@@ -1,0 +1,13 @@
+{
+  "extends": ["standard", "standard-react"],
+  "rules": {
+    "brace-style": [2, "stroustrup", {"allowSingleLine": true}],
+    "eqeqeq": [2, "smart"],
+    "jsx-quotes": [2, "prefer-double"],
+    "react/prop-types": 0,
+    "react/self-closing-comp": 0,
+    "react/wrap-multilines": 0,
+    "space-before-function-paren": 0
+  },
+  "parser": "babel-eslint"
+}
