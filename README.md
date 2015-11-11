@@ -2,7 +2,7 @@
 
 Owns all the dependencies you need to lint, build, test, distribute and demo an npm web module and provides an `nwb` command to run them in the context of your module, so you don't have to repeat this configuration over and over again in multiple projects.
 
-**Note: this tool initially scratches a personal itch - hence the very specific list of conventions below - configurability,flexibility, templating etc. may come later**
+**Note: this tool initially scratches a personal itch - hence the very specific list of conventions below - configurability, flexibility, templating etc. may come later**
 
 ```
 npm install -g nwb
