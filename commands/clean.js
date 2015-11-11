@@ -4,4 +4,4 @@ var exec = require('../exec')
 var rimraf = path.resolve(__dirname, '../node_modules/.bin/rimraf')
 
 console.log('nwb: clean')
-exec([rimraf, 'dist', 'lib'])
+exec([rimraf, 'lib', 'umd'])
