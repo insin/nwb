@@ -87,12 +87,10 @@ The following fields will be used if present:
 
   ```json
   {
-    ...
     "externals": {
       "react": "React",
       "react-router": "ReactRouter"
     },
-    ...
   }
   ```
 
