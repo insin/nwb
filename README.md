@@ -5,7 +5,7 @@ Owns all the dependencies you need to lint, build, test, distribute and demo an 
 **Note: this tool initially scratches a personal itch - hence the scoped package and the very specific list of conventions below - configurability,flexibility, templating etc. may come later**
 
 ```
-npm install @insin/npb
+npm install -g @insin/npb
 ```
 
 ## Conventions
