@@ -6,5 +6,5 @@ var config = path.join(__dirname, '../.eslintrc')
 var src = path.resolve('src')
 var test = path.resolve('test')
 
-console.log('npb: lint')
+console.log('nwb: lint')
 exec([eslint, '-c', config, src, test], {cwd: path.join(__dirname, '..')})

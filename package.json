@@ -1,17 +1,15 @@
 {
-  "name": "@insin/npb",
-  "description": "npm package builder",
+  "name": "nwb",
+  "description": "npm web builder",
   "version": "0.0.1",
   "license": "MIT",
   "author": "Jonny Buchanan <jonathan.buchanan@gmail.com>",
   "bin": {
-    "npb": "bin/npb.js"
+    "nwb": "bin/nwb.js"
   },
   "scripts": {
     "lint": "eslint .",
-    "lint:fix": "eslint . --fix",
-    "test": "npm run lint && npm run test:unit",
-    "test:unit": "karma start"
+    "lint:fix": "eslint . --fix"
   },
   "dependencies": {
     "babel": "5.8.29",
@@ -54,12 +52,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/insin/npb.git"
+    "url": "https://github.com/insin/nwb.git"
   },
   "keywords": [
     "npm",
-    "package",
+    "web",
     "builder",
-    "npb"
+    "nwb"
   ]
 }

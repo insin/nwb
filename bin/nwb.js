@@ -21,11 +21,11 @@ if (args.version) {
   process.exit(0)
 }
 if (args.help || args._.length === 0) {
-  console.log('Usage: npb <command>')
+  console.log('Usage: nwb <command>')
   console.log('')
   console.log('Options:')
   console.log('  -h, --help    display this help message')
-  console.log("  -v, --version print npb's version")
+  console.log("  -v, --version print nwb's version")
   console.log('')
   console.log('Commands:')
   glob.sync('*.js', {cwd: path.join(__dirname, '../commands/')}).forEach(function(filename) {

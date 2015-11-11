@@ -1,11 +1,11 @@
-# npb - npm package builder
+# nwb - npm web builder
 
-Owns all the dependencies you need to lint, build, test, distribute and demo an npm web module and provides an `npb` command to run them in the context of your module, so you don't have to repeat this configuration over and over again in multiple projects.
+Owns all the dependencies you need to lint, build, test, distribute and demo an npm web module and provides an `nwb` command to run them in the context of your module, so you don't have to repeat this configuration over and over again in multiple projects.
 
-**Note: this tool initially scratches a personal itch - hence the scoped package and the very specific list of conventions below - configurability,flexibility, templating etc. may come later**
+**Note: this tool initially scratches a personal itch - hence the very specific list of conventions below - configurability,flexibility, templating etc. may come later**
 
 ```
-npm install -g @insin/npb
+npm install -g nwb
 ```
 
 ## Conventions
@@ -27,7 +27,7 @@ The conventions it currently assumes are:
      1. which is pointed to by a `jsnext:main` field in `package.json`
   1. uses ES6 module syntax, to allow consumption by [Rollup](https://github.com/rollup/rollup) (or similar tools)
   1. uses ES6 features for convenience rather than depending on high compliancy with the ES6 spec, so can be transpiled with [Babel](http://babeljs.io) 5's default stage (2) and loose mode
-  1. complies with [standard style](https://github.com/feross/standard) plus a [few tweaks](https://github.com/insin/npb/blob/master/.eslintrc)
+  1. complies with [standard style](https://github.com/feross/standard) plus a [few tweaks](https://github.com/insin/nwb/blob/master/.eslintrc)
 
 **Distribution**
 
@@ -71,7 +71,7 @@ The conventions it currently assumes are:
 
 ## UMD build `package.json` configuration
 
-Everything which can vary in the UMD build provided by `npb` is configured in `package.json` - these are the fields it requires:
+Everything which can vary in the UMD build provided by `nwb` is configured in `package.json` - these are the fields it requires:
 
 * `name` - used in the UMD build banner
 * `version` - used in the UMD build banner
@@ -99,7 +99,7 @@ The following fields will be used if present:
 Usage, from a module's root directory (containing its `package.json`):
 
 ```
-npb <command>
+nwb <command>
 ```
 
 ### Module commands
