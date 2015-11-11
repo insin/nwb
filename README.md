@@ -36,8 +36,7 @@ The conventions it currently assumes are:
      1. which is pointed to by the `main` field in `package.json`
 
 1. Your module is distributed in `umd/` as a UMD build for global namespace consumption via [npmcdn](https://npmcdn.com) (or similar services), with all its non-peer dependencies bundled, and:
-  1. its entry point is located at `umd/<package.name>.js` and `umd/<package.name>.min.js`
-     1. one of which pointed to by a `umd` field in `package.json`
+  1. UMD builds are located at `umd/<package.name>.js` and `umd/<package.name>.min.js`
 
 **Testing**
 
