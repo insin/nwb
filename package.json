@@ -44,7 +44,7 @@
     "style-loader": "0.13.0",
 
     "argv-set-env": "1.0.0",
-    "glob" : "5.0.15",
+    "glob" : "6.0.1",
     "minimist": "1.2.0",
     "rimraf": "2.4.3"
   },
