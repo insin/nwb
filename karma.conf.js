@@ -8,6 +8,7 @@ if (!process.env.NODE_ENV) {
 
 var path = require('path')
 
+var glob = require('glob')
 var webpack = require('webpack')
 
 var cwd = process.env.ORIGINAL_CWD
@@ -30,6 +31,17 @@ var testFiles = path.join(cwd, 'test/**/*-test.js')
 var preprocessors = {}
 preprocessors[testFiles] = ['webpack', 'sourcemap']
 
+// Find the node_modules directory containing nwb's dependencies
+var nodeModules
+if (glob.sync('./node_modules').length > 0) {
+  // Global installs and npm@2 local installs have a local node_modules dir
+  nodeModules = path.join(__dirname, 'node_modules')
+}
+else {
+  // Otherwise assume an npm@3 local install, with node_modules as the parent
+  nodeModules = path.join(__dirname, '../../node_modules')
+}
+
 module.exports = function(config) {
   config.set({
     browsers: ['PhantomJS'],
@@ -43,7 +55,7 @@ module.exports = function(config) {
       ]
     },
     files: [
-      'node_modules/phantomjs-polyfill/bind-polyfill.js',
+      path.join(nodeModules, 'phantomjs-polyfill/bind-polyfill.js'),
       path.join(cwd, 'test/**/*-test.js')
     ],
     preprocessors: preprocessors,
@@ -63,13 +75,13 @@ module.exports = function(config) {
         },
         extensions: ['', '.js', '.json'],
         modulesDirectories: ['node_modules'],
-        fallback: [
-          path.join(__dirname, 'node_modules')
-        ]
+        // Resolve testing dependencies from nwb's dependencies
+        fallback: [nodeModules]
       },
       resolveLoader: {
         modulesDirectories: ['node_modules'],
-        root: path.join(__dirname, 'node_modules')
+        // Resolve Webpack loaders from nwb's dependencies
+        root: nodeModules
       },
       module: {
         loaders: loaders
