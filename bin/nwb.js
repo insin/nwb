@@ -24,7 +24,7 @@ if (args.help || args._.length === 0) {
   console.log("  -v, --version print nwb's version")
   console.log('')
   console.log('Common commands:')
-  console.log('  build         build-app if public/ is present, otherwise build-module')
+  console.log('  build         lint/clean/build-app if public/ is present, otherwise build-module')
   console.log('  clean         clean-app if public/ is present, otherwise clean-module')
   console.log('  lint          lint src/ and test/')
   console.log('  test          lint and start running unit tests')

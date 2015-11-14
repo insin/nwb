@@ -1,7 +1,7 @@
 {
   "name": "nwb",
   "description": "npm web builder",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "license": "MIT",
   "author": "Jonny Buchanan <jonathan.buchanan@gmail.com>",
   "bin": {
