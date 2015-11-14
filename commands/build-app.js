@@ -1,14 +1,9 @@
 var path = require('path')
 var exec = require('../exec')
 
-var config = path.join(__dirname, '../webpack.umd.config.js')
+var config = path.join(__dirname, '../webpack.app.config.js')
 
-console.log('nwb: build-umd')
-exec(
-  'webpack',
-  ['--config=' + config, '--set-env-ORIGINAL_CWD=' + process.cwd()],
-  {cwd: path.join(__dirname, '..')
-})
+console.log('nwb: build-app')
 exec(
   'webpack',
   ['--config=' + config, '--set-env-ORIGINAL_CWD=' + process.cwd(), '--set-env-NODE_ENV=production'],

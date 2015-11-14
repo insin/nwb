@@ -1,4 +1,4 @@
 var exec = require('../exec')
 
-console.log('nwb: clean')
-exec('rimraf' ['demo/dist'])
+console.log('nwb: clean-demo')
+exec('rimraf', ['demo/dist'])

@@ -1,4 +1,3 @@
 .gitignore
 .npmignore
 .travis.yml
-templates

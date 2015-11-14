@@ -1,15 +1,10 @@
-var fs = require('fs')
-var path = require('path')
+var glob = require('glob')
 
 require('./lint')
-require('./clean')
-require('./build')
+require('./clean-module')
+require('./build-module')
 require('./build-umd')
 
-try {
-  fs.statSync(path.resolve('demo'))
+if (glob.sync('demo').length > 0) {
   require('./dist-demo')
-}
-catch (e) {
-  // pass
 }

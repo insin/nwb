@@ -10,17 +10,16 @@ var path = require('path')
 
 var webpack = require('webpack')
 var ExtractTextPlugin = require('extract-text-webpack-plugin')
-var HtmlWebpackPlugin = require('html-webpack-plugin')
 
 var cwd = process.env.ORIGINAL_CWD
-var pkg = require(path.join(cwd, 'package.json'))
 
 module.exports = {
   devtool: 'source-map',
-  entry: path.join(cwd, 'demo/src/index.js'),
+  entry: path.join(cwd, 'src/index.js'),
   output: {
-    filename: 'demo.js',
-    path: path.join(cwd, 'demo/dist')
+    filename: 'app.js',
+    path: path.join(cwd, 'public/build'),
+    publicPath: 'build/'
   },
   plugins: [
     new webpack.DefinePlugin({
@@ -29,14 +28,23 @@ module.exports = {
     new ExtractTextPlugin('style.css'),
     new webpack.optimize.DedupePlugin(),
     new webpack.optimize.OccurenceOrderPlugin(),
+    // Move anything imported from node_modules into a vendor bundle
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'vendor',
+      filename: 'vendor.js',
+      minChunks: function(module, count) {
+        return (
+          module.resource &&
+          module.resource.indexOf(path.resolve(cwd, 'node_modules')) === 0 &&
+          /\.js$/.test(module.resource)
+        )
+      }
+    }),
     new webpack.optimize.UglifyJsPlugin({
       compress: {
         screw_ie8: true,
         warnings: false
       }
-    }),
-    new HtmlWebpackPlugin({
-      title: pkg.name + ' ' + pkg.version + ' Demo'
     })
   ],
   resolve: {

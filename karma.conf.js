@@ -16,7 +16,11 @@ var isCi = process.env.CONTINUOUS_INTEGRATION === 'true'
 var runCoverage = process.env.COVERAGE === 'true' || isCi
 
 var loaders = [
-  {test: /\.js$/, loader: 'babel', exclude: /node_modules/}
+  {test: /\.js$/, loader: 'babel', exclude: /node_modules/},
+  {test: /\.css$/, loader: 'null'},
+  {test: /\.(gif|jpe?g|png)$/, loader: 'file?name=[name].[ext]'},
+  {test: /\.(otf|eot|svg|ttf|woff|woff2).*$/, loader: 'file?name=[name].[ext]'},
+  {test: /\.json$/, loader: 'json'}
 ]
 
 var reporters = ['dots']

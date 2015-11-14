@@ -11,7 +11,34 @@ var path = require('path')
 var webpack = require('webpack')
 
 var cwd = process.env.ORIGINAL_CWD
-var pkg = require('./getPackage')(cwd)
+var pkg = require(path.join(cwd, 'package.json'))
+
+// Validate package.json
+var REQUIRED_CONFIG = ['name', 'version', 'homepage', 'license', 'global']
+var missing = REQUIRED_CONFIG.filter(function(field) { return !pkg[field] })
+if (missing.length > 0) {
+  console.error('Required UMD build fields missing from package.json: ' + missing.join(', '))
+  process.exit(1)
+}
+if (pkg.externals && Object.prototype.toString.call(pkg.externals) !== '[object Object]') {
+  console.error('UMD build externals field in package.json must be an Object')
+  process.exit(1)
+}
+
+var externals = {}
+// Expand a {package: global} object into a webpack externals object
+if (pkg.externals) {
+  externals = Object.keys(pkg.externals).reduce(function(externals, packageName) {
+    var globalName = pkg.externals[packageName]
+    externals[packageName] = {
+      root: globalName,
+      commonjs2: packageName,
+      commonjs: packageName,
+      amd: packageName
+    }
+    return externals
+  }, {})
+}
 
 var plugins = [
   new webpack.optimize.OccurenceOrderPlugin(),
@@ -43,7 +70,7 @@ module.exports = {
     libraryTarget: 'umd',
     path: path.join(cwd, 'umd')
   },
-  externals: pkg.externals,
+  externals: externals,
   plugins: plugins,
   resolve: {
     extensions: ['', '.js', '.json'],

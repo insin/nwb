@@ -1,12 +1,10 @@
-var path = require('path')
-var exec = require('../exec')
+var glob = require('glob')
 
-var src = path.resolve('src')
-var lib = path.resolve('lib')
-
-console.log('nwb: build')
-exec(
-  'babel',
-  [src, '--out-dir', lib],
-  {cwd: path.join(__dirname, '..')}
-)
+if (glob.sync('public').length > 0) {
+  require('./lint')
+  require('./clean-app')
+  require('./build-app')
+}
+else {
+  require('./build-module')
+}

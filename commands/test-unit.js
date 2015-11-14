@@ -3,6 +3,7 @@ var exec = require('../exec')
 
 var config = path.join(__dirname, '../karma.conf.js')
 
+console.log('nwb: test-unit')
 exec(
   'karma',
   ['start', config, '--set-env-ORIGINAL_CWD=' + process.cwd()],

@@ -1,46 +1,78 @@
 # nwb - npm web builder
 
-Owns all the dependencies you need to lint, build, test, distribute and demo an npm web module and provides an `nwb` command to run them in the context of your module, so you don't have to repeat this configuration over and over again in multiple projects.
+**Note: nwb initially scratches a personal itch - hence the very specific list of conventions below - configurability, flexibility, templating etc. may come later**
 
-**Note: this tool initially scratches a personal itch - hence the very specific list of conventions below - configurability, flexibility, templating etc. may come later**
+nwb manages npm dependencies and configuration of development tools you can use to lint, build, test, and distribute:
+
+* npm modules which are intended to be run in the browser using a bundling tool or a UMD build - e.g. React components, form helpers - referred to as "web modules" from here on for clarity
+* client apps which use npm for dependencies and need to be bundled for deployment
+
+It provides an `nwb` command to run these pre-configured tools on your web module or app, so you don't have to repeat the same configuration over and over again in multiple repositories.
 
 ```
 npm install -g nwb
 ```
 
-## Conventions
+## `nwb` commands
 
-The conventions it currently assumes are:
+Run `nwb` commands in your web module or app's root directory (containing its `package.json`):
 
-**Environments**
+```
+Usage: nwb <command>
 
-1. Your module is capable of running on both [Node.js](https://nodejs.or) and browsers as part of a progressively rendered web application
+Options:
+  -h, --help    display this help message
+  -v, --version print nwb's version
+
+Common commands:
+  build         build-app if public/ is present, otherwise build-module
+  clean         clean-app if public/ is present, otherwise clean-module
+  lint          lint src/ and test/
+  test          lint and start running unit tests
+  test-unit     start running *-test.js unit tests in test/
+
+Web app commands:
+  build-app     build src/index.js into public/build/
+  clean-app     delete public/build/
+
+Web module commands:
+  build-module  transpile from src/ into lib/
+  build-umd     create UMD builds from src/index.js into umd/
+  clean-module  delete lib/ and umd/
+  dist          lint and build module and demo app (if present)
+
+Web module demo app commands:
+  build-demo    build demo app from demo/src/index.js into demo/dist/
+  clean-demo    delete demo/dist/
+  dist-demo     lint and build demo app
+  lint-demo     lint demo/src/
+```
+
+## Example repos
+
+[nwb-module-template](https://github.com/insin/nwb-module-template) is a minimal web module which can be cloned as a starting point.
+
+[get-form-data](https://github.com/insin/get-form-data) is a module which is developed and prepared for npm publishing with nwb.
+
+[react-auto-form](https://github.com/insin/react-auto-form) is a module which uses nwb's `externals` config for its `peerDependencies` and has a React demo app which is also built by nwb.
+
+## Common conventions
+
+The conventions nwb currently assumes for all builds are:
 
 **Dependencies**
 
-1. Your module's dependencies are managed by [npm](https://www.npmjs.com/)
+1. Your dependencies are managed by [npm](https://www.npmjs.com/)
 
 **Source**
 
-1. Your module:
-  1. has its entry point at `src/index.js`
-     1. which is pointed to by a `jsnext:main` field in `package.json`
-  1. uses ES6 module syntax, to allow consumption by [Rollup](https://github.com/rollup/rollup) (or similar tools)
+1. Your code:
   1. uses ES6 features for convenience rather than depending on high compliancy with the ES6 spec, so can be transpiled with [Babel](http://babeljs.io) 5's default stage (2) and loose mode
   1. complies with [standard style](https://github.com/feross/standard) plus a [few tweaks](https://github.com/insin/nwb/blob/master/.eslintrc)
 
-**Distribution**
+**Unit testing**
 
-1. Your module is distributed in `lib/` as an ES5 build for consumption by Node.js and [Webpack](https://github.com/webpack/webpack/)/[Browserify](https://github.com/substack/node-browserify) (or similar tools), and:
-  1. its entry point is located at `lib/index.js`
-     1. which is pointed to by the `main` field in `package.json`
-
-1. Your module is distributed in `umd/` as a UMD build for global namespace consumption via [npmcdn](https://npmcdn.com) (or similar services), with all its non-peer dependencies bundled, and:
-  1. UMD builds are located at `umd/<package.name>.js` and `umd/<package.name>.min.js`
-
-**Testing**
-
-1. Your module's tests are:
+1. Your unit tests are:
    1. in `*-test.js` files underneath `test/`
    1. written with [tape](https://github.com/substack/tape)
    1. able to run on PhantomJS 1.x (with `Function.prototype.bind()` polyfilled)
@@ -53,12 +85,54 @@ The conventions it currently assumes are:
       import MyThing from 'src/index'
       ```
 
-**Demo**
+## App conventions
 
-1. If your module has a demo page:
-  1. its entry point is located at `demo/src/app.js`
-  1. it's capable of bootstrapping itself from an empty HTML document
-  1. it uses `import` or `require()` to pull in all of its JavaScript, CSS and image dependencies
+The conventions nwb currently assumes for a web app are:
+
+**Source**
+
+1. Your app:
+  1. has its entry point at `src/index.js`
+  1. uses `import` or `require()` for its CSS and image dependencies
+
+**Build**
+
+1. Your app has its HTML entry point at `public/index.html`
+
+1. Your app builds into `public/build/` and:
+   1. uses a vendor.js bundle for dependencies loaded out of node_modules
+   1. uses an app.js bundle for all other code
+
+## Web module conventions
+
+The conventions nwb currently assumes for a web module are:
+
+**Environments**
+
+1. Your module is capable of running on both [Node.js](https://nodejs.org) and browsers as part of a progressively rendered web application
+
+**Source**
+
+1. Your module:
+  1. has its entry point at `src/index.js`
+     1. which is pointed to by a `jsnext:main` field in `package.json`
+  1. uses ES6 module syntax, to allow consumption by [Rollup](https://github.com/rollup/rollup)/[Webpack 2](https://github.com/webpack/webpack/pull/861) (or similar tree-shaking tools)
+
+**Distribution**
+
+1. Your module is distributed in `lib/` as an ES5 build for consumption by Node.js and [Webpack](https://github.com/webpack/webpack/)/[Browserify](https://github.com/substack/node-browserify) (or similar bundling tools), and:
+  1. its entry point is located at `lib/index.js`
+     1. which is pointed to by the `main` field in `package.json`
+
+1. Your module is distributed in `umd/` as a UMD build for global namespace consumption via [npmcdn](https://npmcdn.com) (or similar services), with all its non-peer dependencies bundled, and:
+  1. UMD builds are located at `umd/<package.name>.js` and `umd/<package.name>.min.js`
+
+**Demo app**
+
+1. If your module has a demo app:
+  1. its entry point is located at `demo/src/index.js`
+  1. it's capable of bootstrapping itself from an empty `<body>`
+  1. it uses `import` or `require()` for its CSS and image dependencies
 
 **Services**
 
@@ -68,7 +142,7 @@ The conventions it currently assumes are:
 
 1. Your module uses [Codecov](https://codecov.io) for code coverage monitoring
 
-## UMD build `package.json` configuration
+### UMD build `package.json` configuration
 
 Everything which can vary in the UMD build provided by `nwb` is configured in `package.json` - these are the fields it requires:
 
@@ -89,33 +163,8 @@ The following fields will be used if present:
     "externals": {
       "react": "React",
       "react-router": "ReactRouter"
-    },
+    }
   }
   ```
-
-## Commands
-
-Usage, from a module's root directory (containing its `package.json`):
-
-```
-nwb <command>
-```
-
-### Module commands
-
-* `dist` - lints code, cleans and builds all distributions; also runs `dist-demo` if `demo/` exists
-* `test` - lints code and runs tests
-* `lint` - lints `src/` and `test/`
-* `clean` - deletes `lib/` and `umd/`
-* `build` - builds the ES5 distribution in `lib/`
-* `build-umd` - builds the UMD distribution in `umd/`
-* `test-unit` - starts Karma to run tests
-
-### Demo commands
-
-* `dist-demo` - lints, cleans and builds the demo
-* `lint-demo` - lints `demo/src/`
-* `clean-demo` - deletes `demo/dist/`
-* `build-demo` - builds the demo in `demo/src/app.js` to `demo/dist/`
 
 ## MIT Licensed
