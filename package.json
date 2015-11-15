@@ -13,7 +13,7 @@
   },
   "dependencies": {
     "babel": "5.8.29",
-    "babel-core": "5.8.33",
+    "babel-core": "5.8.34",
 
     "eslint": "1.9.0",
     "babel-eslint": "4.1.5",
@@ -34,9 +34,9 @@
     "phantomjs-polyfill": "0.0.1",
     "tape": "4.2.2",
 
-    "webpack": "1.12.4",
+    "webpack": "1.12.6",
     "babel-loader": "5.3.3",
-    "css-loader": "0.22.0",
+    "css-loader": "0.23.0",
     "extract-text-webpack-plugin": "0.9.1",
     "file-loader": "0.8.4",
     "html-webpack-plugin": "1.6.2",
