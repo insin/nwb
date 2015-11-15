@@ -1,5 +1,7 @@
 # nwb - npm web builder
 
+[![npm package][npm-badge]][npm]
+
 **Note: nwb initially scratches a personal itch - hence the very specific list of conventions below - configurability, flexibility, templating etc. may come later**
 
 nwb manages npm dependencies and configuration of development tools you can use to lint, build, test, and distribute:
@@ -174,3 +176,6 @@ The following fields will be used if present:
   ```
 
 ## MIT Licensed
+
+[npm-badge]: https://img.shields.io/npm/v/nwb.svg
+[npm]: https://www.npmjs.org/package/nwb
