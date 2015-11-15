@@ -48,7 +48,7 @@ module.exports = {
     })
   ],
   resolve: {
-    extensions: ['', '.js', '.json'],
+    extensions: ['', '.js', '.jsx', '.json'],
     modulesDirectories: ['node_modules']
   },
   resolveLoader: {
@@ -57,7 +57,7 @@ module.exports = {
   },
   module: {
     loaders: [
-      {test: /\.js$/, loader: 'babel', exclude: /node_modules/},
+      {test: /\.jsx?$/, loader: 'babel', exclude: /node_modules/},
       {test: /\.css$/, loader: ExtractTextPlugin.extract('style', 'css?-minimize')},
       {test: /\.(gif|jpe?g|png)$/, loader: 'file?name=[name].[ext]'},
       {test: /\.(otf|eot|svg|ttf|woff|woff2).*$/, loader: 'file?name=[name].[ext]'},

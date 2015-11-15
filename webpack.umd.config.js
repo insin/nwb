@@ -73,7 +73,7 @@ module.exports = {
   externals: externals,
   plugins: plugins,
   resolve: {
-    extensions: ['', '.js', '.json'],
+    extensions: ['', '.js', '.jsx', '.json'],
     modulesDirectories: ['node_modules']
   },
   resolveLoader: {
@@ -82,7 +82,7 @@ module.exports = {
   },
   module: {
     loaders: [
-      {test: /\.js$/, loader: 'babel', exclude: /node_modules/},
+      {test: /\.jsx?$/, loader: 'babel', exclude: /node_modules/},
       {test: /\.css$/, loader: 'null'},
       {test: /\.json$/, loader: 'json'}
     ]

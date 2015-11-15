@@ -40,7 +40,7 @@ module.exports = function config(options) {
       })
     ],
     resolve: {
-      extensions: ['', '.js', '.json'],
+      extensions: ['', '.js', '.jsx', '.json'],
       modulesDirectories: ['node_modules']
     },
     resolveLoader: {
