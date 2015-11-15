@@ -50,6 +50,8 @@ Web module demo app commands:
 
 ## Example repos
 
+[nwb-app-template](https://github.com/insin/nwb-app-template) is a minimal web app which can be cloned as a starting point.
+
 [nwb-module-template](https://github.com/insin/nwb-module-template) is a minimal web module which can be cloned as a starting point.
 
 [get-form-data](https://github.com/insin/get-form-data) is a module which is developed and prepared for npm publishing with nwb.
