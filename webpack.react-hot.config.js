@@ -17,8 +17,8 @@ module.exports = function config(options) {
   return {
     devtool: 'eval-source-map',
     entry: [
-      'webpack-dev-server/client?http://localhost:' + options.port,
-      'webpack/hot/only-dev-server',
+      require.resolve('webpack-dev-server/client') + '?http://localhost:' + options.port,
+      require.resolve('webpack/hot/only-dev-server'),
       options.entry
     ],
     output: {
@@ -53,17 +53,17 @@ module.exports = function config(options) {
           stage: 2,
           loose: 'all',
           plugins: [
-            'react-transform'
+            require.resolve('babel-plugin-react-transform')
           ],
           extra: {
             'react-transform': {
               transforms: [{
                 transform: require.resolve('react-transform-hmr'),
-                imports: ['react'],
+                imports: [options.react],
                 locals: ['module']
               }, {
                 transform: require.resolve('react-transform-catch-errors'),
-                imports: ['react', require.resolve('redbox-react')]
+                imports: [options.react, require.resolve('redbox-noreact')]
               }]
             }
           }
