@@ -12,7 +12,14 @@ var webpack = require('webpack')
 var HtmlWebpackPlugin = require('html-webpack-plugin')
 
 module.exports = function config(options) {
-  var pkg = require(path.join(options.cwd, 'package.json'))
+  var title = 'serve-react'
+  try {
+    var pkg = require(path.join(options.cwd, 'package.json'))
+    title = pkg.name + ' ' + pkg.version
+  }
+  catch (e) {
+    // pass
+  }
 
   return {
     devtool: 'eval-source-map',
@@ -36,7 +43,7 @@ module.exports = function config(options) {
         template: require.resolve('html-webpack-template/index.html'),
         appMountId: 'app',
         mobile: true,
-        title: pkg.name + ' ' + pkg.version
+        title: title
       })
     ],
     resolve: {
