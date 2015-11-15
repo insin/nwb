@@ -58,12 +58,12 @@ module.exports = function config(options) {
           extra: {
             'react-transform': {
               transforms: [{
-                transform: 'react-transform-hmr',
+                transform: require.resolve('react-transform-hmr'),
                 imports: ['react'],
                 locals: ['module']
               }, {
-                transform: 'react-transform-catch-errors',
-                imports: ['react', 'redbox-react']
+                transform: require.resolve('react-transform-catch-errors'),
+                imports: ['react', require.resolve('redbox-react')]
               }]
             }
           }
