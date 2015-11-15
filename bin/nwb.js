@@ -33,7 +33,7 @@ if (args.help || args._.length === 0) {
   console.log('Web app commands:')
   console.log('  build-app     build src/index.js into public/build/')
   console.log('  clean-app     delete public/build/')
-//  console.log('  serve         serve src/index.js with hot reloading')
+
   console.log('')
   console.log('Web module commands:')
   console.log('  build-module  transpile from src/ into lib/')
@@ -46,29 +46,42 @@ if (args.help || args._.length === 0) {
   console.log('  clean-demo    delete demo/dist/')
   console.log('  dist-demo     lint and build demo app')
   console.log('  lint-demo     lint demo/src/')
+  console.log('')
+  console.log('React-specific commands:')
+  console.log('  serve-react <file>  serve an entry module with hot reloading')
+  console.log('  serve-react-app     serve src/index.js with hot reloading')
   process.exit(0)
 }
 
 var command = args._[0]
 
-if (/^[a-z]+(?:-[a-z]+)?$/.test(command)) {
-  try {
-    var commandModule = '../commands/' + command
-    require.resolve(commandModule)
-    try {
-      require(commandModule)
-      process.exit(0)
-    }
-    catch (e) {
-      console.error('Error running ' + command + ':')
-      console.error(e.stack)
-      process.exit(1)
-    }
-  }
-  catch (e) {
-    // Error thrown by require.resolve
-  }
+function unknownCommand() {
+  console.error('Unknown command: ' + command)
+  process.exit(1)
 }
 
-console.error('Unknown command: ' + command)
-process.exit(1)
+// Validate the command is in foo-bar-baz format before trying to resolve a
+// module path with it.
+if (!/^[a-z]+(?:-[a-z]+)*$/.test(command)) {
+  unknownCommand()
+}
+
+var commandModulePath
+try {
+  commandModulePath = require.resolve('../commands/' + command)
+}
+catch (e) {
+  unknownCommand()
+}
+
+try {
+  var commandModule = require(commandModulePath)
+  if (typeof commandModule == 'function') {
+    commandModule(args)
+  }
+}
+catch (e) {
+  console.error('Error running ' + command + ':')
+  console.error(e.stack)
+  process.exit(1)
+}

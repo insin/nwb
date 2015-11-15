@@ -25,7 +25,7 @@ Options:
   -v, --version print nwb's version
 
 Common commands:
-  build         build-app if public/ is present, otherwise build-module
+  build         lint/clean/build-app if public/ is present, otherwise build-module
   clean         clean-app if public/ is present, otherwise clean-module
   lint          lint src/ and test/
   test          lint and start running unit tests
@@ -46,6 +46,10 @@ Web module demo app commands:
   clean-demo    delete demo/dist/
   dist-demo     lint and build demo app
   lint-demo     lint demo/src/
+
+React-specific commands:
+  serve-react <file>  serve an entry module with hot reloading
+  serve-react-app     serve src/index.js with hot reloading
 ```
 
 ## Example repos

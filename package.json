@@ -14,6 +14,11 @@
   "dependencies": {
     "babel": "5.8.29",
     "babel-core": "5.8.34",
+    "babel-plugin-react-display-name": "2.0.0",
+    "babel-plugin-react-transform": "1.1.1",
+    "react-transform-catch-errors": "1.0.0",
+    "react-transform-hmr": "1.0.1",
+    "redbox-react": "1.1.1",
 
     "eslint": "1.9.0",
     "babel-eslint": "4.1.5",
@@ -40,9 +45,12 @@
     "extract-text-webpack-plugin": "0.9.1",
     "file-loader": "0.8.4",
     "html-webpack-plugin": "1.6.2",
+    "html-webpack-template": "2.5.2",
     "json-loader": "0.5.3",
     "null-loader": "0.1.1",
     "style-loader": "0.13.0",
+    "url-loader": "0.5.6",
+    "webpack-dev-server": "1.12.1",
 
     "argv-set-env": "1.0.0",
     "glob" : "6.0.1",
