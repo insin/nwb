@@ -45,7 +45,7 @@
     "extract-text-webpack-plugin": "0.9.1",
     "file-loader": "0.8.4",
     "html-webpack-plugin": "1.6.2",
-    "html-webpack-template": "2.5.2",
+    "html-webpack-template": "2.5.1",
     "json-loader": "0.5.3",
     "null-loader": "0.1.1",
     "style-loader": "0.13.0",
