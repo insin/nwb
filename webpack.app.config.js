@@ -13,6 +13,18 @@ var ExtractTextPlugin = require('extract-text-webpack-plugin')
 
 var cwd = process.env.ORIGINAL_CWD
 
+function failBuildOnCompilationError() {
+  this.plugin('done', function(stats) {
+    if (stats.compilation.errors && stats.compilation.errors.length > 0) {
+      console.error('webpack build failed:')
+      stats.compilation.errors.forEach(function(error) {
+        console.error(error.message)
+      })
+      process.exit(1)
+    }
+  })
+}
+
 module.exports = {
   devtool: 'source-map',
   entry: path.join(cwd, 'src/index.js'),
@@ -22,6 +34,7 @@ module.exports = {
     publicPath: 'build/'
   },
   plugins: [
+    failBuildOnCompilationError,
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
     }),
