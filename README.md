@@ -108,8 +108,9 @@ The conventions nwb currently assumes for a web app are:
 1. Your app has its HTML entry point at `public/index.html`
 
 1. Your app builds into `public/build/` and:
-   1. uses a vendor.js bundle for dependencies loaded out of node_modules
-   1. uses an app.js bundle for all other code
+   1. uses a `vendor.js` bundle for dependencies loaded out of node_modules
+   1. uses an `app.js` bundle for all other code
+   1. uses a `style.css` bundle for all CSS
 
 ## Web module conventions
 
