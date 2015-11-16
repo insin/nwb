@@ -60,6 +60,7 @@ module.exports = function config(options) {
           stage: 2,
           loose: 'all',
           plugins: [
+            require.resolve('babel-plugin-react-display-name'),
             require.resolve('babel-plugin-react-transform')
           ],
           extra: {
