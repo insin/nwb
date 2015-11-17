@@ -1,6 +1,5 @@
 var glob = require('glob')
 
-require('./lint')
 require('./clean-module')
 require('./build-module')
 require('./build-umd')

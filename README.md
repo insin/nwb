@@ -4,7 +4,7 @@
 
 **Note: nwb initially scratches a personal itch - hence the very specific list of conventions below - configurability, flexibility, templating etc. may come later**
 
-nwb manages npm dependencies and configuration of development tools you can use to lint, build, test, and distribute:
+nwb manages npm dependencies and configuration of development tools you can use to build, test, and distribute:
 
 * npm modules which are intended to be run in the browser using a bundling tool or a UMD build - e.g. React components, form helpers - referred to as "web modules" from here on for clarity
 * client apps which use npm for dependencies and need to be bundled for deployment
@@ -27,11 +27,9 @@ Options:
   -v, --version print nwb's version
 
 Common commands:
-  build         lint/clean/build-app if public/ is present, otherwise build-module
-  clean         clean-app if public/ is present, otherwise clean-module
-  lint          lint src/ and test/
-  test          lint and start running unit tests
-  test-unit     start running *-test.js unit tests in test/
+  build         clean and build app if public/ is present, otherwise build module
+  clean         clean app if public/ is present, otherwise clean-module
+  test          start running *-test.js unit tests in test/
 
 Web app commands:
   build-app     build src/index.js into public/build/
@@ -41,13 +39,12 @@ Web module commands:
   build-module  transpile from src/ into lib/
   build-umd     create UMD builds from src/index.js into umd/
   clean-module  delete lib/ and umd/
-  dist          lint and build module and demo app (if present)
+  dist          clean and build module and demo app (if present)
 
 Web module demo app commands:
   build-demo    build demo app from demo/src/index.js into demo/dist/
   clean-demo    delete demo/dist/
-  dist-demo     lint and build demo app
-  lint-demo     lint demo/src/
+  dist-demo     clean and build demo app
 
 React-specific commands:
   serve-react <file>  serve an entry module with hot reloading
@@ -74,9 +71,7 @@ The conventions nwb currently assumes for all builds are:
 
 **Source**
 
-1. Your code:
-  1. uses ES6 features for convenience rather than depending on high compliancy with the ES6 spec, so can be transpiled with [Babel](http://babeljs.io) 5's default stage (2) and loose mode
-  1. complies with [standard style](https://github.com/feross/standard) plus a [few tweaks](https://github.com/insin/nwb/blob/master/.eslintrc)
+1. Your code uses ES6 features for convenience rather than depending on high compliancy with the ES6 spec, so can be transpiled with [Babel](http://babeljs.io) 5's loose mode
 
 **Unit testing**
 
