@@ -44,7 +44,8 @@ if (args.help || args._.length === 0) {
   console.log('  dist-demo     clean and build demo app')
   console.log('')
   console.log('React-specific commands:')
-  console.log('  serve-react <file>  serve an entry module with hot reloading')
+  console.log('  build-react-app     build app with Babel production optimisations for React')
+  console.log('  serve-react <file>  serve a React entry module with hot reloading')
   console.log('  serve-react-app     serve src/index.js with hot reloading')
   process.exit(0)
 }

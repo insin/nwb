@@ -47,7 +47,8 @@ Web module demo app commands:
   dist-demo     clean and build demo app
 
 React-specific commands:
-  serve-react <file>  serve an entry module with hot reloading
+  build-react-app     build app with Babel production optimisations for React
+  serve-react <file>  serve a React entry module with hot reloading
   serve-react-app     serve src/index.js with hot reloading
 ```
 
