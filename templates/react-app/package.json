@@ -1,0 +1,21 @@
+{
+  "name": "{{name}}",
+  "version": "0.0.1",
+  "description": "Describe {{name}} here",
+  "scripts": {
+    "build": "nwb build-react-app",
+    "clean": "nwb clean",
+    "start": "nwb serve-react-app",
+    "test": "nwb test"
+  },
+  "dependencies": {
+    "react": "{{reactVersion}}",
+    "react-dom": "{{reactVersion}}"
+  },
+  "devDependencies": {
+    "nwb": "^{{nwbVersion}}"
+  },
+  "author": "",
+  "license": "MIT",
+  "repository": ""
+}

@@ -7,7 +7,7 @@
 nwb manages npm dependencies and configuration of development tools you can use to build, test, and distribute:
 
 * npm modules which are intended to be run in the browser using a bundling tool or a UMD build - e.g. React components, form helpers - referred to as "web modules" from here on for clarity
-* client apps which use npm for dependencies and need to be bundled for deployment
+* client apps which use npm and Webpack for installing and requiring dependencies
 
 It provides an `nwb` command to run these pre-configured tools on your web module or app, so you don't have to repeat the same configuration over and over again in multiple repositories.
 

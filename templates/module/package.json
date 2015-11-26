@@ -1,0 +1,18 @@
+{
+  "name": "{{name}}",
+  "version": "0.0.1",
+  "description": "Describe {{name}} here",
+  "scripts": {
+    "build": "nwb build-module",
+    "clean": "nwb clean",
+    "test": "nwb test"
+  },
+  "dependencies": {
+  },
+  "devDependencies": {
+    "nwb": "^{{nwbVersion}}"
+  },
+  "author": "",
+  "license": "MIT",
+  "repository": ""
+}

@@ -1,61 +1,74 @@
 {
   "name": "nwb",
   "description": "npm web builder",
-  "version": "0.0.6",
+  "version": "0.1.0",
   "license": "MIT",
   "author": "Jonny Buchanan <jonathan.buchanan@gmail.com>",
   "bin": {
-    "nwb": "bin/nwb.js"
+    "nwb": "lib/bin/nwb.js"
   },
   "scripts": {
-    "lint": "lint .",
-    "lint:fix": "lint . --fix"
+    "build": "babel src --loose all --out-dir lib",
+    "lint": "lint src test",
+    "test": "mocha --compilers js:babel-core/register tests/**/*.js",
+    "test:watch": "mocha --watch --compilers js:babel-core/register tests/**/*.js"
   },
+  "files": [
+    "lib",
+    "templates"
+  ],
   "dependencies": {
-    "babel": "5.8.29",
+    "argv-set-env": "1.0.0",
+    "copy-template-dir": "1.0.5",
+    "eventsource-polyfill": "0.9.6",
+    "express": "4.13.3",
+    "glob" : "6.0.1",
+    "inquirer" : "0.11.0",
+    "minimist": "1.2.0",
+    "resolve": "1.1.6",
+    "rimraf": "2.4.4",
+
+    "babel": "5.8.34",
     "babel-core": "5.8.34",
     "babel-plugin-react-display-name": "2.0.0",
     "babel-plugin-react-transform": "1.1.1",
+    "babel-runtime": "^5.8.34",
     "react-transform-catch-errors": "1.0.0",
     "react-transform-hmr": "1.0.1",
     "redbox-noreact": "1.0.0",
-
 
     "karma": "0.13.15",
     "codecov.io": "0.1.6",
     "isparta-loader": "1.0.0",
     "karma-coverage": "0.5.3",
+    "karma-mocha": "0.2.1",
+    "karma-mocha-reporter": "1.1.2",
     "karma-phantomjs-launcher": "0.2.1",
     "karma-sourcemap-loader": "0.3.6",
-    "karma-tap": "1.0.3",
     "karma-webpack": "1.7.0",
-    "phantomjs": "1.9.18",
+    "phantomjs": "1.9.19",
     "phantomjs-polyfill": "0.0.1",
-    "tape": "4.2.2",
 
-    "webpack": "1.12.6",
-    "babel-loader": "5.3.3",
+    "webpack": "1.12.9",
+    "autoprefixer-loader": "3.1.0",
+    "babel-loader": "5.4.0",
     "css-loader": "0.23.0",
     "extract-text-webpack-plugin": "0.9.1",
-    "file-loader": "0.8.4",
+    "file-loader": "0.8.5",
     "html-webpack-plugin": "1.6.2",
     "html-webpack-template": "2.5.1",
-    "json-loader": "0.5.3",
+    "json-loader": "0.5.4",
     "null-loader": "0.1.1",
     "style-loader": "0.13.0",
-    "url-loader": "0.5.6",
+    "url-loader": "0.5.7",
     "webpack-combine-loaders": "1.0.0",
-    "webpack-dev-server": "1.12.1",
-
-    "argv-set-env": "1.0.0",
-    "eslint-config-jonnybuchanan": "1.0.1",
-    "glob" : "6.0.1",
-    "minimist": "1.2.0",
-    "object.assign": "4.0.3",
-    "resolve": "1.1.6",
-    "rimraf": "2.4.3"
+    "webpack-dev-middleware": "1.4.0",
+    "webpack-hot-middleware": "2.5.0"
   },
   "devDependencies": {
+    "eslint-config-jonnybuchanan": "1.0.1",
+    "expect": "1.13.0",
+    "mocha": "2.3.4"
   },
   "repository": {
     "type": "git",
@@ -65,6 +78,7 @@
     "npm",
     "web",
     "builder",
-    "nwb"
+    "nwb",
+    "react"
   ]
 }
