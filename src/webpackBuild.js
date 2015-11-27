@@ -3,8 +3,8 @@ import assert from 'assert'
 import argvSetEnv from 'argv-set-env'
 import webpack from 'webpack'
 
-import createWebpackConfig from '../createWebpackConfig'
-import getUserConfig from '../getUserConfig'
+import createWebpackConfig from './createWebpackConfig'
+import getUserConfig from './getUserConfig'
 
 export default function(args, buildConfig = {}, cb) {
   // Set cross-platform environment variables based on --set-env-NAME arguments
@@ -14,7 +14,7 @@ export default function(args, buildConfig = {}, cb) {
     process.env.NODE_ENV = 'production'
   }
 
-  let userConfig = getUserConfig(args.config)
+  let userConfig = getUserConfig(args)
   if (typeof buildConfig == 'function') {
     buildConfig = buildConfig()
   }
