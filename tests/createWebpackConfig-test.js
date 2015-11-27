@@ -17,7 +17,7 @@ describe('createWebpackConfig()', () => {
         .toContain('url-loader')
         .toContain('file-loader')
         .toContain('json-loader')
-      expect(config.resolve.extensions).toEqual(['', '.js', '.jsx','.json'])
+      expect(config.resolve.extensions).toEqual(['', '.web.js', '.js', '.jsx','.json'])
     })
     it('excludes node_modules from babel-loader', () => {
       expect(config.module.loaders[0].exclude.test('node_modules')).toBe(true)
@@ -35,7 +35,7 @@ describe('createWebpackConfig()', () => {
         .toContain('url-loader')
         .toContain('file-loader')
         .toContain('json-loader')
-      expect(config.resolve.extensions).toEqual(['', '.js', '.jsx','.json'])
+      expect(config.resolve.extensions).toEqual(['', '.web.js', '.js', '.jsx','.json'])
     })
   })
 })
