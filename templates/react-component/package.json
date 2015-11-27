@@ -4,13 +4,14 @@
   "description": "{{name}} React component",
   "scripts": {
     "build": "nwb build",
+    "clean": "nwb clean",
     "start": "nwb serve",
     "test": "nwb test"
   },
   "dependencies": {
   },
   "peerDependencies": {
-    "react": "{{reactVersion}}",
+    "react": "{{reactVersion}}"
   },
   "devDependencies": {
     "nwb": "{{nwbVersion}}",

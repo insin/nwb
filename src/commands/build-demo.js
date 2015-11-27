@@ -18,7 +18,7 @@ export default function(args) {
     plugins: {
       html: {
         template: require.resolve('html-webpack-template/index.html'),
-        appMountId: 'app',
+        appMountId: 'demo',
         mobile: true,
         title: `${pkg.name} ${pkg.version} Demo`
       }

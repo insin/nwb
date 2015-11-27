@@ -1,7 +1,7 @@
 module.exports = {
   // Let nwb know this is a React component module when generic build commands
   // are used.
-  type: 'react component',
+  type: 'react-component',
 
   // The name of the global variable the UMD build of this React component
   // module will export.

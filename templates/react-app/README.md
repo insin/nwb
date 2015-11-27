@@ -14,16 +14,17 @@ You will need the following things properly installed on your computer.
 
 * `git clone <repository-url>` this repository
 * change into the new directory
-* `npm install
+* `npm install`
 
 ## Running / Development
 
-* `nwb serve`
-* Visit your app at [http://localhost:3000](http://localhost:3000).
+* `nwb serve` will run the app
+* Visit the app at [http://localhost:3000](http://localhost:3000)
 
 ### Running Tests
 
-* `nwb test`
+* `nwb test` will run the tests once
+* `nwb test --server` will run the tests on every change
 
 ### Building
 

@@ -1,9 +1,23 @@
 import expect from 'expect'
+import React from 'react'
+import {render, unmountComponentAtNode} from 'react-dom'
 
-import message from 'src/index'
+import Component from 'src/'
 
-describe('Module template', () => {
+describe('Component', () => {
+  let node
+
+  beforeEach(() => {
+    node = document.createElement('div')
+  })
+
+  afterEach(() => {
+    unmountComponentAtNode(node)
+  })
+
   it('displays a welcome message', () => {
-    expect(message).toEqual('Hello world')
+    render(<Component/>, node, () => {
+      expect(node.innerHTML).toContain('Welcome to React components')
+    })
   })
 })
