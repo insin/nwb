@@ -14,6 +14,7 @@ export default function(args) {
     process.exit(1)
   }
 
+  console.log('nwb: serve-react')
   serveReact(args, {
     entry,
     output: {

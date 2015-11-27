@@ -3,6 +3,7 @@ import path from 'path'
 import serveReact from '../serveReact'
 
 export default function(args) {
+  console.log('nwb: serve-react-app')
   serveReact(args, {
     entry: path.resolve('src/index.js'),
     output: {

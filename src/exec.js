@@ -3,6 +3,8 @@ import path from 'path'
 
 import glob from 'glob'
 
+import debug from './debug'
+
 /**
  * Get the absolute path to a named .bin script in a manner compatible with
  * global installs and both npm@2 and npm@3 local installs.
@@ -23,7 +25,6 @@ function getBinScript(name) {
  */
 export default function exec(bin, args, options = {}) {
   let command = `${getBinScript(bin)} ${args.join(' ')}`
-  console.log(`nwb: ${bin} ${args.join(' ')}`)
-  console.log('')
+  debug(command)
   execSync(command, {...options, stdio: [0, 1, 2]})
 }

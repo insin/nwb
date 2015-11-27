@@ -1,4 +1,4 @@
-import {REACT_APP, WEB_MODULE} from '../constants'
+import {REACT_APP, REACT_COMPONENT, WEB_MODULE} from '../constants'
 import getUserConfig from '../getUserConfig'
 
 export default function(args) {
@@ -6,7 +6,7 @@ export default function(args) {
   if (type === REACT_APP) {
     require('./clean-app')
   }
-  else if (type === WEB_MODULE) {
+  else if (type === REACT_COMPONENT || type === WEB_MODULE) {
     require('./clean-module')
   }
 }

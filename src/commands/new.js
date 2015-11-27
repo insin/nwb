@@ -6,6 +6,7 @@ import inquirer from 'inquirer'
 import glob from 'glob'
 
 import {REACT_APP, REACT_COMPONENT, REACT_VERSION, WEB_MODULE, MODULE_TYPES} from '../constants'
+import debug from '../debug'
 import pkg from '../../package.json'
 
 function getWebModulePrefs(cb) {
@@ -16,6 +17,15 @@ function getWebModulePrefs(cb) {
       message: `Which global variable will the UMD build export?`
     }
   ], cb)
+}
+
+function installReact(targetDir) {
+  let command = `npm install react@${REACT_VERSION} react-dom@${REACT_VERSION}`
+  debug(`${command} in ${targetDir}`)
+  execSync(command, {
+    cwd: targetDir,
+    stdio: [0, 1, 2]
+  })
 }
 
 let moduleCreators = {
@@ -32,10 +42,7 @@ let moduleCreators = {
       }
       console.log(`nwb: created ${targetDir}`)
       console.log('nwb: installing dependencies')
-      execSync(`npm install react@${REACT_VERSION} react-dom@${REACT_VERSION}`, {
-        cwd: targetDir,
-        stdio: [0, 1, 2]
-      })
+      installReact(targetDir)
     })
   },
 
@@ -54,10 +61,7 @@ let moduleCreators = {
         }
         console.log(`nwb: created ${targetDir}`)
         console.log('nwb: installing dependencies')
-        execSync(`npm install react@${REACT_VERSION} react-dom@${REACT_VERSION}`, {
-          cwd: targetDir,
-          stdio: [0, 1, 2]
-        })
+        installReact(targetDir)
       })
     })
   },

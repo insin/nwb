@@ -28,6 +28,6 @@ let buildConfig = () => {
 }
 
 export default function(args) {
-  console.log(`nwb: ${args._[0]}`)
+  console.log(`nwb: build-react-app`)
   webpackBuild(args, buildConfig)
 }
