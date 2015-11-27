@@ -1,12 +1,20 @@
 import express from 'express'
 import webpack from 'webpack'
 
-module.exports = function server(webpackConfig, {noInfo, port, staticPath}) {
-  var app = express()
-  var compiler = webpack(webpackConfig)
+/**
+ * Start an express server which uses webpack-dev-middleware to build and serve
+ * assets using Webpack's watch mode, and webpack-hot-middleware to hot reload
+ * changes in the browser.
+ *
+ * If static path config is also provided, express will also be used to serve
+ * static content from the given path.
+ */
+export default function server(webpackConfig, {noInfo, port, staticPath}) {
+  let app = express()
+  let compiler = webpack(webpackConfig)
 
   app.use(require('webpack-dev-middleware')(compiler, {
-    noInfo: noInfo,
+    noInfo,
     publicPath: webpackConfig.output.publicPath,
     stats: {
       colors: true
@@ -15,7 +23,9 @@ module.exports = function server(webpackConfig, {noInfo, port, staticPath}) {
 
   app.use(require('webpack-hot-middleware')(compiler))
 
-  app.use(express.static(staticPath))
+  if (staticPath) {
+    app.use(express.static(staticPath))
+  }
 
   app.listen(port, 'localhost', function(err) {
     if (err) {

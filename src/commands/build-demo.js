@@ -1,11 +1,26 @@
 import path from 'path'
-import exec from '../exec'
 
-let config = path.join(__dirname, '../config/webpack-build.js')
+import webpackBuild from '../webpackBuild'
 
-console.log('nwb: build-demo')
-exec(
-  'webpack',
-  ['--config=' + config, '--set-env-ORIGINAL_CWD=' + process.cwd()],
-  {cwd: path.join(__dirname, '..')
-})
+/**
+ * Build a web module's demo app from demo/src/index.js.
+ */
+export default function(args) {
+  let pkg = require(path.resolve('package.json'))
+
+  webpackBuild(args, {
+    entry: path.resolve('demo/src/index.js'),
+    output: {
+      filename: 'demo.js',
+      path: path.resolve('demo/dist')
+    },
+    plugins: {
+      html: {
+        template: require.resolve('html-webpack-template/index.html'),
+        appMountId: 'app',
+        mobile: true,
+        title: `${pkg.name} ${pkg.version} Demo`
+      }
+    }
+  })
+}

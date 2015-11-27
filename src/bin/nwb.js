@@ -25,38 +25,21 @@ Options:
   -h, --help     display this help message
   -v, --version  print nwb's version
 
+Module creation commands:
+  new react-app <name>        create a React app
+  new react-component <name>  create a React component with a demo app
+  new web-module <name>       craete a web module
+
 Common commands:
+  build          clean and build
+  clean          delete build
+  test           run tests
+                   --server  keep running tests on every change
 
-  These will detect which type of project they're being run in.
-
-  build        clean and build
-  clean        delete build
-  test         start running tests
-  test --once  run tests once
-  serve        serve with hot reloading
-
-React app commands:
-
-  build-react-app  build app into public/build/
-  serve-react-app  serve with hot reloading
-
-Generic app commands:
-
-  build-app  build app into public/build/
-  clean-app  delete public/build/
-
-Web module commands:
-
-  build-module  transpile from src/ into lib/
-  build-umd     create UMD builds from src/index.js into umd/
-  clean-module  delete lib/ and umd/
-  dist          clean and build module and demo app (if present)
-
-Web module demo app commands:
-
-  build-demo  build demo app from demo/src/index.js into demo/dist/
-  clean-demo  delete demo/dist/
-  dist-demo   clean and build demo app
+React module commands:
+  serve          serve an app, or a component's demo app, with hot reloading
+                   --info  show webpack build info
+                   --port  port to run the dev server on [3000]
 `)
   process.exit(0)
 }

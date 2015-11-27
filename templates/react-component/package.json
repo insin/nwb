@@ -1,22 +1,27 @@
 {
   "name": "{{name}}",
   "version": "0.0.1",
-  "description": "Describe {{name}} here",
-  "private": true,
+  "description": "{{name}} React component",
   "scripts": {
     "build": "nwb build",
-    "clean": "nwb clean",
     "start": "nwb serve",
     "test": "nwb test"
   },
   "dependencies": {
+  },
+  "peerDependencies": {
+    "react": "{{reactVersion}}",
+  },
+  "devDependencies": {
+    "nwb": "^{{nwbVersion}}",
     "react": "{{reactVersion}}",
     "react-dom": "{{reactVersion}}"
   },
-  "devDependencies": {
-    "nwb": "^{{nwbVersion}}"
-  },
   "author": "",
+  "homepage": "",
   "license": "MIT",
-  "repository": ""
+  "repository": "",
+  "keywords": [
+    "react-component"
+  ]
 }

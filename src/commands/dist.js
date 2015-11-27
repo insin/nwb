@@ -1,7 +1,6 @@
 import glob from 'glob'
 
 // Prepare a web module for distribution
-require('./clean-module')
 require('./build-module')
 require('./build-umd')
 

@@ -33,7 +33,18 @@ if (runCoverage) {
   reporters.push('coverage')
 }
 
-let webpackConfig = createWebpackConfig({
+// Find the node_modules directory containing nwb's dependencies
+let nodeModules
+if (glob.sync('../../node_modules/', {cwd: __dirname}).length > 0) {
+  // Global installs and npm@2 local installs have a local node_modules dir
+  nodeModules = path.join(__dirname, '../../node_modules')
+}
+else {
+  // Otherwise assume an npm@3 local install, with node_modules as the parent
+  nodeModules = path.join(__dirname, '../../../node_modules')
+}
+
+let webpackConfig = createWebpackConfig(cwd, {
   server: true,
   devtool: 'inline-source-map',
   loaders: {
@@ -43,21 +54,10 @@ let webpackConfig = createWebpackConfig({
     alias: {
       'src': path.join(cwd, 'src')
     },
-    // Resolve testing dependencies from nwb's dependencies
+    // Fall back to resolve testing dependencies from nwb's dependencies
     fallback: [nodeModules]
   }
 })
-
-// Find the node_modules directory containing nwb's dependencies
-let nodeModules
-if (glob.sync('../../node_modules/').length > 0) {
-  // Global installs and npm@2 local installs have a local node_modules dir
-  nodeModules = path.join(__dirname, '../../node_modules')
-}
-else {
-  // Otherwise assume an npm@3 local install, with node_modules as the parent
-  nodeModules = path.join(__dirname, '../../../node_modules')
-}
 
 export default function(config) {
   config.set({

@@ -74,19 +74,14 @@ export default {
   externals,
   plugins,
   resolve: {
-    extensions: ['', '.js', '.jsx', '.json'],
-    modulesDirectories: ['node_modules']
-  },
-  resolveLoader: {
-    modulesDirectories: ['node_modules'],
-    root: path.join(__dirname, 'node_modules')
+    extensions: ['', '.js', '.jsx', '.json']
   },
   module: {
     loaders: [
-      {test: /\.jsx?$/, loader: 'babel', exclude: /node_modules/},
+      {test: /\.jsx?$/, loader: require.resolve('babel-loader'), exclude: /node_modules/},
       // TODO Revisit
-      {test: /\.css$/, loader: 'null'},
-      {test: /\.json$/, loader: 'json'}
+      {test: /\.css$/, loader: require.resolve('null-loader')},
+      {test: /\.json$/, loader: require.resolve('json-loader')}
     ]
   }
 }

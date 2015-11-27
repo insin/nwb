@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "description": "Describe {{name}} here",
   "scripts": {
-    "build": "nwb build-module",
+    "build": "nwb build",
     "clean": "nwb clean",
     "test": "nwb test"
   },
@@ -13,6 +13,7 @@
     "nwb": "^{{nwbVersion}}"
   },
   "author": "",
+  "homepage": "",
   "license": "MIT",
   "repository": ""
 }

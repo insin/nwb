@@ -23,7 +23,7 @@
     "eventsource-polyfill": "0.9.6",
     "express": "4.13.3",
     "glob" : "6.0.1",
-    "inquirer" : "0.11.0",
+    "inquirer": "0.11.0",
     "minimist": "1.2.0",
     "resolve": "1.1.6",
     "rimraf": "2.4.4",

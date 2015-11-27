@@ -1,4 +1,15 @@
+import path from 'path'
+
+import serveReact from '../serveReact'
+
 export default function(args) {
-  args._[1] = 'src/index.js'
-  require('./serve-react')(args)
+  serveReact(args, {
+    entry: path.resolve('src/index.js'),
+    output: {
+      path: path.resolve('public/build'),
+      filename: 'app.js',
+      publicPath: '/build/'
+    },
+    staticPath: path.resolve('public')
+  })
 }

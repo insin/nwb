@@ -9,7 +9,7 @@ import glob from 'glob'
  */
 function getBinScript(name) {
   // Global install or npm@2 local install, dependencies in local node_modules
-  var paths = glob.sync(`../node_modules/.bin/${name}`, {cwd: __dirname})
+  let paths = glob.sync(`../node_modules/.bin/${name}`, {cwd: __dirname})
   if (paths.length > 0) return path.join(__dirname, paths[0])
   // Local npm@3 install, .bin and dependencies are siblings
   paths = glob.sync(`../../.bin/${name}`, {cwd: __dirname})

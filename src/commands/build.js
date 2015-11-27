@@ -1,18 +1,21 @@
 import glob from 'glob'
 
+import {REACT_APP, REACT_COMPONENT, WEB_MODULE} from '../constants'
 import getUserConfig from '../getUserConfig'
 
 export default function(args) {
-  var userConfig = getUserConfig()
-  if (userConfig.type === 'react-app') {
+  let userConfig = getUserConfig(args)
+  if (userConfig.type === REACT_APP) {
     require('./clean-app')
     require('./build-react-app')(args)
   }
-  else if (glob.sync('public/').length > 0) {
-    require('./clean-app')
-    require('./build-app')(args)
-  }
-  else {
+  else if (userConfig.type === REACT_COMPONENT || userConfig.type === WEB_MODULE) {
+    require('./clean-module')
     require('./build-module')
+    require('./build-umd')
+    if (userConfig.type === REACT_COMPONENT || glob.sync('demo/').length > 0) {
+      require('./clean-demo')
+      require('./build-demo')
+    }
   }
 }

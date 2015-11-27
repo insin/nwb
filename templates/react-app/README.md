@@ -7,14 +7,14 @@ This README outlines the details of collaborating on this React application. A s
 You will need the following things properly installed on your computer.
 
 * [Git](http://git-scm.com/)
-* [Node.js](http://nodejs.org/) (with NPM)
+* [Node.js](http://nodejs.org/) (with npm)
 * [nwb](https://github.com/insin/nwb/) - `npm install -g nwb`
 
 ## Installation
 
 * `git clone <repository-url>` this repository
 * change into the new directory
-* `npm install --production`
+* `npm install
 
 ## Running / Development
 

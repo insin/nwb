@@ -1,18 +1,25 @@
+/**
+ * Functions for creating a Webpack config with:
+ *
+ * - a default set of loaders which can be customised for a particular type of
+ *   build and further tweaked by the end user.
+ * - a default set of plugins which can be customised for a particular type of
+ *   build and environment, with only configuration or a flag required to enable
+ *   additional pre-selected plugins.
+ */
+import assert from 'assert'
 import path from 'path'
 
 import combineLoaders from 'webpack-combine-loaders'
 import ExtractTextPlugin from 'extract-text-webpack-plugin'
+import HtmlWebpackPlugin from 'html-webpack-plugin'
 import webpack, {optimize} from 'webpack'
 
 /**
- * Merge webpack loader config ({test: ..., loader: ..., query: ...}) objects.
+ * Merge webpack loader config ({test, loader, query, inclue, exclude}) objects.
  */
 export function mergeLoaderConfig(defaultConfig = {}, buildConfig = {}, userConfig = {}) {
-  if (!defaultConfig && !buildConfig && !userConfig) {
-    return null
-  }
-
-  // TODO Intelligent merging instead of... this
+  // TODO Intelligent merging instead of this dumb overriding/query merging
   return {
     test: userConfig.test || buildConfig.test || defaultConfig.test,
     loader: userConfig.loader || buildConfig.loader || defaultConfig.loader,
@@ -35,34 +42,22 @@ export let loaderConfigFactory = (buildConfig, userConfig) =>
     ({id, ...mergeLoaderConfig(defaultConfig, buildConfig[id], userConfig[id])})
 
 /**
- * Force the build to fail by exiting with a non-zero code when there are
- * compilation errors.
+ * Create a default style-handling pipeline for either a static build (default)
+ * or a server build.
  */
-export function failBuildOnCompilationError() {
-  this.plugin('done', ({compilation}) => {
-    if (compilation.errors && compilation.errors.length > 0) {
-      console.error('webpack build failed:')
-      compilation.errors.forEach(error => console.error(error.message))
-      process.exit(1)
-    }
-  })
-}
-
-export function createStyleLoader(loader, server) {
+export function createStyleLoader(loader, server, prefix) {
+  let name = (name) => prefix ? `${prefix}-${name}` : name
   let loaders = [
-    loader('css', {
-      loader: require.resolve('css-loader'),
-      query: {
-        minimize: false
-      }
+    loader(name('css'), {
+      loader: require.resolve('css-loader')
     }),
-    loader('autoprefixer', {
+    loader(name('autoprefixer'), {
       loader: require.resolve('autoprefixer-loader')
     })
   ]
 
   if (server) {
-    loaders.unshift(loader('style', {
+    loaders.unshift(loader(name('style'), {
       loader: require.resolve('style-loader')
     }))
     return combineLoaders(loaders)
@@ -81,10 +76,16 @@ export function createLoaders(server, buildConfig = {}, userConfig = {}) {
       loader: require.resolve('babel-loader'),
       exclude: /node_modules/
     }),
-    {
+    loader('css-pipeline', {
       test: /\.css$/,
-      loader: createStyleLoader(loader, server)
-    },
+      loader: createStyleLoader(loader, server),
+      exclude: /node_modules/
+    }),
+    loader('vendor-css-pipeline', {
+      test: /\.css$/,
+      loader: createStyleLoader(loader, server, 'vendor'),
+      include: /node_modules/
+    }),
     loader('graphics', {
       test: /\.(gif|png)$/,
       loader: require.resolve('url-loader'),
@@ -92,12 +93,12 @@ export function createLoaders(server, buildConfig = {}, userConfig = {}) {
         limit: 10240
       }
     }),
-    loader('jpg', {
+    loader('jpeg', {
       test: /\.jpe?g$/,
       loader: require.resolve('file-loader')
     }),
-    loader('font', {
-      test: /\.(otf|svg|ttf|woff|woff2)(\?v=\d+\.\d+\.\d+)?$/,
+    loader('fonts', {
+      test: /\.()(\?v=\d+\.\d+\.\d+)?$/,
       loader: require.resolve('url-loader'),
       query: {
         limit: 10240
@@ -110,14 +111,48 @@ export function createLoaders(server, buildConfig = {}, userConfig = {}) {
     loader('json', {
       test: /\.json$/,
       loader: require.resolve('json-loader')
-    })
+    }),
+    // Undocumented escape hatches for adding new loaders
+    ...buildConfig._extra || [],
+    ...userConfig._extra || []
   ]
 }
 
+/**
+ * A webpack plugin which forces the build to fail by exiting with a non-zero
+ * code when there are compilation errors. This is intended for use on a CI
+ * server which is running webpack builds.
+ */
+export function failBuildOnCompilationError() {
+  this.plugin('done', ({compilation}) => {
+    if (compilation.errors && compilation.errors.length > 0) {
+      console.error('webpack build failed:')
+      compilation.errors.forEach(error => console.error(error.message))
+      process.exit(1)
+    }
+  })
+}
+
 export function createPlugins(server, cwd, {
-  appStyle, banner, define, style, vendorJS, vendorStyle
+  // File name to use for extracted CSS - only applicable for server builds
+  appStyle,
+  // Banner comment to be added to each generated file in a UMD build
+  banner,
+  // Extra constant replacements for DefinePlugin. Since plugins aren't
+  // currently exposed for user config, it's assumed any user-provided defines
+  // have already been merged into this.
+  define,
+  // Escape hatch for adding new build-specific plugins
+  extra,
+  // Options for HtmlWebpackPlugin
+  html,
+  // Name to use for a vendor JavaScript chunk - providing a name causes it to
+  // be created.
+  vendorJS
+  // TODO Name to use for a vendor CSS chunk
+  // vendorStyle
 } = {}) {
-  var plugins = [
+  let plugins = [
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development'),
       ...define
@@ -126,6 +161,7 @@ export function createPlugins(server, cwd, {
     new optimize.OccurenceOrderPlugin()
   ]
 
+  // Assumption: we're always hot reloading if we're bundling on the server
   if (server) {
     plugins.unshift(
       new webpack.HotModuleReplacementPlugin(),
@@ -141,11 +177,11 @@ export function createPlugins(server, cwd, {
     plugins.push(new ExtractTextPlugin(appStyle))
   }
 
-  // Move JavaScript imported from node_modules into a vendor bundle
+  // Move JavaScript imported from node_modules into a vendor chunk
   if (vendorJS) {
     plugins.push(new optimize.CommonsChunkPlugin({
       name: vendorJS,
-      filename: vendorJS,
+      filename: `${vendorJS}.js`,
       minChunks: function(module, count) {
         return (
           module.resource &&
@@ -156,11 +192,11 @@ export function createPlugins(server, cwd, {
     }))
   }
 
-  // // Move styles imported from node_modules into a vendor stylesheet
+  // TODO Move CSS imported from node_modules into a vendor chunk
   // if (vendorStyle) {
   //   plugins.push(new optimize.CommonsChunkPlugin({
   //     name: vendorStyle,
-  //     filename: vendorStyle,
+  //     filename: `${vendorStyle}.css`,
   //     minChunks: function(module, count) {
   //       return (
   //         module.resource &&
@@ -180,8 +216,16 @@ export function createPlugins(server, cwd, {
     }))
   }
 
+  if (html) {
+    plugins.push(new HtmlWebpackPlugin(html))
+  }
+
   if (banner) {
     plugins.push(new webpack.BannerPlugin(banner))
+  }
+
+  if (extra) {
+    plugins = plugins.concat(extra)
   }
 
   return plugins
@@ -192,15 +236,21 @@ export function createPlugins(server, cwd, {
  * creating a static build (default) or serving an app with hot reloading.
  */
 export default function createWebpackConfig(cwd, {
-  loaders = {}, plugins = {}, resolve = {}, server = false, userConfig = {}, ...otherConfig
+  loaders = {},
+  plugins = {},
+  resolve = {},
+  server = false,
+  userConfig = {},
+  ...otherConfig
 } = {}) {
+  assert.equal(typeof cwd, 'string')
   return {
     module: {
       loaders: createLoaders(server, loaders, userConfig.loaders)
     },
     plugins: createPlugins(server, cwd, plugins),
     resolve: {
-      extensions: ['', '.js', '.jsx', '.json'],
+      extensions: ['', '.web.js', '.js', '.jsx', '.json'],
       ...resolve
     },
     ...otherConfig

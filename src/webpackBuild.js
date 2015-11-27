@@ -1,46 +1,42 @@
-// Set cross-platform environment variables based on --set-env-NAME arguments
-require('argv-set-env')()
+import assert from 'assert'
 
-// Default environment settings
-if (!process.env.NODE_ENV) {
-  process.env.NODE_ENV = 'production'
-}
-
-import path from 'path'
-
+import argvSetEnv from 'argv-set-env'
 import webpack from 'webpack'
 
 import createWebpackConfig from '../createWebpackConfig'
 import getUserConfig from '../getUserConfig'
 
-export default function(args, buildConfig = {}) {
+export default function(args, buildConfig = {}, cb) {
+  // Set cross-platform environment variables based on --set-env-NAME arguments
+  argvSetEnv()
+  // Default environment setting for a build
+  if (!process.env.NODE_ENV) {
+    process.env.NODE_ENV = 'production'
+  }
+
   let userConfig = getUserConfig(args.config)
   if (typeof buildConfig == 'function') {
     buildConfig = buildConfig()
   }
 
-  let cwd = process.cwd()
+  assert(buildConfig.entry, 'entry config is required to create a Webpack build')
+  assert(buildConfig.output, 'output config is required to create a Webpack build')
 
-  var webpackConfig = createWebpackConfig(cwd, {
+  let webpackConfig = createWebpackConfig(process.cwd(), {
     server: false,
     devtool: 'source-map',
-    entry: path.resolve('src/index.js'),
-    output: {
-      filename: 'app.js',
-      path: path.resolve('public/build'),
-      publicPath: 'build/'
-    },
+    entry: buildConfig.entry,
+    output: buildConfig.output,
     loaders: buildConfig.loaders,
     plugins: {
       define: {...buildConfig.define, ...userConfig.define},
       appStyle: 'style.css',
-      vendorJS: 'vendor.js'
+      vendorJS: 'vendor',
+      ...buildConfig.plugins
     }
-  }, userConfig.webpack)
+  }, userConfig)
 
   let compiler = webpack(webpackConfig)
-
-  console.log('nwb: build-app')
   compiler.run((err, stats) => {
     if (err) {
       console.error('webpack build error:')
@@ -53,5 +49,8 @@ export default function(args, buildConfig = {}) {
       colors: true,
       modules: false
     }))
+    if (cb) {
+      cb()
+    }
   })
 }
