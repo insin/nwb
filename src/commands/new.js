@@ -91,7 +91,7 @@ export default function(args) {
     console.error(`nwb: a module type must be provided, one of: ${MODULE_TYPES.join(', ')}`)
     process.exit(1)
   }
-  if (!(moduleType in MODULE_TYPES)) {
+  if (MODULE_TYPES.indexOf(moduleType) === -1) {
     console.error(`nwb: module type must be one of: ${MODULE_TYPES.join(', ')}`)
     process.exit(1)
   }
