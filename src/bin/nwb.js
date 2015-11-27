@@ -28,7 +28,7 @@ Options:
 Module creation commands:
   new react-app <name>        create a React app
   new react-component <name>  create a React component with a demo app
-  new web-module <name>       craete a web module
+  new web-module <name>       create a web module
 
 Common commands:
   build          clean and build

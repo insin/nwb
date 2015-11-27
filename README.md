@@ -52,27 +52,20 @@ Options:
   -v, --version  print nwb's version
 
 Module creation commands:
-  new react-app <name>
-  new react-component <name>
-  new web-module <name>
+  new react-app <name>        create a React app
+  new react-component <name>  create a React component with a demo app
+  new web-module <name>       create a web module
 
 Common commands:
   build          clean and build
   clean          delete build
   test           run tests
-
-                   Options:
                    --server  keep running tests on every change
 
 React module commands:
-  serve          serve an app or a component's demo app with hot reloading
-
-                   Options:
-                     --info  show webpack build info
-                     --port  port to run the dev server on [3000]
-
-Web module commands:
-  dist           build the web module and its demo app (if it has one)
+  serve          serve an app, or a component's demo app, with hot reloading
+                   --info  show webpack build info
+                   --port  port to run the dev server on [3000]
 ```
 
 ## Documentation
