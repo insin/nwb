@@ -14,7 +14,7 @@
     "react-dom": "{{reactVersion}}"
   },
   "devDependencies": {
-    "nwb": "^{{nwbVersion}}"
+    "nwb": "{{nwbVersion}}"
   },
   "author": "",
   "license": "MIT",

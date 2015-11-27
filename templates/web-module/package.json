@@ -10,7 +10,7 @@
   "dependencies": {
   },
   "devDependencies": {
-    "nwb": "^{{nwbVersion}}"
+    "nwb": "{{nwbVersion}}"
   },
   "author": "",
   "homepage": "",
