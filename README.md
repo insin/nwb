@@ -60,7 +60,8 @@ Common commands:
   build          clean and build
   clean          delete build
   test           run tests
-                   --server  keep running tests on every change
+                   --coverage  create code coverage report
+                   --server    keep running tests on every change
 
 React module commands:
   serve          serve an app, or a component's demo app, with hot reloading

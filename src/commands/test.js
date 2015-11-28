@@ -8,6 +8,9 @@ export default function(args) {
   if (!args.server) {
     karmaArgs.push('--single-run')
   }
+  if (args.coverage) {
+    karmaArgs.push('--set-env-COVERAGE=true')
+  }
 
   console.log('nwb: test')
   exec('karma', karmaArgs, {
