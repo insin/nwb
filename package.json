@@ -9,6 +9,7 @@
   },
   "scripts": {
     "build": "babel src --loose all --out-dir lib",
+    "build:watch": "babel src --watch --loose all --out-dir lib",
     "lint": "lint src test",
     "test": "mocha --compilers js:babel-core/register tests/**/*.js",
     "test:watch": "mocha --watch --compilers js:babel-core/register tests/**/*.js"
