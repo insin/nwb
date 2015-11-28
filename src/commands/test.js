@@ -1,4 +1,6 @@
 import path from 'path'
+
+import debug from '../debug'
 import exec from '../exec'
 
 export default function(args) {
@@ -13,7 +15,13 @@ export default function(args) {
   }
 
   console.log('nwb: test')
-  exec('karma', karmaArgs, {
-    cwd: path.resolve(__dirname, '../../')
-  })
+  try {
+    exec('karma', karmaArgs, {
+      cwd: path.resolve(__dirname, '../../')
+    })
+  }
+  catch (e) {
+    debug(e.stack)
+    process.exit(1)
+  }
 }
