@@ -10,10 +10,17 @@
 import assert from 'assert'
 import path from 'path'
 
-import combineLoaders from 'webpack-combine-loaders'
+import qs from 'qs'
+
 import ExtractTextPlugin from 'extract-text-webpack-plugin'
 import HtmlWebpackPlugin from 'html-webpack-plugin'
 import webpack, {optimize} from 'webpack'
+
+export let combineLoaders = loaders =>
+  loaders.map(loader => {
+    let query = qs.stringify(loader.query, {arrayFormat: 'brackets'})
+    return `${loader.loader}${query && `?${query}`}`
+  }).join('!')
 
 /**
  * Merge webpack loader config ({test, loader, query, inclue, exclude}) objects.

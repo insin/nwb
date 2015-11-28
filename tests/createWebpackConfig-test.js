@@ -1,6 +1,6 @@
 import expect from 'expect'
 
-import createWebpackConfig from '../src/createWebpackConfig'
+import createWebpackConfig, {combineLoaders} from '../src/createWebpackConfig'
 
 let cwd = process.cwd()
 
@@ -37,5 +37,21 @@ describe('createWebpackConfig()', () => {
         .toContain('json-loader')
       expect(config.resolve.extensions).toEqual(['', '.web.js', '.js', '.jsx','.json'])
     })
+  })
+})
+
+describe('combineLoaders()', () => {
+  it('stringifies query strings, appends them and joins loaders', () => {
+    expect(combineLoaders([
+      {loader: 'one', query: {a: 1, b: 2}},
+      {loader: 'two', query: {c: 3, d: 4}}
+    ])).toEqual('one?a=1&b=2!two?c=3&d=4')
+  })
+  it('only appends a ? if query is non-empty', () => {
+    expect(combineLoaders([
+      {loader: 'one', query: {a: 1, b: 2}},
+      {loader: 'two', query: {}},
+      {loader: 'three'},
+    ])).toEqual('one?a=1&b=2!two!three')
   })
 })
