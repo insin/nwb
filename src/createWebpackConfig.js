@@ -27,17 +27,21 @@ export let combineLoaders = loaders =>
  */
 export function mergeLoaderConfig(defaultConfig = {}, buildConfig = {}, userConfig = {}) {
   // TODO Intelligent merging instead of this dumb overriding/query merging
-  return {
+  let loader = {
     test: userConfig.test || buildConfig.test || defaultConfig.test,
     loader: userConfig.loader || buildConfig.loader || defaultConfig.loader,
     include: userConfig.include || buildConfig.include || defaultConfig.include,
-    exclude: userConfig.exclude || buildConfig.exclude || defaultConfig.exclude,
-    query: {
-      ...defaultConfig.query,
-      ...buildConfig.query,
-      ...userConfig.query
-    }
+    exclude: userConfig.exclude || buildConfig.exclude || defaultConfig.exclude
   }
+  let query = {
+    ...defaultConfig.query,
+    ...buildConfig.query,
+    ...userConfig.query
+  }
+  if (Object.keys(query).length > 0) {
+    loader.query = query
+  }
+  return loader
 }
 
 /**

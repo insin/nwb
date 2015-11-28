@@ -1,6 +1,9 @@
 import expect from 'expect'
 
-import createWebpackConfig, {combineLoaders} from '../src/createWebpackConfig'
+import createWebpackConfig, {
+  combineLoaders,
+  mergeLoaderConfig
+} from '../src/createWebpackConfig'
 
 let cwd = process.cwd()
 
@@ -36,6 +39,33 @@ describe('createWebpackConfig()', () => {
         .toContain('file-loader')
         .toContain('json-loader')
       expect(config.resolve.extensions).toEqual(['', '.web.js', '.js', '.jsx','.json'])
+    })
+  })
+})
+
+describe('mergeLoaderConfig()', () => {
+  const TEST_RE = /\.test$/
+  const EXCLUDE_RE = /node_modules/
+  let loader = {test: TEST_RE, loader: 'one', exclude: EXCLUDE_RE}
+  it('merges default, build and user config for a loader', () => {
+    expect(mergeLoaderConfig(
+      {...loader, query: {a: 1}},
+      {query: {b: 2}},
+      {query: {c: 3}}
+    )).toEqual({
+      test: TEST_RE,
+      loader: 'one',
+      include: undefined,
+      exclude: EXCLUDE_RE,
+      query: {a: 1, b: 2, c: 3}
+    })
+  })
+  it('only adds a query prop if the merged query has props', () => {
+    expect(mergeLoaderConfig(loader, {}, {})).toEqual({
+      test: TEST_RE,
+      loader: 'one',
+      include: undefined,
+      exclude: EXCLUDE_RE
     })
   })
 })
