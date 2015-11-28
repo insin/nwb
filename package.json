@@ -68,7 +68,7 @@
     "webpack-hot-middleware": "2.5.0"
   },
   "devDependencies": {
-    "eslint-config-jonnybuchanan": "1.0.1",
+    "eslint-config-jonnybuchanan": "~1.0.2",
     "expect": "1.13.0",
     "mocha": "2.3.4"
   },
