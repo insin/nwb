@@ -109,7 +109,7 @@ export function createLoaders(server, buildConfig = {}, userConfig = {}) {
       loader: require.resolve('file-loader')
     }),
     loader('fonts', {
-      test: /\.()(\?v=\d+\.\d+\.\d+)?$/,
+      test: /\.(otf|svg|ttf|woff|woff2)(\?v=\d+\.\d+\.\d+)?$/,
       loader: require.resolve('url-loader'),
       query: {
         limit: 10240
