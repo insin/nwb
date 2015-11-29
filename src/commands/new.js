@@ -5,9 +5,13 @@ import copyTemplateDir from 'copy-template-dir'
 import inquirer from 'inquirer'
 import glob from 'glob'
 
-import {REACT_APP, REACT_COMPONENT, REACT_VERSION, WEB_MODULE, MODULE_TYPES} from '../constants'
+import {
+  REACT_APP, REACT_COMPONENT, REACT_VERSION as reactVersion, WEB_MODULE, MODULE_TYPES
+} from '../constants'
 import debug from '../debug'
 import pkg from '../../package.json'
+
+let nwbVersion = `~${pkg.version}`
 
 function getWebModulePrefs(cb) {
   inquirer.prompt([
@@ -20,7 +24,7 @@ function getWebModulePrefs(cb) {
 }
 
 function installReact(targetDir) {
-  let command = `npm install react@${REACT_VERSION} react-dom@${REACT_VERSION}`
+  let command = `npm install react@${reactVersion} react-dom@${reactVersion}`
   debug(`${command} in ${targetDir}`)
   execSync(command, {
     cwd: targetDir,
@@ -31,11 +35,8 @@ function installReact(targetDir) {
 let moduleCreators = {
   [REACT_APP](name, targetDir) {
     let templateDir = path.join(__dirname, `../../templates/${REACT_APP}`)
-    copyTemplateDir(templateDir, targetDir, {
-      name,
-      nwbVersion: `~${pkg.version}`,
-      reactVersion: REACT_VERSION
-    }, err => {
+    let templateVars = {name, nwbVersion, reactVersion}
+    copyTemplateDir(templateDir, targetDir, templateVars, err => {
       if (err) {
         console.error(err.stack)
         process.exit(1)
@@ -49,12 +50,8 @@ let moduleCreators = {
   [REACT_COMPONENT](name, targetDir) {
     getWebModulePrefs(({globalVariable}) => {
       let templateDir = path.join(__dirname, `../../templates/${REACT_COMPONENT}`)
-      copyTemplateDir(templateDir, targetDir, {
-        globalVariable,
-        name,
-        nwbVersion: `~${pkg.version}`,
-        reactVersion: REACT_VERSION
-      }, err => {
+      let templateVars = {globalVariable, name, nwbVersion, reactVersion}
+      copyTemplateDir(templateDir, targetDir, templateVars, err => {
         if (err) {
           console.error(err.stack)
           process.exit(1)
@@ -69,11 +66,8 @@ let moduleCreators = {
   [WEB_MODULE](name, targetDir) {
     getWebModulePrefs(({globalVariable}) => {
       let templateDir = path.join(__dirname, `../../templates/${WEB_MODULE}`)
-      copyTemplateDir(templateDir, targetDir, {
-        globalVariable,
-        name,
-        nwbVersion: `~${pkg.version}`
-      }, err => {
+      let templateVars = {globalVariable, name, nwbVersion}
+      copyTemplateDir(templateDir, targetDir, templateVars, err => {
         if (err) {
           console.error(err.stack)
           process.exit(1)
