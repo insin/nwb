@@ -146,7 +146,7 @@ export function failBuildOnCompilationError() {
 }
 
 export function createPlugins(server, cwd, {
-  // File name to use for extracted CSS - only applicable for server builds
+  // File name to use for extracted CSS - only applicable for static builds
   appStyle,
   // Banner comment to be added to each generated file in a UMD build
   banner,
