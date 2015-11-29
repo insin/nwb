@@ -10,11 +10,12 @@
 import assert from 'assert'
 import path from 'path'
 
-import qs from 'qs'
-
 import ExtractTextPlugin from 'extract-text-webpack-plugin'
 import HtmlWebpackPlugin from 'html-webpack-plugin'
+import qs from 'qs'
 import webpack, {optimize} from 'webpack'
+
+import debug from './debug'
 
 export let combineLoaders = loaders =>
   loaders.map(loader => {
@@ -123,9 +124,9 @@ export function createLoaders(server, buildConfig = {}, userConfig = {}) {
       test: /\.json$/,
       loader: require.resolve('json-loader')
     }),
-    // Undocumented escape hatches for adding new loaders
-    ...buildConfig._extra || [],
-    ...userConfig._extra || []
+    // Escape hatches for adding new loaders
+    ...buildConfig.extra || [],
+    ...userConfig.extra || []
   ]
 }
 
@@ -185,7 +186,7 @@ export function createPlugins(server, cwd, {
   }
 
   if (!server && appStyle) {
-    plugins.push(new ExtractTextPlugin(appStyle))
+    plugins.push(new ExtractTextPlugin(`${appStyle}.css`))
   }
 
   // Move JavaScript imported from node_modules into a vendor chunk
@@ -251,10 +252,11 @@ export default function createWebpackConfig(cwd, {
   plugins = {},
   resolve = {},
   server = false,
-  userConfig = {},
   ...otherConfig
-} = {}) {
+} = {}, userConfig = {}) {
   assert.equal(typeof cwd, 'string')
+  debug('build config: %o', arguments[1])
+  debug('user config: %o', userConfig)
   return {
     module: {
       loaders: createLoaders(server, loaders, userConfig.loaders)

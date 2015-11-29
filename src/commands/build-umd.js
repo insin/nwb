@@ -1,17 +1,64 @@
+import assert from 'assert'
 import path from 'path'
-import exec from '../exec'
 
-let config = path.join(__dirname, '../config/webpack-umd.js')
-let cwd = process.cwd()
+import getUserConfig from '../getUserConfig'
+import webpackBuild from '../webpackBuild'
 
-console.log('nwb: build-umd')
-exec(
-  'webpack',
-  [`--config=${config}`, `--set-env-ORIGINAL_CWD=${cwd}`],
-  {cwd: path.join(__dirname, '../../')
-})
-exec(
-  'webpack',
-  [`--config=${config}`, `--set-env-ORIGINAL_CWD=${cwd}`, '--set-env-NODE_ENV=production'],
-  {cwd: path.join(__dirname, '../../')
-})
+function createBanner(pkg) {
+  let banner = `${pkg.name} ${pkg.version}`
+  if (pkg.homepage) {
+    banner += ` - ${pkg.homepage}`
+  }
+  if (pkg.license) {
+    banner += `\n${pkg.license} Licensed`
+  }
+  return banner
+}
+
+function createWebpackExternals(externals) {
+  return Object.keys(externals).reduce((webpackExternals, packageName) => {
+    let globalName = externals[packageName]
+    webpackExternals[packageName] = {
+      root: globalName,
+      commonjs2: packageName,
+      commonjs: packageName,
+      amd: packageName
+    }
+    return webpackExternals
+  }, {})
+}
+
+/**
+ * Create a web module's UMD builds.
+ */
+export default function(args, cb) {
+  let pkg = require(path.resolve('package.json'))
+  let userConfig = getUserConfig(args)
+
+  assert(userConfig.global, 'global config is required to create a UMD build')
+
+  let buildConfig = {
+    entry: path.resolve('src/index.js'),
+    output: {
+      filename: `${pkg.name}.js`,
+      library: userConfig.global,
+      libraryTarget: 'umd',
+      path: path.resolve('umd')
+    },
+    externals: createWebpackExternals(userConfig.externals),
+    plugins: {
+      banner: createBanner(pkg)
+    }
+  }
+
+  require('./clean-umd')
+
+  console.log('nwb: build-umd')
+  process.env.NODE_ENV = 'development'
+  webpackBuild(args, buildConfig, () => {
+    process.env.NODE_ENV = 'production'
+    buildConfig.devtool = 'source-map'
+    buildConfig.output.filename = `${pkg.name}.min.js`
+    webpackBuild(args, buildConfig, cb)
+  })
+}

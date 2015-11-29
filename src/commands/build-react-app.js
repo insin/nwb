@@ -7,11 +7,15 @@ import webpackBuild from '../webpackBuild'
 // builds.
 let buildConfig = () => {
   let config = {
+    devtool: 'source-map',
     entry: path.resolve('src/index.js'),
     output: {
       filename: 'app.js',
       path: path.resolve('public/build'),
       publicPath: 'build/'
+    },
+    plugins: {
+      vendorJS: 'vendor'
     }
   }
   if (process.env.NODE_ENV === 'production') {
