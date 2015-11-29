@@ -1,6 +1,6 @@
 # {{name}}
 
-This README outlines the details of collaborating on this React application. A short introduction of this app could easily go here.
+Collaborating on this React application:
 
 ## Prerequisites
 
@@ -28,5 +28,5 @@ You will need the following things properly installed on your computer.
 
 ### Building
 
-* `nwb build --set-env-NODE_ENV=development` (development)
 * `nwb build` (production)
+* `nwb build --set-env-NODE_ENV=development` (development)

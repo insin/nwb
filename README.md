@@ -2,11 +2,11 @@
 
 [![npm package][npm-badge]][npm]
 
-Provides templates and preconfigured tooling for developing:
+Provides templates and preconfigured tools for developing:
 
 * React apps
 * React components
-* web modules - JavaScript modules published to npm which are expected to run in a browser
+* web modules - i.e. modules to be published to npm which are expected to be able to run in a browser as a dependency of a webapp.
 
 ## Install
 
@@ -72,13 +72,21 @@ React module commands:
 
 ## Documentation
 
-Supported module tyeps:
+### Supported module types
 
 * [React Apps](/docs/ReactApps.md)
 * [React Components](/docs/ReactComponents.md)
 * [Web Modules](/docs/WebModules.md)
 
-Other documentation:
+All module templates are also configured:
+
+* To run their tests on [Travis CI](https://travis-ci.org/)
+  * with code coverage results posted to [codecov.io](https://codecov.io/)
+* To be published to npm with only the required files.
+
+### Configuration
+
+nwb uses an `nwb.config.js` file in the project root and some standard fields from `package.json` for configuration:
 
 * [Configuration](/docs/Configuration.md)
 
