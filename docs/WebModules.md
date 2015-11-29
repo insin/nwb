@@ -1,12 +1,15 @@
 # Web Modules
 
-A web module is a module published to npm which is expxected to be able to run on the browser
+A web module is a module which will be published to npm and si expected to be able to run in a browser as a dependency of a webapp.
 
 ## Create a new web module
 
 ```
-nwb new module app-name
+nwb new web-module <module-name>
+? Which global variable will the UMD build export? <ModuleName>
 ```
+
+Creates a skeleton for a web module with the given name, with a UMD build exporting the specified global variable.
 
 ## Run tests
 
@@ -14,12 +17,29 @@ nwb new module app-name
 nwb test
 ```
 
+Runs tests once.
+
+```
+nwb test --server
+```
+
 Starts a Karma server which runs tests on every change.
 
-## Prepare a distribution
+## Create builds
+
+* An ES5 build is created in `lib/`
+* UMD builds are created in `umd/`
 
 ```
-nwb dist
+nwb build
 ```
 
-Creates an ES5 build of your module in `lib/` and a UMD build in `umd/`.
+Builds your component and its demo app.
+
+## Clean up
+
+```
+nwb clean
+```
+
+Deletes all builds.

@@ -5,7 +5,8 @@
 Provides templates and preconfigured tooling for developing:
 
 * React apps
-* web modules - JavaScript modules published to npm which are expected to run at the very least in browsers, such as React components
+* React components
+* web modules - JavaScript modules published to npm which are expected to run in a browser
 
 ## Install
 
@@ -29,7 +30,7 @@ Create a new React component and start hot reloading its demo app:
 
 ```
 nwb new react-component react-thing
-[?] Which global variable will the UMD build export? ReactThing
+? Which global variable will the UMD build export? ReactThing
 cd react-thing
 nwb serve
 ```
@@ -71,8 +72,14 @@ React module commands:
 
 ## Documentation
 
+Supported module tyeps:
+
 * [React Apps](/docs/ReactApps.md)
+* [React Components](/docs/ReactComponents.md)
 * [Web Modules](/docs/WebModules.md)
+
+Other documentation:
+
 * [Configuration](/docs/Configuration.md)
 
 ## MIT Licensed

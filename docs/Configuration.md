@@ -36,7 +36,7 @@ If provided, this config will also be used for the `babel-loader` Webpack loader
 
 ### `define`: `Object`
 
-By default, nwb will use Webpack's `DefinePlugin` to replace all occurances of `process.env.NODE_ENV` throughout your code with a string containing `NODE_ENV`'s current value of the same environment variable.
+By default, nwb will use Webpack's `DefinePlugin` to replace all occurances of `process.env.NODE_ENV` throughout your code with a string containing `NODE_ENV`'s current value.
 
 Configure a `define` object to add your own replacements.
 
@@ -50,9 +50,9 @@ e.g. to replace all occurrences of `__VERSION__` with a string containing your a
 }
 ```
 
-### `externals`: `Object` (required by `build-umd`)
+### `externals`: `Object` (only for UMD builds)
 
-A mapping from peer dependency module names a web module module imports to the global variable names they're expected to be available as for use by the UMD build.
+A mapping from peer dependency module names to the global variables they're expected to be available as for use by the UMD build.
 
 e.g. if you're creating a React component which also depends on React Router:
 
@@ -65,7 +65,7 @@ e.g. if you're creating a React component which also depends on React Router:
 }
 ```
 
-### `global`: `String` (required by `build-umd`)
+### `global`: `String` (*required* for UMD builds)
 
 The name of the global variable the UMD build will export.
 
@@ -129,7 +129,7 @@ e.g., to enable [CSS Modules][CSS Modules]:
 
 ## `package.json` UMD banner configuration
 
-The banner added to UMD builds by `build-umd` will use as many of the following `package.json` fields as are present:
+The banner comment added to UMD builds will use as many of the following `package.json` fields as are present:
 
 * `name`
 * `version`

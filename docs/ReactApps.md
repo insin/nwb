@@ -1,6 +1,6 @@
 # React Apps
 
-nwb provides a template for React apps and pre-configures development tools to work with it.
+nwb provides a template for a React app and pre-configures development tools to work with it.
 
 ## Create a new React app
 
@@ -30,7 +30,7 @@ Starts a development server which serves up your app with hot reloading.
 nwb test
 ```
 
-Runs `-test.js`
+Runs tests once.
 
 ```
 nwb test --server
@@ -40,32 +40,24 @@ Starts a Karma server which runs tests on every change.
 
 ## Create a static build
 
-Static builds default to production mode, which strips out development code from React, performs some React elements optimisations in your components and minifies code:
+A static build is created in `public/build`, with an index page in `public/index.html`.
 
 ```
 nwb build
 ```
 
-For a development build:
+Creates a production build - strips out development code from React, performs React element optimisations in your components and minifies code.
 
 ```
 nwb build --set-env-NODE_ENV=development
 ```
 
-## Clean
+Creates a development build.
 
-Deletes the static build:
+## Clean up
 
 ```
 nwb clean
 ```
 
-## `nwb.config.js`
-
-### `type` - must be `'react-app'`
-
-
-
-### `babel` - custom Babel configuration
-
-### `webpack` - custom Webpack configuration
+Deletes the static build.
