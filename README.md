@@ -6,7 +6,7 @@ Provides templates and preconfigured tools for developing:
 
 * React apps
 * React components
-* web modules - i.e. modules to be published to npm which are expected to be able to run in a browser as a dependency of a webapp.
+* web modules - modules published on npm which are expected to be able to run in a browser as a dependency of a webapp.
 
 ## Install
 
