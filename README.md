@@ -39,6 +39,7 @@ Create a new web module and run tests on every change as you develop it:
 
 ```
 nwb new web-module get-form-data
+? Which global variable will the UMD build export? getFormData
 cd get-form-data
 nwb test --server
 ```
