@@ -1,1 +1,1 @@
-export default 'Welcome to {{name}}!'
+export default 'Welcome to {{name}}'
