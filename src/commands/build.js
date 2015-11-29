@@ -6,16 +6,14 @@ import getUserConfig from '../getUserConfig'
 export default function(args) {
   let userConfig = getUserConfig(args)
   if (userConfig.type === REACT_APP) {
-    require('./clean-app')
     require('./build-react-app')(args)
   }
   else if (userConfig.type === REACT_COMPONENT || userConfig.type === WEB_MODULE) {
-    require('./clean-module')
     require('./build-module')
-    require('./build-umd')
-    if (userConfig.type === REACT_COMPONENT || glob.sync('demo/').length > 0) {
-      require('./clean-demo')
-      require('./build-demo')
-    }
+    require('./build-umd')(args, () => {
+      if (userConfig.type === REACT_COMPONENT || glob.sync('demo/').length > 0) {
+        require('./build-demo')(args)
+      }
+    })
   }
 }

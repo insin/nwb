@@ -1,3 +1,5 @@
+import glob from 'glob'
+
 import {REACT_APP, REACT_COMPONENT, WEB_MODULE} from '../constants'
 import getUserConfig from '../getUserConfig'
 
@@ -8,5 +10,9 @@ export default function(args) {
   }
   else if (type === REACT_COMPONENT || type === WEB_MODULE) {
     require('./clean-module')
+    require('./clean-umd')
+    if (type === REACT_COMPONENT || glob.sync('demo/').length > 0) {
+      require('./clean-demo')
+    }
   }
 }
