@@ -51,6 +51,9 @@
     "phantomjs": "1.9.19",
     "phantomjs-polyfill": "0.0.1",
 
+    "mocha": "2.3.4",
+    "expect": "1.13.0",
+
     "webpack": "1.12.9",
     "autoprefixer-loader": "3.1.0",
     "babel-loader": "5.4.0",
@@ -67,9 +70,7 @@
     "webpack-hot-middleware": "2.5.0"
   },
   "devDependencies": {
-    "eslint-config-jonnybuchanan": "~1.0.2",
-    "expect": "1.13.0",
-    "mocha": "2.3.4"
+    "eslint-config-jonnybuchanan": "~1.0.2"
   },
   "repository": {
     "type": "git",
