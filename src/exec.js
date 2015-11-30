@@ -25,6 +25,6 @@ function getBinScript(name) {
  */
 export default function exec(bin, args, options = {}) {
   let command = `${getBinScript(bin)} ${args.join(' ')}`
-  debug(command)
+  debug('executing command: %s', command)
   execSync(command, {...options, stdio: [0, 1, 2]})
 }

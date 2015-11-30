@@ -9,10 +9,10 @@ export default function getUserConfig(args) {
   let userConfigPath = path.join(process.cwd(), args.config || 'nwb.config.js')
   try {
     userConfig = require(userConfigPath)
-    debug(`found nwb config file at ${userConfigPath}`)
+    debug('found nwb config file at %s', userConfigPath)
   }
   catch (e) {
-    console.error(`couldn't find nwb config file at ${userConfigPath}`)
+    console.error(`nwb: couldn't find nwb config file at ${userConfigPath}`)
     process.exit(1)
   }
 
@@ -21,13 +21,12 @@ export default function getUserConfig(args) {
   }
 
   if (MODULE_TYPES.indexOf(userConfig.type) === -1) {
-    console.error(`invalid module type configured in ${userConfigPath}: ${userConfig.type}`)
-    console.error(`'type' must be one of: ${MODULE_TYPES.join(', ')}`)
+    console.error(`nwb: invalid module type configured in ${userConfigPath}: ${userConfig.type}`)
+    console.error(`nwb: 'type' config must be one of: ${MODULE_TYPES.join(', ')}`)
     process.exit(1)
   }
 
-  debug('User config loaded')
-  debug(userConfig)
+  debug('user config loaded: %o', userConfig)
 
   return userConfig
 }

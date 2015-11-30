@@ -9,7 +9,7 @@ let cwd = process.cwd()
 
 describe('createWebpackConfig()', () => {
   describe('without any config arguments', () => {
-    let config = createWebpackConfig(cwd)
+    let config = createWebpackConfig(cwd, {})
     it('creates a default webpack build config', () => {
       expect(Object.keys(config)).toEqual(['module', 'plugins', 'resolve'])
       expect(config.module.loaders.map(loader => loader.loader).join('\n'))

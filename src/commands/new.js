@@ -25,7 +25,7 @@ function getWebModulePrefs(cb) {
 
 function installReact(targetDir) {
   let command = `npm install react@${reactVersion} react-dom@${reactVersion}`
-  debug(`${command} in ${targetDir}`)
+  debug(`${targetDir} $ ${command}`)
   execSync(command, {
     cwd: targetDir,
     stdio: [0, 1, 2]

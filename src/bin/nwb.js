@@ -48,7 +48,7 @@ React module commands:
 let command = args._[0]
 
 let unknownCommand = () => {
-  console.error(`Unknown command: ${command}`)
+  console.error(`nwb: unknown command: ${command}`)
   process.exit(1)
 }
 
@@ -73,7 +73,7 @@ try {
   }
 }
 catch (e) {
-  console.error(`Error running ${command}:`)
+  console.error(`nwb: error running ${command}:`)
   console.error(e.stack)
   process.exit(1)
 }

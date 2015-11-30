@@ -138,7 +138,7 @@ export function createLoaders(server, buildConfig = {}, userConfig = {}) {
 export function failBuildOnCompilationError() {
   this.plugin('done', ({compilation}) => {
     if (compilation.errors && compilation.errors.length > 0) {
-      console.error('webpack build failed:')
+      console.error('nwb: webpack build failed:')
       compilation.errors.forEach(error => console.error(error.message))
       process.exit(1)
     }
