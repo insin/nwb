@@ -4,15 +4,15 @@ nwb will look for an `nwb.config.js` file in the current working directory for p
 
 This file should export either a configuration object or a function which creates a configuration object. In the case of a function, it will be called *after* nwb has ensured the appropriate `NODE_ENV` environment variable has been set for the command being run.
 
-(You can also specify a different configuration file using the `--config` option when running a command)
-
 ### Configuration Object Fields
 
 The object exported or returned by your nwb config can use the following fields.
 
 #### `type`: `String` (required)
 
-This field is used to determine which type of module nwb is working with when a generic builds command like `build` are run. It must be one of:
+This field is used to determine which type of module nwb is working with when a generic builds command like `build` are run.
+
+It must be one of:
 
 * `'react-app'`
 * `'react-component'`
@@ -20,7 +20,7 @@ This field is used to determine which type of module nwb is working with when a 
 
 #### `babel`: `Object`
 
-*[Babel (version 5) options](https://github.com/babel/babel.github.io/blob/862b43db93e48762671267034a50c30c00e433e2/docs/usage/options.md).*
+Use this field to provide your own options for Babel (version 5) - [see the Babel 5 options documentation](https://github.com/babel/babel.github.io/blob/862b43db93e48762671267034a50c30c00e433e2/docs/usage/options.md).
 
 e.g. to use `async`/`await` transforms, you will need to configure Babel's `stage` and `optional` settings:
 
@@ -38,9 +38,9 @@ If provided, this config will also be used to configure the `babel-loader` Webpa
 
 #### `define`: `Object`
 
-By default, nwb will use Webpack's `DefinePlugin` to replace all occurances of `process.env.NODE_ENV` throughout your code with a string containing `NODE_ENV`'s current value.
+By default, nwb will use Webpack's `DefinePlugin` to replace all occurances of `process.env.NODE_ENV` with a string containing `NODE_ENV`'s current value.
 
-Configure a `define` object to add your own replacements.
+You can configure a `define` object to add your own constant values.
 
 e.g. to replace all occurrences of `__VERSION__` with a string containing your app's version from its `package.json`:
 
@@ -54,9 +54,9 @@ e.g. to replace all occurrences of `__VERSION__` with a string containing your a
 
 #### `externals`: `Object` (only for UMD builds)
 
-A mapping from peer dependency module names to the global variables they're expected to be available as for use by the UMD build.
+A mapping from `peerDependency` module names to the global variables they're expected to be available as for use by the UMD build.
 
-e.g. if you're creating a React component which also depends on React Router:
+e.g. if you're creating a React component which also depends on [React Router](https://github.com/rackt/react-router):
 
 ```js
 {
@@ -75,7 +75,7 @@ You will be prompted to configure this when initially creating a React component
 
 #### `loaders`: `Object`
 
-Each Webpack loader configured by nwb's default pipeline has a unique id you can use to customise it.
+Each [Webpack loader](https://webpack.github.io/docs/loaders.html) configured by nwb's default pipeline has a unique id you can use to customise it.
 
 Default loaders and their ids are:
 

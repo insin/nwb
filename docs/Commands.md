@@ -49,11 +49,9 @@ When run in a React component module, `serve` will serve the component's demo ap
 
 A demo app is essential to show people what your component can do - as [React Rocks](http://react.rocks/) says: online demo or it didn't happen!
 
-Having a demo which uses your component is also a great way to test it as you prototype and build, quickly seeing what does and does't work before committing to a test.
+Having a demo which uses your component is also a great way to test it as you prototype and build, quickly seeing what does and doesn't work before committing to a test.
 
 ### `test` - run unit tests
-
-Whether you're writing tests up front or catching up after your're happy with what you've created so far, having them run on every code changes makes testing more fun.
 
 ```
 nwb test
@@ -63,10 +61,8 @@ Runs unit tests once.
 
 **Flags:**
 
-* `--server` - keep the Karma server running and keep running tests on every change
+* `--server` - keep the Karma server running and keep running tests on every change. Whether you're writing tests up front or catching up after your're happy with what you've created so far, having them run on every code changes makes testing more fun.
 * `--coverage` - create a code coverage report in `coverage/`
-
-Whether you're writing tests up front or catching up after your're happy with what you've created, having them run on every code changes makes testing more fun.
 
 **In React component modules:**
 
@@ -89,7 +85,9 @@ By default, static builds are created in production mode:
 * The Babel 5 [constant-elements](https://github.com/babel/babel.github.io/blob/862b43db93e48762671267034a50c30c00e433e2/docs/advanced/transformers/optimisation/react/constant-elements.md) and [inline-elements](https://github.com/babel/babel.github.io/blob/862b43db93e48762671267034a50c30c00e433e2/docs/advanced/transformers/optimisation/react/inline-elements.md) React optimisation transforms will be used.
 * Code will be minified and have dead code elimination performed on it (for example, to remove development mode features from React).
 
-To create a development build, set NODE_ENV to 'development' when running this command. nwb supports a cross-platform way to do this:
+To create a development build, set the `NODE_ENV` environment variable to `'development'` when running the `buils` command.
+
+nwb supports a cross-platform way of doing this, using [argv-set-env](https://github.com/kentcdodds/argv-set-env):
 
 ```
 nwb build --set-env-NODE_ENV=development
@@ -97,12 +95,12 @@ nwb build --set-env-NODE_ENV=development
 
 **In React component modules and other web modules:**
 
-Builds the component in preparatiom for publishing to npm.
+Builds the component in preparation for publishing to npm.
 
 * An ES5 build will be created in `lib/`
 * UMD builds will be created in `umd/`
 
-If the module has a `demo/` directory, building will also create a static build of its demo app in `demo/dist/`.
+If the module has a `demo/` directory, running `build` will also create a static build of its demo app in `demo/dist/`.
 
 ### `clean` - clean up
 
