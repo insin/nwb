@@ -46,7 +46,7 @@ export default function(args, buildConfig = {}, cb) {
   let compiler = webpack(webpackConfig)
   compiler.run((err, stats) => {
     if (err) {
-      console.error('webpack build error:')
+      console.error('nwb: webpack build error:')
       console.error(err.stack)
       process.exit(1)
     }

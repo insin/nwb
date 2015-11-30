@@ -33,6 +33,6 @@ export default function server(webpackConfig, {noInfo, port, staticPath}) {
       console.error(err.stack)
       process.exit(1)
     }
-    console.log(`nwb dev server listening at http://localhost:${port}`)
+    console.log(`nwb: dev server listening at http://localhost:${port}`)
   })
 }

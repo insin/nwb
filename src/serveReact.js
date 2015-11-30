@@ -26,7 +26,7 @@ export default function(args, config) {
     reactPath = resolve.sync('react', {basedir: process.cwd()})
   }
   catch (e) {
-    console.error('React must be installed locally to serve a React app')
+    console.error('nwb: React must be installed locally to serve a React app')
     process.exit(1)
   }
 
