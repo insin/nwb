@@ -1,14 +1,16 @@
-# Configuration
+## Configuration
 
-## nwb config file
-
-By default, nwb will look for an `nwb.config.js` file in the current working directory for configuration.
-
-You can also specify a different configuration file using the `--config` option when running a command.
+nwb will look for an `nwb.config.js` file in the current working directory for project-specific configuration.
 
 This file should export either a configuration object or a function which creates a configuration object. In the case of a function, it will be called *after* nwb has ensured the appropriate `NODE_ENV` environment variable has been set for the command being run.
 
-### `type`: `String` (required)
+(You can also specify a different configuration file using the `--config` option when running a command)
+
+### Configuration Object Fields
+
+The object exported or returned by your nwb config can use the following fields.
+
+#### `type`: `String` (required)
 
 This field is used to determine which type of module nwb is working with when a generic builds command like `build` are run. It must be one of:
 
@@ -16,7 +18,7 @@ This field is used to determine which type of module nwb is working with when a 
 * `'react-component'`
 * `'web-module'`
 
-### `babel`: `Object`
+#### `babel`: `Object`
 
 *[Babel (version 5) options](https://github.com/babel/babel.github.io/blob/862b43db93e48762671267034a50c30c00e433e2/docs/usage/options.md).*
 
@@ -34,7 +36,7 @@ e.g. to use `async`/`await` transforms, you will need to configure Babel's `stag
 
 If provided, this config will also be used to configure the `babel-loader` Webpack loader if there isn't any `query` configuration already specified for it in [`loaders`](#loaders-object).
 
-### `define`: `Object`
+#### `define`: `Object`
 
 By default, nwb will use Webpack's `DefinePlugin` to replace all occurances of `process.env.NODE_ENV` throughout your code with a string containing `NODE_ENV`'s current value.
 
@@ -50,7 +52,7 @@ e.g. to replace all occurrences of `__VERSION__` with a string containing your a
 }
 ```
 
-### `externals`: `Object` (only for UMD builds)
+#### `externals`: `Object` (only for UMD builds)
 
 A mapping from peer dependency module names to the global variables they're expected to be available as for use by the UMD build.
 
@@ -65,13 +67,13 @@ e.g. if you're creating a React component which also depends on React Router:
 }
 ```
 
-### `global`: `String` (*required* for UMD builds)
+#### `global`: `String` (*required* for UMD builds)
 
 The name of the global variable the UMD build will export.
 
 You will be prompted to configure this when initially creating a React component or web module.
 
-### `loaders`: `Object`
+#### `loaders`: `Object`
 
 Each Webpack loader configured by nwb's default pipeline has a unique id you can use to customise it.
 
@@ -127,7 +129,7 @@ e.g., to enable [CSS Modules][CSS Modules]:
 }
 ```
 
-## `package.json` UMD banner configuration
+## `package.json` UMD Banner Configuration
 
 The banner comment added to UMD builds will use as many of the following `package.json` fields as are present:
 

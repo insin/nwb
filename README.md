@@ -5,8 +5,8 @@
 Provides templates and preconfigured tools for developing:
 
 * React apps
-* Reusable React components which will be published on npm
-* web modules - modules published on npm which are expected to be able to run in a browser as a dependency of a webapp
+* Reusable React component modules which will be published to npm
+* Other web modules - modules published on npm which are expected to be able to run in a browser as a dependency of a webapp
 
 ## Install
 
@@ -16,7 +16,9 @@ Installing globally gives you an `nwb` command:
 npm install -g nwb@next
 ```
 
-## Getting started
+## [Documentation](/docs/)
+
+## Quick starts
 
 Create a new React app and start a hot reloading development server:
 
@@ -26,7 +28,7 @@ cd github-issues
 nwb serve
 ```
 
-Create a new React component and start hot reloading its demo app:
+Create a new React component module and start hot reloading its demo app:
 
 ```
 nwb new react-component react-thing
@@ -53,42 +55,21 @@ Options:
   -h, --help     display this help message
   -v, --version  print nwb's version
 
-Module creation commands:
+Project creatiom commands:
   new react-app <name>        create a React app
   new react-component <name>  create a React component with a demo app
   new web-module <name>       create a web module
 
-Common commands:
+Development commands:
   build          clean and build
   clean          delete build
   test           run tests
                    --coverage  create code coverage report
                    --server    keep running tests on every change
-
-React module commands:
   serve          serve an app, or a component's demo app, with hot reloading
-                   --info  show webpack build info
-                   --port  port to run the dev server on [3000]
+                   --info      show webpack module info
+                   --port      port to run the dev server on [3000]
 ```
-
-## Documentation
-
-### Supported module types
-
-* [React Apps](/docs/ReactApps.md)
-* [React Components](/docs/ReactComponents.md)
-* [Web Modules](/docs/WebModules.md)
-
-All module templates are also configured to:
-
-* Run their tests on [Travis CI](https://travis-ci.org/) with code coverage results posted to [codecov.io](https://codecov.io/)
-* Publish only source and ES5/UMD builds to npm.
-
-### Configuration
-
-nwb depends on having an `nwb.config.js` file in the project root and uses some standard fields from `package.json` for configuration. Details of configuring it:
-
-* [Configuration](/docs/Configuration.md)
 
 ## MIT Licensed
 
