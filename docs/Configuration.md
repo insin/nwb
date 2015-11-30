@@ -32,7 +32,7 @@ e.g. to use `async`/`await` transforms, you will need to configure Babel's `stag
 }
 ```
 
-If provided, this config will also be used to configure the `babel-loader` Webpack loader if there isn't any `query` configuration specified for it in [`loaders`](#loaders-object).
+If provided, this config will also be used to configure the `babel-loader` Webpack loader if there isn't any `query` configuration already specified for it in [`loaders`](#loaders-object).
 
 ### `define`: `Object`
 

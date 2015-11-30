@@ -5,8 +5,8 @@
 Provides templates and preconfigured tools for developing:
 
 * React apps
-* React components
-* web modules - modules published on npm which are expected to be able to run in a browser as a dependency of a webapp.
+* Reusable React components which will be published on npm
+* web modules - modules published on npm which are expected to be able to run in a browser as a dependency of a webapp
 
 ## Install
 
@@ -79,15 +79,14 @@ React module commands:
 * [React Components](/docs/ReactComponents.md)
 * [Web Modules](/docs/WebModules.md)
 
-All module templates are also configured:
+All module templates are also configured to:
 
-* To run their tests on [Travis CI](https://travis-ci.org/)
-  * with code coverage results posted to [codecov.io](https://codecov.io/)
-* To be published to npm with only the required files.
+* Run their tests on [Travis CI](https://travis-ci.org/) with code coverage results posted to [codecov.io](https://codecov.io/)
+* Publish only source and ES5/UMD builds to npm.
 
 ### Configuration
 
-nwb uses an `nwb.config.js` file in the project root and some standard fields from `package.json` for configuration:
+nwb depends on having an `nwb.config.js` file in the project root and uses some standard fields from `package.json` for configuration. Details of configuring it:
 
 * [Configuration](/docs/Configuration.md)
 
