@@ -20,7 +20,7 @@ describe('createWebpackConfig()', () => {
         .toContain('url-loader')
         .toContain('file-loader')
         .toContain('json-loader')
-      expect(config.resolve.extensions).toEqual(['', '.web.js', '.js', '.jsx','.json'])
+      expect(config.resolve.extensions).toEqual(['', '.web.js', '.js', '.jsx', '.json'])
     })
     it('excludes node_modules from babel-loader', () => {
       expect(config.module.loaders[0].exclude.test('node_modules')).toBe(true)
@@ -38,7 +38,7 @@ describe('createWebpackConfig()', () => {
         .toContain('url-loader')
         .toContain('file-loader')
         .toContain('json-loader')
-      expect(config.resolve.extensions).toEqual(['', '.web.js', '.js', '.jsx','.json'])
+      expect(config.resolve.extensions).toEqual(['', '.web.js', '.js', '.jsx', '.json'])
     })
   })
 })
@@ -81,7 +81,7 @@ describe('combineLoaders()', () => {
     expect(combineLoaders([
       {loader: 'one', query: {a: 1, b: 2}},
       {loader: 'two', query: {}},
-      {loader: 'three'},
+      {loader: 'three'}
     ])).toEqual('one?a=1&b=2!two!three')
   })
 })
