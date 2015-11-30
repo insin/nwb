@@ -11,7 +11,7 @@ export default function(args) {
   else if (userConfig.type === REACT_COMPONENT || userConfig.type === WEB_MODULE) {
     require('./build-module')
     require('./build-umd')(args, () => {
-      if (userConfig.type === REACT_COMPONENT || glob.sync('demo/').length > 0) {
+      if (glob.sync('demo/').length > 0) {
         require('./build-demo')(args)
       }
     })
