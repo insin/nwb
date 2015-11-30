@@ -230,7 +230,10 @@ export function createPlugins(server, cwd, {
   }
 
   if (html) {
-    plugins.push(new HtmlWebpackPlugin(html))
+    plugins.push(new HtmlWebpackPlugin({
+      template: path.join(__dirname, '../templates/webpack-template.html'),
+      ...html
+    }))
   }
 
   if (banner) {

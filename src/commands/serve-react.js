@@ -24,10 +24,8 @@ export default function(args) {
     },
     plugins: {
       html: {
-        template: require.resolve('html-webpack-template/index.html'),
-        appMountId: args['mount-id'] || 'app',
-        mobile: true,
-        title: args.title || 'serve-react'
+        mountId: args['mount-id'] || 'app',
+        title: args.title || 'nwb: serve-react'
       }
     }
   })
