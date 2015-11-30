@@ -26,6 +26,22 @@ export default function getUserConfig(args) {
     process.exit(1)
   }
 
+  // If the user provided some Babel config, automatically apply it to
+  // babel-loader as query config unless there's already some set.
+  if (!userConfig.loaders) {
+    userConfig.loaders = {}
+  }
+  if (userConfig.babel) {
+    if (!userConfig.loaders.babel) {
+      userConfig.loaders.babel = {query: userConfig.babel}
+      debug('added babel-loader with user babel config')
+    }
+    else if (!userConfig.loaders.babel.query) {
+      userConfig.loaders.babel.query = userConfig.babel
+      debug('added query to babel-loader with user babel config')
+    }
+  }
+
   debug('user config loaded: %o', userConfig)
 
   return userConfig
