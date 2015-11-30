@@ -16,6 +16,7 @@ import qs from 'qs'
 import webpack, {optimize} from 'webpack'
 
 import debug from './debug'
+import {typeOf} from './utils'
 
 export let combineLoaders = loaders =>
   loaders.map(loader => {
@@ -247,16 +248,16 @@ export function createPlugins(server, cwd, {
  * Create a webpack config with a curated set of default loaders suitable for
  * creating a static build (default) or serving an app with hot reloading.
  */
-export default function createWebpackConfig(cwd, {
-  loaders = {},
-  plugins = {},
-  resolve = {},
-  server = false,
-  ...otherConfig
-} = {}, userConfig = {}) {
-  assert.equal(typeof cwd, 'string')
-  debug('build config: %o', arguments[1])
-  debug('user config: %o', userConfig)
+export default function createWebpackConfig(cwd, buildConfig, userConfig = {}) {
+  assert.equal(typeOf(cwd), 'string', 'cwd is required')
+  assert.equal(typeOf(buildConfig), 'object', 'buildConfig is required')
+  debug('createWebpackConfig cwd = %s', cwd)
+  debug('createWebpackConfig buildConfig = %j', buildConfig)
+
+  let {
+    loaders = {}, plugins = {}, resolve = {}, server = false, ...otherConfig
+  } = buildConfig
+
   return {
     module: {
       loaders: createLoaders(server, loaders, userConfig.loaders)
