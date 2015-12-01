@@ -129,6 +129,12 @@ e.g., to enable [CSS Modules][CSS Modules]:
 }
 ```
 
+##### `loaders.extra`: `Array`
+
+If you provide an `extra` prop in the `loaders` object with a list of loader configuration objects, they will be added to the Webpack configuration.
+
+This is currently a crude escape hatch for adding more loaders.
+
 ## `package.json` UMD Banner Configuration
 
 The banner comment added to UMD builds will use as many of the following `package.json` fields as are present:
