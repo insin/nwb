@@ -1,6 +1,6 @@
 # {{name}}
 
-Collaborating on this React application:
+Collaborating on this React app:
 
 ## Prerequisites
 
