@@ -23,6 +23,8 @@ It also aims to allows developers to layer their own configuration needs and pre
 
 ### Not Currently Considered
 
+* How you write your React apps - React apps are all about what happens in the code; the workflow tends to be install it, import it, use it. nwb fills the tank, starts the car, slides out of the driver's seat and walks away.
+
 * Code style - linting is left in your hands, as code style is too controversial a topic to make any default choice about.
 
   Future versions should at least let you tell nwb how to run your linting setup at appropriate times, but it's assumed you will add your own linting calls to `package.json` scripts for now.
