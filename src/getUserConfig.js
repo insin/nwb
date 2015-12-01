@@ -1,5 +1,7 @@
 import path from 'path'
 
+import glob from 'glob'
+
 import {MODULE_TYPES} from './constants'
 import debug from './debug'
 
@@ -7,12 +9,19 @@ export default function getUserConfig(args = {}) {
   // Try to load default user config, or user a config file path we were given
   let userConfig = {}
   let userConfigPath = args.absConfig || path.join(process.cwd(), args.config || 'nwb.config.js')
+
+  if (glob.sync(userConfigPath).length === 0) {
+    console.error(`nwb: couldn't find a config file at ${userConfigPath}`)
+    process.exit(1)
+  }
+
   try {
     userConfig = require(userConfigPath)
-    debug('found nwb config file at %s', userConfigPath)
+    debug('imported config module from %s', userConfigPath)
   }
   catch (e) {
-    console.error(`nwb: couldn't find nwb config file at ${userConfigPath}`)
+    console.error(`nwb: couldn't import the config file at ${userConfigPath}`)
+    console.error(e.stack)
     process.exit(1)
   }
 
@@ -42,7 +51,7 @@ export default function getUserConfig(args = {}) {
     }
   }
 
-  debug('user config loaded: %o', userConfig)
+  debug('final user config: %o', userConfig)
 
   return userConfig
 }
