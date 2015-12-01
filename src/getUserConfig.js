@@ -3,10 +3,10 @@ import path from 'path'
 import {MODULE_TYPES} from './constants'
 import debug from './debug'
 
-export default function getUserConfig(args) {
+export default function getUserConfig(args = {}) {
   // Try to load default user config, or user a config file path we were given
   let userConfig = {}
-  let userConfigPath = path.join(process.cwd(), args.config || 'nwb.config.js')
+  let userConfigPath = args.absConfig || path.join(process.cwd(), args.config || 'nwb.config.js')
   try {
     userConfig = require(userConfigPath)
     debug('found nwb config file at %s', userConfigPath)
