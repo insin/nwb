@@ -11,8 +11,8 @@
     "build": "eslint src && rimraf lib && babel src --loose all --out-dir lib",
     "build:watch": "rimraf lib && babel src --watch --loose all --out-dir lib",
     "lint": "eslint src tests",
-    "test": "npm run lint && mocha --compilers js:babel-core/register tests/**/*.js",
-    "test:watch": "mocha --watch --compilers js:babel-core/register tests/**/*.js"
+    "test": "npm run lint && mocha --compilers js:babel-core/register tests/**/*-test.js",
+    "test:watch": "mocha --watch --compilers js:babel-core/register tests/**/*-test.js"
   },
   "files": [
     "docs",
