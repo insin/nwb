@@ -61,7 +61,7 @@ Runs unit tests once.
 
 **Flags:**
 
-* `--server` - keep the Karma server running and keep running tests on every change. Whether you're writing tests up front or catching up after your're happy with what you've created so far, having them run on every code changes makes testing more fun.
+* `--server` - keep the Karma server running and keep running tests on every change. Whether you're writing tests up front or catching up after you're happy with what you've created so far, having them run on every code change makes testing more fun.
 * `--coverage` - create a code coverage report in `coverage/`
 
 **In React component modules:**
@@ -80,10 +80,12 @@ Builds the project.
 
 A static build will be created in `public/build/`.
 
+A separate `vendor.js` file will be built containing all dependencies imported from `node_modules`.
+
 By default, static builds are created in production mode:
 
 * The Babel 5 [constant-elements](https://github.com/babel/babel.github.io/blob/862b43db93e48762671267034a50c30c00e433e2/docs/advanced/transformers/optimisation/react/constant-elements.md) and [inline-elements](https://github.com/babel/babel.github.io/blob/862b43db93e48762671267034a50c30c00e433e2/docs/advanced/transformers/optimisation/react/inline-elements.md) React optimisation transforms will be used.
-* Code will be minified and have dead code elimination performed on it (for example, to remove development mode features from React).
+* code will be minified and have dead code elimination performed on it (for example, to remove development mode features from React).
 
 To create a development build, set the `NODE_ENV` environment variable to `'development'` when running the `buils` command.
 

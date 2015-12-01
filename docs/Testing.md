@@ -6,7 +6,7 @@ Tests are written in `*-test.js` files in the `tests/` directory.
 
 **nwb 0.1 assumes use of the [Mocha](https://mochajs.org/) test framework and configures Karma for it.** This should be configurable in a future release, but for now, Mocha test functions will be available globally in tests.
 
-You're free to use whichever assertion library - and other unit testing utilities, such as spies - you like, but for the sake of providing a default so you don't *have* to start by making a decision, nwb 0.1 manages a dependency for the [Expect](https://github.com/mjackson/expect) library for assertions and spies. As a result, you can import Expect without having it in your own `devDependencies`.
+You're free to use whichever assertion library - and other unit testing utilities, such as spies - you like, but for the sake of providing a default so you don't *have* to start by making a decision, nwb 0.1 manages a dependency for the [expect](https://github.com/mjackson/expect) library for assertions and spies. As a result, you can import expect without having it in your own `devDependencies`.
 
 ### Example Test
 
