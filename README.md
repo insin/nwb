@@ -2,7 +2,6 @@
 
 [![Travis][build-badge]][build]
 [![npm package][npm-badge]][npm]
-[![Coveralls][coveralls-badge]][coveralls]
 
 Provides templates and preconfigured tools for developing:
 
@@ -80,6 +79,3 @@ Development commands:
 
 [npm-badge]: https://img.shields.io/npm/v/nwb.svg?style=flat-square
 [npm]: https://www.npmjs.org/package/nwb
-
-[coveralls-badge]: https://img.shields.io/coveralls/insin/nwb/master.svg?style=flat-square
-[coveralls]: https://coveralls.io/github/insin/nwb
