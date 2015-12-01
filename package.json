@@ -67,7 +67,7 @@
     "style-loader": "0.13.0",
     "url-loader": "0.5.7",
     "webpack-dev-middleware": "1.4.0",
-    "webpack-hot-middleware": "2.5.1"
+    "webpack-hot-middleware": "2.6.0"
   },
   "devDependencies": {
     "eslint-config-jonnybuchanan": "2.0.x"
