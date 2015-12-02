@@ -14,7 +14,7 @@ Provides templates and preconfigured tools for developing:
 Installing globally gives you an `nwb` command:
 
 ```
-npm install -g nwb
+npm install -g nwb@latest
 ```
 
 ## [Documentation](/docs/)
