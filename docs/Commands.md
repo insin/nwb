@@ -10,17 +10,23 @@ Creates a skeleton for a React app with the given name.
 
 ```
 nwb new react-component <component-name>
-? Which global variable will the UMD build export? <ComponentName>
+? Do you want nwb to create a UMD build for this module?
+? Which global variable should the UMD build export?
 ```
 
-Creates a skeleton for a React component with the given name, with a UMD build exporting the specified global variable.
+Creates a skeleton for a React component with the given name, with an optional UMD build exporting a specified global variable.
 
 ```
 nwb new web-module <module-name>
-? Which global variable will the UMD build export? <ModuleName>
+? Do you want nwb to create a UMD build for this module?
+? Which global variable should the UMD build export?
 ```
 
-Creates a skeleton for a web module with the given name, with a UMD build exporting the specified global variable.
+Creates a skeleton for a web module with the given name, with an optional UMD build exporting a specified global variable.
+
+**Flags:**
+
+* `-f` - force creation of the new project without asking any questions, using which default settings are necessary as a result.
 
 ### `serve` - serve a React app
 
@@ -100,7 +106,7 @@ nwb build --set-env-NODE_ENV=development
 Builds the component in preparation for publishing to npm.
 
 * An ES5 build will be created in `lib/`
-* UMD builds will be created in `umd/`
+* If enabled, UMD builds will be created in `umd/`
 
 If the module has a `demo/` directory, running `build` will also create a static build of its demo app in `demo/dist/`.
 

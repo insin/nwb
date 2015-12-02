@@ -13,12 +13,23 @@ import pkg from '../../package.json'
 
 let nwbVersion = `~${pkg.version}`
 
-function getWebModulePrefs(cb) {
+function getWebModulePrefs(args, cb) {
+  if (args.f) {
+    return cb({umd: false, globalVariable: ''})
+  }
   inquirer.prompt([
     {
+      type: 'confirm',
+      name: 'umd',
+      message: 'Do you want nwb to create a UMD build for this module?',
+      default: true
+    },
+    {
+      when: ({umd}) => umd,
       type: 'input',
       name: 'globalVariable',
-      message: `Which global variable will the UMD build export?`
+      message: 'Which global variable should the UMD build export?',
+      default: ''
     }
   ], cb)
 }
@@ -33,7 +44,7 @@ function installReact(targetDir) {
 }
 
 let moduleCreators = {
-  [REACT_APP](name, targetDir) {
+  [REACT_APP](args, name, targetDir) {
     let templateDir = path.join(__dirname, `../../templates/${REACT_APP}`)
     let templateVars = {name, nwbVersion, reactVersion}
     copyTemplateDir(templateDir, targetDir, templateVars, err => {
@@ -47,10 +58,10 @@ let moduleCreators = {
     })
   },
 
-  [REACT_COMPONENT](name, targetDir) {
-    getWebModulePrefs(({globalVariable}) => {
+  [REACT_COMPONENT](args, name, targetDir) {
+    getWebModulePrefs(args, ({umd, globalVariable}) => {
       let templateDir = path.join(__dirname, `../../templates/${REACT_COMPONENT}`)
-      let templateVars = {globalVariable, name, nwbVersion, reactVersion}
+      let templateVars = {umd, globalVariable, name, nwbVersion, reactVersion}
       copyTemplateDir(templateDir, targetDir, templateVars, err => {
         if (err) {
           console.error(err.stack)
@@ -63,10 +74,10 @@ let moduleCreators = {
     })
   },
 
-  [WEB_MODULE](name, targetDir) {
-    getWebModulePrefs(({globalVariable}) => {
+  [WEB_MODULE](args, name, targetDir) {
+    getWebModulePrefs(args, ({umd, globalVariable}) => {
       let templateDir = path.join(__dirname, `../../templates/${WEB_MODULE}`)
-      let templateVars = {globalVariable, name, nwbVersion}
+      let templateVars = {umd, globalVariable, name, nwbVersion}
       copyTemplateDir(templateDir, targetDir, templateVars, err => {
         if (err) {
           console.error(err.stack)
@@ -100,10 +111,10 @@ export default function(args) {
     process.exit(1)
   }
   if (glob.sync(`${name}/`).length !== 0) {
-    console.error(`nwb: a ${name} directory already exists`)
+    console.error(`nwb: "${name}" directory already exists`)
     process.exit(1)
   }
 
   let targetDir = path.join(process.cwd(), name)
-  moduleCreators[moduleType](name, targetDir)
+  moduleCreators[moduleType](args, name, targetDir)
 }

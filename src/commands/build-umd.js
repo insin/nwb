@@ -35,6 +35,11 @@ export default function(args, cb) {
   let pkg = require(path.resolve('package.json'))
   let userConfig = getUserConfig(args)
 
+  if (!userConfig.umd) {
+    console.error(`nwb: the UMD build for this module is disabled by nwb.config.js (umd = ${userConfig.umd})`)
+    process.exit(1)
+  }
+
   assert(userConfig.global, 'global config is required to create a UMD build')
 
   let buildConfig = {

@@ -52,6 +52,12 @@ e.g. to replace all occurrences of `__VERSION__` with a string containing your a
 }
 ```
 
+#### `umd`: `Boolean`
+
+Determines whether or not nwb will create a UMD build when you run `nwb build` for a React component or web module.
+
+Defaults to `true` when you are prompted to onfigure this by `nwb new`.
+
 #### `externals`: `Object` (only for UMD builds)
 
 A mapping from `peerDependency` module names to the global variables they're expected to be available as for use by the UMD build.
@@ -71,7 +77,7 @@ e.g. if you're creating a React component which also depends on [React Router](h
 
 The name of the global variable the UMD build will export.
 
-You will be prompted to configure this when initially creating a React component or web module.
+You will be prompted to configure this if you choose to enable a UMD build when creating a React component or web module with `nwb new`.
 
 #### `karma`: `Object`
 

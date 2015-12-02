@@ -29,6 +29,7 @@ Project creation commands:
   new react-app <name>        create a React app
   new react-component <name>  create a React component with a demo app
   new web-module <name>       create a web module
+                                -f  force creation, don't ask any questions
 
 Development commands:
   build          clean and build
