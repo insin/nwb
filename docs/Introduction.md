@@ -14,7 +14,7 @@ It also aims to allows developers to layer their own configuration needs and pre
 * Default Webpack loader settings
 * Adding extra webpack loaders - a crude escape hatch
 * Webpack `DefinePlugin` replacements
-* Karma settings for test paths, frameworks and reporters
+* Karma settings for test paths, frameworks, reporters and plugins
 
 ### Not Configurable... Yet
 
@@ -24,8 +24,6 @@ It also aims to allows developers to layer their own configuration needs and pre
 ### Not Currently Considered
 
 * How you actually write your React apps - React apps are all about what happens in the code; the workflow tends to be install it, import it where you need it, use it.
-
-  nwb currently fills the tank, starts the car, slides out of the driver's seat and walks away.
 
 * Code style - linting is left in your hands, as code style is too controversial a topic to make any default choice about.
 
