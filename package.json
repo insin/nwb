@@ -1,7 +1,7 @@
 {
   "name": "nwb",
   "description": "npm web builder - Babel, Webpack and Karma in a React-shaped box",
-  "version": "0.1.0-beta.1",
+  "version": "0.1.0",
   "license": "MIT",
   "author": "Jonny Buchanan <jonathan.buchanan@gmail.com>",
   "bin": {
