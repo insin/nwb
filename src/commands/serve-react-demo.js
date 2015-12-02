@@ -11,7 +11,7 @@ export default function(args) {
   serveReact(args, {
     entry: path.resolve('demo/src/index.js'),
     output: {
-      filename: 'app.js',
+      filename: 'demo.js',
       // This doesn't really matter, as files will be served from memory
       path: __dirname,
       publicPath: '/'

@@ -38,7 +38,6 @@ export default function(args, buildConfig = {}, cb) {
     loaders,
     plugins: {
       define: {...define, ...userConfig.define},
-      appStyle: 'style',
       ...plugins
     },
     ...otherBuildConfig

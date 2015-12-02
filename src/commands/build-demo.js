@@ -12,9 +12,11 @@ export default function(args) {
 
   console.log('nwb: build-demo')
   webpackBuild(args, {
-    entry: path.resolve('demo/src/index.js'),
+    entry: {
+      demo: path.resolve('demo/src/index.js')
+    },
     output: {
-      filename: 'demo.js',
+      filename: '[name].js',
       path: path.resolve('demo/dist')
     },
     plugins: {

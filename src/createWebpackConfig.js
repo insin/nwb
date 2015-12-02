@@ -147,8 +147,6 @@ export function failBuildOnCompilationError() {
 }
 
 export function createPlugins(server, cwd, {
-  // File name to use for extracted CSS - only applicable for static builds
-  appStyle,
   // Banner comment to be added to each generated file in a UMD build
   banner,
   // Extra constant replacements for DefinePlugin. Since plugins aren't
@@ -159,11 +157,8 @@ export function createPlugins(server, cwd, {
   extra,
   // Options for HtmlWebpackPlugin
   html,
-  // Name to use for a vendor JavaScript chunk - providing a name causes it to
-  // be created.
-  vendorJS
-  // TODO Name to use for a vendor CSS chunk
-  // vendorStyle
+  // Name to use for a vendor chunk - providing a name causes it to be created.
+  vendorChunkName
 } = {}) {
   let plugins = [
     new webpack.DefinePlugin({
@@ -186,39 +181,22 @@ export function createPlugins(server, cwd, {
     plugins.unshift(failBuildOnCompilationError)
   }
 
-  if (!server && appStyle) {
-    plugins.push(new ExtractTextPlugin(`${appStyle}.css`))
+  if (!server) {
+    plugins.push(new ExtractTextPlugin(`[name].css`))
   }
 
-  // Move JavaScript imported from node_modules into a vendor chunk
-  if (vendorJS) {
+  // Move modules imported from node_modules into a vendor chunk
+  if (vendorChunkName) {
     plugins.push(new optimize.CommonsChunkPlugin({
-      name: vendorJS,
-      filename: `${vendorJS}.js`,
-      minChunks: function(module, count) {
+      name: vendorChunkName,
+      minChunks(module, count) {
         return (
           module.resource &&
-          module.resource.indexOf(path.resolve(cwd, 'node_modules')) === 0 &&
-          /\.js$/.test(module.resource)
+          module.resource.indexOf(path.resolve(cwd, 'node_modules')) === 0
         )
       }
     }))
   }
-
-  // TODO Move CSS imported from node_modules into a vendor chunk
-  // if (vendorStyle) {
-  //   plugins.push(new optimize.CommonsChunkPlugin({
-  //     name: vendorStyle,
-  //     filename: `${vendorStyle}.css`,
-  //     minChunks: function(module, count) {
-  //       return (
-  //         module.resource &&
-  //         module.resource.indexOf(path.resolve(cwd, 'node_modules')) === 0 &&
-  //         /\.(css|less|scss|styl)$/.test(module.resource)
-  //       )
-  //     }
-  //   }))
-  // }
 
   if (process.env.NODE_ENV === 'production') {
     plugins.push(new optimize.UglifyJsPlugin({

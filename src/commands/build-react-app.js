@@ -8,14 +8,16 @@ import webpackBuild from '../webpackBuild'
 let buildConfig = () => {
   let config = {
     devtool: 'source-map',
-    entry: path.resolve('src/index.js'),
+    entry: {
+      app: path.resolve('src/index.js')
+    },
     output: {
-      filename: 'app.js',
+      filename: '[name].js',
       path: path.resolve('public/build'),
       publicPath: 'build/'
     },
     plugins: {
-      vendorJS: 'vendor'
+      vendorChunkName: 'vendor'
     }
   }
   if (process.env.NODE_ENV === 'production') {
