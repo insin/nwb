@@ -1,8 +1,8 @@
 ## Introduction
 
-npm web builder (nbw) provides a starter kit for developing JavaScript modules for use in webapps, reusable [React](https://facebook.github.io/react/) components and React webapps.
+npm web builder (nbw) provides a starter kit for developing [React](https://facebook.github.io/react/) apps, reusable React components and general JavaScript modules for use in webapps.
 
-It generates skeleton projects and provides development commands which will work with them for building, testing and serving.
+It generates skeleton projects and provides [development commands](/docs/Commands.md) which will work with them for building, [testing](/docs/Testing.md) and serving.
 
 Rather than copying boilerplate configuration, it owns all the build tool dependencies and dynamically generates configurations suitable for each of these types of project, based on experience of which pieces of configuration are common, and which vary, from having developed multiple of each of them.
 
@@ -12,9 +12,11 @@ It also aims to allows developers to layer their own configuration needs and pre
 
 * Babel 5 settings
 * Default Webpack loader settings
-* Adding extra webpack loaders - a crude escape hatch
+* Adding extra webpack loaders - a crude escape hatch for now
 * Webpack `DefinePlugin` replacements
 * Karma settings for test paths, frameworks, reporters and plugins
+
+See the [Configuration docs](/docs/Configuration.md) for details.
 
 ### Not Configurable... Yet
 
@@ -23,7 +25,7 @@ It also aims to allows developers to layer their own configuration needs and pre
 
 ### Not Currently Considered
 
-* How you actually write your React apps - React apps are all about what happens in the code; the workflow tends to be install it, import it where you need it, use it.
+* How you actually write your React apps - React apps are all about what happens in the code; the workflow tends to be install it, import it where you need it and use it.
 
 * Code style - linting is left in your hands, as code style is too controversial a topic to make any default choice about.
 

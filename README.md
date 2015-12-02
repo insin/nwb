@@ -5,7 +5,7 @@ Babel, Webpack and Karma in a React-shaped box.
 [![Travis][build-badge]][build]
 [![npm package][npm-badge]][npm]
 
-Provides projects templates and preconfigured - but configurable - tooling for developing:
+Provides project templates and preconfigured - but configurable - tooling for developing:
 
 * React apps
 * Reusable React component modules which will be published to npm
@@ -16,7 +16,7 @@ Provides projects templates and preconfigured - but configurable - tooling for d
 Installing globally gives you an `nwb` command:
 
 ```
-npm install -g nwb@latest
+npm install -g nwb
 ```
 
 ## [Documentation](/docs/)
