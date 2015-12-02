@@ -24,11 +24,18 @@ nwb uses [Webpack](https://webpack.github.io/) for this, and it plays a key part
 
 [Karma](http://karma-runner.github.io) will do just fine. It's configured to use [PhantomJS](http://phantomjs.org/) by default.
 
-**Testing isn't configurable in 0.1 - this will be dealt with in future releases.**
+### "Defaults, we need defaults" picks
 
-### "But I don't *want* to pick" picks - only to get 0.1 out the door
+Since we want to...
 
-**Test framework** - unfortunately, Karma needs to know about whatever we'll be using to drive our unit tests. We prefer [Tape](https://github.com/substack/tape) because it's simple and comes with its own assertions, but it does lack features which are common and useful, such as before/after hooks.
+1. Provide project templates with tests which can be run right out of the box
+1. Provide default testing tools so you don't *have* to make a choice when you're just getting started
+
+...we need to make some choices.
+
+[These can be configured](/docs/Configuration.md#karma-object) to your liking if they're not to your taste.
+
+**Test framework** - we like [Tape](https://github.com/substack/tape) because it's explicit, simple and comes with its own assertions, but it lacks some features which are common and useful, such as before/after hooks.
 
 [Mocha](https://mochajs.org/) was chosen as the default test framework as it seems fairly uncontroversial.
 

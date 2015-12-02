@@ -14,16 +14,18 @@ It also aims to allows developers to layer their own configuration needs and pre
 * Default Webpack loader settings
 * Adding extra webpack loaders - a crude escape hatch
 * Webpack `DefinePlugin` replacements
+* Karma settings for test paths, frameworks and reporters
 
 ### Not Configurable... Yet
 
 * Webpack plugins
-* Karma settings - Mocha is hardcoded in there
-* Directory structure - possibly controversial, but nwb currently assumes things will be where its project templates put them
+* Source and demo directory structures - nwb currently assumes these will be exactly where its project templates put them
 
 ### Not Currently Considered
 
-* How you write your React apps - React apps are all about what happens in the code; the workflow tends to be install it, import it, use it. nwb fills the tank, starts the car, slides out of the driver's seat and walks away.
+* How you actually write your React apps - React apps are all about what happens in the code; the workflow tends to be install it, import it where you need it, use it.
+
+  nwb currently fills the tank, starts the car, slides out of the driver's seat and walks away.
 
 * Code style - linting is left in your hands, as code style is too controversial a topic to make any default choice about.
 

@@ -4,6 +4,7 @@ import argvSetEnv from 'argv-set-env'
 import webpack from 'webpack'
 
 import createWebpackConfig from './createWebpackConfig'
+import debug from './debug'
 import getUserConfig from './getUserConfig'
 
 export default function(args, buildConfig = {}, cb) {
@@ -42,6 +43,8 @@ export default function(args, buildConfig = {}, cb) {
     },
     ...otherBuildConfig
   }, userConfig)
+
+  debug('webpack config: %o', webpackConfig)
 
   let compiler = webpack(webpackConfig)
   compiler.run((err, stats) => {

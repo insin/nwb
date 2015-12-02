@@ -73,9 +73,125 @@ The name of the global variable the UMD build will export.
 
 You will be prompted to configure this when initially creating a React component or web module.
 
+#### `karma`: `Object`
+
+Karma defaults to using the Mocha framework and reporter plugins, but it's possible to configure your own, as well as where it looks for tests.
+
+##### `tests`: `String`
+
+By default, Karma will attempt to run tests from `'tests/**/*-test.js'` - you can configure this using the `tests` property.
+
+e.g. if you want to colocate your tests with your source:
+
+```js
+{
+  karma: {
+    tests: 'src/**/*-test.js'
+  }
+}
+```
+
+##### `frameworks`: `Array<String | Plugin>`
+
+You must provide the plugin for any custom framework you want to use and manage it as a dependency yourself. Customise the testing framework plugin(s) Karma uses with the `frameworks` and `plugins` props:
+
+```
+npm install --save-dev karma-tap
+```
+```js
+{
+  karma: {
+    frameworks: ['tap'],
+    plugins: [
+      require('karma-tap')
+    ]
+  }
+}
+```
+
+nwb can also determine the correct framework name given the plugin itself, so the following is functionally identical to the configuration above:
+
+```js
+{
+  karma: {
+    frameworks: [
+      require('karma-tap')
+    ]
+  }
+}
+```
+
+If a plugin module provides multiple plugins, nwb will only infer the name of the first plugin it provides, so pass it using `plugins` instead and list all the frameworks you want to use, for clarity:
+
+```js
+{
+  karma: {
+    frameworks: ['mocha', 'chai', 'chai-as-promised'],
+    plugins: [
+      require('karma-chai-plugins') // Provides chai, chai-as-promised, ...
+    ]
+  }
+}
+```
+
+If you're configuring frameworks and you want to use the Mocha framework managed by nwb, just pass its name as in the above example.
+
+##### `reporters`: `Array<String | Plugin>`
+
+Customising reporters follows the same principle as frameworks, just using the `reporters` prop instead.
+
+For built-in reporters, or nwb's versfon of the Mocha reporter, just pass a name:
+
+```js
+{
+  karma: {
+    reporters: ['progress']
+  }
+}
+```
+
+For custom reporters, install and provide the plugin:
+
+```
+npm install --save-dev karma-tape-reporter
+```
+```js
+{
+  karma: {
+    reporters: [
+      require('karma-tape-reporter')
+    ]
+  }
+}
+```
+
+##### `plugins`: `Array<Plugin>`
+
+A list of plugins to be loaded by Karma - this should be used in combination with `frameworks` and `reporters` as necessary.
+
 #### `loaders`: `Object`
 
 Each [Webpack loader](https://webpack.github.io/docs/loaders.html) configured by nwb's default pipeline has a unique id you can use to customise it.
+
+To customise a loader, add a prop to the `loaders` object matching its id and pass a configuration object.
+
+Refer to each loader's documentation for configuration options which can be set via `query`.
+
+e.g., to enable [CSS Modules][CSS Modules]:
+
+```js
+{
+  loaders: {
+    css: {
+      query: {
+        modules: true
+      }
+    }
+  }
+}
+```
+
+##### Default loaders
 
 Default loaders and their ids are:
 
@@ -111,23 +227,25 @@ Default loaders and their ids are:
 
 * `json` - handles `.json` files using [json-loader][json-loader]
 
-To customise a loader, add a prop to the `loaders` object matching its id and pass a configuration object.
+##### Test loaders
 
-Refer to each loader's documentation for configuration options which can be set via `query`.
+When running Karma tests with coverage enabled, the following loader will be added:
 
-e.g., to enable [CSS Modules][CSS Modules]:
+* `isparta` - handles instrumentation of source files for coverage analysis [isparta-loader][isparta-loader]
 
-```js
-{
-  loaders: {
-    css: {
-      query: {
-        modules: true
+  > Default config: `{include: path.join(cwd, 'src')}` (where cwd is the directory you ran `nwb test` from).
+
+  You may need to tweak this loader if you're [changing where Karma looks for tests](#tests-string) - e.g. if you're colocating tests in `__tests__` directories, you will want to configure isparta-loader to ignore these:
+
+  ```js
+  {
+    loaders: {
+      isparta: {
+        exclude: /__tests__/
       }
     }
   }
-}
-```
+  ```
 
 ##### `loaders.extra`: `Array`
 
@@ -149,6 +267,7 @@ The banner comment added to UMD builds will use as many of the following `packag
 [CSS Modules]: https://github.com/css-modules/css-modules
 [css-loader]: https://github.com/webpack/css-loader/
 [file-loader]: https://github.com/webpack/file-loader/
+[isparta-loader]: https://github.com/deepsweet/isparta-loader
 [json-loader]: https://github.com/webpack/json-loader/
 [style-loader]: https://github.com/webpack/style-loader/
 [url-loader]: https://github.com/webpack/url-loader/

@@ -4,7 +4,7 @@ import debug from '../debug'
 import exec from '../exec'
 
 export default function(args) {
-  let config = path.join(__dirname, '../config/karma.js')
+  let config = path.join(__dirname, '../karma.js')
   let cwd = process.cwd()
   let karmaArgs = ['start', config, `--set-env-ORIGINAL_CWD=${cwd}`]
   if (!args.server) {

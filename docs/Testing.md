@@ -1,12 +1,14 @@
 ## Testing
 
-Tests are written in `*-test.js` files in the `tests/` directory.
-
 [Karma](http://karma-runner.github.io/) is used as a test runner and [Webpack](https://webpack.github.io/) is used to instrument and bundle test code.
 
-**nwb 0.1 assumes use of the [Mocha](https://mochajs.org/) test framework and configures Karma for it.** This should be configurable in a future release, but for now, Mocha test functions will be available globally in tests.
+### Default Settings
 
-You're free to use whichever assertion library - and other unit testing utilities, such as spies - you like, but for the sake of providing a default so you don't *have* to start by making a decision, nwb 0.1 manages a dependency for the [expect](https://github.com/mjackson/expect) library for assertions and spies. As a result, you can import expect without having it in your own `devDependencies`.
+By default, tests are written in `*-test.js` files in the `tests/` directory.
+
+[Mocha](https://mochajs.org/) is configured as the default test framework and [expect](https://github.com/mjackson/expect) is made available by default for assertions and spies without having to install it in your own `devDependencies`.
+
+Don't worry if none of the above is to your taste, as [Karma can be configured using the nwb config file](/docs/Configuration.md#karma-object).
 
 ### Example Test
 

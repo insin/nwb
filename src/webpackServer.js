@@ -1,5 +1,6 @@
 import assert from 'assert'
 
+import debug from './debug'
 import devServer from './devServer'
 import getUserConfig from './getUserConfig'
 import createWebpackConfig from './createWebpackConfig'
@@ -39,6 +40,8 @@ export default function(args, buildConfig) {
       ...plugins
     }
   }, userConfig)
+
+  debug('webpack config: %o', webpackConfig)
 
   devServer(webpackConfig, {
     noInfo: !args.info,
