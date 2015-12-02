@@ -19,7 +19,7 @@ Installing globally gives you an `nwb` command:
 npm install -g nwb
 ```
 
-## [Documentation](/docs/)
+## [Documentation](/docs/#table-of-contents)
 
 ## Quick Start Examples
 
