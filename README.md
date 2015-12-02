@@ -1,9 +1,11 @@
 # nwb - npm web builder
 
+Babel, Webpack and Karma in a React-shaped box.
+
 [![Travis][build-badge]][build]
 [![npm package][npm-badge]][npm]
 
-Provides templates and preconfigured tools for developing:
+Provides projects templates and preconfigured - but configurable - tooling for developing:
 
 * React apps
 * Reusable React component modules which will be published to npm
@@ -19,7 +21,7 @@ npm install -g nwb@latest
 
 ## [Documentation](/docs/)
 
-## Quick starts
+## Quick Start Examples
 
 Create a new React app and start a hot reloading development server:
 
