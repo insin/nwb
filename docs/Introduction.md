@@ -2,7 +2,7 @@
 
 npm web builder (nbw) provides a starter kit for developing [React](https://facebook.github.io/react/) apps, reusable React components and general JavaScript modules for use in webapps.
 
-It generates skeleton projects and provides [development commands](/docs/Commands.md) which will work with them for building, [testing](/docs/Testing.md) and serving.
+It generates skeleton projects and provides [development commands](/docs/Commands.md#nwb-commands) which will work with them for building, [testing](/docs/Testing.md#testing) and serving.
 
 Rather than copying boilerplate configuration, it owns all the build tool dependencies and dynamically generates configurations suitable for each of these types of project, based on experience of which pieces of configuration are common, and which vary, from having developed multiple of each of them.
 
@@ -16,7 +16,7 @@ It also aims to allows developers to layer their own configuration needs and pre
 * Webpack `DefinePlugin` replacements
 * Karma settings for test paths, frameworks, reporters and plugins
 
-See the [Configuration docs](/docs/Configuration.md) for details.
+See the [Configuration docs](/docs/Configuration.md#configuration) for details.
 
 ### Not Configurable... Yet
 

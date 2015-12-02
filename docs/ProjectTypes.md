@@ -17,3 +17,5 @@ All project templates are pre-configured to:
 * publish to npm appropriately:
   * React apps have `private: true` set by default so they can't be published to npm by accident
   * components and web modules will only publish source and ES5/UMD builds to npm
+
+Each template also comes with a working, minimal unit test to get you started.
