@@ -1,15 +1,15 @@
 # nwb - npm web builder
 
-Babel, Webpack and Karma in a React-shaped box.
-
 [![Travis][build-badge]][build]
 [![npm package][npm-badge]][npm]
 
-Provides project templates and preconfigured - but configurable - tooling for developing:
+npm web builder (nbw) is a development tool for [React](https://facebook.github.io/react/) apps, reusable React components and general JavaScript modules for use in webapps.
 
-* React apps
-* Reusable React component modules which will be published to npm
-* Other web modules - modules published on npm which are expected to be able to run in a browser as a dependency of a webapp
+It [generates skeleton projects](/docs/Commands.md#new---create-a-new-project) and provides [development commands](/docs/Commands.md#nwb-commands) which will work with them for building, [testing](/docs/Testing.md#testing) and serving.
+
+Rather than copying boilerplate configuration, it owns all the build tool dependencies and dynamically generates configurations suitable for each type of project.
+
+It also aims to allows developers to layer their own configuration needs and preferences over the top of this baseline, where possible.
 
 ## Install
 

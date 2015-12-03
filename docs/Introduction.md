@@ -1,10 +1,10 @@
 ## Introduction
 
-npm web builder (nbw) provides a starter kit for developing [React](https://facebook.github.io/react/) apps, reusable React components and general JavaScript modules for use in webapps.
+npm web builder (nbw) is a development tool for [React](https://facebook.github.io/react/) apps, reusable React components and general JavaScript modules for use in webapps.
 
-It generates skeleton projects and provides [development commands](/docs/Commands.md#nwb-commands) which will work with them for building, [testing](/docs/Testing.md#testing) and serving.
+It [generates skeleton projects](/docs/Commands.md#new---create-a-new-project) and provides [development commands](/docs/Commands.md#nwb-commands) which will work with them for building, [testing](/docs/Testing.md#testing) and serving.
 
-Rather than copying boilerplate configuration, it owns all the build tool dependencies and dynamically generates configurations suitable for each of these types of project, based on experience of which pieces of configuration are common, and which vary, from having developed multiple of each of them.
+Rather than copying boilerplate configuration, it owns all the build tool dependencies and dynamically generates configurations suitable for each type of project.
 
 It also aims to allows developers to layer their own configuration needs and preferences over the top of this baseline, where possible.
 
@@ -12,7 +12,7 @@ It also aims to allows developers to layer their own configuration needs and pre
 
 * Babel 5 settings
 * Default Webpack loader settings
-* Adding extra webpack loaders - a crude escape hatch for now
+* Adding extra Webpack loaders - a crude escape hatch for now
 * Webpack `DefinePlugin` replacements
 * Karma settings for test paths, frameworks, reporters and plugins
 

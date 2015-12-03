@@ -26,7 +26,7 @@ Creates a skeleton for a web module with the given name, with an optional UMD bu
 
 **Flags:**
 
-* `-f` - force creation of the new project without asking any questions, using which default settings are necessary as a result.
+* `-f` - force creation of the new project without asking any questions, using whichever default settings are necessary as a result.
 
 ### `serve` - serve a React app
 
