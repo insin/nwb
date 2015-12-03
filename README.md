@@ -3,7 +3,7 @@
 [![Travis][build-badge]][build]
 [![npm package][npm-badge]][npm]
 
-npm web builder (nbw) is a development tool for [React](https://facebook.github.io/react/) apps, reusable React components and general JavaScript modules for use in webapps.
+A development tool for [React](https://facebook.github.io/react/) apps, reusable React components and general JavaScript modules for use in webapps.
 
 It [generates skeleton projects](/docs/Commands.md#new---create-a-new-project) and provides [development commands](/docs/Commands.md#nwb-commands) which will work with them for building, [testing](/docs/Testing.md#testing) and serving.
 
