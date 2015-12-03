@@ -5,7 +5,7 @@
 
 A development tool for [React](https://facebook.github.io/react/) apps, reusable React components and other JavaScript modules for use in webapps.
 
-It [generates skeleton projects](/docs/Commands.md#new---create-a-new-project) and provides [development commands](/docs/Commands.md#nwb-commands) which will work with them for building, [testing](/docs/Testing.md#testing) and serving.
+nwb [generates skeleton projects](/docs/Commands.md#new---create-a-new-project) and provides [development commands](/docs/Commands.md#nwb-commands) which will work with them for building, [testing](/docs/Testing.md#testing) and serving.
 
 Rather than copying boilerplate configuration, it owns all the build tool dependencies and dynamically generates configurations suitable for each type of project.
 
