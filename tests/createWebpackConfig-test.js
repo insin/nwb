@@ -55,7 +55,6 @@ describe('mergeLoaderConfig()', () => {
     )).toEqual({
       test: TEST_RE,
       loader: 'one',
-      include: undefined,
       exclude: EXCLUDE_RE,
       query: {a: 1, b: 2, c: 3}
     })
@@ -64,8 +63,45 @@ describe('mergeLoaderConfig()', () => {
     expect(mergeLoaderConfig(loader, {}, {})).toEqual({
       test: TEST_RE,
       loader: 'one',
-      include: undefined,
       exclude: EXCLUDE_RE
+    })
+  })
+  it('removes the merged query when it has no properties', () => {
+    expect(mergeLoaderConfig(loader, {}, {query: {}})).toEqual({
+      test: TEST_RE,
+      loader: 'one',
+      exclude: EXCLUDE_RE
+    })
+  })
+  it('appends lists when merging queries', () => {
+    expect(mergeLoaderConfig(
+      loader,
+      {query: {optional: ['two']}},
+      {query: {optional: ['three']}}
+    )).toEqual({
+      test: TEST_RE,
+      loader: 'one',
+      exclude: EXCLUDE_RE,
+      query: {
+        optional: ['two', 'three']
+      }
+    })
+  })
+  it('deep merges queries', () => {
+    expect(mergeLoaderConfig(
+      loader,
+      {query: {nested: {a: true}}},
+      {query: {nested: {b: true}}}
+    )).toEqual({
+      test: TEST_RE,
+      loader: 'one',
+      exclude: EXCLUDE_RE,
+      query: {
+        nested: {
+          a: true,
+          b: true
+        }
+      }
     })
   })
 })

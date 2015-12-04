@@ -14,6 +14,7 @@ import ExtractTextPlugin from 'extract-text-webpack-plugin'
 import HtmlWebpackPlugin from 'html-webpack-plugin'
 import qs from 'qs'
 import webpack, {optimize} from 'webpack'
+import merge from 'webpack-merge'
 
 import debug from './debug'
 import {typeOf} from './utils'
@@ -28,20 +29,9 @@ export let combineLoaders = loaders =>
  * Merge webpack loader config ({test, loader, query, inclue, exclude}) objects.
  */
 export function mergeLoaderConfig(defaultConfig = {}, buildConfig = {}, userConfig = {}) {
-  // TODO Intelligent merging instead of this dumb overriding/query merging
-  let loader = {
-    test: userConfig.test || buildConfig.test || defaultConfig.test,
-    loader: userConfig.loader || buildConfig.loader || defaultConfig.loader,
-    include: userConfig.include || buildConfig.include || defaultConfig.include,
-    exclude: userConfig.exclude || buildConfig.exclude || defaultConfig.exclude
-  }
-  let query = {
-    ...defaultConfig.query,
-    ...buildConfig.query,
-    ...userConfig.query
-  }
-  if (Object.keys(query).length > 0) {
-    loader.query = query
+  let loader = merge(defaultConfig, buildConfig, userConfig)
+  if (loader.query && Object.keys(loader.query).length === 0) {
+    delete loader.query
   }
   return loader
 }
