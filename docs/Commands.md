@@ -84,16 +84,16 @@ Builds the project.
 
 **In React apps:**
 
-A static build will be created in `public/build/`.
+A static build will be created in `public/build/`, with `app.js` and `app.css` files plus any other resources used.
 
-A separate `vendor.js` file will be built containing all dependencies imported from `node_modules`.
+Separate `vendor.js` and `vendor.css` files will be built for any dependencies used from `node_modules`.
 
 By default, static builds are created in production mode:
 
 * The Babel 5 [constant-elements](https://github.com/babel/babel.github.io/blob/862b43db93e48762671267034a50c30c00e433e2/docs/advanced/transformers/optimisation/react/constant-elements.md) and [inline-elements](https://github.com/babel/babel.github.io/blob/862b43db93e48762671267034a50c30c00e433e2/docs/advanced/transformers/optimisation/react/inline-elements.md) React optimisation transforms will be used.
 * code will be minified and have dead code elimination performed on it (for example, to remove development mode features from React).
 
-To create a development build, set the `NODE_ENV` environment variable to `'development'` when running the `buils` command.
+To create a development build, set the `NODE_ENV` environment variable to `'development'` when running the `build` command.
 
 nwb supports a cross-platform way of doing this, using [argv-set-env](https://github.com/kentcdodds/argv-set-env):
 
