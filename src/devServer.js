@@ -27,7 +27,7 @@ export default function server(webpackConfig, {noInfo, port, staticPath}) {
     app.use(express.static(staticPath))
   }
 
-  app.listen(port, 'localhost', function(err) {
+  app.listen(port, 'localhost', err => {
     if (err) {
       console.error('nwb: error starting dev server:')
       console.error(err.stack)
