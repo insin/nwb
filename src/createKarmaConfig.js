@@ -5,12 +5,10 @@ process.env.NODE_ENV = 'test'
 
 import path from 'path'
 
-import glob from 'glob'
-
 import createWebpackConfig, {loaderConfigFactory} from './createWebpackConfig'
 import debug from './debug'
 import getUserConfig from './getUserConfig'
-import {typeOf} from './utils'
+import {findNodeModules, typeOf} from './utils'
 
 const DEFAULT_TESTS = 'tests/**/*-test.js'
 
@@ -142,17 +140,9 @@ export default function(config) {
 
   let {plugins, frameworks, reporters, loaders} = getKarmaConfig(cwd, runCoverage, userConfig)
   let testFiles = path.join(cwd, userKarma.tests || DEFAULT_TESTS)
-  let preprocessors = {[testFiles]: ['webpack', 'sourcemap']}
-
-  // Find the node_modules directory containing nwb's dependencies
-  let nodeModules
-  if (glob.sync('../node_modules/', {cwd: __dirname}).length > 0) {
-    // Global installs and npm@2 local installs have a local node_modules dir
-    nodeModules = path.join(__dirname, '../node_modules')
-  }
-  else {
-    // Otherwise assume an npm@3 local install, with node_modules as the parent
-    nodeModules = path.join(__dirname, '../../node_modules')
+  let preprocessors = {
+    [require.resolve('babel-core/lib/polyfill')]: ['webpack', 'sourcemap'],
+    [testFiles]: ['webpack', 'sourcemap']
   }
 
   let webpackConfig = createWebpackConfig(cwd, {
@@ -166,7 +156,7 @@ export default function(config) {
         'src': path.join(cwd, 'src')
       },
       // Fall back to resolve test runtime dependencies from nwb's dependencies
-      fallback: [nodeModules]
+      fallback: [findNodeModules()]
     },
     node: {
       fs: 'empty'
@@ -186,7 +176,7 @@ export default function(config) {
       ]
     },
     files: [
-      require.resolve('phantomjs-polyfill/bind-polyfill.js'),
+      require.resolve('babel-core/lib/polyfill'),
       testFiles
     ],
     preprocessors,

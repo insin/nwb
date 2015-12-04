@@ -17,7 +17,7 @@ import webpack, {optimize} from 'webpack'
 import merge from 'webpack-merge'
 
 import debug from './debug'
-import {typeOf} from './utils'
+import {findNodeModules, typeOf} from './utils'
 
 export let combineLoaders = loaders =>
   loaders.map(loader => {
@@ -234,10 +234,14 @@ export default function createWebpackConfig(cwd, buildConfig, userConfig = {}) {
       loaders: createLoaders(server, loaders, userConfig.loaders)
     },
     plugins: createPlugins(server, cwd, plugins),
-    resolve: {
-      extensions: ['', '.web.js', '.js', '.jsx', '.json'],
-      ...resolve
-    },
+    resolve: merge({
+      alias: {
+        // Alias babel-runtime so it can be found from nwb's dependencies when
+        // using Babel stage: 0 and optional: ['runtime'] for async/await.
+        'babel-runtime': path.join(findNodeModules(), 'babel-runtime')
+      },
+      extensions: ['', '.web.js', '.js', '.jsx', '.json']
+    }, resolve),
     ...otherConfig
   }
 }
