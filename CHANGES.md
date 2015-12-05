@@ -1,4 +1,5 @@
-Added:
+# 0.2.0 / 2015-12-05
+
 **Added:**
 
 - Express [middleware](https://github.com/insin/nwb/blob/master/docs/Middleware.md#middleware) for running a React app on your own development server using nwb's Webpack config generation [[#8](https://github.com/insin/nwb/issues/8)]
