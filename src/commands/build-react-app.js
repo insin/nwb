@@ -13,8 +13,7 @@ let buildConfig = () => {
     },
     output: {
       filename: '[name].js',
-      path: path.resolve('public/build'),
-      publicPath: 'build/'
+      path: path.resolve('public/build')
     },
     plugins: {
       vendorChunkName: 'vendor'

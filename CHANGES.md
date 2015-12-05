@@ -9,6 +9,7 @@ Changed:
 Fixed:
 
 - babel-runtime can now be resolved from nwb's dependencies when using `optional: ['runtime']` Babel config.
+- Fixed paths to resources required from CSS in React app builds.
 
 # 0.1.0 / 2015-12-02
 
