@@ -1,0 +1,22 @@
+{
+  "name": "nwb-sass",
+  "version": "0.3.0",
+  "description": "Sass plugin for nwb",
+  "main": "index.js",
+  "dependencies": {
+    "sass-loader": "^3.1.2",
+    "node-sass": "^3.4.2"
+  },
+  "author": "Jonny Buchanan <jonathan.buchanan@gmail.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/insin/nwb-sass.git"
+  },
+  "keywords": [
+    "nwb",
+    "nwb-plugin",
+    "nwb-css-preprocessor-plugin",
+    "sass"
+  ]
+}
