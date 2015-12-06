@@ -1,3 +1,16 @@
+# 0.3.0-beta.0 / 2015-12-06
+
+**Added:**
+
+- Plugin API/CSS preprocessors [[#6](https://github.com/insin/nwb/issues/6)]
+  - Loading of configuration objects exported by `'nwb-*'` dependencies found in `package.json`.
+  - Creation of style loading pipelines for plugins which provide `cssPreprocessors` configuration.
+    - [nwb-sass](https://github.com/insin/nwb-sass)
+
+**Fixed:**
+
+- Babel config is now passed to Babel when transpiling modules [[#13](https://github.com/insin/nwb/issues/13)]
+
 # 0.2.0 / 2015-12-05
 
 **Added:**
