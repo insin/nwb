@@ -17,7 +17,7 @@ import webpack, {optimize} from 'webpack'
 import merge from 'webpack-merge'
 
 import debug from './debug'
-import {findNodeModules, typeOf} from './utils'
+import {endsWith, findNodeModules, typeOf} from './utils'
 
 export let combineLoaders = loaders =>
   loaders.map(loader => {
@@ -45,11 +45,32 @@ export let loaderConfigFactory = (buildConfig, userConfig) =>
     ({id, ...mergeLoaderConfig(defaultConfig, buildConfig[id], userConfig[id])})
 
 /**
+ * Create a function which applies a prefix to a given name when a prefix is
+ * given, unless the prefix ends with a name, in which case the prefix itself is
+ * returned.
+ * The latter rule is to allow loaders created for CSS preprocessor plugins to
+ * be given unique ids for user configuration without duplicating the name of
+ * the loader.
+ * e.g.: styleLoaderName('sass')('css') => 'sass-css'
+ *       styleLoaderName('sass')('sass') => 'sass' (as opposed to 'sass-sass')
+ */
+export let styleLoaderName = (prefix) =>
+  (name) => {
+    if (prefix && endsWith(prefix, name)) {
+      return prefix
+    }
+    return prefix ? `${prefix}-${name}` : name
+  }
+
+/**
  * Create a default style-handling pipeline for either a static build (default)
  * or a server build.
  */
-export function createStyleLoader(loader, server, prefix) {
-  let name = (name) => prefix ? `${prefix}-${name}` : name
+export function createStyleLoader(loader, server, {
+  prefix = null,
+  extraLoader = null
+} = {}) {
+  let name = styleLoaderName(prefix)
   let loaders = [
     loader(name('css'), {
       loader: require.resolve('css-loader')
@@ -58,6 +79,10 @@ export function createStyleLoader(loader, server, prefix) {
       loader: require.resolve('autoprefixer-loader')
     })
   ]
+
+  if (extraLoader) {
+    loaders.push(loader(name(extraLoader.id), extraLoader.config))
+  }
 
   if (server) {
     loaders.unshift(loader(name('style'), {
@@ -70,10 +95,10 @@ export function createStyleLoader(loader, server, prefix) {
   }
 }
 
-export function createLoaders(server, buildConfig = {}, userConfig = {}) {
+export function createLoaders(server, buildConfig = {}, userConfig = {}, pluginConfig = {}) {
   let loader = loaderConfigFactory(buildConfig, userConfig)
 
-  return [
+  let loaders = [
     loader('babel', {
       test: /\.jsx?$/,
       loader: require.resolve('babel-loader'),
@@ -86,7 +111,9 @@ export function createLoaders(server, buildConfig = {}, userConfig = {}) {
     }),
     loader('vendor-css-pipeline', {
       test: /\.css$/,
-      loader: createStyleLoader(loader, server, 'vendor'),
+      loader: createStyleLoader(loader, server, {
+        prefix: 'vendor'
+      }),
       include: /node_modules/
     }),
     loader('graphics', {
@@ -119,6 +146,35 @@ export function createLoaders(server, buildConfig = {}, userConfig = {}) {
     ...buildConfig.extra || [],
     ...userConfig.extra || []
   ]
+
+  if (pluginConfig.cssPreprocessors) {
+    Object.keys(pluginConfig.cssPreprocessors).forEach(id => {
+      let {test, ...config} = pluginConfig.cssPreprocessors[id]
+      debug(test.source)
+      loaders.push(
+        loader(`${id}-pipeline`, {
+          test,
+          loader: createStyleLoader(loader, server, {
+            extraLoader: {id, config},
+            prefix: id
+          }),
+          exclude: /node_modules/
+        })
+      )
+      loaders.push(
+        loader(`vendor-${id}-pipeline`, {
+          test,
+          loader: createStyleLoader(loader, server, {
+            extraLoader: {id, config},
+            prefix: `vendor-${id}`
+          }),
+          include: /node_modules/
+        })
+      )
+    })
+  }
+
+  return loaders
 }
 
 /**
@@ -219,7 +275,7 @@ export function createPlugins(server, cwd, {
  * Create a webpack config with a curated set of default loaders suitable for
  * creating a static build (default) or serving an app with hot reloading.
  */
-export default function createWebpackConfig(cwd, buildConfig, userConfig = {}) {
+export default function createWebpackConfig(cwd, buildConfig, pluginConfig = {}, userConfig = {}) {
   assert.equal(typeOf(cwd), 'string', 'cwd is required')
   assert.equal(typeOf(buildConfig), 'object', 'buildConfig is required')
   debug('createWebpackConfig cwd = %s', cwd)
@@ -231,7 +287,7 @@ export default function createWebpackConfig(cwd, buildConfig, userConfig = {}) {
 
   return {
     module: {
-      loaders: createLoaders(server, loaders, userConfig.loaders)
+      loaders: createLoaders(server, loaders, userConfig.loaders, pluginConfig)
     },
     plugins: createPlugins(server, cwd, plugins),
     resolve: merge({

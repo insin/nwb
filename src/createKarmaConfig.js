@@ -7,6 +7,7 @@ import path from 'path'
 
 import createWebpackConfig, {loaderConfigFactory} from './createWebpackConfig'
 import debug from './debug'
+import getPluginConfig from './getPluginConfig'
 import getUserConfig from './getUserConfig'
 import {findNodeModules, typeOf} from './utils'
 
@@ -133,10 +134,8 @@ export default function(config) {
   let runCoverage = process.env.COVERAGE === 'true' || isCi
 
   let userConfig = getUserConfig({absConfig: path.join(cwd, 'nwb.config.js')})
-  if (typeOf(userConfig) === 'function') {
-    userConfig = userConfig()
-  }
   let userKarma = userConfig.karma || {}
+  let pluginConfig = getPluginConfig(cwd)
 
   let {plugins, frameworks, reporters, loaders} = getKarmaConfig(cwd, runCoverage, userConfig)
   let testFiles = path.join(cwd, userKarma.tests || DEFAULT_TESTS)
@@ -161,7 +160,7 @@ export default function(config) {
     node: {
       fs: 'empty'
     }
-  })
+  }, pluginConfig, userConfig)
 
   let karmaConfig = {
     plugins,

@@ -1,6 +1,7 @@
 import assert from 'assert'
 
 import createWebpackConfig from './createWebpackConfig'
+import getPluginConfig from './getPluginConfig'
 import getUserConfig from './getUserConfig'
 
 /**
@@ -9,6 +10,7 @@ import getUserConfig from './getUserConfig'
  */
 export default function(args, buildConfig) {
   let userConfig = getUserConfig(args)
+  let pluginConfig = getPluginConfig(process.cwd())
 
   let {
     define, entry, output, loaders = {}, plugins
@@ -32,5 +34,5 @@ export default function(args, buildConfig) {
       define: {...define, ...userConfig.define},
       ...plugins
     }
-  }, userConfig)
+  }, pluginConfig, userConfig)
 }

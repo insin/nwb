@@ -3,6 +3,13 @@ import path from 'path'
 import glob from 'glob'
 
 /**
+ * String.prototype.endsWith() is behind the --harmony flag in Node.js v0.12.
+ */
+export function endsWith(s1, s2) {
+  return s1.lastIndexOf(s2) === s1.length - s2.length
+}
+
+/**
  * Find the node_modules directory containing nwb's dependencies.
  */
 export function findNodeModules() {

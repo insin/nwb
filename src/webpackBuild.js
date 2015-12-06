@@ -5,6 +5,7 @@ import webpack from 'webpack'
 
 import createWebpackConfig from './createWebpackConfig'
 import debug from './debug'
+import getPluginConfig from './getPluginConfig'
 import getUserConfig from './getUserConfig'
 
 export default function(args, buildConfig = {}, cb) {
@@ -19,6 +20,7 @@ export default function(args, buildConfig = {}, cb) {
   }
 
   let userConfig = getUserConfig(args)
+  let pluginConfig = getPluginConfig(process.cwd())
   if (typeof buildConfig == 'function') {
     buildConfig = buildConfig()
   }
@@ -41,7 +43,7 @@ export default function(args, buildConfig = {}, cb) {
       ...plugins
     },
     ...otherBuildConfig
-  }, userConfig)
+  }, pluginConfig, userConfig)
 
   debug('webpack config: %o', webpackConfig)
 
