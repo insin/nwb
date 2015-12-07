@@ -66,6 +66,18 @@ nwb: test
 ...
 ```
 
+## Example Project
+
+[react-nwb-github-issues](https://github.com/insin/react-nwb-github-issues) shows development of a demo app from scratch using nwb.
+
+Selected commits of interest:
+
+* [The skeleton React app created by `nwb new react-app`](https://github.com/insin/react-nwb-github-issues/commit/b7559f598b38dc5493915cf1e5c40aaf90a082ff)
+* [Installing a CSS preprocessor plugin](https://github.com/insin/react-nwb-github-issues/commit/b8e4c880ab174353dc231668e2ab48d1899ed268) - nwb automatically detects and uses CSS preprocessor plugins from your dependencies
+* [Installing a dependency which manages and `require()`s its own CSS dependency](https://github.com/insin/react-nwb-github-issues/commit/cad3abd4ec47f78bf50194ec1bd7cbfb1068e733) - the CSS and its image/font dependencies were hot reloaded into the running app when this change was made
+
+*Note: this example app is a clone of the ember-cli [github-issues-demo](https://github.com/wycats/github-issues-demo) app, and initially tries to stick close to it commit-by-commit for the sake of comparison, by using [async-props](https://github.com/rackt/async-props), which is currently in pre-release.*
+
 ## Usage
 
 ```
