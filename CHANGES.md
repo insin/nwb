@@ -2,9 +2,10 @@
 
 **Added:**
 
-- Plugin API/CSS preprocessors [[#6](https://github.com/insin/nwb/issues/6)]
+- Support for CSS preprocessor plugin packages [[#6](https://github.com/insin/nwb/issues/6)]
   - Loading of configuration objects exported by `'nwb-*'` dependencies found in `package.json`.
   - Creation of style loading pipelines for plugins which provide `cssPreprocessors` configuration.
+    - [nwb-less](https://github.com/insin/nwb-less)
     - [nwb-sass](https://github.com/insin/nwb-sass)
 
 **Fixed:**
