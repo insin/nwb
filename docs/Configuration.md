@@ -177,7 +177,7 @@ A list of plugins to be loaded by Karma - this should be used in combination wit
 
 #### `loaders`: `Object`
 
-Each [Webpack loader](https://webpack.github.io/docs/loaders.html) configured by nwb's default pipeline has a unique id you can use to customise it.
+Each [Webpack loader](https://webpack.github.io/docs/loaders.html) configured by default has a unique id you can use to customise it.
 
 To customise a loader, add a prop to the `loaders` object matching its id and pass a configuration object.
 

@@ -29,7 +29,7 @@ CSS preprocessor plugins must export a configuration object in the following for
    }
    ```
 
-The preprocessor id is critical - this will be used to generate names for the style loading pipelines created for the preprocessor, and this id will be the one users will use in their `nwb.config.js` to apply configuration to the preprocessing loader.
+The preprocessor id is critical - this will be used to generate names for the style loaders created for the preprocessor, and this id will be the one users will use in their `nwb.config.js` to apply configuration to the preprocessing loader.
 
 ----
 
