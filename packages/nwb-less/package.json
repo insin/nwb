@@ -1,0 +1,25 @@
+{
+  "name": "nwb-less",
+  "version": "0.3.0",
+  "description": "Less plugin for nwb",
+  "main": "index.js",
+  "files": [
+    "index.js"
+  ],
+  "dependencies": {
+    "less": "^2.5.3",
+    "less-loader": "^2.2.2"
+  },
+  "author": "Jonny Buchanan <jonathan.buchanan@gmail.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/insin/nwb-less.git"
+  },
+  "keywords": [
+    "nwb",
+    "nwb-plugin",
+    "nwb-css-preprocessor-plugin",
+    "less"
+  ]
+}
