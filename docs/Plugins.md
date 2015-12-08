@@ -13,7 +13,7 @@ Plugins are implemented as npm packages which have names beginning with `'nwb-'`
 
 nwb will scan the current project's `package.json` for these modules, then import them and merge their configuration objects for use when generating configurations.
 
-#### CSS Preprocessors
+#### Implementing CSS Preprocessors
 
 CSS preprocessor plugins must export a configuration object in the following format:
 

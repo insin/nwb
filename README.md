@@ -3,15 +3,22 @@
 [![Travis][build-badge]][build]
 [![npm package][npm-badge]][npm]
 
-nwb is a development tool for [React](https://facebook.github.io/react/) apps, reusable React components and other JavaScript modules for use in webapps.
+nwb is a development tool for [React](https://facebook.github.io/react/) apps, React components and other JavaScript modules.
 
-It provides [development commands](/docs/Commands.md#nwb-commands) for building and serving code with [Webpack](https://webpack.github.io/) and [Babel](http://babeljs.io/), and [running tests](/docs/Testing.md#testing) with [Karma](http://karma-runner.github.io).
+**Think of nwb like a frontend to [Webpack](https://webpack.github.io/), [Babel](http://babeljs.io/) and [Karma](http://karma-runner.github.io).**
 
-**Think of nwb like a frontend to Webpack, Babel and Karma.**
+It provides [commands](/docs/Commands.md#nwb-commands) for:
 
-nwb owns and manages dependencies for these tools and dynamically generates configurations for them. An `nwb.config.js` file allows you to [tweak the default configuration](/docs/Configuration.md#configuration) where it matters.
+* creating **static builds** for React apps, including production optimisations
+* creating **ES5 and UMD builds** for React components and other JavaScript modules to be published to npm
+* **serving** React apps and demos with **hot module reloading** and **syntax/`render()` error overlays**
+* running **unit tests** with code coverage
 
-Since there is a light bit of convention involved, nwb can also [generate skeleton projects](/docs/Commands.md#new---create-a-new-project) to get you started quickly.
+Instead of copying boilerplate `devDependencies` and configuration scripts into your project, nwb **owns the npm dependencies** for these tools and **dynamically generates configuration** , so you don't have to deal with keeping these up to date yourself.
+
+An **`nwb.config.js`** file allows you to [tweak the generated configuration](/docs/Configuration.md#configuration) to suit your project.
+
+To speed up developing new projects, nwb can also [generate skeleton projects](/docs/Commands.md#new---create-a-new-project) which are ready for deployment or publishing out of the box, and are preconfigured for running tests on [Travis CI](https://travis-ci.org/).
 
 ## Install
 

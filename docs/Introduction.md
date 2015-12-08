@@ -1,22 +1,30 @@
 ## Introduction
 
-npm web builder (nwb) is a development tool for [React](https://facebook.github.io/react/) apps, reusable React components and other JavaScript modules for use in webapps.
+npm web builder (nwb) is a development tool for [React](https://facebook.github.io/react/) apps, React components and other JavaScript modules.
 
-It provides [development commands](/docs/Commands.md#nwb-commands) for building and serving code with [Webpack](https://webpack.github.io/) and [Babel](http://babeljs.io/), and [running tests](/docs/Testing.md#testing) with [Karma](http://karma-runner.github.io).
+**Think of nwb like a frontend to [Webpack](https://webpack.github.io/), [Babel](http://babeljs.io/) and [Karma](http://karma-runner.github.io).**
 
-**Think of nwb like a frontend to Webpack, Babel and Karma.**
+It provides [commands](/docs/Commands.md#nwb-commands) for:
 
-nwb owns and manages dependencies for these tools and dynamically generates configurations for them. An `nwb.config.js` file allows you to [tweak the default configuration](/docs/Configuration.md#configuration) where it matters.
+* creating **static builds** for React apps, including production optimisations
+* creating **ES5 and UMD builds** for React components and other JavaScript modules to be published to npm
+* **serving** React apps and demos with **hot module reloading** and **syntax/`render()` error overlays**
+* running **unit tests** with code coverage
 
-Since there is a light bit of convention involved, nwb can also [generate skeleton projects](/docs/Commands.md#new---create-a-new-project) to get you started quickly.
+Instead of copying boilerplate `devDependencies` and configuration scripts into your project, nwb **owns the npm dependencies** for these tools and **dynamically generates configuration** , so you don't have to deal with keeping these up to date yourself.
 
-### What's Configurable in 0.1?
+An **`nwb.config.js`** file allows you to [tweak the generated configuration](/docs/Configuration.md#configuration) to suit your project.
+
+To speed up developing new projects, nwb can also [generate skeleton projects](/docs/Commands.md#new---create-a-new-project) which are ready for deployment or publishing out of the box, and are preconfigured for running tests on [Travis CI](https://travis-ci.org/).
+
+### What's Configurable?
 
 * Babel 5 settings
 * Default Webpack loader settings
 * Adding extra Webpack loaders - a crude escape hatch for now
 * Webpack `DefinePlugin` replacements
 * Karma settings for test paths, frameworks, reporters and plugins
+* CSS preprocessors can be added as [nwb plugins](/docs/Plugins.md#css-preprocessors).
 
 See the [Configuration docs](/docs/Configuration.md#configuration) for details.
 
@@ -33,4 +41,4 @@ See the [Configuration docs](/docs/Configuration.md#configuration) for details.
 
   Future versions should at least let you tell nwb how to run your linting setup at appropriate times, but it's assumed you will add your own linting calls to `package.json` scripts for now.
 
-  If you currently have an ESLint config and associated dependencies you're copying and installing from project to project, [Duplicated Config → Tools: ESLint](https://medium.com/@jbscript/config-tools-eslint-c85b6d48f7e2#.7q5c9rloa) may be of interest.
+  If you have an ESLint config and associated dependencies you're currently copying and installing from project to project, [Duplicated Config → Tools: ESLint](https://medium.com/@jbscript/config-tools-eslint-c85b6d48f7e2#.7q5c9rloa) may be of interest.
