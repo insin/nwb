@@ -1,3 +1,8 @@
+**Added:**
+
+- Added an ES6 build with untranspiled ES6 module usage [[#15](https://github.com/insin/nwb/issues/15)]
+  - This is pointed to by `jsnext:main` in project template `package.json` for use by tree-shaking ES6 bundlers
+
 **Changed:**
 
 - 1.0.0 is now the default version for project templates.

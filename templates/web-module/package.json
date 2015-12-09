@@ -2,6 +2,7 @@
   "name": "{{name}}",
   "version": "1.0.0",
   "description": "Describe {{name}} here",
+  "jsnext:main": "es6/index.js",
   "scripts": {
     "build": "nwb build",
     "clean": "nwb clean",

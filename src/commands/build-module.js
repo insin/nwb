@@ -10,8 +10,10 @@ import getUserConfig from '../getUserConfig'
 export default function(args) {
   require('./clean-module')
 
-  let src = path.resolve('src')
+  let cwd = path.join(__dirname, '..')
+  let es6 = path.resolve('es6')
   let lib = path.resolve('lib')
+  let src = path.resolve('src')
 
   let babelArgs = [src, '--out-dir', lib]
 
@@ -26,8 +28,13 @@ export default function(args) {
     babelArgs = [...babelArgs, '--babelrc', babelrc.path]
   }
 
-  console.log('nwb: build-module')
-  exec('babel', babelArgs, {cwd: path.join(__dirname, '..')})
+  console.log('nwb: build-module (es5)')
+  exec('babel', babelArgs, {cwd})
+
+  babelArgs[2] = es6
+  babelArgs = [...babelArgs, '--blacklist=es6.modules']
+  console.log('nwb: build-module (es6)')
+  exec('babel', babelArgs, {cwd})
 
   temp.cleanupSync()
 }
