@@ -1,3 +1,7 @@
+**Fixed:**
+
+- Added missing `main` config to `package.json` for React components/web modules, pointing at the ES5 build in `lib/`.
+
 **Added:**
 
 - Added an ES6 build with untranspiled ES6 module usage [[#15](https://github.com/insin/nwb/issues/15)]
