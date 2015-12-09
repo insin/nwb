@@ -1,3 +1,5 @@
+# 0.3.1 / 2015-12-09
+
 **Fixed:**
 
 - Generic `nwb build` was broken for React components/web modules in 0.3.0.
