@@ -4,6 +4,11 @@
   "description": "Describe {{name}} here",
   "main": "lib/index.js",
   "jsnext:main": "es6/index.js",
+  "files": [
+    "es6",
+    "lib",
+    "umd"
+  ],
   "scripts": {
     "build": "nwb build",
     "clean": "nwb clean",

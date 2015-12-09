@@ -4,6 +4,8 @@
 
 **Added:**
 
+- Added `files` config to React component/web module `package.json` templates.
+  - The `files` config for the React component template assumes that components published to npm with `require()` calls for CSS which ships with it will use a `css/` dir.
 - Added an ES6 build with untranspiled ES6 module usage [[#15](https://github.com/insin/nwb/issues/15)]
   - This is pointed to by `jsnext:main` in project template `package.json` for use by tree-shaking ES6 bundlers
 

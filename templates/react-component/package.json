@@ -4,6 +4,12 @@
   "description": "{{name}} React component",
   "main": "lib/index.js",
   "jsnext:main": "es6/index.js",
+  "files": [
+    "css",
+    "es6",
+    "lib",
+    "umd"
+  ],
   "scripts": {
     "build": "nwb build",
     "clean": "nwb clean",
