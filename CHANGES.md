@@ -1,3 +1,7 @@
+**Changed:**
+
+- 1.0.0 is now the default version for project templates.
+
 # 0.3.1 / 2015-12-09
 
 **Fixed:**
