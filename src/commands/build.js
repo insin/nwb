@@ -15,7 +15,7 @@ export default function(args) {
     require('./build-react-app')(args)
   }
   else if (userConfig.type === REACT_COMPONENT || userConfig.type === WEB_MODULE) {
-    require('./build-module')
+    require('./build-module')(args)
     if (userConfig.umd) {
       require('./build-umd')(args, () => buildDemo(args))
     }
