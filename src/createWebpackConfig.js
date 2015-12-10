@@ -150,7 +150,6 @@ export function createLoaders(server, buildConfig = {}, userConfig = {}, pluginC
   if (pluginConfig.cssPreprocessors) {
     Object.keys(pluginConfig.cssPreprocessors).forEach(id => {
       let {test, ...config} = pluginConfig.cssPreprocessors[id]
-      debug(test.source)
       loaders.push(
         loader(`${id}-pipeline`, {
           test,
