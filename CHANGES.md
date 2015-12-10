@@ -1,6 +1,6 @@
 **Fixed:**
 
-- Added missing `main` config to `package.json` for React components/web modules, pointing at the ES5 build in `lib/`.
+- Added missing `main` config to React component/web module `package.json` templates, pointing at the ES5 build in `lib/`.
 
 **Added:**
 
@@ -11,7 +11,7 @@
 
 **Changed:**
 
-- 1.0.0 is now the default version for project templates.
+- 1.0.0 is now the default version for template projects.
 
 # 0.3.1 / 2015-12-09
 
