@@ -21,7 +21,7 @@ export default function(args, buildConfig) {
 
   return createWebpackConfig(process.cwd(), {
     server: true,
-    devtool: 'eval-source-map',
+    devtool: '#eval-source-map',
     entry: [
       // Polyfill EventSource for IE, as webpack-hot-middleware/client uses it
       require.resolve('eventsource-polyfill'),
