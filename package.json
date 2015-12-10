@@ -19,6 +19,9 @@
     "lib",
     "templates"
   ],
+  "engines": {
+    "node": ">=4.0.0"
+  },
   "dependencies": {
     "argv-set-env": "1.0.0",
     "copy-template-dir": "1.0.5",

@@ -4,6 +4,7 @@
 
 **Added:**
 
+- Added `"engines": {"node": ">=4.0.0"}` to `package.json` - nwb accidentally depends on this because it uses [qs](https://github.com/hapijs/qs) v6 - if it's a problem for you, please create an issue [[#19](https://github.com/insin/nwb/issues/19)]
 - Added `files` config to React component/web module `package.json` templates.
   - The `files` config for the React component template assumes that components published to npm with `require()` calls for CSS which ships with it will use a `css/` dir.
 - Added an ES6 build with untranspiled ES6 module usage [[#15](https://github.com/insin/nwb/issues/15)]
