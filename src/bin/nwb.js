@@ -38,6 +38,7 @@ Development commands:
                    --coverage  create code coverage report
                    --server    keep running tests on every change
   serve          serve an app, or a component's demo app, with hot reloading
+                   --fallback  serve the index page from any path
                    --info      show webpack module info
                    --port      port to run the dev server on [3000]
 `)

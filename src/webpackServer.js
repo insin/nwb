@@ -16,6 +16,7 @@ export default function(args, buildConfig) {
   debug('webpack config: %o', webpackConfig)
 
   devServer(webpackConfig, {
+    fallback: !!args.fallback,
     noInfo: !args.info,
     port: args.port || 3000,
     staticPath: server.staticPath

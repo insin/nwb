@@ -1,3 +1,6 @@
+import fs from 'fs'
+import path from 'path'
+
 import express from 'express'
 import webpack from 'webpack'
 
@@ -9,7 +12,7 @@ import webpack from 'webpack'
  * If static path config is also provided, express will also be used to serve
  * static content from the given path.
  */
-export default function server(webpackConfig, {noInfo, port, staticPath}) {
+export default function server(webpackConfig, {fallback, noInfo, port, staticPath}) {
   let app = express()
   let compiler = webpack(webpackConfig)
 
@@ -25,6 +28,21 @@ export default function server(webpackConfig, {noInfo, port, staticPath}) {
 
   if (staticPath) {
     app.use(express.static(staticPath))
+  }
+
+  if (fallback) {
+    app.use((req, res, next) => {
+      // Only fall back for GET methods which accept HTML and don't appear to
+      // end with a file extension.
+      if (req.method !== 'GET' || !req.accepts('html') || /\.[\w]{1,4}$/i.test(req.path)) {
+        return next()
+      }
+      fs.readFile(path.resolve('public/index.html'), 'utf8', (err, html) => {
+        if (err) return next(err)
+        // Rewrite relative build URLs to be absolute so they work from any path
+        res.send(html.replace(/="build\//g, '="/build/'))
+      })
+    })
   }
 
   app.listen(port, 'localhost', err => {

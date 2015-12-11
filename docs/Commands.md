@@ -42,6 +42,7 @@ Starts a development server which serves a React app with hot reloading.
 
 **Flags:**
 
+* `--fallback` - fall back to serving the index page from any path, for developing React apps which use the HTML5 History API
 * `--info` - print info about Webpack modules after rebuilds
 * `--port=3000` - change the port the dev server runs on
 
