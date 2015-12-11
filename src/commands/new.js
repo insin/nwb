@@ -44,7 +44,7 @@ function installReact(targetDir) {
 }
 
 let moduleCreators = {
-  [REACT_APP](args, name, targetDir) {
+  [REACT_APP](args, name, targetDir, cb) {
     let templateDir = path.join(__dirname, `../../templates/${REACT_APP}`)
     let templateVars = {name, nwbVersion, reactVersion}
     copyTemplateDir(templateDir, targetDir, templateVars, err => {
@@ -55,10 +55,11 @@ let moduleCreators = {
       console.log(`nwb: created ${targetDir}`)
       console.log('nwb: installing dependencies')
       installReact(targetDir)
+      cb()
     })
   },
 
-  [REACT_COMPONENT](args, name, targetDir) {
+  [REACT_COMPONENT](args, name, targetDir, cb) {
     getWebModulePrefs(args, ({umd, globalVariable}) => {
       let templateDir = path.join(__dirname, `../../templates/${REACT_COMPONENT}`)
       let templateVars = {umd, globalVariable, name, nwbVersion, reactVersion}
@@ -70,11 +71,12 @@ let moduleCreators = {
         console.log(`nwb: created ${targetDir}`)
         console.log('nwb: installing dependencies')
         installReact(targetDir)
+        cb()
       })
     })
   },
 
-  [WEB_MODULE](args, name, targetDir) {
+  [WEB_MODULE](args, name, targetDir, cb) {
     getWebModulePrefs(args, ({umd, globalVariable}) => {
       let templateDir = path.join(__dirname, `../../templates/${WEB_MODULE}`)
       let templateVars = {umd, globalVariable, name, nwbVersion}
@@ -84,12 +86,13 @@ let moduleCreators = {
           process.exit(1)
         }
         console.log(`nwb: created ${targetDir}`)
+        cb()
       })
     })
   }
 }
 
-export default function(args) {
+export default function(args, cb = () => {}) {
   if (args._.length === 1) {
     console.log(`usage: nwb new [${MODULE_TYPES.join('|')}] <name>`)
     process.exit(0)
@@ -116,5 +119,5 @@ export default function(args) {
   }
 
   let targetDir = path.join(process.cwd(), name)
-  moduleCreators[moduleType](args, name, targetDir)
+  moduleCreators[moduleType](args, name, targetDir, cb)
 }
