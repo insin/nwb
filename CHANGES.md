@@ -1,3 +1,5 @@
+# 0.4.0 / 2015-12-11
+
 **Added:**
 
 - Added `--fallback` option to `nwb serve`, for serving the index page from any path when developing React apps which use the HTML5 History API [[#16](https://github.com/insin/nwb/issues/16)]
@@ -10,6 +12,7 @@
 **Fixed:**
 
 - Added missing `main` config to React component/web module `package.json` templates, pointing at the ES5 build in `lib/`.
+- Express middleware wasn't included in npm package.
 
 **Changed:**
 
