@@ -1,3 +1,7 @@
+**Dependencies:**
+
+- expect v0.13.0 → [0.13.1](https://github.com/mjackson/expect/blob/master/CHANGES.md#v1131)
+
 # 0.4.0 / 2015-12-11
 
 **Added:**
