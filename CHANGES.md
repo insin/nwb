@@ -1,3 +1,9 @@
+# 0.4.1 / 2015-12-13
+
+**Fixed:**
+
+- Bad npm package for 0.4.0 - npm was reading the new `files` config from `package.json` in templates for React components/web modules and applying it when packing nwb itself for publishing.
+
 # 0.4.0 / 2015-12-11
 
 **Added:**
