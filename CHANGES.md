@@ -6,10 +6,15 @@
 
 - `files` config from template `package.json` was being used when packing nwb for publishing. Renamed them to `_package.json` to avoid this [[#22](https://github.com/insin/nwb/issues/22)]
 
+**Changed:**
+
+- Downgraded qs dependency so Node.js >= 4.0.0 isn't required [[#19](https://github.com/insin/nwb/issues/19)]
+
 **Dependencies:**
 
 - copy-template-dir: v1.0.5 → v1.1.0 - rename all files beginning with `_`
 - expect: v0.13.0 → [v0.13.2](https://github.com/mjackson/expect/blob/master/CHANGES.md#v1132) - better `Map` and `Set` support, dep upgrades
+- qs: v6.0.0 → v5.2.0
 
 # 0.4.1 / 2015-12-13
 
@@ -22,7 +27,7 @@
 **Added:**
 
 - Added `--fallback` option to `nwb serve`, for serving the index page from any path when developing React apps which use the HTML5 History API [[#16](https://github.com/insin/nwb/issues/16)]
-- Added `"engines": {"node": ">=4.0.0"}` to `package.json` - nwb accidentally depends on this because it uses [qs](https://github.com/hapijs/qs) v6 - if it's a problem for you, please create an issue [[#19](https://github.com/insin/nwb/issues/19)]
+- Added `"engines": {"node": ">=4.0.0"}` to `package.json` - nwb accidentally depends on this because it uses [qs](https://github.com/hapijs/qs) v6 [[#19](https://github.com/insin/nwb/issues/19)]
 - Added `files` config to React component/web module `package.json` templates.
   - The `files` config for the React component template assumes that components published to npm with `require()` calls for CSS which ships with it will use a `css/` dir.
 - Added a default ES6 build with untranspiled ES6 module usage [[#15](https://github.com/insin/nwb/issues/15)]
