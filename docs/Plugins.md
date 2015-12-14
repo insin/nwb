@@ -6,6 +6,7 @@ CSS preprocessors provide a Webpack loader which processes modules written in al
 
 * [nwb-less](https://github.com/insin/nwb-less) - adds processing of `.less` files
 * [nwb-sass](https://github.com/insin/nwb-sass) - adds processing of `.scss` files
+* [nwb-stylus](https://github.com/insin/nwb-stylus) - adds processing of `.styl` files
 
 ### Implementing Plugins
 
