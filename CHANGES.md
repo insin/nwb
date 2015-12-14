@@ -9,7 +9,7 @@
 **Dependencies:**
 
 - copy-template-dir: v1.0.5 → v1.1.0 - rename all files beginning with `_`
-- expect: v0.13.0 → [v0.13.2](https://github.com/mjackson/expect/blob/master/CHANGES.md#v1132)
+- expect: v0.13.0 → [v0.13.2](https://github.com/mjackson/expect/blob/master/CHANGES.md#v1132) - better `Map` and `Set` support, dep upgrades
 
 # 0.4.1 / 2015-12-13
 
