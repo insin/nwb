@@ -12,6 +12,7 @@
     "build:watch": "rimraf lib && babel src --watch --loose all --out-dir lib",
     "lint": "eslint src tests",
     "test": "npm run lint && mocha --compilers js:babel-core/register tests/**/*-test.js",
+    "test:coverage": "npm run lint && babel-node node_modules/isparta/bin/isparta cover --report html --report lcov node_modules/mocha/bin/_mocha -- tests/**/*-test.js",
     "test:watch": "mocha --watch --compilers js:babel-core/register tests/**/*-test.js --grep command: --invert"
   },
   "files": [
@@ -59,6 +60,7 @@
 
     "mocha": "2.3.4",
     "expect": "1.13.2",
+    "isparta": "3.5.3",
 
     "webpack": "1.12.9",
     "autoprefixer-loader": "3.1.0",

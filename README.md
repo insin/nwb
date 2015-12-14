@@ -2,6 +2,7 @@
 
 [![Travis][build-badge]][build]
 [![npm package][npm-badge]][npm]
+[![Coveralls][coveralls-badge]][coveralls]
 
 nwb is a development tool for [React](https://facebook.github.io/react/) apps, React components and other JavaScript modules.
 
@@ -119,3 +120,6 @@ Development commands:
 
 [npm-badge]: https://img.shields.io/npm/v/nwb.svg?style=flat-square
 [npm]: https://www.npmjs.org/package/nwb
+
+[coveralls-badge]: https://img.shields.io/coveralls/insin/nwb/master.svg?style=flat-square
+[coveralls]: https://coveralls.io/github/insin/nwb
