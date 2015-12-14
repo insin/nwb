@@ -1,5 +1,10 @@
+**Fixed:**
+
+- `files` config from template `package.json` was being used when packing nwb for publishing. Renamed them to `_package.json` to avoid this [[#22](https://github.com/insin/nwb/issues/22)]
+
 **Dependencies:**
 
+- copy-template-dir: v1.0.5 → v1.1.0 - rename all files beginning with `_`
 - expect v0.13.0 → [0.13.1](https://github.com/mjackson/expect/blob/master/CHANGES.md#v1131)
 
 # 0.4.1 / 2015-12-13
