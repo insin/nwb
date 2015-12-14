@@ -1,0 +1,24 @@
+{
+  "name": "nwb-stylus",
+  "version": "0.5.0",
+  "description": "Stylus plugin for nwb",
+  "main": "index.js",
+  "files": [
+    "index.js"
+  ],
+  "dependencies": {
+    "stylus-loader": "^1.4.2"
+  },
+  "author": "Jonny Buchanan <jonathan.buchanan@gmail.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/insin/nwb-stylus.git"
+  },
+  "keywords": [
+    "nwb",
+    "nwb-plugin",
+    "nwb-css-preprocessor-plugin",
+    "stylus"
+  ]
+}
