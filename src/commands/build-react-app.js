@@ -33,7 +33,7 @@ let buildConfig = () => {
 }
 
 export default function(args) {
-  require('./clean-app')
+  require('./clean-app')(args)
 
   console.log(`nwb: build-react-app`)
   webpackBuild(args, buildConfig)

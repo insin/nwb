@@ -1,4 +1,6 @@
 import exec from '../exec'
 
-console.log('nwb: clean-demo')
-exec('rimraf', ['demo/dist'])
+export default function(args) {
+  console.log('nwb: clean-demo')
+  exec('rimraf', ['demo/dist'])
+}

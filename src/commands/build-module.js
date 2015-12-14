@@ -8,7 +8,7 @@ import exec from '../exec'
 import getUserConfig from '../getUserConfig'
 
 export default function(args) {
-  require('./clean-module')
+  require('./clean-module')(args)
 
   let cwd = path.join(__dirname, '..')
   let es6 = path.resolve('es6')

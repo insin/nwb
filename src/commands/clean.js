@@ -6,15 +6,15 @@ import getUserConfig from '../getUserConfig'
 export default function(args) {
   let {type, umd} = getUserConfig(args)
   if (type === REACT_APP) {
-    require('./clean-app')
+    require('./clean-app')(args)
   }
   else if (type === REACT_COMPONENT || type === WEB_MODULE) {
-    require('./clean-module')
+    require('./clean-module')(args)
     if (umd) {
-      require('./clean-umd')
+      require('./clean-umd')(args)
     }
     if (type === REACT_COMPONENT || glob.sync('demo/').length > 0) {
-      require('./clean-demo')
+      require('./clean-demo')(args)
     }
   }
 }

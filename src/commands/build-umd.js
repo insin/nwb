@@ -56,7 +56,7 @@ export default function(args, cb) {
     }
   }
 
-  require('./clean-umd')
+  require('./clean-umd')(args)
 
   console.log('nwb: build-umd')
   process.env.NODE_ENV = 'development'

@@ -8,7 +8,7 @@ import webpackBuild from '../webpackBuild'
 export default function(args) {
   let pkg = require(path.resolve('package.json'))
 
-  require('./clean-demo')
+  require('./clean-demo')(args)
 
   console.log('nwb: build-demo')
   webpackBuild(args, {

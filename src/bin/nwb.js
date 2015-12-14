@@ -68,9 +68,7 @@ catch (e) {
 
 try {
   let commandModule = require(commandModulePath)
-  if (typeof commandModule == 'function') {
-    commandModule(args)
-  }
+  commandModule(args)
 }
 catch (e) {
   console.error(`nwb: error running ${command}:`)
