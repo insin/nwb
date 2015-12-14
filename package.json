@@ -59,7 +59,7 @@
     "phantomjs": "1.9.19",
 
     "mocha": "2.3.4",
-    "expect": "1.13.2",
+    "expect": "1.13.3",
     "isparta": "3.5.3",
 
     "webpack": "1.12.9",

@@ -8,12 +8,12 @@
 
 **Changed:**
 
-- Downgraded qs dependency so Node.js >= 4.0.0 isn't required [[#19](https://github.com/insin/nwb/issues/19)]
+- Downgraded qs dependency so Node.js 0.12.x can be used [[#19](https://github.com/insin/nwb/issues/19)]
 
 **Dependencies:**
 
 - copy-template-dir: v1.0.5 → v1.1.0 - rename all files beginning with `_`
-- expect: v0.13.0 → [v0.13.2](https://github.com/mjackson/expect/blob/master/CHANGES.md#v1132) - better `Map` and `Set` support, dep upgrades
+- expect: v0.13.0 → [v0.13.3](https://github.com/mjackson/expect/blob/master/CHANGES.md#v1133) - `Map`, `Set` and circular comparison fixes
 - qs: v6.0.0 → v5.2.0
 
 # 0.4.1 / 2015-12-13
