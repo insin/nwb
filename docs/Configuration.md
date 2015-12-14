@@ -25,7 +25,7 @@ Use this field to provide your own options for Babel (version 5) - [see the Babe
 e.g. to use `async`/`await` transforms, you will need to configure Babel's `stage` and `optional` settings:
 
 ```js
-{
+module.exports = {
   // ...
   babel: {
     stage: 0,
@@ -45,7 +45,7 @@ You can configure a `define` object to add your own constant values.
 e.g. to replace all occurrences of `__VERSION__` with a string containing your app's version from its `package.json`:
 
 ```js
-{
+module.exports = {
   define: {
     __VERSION__: JSON.stringify(require('./package.json').version)
   }
@@ -65,7 +65,7 @@ A mapping from `peerDependency` module names to the global variables they're exp
 e.g. if you're creating a React component which also depends on [React Router](https://github.com/rackt/react-router):
 
 ```js
-{
+module.exports = {
   externals: {
     'react': 'React',
     'react-router': 'ReactRouter'
@@ -90,7 +90,7 @@ By default, Karma will attempt to run tests from `'tests/**/*-test.js'` - you ca
 e.g. if you want to colocate your tests with your source:
 
 ```js
-{
+module.exports = {
   karma: {
     tests: 'src/**/*-test.js'
   }
@@ -105,7 +105,7 @@ You must provide the plugin for any custom framework you want to use and manage 
 npm install --save-dev karma-tap
 ```
 ```js
-{
+module.exports = {
   karma: {
     frameworks: ['tap'],
     plugins: [
@@ -118,7 +118,7 @@ npm install --save-dev karma-tap
 nwb can also determine the correct framework name given the plugin itself, so the following is functionally identical to the configuration above:
 
 ```js
-{
+module.exports = {
   karma: {
     frameworks: [
       require('karma-tap')
@@ -130,7 +130,7 @@ nwb can also determine the correct framework name given the plugin itself, so th
 If a plugin module provides multiple plugins, nwb will only infer the name of the first plugin it provides, so pass it using `plugins` instead and list all the frameworks you want to use, for clarity:
 
 ```js
-{
+module.exports = {
   karma: {
     frameworks: ['mocha', 'chai', 'chai-as-promised'],
     plugins: [
@@ -149,7 +149,7 @@ Customising reporters follows the same principle as frameworks, just using the `
 For built-in reporters, or nwb's versfon of the Mocha reporter, just pass a name:
 
 ```js
-{
+module.exports = {
   karma: {
     reporters: ['progress']
   }
@@ -162,7 +162,7 @@ For custom reporters, install and provide the plugin:
 npm install --save-dev karma-tape-reporter
 ```
 ```js
-{
+module.exports = {
   karma: {
     reporters: [
       require('karma-tape-reporter')
@@ -186,7 +186,7 @@ Refer to each loader's documentation for configuration options which can be set 
 e.g., to enable [CSS Modules][CSS Modules]:
 
 ```js
-{
+module.exports = {
   loaders: {
     css: {
       query: {
@@ -262,7 +262,7 @@ When running Karma tests with coverage enabled, the following loader will be add
   You may need to tweak this loader if you're [changing where Karma looks for tests](#tests-string) - e.g. if you're colocating tests in `__tests__` directories, you will want to configure isparta-loader to ignore these:
 
   ```js
-  {
+  module.exports = {
     loaders: {
       isparta: {
         exclude: /__tests__/
