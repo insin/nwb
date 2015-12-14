@@ -2,6 +2,7 @@ import expect from 'expect'
 
 import createWebpackConfig, {
   combineLoaders,
+  getTopLevelLoaderConfig,
   mergeLoaderConfig,
   styleLoaderName
 } from '../src/createWebpackConfig'
@@ -193,5 +194,64 @@ describe('combineLoaders()', () => {
       {loader: 'two', query: {}},
       {loader: 'three'}
     ])).toEqual('one?a=1&b=2!two!three')
+  })
+})
+
+describe('getTopLevelLoaderConfig()', () => {
+  describe('without any top level config specified', () => {
+    it('returns an empty object', () => {
+      expect(getTopLevelLoaderConfig(null)).toEqual({})
+      expect(getTopLevelLoaderConfig({})).toEqual({})
+    })
+  })
+  it('trusts the user if they specify their own config prop for a loader', () => {
+    expect(getTopLevelLoaderConfig({test: {config: {a: 1}, query: {config: 'testLoader'}}}))
+      .toEqual({testLoader: {a: 1}})
+  })
+  it('throws if a top-level webpack config prop is used', () => {
+    expect(getTopLevelLoaderConfig)
+      .withArgs({test: {config: {a: 1}, query: {config: 'entry'}}})
+      .toThrow(/this is reserved for use by Webpack/)
+  })
+  it('uses "babel" as the default config prop for babel-loader', () => {
+    expect(getTopLevelLoaderConfig({babel: {config: {stage: 0}}}))
+      .toEqual({babel: {stage: 0}})
+  })
+  it('throws if other top-level config is given', () => {
+    expect(getTopLevelLoaderConfig)
+      .withArgs({test: {config: {a: 1}}})
+      .toThrow(/The test loader doesn't appear to support a default top-level config object/)
+  })
+
+  describe('with CSS preprocessors available', () => {
+    let cssPreprocessors = {
+      sass: {
+        test: /\.scss$/,
+        loader: 'path/to/sass-loader.js',
+        defaultConfig: 'sassLoader'
+      },
+      less: {
+        test: /\.less$/,
+        loader: 'path/to/less-loader.js'
+      }
+    }
+
+    it('uses the default config prop for a CSS preprocessor', () => {
+      expect(getTopLevelLoaderConfig({sass: {config: {a: 1}}}, cssPreprocessors))
+        .toEqual({sassLoader: {a: 1}})
+    })
+    it('throws if the same config prop is configured twice', () => {
+      expect(getTopLevelLoaderConfig)
+        .withArgs({
+          sass: {config: {a: 1}},
+          'vendor-sass': {config: {b: 1}}
+        }, cssPreprocessors)
+        .toThrow(/this has alraedy been used/)
+    })
+    it('throws if a default config prop is not available', () => {
+      expect(getTopLevelLoaderConfig)
+        .withArgs({less: {config: {a: 1}}}, cssPreprocessors)
+        .toThrow(/The less CSS preprocessor loader doesn't support a default top-level config object/)
+    })
   })
 })

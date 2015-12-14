@@ -34,7 +34,7 @@ e.g. to use `async`/`await` transforms, you will need to configure Babel's `stag
 }
 ```
 
-If provided, this config will also be used to configure the `babel-loader` Webpack loader if there isn't any `query` configuration already specified for it in [`loaders`](#loaders-object).
+If provided, this config will also be used to configure the `babel-loader` Webpack loader if there isn't any other configuration specified for it in [`loaders`](#loaders-object).
 
 #### `define`: `Object`
 
@@ -191,6 +191,24 @@ e.g., to enable [CSS Modules][CSS Modules]:
     css: {
       query: {
         modules: true
+      }
+    }
+  }
+}
+```
+
+If a loader supports configuration via a top-level webpack configuration property, this can be provided as `config`. This is primarily for loaders which can't be configured via `query` as they have configuration which can't be serialised, such as instances of plugins.
+
+e.g. to use the `nib` plugin with the [Stylus](http://learnboost.github.io/stylus/) preprocessor provided by [nwb-stylus](https://github.com/insin/nwb-stylus):
+
+```js
+var nib = require('nib')
+
+module.exports = {
+  loaders: {
+    stylus: {
+      config: {
+        use: [nib()]
       }
     }
   }

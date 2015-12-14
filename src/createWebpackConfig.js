@@ -19,6 +19,10 @@ import merge from 'webpack-merge'
 import debug from './debug'
 import {endsWith, findNodeModules, typeOf} from './utils'
 
+// Top-level property names reserved for webpack config
+// From http://webpack.github.io/docs/configuration.html
+const WEBPACK_RESERVED = 'context entry output module resolve resolveLoader externals target bail profile cache watch watchOptions debug devtool devServer node amd loader recordsPath recordsInputPath recordsOutputPath plugins'.split(' ')
+
 export let combineLoaders = loaders =>
   loaders.map(loader => {
     let query = qs.stringify(loader.query, {arrayFormat: 'brackets'})
@@ -29,7 +33,10 @@ export let combineLoaders = loaders =>
  * Merge webpack loader config ({test, loader, query, inclue, exclude}) objects.
  */
 export function mergeLoaderConfig(defaultConfig = {}, buildConfig = {}, userConfig = {}) {
-  let loader = merge(defaultConfig, buildConfig, userConfig)
+  // Don't include a 'config' object if the user provided one - this will be
+  // configurd at the top level instead.
+  let {config, ...userLoaderConfig} = userConfig
+  let loader = merge(defaultConfig, buildConfig, userLoaderConfig)
   if (loader.query && Object.keys(loader.query).length === 0) {
     delete loader.query
   }
@@ -271,6 +278,60 @@ export function createPlugins(server, cwd, {
 }
 
 /**
+ * Extract top-level loader configuration provided by the user.
+ */
+export function getTopLevelLoaderConfig(userLoaderConfig, cssPreprocessors = {}) {
+  if (!userLoaderConfig || Object.keys(userLoaderConfig).length === 0) {
+    return {}
+  }
+
+  let topLevelLoaderConfig = {}
+  Object.keys(userLoaderConfig).forEach(loaderId => {
+    let loaderConfig = userLoaderConfig[loaderId]
+    if (!('config' in loaderConfig)) return
+
+    // Determine the proeprty to set top level loader config under
+    let configPropertyName
+
+    // Trust the user to specify their own config key for loaders with support
+    if (loaderConfig.query && 'config' in loaderConfig.query) {
+      configPropertyName = loaderConfig.query.config
+    }
+    else {
+      // Otherwise, determine the correct config key
+      let id = loaderId.replace(/^vendor-/, '')
+      if (id in cssPreprocessors) {
+        if (!cssPreprocessors[id].defaultConfig) {
+          throw new Error(`The ${id} CSS preprocessor loader doesn't support a default top-level config object.`)
+        }
+        configPropertyName = cssPreprocessors[id].defaultConfig
+      }
+      else if (id === 'babel') {
+        configPropertyName = 'babel'
+      }
+      else {
+        throw new Error(`The ${id} loader doesn't appear to support a default top-level config object.`)
+      }
+    }
+
+    if (WEBPACK_RESERVED.indexOf(configPropertyName) !== -1) {
+      throw new Error(
+        `User config for the ${loaderId} loader cannot be set in ${configPropertyName} - this is reserved for use by Webpack.`
+      )
+    }
+    else if (configPropertyName in topLevelLoaderConfig) {
+      throw new Error(
+        `User config for the ${loaderId} loader cannot be set in ${configPropertyName} - this has alraedy been used.`
+      )
+    }
+
+    topLevelLoaderConfig[configPropertyName] = loaderConfig.config
+  })
+
+  return topLevelLoaderConfig
+}
+
+/**
  * Create a webpack config with a curated set of default loaders suitable for
  * creating a static build (default) or serving an app with hot reloading.
  */
@@ -281,8 +342,11 @@ export default function createWebpackConfig(cwd, buildConfig, pluginConfig = {},
   debug('createWebpackConfig buildConfig = %j', buildConfig)
 
   let {
-    loaders = {}, plugins = {}, resolve = {}, server = false, ...otherConfig
+    loaders = {}, plugins = {}, resolve = {}, server = false, ...otherBuildConfig
   } = buildConfig
+
+  let topLevelLoaderConfig = getTopLevelLoaderConfig(userConfig.loaders,
+                                                     pluginConfig.cssPreprocessors)
 
   return {
     module: {
@@ -297,6 +361,7 @@ export default function createWebpackConfig(cwd, buildConfig, pluginConfig = {},
       },
       extensions: ['', '.web.js', '.js', '.jsx', '.json']
     }, resolve),
-    ...otherConfig
+    ...otherBuildConfig,
+    ...topLevelLoaderConfig
   }
 }

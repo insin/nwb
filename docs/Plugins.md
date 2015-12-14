@@ -20,16 +20,19 @@ CSS preprocessor plugins must export a configuration object in the following for
    ```js
    {
       cssPreprocessors: {
-        'preprocessor id': {
+        'preprocessor id here': {
           test: /\.regexp for filenames to be preprocessed$/,
           loader: 'absolute path to a webpack loader module.js',
+          defaultConfig: 'default top-level webpack config prop for loader',
           ...{other: 'webpack loader config, e.g. default query config'}
         }
       }
    }
    ```
 
-The preprocessor id is critical - this will be used to generate names for the style loaders created for the preprocessor, and this id will be the one users will use in their `nwb.config.js` to apply configuration to the preprocessing loader.
+The preprocessor id is critical - this will be used to generate names for the style loaders created for the preprocessor, and this will be what users will use in their `nwb.config.js` to apply configuration to the preprocessor's webpack loader.
+
+If the preprocessor's webpack loader supports reading configuration from a top-level webpack configuration property, its name should be configured as `defaultConfig`.
 
 ----
 
@@ -40,7 +43,8 @@ module.exports = {
   cssPreprocessors: {
     sass: {
       test: /\.scss$/,
-      loader: require.resolve('sass-loader')
+      loader: require.resolve('sass-loader'),
+      defaultConfig: 'sassLoader'
     }
   }
 }
