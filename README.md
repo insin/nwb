@@ -116,6 +116,8 @@ Development commands:
 
 ## MIT Licensed
 
+*Operating system icons created with [Icons8](https://icons8.com/)*
+
 [travis-badge]: https://img.shields.io/travis/insin/nwb/master.svg?style=flat-square
 [travis]: https://travis-ci.org/insin/nwb
 
