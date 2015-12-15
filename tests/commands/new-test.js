@@ -5,6 +5,8 @@ import glob from 'glob'
 import rimraf from 'rimraf'
 import temp from 'temp'
 
+const INSTALL_TIMEOUT = 40000
+
 let cli = require('../../src/cli')
 let originalCwd
 let tmpDir
@@ -56,7 +58,7 @@ describe('command: nwb new react-component', () => {
   })
 
   it('creates a new react component with a given name', function(done) {
-    this.timeout(20000)
+    this.timeout(INSTALL_TIMEOUT)
     cli(['new', 'react-component', 'test-component', '-f'], () => {
       expect(glob.sync('**', {dot: true, 'ignore': 'test-component/node_modules/**'})).toEqual([
         'test-component',
@@ -98,7 +100,7 @@ describe('command: nwb new react-app', () => {
   })
 
   it('creates a new react app with a given name', function(done) {
-    this.timeout(20000)
+    this.timeout(INSTALL_TIMEOUT)
     cli(['new', 'react-app', 'test-app', '-f'], () => {
       expect(glob.sync('**', {dot: true, 'ignore': 'test-app/node_modules/**'})).toEqual([
         'test-app',
