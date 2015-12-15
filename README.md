@@ -1,6 +1,7 @@
 # nwb - npm web builder
 
-[![Travis][build-badge]][build]
+![Linux](linux.png) [![Travis][travis-badge]][travis]
+![Windows](windows.png) [![Appveyor][appveyor-badge]][appveyor]
 [![npm package][npm-badge]][npm]
 [![Coveralls][coveralls-badge]][coveralls]
 
@@ -115,8 +116,11 @@ Development commands:
 
 ## MIT Licensed
 
-[build-badge]: https://img.shields.io/travis/insin/nwb/master.svg?style=flat-square
-[build]: https://travis-ci.org/insin/nwb
+[travis-badge]: https://img.shields.io/travis/insin/nwb/master.svg?style=flat-square
+[travis]: https://travis-ci.org/insin/nwb
+
+[appveyor-badge]: https://img.shields.io/appveyor/ci/insin/nwb/master.svg?style=flat-square
+[appveyor]: https://ci.appveyor.com/project/insin/nwb
 
 [npm-badge]: https://img.shields.io/npm/v/nwb.svg?style=flat-square
 [npm]: https://www.npmjs.org/package/nwb
