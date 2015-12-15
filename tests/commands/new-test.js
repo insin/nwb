@@ -5,7 +5,7 @@ import glob from 'glob'
 import rimraf from 'rimraf'
 import temp from 'temp'
 
-let newCmd = require('../../src/commands/new')
+let cli = require('../../src/cli')
 let originalCwd
 let tmpDir
 
@@ -22,7 +22,7 @@ describe('command: nwb new web-module', () => {
   })
 
   it('creates a new web module with a given name', function(done) {
-    newCmd({_: ['new', 'web-module', 'test-module'], f: true}, () => {
+    cli(['new', 'web-module', 'test-module', '-f'], () => {
       expect(glob.sync('**', {dot: true})).toEqual([
         'test-module',
         'test-module/.gitignore',
@@ -57,7 +57,7 @@ describe('command: nwb new react-component', () => {
 
   it('creates a new react component with a given name', function(done) {
     this.timeout(20000)
-    newCmd({_: ['new', 'react-component', 'test-component'], f: true}, () => {
+    cli(['new', 'react-component', 'test-component', '-f'], () => {
       expect(glob.sync('**', {dot: true, 'ignore': 'test-component/node_modules/**'})).toEqual([
         'test-component',
         'test-component/.gitignore',
@@ -99,7 +99,7 @@ describe('command: nwb new react-app', () => {
 
   it('creates a new react app with a given name', function(done) {
     this.timeout(20000)
-    newCmd({_: ['new', 'react-app', 'test-app'], f: true}, () => {
+    cli(['new', 'react-app', 'test-app', '-f'], () => {
       expect(glob.sync('**', {dot: true, 'ignore': 'test-app/node_modules/**'})).toEqual([
         'test-app',
         'test-app/.gitignore',
