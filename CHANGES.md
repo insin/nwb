@@ -1,3 +1,5 @@
+# 0.5.0 / 2015-12-15
+
 **Added:**
 
 - Top-level Webpack config can now be provided for loaders which support it, as a `config` object in their `nwb.config.js` `loaders` configuration. This is intended for loaders which can't use serialisable `query` config due to plugins, such as some CSS preprocessors [[#18](https://github.com/insin/nwb/issues/18)]
@@ -8,13 +10,13 @@
 
 **Changed:**
 
-- Downgraded qs dependency so Node.js 0.12.x can be used [[#19](https://github.com/insin/nwb/issues/19)]
+- Downgraded qs dependency so nwb can be used with Node.js 0.12.x [[#19](https://github.com/insin/nwb/issues/19)]
 
 **Dependencies:**
 
 - copy-template-dir: v1.0.5 → v1.1.0 - rename all files beginning with `_`
 - expect: v0.13.0 → [v0.13.3](https://github.com/mjackson/expect/blob/master/CHANGES.md#v1133) - `Map`, `Set` and circular comparison fixes
-- qs: v6.0.0 → v5.2.0
+- qs: v6.0.0 → v5.2.0 - downgrade to lose Node.js >= 4.0.0 requirement
 
 # 0.4.1 / 2015-12-13
 

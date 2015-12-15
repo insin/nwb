@@ -1,7 +1,7 @@
 {
   "name": "nwb",
   "description": "npm web builder - a development tool for React and web modules",
-  "version": "0.4.1",
+  "version": "0.5.0",
   "license": "MIT",
   "author": "Jonny Buchanan <jonathan.buchanan@gmail.com>",
   "bin": {
