@@ -5,7 +5,7 @@ import serveReact from '../serveReact'
 /**
  * Serve a web module React demo app from demo/src/index.js.
  */
-export default function(args) {
+export default function(args, cb) {
   let pkg = require(path.resolve('package.json'))
   console.log('nwb: serve-react-demo')
   serveReact(args, {
@@ -22,5 +22,5 @@ export default function(args) {
         title: `${pkg.name} ${pkg.version} Demo`
       }
     }
-  })
+  }, cb)
 }

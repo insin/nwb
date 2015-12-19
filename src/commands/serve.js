@@ -5,10 +5,10 @@ import getUserConfig from '../getUserConfig'
 export default function(args, cb) {
   let userConfig = getUserConfig(args)
   if (userConfig.type === REACT_APP) {
-    require('./serve-react-app')(args)
+    require('./serve-react-app')(args, cb)
   }
   else if (userConfig.type === REACT_COMPONENT) {
-    require('./serve-react-demo')(args)
+    require('./serve-react-demo')(args, cb)
   }
   else {
     cb(new UserError('nwb: unable to serve anything in the current directory'))

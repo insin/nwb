@@ -29,5 +29,5 @@ export default function(args, cb) {
         title: args.title || 'nwb: serve-react'
       }
     }
-  })
+  }, cb)
 }

@@ -5,7 +5,7 @@ import createServeReactWebpackConfig from './createServeReactWebpackConfig'
 /**
  * Start a development server with Webpack using a given build configuration.
  */
-export default function(args, buildConfig) {
+export default function(args, buildConfig, cb) {
   // Force environment variable to development
   process.env.NODE_ENV = 'development'
 
@@ -20,5 +20,5 @@ export default function(args, buildConfig) {
     noInfo: !args.info,
     port: args.port || 3000,
     staticPath: server.staticPath
-  })
+  }, cb)
 }
