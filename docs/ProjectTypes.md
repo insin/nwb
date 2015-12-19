@@ -2,7 +2,7 @@
 
 nwb supports creation and development of the following project types:
 
-**React apps** - React-driven web applications
+**React apps** - React web applications.
 
 **React component modules** - reusable React components which will be published to npm.
 

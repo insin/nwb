@@ -1,7 +1,8 @@
 import {REACT_APP, REACT_COMPONENT} from '../constants'
+import {UserError} from '../errors'
 import getUserConfig from '../getUserConfig'
 
-export default function(args) {
+export default function(args, cb) {
   let userConfig = getUserConfig(args)
   if (userConfig.type === REACT_APP) {
     require('./serve-react-app')(args)
@@ -10,7 +11,6 @@ export default function(args) {
     require('./serve-react-demo')(args)
   }
   else {
-    console.log('nwb: unable to serve anything in the current module')
-    process.exit(1)
+    cb(new UserError('nwb: unable to serve anything in the current directory'))
   }
 }

@@ -2,6 +2,7 @@ import assert from 'assert'
 import path from 'path'
 
 import getUserConfig from '../getUserConfig'
+import {UserError} from '../errors'
 import webpackBuild from '../webpackBuild'
 
 function createBanner(pkg) {
@@ -36,8 +37,7 @@ export default function(args, cb) {
   let userConfig = getUserConfig(args)
 
   if (!userConfig.umd) {
-    console.error(`nwb: the UMD build for this module is disabled by nwb.config.js (umd = ${userConfig.umd})`)
-    process.exit(1)
+    return cb(new UserError(`nwb: the UMD build for this module is disabled by nwb.config.js (umd = ${userConfig.umd})`))
   }
 
   assert(userConfig.global, 'global config is required to create a UMD build')
@@ -60,7 +60,8 @@ export default function(args, cb) {
 
   console.log('nwb: build-umd')
   process.env.NODE_ENV = 'development'
-  webpackBuild(args, buildConfig, () => {
+  webpackBuild(args, buildConfig, err => {
+    if (err) return cb(err)
     process.env.NODE_ENV = 'production'
     buildConfig.devtool = 'source-map'
     buildConfig.output.filename = `${pkg.name}.min.js`

@@ -6,16 +6,17 @@ import inquirer from 'inquirer'
 import glob from 'glob'
 
 import {
-  REACT_APP, REACT_COMPONENT, REACT_VERSION as reactVersion, WEB_MODULE, MODULE_TYPES
+  REACT_APP, REACT_COMPONENT, REACT_VERSION as reactVersion, WEB_MODULE, PROJECT_TYPES
 } from '../constants'
 import debug from '../debug'
+import {UserError} from '../errors'
 import pkg from '../../package.json'
 
 let nwbVersion = `~${pkg.version}`
 
-function getWebModulePrefs(args, cb) {
+function getWebModulePrefs(args, done) {
   if (args.f) {
-    return cb({umd: false, globalVariable: ''})
+    return done({umd: false, globalVariable: ''})
   }
   inquirer.prompt([
     {
@@ -31,7 +32,7 @@ function getWebModulePrefs(args, cb) {
       message: 'Which global variable should the UMD build export?',
       default: ''
     }
-  ], cb)
+  ], done)
 }
 
 function installReact(targetDir) {
@@ -43,15 +44,12 @@ function installReact(targetDir) {
   })
 }
 
-let moduleCreators = {
+let projectCreators = {
   [REACT_APP](args, name, targetDir, cb) {
     let templateDir = path.join(__dirname, `../../templates/${REACT_APP}`)
     let templateVars = {name, nwbVersion, reactVersion}
     copyTemplateDir(templateDir, targetDir, templateVars, err => {
-      if (err) {
-        console.error(err.stack)
-        process.exit(1)
-      }
+      if (err) return cb(err)
       console.log(`nwb: created ${targetDir}`)
       console.log('nwb: installing dependencies')
       installReact(targetDir)
@@ -64,10 +62,7 @@ let moduleCreators = {
       let templateDir = path.join(__dirname, `../../templates/${REACT_COMPONENT}`)
       let templateVars = {umd, globalVariable, name, nwbVersion, reactVersion}
       copyTemplateDir(templateDir, targetDir, templateVars, err => {
-        if (err) {
-          console.error(err.stack)
-          process.exit(1)
-        }
+        if (err) return cb(err)
         console.log(`nwb: created ${targetDir}`)
         console.log('nwb: installing dependencies')
         installReact(targetDir)
@@ -81,10 +76,7 @@ let moduleCreators = {
       let templateDir = path.join(__dirname, `../../templates/${WEB_MODULE}`)
       let templateVars = {umd, globalVariable, name, nwbVersion}
       copyTemplateDir(templateDir, targetDir, templateVars, err => {
-        if (err) {
-          console.error(err.stack)
-          process.exit(1)
-        }
+        if (err) return cb(err)
         console.log(`nwb: created ${targetDir}`)
         cb()
       })
@@ -92,32 +84,27 @@ let moduleCreators = {
   }
 }
 
-export default function(args, cb = () => {}) {
+export default function(args, cb) {
   if (args._.length === 1) {
-    console.log(`usage: nwb new [${MODULE_TYPES.join('|')}] <name>`)
-    process.exit(0)
+    return cb(new UserError(`usage: nwb new [${PROJECT_TYPES.join('|')}] <name>`))
   }
 
-  let moduleType = args._[1]
-  if (!moduleType) {
-    console.error(`nwb: a module type must be provided, one of: ${MODULE_TYPES.join(', ')}`)
-    process.exit(1)
+  let projectType = args._[1]
+  if (!projectType) {
+    return cb(new UserError(`nwb: a project type must be provided, one of: ${PROJECT_TYPES.join(', ')}`))
   }
-  if (MODULE_TYPES.indexOf(moduleType) === -1) {
-    console.error(`nwb: module type must be one of: ${MODULE_TYPES.join(', ')}`)
-    process.exit(1)
+  if (PROJECT_TYPES.indexOf(projectType) === -1) {
+    return cb(new UserError(`nwb: project type must be one of: ${PROJECT_TYPES.join(', ')}`))
   }
 
   let name = args._[2]
   if (!name) {
-    console.error(`nwb: a module name must be provided`)
-    process.exit(1)
+    return cb(new UserError(`nwb: a project name must be provided`))
   }
   if (glob.sync(`${name}/`).length !== 0) {
-    console.error(`nwb: "${name}" directory already exists`)
-    process.exit(1)
+    return cb(new UserError(`nwb: "${name}" directory already exists`))
   }
 
   let targetDir = path.join(process.cwd(), name)
-  moduleCreators[moduleType](args, name, targetDir, cb)
+  projectCreators[projectType](args, name, targetDir, cb)
 }

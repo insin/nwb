@@ -32,9 +32,9 @@ let buildConfig = () => {
   return config
 }
 
-export default function(args) {
+export default function(args, cb) {
   require('./clean-app')(args)
 
   console.log(`nwb: build-react-app`)
-  webpackBuild(args, buildConfig)
+  webpackBuild(args, buildConfig, cb)
 }

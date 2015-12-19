@@ -1,3 +1,7 @@
+**Fixed:**
+
+- Use a non-zero exit code when displaying usage or otherwise exiting due to missing arguments.
+
 # 0.5.0 / 2015-12-15
 
 **Added:**

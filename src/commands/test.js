@@ -1,9 +1,8 @@
 import path from 'path'
 
-import debug from '../debug'
 import exec from '../exec'
 
-export default function(args) {
+export default function(args, cb) {
   let config = path.join(__dirname, '../karma.js')
   let cwd = process.cwd()
   let karmaArgs = ['start', config, `--set-env-ORIGINAL_CWD=${cwd}`]
@@ -19,9 +18,9 @@ export default function(args) {
     exec('karma', karmaArgs, {
       cwd: path.resolve(__dirname, '../../')
     })
+    cb()
   }
   catch (e) {
-    debug(e.stack)
-    process.exit(1)
+    cb(e)
   }
 }

@@ -41,7 +41,7 @@ export default function(argv, cb) {
                      --info      show webpack module info
                      --port      port to run the dev server on [3000]
   `)
-    process.exit(0)
+    process.exit(args.help ? 0 : 1)
   }
 
   let command = args._[0]

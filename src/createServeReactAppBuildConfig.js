@@ -2,6 +2,8 @@ import assert from 'assert'
 
 import resolve from 'resolve'
 
+import {UserError} from './errors'
+
 /**
  * Creates a build configuration object which will be used to create a Webpack
  * config for serving a React app.
@@ -23,8 +25,7 @@ export default function(config) {
     reactPath = resolve.sync('react', {basedir: process.cwd()})
   }
   catch (e) {
-    console.error('nwb: React must be installed locally to serve a React app')
-    process.exit(1)
+    throw new UserError('nwb: React must be installed locally to serve a React app')
   }
 
   return {

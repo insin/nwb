@@ -5,7 +5,7 @@ import webpackBuild from '../webpackBuild'
 /**
  * Build a web module's demo app from demo/src/index.js.
  */
-export default function(args) {
+export default function(args, cb) {
   let pkg = require(path.resolve('package.json'))
 
   require('./clean-demo')(args)
@@ -25,5 +25,5 @@ export default function(args) {
         title: `${pkg.name} ${pkg.version} Demo`
       }
     }
-  })
+  }, cb)
 }

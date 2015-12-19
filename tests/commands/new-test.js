@@ -1,3 +1,4 @@
+import fs from 'fs'
 import path from 'path'
 
 import expect from 'expect'
@@ -5,26 +6,67 @@ import glob from 'glob'
 import rimraf from 'rimraf'
 import temp from 'temp'
 
-const INSTALL_TIMEOUT = 40000
+describe('command: nwb new web-module', function() {
+  this.timeout(40000)
 
-let cli = require('../../src/cli')
-let originalCwd
-let tmpDir
+  let cli = require('../../src/cli')
+  let originalCwd
+  let tmpDir
 
-describe('command: nwb new web-module', () => {
-  before(() => {
+  beforeEach(() => {
     originalCwd = process.cwd()
     tmpDir = temp.mkdirSync('nwb-new-module')
     process.chdir(tmpDir)
   })
 
-  after(done => {
+  afterEach(done => {
     process.chdir(originalCwd)
     rimraf(tmpDir, done)
   })
 
-  it('creates a new web module with a given name', function(done) {
-    cli(['new', 'web-module', 'test-module', '-f'], () => {
+  describe('with missing or invalid arguments', function() {
+    this.timeout(200)
+    it('prints usage info without any arguments', done => {
+      cli(['new'], err => {
+        expect(err).toExist()
+        expect(err.message).toContain('usage: nwb new')
+        done()
+      })
+    })
+    it('requires a project type', done => {
+      cli(['new', ''], err => {
+        expect(err).toExist()
+        expect(err.message).toContain('a project type must be provided')
+        done()
+      })
+    })
+    it('requires a valid project type', done => {
+      cli(['new', 'test-app'], err => {
+        expect(err).toExist()
+        expect(err.message).toContain('project type must be one of')
+        done()
+      })
+    })
+    it('requires a project name', done => {
+      cli(['new', 'web-module'], err => {
+        expect(err).toExist()
+        expect(err.message).toContain('a project name must be provided')
+        done()
+      })
+    })
+    it('checks if the project directory already exists', done => {
+      fs.mkdirSync('existing-dir')
+      cli(['new', 'web-module', 'existing-dir', '-f'], err => {
+        expect(err).toExist()
+        expect(err.message).toContain('directory already exists')
+        done()
+      })
+    })
+  })
+
+  it('creates a new web module with a given name', done => {
+    cli(['new', 'web-module', 'test-module', '-f'], err => {
+      expect(err).toNotExist('No errors creating new web module')
       expect(glob.sync('**', {dot: true})).toEqual([
         'test-module',
         'test-module/.gitignore',
@@ -43,23 +85,10 @@ describe('command: nwb new web-module', () => {
       done()
     })
   })
-})
 
-describe('command: nwb new react-component', () => {
-  before(() => {
-    originalCwd = process.cwd()
-    tmpDir = temp.mkdirSync('nwb-new-component')
-    process.chdir(tmpDir)
-  })
-
-  after(done => {
-    process.chdir(originalCwd)
-    rimraf(tmpDir, done)
-  })
-
-  it('creates a new react component with a given name', function(done) {
-    this.timeout(INSTALL_TIMEOUT)
-    cli(['new', 'react-component', 'test-component', '-f'], () => {
+  it('creates a new React component with a given name', done => {
+    cli(['new', 'react-component', 'test-component', '-f'], err => {
+      expect(err).toNotExist('No errors creating new React component')
       expect(glob.sync('**', {dot: true, 'ignore': 'test-component/node_modules/**'})).toEqual([
         'test-component',
         'test-component/.gitignore',
@@ -85,23 +114,10 @@ describe('command: nwb new react-component', () => {
       done()
     })
   })
-})
 
-describe('command: nwb new react-app', () => {
-  before(() => {
-    originalCwd = process.cwd()
-    tmpDir = temp.mkdirSync('nwb-new-app')
-    process.chdir(tmpDir)
-  })
-
-  after(done => {
-    process.chdir(originalCwd)
-    rimraf(tmpDir, done)
-  })
-
-  it('creates a new react app with a given name', function(done) {
-    this.timeout(INSTALL_TIMEOUT)
-    cli(['new', 'react-app', 'test-app', '-f'], () => {
+  it('creates a new react app with a given name', done => {
+    cli(['new', 'react-app', 'test-app', '-f'], err => {
+      expect(err).toNotExist('No errors creating new React component')
       expect(glob.sync('**', {dot: true, 'ignore': 'test-app/node_modules/**'})).toEqual([
         'test-app',
         'test-app/.gitignore',
