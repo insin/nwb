@@ -12,6 +12,7 @@ export default function(args, cb) {
 
   console.log('nwb: build-demo')
   webpackBuild(args, {
+    devtool: 'sourcemap',
     entry: {
       demo: path.resolve('demo/src/index.js')
     },
