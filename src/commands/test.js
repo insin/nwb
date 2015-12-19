@@ -1,26 +1,18 @@
 import path from 'path'
 
-import exec from '../exec'
+import karmaServer from '../karmaServer'
 
 export default function(args, cb) {
-  let config = path.join(__dirname, '../karma.js')
   let cwd = process.cwd()
-  let karmaArgs = ['start', config, `--set-env-ORIGINAL_CWD=${cwd}`]
-  if (!args.server) {
-    karmaArgs.push('--single-run')
-  }
-  if (args.coverage) {
-    karmaArgs.push('--set-env-COVERAGE=true')
-  }
+  let isCi = process.env.CONTINUOUS_INTEGRATION === 'true'
+
+  // We need to be in nwb's dir so Karma can import plugins
+  process.chdir(path.join(__dirname, '../../'))
 
   console.log('nwb: test')
-  try {
-    exec('karma', karmaArgs, {
-      cwd: path.resolve(__dirname, '../../')
-    })
-    cb()
-  }
-  catch (e) {
-    cb(e)
-  }
+  karmaServer({
+    cwd,
+    singleRun: !args.server,
+    runCoverage: isCi || !!args.coverage
+  }, cb)
 }

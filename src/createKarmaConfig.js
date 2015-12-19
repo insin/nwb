@@ -128,11 +128,7 @@ export function getKarmaConfig(cwd, runCoverage, userConfig = {}) {
   return {plugins, frameworks, reporters, loaders}
 }
 
-export default function(config) {
-  let cwd = process.env.ORIGINAL_CWD
-  let isCi = process.env.CONTINUOUS_INTEGRATION === 'true'
-  let runCoverage = process.env.COVERAGE === 'true' || isCi
-
+export default function({cwd, singleRun, runCoverage}) {
   let userConfig = getUserConfig({absConfig: path.join(cwd, 'nwb.config.js')})
   let userKarma = userConfig.karma || {}
   let pluginConfig = getPluginConfig(cwd)
@@ -183,9 +179,9 @@ export default function(config) {
     webpackServer: {
       noInfo: true
     },
-    singleRun: isCi
+    singleRun
   }
 
   debug('karma config %o', karmaConfig)
-  config.set(karmaConfig)
+  return karmaConfig
 }
