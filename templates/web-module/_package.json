@@ -2,8 +2,7 @@
   "name": "{{name}}",
   "version": "1.0.0",
   "description": "Describe {{name}} here",
-  "main": "lib/index.js",
-  "jsnext:main": "es6/index.js",
+  "main": "lib/index.js",{{jsNextMain}}
   "files": [
     "es6",
     "lib",

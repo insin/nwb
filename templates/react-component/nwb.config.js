@@ -12,5 +12,10 @@ module.exports = {
   // build.
   externals: {
     'react': 'React'
-  }
+  },
+
+  // Should nwb create a build with untranspiled ES6 modules for tree-shaking
+  // module bundlers? If you change your mind later, add or remove this line in
+  // package.json: "jsnext:main": "es6/index.js"
+  jsNext: {{jsNext}}
 }

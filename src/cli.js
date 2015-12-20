@@ -28,7 +28,10 @@ export default function(argv, cb) {
     new react-app <name>        create a React app
     new react-component <name>  create a React component with a demo app
     new web-module <name>       create a web module
-                                  -f  force creation, don't ask any questions
+                                -f, --force  force creation, no questions
+                                -g, --global global variable for npm UMD build
+                                --no-jsnext  disable npm ES6 modules build
+                                --no-umd     disable npm UMD module build
 
   Development commands:
     build          clean and build
@@ -66,5 +69,8 @@ export default function(argv, cb) {
   }
 
   let commandModule = require(commandModulePath)
+  if (commandModule.default) {
+    commandModule = commandModule.default
+  }
   commandModule(args, cb)
 }

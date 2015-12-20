@@ -27,6 +27,14 @@ describe('getUserConfig()', () => {
     })
   })
 
+  // TODO Remove in 0.7
+  describe('when jsNext config is missing', () => {
+    it('defaults to true (in nwb 0.6)', () => {
+      let config = getUserConfig({config: 'tests/fixtures/minimal-module-config.js'})
+      expect(config.jsNext).toBe(true)
+    })
+  })
+
   describe('when babel config is provided', () => {
     it('creates a babel-loader config if there was none', () => {
       let config = getUserConfig({config: 'tests/fixtures/babel-only-config.js'})

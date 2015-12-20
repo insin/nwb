@@ -14,23 +14,47 @@ import pkg from '../../package.json'
 
 let nwbVersion = `~${pkg.version}`
 
-function getWebModulePrefs(args, done) {
-  if (args.f) {
-    return done({umd: false, globalVariable: ''})
+export function getWebModulePrefs(args, done) {
+  // Determine defaults based on arguments
+  let umd = true
+  if (args.umd === false) {
+    umd = false
   }
+  else if (args.g || args.global) {
+    umd = true
+  }
+  else if (args.f || args.force) {
+    umd = false
+  }
+  let globalVariable = args.g || args.global || ''
+  let jsNext = true
+  if (args.jsnext === false) {
+    jsNext = false
+  }
+
+  if (args.f || args.force) {
+    return done({umd, globalVariable, jsNext})
+  }
+
   inquirer.prompt([
     {
       type: 'confirm',
       name: 'umd',
-      message: 'Do you want nwb to create a UMD build for this module?',
-      default: true
+      message: 'Do you want to create a UMD build for npm?',
+      default: umd
     },
     {
       when: ({umd}) => umd,
       type: 'input',
       name: 'globalVariable',
       message: 'Which global variable should the UMD build export?',
-      default: ''
+      default: globalVariable
+    },
+    {
+      type: 'confirm',
+      name: 'jsNext',
+      message: 'Do you want to create an ES6 modules build for npm?',
+      default: jsNext
     }
   ], done)
 }
@@ -42,6 +66,11 @@ function installReact(targetDir) {
     cwd: targetDir,
     stdio: [0, 1, 2]
   })
+}
+
+export function npmModuleVars(vars) {
+  vars.jsNextMain = vars.jsNext ? '\n  "jsnext:main": "es6/index.js",' : ''
+  return vars
 }
 
 let projectCreators = {
@@ -58,9 +87,11 @@ let projectCreators = {
   },
 
   [REACT_COMPONENT](args, name, targetDir, cb) {
-    getWebModulePrefs(args, ({umd, globalVariable}) => {
+    getWebModulePrefs(args, ({umd, globalVariable, jsNext}) => {
       let templateDir = path.join(__dirname, `../../templates/${REACT_COMPONENT}`)
-      let templateVars = {umd, globalVariable, name, nwbVersion, reactVersion}
+      let templateVars = npmModuleVars(
+        {umd, globalVariable, jsNext, name, nwbVersion, reactVersion}
+      )
       copyTemplateDir(templateDir, targetDir, templateVars, err => {
         if (err) return cb(err)
         console.log(`nwb: created ${targetDir}`)
@@ -72,9 +103,11 @@ let projectCreators = {
   },
 
   [WEB_MODULE](args, name, targetDir, cb) {
-    getWebModulePrefs(args, ({umd, globalVariable}) => {
+    getWebModulePrefs(args, ({umd, globalVariable, jsNext}) => {
       let templateDir = path.join(__dirname, `../../templates/${WEB_MODULE}`)
-      let templateVars = {umd, globalVariable, name, nwbVersion}
+      let templateVars = npmModuleVars(
+        {umd, globalVariable, jsNext, name, nwbVersion}
+      )
       copyTemplateDir(templateDir, targetDir, templateVars, err => {
         if (err) return cb(err)
         console.log(`nwb: created ${targetDir}`)

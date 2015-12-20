@@ -1,7 +1,16 @@
+**Added:**
+
+- Command-line arguments can now be used to configure settings for `nwb new`.
+
 **Fixed:**
 
 - Demo apps weren't generating sourcemaps when bundling.
 - Use a non-zero exit code when displaying usage or otherwise exiting due to missing arguments [[#23](https://github.com/insin/nwb/issues/23)]
+
+**Changed:**
+
+- The ES6 modules build for npm modules is now optional, controlled by a `jsNext` setting in `nwb.config.js`, defaulting to `true`.
+  - nwb 0.6 will default `jsNext` to `true` and log a warning when it's missing from a config file - this behaviour will be removed in nwb 0.7.
 
 # 0.5.0 / 2015-12-15
 

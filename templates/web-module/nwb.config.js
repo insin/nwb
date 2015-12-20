@@ -9,5 +9,10 @@ module.exports = {
   // A mapping from the npm package names of this module's peerDependencies - if
   // it has any - to the global variables they're expected to be available as
   // for use by the UMD build, e.g. {'react': 'React'}
-  externals: {}
+  externals: {},
+
+  // Should nwb create a build with untranspiled ES6 modules for tree-shaking
+  // module bundlers? If you change your mind later, add or remove this line in
+  // package.json: "jsnext:main": "es6/index.js"
+  jsNext: {{jsNext}}
 }

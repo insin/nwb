@@ -52,11 +52,17 @@ module.exports = {
 }
 ```
 
+#### jsNext: `Boolean`
+
+Determines whether or not nwb will create an ES6 modules build for tree-shaking module bundlers when you run `nwb build` for a React component or web module.
+
+Defaults to `true`.
+
 #### `umd`: `Boolean`
 
 Determines whether or not nwb will create a UMD build when you run `nwb build` for a React component or web module.
 
-Defaults to `true` when you are prompted to onfigure this by `nwb new`.
+Defaults to `true` when you are prompted to onfigure this by `nwb new`, or if you provide a UMD global variable as a command-line argument.
 
 #### `externals`: `Object` (only for UMD builds)
 

@@ -2,9 +2,12 @@ import path from 'path'
 
 import glob from 'glob'
 
-import {PROJECT_TYPES} from './constants'
+import {PROJECT_TYPES, REACT_COMPONENT, WEB_MODULE} from './constants'
 import debug from './debug'
 import {UserError} from './errors'
+
+// TODO Remove in 0.7
+let warnedJSNext = false
 
 export default function getUserConfig(args = {}) {
   // Try to load default user config, or user a config file path we were given
@@ -48,6 +51,19 @@ export default function getUserConfig(args = {}) {
       userConfig.loaders.babel.query = userConfig.babel
       debug('added query to babel-loader with user babel config')
     }
+  }
+
+  // TODO Remove in 0.7
+  if ((userConfig.type === REACT_COMPONENT || userConfig.type === WEB_MODULE) &&
+      !('jsNext' in userConfig)) {
+    if (!warnedJSNext) {
+      console.warn([
+        'nwb: there was no jsNext setting in your nwb config file - this will default to true in nwb 0.6',
+        `nwb: set jsNext: true in ${path.basename(userConfigPath)} if you want to keep using the ES6 modules build`
+      ].join('\n'))
+      warnedJSNext = true
+    }
+    userConfig.jsNext = true
   }
 
   debug('final user config: %o', userConfig)

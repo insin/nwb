@@ -10,23 +10,31 @@ Creates a skeleton for a React app with the given name.
 
 ```
 nwb new react-component <component-name>
-? Do you want nwb to create a UMD build for this module?
+? Do you want to create a UMD build for npm?
 ? Which global variable should the UMD build export?
+? Do you want to create an ES6 modules build for npm?
 ```
 
 Creates a skeleton for a React component with the given name, with an optional UMD build exporting a specified global variable.
 
 ```
 nwb new web-module <module-name>
-? Do you want nwb to create a UMD build for this module?
+? Do you want to create a UMD build for npm?
 ? Which global variable should the UMD build export?
+? Do you want to create an ES6 modules build for npm?
 ```
 
 Creates a skeleton for a web module with the given name, with an optional UMD build exporting a specified global variable.
 
 **Flags:**
 
-* `-f` - force creation of the new project without asking any questions, using whichever default settings are necessary as a result.
+* `-f, --force` - force creation of the new project without asking any questions, using whichever default settings are necessary as a result.
+
+**React component and web module flags:**
+
+* `-g, --global` - provide a global variable to be exported by the UMD build, implicitly enabling the UMD build.
+* `--no-jsnext` - disable the npm ES6 modules build.
+* `--no-umd` - disable the npm UMD build.
 
 ### `serve` - serve a React app
 

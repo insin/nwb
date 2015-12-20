@@ -6,10 +6,11 @@ import glob from 'glob'
 import rimraf from 'rimraf'
 import temp from 'temp'
 
-describe('command: nwb new web-module', function() {
+let cli = require('../../src/cli')
+
+describe('command: nwb new', function() {
   this.timeout(40000)
 
-  let cli = require('../../src/cli')
   let originalCwd
   let tmpDir
 
@@ -64,83 +65,109 @@ describe('command: nwb new web-module', function() {
     })
   })
 
-  it('creates a new web module with a given name', done => {
-    cli(['new', 'web-module', 'test-module', '-f'], err => {
-      expect(err).toNotExist('No errors creating new web module')
-      expect(glob.sync('**', {dot: true})).toEqual([
-        'test-module',
-        'test-module/.gitignore',
-        'test-module/.travis.yml',
-        'test-module/nwb.config.js',
-        'test-module/package.json',
-        'test-module/README.md',
-        'test-module/src',
-        'test-module/src/index.js',
-        'test-module/tests',
-        'test-module/tests/.eslintrc',
-        'test-module/tests/index-test.js'
-      ])
-      let pkg = require(path.resolve('test-module/package.json'))
-      expect(pkg.name).toBe('test-module')
-      done()
+  describe('web modules and React components', () => {
+    it('creates a new web module with a given name', done => {
+      cli(['new', 'web-module', 'test-module', '-f'], err => {
+        expect(err).toNotExist('No errors creating new web module')
+        expect(glob.sync('**', {dot: true})).toEqual([
+          'test-module',
+          'test-module/.gitignore',
+          'test-module/.travis.yml',
+          'test-module/nwb.config.js',
+          'test-module/package.json',
+          'test-module/README.md',
+          'test-module/src',
+          'test-module/src/index.js',
+          'test-module/tests',
+          'test-module/tests/.eslintrc',
+          'test-module/tests/index-test.js'
+        ])
+        let pkg = require(path.resolve('test-module/package.json'))
+        expect(pkg.name).toBe('test-module')
+        expect(pkg['jsnext:main']).toBe('es6/index.js')
+        let config = require(path.resolve('test-module/nwb.config.js'))
+        expect(config).toEqual({
+          type: 'web-module',
+          umd: false,
+          global: '',
+          externals: {},
+          jsNext: true
+        })
+        done()
+      })
+    })
+
+    it('creates a new React component with a given name', done => {
+      cli(['new', 'react-component', 'test-component', '-f'], err => {
+        expect(err).toNotExist('No errors creating new React component')
+        expect(glob.sync('**', {dot: true, 'ignore': 'test-component/node_modules/**'})).toEqual([
+          'test-component',
+          'test-component/.gitignore',
+          'test-component/.travis.yml',
+          'test-component/demo',
+          'test-component/demo/src',
+          'test-component/demo/src/index.js',
+          'test-component/nwb.config.js',
+          'test-component/package.json',
+          'test-component/README.md',
+          'test-component/src',
+          'test-component/src/index.js',
+          'test-component/tests',
+          'test-component/tests/.eslintrc',
+          'test-component/tests/index-test.js'
+        ])
+        expect(glob.sync('test-component/node_modules/*')).toEqual([
+          'test-component/node_modules/react',
+          'test-component/node_modules/react-dom'
+        ])
+        let pkg = require(path.resolve('test-component/package.json'))
+        expect(pkg.name).toBe('test-component')
+        expect(pkg['jsnext:main']).toBe('es6/index.js')
+        let config = require(path.resolve('test-component/nwb.config.js'))
+        expect(config).toEqual({
+          type: 'react-component',
+          umd: false,
+          global: '',
+          externals: {react: 'React'},
+          jsNext: true
+        })
+        done()
+      })
     })
   })
 
-  it('creates a new React component with a given name', done => {
-    cli(['new', 'react-component', 'test-component', '-f'], err => {
-      expect(err).toNotExist('No errors creating new React component')
-      expect(glob.sync('**', {dot: true, 'ignore': 'test-component/node_modules/**'})).toEqual([
-        'test-component',
-        'test-component/.gitignore',
-        'test-component/.travis.yml',
-        'test-component/demo',
-        'test-component/demo/src',
-        'test-component/demo/src/index.js',
-        'test-component/nwb.config.js',
-        'test-component/package.json',
-        'test-component/README.md',
-        'test-component/src',
-        'test-component/src/index.js',
-        'test-component/tests',
-        'test-component/tests/.eslintrc',
-        'test-component/tests/index-test.js'
-      ])
-      expect(glob.sync('test-component/node_modules/*')).toEqual([
-        'test-component/node_modules/react',
-        'test-component/node_modules/react-dom'
-      ])
-      let pkg = require(path.resolve('test-component/package.json'))
-      expect(pkg.name).toBe('test-component')
-      done()
-    })
-  })
-
-  it('creates a new react app with a given name', done => {
-    cli(['new', 'react-app', 'test-app', '-f'], err => {
-      expect(err).toNotExist('No errors creating new React component')
-      expect(glob.sync('**', {dot: true, 'ignore': 'test-app/node_modules/**'})).toEqual([
-        'test-app',
-        'test-app/.gitignore',
-        'test-app/.travis.yml',
-        'test-app/nwb.config.js',
-        'test-app/package.json',
-        'test-app/public',
-        'test-app/public/index.html',
-        'test-app/README.md',
-        'test-app/src',
-        'test-app/src/App.js',
-        'test-app/src/index.js',
-        'test-app/tests',
-        'test-app/tests/.eslintrc',
-        'test-app/tests/App-test.js'
-      ])
-      expect(glob.sync('test-app/node_modules/*')).toEqual([
-        'test-app/node_modules/react',
-        'test-app/node_modules/react-dom'
-      ])
-      let pkg = require(path.resolve('test-app/package.json'))
-      expect(pkg.name).toBe('test-app')
-      done()
+  describe('react apps', () => {
+    it('creates a new react app with a given name', done => {
+      cli(['new', 'react-app', 'test-app', '-f'], err => {
+        expect(err).toNotExist('No errors creating new React component')
+        expect(glob.sync('**', {dot: true, 'ignore': 'test-app/node_modules/**'})).toEqual([
+          'test-app',
+          'test-app/.gitignore',
+          'test-app/.travis.yml',
+          'test-app/nwb.config.js',
+          'test-app/package.json',
+          'test-app/public',
+          'test-app/public/index.html',
+          'test-app/README.md',
+          'test-app/src',
+          'test-app/src/App.js',
+          'test-app/src/index.js',
+          'test-app/tests',
+          'test-app/tests/.eslintrc',
+          'test-app/tests/App-test.js'
+        ])
+        expect(glob.sync('test-app/node_modules/*')).toEqual([
+          'test-app/node_modules/react',
+          'test-app/node_modules/react-dom'
+        ])
+        let pkg = require(path.resolve('test-app/package.json'))
+        expect(pkg.name).toBe('test-app')
+        let config = require(path.resolve('test-app/nwb.config.js'))
+        expect(config).toEqual({
+          type: 'react-app'
+        })
+        done()
+      })
     })
   })
 })

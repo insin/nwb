@@ -52,8 +52,9 @@ Create a new React component module and start hot reloading its demo app:
 
 ```
 $ nwb new react-component react-thing
-? Do you want nwb to create a UMD build for this module? Yes
+? Do you want to create a UMD build for npm? Yes
 ? Which global variable should the UMD build export? ReactThing
+? Do you want to create an ES6 modules build for npm? Yes
 nwb: created /path/to/react-thing
 nwb: installing dependencies
 ...
@@ -64,7 +65,7 @@ nwb: dev server listening at http://localhost:3000
 ...
 ```
 
-Create a new web module and run tests on every change as you develop it:
+Create a new web module without being asked any questions and run tests on every change as you develop it:
 
 ```
 $ nwb new web-module get-form-data -f
@@ -100,7 +101,10 @@ Project creation commands:
   new react-app <name>        create a React app
   new react-component <name>  create a React component with a demo app
   new web-module <name>       create a web module
-                                -f  force creation, don't ask any questions
+                                -f, --force  force creation, no questions
+                                -g, --global global variable for npm UMD build
+                                --no-jsnext  disable npm ES6 modules build
+                                --no-umd     disable npm UMD module build
 
 Development commands:
   build          clean and build
