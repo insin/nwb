@@ -1,6 +1,6 @@
 ## Introduction
 
-nwb is a development tool for [React](https://facebook.github.io/react/) apps, React components and other JavaScript modules.
+nwb is a development tool for [React](https://facebook.github.io/react/) apps and components, and other web apps and npm web modules.
 
 **Think of nwb like a frontend to [Webpack](https://webpack.github.io/), [Babel](http://babeljs.io/) and [Karma](http://karma-runner.github.io).**
 
@@ -21,7 +21,7 @@ To speed up developing new projects, nwb can also [generate skeleton projects](/
 
 * Babel 5 settings
 * Default Webpack loader settings
-* Adding extra Webpack loaders - a crude escape hatch for now
+* Adding extra Webpack loaders (a crude escape hatch for now)
 * Webpack `DefinePlugin` replacements
 * Karma settings for test paths, frameworks, reporters and plugins
 * CSS preprocessors can be added as [nwb plugins](/docs/Plugins.md#css-preprocessors).

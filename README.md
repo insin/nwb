@@ -5,15 +5,15 @@
 [![npm package][npm-badge]][npm]
 [![Coveralls][coveralls-badge]][coveralls]
 
-nwb is a development tool for [React](https://facebook.github.io/react/) apps, React components and other JavaScript modules.
+nwb is a development tool for [React](https://facebook.github.io/react/) apps and components, and other web apps and npm web modules.
 
 **Think of nwb like a frontend to [Webpack](https://webpack.github.io/), [Babel](http://babeljs.io/) and [Karma](http://karma-runner.github.io).**
 
 It provides [commands](/docs/Commands.md#nwb-commands) for:
 
-* creating **static builds** for React apps, including production optimisations
+* creating **static builds** for React apps and other web apps, including React production optimisations
 * creating **ES5 and UMD builds** for React components and other JavaScript modules to be published to npm
-* **serving** React apps and demos with **hot module reloading** and **syntax/`render()` error overlays**
+* **serving** React apps and demos with **hot module reloading** and **syntax/`render()` error overlays**, and other web apps with auto-reloading on change and syntax error overlays
 * running **unit tests** with code coverage
 
 Instead of copying boilerplate `devDependencies` and configuration scripts into your project, nwb **owns the npm dependencies** for these tools and **dynamically generates configuration** , so you don't have to deal with keeping these up to date yourself.
