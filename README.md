@@ -1,4 +1,4 @@
-# nwb - npm web builder
+# nwb
 
 ![Linux](linux.png) [![Travis][travis-badge]][travis]
 ![Windows](windows.png) [![Appveyor][appveyor-badge]][appveyor]
@@ -65,6 +65,18 @@ nwb: dev server listening at http://localhost:3000
 ...
 ```
 
+Create a new web app and start a development server which reloads on every change:
+
+```
+$ nwb new web-app secret-prototype
+nwb: created /path/to/secret-prototype
+$ cd secret-prototype
+$ nwb serve --reload
+nwb: serve-web-app
+nwb: dev server listening at http://localhost:3000
+...
+```
+
 Create a new web module without being asked any questions and run tests on every change as you develop it:
 
 ```
@@ -99,7 +111,8 @@ Options:
 
 Project creation commands:
   new react-app <name>        create a React app
-  new react-component <name>  create a React component with a demo app
+  new react-component <name>  create a React component module with a demo app
+  new web-app <name>          create a web app
   new web-module <name>       create a web module
                                 -f, --force  force creation, no questions
                                 -g, --global global variable for npm UMD build
@@ -116,6 +129,7 @@ Development commands:
                    --fallback  serve the index page from any path
                    --info      show webpack module info
                    --port      port to run the dev server on [3000]
+                   --reload    auto-reload the page if hot reloading fails
 ```
 
 ## MIT Licensed

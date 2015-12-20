@@ -5,7 +5,7 @@ import getPluginConfig from './getPluginConfig'
 import getUserConfig from './getUserConfig'
 
 /**
- * Creates the final Webpack config for serving a React app with hot reloading,
+ * Creates the final Webpack config for serving a web app with hot reloading,
  * using build and user configuration.
  */
 export default function(args, buildConfig) {
@@ -19,13 +19,15 @@ export default function(args, buildConfig) {
   assert(entry, 'an entry file is required to serve a Webpack build')
   assert(output, 'output config is required to serve a Webpack build')
 
+  let hotMiddlewareOptions = args.reload ? '?reload=true' : ''
+
   return createWebpackConfig(process.cwd(), {
     server: true,
     devtool: '#eval-source-map',
     entry: [
       // Polyfill EventSource for IE, as webpack-hot-middleware/client uses it
       require.resolve('eventsource-polyfill'),
-      require.resolve('webpack-hot-middleware/client'),
+      require.resolve('webpack-hot-middleware/client') + hotMiddlewareOptions,
       entry
     ],
     output,

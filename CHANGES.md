@@ -1,5 +1,8 @@
 **Added:**
 
+- Added a new web app project type - this is for anyone who wants to use nwb's build/serve/test setup but isn't using React.
+- Added a `--reload` option to auto-reload the page when webpack hot module replacement gets stuck. This is primarily intended for use with the new web-app
+ project type.
 - Command-line arguments can now be used to configure settings for `nwb new`.
 
 **Fixed:**

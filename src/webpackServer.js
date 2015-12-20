@@ -1,6 +1,6 @@
 import debug from './debug'
 import devServer from './devServer'
-import createServeReactWebpackConfig from './createServeReactWebpackConfig'
+import createServerWebpackConfig from './createServerWebpackConfig'
 
 /**
  * Start a development server with Webpack using a given build configuration.
@@ -11,7 +11,7 @@ export default function(args, buildConfig, cb) {
 
   let {server = {staticPath: null}} = buildConfig
 
-  let webpackConfig = createServeReactWebpackConfig(args, buildConfig)
+  let webpackConfig = createServerWebpackConfig(args, buildConfig)
 
   debug('webpack config: %o', webpackConfig)
 

@@ -54,4 +54,15 @@ describe('command: test', function() {
       })
     })
   })
+
+  it('successfully tests a new web app', function(done) {
+    cli(['new', 'web-app', 'test-app'], err => {
+      expect(err).toNotExist('No errors creating new web app')
+      process.chdir(path.join(tmpDir, 'test-app'))
+      cli(['test'], err => {
+        expect(err).toNotExist('No errors testing new web app')
+        done()
+      })
+    })
+  })
 })

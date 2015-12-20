@@ -26,7 +26,8 @@ export default function(argv, cb) {
 
   Project creation commands:
     new react-app <name>        create a React app
-    new react-component <name>  create a React component with a demo app
+    new react-component <name>  create a React component module with a demo app
+    new web-app <name>          create a web app
     new web-module <name>       create a web module
                                 -f, --force  force creation, no questions
                                 -g, --global global variable for npm UMD build
@@ -43,6 +44,7 @@ export default function(argv, cb) {
                      --fallback  serve the index page from any path
                      --info      show webpack module info
                      --port      port to run the dev server on [3000]
+                     --reload    auto-reload the page if hot reloading fails
   `)
     process.exit(args.help ? 0 : 1)
   }

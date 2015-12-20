@@ -6,7 +6,7 @@ import inquirer from 'inquirer'
 import glob from 'glob'
 
 import {
-  REACT_APP, REACT_COMPONENT, REACT_VERSION as reactVersion, WEB_MODULE, PROJECT_TYPES
+  REACT_APP, REACT_COMPONENT, REACT_VERSION as reactVersion, WEB_APP, WEB_MODULE, PROJECT_TYPES
 } from '../constants'
 import debug from '../debug'
 import {UserError} from '../errors'
@@ -99,6 +99,16 @@ let projectCreators = {
         installReact(targetDir)
         cb()
       })
+    })
+  },
+
+  [WEB_APP](args, name, targetDir, cb) {
+    let templateDir = path.join(__dirname, `../../templates/${WEB_APP}`)
+    let templateVars = {name, nwbVersion}
+    copyTemplateDir(templateDir, targetDir, templateVars, err => {
+      if (err) return cb(err)
+      console.log(`nwb: created ${targetDir}`)
+      cb()
     })
   },
 

@@ -136,10 +136,10 @@ describe('command: nwb new', function() {
     })
   })
 
-  describe('react apps', () => {
-    it('creates a new react app with a given name', done => {
+  describe('web apps', () => {
+    it('creates a new React app with a given name', done => {
       cli(['new', 'react-app', 'test-app', '-f'], err => {
-        expect(err).toNotExist('No errors creating new React component')
+        expect(err).toNotExist('No errors creating new React app')
         expect(glob.sync('**', {dot: true, 'ignore': 'test-app/node_modules/**'})).toEqual([
           'test-app',
           'test-app/.gitignore',
@@ -165,6 +165,34 @@ describe('command: nwb new', function() {
         let config = require(path.resolve('test-app/nwb.config.js'))
         expect(config).toEqual({
           type: 'react-app'
+        })
+        done()
+      })
+    })
+
+    it('creates a new web app with a given name', done => {
+      cli(['new', 'web-app', 'test-app', '-f'], err => {
+        expect(err).toNotExist('No errors creating new web app')
+        expect(glob.sync('**', {dot: true, 'ignore': 'test-app/node_modules/**'})).toEqual([
+          'test-app',
+          'test-app/.gitignore',
+          'test-app/.travis.yml',
+          'test-app/nwb.config.js',
+          'test-app/package.json',
+          'test-app/public',
+          'test-app/public/index.html',
+          'test-app/README.md',
+          'test-app/src',
+          'test-app/src/index.js',
+          'test-app/tests',
+          'test-app/tests/.eslintrc',
+          'test-app/tests/index-test.js'
+        ])
+        let pkg = require(path.resolve('test-app/package.json'))
+        expect(pkg.name).toBe('test-app')
+        let config = require(path.resolve('test-app/nwb.config.js'))
+        expect(config).toEqual({
+          type: 'web-app'
         })
         done()
       })

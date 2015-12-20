@@ -1,11 +1,11 @@
 import glob from 'glob'
 
-import {REACT_APP, REACT_COMPONENT, WEB_MODULE} from '../constants'
+import {REACT_APP, REACT_COMPONENT, WEB_APP, WEB_MODULE} from '../constants'
 import getUserConfig from '../getUserConfig'
 
 export default function(args) {
   let {type, umd} = getUserConfig(args)
-  if (type === REACT_APP) {
+  if (type === REACT_APP || type === WEB_APP) {
     require('./clean-app')(args)
   }
   else if (type === REACT_COMPONENT || type === WEB_MODULE) {

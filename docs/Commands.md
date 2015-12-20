@@ -18,6 +18,12 @@ nwb new react-component <component-name>
 Creates a skeleton for a React component with the given name, with an optional UMD build exporting a specified global variable.
 
 ```
+nwb new web-app <module-name>
+```
+
+Creates a skeleton for a web app with the given name.
+
+```
 nwb new web-module <module-name>
 ? Do you want to create a UMD build for npm?
 ? Which global variable should the UMD build export?
@@ -53,6 +59,7 @@ Starts a development server which serves a React app with hot reloading.
 * `--fallback` - fall back to serving the index page from any path, for developing React apps which use the HTML5 History API
 * `--info` - print info about Webpack modules after rebuilds
 * `--port=3000` - change the port the dev server runs on
+* `--reload` - auto-reload the page when webpack gets stuck
 
 **In React apps:**
 

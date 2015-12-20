@@ -1,6 +1,6 @@
 import glob from 'glob'
 
-import {REACT_APP, REACT_COMPONENT, WEB_MODULE} from '../constants'
+import {REACT_APP, REACT_COMPONENT, WEB_APP, WEB_MODULE} from '../constants'
 import getUserConfig from '../getUserConfig'
 
 function buildDemo(args, cb) {
@@ -13,6 +13,9 @@ export default function(args, cb) {
   let userConfig = getUserConfig(args)
   if (userConfig.type === REACT_APP) {
     require('./build-react-app')(args, cb)
+  }
+  if (userConfig.type === WEB_APP) {
+    require('./build-web-app')(args, cb)
   }
   else if (userConfig.type === REACT_COMPONENT || userConfig.type === WEB_MODULE) {
     require('./build-module')(args)
