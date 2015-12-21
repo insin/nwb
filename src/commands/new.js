@@ -1,6 +1,7 @@
 import path from 'path'
 import {execSync} from 'child_process'
 
+import chalk from 'chalk'
 import copyTemplateDir from 'copy-template-dir'
 import inquirer from 'inquirer'
 import glob from 'glob'
@@ -68,6 +69,13 @@ function installReact(targetDir) {
   })
 }
 
+function logCreatedFiles(targetDir, createdFiles) {
+  createdFiles.sort().forEach(createdFile => {
+    let relativePath = path.relative(targetDir, createdFile)
+    console.log(`  ${chalk.green('create')} ${relativePath}`)
+  })
+}
+
 export function npmModuleVars(vars) {
   vars.jsNextMain = vars.jsNext ? '\n  "jsnext:main": "es6/index.js",' : ''
   return vars
@@ -77,9 +85,9 @@ let projectCreators = {
   [REACT_APP](args, name, targetDir, cb) {
     let templateDir = path.join(__dirname, `../../templates/${REACT_APP}`)
     let templateVars = {name, nwbVersion, reactVersion}
-    copyTemplateDir(templateDir, targetDir, templateVars, err => {
+    copyTemplateDir(templateDir, targetDir, templateVars, (err, createdFiles) => {
       if (err) return cb(err)
-      console.log(`nwb: created ${targetDir}`)
+      logCreatedFiles(targetDir, createdFiles)
       console.log('nwb: installing dependencies')
       installReact(targetDir)
       cb()
@@ -92,9 +100,9 @@ let projectCreators = {
       let templateVars = npmModuleVars(
         {umd, globalVariable, jsNext, name, nwbVersion, reactVersion}
       )
-      copyTemplateDir(templateDir, targetDir, templateVars, err => {
+      copyTemplateDir(templateDir, targetDir, templateVars, (err, createdFiles) => {
         if (err) return cb(err)
-        console.log(`nwb: created ${targetDir}`)
+        logCreatedFiles(targetDir, createdFiles)
         console.log('nwb: installing dependencies')
         installReact(targetDir)
         cb()
@@ -105,9 +113,9 @@ let projectCreators = {
   [WEB_APP](args, name, targetDir, cb) {
     let templateDir = path.join(__dirname, `../../templates/${WEB_APP}`)
     let templateVars = {name, nwbVersion}
-    copyTemplateDir(templateDir, targetDir, templateVars, err => {
+    copyTemplateDir(templateDir, targetDir, templateVars, (err, createdFiles) => {
       if (err) return cb(err)
-      console.log(`nwb: created ${targetDir}`)
+      logCreatedFiles(targetDir, createdFiles)
       cb()
     })
   },
@@ -118,9 +126,9 @@ let projectCreators = {
       let templateVars = npmModuleVars(
         {umd, globalVariable, jsNext, name, nwbVersion}
       )
-      copyTemplateDir(templateDir, targetDir, templateVars, err => {
+      copyTemplateDir(templateDir, targetDir, templateVars, (err, createdFiles) => {
         if (err) return cb(err)
-        console.log(`nwb: created ${targetDir}`)
+        logCreatedFiles(targetDir, createdFiles)
         cb()
       })
     })
@@ -145,9 +153,10 @@ export default function(args, cb) {
     return cb(new UserError(`nwb: a project name must be provided`))
   }
   if (glob.sync(`${name}/`).length !== 0) {
-    return cb(new UserError(`nwb: "${name}" directory already exists`))
+    return cb(new UserError(`nwb: ${name}/ directory already exists`))
   }
 
   let targetDir = path.join(process.cwd(), name)
+  console.log(`nwb: new ${projectType}`)
   projectCreators[projectType](args, name, targetDir, cb)
 }

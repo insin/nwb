@@ -26,7 +26,8 @@
   },
   "dependencies": {
     "argv-set-env": "1.0.0",
-    "copy-template-dir": "1.1.0",
+    "chalk": "1.1.1",
+    "copy-template-dir": "1.2.0",
     "debug": "2.2.0",
     "eventsource-polyfill": "0.9.6",
     "express": "4.13.3",

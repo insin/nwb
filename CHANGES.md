@@ -1,8 +1,7 @@
 **Added:**
 
-- Added a new web app project type - this is for anyone who wants to use nwb's build/serve/test setup but isn't using React.
-- Added a `--reload` option to auto-reload the page when webpack hot module replacement gets stuck. This is primarily intended for use with the new web-app
- project type.
+- Added a new `web-app` project type - this is for anyone who wants to use nwb's build/serve/test setup but isn't using React.
+- Added a `--reload` option to auto-reload the page when webpack hot module replacement gets stuck. This is primarily intended for use with the new `web-app` project type.
 - Command-line arguments can now be used to configure settings for `nwb new`.
 
 **Fixed:**
@@ -12,8 +11,13 @@
 
 **Changed:**
 
+- Commands which create files now log details of what they've created [[#26](https://github.com/insin/nwb/issues/26)]
 - The ES6 modules build for npm modules is now optional, controlled by a `jsNext` setting in `nwb.config.js`, defaulting to `true`.
   - nwb 0.6 will default `jsNext` to `true` and log a warning when it's missing from a config file - this behaviour will be removed in nwb 0.7.
+
+**Dependencies:**
+
+- copy-template-dir: v1.1.0 → v1.2.0 - provide created file paths in callback
 
 # 0.5.0 / 2015-12-15
 

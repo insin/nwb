@@ -1,5 +1,7 @@
 #!/usr/bin/env node
 
+import chalk from 'chalk'
+
 import cli from '../cli'
 import {UserError} from '../errors'
 
@@ -15,10 +17,10 @@ catch (err) {
 // Assumption: error will be undefined or null on success
 if (error != null) {
   if (error instanceof UserError) {
-    console.error(error.message)
+    console.error(chalk.red(error.message))
   }
   else {
-    console.error('nwb: error running command:')
+    console.error(chalk.red('nwb: error running command:'))
     console.error(error.stack)
   }
   process.exit(1)
