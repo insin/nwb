@@ -1,3 +1,4 @@
+import {cyan, green, red, yellow} from 'chalk'
 import parseArgs from 'minimist'
 
 import pkg from '../package.json'
@@ -11,48 +12,62 @@ export default function(argv, cb) {
     boolean: ['help', 'version']
   })
 
-  if (args.version) {
+  let command = args._[0]
+
+  if (args.version || /^v(ersion)?$/.test(command)) {
     console.log(`v${pkg.version}`)
     process.exit(0)
   }
 
-  if (args.help || args._.length === 0) {
-    console.log(`
-  Usage: nwb <command>
+  if (args.help || !command || /^h(elp)?$/.test(command)) {
+    console.log(`Usage: ${green('nwb')} ${yellow('<command>')}
 
-  Options:
-    -h, --help     display this help message
-    -v, --version  print nwb's version
+Options:
+  ${cyan('-h, --help')}     display this help message
+  ${cyan('-v, --version')}  print nwb's version
 
-  Project creation commands:
-    new react-app <name>        create a React app
-    new react-component <name>  create a React component module with a demo app
-    new web-app <name>          create a web app
-    new web-module <name>       create a web module
-                                -f, --force  force creation, no questions
-                                -g, --global global variable for npm UMD build
-                                --no-jsnext  disable npm ES6 modules build
-                                --no-umd     disable npm UMD module build
+Project creation commands:
+  ${green('init')} ${yellow('<project-type>')} ${cyan('[name]')}
+    initialise a project in the current directory
 
-  Development commands:
-    build          clean and build
-    clean          delete build
-    test           run tests
-                     --coverage  create code coverage report
-                     --server    keep running tests on every change
-    serve          serve an app, or a component's demo app, with hot reloading
-                     --fallback  serve the index page from any path
-                     --info      show webpack module info
-                     --port      port to run the dev server on [3000]
-                     --reload    auto-reload the page if hot reloading fails
-  `)
-    process.exit(args.help ? 0 : 1)
+  ${green('new')} ${yellow('<project-type> <name>')}
+    create a project in a new directory
+
+  ${cyan('-f, --force')}   force project creation, don't ask questions
+  ${cyan('-g, --global')}  global variable name to export in the UMD build
+  ${cyan('--no-jsnext')}   disable npm ES6 modules build
+  ${cyan('--no-umd')}      disable npm UMD module build
+
+  Project types:
+    ${cyan('react-app')}        a React app
+    ${cyan('react-component')}  a React component module with a demo app
+    ${cyan('web-app')}          a plain JavaScript app
+    ${cyan('web-module')}       a plain JavaScript module
+
+Development commands:
+  ${green('build')}
+    clean and build the project
+
+  ${green('clean')}
+    delete built resources
+
+  ${green('serve')}
+    serve an app, or a component's demo app, with hot reloading
+    ${cyan('--fallback')}  serve the index page from any path
+    ${cyan('--info')}      show webpack module info
+    ${cyan('--port')}      port to run the dev server on ${cyan('(default: 3000)')}
+    ${cyan('--reload')}    auto reload the page if hot reloading fails
+
+  ${green('test')}
+    run unit tests
+    ${cyan('--coverage')}  create a code coverage report
+    ${cyan('--server')}    keep running tests on every change
+`)
+    process.exit(args.help || command ? 0 : 1)
   }
 
-  let command = args._[0]
-
   let unknownCommand = () => {
-    console.error(`nwb: unknown command: ${command}`)
+    console.error(`${red('nwb: unknown command:')} ${yellow(command)}`)
     process.exit(1)
   }
 

@@ -110,26 +110,41 @@ Options:
   -v, --version  print nwb's version
 
 Project creation commands:
-  new react-app <name>        create a React app
-  new react-component <name>  create a React component module with a demo app
-  new web-app <name>          create a web app
-  new web-module <name>       create a web module
-                                -f, --force  force creation, no questions
-                                -g, --global global variable for npm UMD build
-                                --no-jsnext  disable npm ES6 modules build
-                                --no-umd     disable npm UMD module build
+  init <project-type> [name]
+    initialise a project in the current directory
+
+  new <project-type> <name>
+    create a project in a new directory
+
+  -f, --force   force project creation, don't ask questions
+  -g, --global  global variable name to export in the UMD build
+  --no-jsnext   disable npm ES6 modules build
+  --no-umd      disable npm UMD module build
+
+  Project types:
+    react-app        a React app
+    react-component  a React component module with a demo app
+    web-app          a plain JavaScript app
+    web-module       a plain JavaScript module
 
 Development commands:
-  build          clean and build
-  clean          delete build
-  test           run tests
-                   --coverage  create code coverage report
-                   --server    keep running tests on every change
-  serve          serve an app, or a component's demo app, with hot reloading
-                   --fallback  serve the index page from any path
-                   --info      show webpack module info
-                   --port      port to run the dev server on [3000]
-                   --reload    auto-reload the page if hot reloading fails
+  build
+    clean and build the project
+
+  clean
+    delete built resources
+
+  serve
+    serve an app, or a component's demo app, with hot reloading
+    --fallback  serve the index page from any path
+    --info      show webpack module info
+    --port      port to run the dev server on (default: 3000)
+    --reload    auto reload the page if hot reloading fails
+
+  test
+    run unit tests
+    --coverage  create a code coverage report
+    --server    keep running tests on every change
 ```
 
 ## MIT Licensed

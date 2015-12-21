@@ -3,6 +3,14 @@
 ### `new` - create a new project
 
 ```
+nwb new <project-type> <name>
+```
+
+Creates a new directory and initialises a project skeleton in it.
+
+The `name` argument must not match a directory which already exists in the current directory.
+
+```
 nwb new react-app <name>
 ```
 
@@ -10,12 +18,12 @@ Creates a skeleton for a React app with the given name.
 
 ```
 nwb new react-component <component-name>
-? Do you want to create a UMD build for npm?
+? Do you want to create a UMD build for npm? Y/n
 ? Which global variable should the UMD build export?
-? Do you want to create an ES6 modules build for npm?
+? Do you want to create an ES6 modules build for npm? Y/n
 ```
 
-Creates a skeleton for a React component with the given name, with an optional UMD build exporting a specified global variable.
+Creates a skeleton for a React component with the given name, with an optional UMD build exporting a specified global variable and an optional ES6 modules build for tree-shaking bundlers.
 
 ```
 nwb new web-app <module-name>
@@ -25,12 +33,12 @@ Creates a skeleton for a web app with the given name.
 
 ```
 nwb new web-module <module-name>
-? Do you want to create a UMD build for npm?
+? Do you want to create a UMD build for npm? Y/n
 ? Which global variable should the UMD build export?
-? Do you want to create an ES6 modules build for npm?
+? Do you want to create an ES6 modules build for npm? Y/n
 ```
 
-Creates a skeleton for a web module with the given name, with an optional UMD build exporting a specified global variable.
+Creates a skeleton for a web module with the given name, with an optional UMD build exporting a specified global variable and an optional ES6 modules build for tree-shaking bundlers.
 
 **Flags:**
 
@@ -41,6 +49,16 @@ Creates a skeleton for a web module with the given name, with an optional UMD bu
 * `-g, --global` - provide a global variable to be exported by the UMD build, implicitly enabling the UMD build.
 * `--no-jsnext` - disable the npm ES6 modules build.
 * `--no-umd` - disable the npm UMD build.
+
+### `init` - initialise a project in the current directory
+
+```
+nwb init <project-type> [name]
+```
+
+This is the same as `new`, except the `name` argument is optional and the new project is initialised in the current directory.
+
+If  `name` is not provided, the name of the current directory will be used.
 
 ### `serve` - serve a React app
 
