@@ -1,5 +1,6 @@
 import path from 'path'
 
+import chalk from 'chalk'
 import glob from 'glob'
 
 import {PROJECT_TYPES, REACT_COMPONENT, WEB_MODULE} from './constants'
@@ -57,10 +58,10 @@ export default function getUserConfig(args = {}) {
   if ((userConfig.type === REACT_COMPONENT || userConfig.type === WEB_MODULE) &&
       !('jsNext' in userConfig)) {
     if (!warnedJSNext) {
-      console.warn([
+      console.warn(chalk.magenta([
         'nwb: there was no jsNext setting in your nwb config file - this will default to true in nwb 0.6',
         `nwb: set jsNext: true in ${path.basename(userConfigPath)} if you want to keep using the ES6 modules build`
-      ].join('\n'))
+      ].join('\n')))
       warnedJSNext = true
     }
     userConfig.jsNext = true

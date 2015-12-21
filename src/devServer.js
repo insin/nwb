@@ -1,6 +1,7 @@
 import fs from 'fs'
 import path from 'path'
 
+import chalk from 'chalk'
 import express from 'express'
 import webpack from 'webpack'
 
@@ -47,6 +48,6 @@ export default function server(webpackConfig, {fallback, noInfo, port, staticPat
 
   app.listen(port, 'localhost', err => {
     if (err) return cb(err)
-    console.log(`nwb: dev server listening at http://localhost:${port}`)
+    console.log(chalk.green(`nwb: dev server listening at http://localhost:${port}`))
   })
 }

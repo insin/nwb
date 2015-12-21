@@ -10,6 +10,7 @@
 import assert from 'assert'
 import path from 'path'
 
+import chalk from 'chalk'
 import ExtractTextPlugin from 'extract-text-webpack-plugin'
 import HtmlWebpackPlugin from 'html-webpack-plugin'
 import qs from 'qs'
@@ -191,8 +192,8 @@ export function createLoaders(server, buildConfig = {}, userConfig = {}, pluginC
 export function failBuildOnCompilationError() {
   this.plugin('done', ({compilation}) => {
     if (compilation.errors && compilation.errors.length > 0) {
-      console.error('nwb: webpack build failed:')
-      compilation.errors.forEach(error => console.error(error.message))
+      console.error(chalk.red('nwb: webpack build failed:'))
+      compilation.errors.forEach(error => console.error(chalk.red(error.message)))
       process.exit(1)
     }
   })
