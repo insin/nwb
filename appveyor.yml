@@ -16,3 +16,7 @@ test_script:
   - npm run test:coverage
 
 build: off
+
+cache:
+  - node_modules
+  - '%APPDATA%\npm-cache'
