@@ -7,7 +7,7 @@ export default function(args, cb) {
   if (userConfig.type === REACT_APP) {
     require('./serve-react-app')(args, cb)
   }
-  if (userConfig.type === WEB_APP) {
+  else if (userConfig.type === WEB_APP) {
     require('./serve-web-app')(args, cb)
   }
   else if (userConfig.type === REACT_COMPONENT) {
