@@ -22,10 +22,12 @@ let buildConfig = () => {
   if (process.env.NODE_ENV === 'production') {
     config.loaders = {
       babel: {
-        optional: [
-          'optimisation.react.inlineElements',
-          'optimisation.react.constantElements'
-        ]
+        query: {
+          optional: [
+            'optimisation.react.inlineElements',
+            'optimisation.react.constantElements'
+          ]
+        }
       }
     }
   }

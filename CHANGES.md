@@ -7,6 +7,7 @@
 
 **Fixed:**
 
+- Production optimisations weren't being applied to React app builds.
 - Demo apps weren't generating sourcemaps when bundling.
 - Use a non-zero exit code when displaying usage or otherwise exiting due to missing arguments [[#23](https://github.com/insin/nwb/issues/23)]
 
