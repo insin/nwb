@@ -25,9 +25,9 @@ The Express module must be passed as the first argument.
 Here's a minimal express server which serves up a React app:
 
 ```js
-import express from 'express'
+var express = require('express')
 
-let app = express()
+var app = express()
 
 app.use(require('nwb/express')(express, {
   info: true

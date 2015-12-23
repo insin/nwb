@@ -5,22 +5,25 @@
 [![npm package][npm-badge]][npm]
 [![Coveralls][coveralls-badge]][coveralls]
 
-nwb is a development tool for [React](https://facebook.github.io/react/) apps and components, and other web apps and npm web modules.
+nwb is a development tool for [React](https://facebook.github.io/react/) apps and components, and plain JavaScript web apps and npm modules.
 
-**Think of nwb like a frontend to [Webpack](https://webpack.github.io/), [Babel](http://babeljs.io/) and [Karma](http://karma-runner.github.io).**
+It's effectively a frontend for [Babel](http://babeljs.io/), [Webpack](https://webpack.github.io/) and [Karma](http://karma-runner.github.io), which allows you to get started with these tools without having to learn them up-front, and to use them together in a common way across your projects without copying dependencies and configuration.
 
-It provides [commands](/docs/Commands.md#nwb-commands) for:
+----
 
-* creating **static builds** for React apps and other web apps, including React production optimisations
-* creating **ES5 and UMD builds** for React components and other JavaScript modules to be published to npm
-* **serving** React apps and demos with **hot module reloading** and **syntax/`render()` error overlays**, and other web apps with auto-reloading on change and syntax error overlays
-* running **unit tests** with code coverage
+nwb provides [development commands](/docs/Commands.md#nwb-commands) for:
 
-Instead of copying boilerplate `devDependencies` and configuration scripts into your project, nwb **owns the npm dependencies** for these tools and **dynamically generates configuration** , so you don't have to deal with keeping these up to date yourself.
+* creating **static builds** for apps, including production optimisations for React apps
+* creating **ES5, UMD and ES6 module builds** for React components and other npm modules
+* **serving React apps** and component demos with *hot module reloading* and *syntax/`render()` error overlays*
+* **serving plain JavaScript web apps** with *auto-reloading* on code changes and *syntax error overlays*
+* **running unit tests** with *code coverage*
 
-An **`nwb.config.js`** file allows you to [tweak the generated configuration](/docs/Configuration.md#configuration) to suit your project.
+nwb **owns the dependencies** for development tools so you don't have to copy the same `devDependencies` between projects and deal with keeping them up to date yourself.
 
-To speed up developing new projects, nwb can also [generate skeleton projects](/docs/Commands.md#new---create-a-new-project) which are ready for deployment or publishing out of the box, and are preconfigured for running tests on [Travis CI](https://travis-ci.org/).
+It also **dynamically generates configuration**, so you don't have to copy configuration boilerplate between projects, while an **`nwb.config.js`** file allows you to [tweak configuration](/docs/Configuration.md#configuration) to suit your project.
+
+To speed up developing new projects, **nwb can also [generate skeleton projects](/docs/Commands.md#new---create-a-new-project)** which are ready for deployment or publishing out of the box, and are preconfigured for running unit tests on [Travis CI](https://travis-ci.org/).
 
 ## Install
 
@@ -90,7 +93,7 @@ nwb: test
 
 ## Example Project
 
-[react-nwb-github-issues](https://github.com/insin/react-nwb-github-issues) shows development of a demo app from scratch using nwb.
+[react-nwb-github-issues](https://github.com/insin/react-nwb-github-issues) shows development of a React app from scratch using nwb.
 
 Selected commits of interest:
 

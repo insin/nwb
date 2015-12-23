@@ -2,21 +2,47 @@
 
 nwb will look for an `nwb.config.js` file in the current working directory for project-specific configuration.
 
-This file should export either a configuration object or a function which creates a configuration object. In the case of a function, it will be called *after* nwb has ensured the appropriate `NODE_ENV` environment variable has been set for the command being run.
+This file should export either a configuration object or a function which creates a configuration object when called.
+
+If a function is exported, it will be called *after* nwb has ensured the appropriate `NODE_ENV` environment variable has been set for the command being run.
 
 ### Configuration Object Fields
 
-The object exported or returned by your nwb config can use the following fields.
+The object exported or returned by your nwb config can use the following fields:
+
+* nwb Configuration
+  * [`type`](#type-string-required)
+* Babel Configuration
+  * [`babel`](#babel-object)
+* Webpack Configuration
+  * [`define`](#define-object)
+  * [`loaders`](#loaders-object)
+  * [`loaders.extra`](#loaders-extra-array)
+* Karma Configuration
+  * [`karma`](#karma-object)
+  * [`karma.tests`](#tests-string)
+  * [`karma.frameworks`](#frameworks-array-string-plugin)
+  * [`karma.reporters`](#reporters-array-string-plugin)
+  * [`karma.plugins`](#plugins-array-plugin)
+* npm Build Configuration
+  * [`jsNext`](#jsnext-boolean)
+  * [`umd`](#umd-boolean)
+  * [`global`](#global-string-required-for-umd-build)
+  * [`externals`](#externals-object-for-umd-build)
+  * [`package.json` fields](#package-json-umd-banner-configuration)
 
 #### `type`: `String` (required)
 
-This field is used to determine which type of module nwb is working with when a generic builds command like `build` are run.
+nwb uses this field to determine which type of project it's working with when generic build commands like `build` are used.
 
 It must be one of:
 
 * `'react-app'`
 * `'react-component'`
+* `'web-app'`
 * `'web-module'`
+
+### Babel Configuration
 
 #### `babel`: `Object`
 
@@ -36,9 +62,11 @@ module.exports = {
 
 If provided, this config will also be used to configure the `babel-loader` Webpack loader if there isn't any other configuration specified for it in [`loaders`](#loaders-object).
 
+### Webpack Configuration
+
 #### `define`: `Object`
 
-By default, nwb will use Webpack's `DefinePlugin` to replace all occurances of `process.env.NODE_ENV` with a string containing `NODE_ENV`'s current value.
+By default, nwb will use Webpack's [`DefinePlugin`](https://webpack.github.io/docs/list-of-plugins.html#defineplugin) to replace all occurances of `process.env.NODE_ENV` with a string containing `NODE_ENV`'s current value.
 
 You can configure a `define` object to add your own constant values.
 
@@ -52,42 +80,115 @@ module.exports = {
 }
 ```
 
-#### jsNext: `Boolean`
+#### `loaders`: `Object`
 
-Determines whether or not nwb will create an ES6 modules build for tree-shaking module bundlers when you run `nwb build` for a React component or web module.
+Each [Webpack loader](https://webpack.github.io/docs/loaders.html) configured by default has a unique id you can use to customise it.
 
-Defaults to `true`.
+To customise a loader, add a prop to the `loaders` object matching its id and pass a configuration object.
 
-#### `umd`: `Boolean`
+Refer to each loader's documentation for configuration options which can be set via `query`.
 
-Determines whether or not nwb will create a UMD build when you run `nwb build` for a React component or web module.
-
-Defaults to `true` when you are prompted to onfigure this by `nwb new`, or if you provide a UMD global variable as a command-line argument.
-
-#### `externals`: `Object` (only for UMD builds)
-
-A mapping from `peerDependency` module names to the global variables they're expected to be available as for use by the UMD build.
-
-e.g. if you're creating a React component which also depends on [React Router](https://github.com/rackt/react-router):
+e.g., to enable [CSS Modules][CSS Modules]:
 
 ```js
 module.exports = {
-  externals: {
-    'react': 'React',
-    'react-router': 'ReactRouter'
+  loaders: {
+    css: {
+      query: {
+        modules: true
+      }
+    }
   }
 }
 ```
 
-#### `global`: `String` (*required* for UMD builds)
+If a loader supports configuration via a top-level webpack configuration property, this can be provided as `config`. This is primarily for loaders which can't be configured via `query` as they have configuration which can't be serialised, such as instances of plugins.
 
-The name of the global variable the UMD build will export.
+e.g. to use the `nib` plugin with the [Stylus](http://learnboost.github.io/stylus/) preprocessor provided by [nwb-stylus](https://github.com/insin/nwb-stylus):
 
-You will be prompted to configure this if you choose to enable a UMD build when creating a React component or web module with `nwb new`.
+```js
+var nib = require('nib')
+
+module.exports = {
+  loaders: {
+    stylus: {
+      config: {
+        use: [nib()]
+      }
+    }
+  }
+}
+```
+
+##### Default Loaders
+
+Default loaders and their ids are:
+
+* `babel` - handles `.js` and `.jsx` files with [babel-loader][babel-loader]
+
+  > Default config: `{exclude: /node_modules/}`
+
+* `css-pipeline` - handles your app's own`.css` files by chaining together a number of loaders:
+
+  > Default config: `{exclude: /node_modules/}`
+
+  Chained loaders are:
+
+  * `style` - (only when serving) applies styles using [style-loader][style-loader]
+  * `css` - handles URLs, minification and CSS Modules using [css-loader][css-loader]
+  * `autoprefixer` - automatically adds vendor prefixes to CSS using [autoprefixer-loader][autoprefixer-loader]
+
+* `vendor-css-pipeline` - handles `.css` files required from `node_modules`, with the same set of chained loaders as `css-pipeline` but with a `vendor-` prefix in their id.
+
+  > Default config: `{include: /node_modules/}`
+
+* `graphics` - handles `.gif` and `.png` files using using [url-loader][url-loader]
+
+  > Default config: `{query: {limit: 10240}}`
+
+* `jpeg` - handles `.jpeg` files using [file-loader][file-loader]
+
+* `fonts` - handles `.otf`, `.svg`, `.ttf`, `.woff` and `.woff2` files using [url-loader][url-loader]
+
+  > Default config: `{query: {limit: 10240}}`
+
+* `eot` - handles `.eot` files using [file-loader][file-loader]
+
+* `json` - handles `.json` files using [json-loader][json-loader]
+
+##### Test loaders
+
+When running Karma tests with coverage enabled, the following loader will be added:
+
+* `isparta` - handles instrumentation of source files for coverage analysis [isparta-loader][isparta-loader]
+
+  > Default config: `{include: path.join(cwd, 'src')}` (where cwd is the directory you ran `nwb test` from).
+
+  You may need to tweak this loader if you're [changing where Karma looks for tests](#tests-string) - e.g. if you're colocating tests in `__tests__` directories, you will want to configure isparta-loader to ignore these:
+
+  ```js
+  module.exports = {
+    loaders: {
+      isparta: {
+        exclude: /__tests__/
+      }
+    }
+  }
+  ```
+
+##### `loaders.extra`: `Array`
+
+If you provide an `extra` field in the `loaders` object with a list of loader configuration objects, they will be added to the Webpack configuration.
+
+This is currently a crude escape hatch for adding more loaders.
+
+### Karma Configuration
+
+Karma defaults to using the Mocha framework and reporter plugins, but it's possible to configure your own, as well as where it looks for tests.
 
 #### `karma`: `Object`
 
-Karma defaults to using the Mocha framework and reporter plugins, but it's possible to configure your own, as well as where it looks for tests.
+Karma configuration is defined in a `karma` object, using the following fields:
 
 ##### `tests`: `String`
 
@@ -181,109 +282,44 @@ module.exports = {
 
 A list of plugins to be loaded by Karma - this should be used in combination with `frameworks` and `reporters` as necessary.
 
-#### `loaders`: `Object`
+### npm Build Configuration
 
-Each [Webpack loader](https://webpack.github.io/docs/loaders.html) configured by default has a unique id you can use to customise it.
+The following fields are used to configure what gets built in addition to the ES5 build created for React components and other modules which will be published to npm.
 
-To customise a loader, add a prop to the `loaders` object matching its id and pass a configuration object.
+#### `jsNext`: `Boolean`
 
-Refer to each loader's documentation for configuration options which can be set via `query`.
+Determines whether or not nwb will create an ES6 modules build for tree-shaking module bundlers when you run `nwb build` for a React component or web module.
 
-e.g., to enable [CSS Modules][CSS Modules]:
+Defaults to `true` when you are prompted to onfigure this by `nwb new`.
+
+#### `umd`: `Boolean`
+
+Determines whether or not nwb will create a UMD build when you run `nwb build` for a React component or web module.
+
+Defaults to `true` when you are prompted to onfigure this by `nwb new`, or if you provide a UMD global variable as a command-line argument.
+
+#### `global`: `String` (*required* for UMD build)
+
+The name of the global variable the UMD build will export.
+
+You will be prompted to configure this if you choose to enable a UMD build when creating a React component or web module with `nwb new`.
+
+#### `externals`: `Object` (for UMD build)
+
+A mapping from `peerDependency` module names to the global variables they're expected to be available as for use by the UMD build.
+
+e.g. if you're creating a React component which also depends on [React Router](https://github.com/rackt/react-router):
 
 ```js
 module.exports = {
-  loaders: {
-    css: {
-      query: {
-        modules: true
-      }
-    }
+  externals: {
+    'react': 'React',
+    'react-router': 'ReactRouter'
   }
 }
 ```
 
-If a loader supports configuration via a top-level webpack configuration property, this can be provided as `config`. This is primarily for loaders which can't be configured via `query` as they have configuration which can't be serialised, such as instances of plugins.
-
-e.g. to use the `nib` plugin with the [Stylus](http://learnboost.github.io/stylus/) preprocessor provided by [nwb-stylus](https://github.com/insin/nwb-stylus):
-
-```js
-var nib = require('nib')
-
-module.exports = {
-  loaders: {
-    stylus: {
-      config: {
-        use: [nib()]
-      }
-    }
-  }
-}
-```
-
-##### Default loaders
-
-Default loaders and their ids are:
-
-* `babel` - handles `.js` and `.jsx` files with [babel-loader][babel-loader]
-
-  > Default config: `{exclude: /node_modules/}`
-
-* `css-pipeline` - handles your app's own`.css` files by chaining together a number of loaders:
-
-  > Default config: `{exclude: /node_modules/}`
-
-  Chained loaders are:
-
-  * `style` - (only when serving) applies styles using [style-loader][style-loader]
-  * `css` - handles URLs, minification and CSS Modules using [css-loader][css-loader]
-  * `autoprefixer` - automatically adds vendor prefixes to CSS using [autoprefixer-loader][autoprefixer-loader]
-
-* `vendor-css-pipeline` - handles `.css` files required from `node_modules`, with the same set of chained loaders as `css-pipeline` but with a `vendor-` prefix in their id.
-
-  > Default config: `{include: /node_modules/}`
-
-* `graphics` - handles `.gif` and `.png` files using using [url-loader][url-loader]
-
-  > Default config: `{query: {limit: 10240}}`
-
-* `jpeg` - handles `.jpeg` files using [file-loader][file-loader]
-
-* `fonts` - handles `.otf`, `.svg`, `.ttf`, `.woff` and `.woff2` files using [url-loader][url-loader]
-
-  > Default config: `{query: {limit: 10240}}`
-
-* `eot` - handles `.eot` files using [file-loader][file-loader]
-
-* `json` - handles `.json` files using [json-loader][json-loader]
-
-##### Test loaders
-
-When running Karma tests with coverage enabled, the following loader will be added:
-
-* `isparta` - handles instrumentation of source files for coverage analysis [isparta-loader][isparta-loader]
-
-  > Default config: `{include: path.join(cwd, 'src')}` (where cwd is the directory you ran `nwb test` from).
-
-  You may need to tweak this loader if you're [changing where Karma looks for tests](#tests-string) - e.g. if you're colocating tests in `__tests__` directories, you will want to configure isparta-loader to ignore these:
-
-  ```js
-  module.exports = {
-    loaders: {
-      isparta: {
-        exclude: /__tests__/
-      }
-    }
-  }
-  ```
-
-##### `loaders.extra`: `Array`
-
-If you provide an `extra` prop in the `loaders` object with a list of loader configuration objects, they will be added to the Webpack configuration.
-
-This is currently a crude escape hatch for adding more loaders.
-
-## `package.json` UMD Banner Configuration
+#### `package.json` UMD Banner Configuration
 
 The banner comment added to UMD builds will use as many of the following `package.json` fields as are present:
 
@@ -291,6 +327,15 @@ The banner comment added to UMD builds will use as many of the following `packag
 * `version`
 * `homepage`
 * `license`
+
+If all fields are present the banner will look like this:
+
+```js
+/*!
+ * nwb 0.6.0 - https://github.com/insin/nwb
+ * MIT Licensed
+ */
+```
 
 [autoprefixer-loader]: https://github.com/passy/autoprefixer-loader/
 [babel-loader]: https://github.com/babel/babel-loader

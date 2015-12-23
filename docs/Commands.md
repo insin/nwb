@@ -8,7 +8,9 @@ nwb new <project-type> <name>
 
 Creates a new directory and initialises a project skeleton in it.
 
-The `name` argument must not match a directory which already exists in the current directory.
+The `name` argument must not be an existing directory.
+
+#### Project Types
 
 ```
 nwb new react-app <name>
@@ -42,13 +44,13 @@ Creates a skeleton for a web module with the given name, with an optional UMD bu
 
 **Flags:**
 
-* `-f, --force` - force creation of the new project without asking any questions, using whichever default settings are necessary as a result.
+* `-f, --force` - force creation of the new project without asking any questions, using whichever default settings are necessary as a result
 
 **React component and web module flags:**
 
-* `-g, --global` - provide a global variable to be exported by the UMD build, implicitly enabling the UMD build.
-* `--no-jsnext` - disable the npm ES6 modules build.
-* `--no-umd` - disable the npm UMD build.
+* `-g, --global` - provide a global variable to be exported by the UMD build, implicitly enabling the UMD build
+* `--no-jsnext` - disable the npm ES6 modules build
+* `--no-umd` - disable the npm UMD build
 
 ### `init` - initialise a project in the current directory
 
@@ -60,13 +62,13 @@ This is the same as `new`, except the `name` argument is optional and the new pr
 
 If  `name` is not provided, the name of the current directory will be used.
 
-### `serve` - serve a React app
+### `serve` - serve an app
 
 ```
 nwb serve
 ```
 
-Starts a development server which serves a React app with hot reloading.
+Starts a development server which serves an app with hot module reloading.
 
 * JavaScript and CSS changes will be applied on the fly without refreshing the page.
 * Syntax errors made while the development server is running will appear as an overlay in your browser.
@@ -81,11 +83,17 @@ Starts a development server which serves a React app with hot reloading.
 
 **In React apps:**
 
-When run in a React app, `serve` will serve the app.
+When run in a `react-app` project, `serve` will serve the app with hot module reloading and display of syntax errors and React component rendering errors as overlays.
+
+**In other web apps:**
+
+When run in a `web-app` project, `serve` will serve the app with hot module reloading (HMR) and display of syntax errors as an overlay, *but* you will have to [manually configure your JavaScript code](https://webpack.github.io/docs/hot-module-replacement.html) if you wish to make use of HMR.
+
+If you use the `--reload` flag, the HMR client will refresh the page any time a JavaScript change was made and it was unable to patch the module. This may be a better option if your app isn't suitable for HMR.
 
 **In React component modules:**
 
-When run in a React component module, `serve` will serve the component's demo app.
+When run in a `react-component` project, `serve` will serve the component's demo app with hot module reloading and display of syntax errors and React component rendering errors as overlays.
 
 A demo app is essential to show people what your component can do - as [React Rocks](http://react.rocks/) says: online demo or it didn't happen!
 
@@ -116,24 +124,27 @@ nwb build
 
 Builds the project.
 
-**In React apps:**
+**In React/web apps:**
 
 A static build will be created in `public/build/`, with `app.js` and `app.css` files plus any other resources used.
 
 Separate `vendor.js` and `vendor.css` files will be built for any dependencies used from `node_modules`.
 
-By default, static builds are created in production mode:
+By default, static builds are created in production mode. Code will be minified and have dead code elimination performed on it (for example to remove unreachable, or development-mode only, code).
 
-* The Babel 5 [constant-elements](https://github.com/babel/babel.github.io/blob/862b43db93e48762671267034a50c30c00e433e2/docs/advanced/transformers/optimisation/react/constant-elements.md) and [inline-elements](https://github.com/babel/babel.github.io/blob/862b43db93e48762671267034a50c30c00e433e2/docs/advanced/transformers/optimisation/react/inline-elements.md) React optimisation transforms will be used.
-* code will be minified and have dead code elimination performed on it (for example, to remove development mode features from React).
-
-To create a development build, set the `NODE_ENV` environment variable to `'development'` when running the `build` command.
-
-nwb supports a cross-platform way of doing this, using [argv-set-env](https://github.com/kentcdodds/argv-set-env):
+To create a development build, set the `NODE_ENV` environment variable to `'development'` when running the `build` command; nwb supports a cross-platform way of doing this, using [argv-set-env](https://github.com/kentcdodds/argv-set-env):
 
 ```
+# Will work on Windows
 nwb build --set-env-NODE_ENV=development
+
+# Won't work on Windows
+NODE_ENV=development nwb build
 ```
+
+**In React apps only:**
+
+In production mode builds, the Babel 5 [constant-elements](https://github.com/babel/babel.github.io/blob/862b43db93e48762671267034a50c30c00e433e2/docs/advanced/transformers/optimisation/react/constant-elements.md) and [inline-elements](https://github.com/babel/babel.github.io/blob/862b43db93e48762671267034a50c30c00e433e2/docs/advanced/transformers/optimisation/react/inline-elements.md) React optimisation transforms will be used.
 
 **In React component modules and other web modules:**
 
@@ -141,6 +152,7 @@ Builds the component in preparation for publishing to npm.
 
 * An ES5 build will be created in `lib/`
 * If enabled, UMD builds will be created in `umd/`
+* If enabled, ES6 modules builds will be created in `es6/`
 
 If the module has a `demo/` directory, running `build` will also create a static build of its demo app in `demo/dist/`.
 
@@ -150,4 +162,4 @@ If the module has a `demo/` directory, running `build` will also create a static
 nwb clean
 ```
 
-Deletes all built resources.
+Deletes all built resource directories.

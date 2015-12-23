@@ -8,6 +8,8 @@ CSS preprocessors provide a Webpack loader which processes modules written in al
 * [nwb-sass](https://github.com/insin/nwb-sass) - adds processing of `.scss` files
 * [nwb-stylus](https://github.com/insin/nwb-stylus) - adds processing of `.styl` files
 
+----
+
 ### Implementing Plugins
 
 Plugins are implemented as npm packages which have names beginning with `'nwb-'`, which export a plugin configuration object.
