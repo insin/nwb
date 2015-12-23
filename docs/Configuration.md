@@ -21,8 +21,8 @@ The object exported or returned by your nwb config can use the following fields:
 * Karma Configuration
   * [`karma`](#karma-object)
   * [`karma.tests`](#tests-string)
-  * [`karma.frameworks`](#frameworks-arraystring-plugin)
-  * [`karma.reporters`](#reporters-arraystring-plugin)
+  * [`karma.frameworks`](#frameworks-arraystring--plugin)
+  * [`karma.reporters`](#reporters-arraystring--plugin)
   * [`karma.plugins`](#plugins-arrayplugin)
 * npm Build Configuration
   * [`jsNext`](#jsnext-boolean)
