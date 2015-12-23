@@ -2,7 +2,7 @@
 
 [![npm package][npm-badge]][npm]
 
-Plugin enabling a [Stylus](http://learnboost.github.io/stylus/) loading pipeline for `.styl` files in [nwb](https://github.com/insin/nwb) using [stylus-loader](https://github.com/shama/stylus-loader).
+Plugin enabling a [Stylus](http://stylus-lang.com/) loading pipeline for `.styl` files in [nwb](https://github.com/insin/nwb) using [stylus-loader](https://github.com/shama/stylus-loader).
 
 ## Usage
 
