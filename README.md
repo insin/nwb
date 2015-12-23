@@ -35,6 +35,16 @@ npm install -g nwb
 
 ## [Documentation](/docs/#table-of-contents)
 
+## Example Video
+
+Just after nwb v0.6.0 was released, someone on [Reactiflux](http://www.reactiflux.com/) asked this question:
+
+> hey guys, i need to prove a concept quickly, i need a boilerplate with react and some kind of mobile ui framework like ratchet, does anyone know of a good boilerplate like that?
+
+This video shows the resulting example of using nwb to create a new React project, installing [Ratchet](http://goratchet.com/)'s from npm and using its CSS, and [using the nwb config file to configure Babel](/docs/Configuration.md#babel-configuration) with a [plugin to make it more convenient to copy and paste HTML samples](https://github.com/insin/babel-plugin-react-html-attrs) from Ratchet's docs:
+
+[![nwb v0.6.0 example on YouTube](https://img.youtube.com/vi/jTuyiw-xzdo/0.jpg)](https://www.youtube.com/watch?v=jTuyiw-xzdo)
+
 ## Quick Start Examples
 
 Create a new React app and start a hot reloading development server:
