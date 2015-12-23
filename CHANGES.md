@@ -1,3 +1,5 @@
+# 0.6.0 / 2015-12-23
+
 **Added:**
 
 - Added an `nwb init` command - same as `nwb new` but creates a project in the current directory and uses the directory name by default [[#25](https://github.com/insin/nwb/issues/25)]
