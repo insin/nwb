@@ -17,19 +17,19 @@ The object exported or returned by your nwb config can use the following fields:
 * Webpack Configuration
   * [`define`](#define-object)
   * [`loaders`](#loaders-object)
-  * [`loaders.extra`](#loaders-extra-array)
+  * [`loaders.extra`](#loadersextra-array)
 * Karma Configuration
   * [`karma`](#karma-object)
   * [`karma.tests`](#tests-string)
-  * [`karma.frameworks`](#frameworks-array-string-plugin)
-  * [`karma.reporters`](#reporters-array-string-plugin)
-  * [`karma.plugins`](#plugins-array-plugin)
+  * [`karma.frameworks`](#frameworks-arraystring-plugin)
+  * [`karma.reporters`](#reporters-arraystring-plugin)
+  * [`karma.plugins`](#plugins-arrayplugin)
 * npm Build Configuration
   * [`jsNext`](#jsnext-boolean)
   * [`umd`](#umd-boolean)
   * [`global`](#global-string-required-for-umd-build)
   * [`externals`](#externals-object-for-umd-build)
-  * [`package.json` fields](#package-json-umd-banner-configuration)
+  * [`package.json` fields](#packagejson-umd-banner-configuration)
 
 #### `type`: `String` (required)
 
