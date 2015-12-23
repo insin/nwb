@@ -6,7 +6,7 @@ This file should export either a configuration object or a function which create
 
 If a function is exported, it will be called *after* nwb has ensured the appropriate `NODE_ENV` environment variable has been set for the command being run.
 
-### Configuration Object Fields
+### Configuration Fields
 
 The object exported or returned by your nwb config can use the following fields:
 
@@ -84,7 +84,7 @@ module.exports = {
 
 Each [Webpack loader](https://webpack.github.io/docs/loaders.html) configured by default has a unique id you can use to customise it.
 
-To customise a loader, add a prop to the `loaders` object matching its id and pass a configuration object.
+To customise a loader, add a prop to the `loaders` object matching its id with a configuration object.
 
 Refer to each loader's documentation for configuration options which can be set via `query`.
 
