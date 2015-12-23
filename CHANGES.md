@@ -21,7 +21,9 @@
 **Dependencies:**
 
 - copy-template-dir: v1.1.0 → v1.2.0 - provide created file paths in callback
+- css-loader: v0.23.0 → v0.23.1
 - expect: v1.13.3 → v1.13.4 - comparing arrays of nested objects fix
+- rimraf: v2.4.4 → v2.4.5
 
 # 0.5.0 / 2015-12-15
 

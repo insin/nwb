@@ -36,7 +36,7 @@
     "minimist": "1.2.0",
     "qs": "5.2.0",
     "resolve": "1.1.6",
-    "rimraf": "2.4.4",
+    "rimraf": "2.4.5",
     "temp": "0.8.3",
     "webpack-merge": "0.3.2",
 
@@ -66,7 +66,7 @@
     "webpack": "1.12.9",
     "autoprefixer-loader": "3.1.0",
     "babel-loader": "5.4.0",
-    "css-loader": "0.23.0",
+    "css-loader": "0.23.1",
     "extract-text-webpack-plugin": "0.9.1",
     "file-loader": "0.8.5",
     "html-webpack-plugin": "1.7.0",
