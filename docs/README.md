@@ -5,4 +5,5 @@
 * [`nwb` commands](/docs/Commands.md)
 * [Testing](/docs/Testing.md)
 * [Configuration](/docs/Configuration.md)
+* [Plugins](/docs/Plugins.md)
 * [Middleware](/docs/Middleware.md)
