@@ -7,15 +7,23 @@ import debug from '../debug'
 import exec from '../exec'
 import getUserConfig from '../getUserConfig'
 
+function preset(presetName) {
+  return require.resolve(`babel-preset-${presetName}`)
+}
+
+function presets(...presetNames) {
+  return presetNames.map(preset).join(',')
+}
+
 export default function(args) {
-  require('./clean-module')(args)
+  require('./clean-module').default(args)
 
   let cwd = path.join(__dirname, '..')
   let es6 = path.resolve('es6')
   let lib = path.resolve('lib')
   let src = path.resolve('src')
 
-  let babelArgs = [src, '--out-dir', lib]
+  let babelArgs = [src, '--out-dir', lib, '--presets', presets('es2015', 'react', 'stage-2')]
 
   // Write any user babel config to a temporary file to point babel at via the
   // babelrc option.

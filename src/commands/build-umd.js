@@ -53,10 +53,21 @@ export default function(args, cb) {
     externals: createWebpackExternals(userConfig.externals),
     plugins: {
       banner: createBanner(pkg)
+    },
+    loaders: {
+      babel: {
+	query: {
+	  presets: [
+	    require.resolve('babel-preset-es2015'),
+	    require.resolve('babel-preset-react'),
+	    require.resolve('babel-preset-stage-2')
+	  ]
+	}
+      }
     }
   }
 
-  require('./clean-umd')(args)
+  require('./clean-umd').default(args)
 
   console.log('nwb: build-umd')
   process.env.NODE_ENV = 'development'

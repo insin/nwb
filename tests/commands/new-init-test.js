@@ -6,7 +6,7 @@ import glob from 'glob'
 import rimraf from 'rimraf'
 import temp from 'temp'
 
-let cli = require('../../src/cli')
+import cli from '../../src/cli'
 
 function reactAppAssertions(dir, name, err, done) {
   expect(err).toNotExist('No errors creating new React app')

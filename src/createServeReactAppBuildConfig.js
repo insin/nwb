@@ -8,13 +8,13 @@ import {UserError} from './errors'
  * Creates a build configuration object which will be used to create a Webpack
  * config for serving a React app.
  */
-export default function(config) {
+export default function (config) {
   let {
     entry,
     output,
     plugins,
     staticPath = null
-  } = config
+    } = config
 
   assert(entry, 'entry config is required to serve a React app')
   assert(output, 'output config is required to serve a React app')
@@ -33,24 +33,28 @@ export default function(config) {
     output,
     loaders: {
       babel: {
-        // Configure hot reloading and error catching via react-transform
         query: {
-          plugins: [
-            require.resolve('babel-plugin-react-display-name'),
-            require.resolve('babel-plugin-react-transform')
+	  presets: [
+	    require.resolve('babel-preset-es2015'),
+	    require.resolve('babel-preset-react'),
+	    require.resolve('babel-preset-stage-2')
           ],
-          extra: {
-            'react-transform': {
-              transforms: [{
-                transform: require.resolve('react-transform-hmr'),
-                imports: [reactPath],
-                locals: ['module']
-              }, {
-                transform: require.resolve('react-transform-catch-errors'),
-                imports: [reactPath, require.resolve('redbox-noreact')]
-              }]
-            }
-          }
+	  // Configure hot reloading and error catching via react-transform
+	  plugins: [
+	    [
+	      require.resolve('babel-plugin-transform-react-display-name'),
+	      require.resolve('babel-plugin-react-transform'), {
+		transforms: [{
+		  transform: require.resolve('react-transform-hmr'),
+		  imports: [reactPath],
+		  locals: ['module']
+		}, {
+		  transform: require.resolve('react-transform-catch-errors'),
+		  imports: [reactPath, require.resolve('redbox-noreact')]
+		}]
+	      }
+	    ]
+	  ]
         }
       }
     },
