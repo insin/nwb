@@ -1,6 +1,7 @@
 import fs from 'fs'
 import path from 'path'
 import {execSync} from 'child_process'
+import os from 'os'
 
 import expect from 'expect'
 import rimraf from 'rimraf'
@@ -15,7 +16,7 @@ describe('command: test', function() {
 
   beforeEach(() => {
     originalCwd = process.cwd()
-    tmpDir = temp.mkdirSync('nwb-test')
+    tmpDir = temp.mkdirSync({dir: path.join(os.homedir()), prefix: 'nwb-test'})
     process.chdir(tmpDir)
   })
 

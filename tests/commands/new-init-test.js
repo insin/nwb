@@ -29,12 +29,9 @@ function reactAppAssertions(dir, name, err, done) {
     'tests/.eslintrc',
     'tests/App-test.js'
   ])
-  expect(glob.sync('node_modules/*', {
-    cwd: path.resolve(dir)
-  })).toEqual([
-    'node_modules/react',
-    'node_modules/react-dom'
-  ])
+  let nodeModules = glob.sync('node_modules/*', { cwd: path.resolve(dir) })
+  expect(nodeModules).toInclude('node_modules/react')
+  expect(nodeModules).toInclude('node_modules/react-dom')
   let pkg = require(path.resolve(dir, 'package.json'))
   expect(pkg.name).toBe(name)
   let config = require(path.resolve(dir, 'nwb.config.js'))
@@ -63,12 +60,9 @@ function reactComponentAssertions(dir, name, err, done) {
     'tests/.eslintrc',
     'tests/index-test.js'
   ])
-  expect(glob.sync('node_modules/*', {
-    cwd: path.resolve(dir)
-  })).toEqual([
-    'node_modules/react',
-    'node_modules/react-dom'
-  ])
+  let nodeModules = glob.sync('node_modules/*', { cwd: path.resolve(dir) })
+  expect(nodeModules).toInclude('node_modules/react')
+  expect(nodeModules).toInclude('node_modules/react-dom')
   let pkg = require(path.resolve(dir, 'package.json'))
   expect(pkg.name).toBe(name)
   expect(pkg['jsnext:main']).toBe('es6/index.js')
@@ -140,7 +134,7 @@ function webModuleAssertions(dir, name, err, done) {
   done()
 }
 
-describe('command: nwb new', function() {
+describe('command: nwb new', function () {
   this.timeout(40000)
 
   let originalCwd
@@ -157,7 +151,7 @@ describe('command: nwb new', function() {
     rimraf(tmpDir, done)
   })
 
-  describe('with missing or invalid arguments', function() {
+  describe('with missing or invalid arguments', function () {
     this.timeout(200)
     it('prints usage info without any arguments', done => {
       cli(['new'], err => {
@@ -222,7 +216,7 @@ describe('command: nwb new', function() {
   })
 })
 
-describe('command: nwb init', function() {
+describe('command: nwb init', function () {
   this.timeout(40000)
 
   let originalCwd
@@ -241,7 +235,7 @@ describe('command: nwb init', function() {
     rimraf(tmpDir, done)
   })
 
-  describe('with missing or invalid arguments', function() {
+  describe('with missing or invalid arguments', function () {
     this.timeout(200)
     it('prints usage info without any arguments', done => {
       cli(['init'], err => {
