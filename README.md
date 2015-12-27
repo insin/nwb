@@ -175,3 +175,5 @@ Development commands:
 
 [coveralls-badge]: https://img.shields.io/coveralls/insin/nwb/master.svg?style=flat-square
 [coveralls]: https://coveralls.io/github/insin/nwb
+
+Don't hate me. I'm testing if appveyor will run on PRs when you specify an `only`
