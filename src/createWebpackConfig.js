@@ -35,7 +35,7 @@ export let combineLoaders = loaders =>
  */
 export function mergeLoaderConfig(defaultConfig = {}, buildConfig = {}, userConfig = {}) {
   // Don't include a 'config' object if the user provided one - this will be
-  // configurd at the top level instead.
+  // configured at the top level instead.
   let {config, ...userLoaderConfig} = userConfig
   let loader = merge(defaultConfig, buildConfig, userLoaderConfig)
   if (loader.query && Object.keys(loader.query).length === 0) {
