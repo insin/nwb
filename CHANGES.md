@@ -1,3 +1,14 @@
+**Dependencies:**
+
+- argv-set-env: v1.0.0 → [v1.0.1](https://github.com/kentcdodds/argv-set-env/releases/tag/v1.0.1) - docs
+- glob: v6.0.1 → v6.0.3 - v6.0.2 was reverted
+- karma: v0.13.15 → [v0.13.16](https://github.com/karma-runner/karma/releases/tag/v0.13.16)
+- karma-mocha-reporter: v1.1.3 → v1.1.4 - handle duplicate descriptions
+- karma-phantomjs-launcher: v0.2.1 → v0.2.2
+- react-transform-catch-errors: v1.0.0 → [v1.0.1](https://github.com/gaearon/react-transform-catch-errors/releases/tag/v1.0.1) - display the offending call stack more prominently
+- rimraf: v2.4.5 → v2.5.0 - add glob option
+- webpack-merge: v0.3.2 → v0.5.1 - fix recursive merging
+
 # 0.6.1 / 2015-12-30
 
 **Fixed:**
