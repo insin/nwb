@@ -1,3 +1,5 @@
+# 0.6.2 / 2015-12-30
+
 **Dependencies:**
 
 - argv-set-env: v1.0.0 → [v1.0.1](https://github.com/kentcdodds/argv-set-env/releases/tag/v1.0.1) - docs

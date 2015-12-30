@@ -1,7 +1,7 @@
 {
   "name": "nwb",
   "description": "CLI tool for React apps and components & plain JS apps and npm modules",
-  "version": "0.6.1",
+  "version": "0.6.2",
   "license": "MIT",
   "author": "Jonny Buchanan <jonathan.buchanan@gmail.com>",
   "bin": {
