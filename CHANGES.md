@@ -1,3 +1,5 @@
+# 0.6.1 / 2015-12-30
+
 **Fixed:**
 
 - The `es6/` directory wasn't included in the default `.gitignore` for npm module project templates.
