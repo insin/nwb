@@ -8,7 +8,7 @@ import {UserError} from '../errors'
 let error
 
 try {
-  cli(process.argv.slice(2), err => error = err)
+  cli(process.argv.slice(2), err => (err) ? process.exit(1) : error = err)
 }
 catch (err) {
   error = err
