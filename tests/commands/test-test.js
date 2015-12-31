@@ -1,6 +1,8 @@
-import expect from 'expect'
 import fs from 'fs'
 import path from 'path'
+import {execSync} from 'child_process'
+
+import expect from 'expect'
 import rimraf from 'rimraf'
 import temp from 'temp'
 
@@ -66,16 +68,35 @@ describe('command: test', function() {
     })
   })
 
-  it('returns error code 1 if test fails', function(done) {
+  it('calls back with an error if tests fail', function(done) {
     cli(['new', 'web-module', 'test-failure-module', '-f'], err => {
       expect(err).toNotExist('No errors creating new web module for failure test')
       process.chdir(path.join(tmpDir, 'test-failure-module'))
-      const content = fs.readFileSync('./tests/index-test.js', 'utf-8')
+      let content = fs.readFileSync('./tests/index-test.js', 'utf-8')
       fs.writeFileSync('./tests/index-test.js', content.replace('Welcome to', 'X'))
       cli(['test'], err => {
         expect(err).toExist()
         done()
       })
+    })
+  })
+
+  it('exits with a non-zero code if tests fail', function(done) {
+    cli(['new', 'web-module', 'test-failure-module', '-f'], err => {
+      expect(err).toNotExist('No errors creating new web module for failure test')
+      process.chdir(path.join(tmpDir, 'test-failure-module'))
+      let content = fs.readFileSync('./tests/index-test.js', 'utf-8')
+      fs.writeFileSync('./tests/index-test.js', content.replace('Welcome to', 'X'))
+      try {
+        execSync(['node', path.join(__dirname, '../../lib/bin/nwb.js'), 'test'].join(' '), {
+          stdio: [0, 1, 2]
+        })
+        done(new Error('test should have failed'))
+      }
+      catch (e) {
+        expect(e.status).toEqual(1)
+        done()
+      }
     })
   })
 })
