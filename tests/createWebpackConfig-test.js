@@ -158,7 +158,7 @@ describe('mergeLoaderConfig()', () => {
       loader: 'one',
       exclude: EXCLUDE_RE,
       query: {
-        optional: ['two', 'three']
+        optional: ['three', 'two']
       }
     })
   })

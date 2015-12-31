@@ -38,7 +38,7 @@
     "resolve": "1.1.6",
     "rimraf": "2.5.0",
     "temp": "0.8.3",
-    "webpack-merge": "0.5.1",
+    "webpack-merge": "0.7.0",
 
     "babel": "5.8.34",
     "babel-core": "5.8.34",
@@ -53,7 +53,7 @@
     "isparta-loader": "1.0.0",
     "karma-coverage": "0.5.3",
     "karma-mocha": "0.2.1",
-    "karma-mocha-reporter": "1.1.4",
+    "karma-mocha-reporter": "1.1.5",
     "karma-phantomjs-launcher": "0.2.2",
     "karma-sourcemap-loader": "0.3.6",
     "karma-webpack": "1.7.0",

@@ -2,6 +2,11 @@
 
 - Exit the process correctly with a non-zero exit code when an async command fails, such as `nwb test` [[#36](https://github.com/insin/nwb/pull/36)] [[jihchi][jihchi]]
 
+**Dependencies:**
+
+- karma-mocha-reporter: v1.1.4 → v1.1.5 - show error message when karma runner ends with error
+- webpack-merge: v0.5.1 → v0.7.0 - bug fix for merging arrays within nested structures
+
 # 0.6.2 / 2015-12-30
 
 **Dependencies:**
