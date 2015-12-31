@@ -1,3 +1,7 @@
+**Fixed:**
+
+- Exit the process correctly with a non-zero exit code when an async command fails, such as `nwb test` [[#36](https://github.com/insin/nwb/pull/36)] [[jihchi][jihchi]]
+
 # 0.6.2 / 2015-12-30
 
 **Dependencies:**
@@ -130,3 +134,5 @@
 # 0.1.0 / 2015-12-02
 
 First 0.x release.
+
+[jihchi]: https://github.com/jihchi
