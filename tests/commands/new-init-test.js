@@ -31,10 +31,8 @@ function reactAppAssertions(dir, name, err, done) {
   ])
   expect(glob.sync('node_modules/*', {
     cwd: path.resolve(dir)
-  })).toEqual([
-    'node_modules/react',
-    'node_modules/react-dom'
-  ])
+  })).toInclude('node_modules/react')
+     .toInclude('node_modules/react-dom')
   let pkg = require(path.resolve(dir, 'package.json'))
   expect(pkg.name).toBe(name)
   let config = require(path.resolve(dir, 'nwb.config.js'))
@@ -65,10 +63,8 @@ function reactComponentAssertions(dir, name, err, done) {
   ])
   expect(glob.sync('node_modules/*', {
     cwd: path.resolve(dir)
-  })).toEqual([
-    'node_modules/react',
-    'node_modules/react-dom'
-  ])
+  })).toInclude('node_modules/react')
+     .toInclude('node_modules/react-dom')
   let pkg = require(path.resolve(dir, 'package.json'))
   expect(pkg.name).toBe(name)
   expect(pkg['jsnext:main']).toBe('es6/index.js')
