@@ -54,17 +54,7 @@ export default function(args, cb) {
     plugins: {
       banner: createBanner(pkg)
     },
-    loaders: {
-      babel: {
-	query: {
-	  presets: [
-	    require.resolve('babel-preset-es2015'),
-	    require.resolve('babel-preset-react'),
-	    require.resolve('babel-preset-stage-2')
-	  ]
-	}
-      }
-    }
+    loaders: userConfig.loaders
   }
 
   require('./clean-umd').default(args)

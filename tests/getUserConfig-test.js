@@ -1,6 +1,7 @@
 import expect from 'expect'
 
 import getUserConfig from '../src/getUserConfig'
+import {findNodeModules} from '../src/utils'
 
 describe('getUserConfig()', () => {
   describe('when no config file can be found', () => {
@@ -38,36 +39,56 @@ describe('getUserConfig()', () => {
   describe('when babel config is provided', () => {
     it('creates a babel-loader config if there was none', () => {
       let config = getUserConfig({config: 'tests/fixtures/babel-only-config.js'})
+      let nodeModules = findNodeModules()
       expect(config.loaders).toEqual({
         babel: {
           query: {
-            loose: 'all',
-            stage: 0,
-            optioonal: ['runtime']
+            plugins: [
+              'transform-runtime'
+            ],
+            presets: [
+              `es2015-loose`,
+              `${nodeModules}/babel-preset-es2015/index.js`,
+              `${nodeModules}/babel-preset-react/index.js`,
+              `${nodeModules}/babel-preset-stage-0/index.js`
+            ]
           }
         }
       })
     })
     it('adds the config to existing babel-loader config if it had no query', () => {
       let config = getUserConfig({config: 'tests/fixtures/babel-loader-config.js'})
+      let nodeModules = findNodeModules()
       expect(config.loaders).toEqual({
         babel: {
-          exclude: 'test',
+          ignore: 'test',
           query: {
-            loose: 'all'
+            presets: [
+              `es2015-loose`,
+              `${nodeModules}/babel-preset-es2015/index.js`,
+              `${nodeModules}/babel-preset-react/index.js`,
+              `${nodeModules}/babel-preset-stage-2/index.js`
+            ]
           }
         }
       })
     })
     it('does nothing if existing babel-loader config already has a query', () => {
       let config = getUserConfig({config: 'tests/fixtures/babel-loader-query-config.js'})
+      let nodeModules = findNodeModules()
       expect(config.loaders).toEqual({
         babel: {
-          exclude: 'test',
+          ignore: 'test',
           query: {
-            loose: 'all',
-            stage: 0,
-            optioonal: ['runtime']
+            plugins: [
+              'transform-runtime'
+            ],
+            presets: [
+              `es2015-loose`,
+              `${nodeModules}/babel-preset-es2015/index.js`,
+              `${nodeModules}/babel-preset-react/index.js`,
+              `${nodeModules}/babel-preset-stage-1/index.js`
+            ]
           }
         }
       })

@@ -6,6 +6,7 @@ import glob from 'glob'
 import {PROJECT_TYPES, REACT_COMPONENT, WEB_MODULE} from './constants'
 import debug from './debug'
 import {UserError} from './errors'
+import merge from 'webpack-merge'
 
 // TODO Remove in 0.7
 let warnedJSNext = false
@@ -43,20 +44,27 @@ export default function getUserConfig(args = {}) {
   if (!userConfig.loaders) {
     userConfig.loaders = {}
   }
-  if (userConfig.babel) {
-    if (!userConfig.loaders.babel) {
-      userConfig.loaders.babel = {query: userConfig.babel}
-      debug('added babel-loader with user babel config')
-    }
-    else if (!userConfig.loaders.babel.query) {
-      userConfig.loaders.babel.query = userConfig.babel
-      debug('added query to babel-loader with user babel config')
+
+  let {stage, ...babelConfig} = userConfig.babel || {}
+  let {query, ...babelLoaderConfig} = userConfig.loaders.babel || {}
+
+  if (typeof stage === 'undefined') {
+    stage = 2
+  }
+  let defaultConfig = {
+    query: {
+      presets: [
+        require.resolve('babel-preset-es2015'),
+        require.resolve('babel-preset-react'),
+        require.resolve(`babel-preset-stage-${stage}`)
+      ]
     }
   }
+  userConfig.loaders.babel = merge(defaultConfig, {query: babelConfig}, babelLoaderConfig, {query})
+  userConfig.babel = {stage, ...babelConfig}
 
   // TODO Remove in 0.7
-  if ((userConfig.type === REACT_COMPONENT || userConfig.type === WEB_MODULE) &&
-      !('jsNext' in userConfig)) {
+  if ((userConfig.type === REACT_COMPONENT || userConfig.type === WEB_MODULE) && !('jsNext' in userConfig)) {
     if (!warnedJSNext) {
       console.warn(chalk.magenta([
         'nwb: there was no jsNext setting in your nwb config file - this will default to true in nwb 0.6',

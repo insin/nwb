@@ -143,15 +143,7 @@ export default function ({cwd, singleRun, runCoverage}) {
     devtool: 'inline-source-map',
     loaders: {
       extra: loaders,
-      babel: {
-	query: {
-	  presets: [
-	    require.resolve('babel-preset-es2015'),
-	    require.resolve('babel-preset-react'),
-	    require.resolve('babel-preset-stage-2')
-	  ]
-	}
-      }
+      babel: userConfig.loaders.babel
     },
     resolve: {
       alias: {

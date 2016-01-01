@@ -23,14 +23,9 @@ let buildConfig = () => {
     config.loaders = {
       babel: {
         query: {
-	  presets: [
-	    require.resolve('babel-preset-es2015'),
-	    require.resolve('babel-preset-react'),
-	    require.resolve('babel-preset-stage-2')
-	  ],
-	  plugins: [
-	    require.resolve('babel-plugin-transform-react-inline-elements'),
-	    require.resolve('babel-plugin-transform-react-constant-elements')
+          plugins: [
+            require.resolve('babel-plugin-transform-react-inline-elements'),
+            require.resolve('babel-plugin-transform-react-constant-elements')
           ]
         }
       }

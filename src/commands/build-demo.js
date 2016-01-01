@@ -1,6 +1,7 @@
 import path from 'path'
 
 import webpackBuild from '../webpackBuild'
+import getUserConfig from '../getUserConfig'
 
 /**
  * Build a web module's demo app from demo/src/index.js.
@@ -10,6 +11,7 @@ export default function(args, cb) {
 
   require('./clean-demo').default(args)
 
+  let userConfig = getUserConfig(args)
   console.log('nwb: build-demo')
   webpackBuild(args, {
     devtool: 'sourcemap',
@@ -26,16 +28,6 @@ export default function(args, cb) {
         title: `${pkg.name} ${pkg.version} Demo`
       }
     },
-    loaders: {
-      babel: {
-	query: {
-	  presets: [
-	    require.resolve('babel-preset-es2015'),
-	    require.resolve('babel-preset-react'),
-	    require.resolve('babel-preset-stage-2')
-	  ]
-	}
-      }
-    }
+    loaders: userConfig.loaders
   }, cb)
 }
