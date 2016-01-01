@@ -3,7 +3,7 @@ import path from 'path'
 import webpackBuild from '../webpackBuild'
 
 export default function(args, cb) {
-  require('./clean-app')(args)
+  require('./clean-app').default(args)
 
   console.log(`nwb: build-web-app`)
   webpackBuild(args, {

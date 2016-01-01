@@ -1,11 +1,11 @@
 module.exports = {
   type: 'react-component',
   babel: {
-    loose: 'all'
+    presets: ['es2015-loose']
   },
   loaders: {
     babel: {
-      exclude: 'test'
+      ignore: 'test'
     }
   }
 }

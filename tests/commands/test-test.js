@@ -1,21 +1,22 @@
 import fs from 'fs'
 import path from 'path'
 import {execSync} from 'child_process'
+import os from 'os'
 
 import expect from 'expect'
 import rimraf from 'rimraf'
 import temp from 'temp'
+import cli from '../../src/cli'
 
 describe('command: test', function() {
   this.timeout(60000)
 
-  let cli = require('../../src/cli')
   let originalCwd
   let tmpDir
 
   beforeEach(() => {
     originalCwd = process.cwd()
-    tmpDir = temp.mkdirSync('nwb-test')
+    tmpDir = temp.mkdirSync({dir: path.join(os.homedir()), prefix: 'nwb-test'})
     process.chdir(tmpDir)
   })
 

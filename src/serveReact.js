@@ -7,5 +7,5 @@ import webpackServer from './webpackServer'
  * error catching.
  */
 export default function(args, config, cb) {
-  webpackServer(args, createServeReactAppBuildConfig(config), cb)
+  webpackServer(args, createServeReactAppBuildConfig(args, config), cb)
 }

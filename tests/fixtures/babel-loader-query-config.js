@@ -3,15 +3,14 @@
 module.exports = {
   type: 'react-component',
   babel: {
-    stage: 2
+    stage: 1
   },
   loaders: {
     babel: {
-      exclude: 'test',
+      ignore: 'test',
       query: {
-        loose: 'all',
-        stage: 0,
-        optioonal: ['runtime']
+        presets: ['es2015-loose'],
+        plugins: ['transform-runtime']
       }
     }
   }

@@ -53,10 +53,11 @@ export default function(args, cb) {
     externals: createWebpackExternals(userConfig.externals),
     plugins: {
       banner: createBanner(pkg)
-    }
+    },
+    loaders: userConfig.loaders
   }
 
-  require('./clean-umd')(args)
+  require('./clean-umd').default(args)
 
   console.log('nwb: build-umd')
   process.env.NODE_ENV = 'development'

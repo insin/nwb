@@ -56,7 +56,7 @@ export function getKarmaConfig(cwd, runCoverage, userConfig = {}) {
   let {
     karma: userKarma = {},
     loaders: userLoaders = {}
-  } = userConfig
+    } = userConfig
 
   let frameworks = []
   let loaders = []
@@ -103,13 +103,11 @@ export function getKarmaConfig(cwd, runCoverage, userConfig = {}) {
   // Ensure nwb's version of mocha plugins get loaded if they're going to be
   // used and haven't been provided by the user.
   if (frameworks.indexOf('mocha') !== -1 &&
-      plugins.indexOf('karma-mocha') === -1 &&
-      !findPlugin(plugins, 'framework:mocha')) {
+    plugins.indexOf('karma-mocha') === -1 && !findPlugin(plugins, 'framework:mocha')) {
     plugins.push('karma-mocha')
   }
   if (reporters.indexOf('mocha') !== -1 &&
-      plugins.indexOf('karma-mocha-reporter') === -1 &&
-      !findPlugin(plugins, 'reporter:mocha')) {
+    plugins.indexOf('karma-mocha-reporter') === -1 && !findPlugin(plugins, 'reporter:mocha')) {
     plugins.push('karma-mocha-reporter')
   }
 
@@ -128,7 +126,7 @@ export function getKarmaConfig(cwd, runCoverage, userConfig = {}) {
   return {plugins, frameworks, reporters, loaders}
 }
 
-export default function({cwd, singleRun, runCoverage}) {
+export default function ({cwd, singleRun, runCoverage}) {
   let userConfig = getUserConfig({absConfig: path.join(cwd, 'nwb.config.js')})
   let userKarma = userConfig.karma || {}
   let pluginConfig = getPluginConfig(cwd)
@@ -136,7 +134,7 @@ export default function({cwd, singleRun, runCoverage}) {
   let {plugins, frameworks, reporters, loaders} = getKarmaConfig(cwd, runCoverage, userConfig)
   let testFiles = path.join(cwd, userKarma.tests || DEFAULT_TESTS)
   let preprocessors = {
-    [require.resolve('babel-core/lib/polyfill')]: ['webpack', 'sourcemap'],
+    [require.resolve('babel-polyfill/lib')]: ['webpack', 'sourcemap'],
     [testFiles]: ['webpack', 'sourcemap']
   }
 
@@ -144,7 +142,8 @@ export default function({cwd, singleRun, runCoverage}) {
     server: true,
     devtool: 'inline-source-map',
     loaders: {
-      extra: loaders
+      extra: loaders,
+      babel: userConfig.loaders.babel
     },
     resolve: {
       alias: {
@@ -171,7 +170,7 @@ export default function({cwd, singleRun, runCoverage}) {
       ]
     },
     files: [
-      require.resolve('babel-core/lib/polyfill'),
+      require.resolve('babel-polyfill/lib'),
       testFiles
     ],
     preprocessors,

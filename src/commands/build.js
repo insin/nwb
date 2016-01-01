@@ -5,22 +5,22 @@ import getUserConfig from '../getUserConfig'
 
 function buildDemo(args, cb) {
   if (glob.sync('demo/').length > 0) {
-    require('./build-demo')(args, cb)
+    require('./build-demo').default(args, cb)
   }
 }
 
 export default function(args, cb) {
   let userConfig = getUserConfig(args)
   if (userConfig.type === REACT_APP) {
-    require('./build-react-app')(args, cb)
+    require('./build-react-app').default(args, cb)
   }
   if (userConfig.type === WEB_APP) {
-    require('./build-web-app')(args, cb)
+    require('./build-web-app').default(args, cb)
   }
   else if (userConfig.type === REACT_COMPONENT || userConfig.type === WEB_MODULE) {
-    require('./build-module')(args)
+    require('./build-module').default(args)
     if (userConfig.umd) {
-      require('./build-umd')(args, () => buildDemo(args, cb))
+      require('./build-umd').default(args, () => buildDemo(args, cb))
     }
     else {
       buildDemo(args, cb)

@@ -23,9 +23,9 @@ let buildConfig = () => {
     config.loaders = {
       babel: {
         query: {
-          optional: [
-            'optimisation.react.inlineElements',
-            'optimisation.react.constantElements'
+          plugins: [
+            require.resolve('babel-plugin-transform-react-inline-elements'),
+            require.resolve('babel-plugin-transform-react-constant-elements')
           ]
         }
       }
@@ -35,7 +35,7 @@ let buildConfig = () => {
 }
 
 export default function(args, cb) {
-  require('./clean-app')(args)
+  require('./clean-app').default(args)
 
   console.log(`nwb: build-react-app`)
   webpackBuild(args, buildConfig, cb)

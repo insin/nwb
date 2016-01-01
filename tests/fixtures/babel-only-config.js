@@ -1,8 +1,8 @@
 module.exports = {
   type: 'react-app',
   babel: {
-    loose: 'all',
+    presets: ['es2015-loose'],
     stage: 0,
-    optioonal: ['runtime']
+    plugins: ['transform-runtime']
   }
 }
