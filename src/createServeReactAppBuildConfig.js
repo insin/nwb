@@ -35,8 +35,8 @@ export default function (args, config) {
     query: {
       // Configure hot reloading and error catching via react-transform
       plugins: [
+        require.resolve('babel-plugin-transform-react-display-name'),
         [
-          require.resolve('babel-plugin-transform-react-display-name'),
           require.resolve('babel-plugin-react-transform'),
           {
             transforms: [{
