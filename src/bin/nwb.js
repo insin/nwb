@@ -10,8 +10,10 @@ function handleError(error) {
     console.error(chalk.red(error.message))
   }
   else {
-    console.error(chalk.red('nwb: error running command:'))
-    console.error(error.stack)
+    console.error(chalk.red('nwb: error running command'))
+    if (error.stack) {
+      console.error(error.stack)
+    }
   }
   process.exit(1)
 }
