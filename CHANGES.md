@@ -1,3 +1,7 @@
+**Changed:**
+
+- `nwb clean` now deletes the `coverage/` directory.
+
 # 0.6.3 / 2015-12-31
 
 **Fixed:**
