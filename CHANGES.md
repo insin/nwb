@@ -1,3 +1,5 @@
+# 0.6.4 / 2016-01-02
+
 **Fixed:**
 
 - `nwb build-umd` no longer errors if there is no `externals` config.
