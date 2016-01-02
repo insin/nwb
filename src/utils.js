@@ -2,6 +2,30 @@ import path from 'path'
 
 import glob from 'glob'
 
+export function createBanner(pkg) {
+  let banner = `${pkg.name} ${pkg.version}`
+  if (pkg.homepage) {
+    banner += ` - ${pkg.homepage}`
+  }
+  if (pkg.license) {
+    banner += `\n${pkg.license} Licensed`
+  }
+  return banner
+}
+
+export function createWebpackExternals(externals = {}) {
+  return Object.keys(externals).reduce((webpackExternals, packageName) => {
+    let globalName = externals[packageName]
+    webpackExternals[packageName] = {
+      root: globalName,
+      commonjs2: packageName,
+      commonjs: packageName,
+      amd: packageName
+    }
+    return webpackExternals
+  }, {})
+}
+
 /**
  * String.prototype.endsWith() is behind the --harmony flag in Node.js v0.12.
  */

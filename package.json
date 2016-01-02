@@ -13,7 +13,7 @@
     "lint": "eslint src tests",
     "test": "npm run build && mocha --compilers js:babel-core/register tests/*-test.js tests/**/*-test.js",
     "test:coverage": "npm run build && babel-node node_modules/isparta/bin/isparta cover --report html --report lcov node_modules/mocha/bin/_mocha -- tests/*-test.js tests/**/*-test.js",
-    "test:watch": "npm run lint && mocha --watch --compilers js:babel-core/register tests/*-test.js"
+    "test:watch": "mocha --watch --compilers js:babel-core/register tests/*-test.js"
   },
   "files": [
     "docs",

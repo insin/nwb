@@ -1,3 +1,7 @@
+**Fixed:**
+
+- `nwb build-umd` no longer errors if there is no `externals` config.
+
 **Changed:**
 
 - `nwb clean` now deletes the `coverage/` directory.
