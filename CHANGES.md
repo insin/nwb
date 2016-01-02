@@ -6,6 +6,10 @@
 
 - `nwb clean` now deletes the `coverage/` directory.
 
+**Dependencies:**
+
+- inquirer: v0.11.0 → v0.11.1 - fix list overflow bug
+
 # 0.6.3 / 2015-12-31
 
 **Fixed:**
