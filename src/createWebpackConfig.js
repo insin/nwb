@@ -49,8 +49,12 @@ export function mergeLoaderConfig(defaultConfig = {}, buildConfig = {}, userConf
  * the option to override defaults with build-specific and user config.
  */
 export let loaderConfigFactory = (buildConfig, userConfig) =>
-  (id, defaultConfig) =>
-    ({id, ...mergeLoaderConfig(defaultConfig, buildConfig[id], userConfig[id])})
+  (id, defaultConfig) => {
+    if (id) {
+      return {id, ...mergeLoaderConfig(defaultConfig, buildConfig[id], userConfig[id])}
+    }
+    return defaultConfig
+  }
 
 /**
  * Create a function which applies a prefix to a given name when a prefix is
@@ -150,8 +154,10 @@ export function createLoaders(server, buildConfig = {}, userConfig = {}, pluginC
       test: /\.json$/,
       loader: require.resolve('json-loader')
     }),
-    // Escape hatches for adding new loaders
-    ...buildConfig.extra || [],
+    // Extra loaders from build config, still configurable via user config when
+    // the loaders specify an id.
+    ...createExtraLoaders(buildConfig.extra, userConfig),
+    // Extra loaders from user config
     ...userConfig.extra || []
   ]
 
@@ -182,6 +188,18 @@ export function createLoaders(server, buildConfig = {}, userConfig = {}, pluginC
   }
 
   return loaders
+}
+
+/**
+ * Create loaders from loader definitions which may include an id attribute for
+ * user customisation. It's assumed these are being created from build config.
+ */
+export function createExtraLoaders(extraLoaders = [], userConfig = {}) {
+  let loader = loaderConfigFactory({}, userConfig)
+  return extraLoaders.map(extraLoader => {
+    let {id, ...loaderConfig} = extraLoader
+    return loader(id, loaderConfig)
+  })
 }
 
 /**
@@ -343,7 +361,7 @@ export default function createWebpackConfig(cwd, buildConfig, pluginConfig = {},
   debug('createWebpackConfig buildConfig = %j', buildConfig)
 
   let {
-    loaders = {}, plugins = {}, resolve = {}, server = false, ...otherBuildConfig
+    loaders = {}, postLoaders = [], plugins = {}, resolve = {}, server = false, ...otherBuildConfig
   } = buildConfig
 
   let topLevelLoaderConfig = getTopLevelLoaderConfig(userConfig.loaders,
@@ -351,7 +369,8 @@ export default function createWebpackConfig(cwd, buildConfig, pluginConfig = {},
 
   return {
     module: {
-      loaders: createLoaders(server, loaders, userConfig.loaders, pluginConfig)
+      loaders: createLoaders(server, loaders, userConfig.loaders, pluginConfig),
+      postLoaders: createExtraLoaders(postLoaders, userConfig.loaders)
     },
     plugins: createPlugins(server, cwd, plugins),
     resolve: merge({

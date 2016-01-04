@@ -41,11 +41,11 @@ describe('getKarmaConfig()', () => {
           'karma-mocha',
           'karma-mocha-reporter'
         ],
-        loaders: []
+        extraLoaders: []
       })
     })
     it('adds coverage config when asked to', () => {
-      let {frameworks, reporters, plugins, loaders} = getKarmaConfig('test', true)
+      let {frameworks, reporters, plugins, extraLoaders} = getKarmaConfig('test', true)
       expect({frameworks, reporters, plugins}).toEqual({
         frameworks: ['mocha'],
         reporters: ['mocha', 'coverage'],
@@ -58,8 +58,8 @@ describe('getKarmaConfig()', () => {
           'karma-coverage'
         ]
       })
-      expect(loaders.length).toEqual(1)
-      expect(loaders[0].loader).toInclude('isparta-loader')
+      expect(extraLoaders.length).toEqual(1)
+      expect(extraLoaders[0].loader).toInclude('isparta-loader')
     })
   })
   describe('with user config', () => {
@@ -74,7 +74,7 @@ describe('getKarmaConfig()', () => {
         'karma-webpack',
         tape
       ],
-      loaders: []
+      extraLoaders: []
     }
     let frameworkReporterResult = {
       frameworks: ['tape'],
@@ -86,7 +86,7 @@ describe('getKarmaConfig()', () => {
         tape,
         reporter
       ],
-      loaders: []
+      extraLoaders: []
     }
     it('defaults the reporter to dots if only a framework plugin is configured', () => {
       expect(getKarmaConfig('test', false, {
@@ -138,7 +138,7 @@ describe('getKarmaConfig()', () => {
           'karma-mocha',
           'karma-mocha-reporter'
         ],
-        loaders: []
+        extraLoaders: []
       })
     })
   })

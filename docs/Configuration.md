@@ -156,6 +156,14 @@ Default loaders and their ids are:
 
 * `json` - handles `.json` files using [json-loader][json-loader]
 
+##### `--auto-install` loader
+
+When you use `nwb serve`'s `--auto-install` flag, it will configure a loader to handle installing missing npm dependencies:
+
+* `install` - installs missing npm dependencies using [npm-install-loader][npm-install-loader]
+
+  > Default config: `{query: {cli: {save: true}}}`
+
 ##### Test loaders
 
 When running Karma tests with coverage enabled, the following loader will be added:
@@ -344,5 +352,6 @@ If all fields are present the banner will look like this:
 [file-loader]: https://github.com/webpack/file-loader/
 [isparta-loader]: https://github.com/deepsweet/isparta-loader
 [json-loader]: https://github.com/webpack/json-loader/
+[npm-install-loader]: https://github.com/ericclemmons/npm-install-loader
 [style-loader]: https://github.com/webpack/style-loader/
 [url-loader]: https://github.com/webpack/url-loader/

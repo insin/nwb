@@ -1,3 +1,7 @@
+**Added:**
+
+- Added an `--auto-install` flag to `nwb serve` which automatically installs npm dependencies and saves them to your package.json while developing.
+
 # 0.6.4 / 2016-01-02
 
 **Fixed:**

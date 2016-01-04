@@ -1,6 +1,7 @@
 import assert from 'assert'
 
 import createWebpackConfig from './createWebpackConfig'
+import debug from './debug'
 import getPluginConfig from './getPluginConfig'
 import getUserConfig from './getUserConfig'
 
@@ -21,6 +22,22 @@ export default function(args, buildConfig) {
 
   let hotMiddlewareOptions = args.reload ? '?reload=true' : ''
 
+  let postLoaders = []
+  if (args['auto-install']) {
+    debug('configuring auto-install')
+    postLoaders.push({
+      id: 'install',
+      test: /\.js$/,
+      loader: require.resolve('npm-install-loader'),
+      query: {
+        cli: {
+          save: true
+        }
+      },
+      exclude: /node_modules/
+    })
+  }
+
   return createWebpackConfig(process.cwd(), {
     server: true,
     devtool: '#eval-source-map',
@@ -32,6 +49,7 @@ export default function(args, buildConfig) {
     ],
     output,
     loaders,
+    postLoaders,
     plugins: {
       define: {...define, ...userConfig.define},
       ...plugins

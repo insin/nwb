@@ -53,10 +53,11 @@ Development commands:
 
   ${green('serve')}
     serve an app, or a component's demo app, with hot reloading
-    ${cyan('--fallback')}  serve the index page from any path
-    ${cyan('--info')}      show webpack module info
-    ${cyan('--port')}      port to run the dev server on ${cyan('(default: 3000)')}
-    ${cyan('--reload')}    auto reload the page if hot reloading fails
+    ${cyan('--auto-install')}  auto install missing npm dependencies
+    ${cyan('--fallback')}      serve the index page from any path
+    ${cyan('--info')}          show webpack module info
+    ${cyan('--port')}          port to run the dev server on ${cyan('(default: 3000)')}
+    ${cyan('--reload')}        auto reload the page if hot reloading fails
 
   ${green('test')}
     run unit tests

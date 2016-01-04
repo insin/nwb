@@ -5,7 +5,7 @@ process.env.NODE_ENV = 'test'
 
 import path from 'path'
 
-import createWebpackConfig, {loaderConfigFactory} from './createWebpackConfig'
+import createWebpackConfig from './createWebpackConfig'
 import debug from './debug'
 import getPluginConfig from './getPluginConfig'
 import getUserConfig from './getUserConfig'
@@ -53,13 +53,11 @@ export function findPlugin(plugins, findId) {
  * Handles creation of Karma config which can vary or be configured by the user.
  */
 export function getKarmaConfig(cwd, runCoverage, userConfig = {}) {
-  let {
-    karma: userKarma = {},
-    loaders: userLoaders = {}
-  } = userConfig
+  let {karma: userKarma = {}} = userConfig
 
   let frameworks = []
-  let loaders = []
+  // Extra webpack loaders required for the generated Karma config.
+  let extraLoaders = []
   // Default reporter to be used if the user configures their own framework but
   // not their own reporter, as the mocha reporter doesn't play nicely with TAP
   // output and who knows which others.
@@ -114,18 +112,17 @@ export function getKarmaConfig(cwd, runCoverage, userConfig = {}) {
   }
 
   if (runCoverage) {
-    // The isparta loader must also be user-configurable
-    let loader = loaderConfigFactory({}, userLoaders)
-    loaders.push(loader('isparta', {
+    extraLoaders.push({
+      id: 'isparta',
       test: /\.jsx?$/,
       loader: require.resolve('isparta-loader'),
       include: path.join(cwd, 'src')
-    }))
+    })
     reporters.push('coverage')
     plugins.push('karma-coverage')
   }
 
-  return {plugins, frameworks, reporters, loaders}
+  return {plugins, frameworks, reporters, extraLoaders}
 }
 
 export default function({cwd, singleRun, runCoverage}) {
@@ -133,7 +130,7 @@ export default function({cwd, singleRun, runCoverage}) {
   let userKarma = userConfig.karma || {}
   let pluginConfig = getPluginConfig(cwd)
 
-  let {plugins, frameworks, reporters, loaders} = getKarmaConfig(cwd, runCoverage, userConfig)
+  let {plugins, frameworks, reporters, extraLoaders} = getKarmaConfig(cwd, runCoverage, userConfig)
   let testFiles = path.join(cwd, userKarma.tests || DEFAULT_TESTS)
   let preprocessors = {
     [require.resolve('babel-core/lib/polyfill')]: ['webpack', 'sourcemap'],
@@ -144,7 +141,7 @@ export default function({cwd, singleRun, runCoverage}) {
     server: true,
     devtool: 'inline-source-map',
     loaders: {
-      extra: loaders
+      extra: extraLoaders
     },
     resolve: {
       alias: {

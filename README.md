@@ -149,10 +149,11 @@ Development commands:
 
   serve
     serve an app, or a component's demo app, with hot reloading
-    --fallback  serve the index page from any path
-    --info      show webpack module info
-    --port      port to run the dev server on (default: 3000)
-    --reload    auto reload the page if hot reloading fails
+    --auto-install  auto install missing npm dependencies
+    --fallback      serve the index page from any path
+    --info          show webpack module info
+    --port          port to run the dev server on (default: 3000)
+    --reload        auto reload the page if hot reloading fails
 
   test
     run unit tests
