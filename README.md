@@ -35,9 +35,17 @@ npm install -g nwb
 
 ## [Documentation](/docs/#table-of-contents)
 
-## Example Video
+## Examples
 
-Just after nwb v0.6.0 was released, someone on [Reactiflux](http://www.reactiflux.com/) asked this question:
+### Auto-installing npm dependencies
+
+nwb v0.7 added an `--auto-install` flag to `nwb serve` which automatically installs and saves missing dependencies from npm.
+
+![nwb serve --auto-install example](/docs/auto-install.gif)
+
+### Creating and customising a new React app
+
+Just after nwb v0.6 was released, someone on [Reactiflux](http://www.reactiflux.com/) asked this question:
 
 > hey guys, i need to prove a concept quickly, i need a boilerplate with react and some kind of mobile ui framework like ratchet, does anyone know of a good boilerplate like that?
 
