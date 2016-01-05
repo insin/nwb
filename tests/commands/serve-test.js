@@ -11,6 +11,7 @@ import kill from 'tree-kill'
 const States = {
   INIT: 'INIT',
   INIT_OK: 'INIT_OK',
+  CHANGED_FILE: 'CHANGED_FILE',
   REBUILDING: 'REBUILDING'
 }
 
@@ -60,6 +61,7 @@ describe('command: serve', function() {
           hmrClient.onopen = () => {
             console.log('HMR open: changing file in .5s')
             setTimeout(() => {
+              state = States.CHANGED_FILE
               let content = fs.readFileSync('./src/App.js', 'utf-8')
               fs.writeFileSync('./src/App.js', content.replace('Welcome to', 'Change'))
             }, 500)
@@ -76,19 +78,17 @@ describe('command: serve', function() {
             }
 
             let data = JSON.parse(e.data)
-            console.log(`HMR message: ${data.action}`)
+            console.log(`HMR message: ${data.action}; state=${state}`)
             if (data.action === 'building') {
-              if (state !== States.INIT_OK) {
-                done(new Error(`HMR client unexpectedly received building message; state=${state}`))
+              if (state === States.CHANGED_FILE) {
+                state = States.REBUILDING
               }
-              state = States.REBUILDING
             }
             else if (data.action === 'built') {
-              if (state !== States.REBUILDING) {
-                done(new Error(`HMR client unexpectedly received built message; state=${state}`))
+              if (state === States.REBUILDING) {
+                buildResults = data
+                done()
               }
-              buildResults = data
-              done()
             }
             else {
               done(new Error(`HMR client received unexpected message: ${e.data}`))
