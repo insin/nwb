@@ -59,12 +59,12 @@ describe('command: serve', function() {
 
           // Change a file to trigger a reload after the HMR client connects
           hmrClient.onopen = () => {
-            console.log('HMR open: changing file in .5s')
+            console.log('HMR open: changing file in 1s')
             setTimeout(() => {
               state = States.CHANGED_FILE
               let content = fs.readFileSync('./src/App.js', 'utf-8')
               fs.writeFileSync('./src/App.js', content.replace('Welcome to', 'Change'))
-            }, 500)
+            }, 1000)
           }
 
           // Fail on EventSource errors
