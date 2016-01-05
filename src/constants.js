@@ -1,4 +1,4 @@
-export const REACT_VERSION = '~0.14.0'
+export const REACT_VERSION = '0.14.x'
 
 export const REACT_APP = 'react-app'
 export const REACT_COMPONENT = 'react-component'

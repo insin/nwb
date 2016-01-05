@@ -12,7 +12,7 @@ import debug from './debug'
 import {UserError} from './errors'
 import pkg from '../package.json'
 
-let nwbVersion = `~${pkg.version}`
+let nwbVersion = pkg.version.split('.').slice(0, 2).concat('x').join('.')
 
 export function getWebModulePrefs(args, done) {
   // Determine defaults based on arguments

@@ -2,6 +2,10 @@
 
 - Added an `--auto-install` flag to `nwb serve` which automatically installs npm dependencies and saves them to your package.json while developing.
 
+**Changed:**
+
+- Use `.x` for dependencies when generating skeleton project `package.json` instead of range sigils.
+
 **Dependencies:**
 
 - karma: v0.13.16 → [v0.13.18](https://github.com/karma-runner/karma/releases/tag/v0.13.18)
