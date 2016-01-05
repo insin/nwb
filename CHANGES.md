@@ -2,6 +2,12 @@
 
 - Added an `--auto-install` flag to `nwb serve` which automatically installs npm dependencies and saves them to your package.json while developing.
 
+**Dependencies:**
+
+- karma: v0.13.16 → [v0.13.18](https://github.com/karma-runner/karma/releases/tag/v0.13.18)
+- karma-phantomjs-launcher: v0.2.2 → v0.2.3 - correct cli argument order
+- webpack-merge: v0.7.0 → v0.7.1 - performance improvements
+
 # 0.6.4 / 2016-01-02
 
 **Fixed:**
@@ -14,7 +20,7 @@
 
 **Dependencies:**
 
-- inquirer: v0.11.0 → v0.11.1 - fix list overflow bug
+- inquirer: v0.11.0 → [v0.11.1](https://github.com/SBoudrias/Inquirer.js/releases/tag/v0.11.1) - fix list overflow bug
 
 # 0.6.3 / 2015-12-31
 
