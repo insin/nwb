@@ -1,3 +1,5 @@
+# 0.7.0 / 2016-01-05
+
 **Fixed:**
 
 - Fall back to nwb's dependencies in Webpack config instead of using an alias so `babel-runtime` can be picked up when `optional: ['runtime']` is used [hopefully fixing the weird `/node_modules/node_modules/` issue seen in [#37](https://github.com/insin/nwb/issues/37)]
