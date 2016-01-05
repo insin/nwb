@@ -28,9 +28,7 @@
     "argv-set-env": "1.0.1",
     "chalk": "1.1.1",
     "copy-template-dir": "1.2.0",
-    "cross-spawn": "2.1.4",
     "debug": "2.2.0",
-    "eventsource": "0.1.6",
     "eventsource-polyfill": "0.9.6",
     "express": "4.13.3",
     "glob" : "6.0.3",
@@ -40,7 +38,6 @@
     "resolve": "1.1.6",
     "rimraf": "2.5.0",
     "temp": "0.8.3",
-    "tree-kill": "1.0.0",
     "webpack-merge": "0.7.1",
 
     "babel": "5.8.34",
@@ -64,7 +61,6 @@
 
     "mocha": "2.3.4",
     "expect": "1.13.4",
-    "isparta": "3.5.3",
 
     "webpack": "1.12.9",
     "autoprefixer-loader": "3.1.0",
@@ -75,14 +71,17 @@
     "html-webpack-plugin": "1.7.0",
     "json-loader": "0.5.4",
     "npm-install-loader": "1.1.1",
-    "null-loader": "0.1.1",
     "style-loader": "0.13.0",
     "url-loader": "0.5.7",
     "webpack-dev-middleware": "1.4.0",
     "webpack-hot-middleware": "2.6.0"
   },
   "devDependencies": {
-    "eslint-config-jonnybuchanan": "2.0.x"
+    "cross-spawn": "2.1.4",
+    "eslint-config-jonnybuchanan": "2.0.x",
+    "eventsource": "0.1.6",
+    "isparta": "3.5.3",
+    "tree-kill": "1.0.0"
   },
   "repository": {
     "type": "git",
