@@ -6,6 +6,10 @@
 
 - Added an `--auto-install` flag to `nwb serve` which automatically installs npm dependencies and saves them to your package.json while developing.
 
+**Removed:**
+
+- `jsNext` config no longer defaults to `true` if not present.
+
 **Changed:**
 
 - Use `.x` for dependencies when generating skeleton project `package.json` instead of range sigils.

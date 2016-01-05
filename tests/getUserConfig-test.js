@@ -27,11 +27,10 @@ describe('getUserConfig()', () => {
     })
   })
 
-  // TODO Remove in 0.7
   describe('when jsNext config is missing', () => {
-    it('defaults to true (in nwb 0.6)', () => {
+    it('defaults to falsy', () => {
       let config = getUserConfig({config: 'tests/fixtures/minimal-module-config.js'})
-      expect(config.jsNext).toBe(true)
+      expect(config.jsNext).toNotExist()
     })
   })
 
