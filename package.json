@@ -11,8 +11,8 @@
     "build": "npm run lint && rimraf lib && babel src --loose all --out-dir lib",
     "build:watch": "rimraf lib && babel src --watch --loose all --out-dir lib",
     "lint": "eslint src tests",
-    "test": "npm run build && mocha --compilers js:babel-core/register tests/*-test.js tests/**/*-test.js",
-    "test:coverage": "npm run build && babel-node node_modules/isparta/bin/isparta cover --report html --report lcov node_modules/mocha/bin/_mocha -- tests/*-test.js tests/**/*-test.js",
+    "test": "npm run build && mocha --compilers js:babel-core/register tests/*-test.js tests/commands/*-test.js",
+    "test:coverage": "npm run build && babel-node node_modules/isparta/bin/isparta cover --report html --report lcov node_modules/mocha/bin/_mocha -- tests/*-test.js tests/commands/*-test.js",
     "test:watch": "mocha --watch --compilers js:babel-core/register tests/*-test.js"
   },
   "files": [
@@ -44,7 +44,7 @@
     "babel-core": "5.8.34",
     "babel-plugin-react-display-name": "2.0.0",
     "babel-plugin-react-transform": "1.1.1",
-    "babel-runtime": "5.8.34",
+    "babel-runtime": "5.8.29",
     "react-transform-catch-errors": "1.0.1",
     "react-transform-hmr": "1.0.1",
     "redbox-noreact": "1.0.0",

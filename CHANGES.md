@@ -1,3 +1,7 @@
+**Fixed:**
+
+- Fall back to nwb's dependencies in Webpack config instead of using an alias so `babel-runtime` can be picked up when `optional: ['runtime']` is used [hopefully fixing the weird `/node_modules/node_modules/` issue seen in [#37](https://github.com/insin/nwb/issues/37)]
+
 **Added:**
 
 - Added an `--auto-install` flag to `nwb serve` which automatically installs npm dependencies and saves them to your package.json while developing.
@@ -8,6 +12,7 @@
 
 **Dependencies:**
 
+- babel-runtime: v5.8.34 → v5.8.29 - downgraded due to a regression in typeof-react-element.js when used in conjunction with `optional: ['runtime']`
 - karma: v0.13.16 → [v0.13.18](https://github.com/karma-runner/karma/releases/tag/v0.13.18)
 - karma-phantomjs-launcher: v0.2.2 → v0.2.3 - correct cli argument order
 - webpack-merge: v0.7.0 → v0.7.1 - performance improvements

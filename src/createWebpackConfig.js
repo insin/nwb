@@ -18,7 +18,7 @@ import webpack, {optimize} from 'webpack'
 import merge from 'webpack-merge'
 
 import debug from './debug'
-import {endsWith, findNodeModules, typeOf} from './utils'
+import {endsWith, typeOf} from './utils'
 
 // Top-level property names reserved for webpack config
 // From http://webpack.github.io/docs/configuration.html
@@ -374,12 +374,11 @@ export default function createWebpackConfig(cwd, buildConfig, pluginConfig = {},
     },
     plugins: createPlugins(server, cwd, plugins),
     resolve: merge({
-      alias: {
-        // Alias babel-runtime so it can be found from nwb's dependencies when
-        // using Babel stage: 0 and optional: ['runtime'] for async/await.
-        'babel-runtime': path.join(findNodeModules(), 'babel-runtime')
-      },
-      extensions: ['', '.web.js', '.js', '.jsx', '.json']
+      extensions: ['', '.web.js', '.js', '.jsx', '.json'],
+      // Fall back to resolving runtime dependencies from nwb's dependencies,
+      // e.g. for babel-runtime when using Babel stage: 0 and optional:
+      // ['runtime'] for async/await.
+      fallback: path.join(__dirname, '../node_modules')
     }, resolve),
     ...otherBuildConfig,
     ...topLevelLoaderConfig

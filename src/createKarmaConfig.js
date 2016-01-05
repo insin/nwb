@@ -9,7 +9,7 @@ import createWebpackConfig from './createWebpackConfig'
 import debug from './debug'
 import getPluginConfig from './getPluginConfig'
 import getUserConfig from './getUserConfig'
-import {findNodeModules, typeOf} from './utils'
+import {typeOf} from './utils'
 
 const DEFAULT_TESTS = 'tests/**/*-test.js'
 
@@ -147,8 +147,8 @@ export default function({cwd, singleRun, runCoverage}) {
       alias: {
         'src': path.join(cwd, 'src')
       },
-      // Fall back to resolve test runtime dependencies from nwb's dependencies
-      fallback: [findNodeModules()]
+      // Fall back to resolving runtime dependencies from nwb's dependencies
+      fallback: path.join(__dirname, '../node_modules')
     },
     node: {
       fs: 'empty'
