@@ -55,15 +55,15 @@ This video shows the resulting example of using nwb to create a new React projec
 
 ## Quick Start Examples
 
-Create a new React app and start a hot reloading development server:
+Create a new React app and start a hot reloading development server which automatically installs missing dependencies from npm when they're required:
 
 ```
 $ nwb new react-app github-issues
-nwb: created /path/to/github-issues
+...
 nwb: installing dependencies
 ...
 $ cd github-issues
-$ nwb serve
+$ nwb serve --auto-install
 nwb: serve-react-app
 nwb: dev server listening at http://localhost:3000
 ...
@@ -76,7 +76,7 @@ $ nwb new react-component react-thing
 ? Do you want to create a UMD build for npm? Yes
 ? Which global variable should the UMD build export? ReactThing
 ? Do you want to create an ES6 modules build for npm? Yes
-nwb: created /path/to/react-thing
+...
 nwb: installing dependencies
 ...
 $ cd react-thing
@@ -90,7 +90,7 @@ Create a new web app and start a development server which reloads on every chang
 
 ```
 $ nwb new web-app secret-prototype
-nwb: created /path/to/secret-prototype
+...
 $ cd secret-prototype
 $ nwb serve --reload
 nwb: serve-web-app
@@ -102,7 +102,7 @@ Create a new web module without being asked any questions and run tests on every
 
 ```
 $ nwb new web-module get-form-data -f
-nwb: created /path/to/get-form-data
+...
 $ cd get-form-data
 $ nwb test --server
 nwb: test
