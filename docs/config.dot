@@ -1,0 +1,44 @@
+digraph G {
+  // inputs
+  "nwb.config.js" -> "User Babel Config"
+  "nwb.config.js" -> "User Webpack Config"
+  "nwb.config.js" -> "User Karma Config"
+  "nwb.config.js" -> "User Module Build Config"
+
+  "User Babel Config" -> "User Webpack Config" [label="contributes to"]
+
+  "User Module Build Config" -> "Command Config" [label="configures"]
+
+  "User Babel Config" -> "Babel" [label="transpile src"]
+  "User Webpack Config" -> "Default Webpack Loader Config" [label="tweaks"]
+  "User Webpack Config" -> "Default Webpack Plugin Config" [label="tweaks"]
+  "User Webpack Config" -> "Webpack Loaders" [label="adds extra"]
+  "User Webpack Config" -> "Webpack Plugins" [label="adds extra"]
+  "User Karma Config" -> "Default Karma Config" [label="tweaks"]
+  "User Karma Config" -> "Karma Config" [label="tweaks"]
+
+  "nwb-* CSS Preprocessor Plugins" -> "Default Webpack Loader Config" [label="contribute to"]
+
+  // nwb
+  "Command Config" -> "Default Webpack Loader Config" [label="configures"]
+  "Command Config" -> "Default Webpack Plugin Config" [label="configures"]
+  "Command Config" -> "Webpack Config" [label="adds to"]
+
+  "Default Webpack Loader Config" -> "Webpack Loaders" [label="defines base"]
+  "Default Webpack Plugin Config" -> "Webpack Plugins" [label="defines base"]
+
+  "Webpack Loaders" -> "Webpack Config" [label="part of"]
+  "Webpack Loaders" -> "Babel" [label="uses"]
+
+  "Webpack Plugins" -> "Webpack Config" [label="part of"]
+
+  "Webpack Config" -> "Webpack" [label="run dev server"]
+  "Webpack Config" -> "Webpack" [label="bundle app"]
+  "Webpack Config" -> "Webpack" [label="create UMD build"]
+  "Webpack Config" -> "Karma Config" [label="part of"]
+
+  "Default Karma Config" -> "Karma Config" [label="defines base"]
+  "Default Karma Config" -> "Webpack Loaders" [label="adds extra"]
+
+  "Karma Config" -> "Karma" [label="run tests"]
+}
