@@ -1,3 +1,5 @@
+# 0.7.1 / 2016-01-10
+
 **Fixed:**
 
 - Express middleware had a broken import.
