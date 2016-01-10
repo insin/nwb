@@ -6,6 +6,13 @@
 
 - Added an `autoInstall` option to Express middleware.
 
+**Dependencies:**
+
+- glob: v6.0.3 → v6.0.4 - remove `util._extend` to avoid deprecation warnings
+- karma: v0.13.18 → [v0.13.19](https://github.com/karma-runner/karma/releases/tag/v0.13.19) - handle new socket.io internal format
+- webpack: v1.12.9 → [v1.12.10](https://github.com/webpack/webpack/compare/v1.12.9...v1.12.10)
+- webpack-merge: v0.7.1 → v0.7.2 - fix inclusion of removed `changelog` dependency
+
 # 0.7.0 / 2016-01-05
 
 **Fixed:**
