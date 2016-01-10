@@ -1,3 +1,7 @@
+**Changed:**
+
+- All commands are now run in the current working directory - you no longer need to `require.resolve()` full paths to extra Babel plugins configured in `nwb.config.js`, just use their names as Babel will now be able to import them.
+
 # 0.7.1 / 2016-01-10
 
 **Fixed:**

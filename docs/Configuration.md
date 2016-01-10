@@ -52,10 +52,22 @@ e.g. to use `async`/`await` transforms, you will need to configure Babel's `stag
 
 ```js
 module.exports = {
-  // ...
   babel: {
     stage: 0,
     optional: ['runtime']
+  }
+}
+```
+
+e.g. to install and use the [babel-plugin-react-html-attrs](https://github.com/insin/babel-plugin-react-html-attrs#readme) plugin:
+
+```
+npm install babel-plugin-react-html-attrs@1.x
+```
+```js
+module.exports = {
+  babel: {
+    plugins: ['react-html-attrs']
   }
 }
 ```

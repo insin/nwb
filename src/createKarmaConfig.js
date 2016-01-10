@@ -66,9 +66,9 @@ export function getKarmaConfig(cwd, runCoverage, userConfig = {}) {
   // them magically located for you, so we're going to have to build a complete
   // list ourselves.
   let plugins = [
-    'karma-phantomjs-launcher',
-    'karma-sourcemap-loader',
-    'karma-webpack'
+    require('karma-phantomjs-launcher'),
+    require('karma-sourcemap-loader'),
+    require('karma-webpack')
   ]
 
   // Frameworks can be configured as a list containing names of bundled
@@ -100,15 +100,11 @@ export function getKarmaConfig(cwd, runCoverage, userConfig = {}) {
 
   // Ensure nwb's version of mocha plugins get loaded if they're going to be
   // used and haven't been provided by the user.
-  if (frameworks.indexOf('mocha') !== -1 &&
-      plugins.indexOf('karma-mocha') === -1 &&
-      !findPlugin(plugins, 'framework:mocha')) {
-    plugins.push('karma-mocha')
+  if (frameworks.indexOf('mocha') !== -1 && !findPlugin(plugins, 'framework:mocha')) {
+    plugins.push(require('karma-mocha'))
   }
-  if (reporters.indexOf('mocha') !== -1 &&
-      plugins.indexOf('karma-mocha-reporter') === -1 &&
-      !findPlugin(plugins, 'reporter:mocha')) {
-    plugins.push('karma-mocha-reporter')
+  if (reporters.indexOf('mocha') !== -1 && !findPlugin(plugins, 'reporter:mocha')) {
+    plugins.push(require('karma-mocha-reporter'))
   }
 
   if (runCoverage) {
@@ -119,7 +115,7 @@ export function getKarmaConfig(cwd, runCoverage, userConfig = {}) {
       include: path.join(cwd, 'src')
     })
     reporters.push('coverage')
-    plugins.push('karma-coverage')
+    plugins.push(require('karma-coverage'))
   }
 
   return {plugins, frameworks, reporters, extraLoaders}

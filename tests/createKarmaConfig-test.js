@@ -30,116 +30,97 @@ describe('findPlugin()', () => {
 
 describe('getKarmaConfig()', () => {
   describe('without user config', () => {
+    let expectedDefaultPlugins = [
+      'launcher:PhantomJS',
+      'preprocessor:sourcemap',
+      'webpackPlugin',
+      'framework:mocha',
+      'reporter:mocha'
+    ]
     it('defaults to Mocha', () => {
-      expect(getKarmaConfig('test', false)).toEqual({
-        frameworks: ['mocha'],
-        reporters: ['mocha'],
-        plugins: [
-          'karma-phantomjs-launcher',
-          'karma-sourcemap-loader',
-          'karma-webpack',
-          'karma-mocha',
-          'karma-mocha-reporter'
-        ],
-        extraLoaders: []
-      })
+      let {frameworks, reporters, plugins, extraLoaders} = getKarmaConfig('test', false)
+      expect(frameworks).toEqual(['mocha'])
+      expect(reporters).toEqual(['mocha'])
+      expect(extraLoaders).toEqual([])
+      expectedDefaultPlugins.forEach(plugin =>
+        expect(findPlugin(plugins, plugin)).toExist()
+      )
     })
     it('adds coverage config when asked to', () => {
       let {frameworks, reporters, plugins, extraLoaders} = getKarmaConfig('test', true)
-      expect({frameworks, reporters, plugins}).toEqual({
-        frameworks: ['mocha'],
-        reporters: ['mocha', 'coverage'],
-        plugins: [
-          'karma-phantomjs-launcher',
-          'karma-sourcemap-loader',
-          'karma-webpack',
-          'karma-mocha',
-          'karma-mocha-reporter',
-          'karma-coverage'
-        ]
+      expect(frameworks).toEqual(['mocha'])
+      expect(reporters).toEqual(['mocha', 'coverage'])
+      expectedDefaultPlugins.concat(['preprocessor:coverage']).forEach(plugin => {
+        expect(findPlugin(plugins, plugin)).toExist()
       })
       expect(extraLoaders.length).toEqual(1)
       expect(extraLoaders[0].loader).toInclude('isparta-loader')
     })
   })
+
   describe('with user config', () => {
-    let tape = {'framework:tape': []}
-    let reporter = {'reporter:tap': []}
-    let frameworkOnlyResult = {
-      frameworks: ['tape'],
-      reporters: ['dots'],
-      plugins: [
-        'karma-phantomjs-launcher',
-        'karma-sourcemap-loader',
-        'karma-webpack',
-        tape
-      ],
-      extraLoaders: []
-    }
-    let frameworkReporterResult = {
-      frameworks: ['tape'],
-      reporters: ['tap'],
-      plugins: [
-        'karma-phantomjs-launcher',
-        'karma-sourcemap-loader',
-        'karma-webpack',
-        tape,
-        reporter
-      ],
-      extraLoaders: []
-    }
+    let tapeFramework = {'framework:tape': []}
+    let tapReporter = {'reporter:tap': []}
+
     it('defaults the reporter to dots if only a framework plugin is configured', () => {
-      expect(getKarmaConfig('test', false, {
+      let {frameworks, reporters, plugins} = getKarmaConfig('test', false, {
         karma: {
-          frameworks: [tape]
+          frameworks: [tapeFramework]
         }
-      })).toEqual(frameworkOnlyResult)
+      })
+      expect(frameworks).toEqual(['tape'])
+      expect(reporters).toEqual(['dots'])
+      expect(findPlugin(plugins, 'framework:tape')).toExist()
     })
     it('defaults the reporter to dots if only a framework name and plugin is configured', () => {
-      expect(getKarmaConfig('test', false, {
+      let {frameworks, reporters, plugins} = getKarmaConfig('test', false, {
         karma: {
           frameworks: ['tape'],
-          plugins: [tape]
+          plugins: [tapeFramework]
         }
-      })).toEqual(frameworkOnlyResult)
+      })
+      expect(frameworks).toEqual(['tape'])
+      expect(reporters).toEqual(['dots'])
+      expect(findPlugin(plugins, 'framework:tape')).toExist()
     })
     it('uses the given reporter if a plugin is also configured', () => {
-      expect(getKarmaConfig('test', false, {
+      let {frameworks, reporters, plugins} = getKarmaConfig('test', false, {
         karma: {
-          frameworks: [tape],
-          reporters: [reporter]
+          frameworks: [tapeFramework],
+          reporters: [tapReporter]
         }
-      })).toEqual(frameworkReporterResult)
+      })
+      expect(frameworks).toEqual(['tape'])
+      expect(reporters).toEqual(['tap'])
+      expect(findPlugin(plugins, 'framework:tape')).toExist()
+      expect(findPlugin(plugins, 'reporter:tap')).toExist()
     })
     it('uses the given reporter if a name plugin is also configured', () => {
-      expect(getKarmaConfig('test', false, {
+      let {frameworks, reporters, plugins} = getKarmaConfig('test', false, {
         karma: {
           frameworks: ['tape'],
           reporters: ['tap'],
-          plugins: [tape, reporter]
+          plugins: [tapeFramework, tapReporter]
         }
-      })).toEqual(frameworkReporterResult)
+      })
+      expect(frameworks).toEqual(['tape'])
+      expect(reporters).toEqual(['tap'])
+      expect(findPlugin(plugins, 'framework:tape')).toExist()
+      expect(findPlugin(plugins, 'reporter:tap')).toExist()
     })
     it('makes sure the Mocha plugins will be loaded when necessary', () => {
-      expect(getKarmaConfig('test', false, {
+      let {frameworks, reporters, plugins} = getKarmaConfig('test', false, {
         karma: {
           frameworks: ['mocha', 'chai', 'chai-as-promised'],
           reporters: ['mocha'],
           plugins: [{'framework: chai': []}]
         }
-      })).toEqual({
-        frameworks: ['mocha', 'chai', 'chai-as-promised'],
-        reporters: ['mocha'],
-        plugins: [
-          'karma-phantomjs-launcher',
-          'karma-sourcemap-loader',
-          'karma-webpack',
-          {'framework: chai': []},
-          'karma-mocha',
-          'karma-mocha-reporter'
-        ],
-        extraLoaders: []
       })
+      expect(frameworks).toEqual(['mocha', 'chai', 'chai-as-promised'])
+      expect(reporters).toEqual(['mocha'])
+      expect(findPlugin(plugins, 'framework:mocha')).toExist()
+      expect(findPlugin(plugins, 'reporter:mocha')).toExist()
+      expect(findPlugin(plugins, 'framework: chai')).toExist()
     })
   })
 })
