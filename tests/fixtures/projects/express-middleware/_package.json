@@ -1,0 +1,10 @@
+{
+  "name": "express-middleware-project",
+  "version": "1.0.0",
+  "description": "test project",
+  "dependencies": {
+    "express": "4.x",
+    "react": "0.14.x",
+    "react-dom": "0.14.x"
+  }
+}

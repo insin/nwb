@@ -1,3 +1,11 @@
+**Fixed:**
+
+- Express middleware had a broken import.
+
+**Added:**
+
+- Added an `autoInstall` option to Express middleware.
+
 # 0.7.0 / 2016-01-05
 
 **Fixed:**

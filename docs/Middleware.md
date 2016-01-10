@@ -14,10 +14,11 @@ Middleware for Express 4.x can be imported from `'nwb/express'`.
 
 ###### `express`
 
-The Express module must be passed as the first argument.
+Your app's version of the Express module must be passed as the first argument.
 
 ###### `options`
 
+* `autoInstall` - automatically install missing npm dependencies. Default: `false`
 * `info` - print info about Webpack modules after rebuilds. Default: `false`
 
 #### Example
