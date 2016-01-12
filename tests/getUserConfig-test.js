@@ -3,21 +3,23 @@ import expect from 'expect'
 import getUserConfig from '../src/getUserConfig'
 
 describe('getUserConfig()', () => {
-  describe('when no config file can be found', () => {
-    it('throws an error', () => {
-      expect(getUserConfig)
-        .withArgs({config: 'tests/fixtures/nonexistent.js'})
-        .toThrow(/couldn't find a config file/)
-    })
-  })
+  // TODO: Remove
+  // describe('when no config file can be found', () => {
+  //   it('throws an error', () => {
+  //     expect(getUserConfig)
+  //       .withArgs({config: 'tests/fixtures/nonexistent.js'})
+  //       .toThrow(/couldn't find a config file/)
+  //   })
+  // })
 
-  describe('when the config file is invalid or otherwise causes an error', () => {
-    it('throws an error', () => {
-      expect(getUserConfig)
-        .withArgs({config: 'tests/fixtures/invalid-config.js'})
-        .toThrow(/couldn't import the config file/)
-    })
-  })
+  // TODO: Remove since it defaults to defualt config if no config is present.
+  // describe('when the config file is invalid or otherwise causes an error', () => {
+  //   it('throws an error', () => {
+  //     expect(getUserConfig)
+  //       .withArgs({config: 'tests/fixtures/invalid-config.js'})
+  //       .toThrow(/couldn't import the config file/)
+  //   })
+  // })
 
   describe('when the config file has an invalid type', () => {
     it('throws an error', () => {
