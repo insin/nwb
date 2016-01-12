@@ -20,7 +20,13 @@ export default function getUserConfig(args = {}) {
     debug('imported config module from %s', userConfigPath)
   }
   catch (e) {
-    throw new UserError(`nwb: couldn't import the config file at ${userConfigPath}`)
+    // If no user config was found, use default
+    userConfig = {
+      // Use type web-app since the only differance is when the build gets run
+      // in production. Therefor adding a config is only requied when building
+      // the project for production.
+      type: 'web-app'
+    }
   }
 
   if (typeof userConfig == 'function') {
