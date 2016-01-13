@@ -142,6 +142,37 @@ function webModuleAssertions(dir, name, err, done) {
   done()
 }
 
+function customReactAppAssertions(dir, name, err, done) {
+  expect(err).toNotExist('No errors creating new React app')
+  expect(glob.sync('**', {
+    dot: true,
+    cwd: path.resolve(dir),
+    ignore: 'node_modules/**'
+  })).toEqual([
+    '.gitignore',
+    '.travis.yml',
+    'nwb.config.js',
+    'package.json',
+    'README.md',
+    'src',
+    'src/App.js',
+    'src/index.js',
+    'tests',
+    'tests/.eslintrc',
+    'tests/App-test.js'
+  ])
+  expect(glob.sync('node_modules/*', {
+    cwd: path.resolve(dir)
+  })).toInclude('node_modules/react')
+     .toInclude('node_modules/react-dom')
+  let pkg = require(path.resolve(dir, 'package.json'))
+  expect(pkg.name).toBe(name)
+  expect(pkg.devDependencies.nwb).toMatch(DEP_VERSION_RE)
+  let config = require(path.resolve(dir, 'nwb.config.js'))
+  expect(config).toEqual({type: 'react-app'})
+  done()
+}
+
 describe('command: nwb new', function() {
   this.timeout(40000)
 
@@ -220,6 +251,14 @@ describe('command: nwb new', function() {
   it('creates a new web app with a given name', done => {
     cli(['new', 'web-app', 'test-web-app'], err => {
       webAppAssertions('test-web-app', 'test-web-app', err, done)
+    })
+  })
+
+  const templateDir = path.resolve(__dirname, '../fixtures/custom-template')
+  it('creates a new react app with a given template dir', done => {
+    cli(['new', `react-app:${templateDir}`, 'test-custom-react-app'], err => {
+      console.log(err)
+      customReactAppAssertions('test-custom-react-app', 'test-custom-react-app', err, done)
     })
   })
 })

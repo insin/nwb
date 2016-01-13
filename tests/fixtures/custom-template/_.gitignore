@@ -1,0 +1,4 @@
+/coverage
+/node_modules
+/public/build
+npm-debug.log

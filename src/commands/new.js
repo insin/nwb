@@ -11,7 +11,7 @@ export default function(args, cb) {
     return cb(new UserError(`usage: nwb new [${PROJECT_TYPES.join('|')}] <name>`))
   }
 
-  let projectType = args._[1]
+  let [projectType, templateDir] = args._[1].split(':')
   try {
     validateProjectType(projectType)
   }
@@ -29,5 +29,5 @@ export default function(args, cb) {
 
   let targetDir = path.join(process.cwd(), name)
   console.log(`nwb: new ${projectType}`)
-  createProject(args, projectType, name, targetDir, cb)
+  createProject(args, projectType, templateDir, name, targetDir, cb)
 }
