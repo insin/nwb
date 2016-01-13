@@ -19,6 +19,7 @@ function reactAppAssertions(dir, name, err, done) {
   })).toEqual([
     '.gitignore',
     '.travis.yml',
+    'CONTRIBUTING.md',
     'nwb.config.js',
     'package.json',
     'public',
@@ -52,6 +53,7 @@ function reactComponentAssertions(dir, name, err, done) {
   })).toEqual([
     '.gitignore',
     '.travis.yml',
+    'CONTRIBUTING.md',
     'demo',
     'demo/src',
     'demo/src/index.js',
@@ -91,6 +93,7 @@ function webAppAssertions(dir, name, err, done) {
   })).toEqual([
     '.gitignore',
     '.travis.yml',
+    'CONTRIBUTING.md',
     'nwb.config.js',
     'package.json',
     'public',
@@ -118,6 +121,7 @@ function webModuleAssertions(dir, name, err, done) {
   })).toEqual([
     '.gitignore',
     '.travis.yml',
+    'CONTRIBUTING.md',
     'nwb.config.js',
     'package.json',
     'README.md',

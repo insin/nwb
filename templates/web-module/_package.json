@@ -11,7 +11,8 @@
   "scripts": {
     "build": "nwb build",
     "clean": "nwb clean",
-    "test": "nwb test"
+    "test": "nwb test",
+    "test:watch": "nwb test --server"
   },
   "dependencies": {
   },

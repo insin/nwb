@@ -7,7 +7,8 @@
     "build": "nwb build",
     "clean": "nwb clean",
     "start": "nwb serve",
-    "test": "nwb test"
+    "test": "nwb test",
+    "test:watch": "nwb test --server"
   },
   "dependencies": {
     "react": "{{reactVersion}}",

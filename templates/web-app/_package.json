@@ -6,8 +6,9 @@
   "scripts": {
     "build": "nwb build",
     "clean": "nwb clean",
-    "start": "nwb serve",
-    "test": "nwb test"
+    "start": "nwb serve --reload",
+    "test": "nwb test",
+    "test:watch": "nwb test --server"
   },
   "dependencies": {
   },
