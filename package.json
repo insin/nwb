@@ -38,6 +38,7 @@
     "resolve": "1.1.6",
     "rimraf": "2.5.0",
     "temp": "0.8.3",
+    "untildify": "^2.1.0",
     "webpack-merge": "0.7.2",
 
     "babel": "5.8.34",

@@ -4,6 +4,7 @@ import {execSync} from 'child_process'
 import chalk from 'chalk'
 import copyTemplateDir from 'copy-template-dir'
 import inquirer from 'inquirer'
+import untildify from 'untildify'
 
 import {
   REACT_APP, REACT_COMPONENT, REACT_VERSION as reactVersion, WEB_APP, WEB_MODULE, PROJECT_TYPES
@@ -90,8 +91,8 @@ export function validateProjectType(projectType) {
 }
 
 const PROJECT_CREATORS = {
-  [REACT_APP](args, name, targetDir, cb) {
-    let templateDir = path.join(__dirname, `../templates/${REACT_APP}`)
+  [REACT_APP](args, template, name, targetDir, cb) {
+    let templateDir = template ? path.resolve(untildify(template)) : path.join(__dirname, `../templates/${REACT_APP}`)
     let templateVars = {name, nwbVersion, reactVersion}
     copyTemplateDir(templateDir, targetDir, templateVars, (err, createdFiles) => {
       if (err) return cb(err)
@@ -102,9 +103,9 @@ const PROJECT_CREATORS = {
     })
   },
 
-  [REACT_COMPONENT](args, name, targetDir, cb) {
+  [REACT_COMPONENT](args, template, name, targetDir, cb) {
     getWebModulePrefs(args, ({umd, globalVariable, jsNext}) => {
-      let templateDir = path.join(__dirname, `../templates/${REACT_COMPONENT}`)
+      let templateDir = template ? path.resolve(untildify(template)) : path.join(__dirname, `../templates/${REACT_COMPONENT}`)
       let templateVars = npmModuleVars(
         {umd, globalVariable, jsNext, name, nwbVersion, reactVersion}
       )
@@ -118,8 +119,8 @@ const PROJECT_CREATORS = {
     })
   },
 
-  [WEB_APP](args, name, targetDir, cb) {
-    let templateDir = path.join(__dirname, `../templates/${WEB_APP}`)
+  [WEB_APP](args, template, name, targetDir, cb) {
+    let templateDir = template ? path.resolve(untildify(template)) : path.join(__dirname, `../templates/${WEB_APP}`)
     let templateVars = {name, nwbVersion}
     copyTemplateDir(templateDir, targetDir, templateVars, (err, createdFiles) => {
       if (err) return cb(err)
@@ -128,9 +129,9 @@ const PROJECT_CREATORS = {
     })
   },
 
-  [WEB_MODULE](args, name, targetDir, cb) {
+  [WEB_MODULE](args, template, name, targetDir, cb) {
     getWebModulePrefs(args, ({umd, globalVariable, jsNext}) => {
-      let templateDir = path.join(__dirname, `../templates/${WEB_MODULE}`)
+      let templateDir = template ? path.resolve(untildify(template)) : path.join(__dirname, `../templates/${WEB_MODULE}`)
       let templateVars = npmModuleVars(
         {umd, globalVariable, jsNext, name, nwbVersion}
       )
@@ -143,6 +144,6 @@ const PROJECT_CREATORS = {
   }
 }
 
-export default function(args, type, name, dir, cb) {
-  PROJECT_CREATORS[type](args, name, dir, cb)
+export default function(args, type, template, name, dir, cb) {
+  PROJECT_CREATORS[type](args, template, name, dir, cb)
 }
