@@ -1,6 +1,29 @@
 **Changed:**
 
-- Development instructions in project templates were moved from `README.md` to a `CONTRIBUTING.md`, and are now documented using `npm` and `npm run` commands instead of global `nwb` commands.
+- `nwb.config.js` consistency changes: Babel and Karma config is currently specified in `babel` and `karma` objects. Other configuration must now be specified in similar objects for consistency. nwb v0.8 will support the old format and display warning messages about the changes required to config; support for the old format will be removed in nwb v0.9.
+  - React component and vanilla JS module npm build configuration must now be specificed as a `build` object:
+    ```
+    // < v0.9
+    module.exports = {
+      externals: {react: 'React'},
+      global: 'MyComponent',
+      jsNext: true,
+      umd: true
+    }
+    ```
+    ```
+    // v0.9
+    module.exports = {
+      build: {
+        externals: {react: 'React'},
+        global: 'MyComponent',
+        jsNext: true,
+        umd: true
+      }
+    }
+    ```
+- Development instructions in project templates were moved from `README.md` to a `CONTRIBUTING.md` file, and are now documented using `npm` and `npm run` commands instead of global `nwb` commands.
+  - A `test:watch` npm script was added to the project templates.
 - All commands are now run in the current working directory - you no longer need to `require.resolve()` full paths to extra Babel plugins configured in `nwb.config.js`, just use their names as Babel will now be able to import them.
 
 # 0.7.1 / 2016-01-10
@@ -109,7 +132,7 @@
 - Reorganised and coloured `nwb help` output.
 - Commands which create files now log details of what they've created [[#26](https://github.com/insin/nwb/issues/26)]
 - The ES6 modules build for npm modules is now optional, controlled by a `jsNext` setting in `nwb.config.js`, defaulting to `true` [[#27](https://github.com/insin/nwb/issues/27)]
-  - nwb 0.6 will default `jsNext` to `true` and log a warning when it's missing from a config file - this behaviour will be removed in nwb 0.7.
+  - nwb 0.6 will default `jsNext` to `true` and log a warning when it's missing from a config file - this behaviour will be removed in nwb v0.7.
 
 **Dependencies:**
 

@@ -1,10 +1,22 @@
 import path from 'path'
 
+import chalk from 'chalk'
 import glob from 'glob'
 
 import {PROJECT_TYPES} from './constants'
 import debug from './debug'
 import {UserError} from './errors'
+
+const DEFAULT_BUILD_CONFIG = {
+  externals: {},
+  global: '',
+  jsNext: false,
+  umd: false
+}
+
+// TODO Remove in nwb 0.9
+const BUILD_CONFIG_PROPS = Object.keys(DEFAULT_BUILD_CONFIG)
+let warnedAboutBuildConfig = false
 
 export default function getUserConfig(args = {}) {
   // Try to load default user config, or user a config file path we were given
@@ -48,6 +60,37 @@ export default function getUserConfig(args = {}) {
       userConfig.loaders.babel.query = userConfig.babel
       debug('added query to babel-loader with user babel config')
     }
+  }
+
+  // TODO Remove in nwb 0.9
+  if (BUILD_CONFIG_PROPS.some(prop => prop in userConfig)) {
+    if (!warnedAboutBuildConfig) {
+      console.warn(chalk.magenta([
+        'nwb: the top level of your nwb config contains npm module build configuration',
+        'nwb: nwb >= 0.9 will require this to be moved into a "build" object'
+      ].join('\n')))
+      warnedAboutBuildConfig = true
+    }
+    let buildConfig = {...DEFAULT_BUILD_CONFIG}
+    BUILD_CONFIG_PROPS.forEach(prop => {
+      if (prop in userConfig) {
+        buildConfig[prop] = userConfig[prop]
+        delete userConfig[prop]
+      }
+    })
+    userConfig.build = buildConfig
+  }
+
+  // Set defaults for npm build config
+  if (!('build' in userConfig)) {
+    userConfig.build = {...DEFAULT_BUILD_CONFIG}
+  }
+  else {
+    BUILD_CONFIG_PROPS.forEach(prop => {
+      if (!(prop in userConfig.build)) {
+        userConfig.build[prop] = DEFAULT_BUILD_CONFIG[prop]
+      }
+    })
   }
 
   debug('final user config: %o', userConfig)

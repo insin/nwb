@@ -25,11 +25,13 @@ The object exported or returned by your nwb config can use the following fields:
   * [`karma.reporters`](#reporters-arraystring--plugin)
   * [`karma.plugins`](#plugins-arrayplugin)
 * npm Build Configuration
-  * [`jsNext`](#jsnext-boolean)
-  * [`umd`](#umd-boolean)
-  * [`global`](#global-string-required-for-umd-build)
-  * [`externals`](#externals-object-for-umd-build)
-  * [`package.json` fields](#packagejson-umd-banner-configuration)
+  * [`build`](#build-object)
+  * UMD build config
+    * [`build.umd`](#umd-boolean)
+    * [`build.global`](#global-string-required-for-umd-build)
+    * [`build.externals`](#externals-object-for-umd-build)
+    * [`package.json` fields](#packagejson-umd-banner-configuration)
+  * [`build.jsNext`](#jsnext-boolean)
 
 #### `type`: `String` (required)
 
@@ -46,7 +48,7 @@ It must be one of:
 
 #### `babel`: `Object`
 
-Use this field to provide your own options for Babel (version 5) - [see the Babel 5 options documentation](https://github.com/babel/babel.github.io/blob/862b43db93e48762671267034a50c30c00e433e2/docs/usage/options.md).
+Use this object to provide your own options for Babel (version 5) - [see the Babel 5 options documentation](https://github.com/babel/babel.github.io/blob/862b43db93e48762671267034a50c30c00e433e2/docs/usage/options.md).
 
 e.g. to use `async`/`await` transforms, you will need to configure Babel's `stage` and `optional` settings:
 
@@ -304,57 +306,65 @@ A list of plugins to be loaded by Karma - this should be used in combination wit
 
 ### npm Build Configuration
 
-The following fields are used to configure what gets built in addition to the ES5 build created for React components and other modules which will be published to npm.
+#### `build`: `Object`
 
-#### `jsNext`: `Boolean`
+By default, `nwb build` creates an ES5 build of your React component or vanilla JS module's code for publishing to npm. Additional npm build configuration is defined in a `build` object, using the following fields:
 
-Determines whether or not nwb will create an ES6 modules build for tree-shaking module bundlers when you run `nwb build` for a React component or web module.
-
-Defaults to `true` when you are prompted to onfigure this by `nwb new`.
-
-#### `umd`: `Boolean`
+##### `umd`: `Boolean`
 
 Determines whether or not nwb will create a UMD build when you run `nwb build` for a React component or web module.
 
-Defaults to `true` when you are prompted to onfigure this by `nwb new`, or if you provide a UMD global variable as a command-line argument.
-
-#### `global`: `String` (*required* for UMD build)
+##### `global`: `String` (*required* for UMD build)
 
 The name of the global variable the UMD build will export.
 
-You will be prompted to configure this if you choose to enable a UMD build when creating a React component or web module with `nwb new`.
-
-#### `externals`: `Object` (for UMD build)
+##### `externals`: `Object` (for UMD build)
 
 A mapping from `peerDependency` module names to the global variables they're expected to be available as for use by the UMD build.
 
-e.g. if you're creating a React component which also depends on [React Router](https://github.com/rackt/react-router):
+e.g. if you're creating a React component which also depends on [React Router](https://github.com/rackt/react-router), this configuration would ensure they're not included in the UMD build:
 
 ```js
 module.exports = {
-  externals: {
-    'react': 'React',
-    'react-router': 'ReactRouter'
+  build: {
+    umd: true,
+    global: 'MyComponent',
+    externals: {
+      'react': 'React',
+      'react-router': 'ReactRouter'
+    }
   }
 }
 ```
 
 #### `package.json` UMD Banner Configuration
 
-The banner comment added to UMD builds will use as many of the following `package.json` fields as are present:
+A banner comment added to UMD builds will use as many of the following `package.json` fields as are present:
 
 * `name`
 * `version`
 * `homepage`
 * `license`
 
-If all fields are present the banner will look like this:
+If all fields are present the banner will be in this format:
 
 ```js
 /*!
  * nwb 0.6.0 - https://github.com/insin/nwb
  * MIT Licensed
  */
+```
+
+##### `jsNext`: `Boolean`
+
+Determines whether or not nwb will create an ES6 modules build for tree-shaking module bundlers when you run `nwb build` for a React component or web module.
+
+```js
+module.exports = {
+  build: {
+    jsNext: true
+  }
+}
 ```
 
 [autoprefixer-loader]: https://github.com/passy/autoprefixer-loader/

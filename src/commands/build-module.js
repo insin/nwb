@@ -31,7 +31,7 @@ export default function(args) {
   console.log('nwb: build-module (es5)')
   exec('babel', babelArgs, {cwd})
 
-  if (userConfig.jsNext) {
+  if (userConfig.build.jsNext) {
     babelArgs[2] = es6
     babelArgs = [...babelArgs, '--blacklist=es6.modules']
     console.log('nwb: build-module (es6)')

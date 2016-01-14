@@ -77,10 +77,12 @@ function reactComponentAssertions(dir, name, err, done) {
   let config = require(path.resolve(dir, 'nwb.config.js'))
   expect(config).toEqual({
     type: 'react-component',
-    umd: false,
-    global: '',
-    externals: {react: 'React'},
-    jsNext: true
+    build: {
+      externals: {react: 'React'},
+      global: '',
+      jsNext: true,
+      umd: false
+    }
   })
   done()
 }
@@ -138,10 +140,12 @@ function webModuleAssertions(dir, name, err, done) {
   let config = require(path.resolve(dir, 'nwb.config.js'))
   expect(config).toEqual({
     type: 'web-module',
-    umd: false,
-    global: '',
-    externals: {},
-    jsNext: true
+    build: {
+      externals: {},
+      global: '',
+      jsNext: true,
+      umd: false
+    }
   })
   done()
 }

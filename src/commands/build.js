@@ -19,7 +19,7 @@ export default function(args, cb) {
   }
   else if (userConfig.type === REACT_COMPONENT || userConfig.type === WEB_MODULE) {
     require('./build-module')(args)
-    if (userConfig.umd) {
+    if (userConfig.build.umd) {
       require('./build-umd')(args, () => buildDemo(args, cb))
     }
     else {

@@ -27,10 +27,44 @@ describe('getUserConfig()', () => {
     })
   })
 
-  describe('when jsNext config is missing', () => {
-    it('defaults to falsy', () => {
+  describe('when build config is missing', () => {
+    it('gets defaulted', () => {
       let config = getUserConfig({config: 'tests/fixtures/minimal-module-config.js'})
-      expect(config.jsNext).toNotExist()
+      expect(config.build).toEqual({
+        externals: {},
+        global: '',
+        jsNext: false,
+        umd: false
+      })
+    })
+  })
+
+  describe('when partial build config is provided', () => {
+    it('missing config is defaulted', () => {
+      let config = getUserConfig({config: 'tests/fixtures/partial-build-config.js'})
+      expect(config.build).toEqual({
+        externals: {},
+        global: 'Test',
+        jsNext: false,
+        umd: true
+      })
+    })
+  })
+
+  // TODO Remove in nwb 0.9
+  describe('when pre-0.8 build config is provided', () => {
+    it('gets upgraded to the new format in nwb 0.8', () => {
+      let config = getUserConfig({config: 'tests/fixtures/0.8-build-config-compat.js'})
+      expect(config).toEqual({
+        type: 'react-component',
+        build: {
+          externals: {react: 'React'},
+          global: 'Test',
+          jsNext: true,
+          umd: true
+        },
+        loaders: {}
+      })
     })
   })
 

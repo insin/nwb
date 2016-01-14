@@ -11,23 +11,25 @@ import webpackBuild from '../webpackBuild'
  */
 export default function(args, cb) {
   let pkg = require(path.resolve('package.json'))
-  let userConfig = getUserConfig(args)
+  let {build} = getUserConfig(args)
 
-  if (!userConfig.umd) {
-    return cb(new UserError(`nwb: the UMD build for this module is disabled by nwb.config.js (umd = ${userConfig.umd})`))
+  if (!build.umd) {
+    return cb(new UserError(
+      `nwb: the UMD build for this module is disabled by nwb.config.js (build.umd = ${build.umd})`
+    ))
   }
 
-  assert(userConfig.global, 'global config is required to create a UMD build')
+  assert(build.global, 'build.global config is required to create a UMD build')
 
   let buildConfig = {
     entry: path.resolve('src/index.js'),
     output: {
       filename: `${pkg.name}.js`,
-      library: userConfig.global,
+      library: build.global,
       libraryTarget: 'umd',
       path: path.resolve('umd')
     },
-    externals: createWebpackExternals(userConfig.externals),
+    externals: createWebpackExternals(build.externals),
     plugins: {
       banner: createBanner(pkg)
     }
