@@ -5,8 +5,12 @@
 
 **Dependencies:**
 
+- inquirer: v0.11.1 → [v0.11.2](https://github.com/SBoudrias/Inquirer.js/releases/tag/v0.11.2) - display fixes
 - karma: v0.13.19 → v0.13.18 - downgraded due to the test hanging issue being introduced
+- karma-sourcemap-loader: v0.3.6 → v0.3.7 - avoid EMFILE errors; fix charset bug; fix RangeError exception
 - socket.io: v1.3.7 - temporarily pinned in nwb's dependencies until the Karma test hang issue is resolved
+- webpack: v1.12.10 → [v1.12.11](https://github.com/webpack/webpack/compare/v1.12.10...v1.12.11)
+- webpack-merge: v0.7.2 → v0.7.3 - bugfix
 
 # 0.7.1 / 2016-01-10
 
