@@ -2,8 +2,8 @@
 
 **Fixed:**
 
-- `react-app` and `web-app` Webpack build config didn't have `output.publicPath` set, so images required from JavaScript weren't being found [#55](https://github.com/insin/nwb/issues/55)]
-- Test runs no longer hang for up to a minute after completion [#49](https://github.com/insin/nwb/issues/49)]
+- `react-app` and `web-app` Webpack build config didn't have `output.publicPath` set, so images required from JavaScript weren't being found [[#55](https://github.com/insin/nwb/issues/55)]
+- Test runs no longer hang for up to a minute after completion [[#49](https://github.com/insin/nwb/issues/49)]
 
 **Dependencies:**
 
@@ -35,7 +35,7 @@
 
 **Fixed:**
 
-- Fall back to nwb's dependencies in Webpack config instead of using an alias so `babel-runtime` can be picked up when `optional: ['runtime']` is used [hopefully fixing the weird `/node_modules/node_modules/` issue seen in [#37](https://github.com/insin/nwb/issues/37)]
+- Fall back to nwb's dependencies in Webpack config instead of using an alias so `babel-runtime` can be picked up when `optional: ['runtime']` is used [hopefully fixing the weird `/node_modules/node_modules/` issue seen in [[#37](https://github.com/insin/nwb/issues/37)]
 
 **Added:**
 
