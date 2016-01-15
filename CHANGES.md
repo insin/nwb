@@ -1,3 +1,5 @@
+# 0.7.2 / 2016-01-15
+
 **Fixed:**
 
 - `react-app` and `web-app` Webpack build config didn't have `output.publicPath` set, so images required from JavaScript weren't being found [#55](https://github.com/insin/nwb/issues/55)]
