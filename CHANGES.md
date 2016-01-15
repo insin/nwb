@@ -1,6 +1,12 @@
 **Fixed:**
 
 - `react-app` and `web-app` Webpack build config didn't have `output.publicPath` set, so images required from JavaScript weren't being found [#55](https://github.com/insin/nwb/issues/55)]
+- Test runs no longer hang for up to a minute after completion [#49](https://github.com/insin/nwb/issues/49)]
+
+**Dependencies:**
+
+- karma: v0.13.19 → v0.13.18 - downgraded due to the test hanging issue being introduced
+- socket.io: v1.3.7 - temporarily pinned in nwb's dependencies until the Karma test hang issue is resolved
 
 # 0.7.1 / 2016-01-10
 
