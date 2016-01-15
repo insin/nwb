@@ -26,6 +26,22 @@
   - A `test:watch` npm script was added to the project templates.
 - All commands are now run in the current working directory - you no longer need to `require.resolve()` full paths to extra Babel plugins configured in `nwb.config.js`, just use their names as Babel will now be able to import them.
 
+# 0.7.2 / 2016-01-15
+
+**Fixed:**
+
+- `react-app` and `web-app` Webpack build config didn't have `output.publicPath` set, so images required from JavaScript weren't being found [[#55](https://github.com/insin/nwb/issues/55)]
+- Test runs no longer hang for up to a minute after completion [[#49](https://github.com/insin/nwb/issues/49)]
+
+**Dependencies:**
+
+- inquirer: v0.11.1 → [v0.11.2](https://github.com/SBoudrias/Inquirer.js/releases/tag/v0.11.2) - display fixes
+- karma: v0.13.19 → v0.13.18 - downgraded due to the test hanging issue being introduced
+- karma-sourcemap-loader: v0.3.6 → v0.3.7 - avoid EMFILE errors; fix charset bug; fix RangeError exception
+- socket.io: v1.3.7 - temporarily pinned in nwb's dependencies until the Karma test hang issue is resolved
+- webpack: v1.12.10 → [v1.12.11](https://github.com/webpack/webpack/compare/v1.12.10...v1.12.11)
+- webpack-merge: v0.7.2 → v0.7.3 - bugfix
+
 # 0.7.1 / 2016-01-10
 
 **Fixed:**
@@ -47,7 +63,7 @@
 
 **Fixed:**
 
-- Fall back to nwb's dependencies in Webpack config instead of using an alias so `babel-runtime` can be picked up when `optional: ['runtime']` is used [hopefully fixing the weird `/node_modules/node_modules/` issue seen in [#37](https://github.com/insin/nwb/issues/37)]
+- Fall back to nwb's dependencies in Webpack config instead of using an alias so `babel-runtime` can be picked up when `optional: ['runtime']` is used [hopefully fixing the weird `/node_modules/node_modules/` issue seen in [[#37](https://github.com/insin/nwb/issues/37)]
 
 **Added:**
 

@@ -13,7 +13,8 @@ export default function(args, cb) {
     },
     output: {
       filename: '[name].js',
-      path: path.resolve('public/build')
+      path: path.resolve('public/build'),
+      publicPath: '/build/'
     },
     plugins: {
       vendorChunkName: 'vendor'
