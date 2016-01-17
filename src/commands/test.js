@@ -6,6 +6,6 @@ export default function(args, cb) {
   console.log('nwb: test')
   karmaServer({
     codeCoverage: isCi || !!args.coverage,
-    singleRun: !args.server
+    singleRun: isCi || !args.server
   }, cb)
 }
