@@ -7,15 +7,13 @@ import createWebpackConfig, {
   styleLoaderName
 } from '../src/createWebpackConfig'
 
-let cwd = process.cwd()
-
 let findLoaderById = (loaders, id) => {
   return loaders.filter(loader => loader.id === id)[0]
 }
 
 describe('createWebpackConfig()', () => {
   describe('without any config arguments', () => {
-    let config = createWebpackConfig(cwd, {})
+    let config = createWebpackConfig({})
     it('creates a default webpack build config', () => {
       expect(Object.keys(config)).toEqual(['module', 'plugins', 'resolve'])
       expect(config.module.loaders.map(loader => loader.loader).join('\n'))
@@ -34,7 +32,7 @@ describe('createWebpackConfig()', () => {
   })
 
   describe('with a server=true config argument', () => {
-    let config = createWebpackConfig(cwd, {server: true})
+    let config = createWebpackConfig({server: true})
     it('creates a server webpack config', () => {
       expect(config.module.loaders.map(loader => loader.loader).join('\n'))
         .toContain('babel-loader')
@@ -58,7 +56,7 @@ describe('createWebpackConfig()', () => {
   }
 
   describe('with plugin config for a CSS preprocessor', () => {
-    let config = createWebpackConfig(cwd, {server: true}, cssPreprocessorPluginConfig)
+    let config = createWebpackConfig({server: true}, cssPreprocessorPluginConfig)
     it('creates a style loading pipeline', () => {
       let loader = findLoaderById(config.module.loaders, 'sass-pipeline')
       expect(loader).toExist()
@@ -74,7 +72,7 @@ describe('createWebpackConfig()', () => {
   })
 
   describe('with plugin config for a CSS preprocessor and user config for its loader', () => {
-    let config = createWebpackConfig(cwd, {server: true}, cssPreprocessorPluginConfig, {
+    let config = createWebpackConfig({server: true}, cssPreprocessorPluginConfig, {
       loaders: {
         sass: {
           query: {

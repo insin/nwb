@@ -21,7 +21,7 @@ let warnedAboutBuildConfig = false
 export default function getUserConfig(args = {}) {
   // Try to load default user config, or user a config file path we were given
   let userConfig = {}
-  let userConfigPath = args.absConfig || path.join(process.cwd(), args.config || 'nwb.config.js')
+  let userConfigPath = args.absConfig || path.resolve(args.config || 'nwb.config.js')
 
   if (glob.sync(userConfigPath).length === 0) {
     throw new UserError(`nwb: couldn't find a config file at ${userConfigPath}`)

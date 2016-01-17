@@ -10,7 +10,6 @@ import getUserConfig from '../getUserConfig'
 export default function(args) {
   require('./clean-module')(args)
 
-  let cwd = path.join(__dirname, '..')
   let es6 = path.resolve('es6')
   let lib = path.resolve('lib')
   let src = path.resolve('src')
@@ -25,17 +24,17 @@ export default function(args) {
     debug('writing babelrc to %s', babelrc.path)
     fs.writeSync(babelrc.fd, JSON.stringify(userConfig.babel))
     fs.closeSync(babelrc.fd)
-    babelArgs = [...babelArgs, '--babelrc', babelrc.path]
+    babelArgs.push('--babelrc', babelrc.path)
   }
 
   console.log('nwb: build-module (es5)')
-  exec('babel', babelArgs, {cwd})
+  exec('babel', babelArgs)
 
   if (userConfig.build.jsNext) {
     babelArgs[2] = es6
-    babelArgs = [...babelArgs, '--blacklist=es6.modules']
+    babelArgs.push('--blacklist=es6.modules')
     console.log('nwb: build-module (es6)')
-    exec('babel', babelArgs, {cwd})
+    exec('babel', babelArgs)
   }
 
   temp.cleanupSync()

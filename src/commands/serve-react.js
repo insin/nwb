@@ -12,7 +12,7 @@ export default function(args, cb) {
 
   let entry = args._[1]
   if (glob.sync(entry).length === 0) {
-    return cb(new UserError(`entry module not found: ${path.join(process.cwd(), entry)}`))
+    return cb(new UserError(`entry module not found: ${path.resolve(entry)}`))
   }
 
   console.log('nwb: serve-react')

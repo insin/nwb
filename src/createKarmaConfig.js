@@ -52,7 +52,7 @@ export function findPlugin(plugins, findId) {
 /**
  * Handles creation of Karma config which can vary or be configured by the user.
  */
-export function getKarmaConfig(cwd, runCoverage, userConfig = {}) {
+export function getKarmaConfig({codeCoverage = false} = {}, userConfig = {}) {
   let {karma: userKarma = {}} = userConfig
 
   let frameworks = []
@@ -107,12 +107,12 @@ export function getKarmaConfig(cwd, runCoverage, userConfig = {}) {
     plugins.push(require('karma-mocha-reporter'))
   }
 
-  if (runCoverage) {
+  if (codeCoverage) {
     extraLoaders.push({
       id: 'isparta',
       test: /\.jsx?$/,
       loader: require.resolve('isparta-loader'),
-      include: path.join(cwd, 'src')
+      include: path.resolve('src')
     })
     reporters.push('coverage')
     plugins.push(require('karma-coverage'))
@@ -121,19 +121,19 @@ export function getKarmaConfig(cwd, runCoverage, userConfig = {}) {
   return {plugins, frameworks, reporters, extraLoaders}
 }
 
-export default function({cwd, singleRun, runCoverage}) {
-  let userConfig = getUserConfig({absConfig: path.join(cwd, 'nwb.config.js')})
+export default function({codeCoverage, singleRun}) {
+  let userConfig = getUserConfig()
   let userKarma = userConfig.karma || {}
-  let pluginConfig = getPluginConfig(cwd)
+  let pluginConfig = getPluginConfig()
 
-  let {plugins, frameworks, reporters, extraLoaders} = getKarmaConfig(cwd, runCoverage, userConfig)
-  let testFiles = path.join(cwd, userKarma.tests || DEFAULT_TESTS)
+  let {plugins, frameworks, reporters, extraLoaders} = getKarmaConfig({codeCoverage}, userConfig)
+  let testFiles = path.resolve(userKarma.tests || DEFAULT_TESTS)
   let preprocessors = {
     [require.resolve('babel-core/lib/polyfill')]: ['webpack', 'sourcemap'],
     [testFiles]: ['webpack', 'sourcemap']
   }
 
-  let webpackConfig = createWebpackConfig(cwd, {
+  let webpackConfig = createWebpackConfig({
     server: true,
     devtool: 'inline-source-map',
     loaders: {
@@ -141,7 +141,7 @@ export default function({cwd, singleRun, runCoverage}) {
     },
     resolve: {
       alias: {
-        'src': path.join(cwd, 'src')
+        'src': path.resolve('src')
       },
       // Fall back to resolving runtime dependencies from nwb's dependencies
       fallback: path.join(__dirname, '../node_modules')
@@ -157,7 +157,7 @@ export default function({cwd, singleRun, runCoverage}) {
     frameworks,
     reporters,
     coverageReporter: {
-      dir: path.join(cwd, 'coverage'),
+      dir: path.resolve('coverage'),
       reporters: [
         {type: 'html', subdir: 'html'},
         {type: 'lcovonly', subdir: '.'}

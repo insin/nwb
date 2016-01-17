@@ -11,7 +11,7 @@ import getUserConfig from './getUserConfig'
  */
 export default function(args, buildConfig) {
   let userConfig = getUserConfig(args)
-  let pluginConfig = getPluginConfig(process.cwd())
+  let pluginConfig = getPluginConfig()
 
   let {
     define, entry, output, loaders = {}, plugins
@@ -38,7 +38,7 @@ export default function(args, buildConfig) {
     })
   }
 
-  return createWebpackConfig(process.cwd(), {
+  return createWebpackConfig({
     server: true,
     devtool: '#eval-source-map',
     entry: [

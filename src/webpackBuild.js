@@ -20,7 +20,7 @@ export default function(args, buildConfig = {}, cb) {
   }
 
   let userConfig = getUserConfig(args)
-  let pluginConfig = getPluginConfig(process.cwd())
+  let pluginConfig = getPluginConfig()
   if (typeof buildConfig == 'function') {
     buildConfig = buildConfig()
   }
@@ -32,7 +32,7 @@ export default function(args, buildConfig = {}, cb) {
     devtool, entry, output, loaders, define, plugins, ...otherBuildConfig
   } = buildConfig
 
-  let webpackConfig = createWebpackConfig(process.cwd(), {
+  let webpackConfig = createWebpackConfig({
     server: false,
     devtool,
     entry,

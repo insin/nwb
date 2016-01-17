@@ -38,7 +38,7 @@ describe('getKarmaConfig()', () => {
       'reporter:mocha'
     ]
     it('defaults to Mocha', () => {
-      let {frameworks, reporters, plugins, extraLoaders} = getKarmaConfig('test', false)
+      let {frameworks, reporters, plugins, extraLoaders} = getKarmaConfig({codeCoverage: false})
       expect(frameworks).toEqual(['mocha'])
       expect(reporters).toEqual(['mocha'])
       expect(extraLoaders).toEqual([])
@@ -47,7 +47,7 @@ describe('getKarmaConfig()', () => {
       )
     })
     it('adds coverage config when asked to', () => {
-      let {frameworks, reporters, plugins, extraLoaders} = getKarmaConfig('test', true)
+      let {frameworks, reporters, plugins, extraLoaders} = getKarmaConfig({codeCoverage: true})
       expect(frameworks).toEqual(['mocha'])
       expect(reporters).toEqual(['mocha', 'coverage'])
       expectedDefaultPlugins.concat(['preprocessor:coverage']).forEach(plugin => {
@@ -63,7 +63,7 @@ describe('getKarmaConfig()', () => {
     let tapReporter = {'reporter:tap': []}
 
     it('defaults the reporter to dots if only a framework plugin is configured', () => {
-      let {frameworks, reporters, plugins} = getKarmaConfig('test', false, {
+      let {frameworks, reporters, plugins} = getKarmaConfig({codeCoverage: false}, {
         karma: {
           frameworks: [tapeFramework]
         }
@@ -73,7 +73,7 @@ describe('getKarmaConfig()', () => {
       expect(findPlugin(plugins, 'framework:tape')).toExist()
     })
     it('defaults the reporter to dots if only a framework name and plugin is configured', () => {
-      let {frameworks, reporters, plugins} = getKarmaConfig('test', false, {
+      let {frameworks, reporters, plugins} = getKarmaConfig({codeCoverage: false}, {
         karma: {
           frameworks: ['tape'],
           plugins: [tapeFramework]
@@ -84,7 +84,7 @@ describe('getKarmaConfig()', () => {
       expect(findPlugin(plugins, 'framework:tape')).toExist()
     })
     it('uses the given reporter if a plugin is also configured', () => {
-      let {frameworks, reporters, plugins} = getKarmaConfig('test', false, {
+      let {frameworks, reporters, plugins} = getKarmaConfig({codeCoverage: false}, {
         karma: {
           frameworks: [tapeFramework],
           reporters: [tapReporter]
@@ -96,7 +96,7 @@ describe('getKarmaConfig()', () => {
       expect(findPlugin(plugins, 'reporter:tap')).toExist()
     })
     it('uses the given reporter if a name plugin is also configured', () => {
-      let {frameworks, reporters, plugins} = getKarmaConfig('test', false, {
+      let {frameworks, reporters, plugins} = getKarmaConfig({codeCoverage: false}, {
         karma: {
           frameworks: ['tape'],
           reporters: ['tap'],
@@ -109,7 +109,7 @@ describe('getKarmaConfig()', () => {
       expect(findPlugin(plugins, 'reporter:tap')).toExist()
     })
     it('makes sure the Mocha plugins will be loaded when necessary', () => {
-      let {frameworks, reporters, plugins} = getKarmaConfig('test', false, {
+      let {frameworks, reporters, plugins} = getKarmaConfig({codeCoverage: false}, {
         karma: {
           frameworks: ['mocha', 'chai', 'chai-as-promised'],
           reporters: ['mocha'],

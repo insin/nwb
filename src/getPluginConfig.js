@@ -5,7 +5,7 @@ import merge from 'webpack-merge'
 
 import debug from './debug'
 
-export default function getPluginConfig(cwd) {
+export default function getPluginConfig(cwd = process.cwd()) {
   let pkg = require(path.join(cwd, 'package.json'))
   let plugins = [
     ...Object.keys(pkg.dependencies || {}),

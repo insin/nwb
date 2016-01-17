@@ -1,12 +1,3 @@
-/**
- * Functions for creating a Webpack config with:
- *
- * - a default set of loaders which can be customised for a particular type of
- *   build and further tweaked by the end user.
- * - a default set of plugins which can be customised for a particular type of
- *   build and environment, with only configuration or a flag required to enable
- *   additional pre-selected plugins.
- */
 import assert from 'assert'
 import path from 'path'
 
@@ -217,7 +208,7 @@ export function failBuildOnCompilationError() {
   })
 }
 
-export function createPlugins(server, cwd, {
+export function createPlugins(server, {
   // Banner comment to be added to each generated file in a UMD build
   banner,
   // Extra constant replacements for DefinePlugin. Since plugins aren't
@@ -263,7 +254,7 @@ export function createPlugins(server, cwd, {
       minChunks(module, count) {
         return (
           module.resource &&
-          module.resource.indexOf(path.resolve(cwd, 'node_modules')) === 0
+          module.resource.indexOf(path.resolve('node_modules')) === 0
         )
       }
     }))
@@ -354,10 +345,8 @@ export function getTopLevelLoaderConfig(userLoaderConfig, cssPreprocessors = {})
  * Create a webpack config with a curated set of default loaders suitable for
  * creating a static build (default) or serving an app with hot reloading.
  */
-export default function createWebpackConfig(cwd, buildConfig, pluginConfig = {}, userConfig = {}) {
-  assert.equal(typeOf(cwd), 'string', 'cwd is required')
+export default function createWebpackConfig(buildConfig, pluginConfig = {}, userConfig = {}) {
   assert.equal(typeOf(buildConfig), 'object', 'buildConfig is required')
-  debug('createWebpackConfig cwd = %s', cwd)
   debug('createWebpackConfig buildConfig = %j', buildConfig)
 
   let {
@@ -372,7 +361,7 @@ export default function createWebpackConfig(cwd, buildConfig, pluginConfig = {},
       loaders: createLoaders(server, loaders, userConfig.loaders, pluginConfig),
       postLoaders: createExtraLoaders(postLoaders, userConfig.loaders)
     },
-    plugins: createPlugins(server, cwd, plugins),
+    plugins: createPlugins(server, plugins),
     resolve: merge({
       extensions: ['', '.web.js', '.js', '.jsx', '.json'],
       // Fall back to resolving runtime dependencies from nwb's dependencies,

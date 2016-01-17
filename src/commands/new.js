@@ -27,7 +27,7 @@ export default function(args, cb) {
     return cb(new UserError(`nwb: ${name}/ directory already exists`))
   }
 
-  let targetDir = path.join(process.cwd(), name)
+  let targetDir = path.resolve(name)
   console.log(`nwb: new ${projectType}`)
   createProject(args, projectType, name, targetDir, cb)
 }
