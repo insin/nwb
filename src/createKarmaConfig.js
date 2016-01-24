@@ -121,8 +121,8 @@ export function getKarmaConfig({codeCoverage = false} = {}, userConfig = {}) {
   return {plugins, frameworks, reporters, extraLoaders}
 }
 
-export default function({codeCoverage, singleRun}) {
-  let userConfig = getUserConfig()
+export default function(args, {codeCoverage, singleRun}) {
+  let userConfig = getUserConfig(args)
   let userKarma = userConfig.karma || {}
   let pluginConfig = getPluginConfig()
 

@@ -10,7 +10,7 @@ function buildDemo(args, cb) {
 }
 
 export default function(args, cb) {
-  let userConfig = getUserConfig(args)
+  let userConfig = getUserConfig(args, {required: true})
   if (userConfig.type === REACT_APP) {
     require('./build-react-app')(args, cb)
   }

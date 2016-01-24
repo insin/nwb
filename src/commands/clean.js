@@ -4,7 +4,7 @@ import {REACT_APP, REACT_COMPONENT, WEB_APP, WEB_MODULE} from '../constants'
 import getUserConfig from '../getUserConfig'
 
 export default function(args) {
-  let {type, umd} = getUserConfig(args)
+  let {type, umd} = getUserConfig(args, {required: true})
   if (type === REACT_APP || type === WEB_APP) {
     require('./clean-app')(args)
   }

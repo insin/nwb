@@ -18,12 +18,13 @@ const DEFAULT_BUILD_CONFIG = {
 const BUILD_CONFIG_PROPS = Object.keys(DEFAULT_BUILD_CONFIG)
 let warnedAboutBuildConfig = false
 
-export default function getUserConfig(args = {}) {
-  // Try to load default user config, or user a config file path we were given
+export default function getUserConfig(args = {}, {required = false} = {}) {
+  // Try to load default user config, or use a config file path we were given
+  // (undocumented).
   let userConfig = {}
   let userConfigPath = args.absConfig || path.resolve(args.config || 'nwb.config.js')
 
-  if (glob.sync(userConfigPath).length === 0) {
+  if (required && glob.sync(userConfigPath).length === 0) {
     throw new UserError(`nwb: couldn't find a config file at ${userConfigPath}`)
   }
 
@@ -39,7 +40,7 @@ export default function getUserConfig(args = {}) {
     userConfig = userConfig()
   }
 
-  if (PROJECT_TYPES.indexOf(userConfig.type) === -1) {
+  if ((required || 'type' in userConfig) && PROJECT_TYPES.indexOf(userConfig.type) === -1) {
     throw new UserError(
       `nwb: invalid project type configured in ${userConfigPath}: ${userConfig.type}`,
       `nwb: 'type' config must be one of: ${PROJECT_TYPES.join(', ')}`

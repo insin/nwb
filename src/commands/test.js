@@ -4,7 +4,7 @@ export default function(args, cb) {
   let isCi = process.env.CONTINUOUS_INTEGRATION === 'true'
 
   console.log('nwb: test')
-  karmaServer({
+  karmaServer(args, {
     codeCoverage: isCi || !!args.coverage,
     singleRun: isCi || !args.server
   }, cb)

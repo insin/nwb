@@ -28,7 +28,8 @@ describe('findPlugin()', () => {
   })
 })
 
-describe('getKarmaConfig()', () => {
+describe('getKarmaConfig()', function() {
+  this.timeout(10000)
   describe('without user config', () => {
     let expectedDefaultPlugins = [
       'launcher:PhantomJS',

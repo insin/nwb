@@ -3,7 +3,7 @@ import {UserError} from '../errors'
 import getUserConfig from '../getUserConfig'
 
 export default function(args, cb) {
-  let userConfig = getUserConfig(args)
+  let userConfig = getUserConfig(args, {required: true})
   if (userConfig.type === REACT_APP) {
     require('./serve-react-app')(args, cb)
   }

@@ -3,10 +3,10 @@ import expect from 'expect'
 import getUserConfig from '../src/getUserConfig'
 
 describe('getUserConfig()', () => {
-  describe('when no config file can be found', () => {
+  describe("when a required config file can't be found", () => {
     it('throws an error', () => {
       expect(getUserConfig)
-        .withArgs({config: 'tests/fixtures/nonexistent.js'})
+        .withArgs({config: 'tests/fixtures/nonexistent.js'}, {required: true})
         .toThrow(/couldn't find a config file/)
     })
   })
