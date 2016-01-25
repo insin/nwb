@@ -3,9 +3,11 @@ module.exports = {
   babel: {
     loose: 'all'
   },
-  loaders: {
-    babel: {
-      exclude: 'test'
+  webpack: {
+    loaders: {
+      babel: {
+        exclude: 'test'
+      }
     }
   }
 }

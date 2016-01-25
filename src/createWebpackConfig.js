@@ -98,6 +98,16 @@ export function createStyleLoader(loader, server, {
   }
 }
 
+/**
+ * Final webpack loader config consists of:
+ * - the default set of loaders created in this function, with build and user
+ *   config tweaks based on loader id.
+ * - extra loaders defined in build config, with user config tweaks based
+ *   on loader id.
+ * - extra loaders created for CSS preprocessor plugins, with user config
+ *   tweaks based on loader id.
+ * - extra loaders defined in user config.
+ */
 export function createLoaders(server, buildConfig = {}, userConfig = {}, pluginConfig = {}) {
   let loader = loaderConfigFactory(buildConfig, userConfig)
 
@@ -208,20 +218,28 @@ export function failBuildOnCompilationError() {
   })
 }
 
-export function createPlugins(server, {
-  // Banner comment to be added to each generated file in a UMD build
-  banner,
-  // Extra constant replacements for DefinePlugin. Since plugins aren't
-  // currently exposed for user config, it's assumed any user-provided defines
-  // have already been merged into this.
-  define,
-  // Escape hatch for adding new build-specific plugins
-  extra,
-  // Options for HtmlWebpackPlugin
-  html,
-  // Name to use for a vendor chunk - providing a name causes it to be created.
-  vendorChunkName
-} = {}) {
+/**
+ * Final webpack plugin config consists of:
+ * - the default set of plugins created by this function based on whether or not
+ *   a server build is being configured, plus environment variables.
+ * - extra plugins managed by this function, whose inclusion is triggered by
+ *   providing configuration for them.
+ * - any extra plugins defined in build and user config.
+ */
+export function createPlugins(server, pluginConfig = {}) {
+  let {
+    // Banner comment to be added to each generated file in a UMD build
+    banner,
+    // Extra constant replacements for DefinePlugin
+    define,
+    // Escape hatch for adding new build-specific plugins
+    extra,
+    // Options for HtmlWebpackPlugin
+    html,
+    // Name to use for a vendor chunk - providing a name causes it to be created.
+    vendorChunkName
+  } = pluginConfig
+
   let plugins = [
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development'),
@@ -245,19 +263,19 @@ export function createPlugins(server, {
 
   if (!server) {
     plugins.push(new ExtractTextPlugin(`[name].css`))
-  }
 
-  // Move modules imported from node_modules into a vendor chunk
-  if (vendorChunkName) {
-    plugins.push(new optimize.CommonsChunkPlugin({
-      name: vendorChunkName,
-      minChunks(module, count) {
-        return (
-          module.resource &&
-          module.resource.indexOf(path.resolve('node_modules')) === 0
-        )
-      }
-    }))
+    // Move modules imported from node_modules into a vendor chunk
+    if (vendorChunkName) {
+      plugins.push(new optimize.CommonsChunkPlugin({
+        name: vendorChunkName,
+        minChunks(module, count) {
+          return (
+            module.resource &&
+            module.resource.indexOf(path.resolve('node_modules')) === 0
+          )
+        }
+      }))
+    }
   }
 
   if (process.env.NODE_ENV === 'production') {
@@ -349,19 +367,39 @@ export default function createWebpackConfig(buildConfig, pluginConfig = {}, user
   assert.equal(typeOf(buildConfig), 'object', 'buildConfig is required')
   debug('createWebpackConfig buildConfig = %j', buildConfig)
 
+  // Final webpack config is primarily driven by build configuration for the nwb
+  // command being run. Each command configures a default, working webpack
+  // configuration for the task it needs to perform.
   let {
-    loaders = {}, postLoaders = [], plugins = {}, resolve = {}, server = false, ...otherBuildConfig
+    // These build config items are used to creating chunks of webpack config,
+    // rather than being included as-is.
+    loaders = {},
+    plugins = {},
+    postLoaders = [],
+    resolve = {},
+    server = false,
+    // Any other build config provided is merged directly into the final webpack
+    // config to provide the rest of the default config.
+    ...otherBuildConfig
   } = buildConfig
 
-  let topLevelLoaderConfig = getTopLevelLoaderConfig(userConfig.loaders,
-                                                     pluginConfig.cssPreprocessors)
+  let {
+    // Loader and plugin config is managed by nwb, with the ability to use
+    // "extra" config to define arbitrary additional loaders and plugins.
+    loaders: userLoaderConfig = {},
+    plugins: userPluginConfig = {},
+    // Any other user webpack config is deep-merged into the generated config
+    // object to give the user even more control. This needs to be used very
+    // carefully as different nwb commands have different webpack config needs.
+    ...otherUserConfig
+  } = userConfig
 
-  return {
+  return merge({
     module: {
-      loaders: createLoaders(server, loaders, userConfig.loaders, pluginConfig),
-      postLoaders: createExtraLoaders(postLoaders, userConfig.loaders)
+      loaders: createLoaders(server, loaders, userLoaderConfig, pluginConfig),
+      postLoaders: createExtraLoaders(postLoaders, userLoaderConfig)
     },
-    plugins: createPlugins(server, plugins),
+    plugins: createPlugins(server, merge(buildConfig.plugins, userPluginConfig)),
     resolve: merge({
       extensions: ['', '.web.js', '.js', '.jsx', '.json'],
       // Fall back to resolving runtime dependencies from nwb's dependencies,
@@ -370,6 +408,9 @@ export default function createWebpackConfig(buildConfig, pluginConfig = {}, user
       fallback: path.join(__dirname, '../node_modules')
     }, resolve),
     ...otherBuildConfig,
-    ...topLevelLoaderConfig
-  }
+    // Top level loader config can be supplied via user "loaders" config, so we
+    // detect, extract and where possible validate it before merging it into the
+    // final webpack config object.
+    ...getTopLevelLoaderConfig(userLoaderConfig, pluginConfig.cssPreprocessors)
+  }, otherUserConfig)
 }

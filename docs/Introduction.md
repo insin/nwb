@@ -24,8 +24,9 @@ To speed up developing new projects, **nwb can also [generate skeleton projects]
 
 * Babel 5 settings
 * Webpack loader settings
-* Adding extra Webpack loaders (a crude escape hatch for now)
+* Adding extra Webpack loaders
 * Webpack [`DefinePlugin`](https://webpack.github.io/docs/list-of-plugins.html#defineplugin) replacements
+* Adding extra Webpack plugins
 * Karma settings for test files, frameworks, reporters and plugins
 * CSS preprocessors can be added as [nwb plugins](/docs/Plugins.md#css-preprocessors)
 
@@ -33,7 +34,6 @@ See the [Configuration docs](/docs/Configuration.md#configuration) for details.
 
 ### Not Configurable... Yet
 
-* Webpack plugins
 * Source and demo directory structures - nwb currently assumes these will be where its skeleton projects put them, in particular:
   * The entry point for all projects is assumed to be `src/index.js`
   * The HTML entry point for webapps is assumed to be `public/index.html`, with built resources in `public/build/`

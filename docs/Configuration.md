@@ -15,9 +15,14 @@ The object exported or returned by your nwb config can use the following fields:
 * Babel Configuration
   * [`babel`](#babel-object)
 * Webpack Configuration
-  * [`define`](#define-object)
-  * [`loaders`](#loaders-object)
-  * [`loaders.extra`](#loadersextra-array)
+  * [`webpack`](#webpack-object)
+  * [`webpack.loaders`](#loaders-object)
+    * [Default loaders](#default-loaders)
+    * [Test loaders](#test-loaders)
+    * [`--auto-install` loader](#autoinstall-loader)
+    * [`loaders.extra`](#loadersextra-array)
+  * [`webpack.plugins`](#plugins-object)
+    * [`plugins.define`](#pluginsdefine-object)
 * Karma Configuration
   * [`karma`](#karma-object)
   * [`karma.tests`](#tests-string)
@@ -78,23 +83,9 @@ If provided, this config will also be used to configure the `babel-loader` Webpa
 
 ### Webpack Configuration
 
-#### `define`: `Object`
+#### `webpack`: `Object`
 
-By default, nwb will use Webpack's [`DefinePlugin`](https://webpack.github.io/docs/list-of-plugins.html#defineplugin) to replace all occurances of `process.env.NODE_ENV` with a string containing `NODE_ENV`'s current value.
-
-You can configure a `define` object to add your own constant values.
-
-e.g. to replace all occurrences of `__VERSION__` with a string containing your app's version from its `package.json`:
-
-```js
-module.exports = {
-  define: {
-    __VERSION__: JSON.stringify(require('./package.json').version)
-  }
-}
-```
-
-#### `loaders`: `Object`
+##### `loaders`: `Object`
 
 Each [Webpack loader](https://webpack.github.io/docs/loaders.html) configured by default has a unique id you can use to customise it.
 
@@ -106,10 +97,12 @@ e.g., to enable [CSS Modules][CSS Modules]:
 
 ```js
 module.exports = {
-  loaders: {
-    css: {
-      query: {
-        modules: true
+  webpack: {
+    loaders: {
+      css: {
+        query: {
+          modules: true
+        }
       }
     }
   }
@@ -124,17 +117,19 @@ e.g. to use the `nib` plugin with the [Stylus](http://learnboost.github.io/stylu
 var nib = require('nib')
 
 module.exports = {
-  loaders: {
-    stylus: {
-      config: {
-        use: [nib()]
+  webpack: {
+    loaders: {
+      stylus: {
+        config: {
+          use: [nib()]
+        }
       }
     }
   }
 }
 ```
 
-##### Default Loaders
+###### Default Loaders
 
 Default loaders and their ids are:
 
@@ -170,7 +165,7 @@ Default loaders and their ids are:
 
 * `json` - handles `.json` files using [json-loader][json-loader]
 
-##### `--auto-install` loader
+###### `--auto-install` loader
 
 When you use `nwb serve`'s `--auto-install` flag, it will configure a loader to handle installing missing npm dependencies:
 
@@ -178,7 +173,7 @@ When you use `nwb serve`'s `--auto-install` flag, it will configure a loader to 
 
   > Default config: `{query: {cli: {save: true}}}`
 
-##### Test loaders
+###### Test loaders
 
 When running Karma tests with coverage enabled, the following loader will be added:
 
@@ -190,19 +185,41 @@ When running Karma tests with coverage enabled, the following loader will be add
 
   ```js
   module.exports = {
-    loaders: {
-      isparta: {
-        exclude: /__tests__/
+    webpack: {
+      loaders: {
+        isparta: {
+          exclude: /__tests__/
+        }
       }
     }
   }
   ```
 
-##### `loaders.extra`: `Array`
+###### `loaders.extra`: `Array`
 
 If you provide an `extra` field in the `loaders` object with a list of loader configuration objects, they will be added to the Webpack configuration.
 
-This is currently a crude escape hatch for adding more loaders.
+##### `plugins`: `Object`
+
+###### `plugins.define`: `Object`
+
+By default, nwb will use Webpack's [`DefinePlugin`](https://webpack.github.io/docs/list-of-plugins.html#defineplugin) to replace all occurances of `process.env.NODE_ENV` with a string containing `NODE_ENV`'s current value.
+
+You can configure a `plugins.define` object to add your own constant values.
+
+e.g. to replace all occurrences of `__VERSION__` with a string containing your app's version from its `package.json`:
+
+```js
+module.exports = {
+  webpack: {
+    plugins: {
+      define: {
+        __VERSION__: JSON.stringify(require('./package.json').version)
+      }
+    }
+  }
+}
+```
 
 ### Karma Configuration
 

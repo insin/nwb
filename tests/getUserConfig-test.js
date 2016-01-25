@@ -1,4 +1,5 @@
 import expect from 'expect'
+import webpack from 'webpack'
 
 import getUserConfig from '../src/getUserConfig'
 
@@ -27,43 +28,88 @@ describe('getUserConfig()', () => {
     })
   })
 
-  describe('when build config is missing', () => {
-    it('gets defaulted', () => {
-      let config = getUserConfig({config: 'tests/fixtures/minimal-module-config.js'})
-      expect(config.build).toEqual({
-        externals: {},
-        global: '',
-        jsNext: false,
-        umd: false
+  describe('when a config function is provided', () => {
+    it('gets passes command and webpack arguments', () => {
+      let config = getUserConfig({
+        _: ['abc123'],
+        config: 'tests/fixtures/return-arguments-config.js'
       })
+      expect(config.command).toEqual('abc123')
+      expect(config.webpack).toEqual(webpack)
     })
   })
 
-  describe('when partial build config is provided', () => {
-    it('missing config is defaulted', () => {
-      let config = getUserConfig({config: 'tests/fixtures/partial-build-config.js'})
-      expect(config.build).toEqual({
-        externals: {},
-        global: 'Test',
-        jsNext: false,
-        umd: true
+  describe('build config', () => {
+    context('when none is provided', () => {
+      it('gets defaulted', () => {
+        let config = getUserConfig({config: 'tests/fixtures/minimal-module-config.js'})
+        expect(config.build).toEqual({
+          externals: {},
+          global: '',
+          jsNext: false,
+          umd: false
+        })
       })
     })
-  })
-
-  // TODO Remove in nwb 0.9
-  describe('when pre-0.8 build config is provided', () => {
-    it('gets upgraded to the new format in nwb 0.8', () => {
-      let config = getUserConfig({config: 'tests/fixtures/0.8-build-config-compat.js'})
-      expect(config).toEqual({
-        type: 'react-component',
-        build: {
-          externals: {react: 'React'},
+    context('when partial config is provided', () => {
+      it('missing config is defaulted', () => {
+        let config = getUserConfig({config: 'tests/fixtures/partial-build-config.js'})
+        expect(config.build).toEqual({
+          externals: {},
           global: 'Test',
-          jsNext: true,
+          jsNext: false,
           umd: true
-        },
-        loaders: {}
+        })
+      })
+    })
+    // TODO Remove in nwb 0.9
+    context('when pre-0.8 build config is provided', () => {
+      it('gets upgraded to the new format in nwb 0.8', () => {
+        let config = getUserConfig({config: 'tests/fixtures/0.8-build-config-compat.js'})
+        expect(config).toEqual({
+          type: 'react-component',
+          build: {
+            externals: {react: 'React'},
+            global: 'Test',
+            jsNext: true,
+            umd: true
+          },
+          webpack: {
+            loaders: {},
+            plugins: {}
+          }
+        })
+      })
+    })
+  })
+
+  describe('webpack config', () => {
+    context('when none is provided', () => {
+      it('gets defaulted', () => {
+        let config = getUserConfig({config: 'tests/fixtures/minimal-module-config.js'})
+        expect(config.webpack).toEqual({
+          loaders: {},
+          plugins: {}
+        })
+      })
+    })
+    // TODO Remove in nwb 0.9
+    context('when pre-0.8 build config is provided', () => {
+      it('gets upgraded to the new format in nwb 0.8', () => {
+        let config = getUserConfig({config: 'tests/fixtures/0.8-webpack-config-compat.js'})
+        expect(config).toEqual({
+          type: 'react-app',
+          build: {
+            externals: {},
+            global: '',
+            jsNext: false,
+            umd: false
+          },
+          webpack: {
+            loaders: {css: {query: {modules: true}}},
+            plugins: {define: {__TEST__: 42}}
+          }
+        })
       })
     })
   })
@@ -71,19 +117,19 @@ describe('getUserConfig()', () => {
   describe('when babel config is provided', () => {
     it('creates a babel-loader config if there was none', () => {
       let config = getUserConfig({config: 'tests/fixtures/babel-only-config.js'})
-      expect(config.loaders).toEqual({
+      expect(config.webpack.loaders).toEqual({
         babel: {
           query: {
             loose: 'all',
             stage: 0,
-            optioonal: ['runtime']
+            optional: ['runtime']
           }
         }
       })
     })
     it('adds the config to existing babel-loader config if it had no query', () => {
       let config = getUserConfig({config: 'tests/fixtures/babel-loader-config.js'})
-      expect(config.loaders).toEqual({
+      expect(config.webpack.loaders).toEqual({
         babel: {
           exclude: 'test',
           query: {
@@ -94,13 +140,13 @@ describe('getUserConfig()', () => {
     })
     it('does nothing if existing babel-loader config already has a query', () => {
       let config = getUserConfig({config: 'tests/fixtures/babel-loader-query-config.js'})
-      expect(config.loaders).toEqual({
+      expect(config.webpack.loaders).toEqual({
         babel: {
           exclude: 'test',
           query: {
             loose: 'all',
             stage: 0,
-            optioonal: ['runtime']
+            optional: ['runtime']
           }
         }
       })

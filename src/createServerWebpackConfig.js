@@ -13,9 +13,7 @@ export default function(args, buildConfig) {
   let userConfig = getUserConfig(args)
   let pluginConfig = getPluginConfig()
 
-  let {
-    define, entry, output, loaders = {}, plugins
-  } = buildConfig
+  let {entry, output, ...otherBuildConfig} = buildConfig
 
   assert(entry, 'an entry file is required to serve a Webpack build')
   assert(output, 'output config is required to serve a Webpack build')
@@ -48,11 +46,7 @@ export default function(args, buildConfig) {
       entry
     ],
     output,
-    loaders,
-    postLoaders,
-    plugins: {
-      define: {...define, ...userConfig.define},
-      ...plugins
-    }
-  }, pluginConfig, userConfig)
+    ...otherBuildConfig,
+    postLoaders
+  }, pluginConfig, userConfig.webpack)
 }

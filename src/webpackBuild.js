@@ -28,22 +28,10 @@ export default function(args, buildConfig = {}, cb) {
   assert(buildConfig.entry, 'entry config is required to create a Webpack build')
   assert(buildConfig.output, 'output config is required to create a Webpack build')
 
-  let {
-    devtool, entry, output, loaders, define, plugins, ...otherBuildConfig
-  } = buildConfig
-
   let webpackConfig = createWebpackConfig({
-    server: false,
-    devtool,
-    entry,
-    output,
-    loaders,
-    plugins: {
-      define: {...define, ...userConfig.define},
-      ...plugins
-    },
-    ...otherBuildConfig
-  }, pluginConfig, userConfig)
+    ...buildConfig,
+    server: false
+  }, pluginConfig, userConfig.webpack)
 
   debug('webpack config: %o', webpackConfig)
 

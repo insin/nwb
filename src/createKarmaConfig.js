@@ -149,7 +149,7 @@ export default function(args, {codeCoverage, singleRun}) {
     node: {
       fs: 'empty'
     }
-  }, pluginConfig, userConfig)
+  }, pluginConfig, userConfig.webpack)
 
   let karmaConfig = {
     plugins,

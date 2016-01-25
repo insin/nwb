@@ -5,13 +5,15 @@ module.exports = {
   babel: {
     stage: 2
   },
-  loaders: {
-    babel: {
-      exclude: 'test',
-      query: {
-        loose: 'all',
-        stage: 0,
-        optioonal: ['runtime']
+  webpack: {
+    loaders: {
+      babel: {
+        exclude: 'test',
+        query: {
+          loose: 'all',
+          stage: 0,
+          optional: ['runtime']
+        }
       }
     }
   }

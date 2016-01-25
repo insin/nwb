@@ -3,6 +3,6 @@ module.exports = {
   babel: {
     loose: 'all',
     stage: 0,
-    optioonal: ['runtime']
+    optional: ['runtime']
   }
 }

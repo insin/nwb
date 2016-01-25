@@ -5,6 +5,7 @@
     ```
     // < v0.9
     module.exports = {
+      type: 'react-component',
       externals: {react: 'React'},
       global: 'MyComponent',
       jsNext: true,
@@ -14,6 +15,7 @@
     ```
     // v0.9
     module.exports = {
+      type: 'react-component',
       build: {
         externals: {react: 'React'},
         global: 'MyComponent',
@@ -22,6 +24,64 @@
       }
     }
     ```
+  - Webpack configuration must now be specified as a `webpack` object:
+    ```
+    // < v0.9
+    module.exports = {
+      type: 'react-app',
+      loaders: {
+        css: {
+          query: {
+            modules: true
+          }
+        }
+      }
+    }
+    ```
+    ```
+    // v0.9
+    module.exports = {
+      type: 'react-app',
+      webpack: {
+        loaders: {
+          css: {
+            query: {
+              modules: true
+            }
+          }
+        }
+      }
+    }
+    ```
+  - Webpack `define` config must now be specified in a `plugins` object:
+    ```
+    // < v0.9
+    module.exports = {
+      type: 'react-app',
+      define: {
+        __VERSION__: JSON.stringify(require('./package.json').version)
+      }
+    }
+    ```
+    ```
+    // v0.9
+    module.exports = {
+      type: 'react-app',
+      webpack: {
+        plugins: {
+          define: {
+            __VERSION__: JSON.stringify(require('./package.json').version)
+          }
+        }
+      }
+    }
+    ```
+- `nwb.config.js` is now only required when running generic build commands: `build`, `clean`, `serve`, `test`
+  - `type` is only required when running a generic build command, but if provided it must be valid.
+- If a config function is exported from `nwb.config.js`, it will now be called with an object containing the following properties:
+  - `command` - the nwb command being executed
+  - `webpack` - the webpack module (for configuring extra plugins using nwb's version of webpack)
+- Extra webpack plugins can now be added by providing a list of them as `webpack.plugins.extra` config.
 - Karma tests now always run just once in a CI environment regardless of the `--server` flag - this allows you to use `--server` in your default `npm test` command if you want to, without needing a separate run script for CI.
 - Development instructions in project templates were moved from `README.md` to a `CONTRIBUTING.md` file, and are now documented using `npm` and `npm run` commands instead of global `nwb` commands.
   - A `test:watch` npm script was added to the project templates.
