@@ -1,34 +1,51 @@
 **Changed:**
 
-- `nwb.config.js` consistency changes: Babel and Karma config is currently specified in `babel` and `karma` objects. Other configuration must now be specified in similar objects for consistency. nwb v0.8 will support the old format and display warning messages about the changes required to config; support for the old format will be removed in nwb v0.9.
-  - React component and vanilla JS module npm build configuration must now be specificed as a `build` object:
-    ```
-    // < v0.9
-    module.exports = {
-      type: 'react-component',
+*`nwb.config.js` format changes:*
+
+nwb v0.8 will support the old format and display warning messages about the changes required before upgrading to nwb v0.9.
+
+1. React component and vanilla JS module npm build configuration must now be specificed as a `build` object:
+  ```
+  // < v0.9
+  module.exports = {
+    type: 'react-component',
+    externals: {react: 'React'},
+    global: 'MyComponent',
+    jsNext: true,
+    umd: true
+  }
+  ```
+  ```
+  // v0.9
+  module.exports = {
+    type: 'react-component',
+    build: {
       externals: {react: 'React'},
       global: 'MyComponent',
       jsNext: true,
       umd: true
     }
-    ```
-    ```
-    // v0.9
-    module.exports = {
-      type: 'react-component',
-      build: {
-        externals: {react: 'React'},
-        global: 'MyComponent',
-        jsNext: true,
-        umd: true
+  }
+  ```
+1. Webpack configuration must now be specified as a `webpack` object:
+  ```
+  // < v0.9
+  module.exports = {
+    type: 'react-app',
+    loaders: {
+      css: {
+        query: {
+          modules: true
+        }
       }
     }
-    ```
-  - Webpack configuration must now be specified as a `webpack` object:
-    ```
-    // < v0.9
-    module.exports = {
-      type: 'react-app',
+  }
+  ```
+  ```
+  // v0.9
+  module.exports = {
+    type: 'react-app',
+    webpack: {
       loaders: {
         css: {
           query: {
@@ -37,55 +54,65 @@
         }
       }
     }
-    ```
-    ```
-    // v0.9
-    module.exports = {
-      type: 'react-app',
-      webpack: {
-        loaders: {
-          css: {
-            query: {
-              modules: true
-            }
-          }
+  }
+  ```
+1. Webpack `define` config must now be specified in a `plugins` object:
+  ```
+  // < v0.9
+  module.exports = {
+    type: 'react-app',
+    define: {
+      __VERSION__: JSON.stringify(require('./package.json').version)
+    }
+  }
+  ```
+  ```
+  // v0.9
+  module.exports = {
+    type: 'react-app',
+    webpack: {
+      plugins: {
+        define: {
+          __VERSION__: JSON.stringify(require('./package.json').version)
         }
       }
     }
-    ```
-  - Webpack `define` config must now be specified in a `plugins` object:
-    ```
-    // < v0.9
-    module.exports = {
-      type: 'react-app',
-      define: {
-        __VERSION__: JSON.stringify(require('./package.json').version)
-      }
-    }
-    ```
-    ```
-    // v0.9
-    module.exports = {
-      type: 'react-app',
-      webpack: {
-        plugins: {
-          define: {
-            __VERSION__: JSON.stringify(require('./package.json').version)
-          }
-        }
-      }
-    }
-    ```
+  }
+  ```
+
+*Other changes:*
+
 - `nwb.config.js` is now only required when running generic build commands: `build`, `clean`, `serve`, `test`
-  - `type` is only required when running a generic build command, but if provided it must be valid.
-- If a config function is exported from `nwb.config.js`, it will now be called with an object containing the following properties:
+  - `type` config is only required when running a generic build command, but if provided it must be valid.
+- If a function is exported from `nwb.config.js`, it will now be called with an object containing the following properties:
   - `command` - the nwb command being executed
   - `webpack` - the webpack module (for configuring extra plugins using nwb's version of webpack)
-- Extra webpack plugins can now be added by providing a list of them as `webpack.plugins.extra` config.
 - Karma tests now always run just once in a CI environment regardless of the `--server` flag - this allows you to use `--server` in your default `npm test` command if you want to, without needing a separate run script for CI.
 - Development instructions in project templates were moved from `README.md` to a `CONTRIBUTING.md` file, and are now documented using `npm` and `npm run` commands instead of global `nwb` commands.
-  - A `test:watch` npm script was added to the project templates.
 - All commands are now run in the current working directory - you no longer need to `require.resolve()` full paths to extra Babel plugins configured in `nwb.config.js`, just use their names as Babel will now be able to import them.
+- Babel polyfills are no longer included Webpack config for Karma, as PhantomJS v2 uses a more recent version of WebKit.
+
+**Added:**
+
+- Extra webpack plugins can now be added by providing a list of them as `webpack.plugins.extra` config.
+- A `test:watch` npm script was added to project template `package.json`.
+
+**Dependencies:**
+
+- cross-spawn: v2.1.4 → [v2.1.5](https://github.com/IndigoUnited/node-cross-spawn/compare/2.1.4...2.1.5) - update `which` dependency (minor)
+- express: v4.13.3 → v4.13.4 - deps
+- extract-text-webpack-plugin: v0.9.1 → [v1.0.1](https://github.com/webpack//extract-text-webpack-plugin/compare/v0.9.1...v1.0.1) - use webpack-sources
+- html-webpack-plugin: v1.7.0 → v2.7.2
+- inquirer: v0.11.2 → [v0.11.4](https://github.com/SBoudrias/Inquirer.js/compare/v0.11.2...v0.11.4)
+- karma: v0.13.18 → v0.13.19 - socket.io 1.4.5 seems to have fixed the post-test hanging issue
+- mocha: v2.3.4 → [v2.4.4](https://github.com/mochajs/mocha/blob/master/CHANGELOG.md#244--2016-01-27)
+- phantomjs: v1.9.19 → v2.1.2 - update installer to PhantomJS 2.1.1
+- qs: v5.2.0 → [v6.0.2](https://github.com/ljharb/qs/blob/master/CHANGELOG.md#602) - revert ES6 requirement
+- resolve: v1.1.6 → [v1.1.7](https://github.com/substack/node-resolve/compare/1.1.6...1.1.7) - fix `node_modules` paths on Windows
+- rimraf: v2.5.0 → [v2.5.1](https://github.com/isaacs/rimraf/compare/v2.5.0...v2.5.1)
+- webpack: v1.12.11 → [v1.12.12](https://github.com/webpack/webpack/compare/v1.12.11...v1.12.12) - fix Windows filename backslash incompatibility
+- webpack-dev-middleware: v1.4.0 → [v1.5.1](https://github.com/webpack/webpack-dev-middleware/compare/v1.4.0...v1.5.1) - platform-agnostic path joining, use `res.send` when available
+- webpack-hot-middleware: v2.6.0 → [v2.6.4](https://github.com/glenjamin/webpack-hot-middleware/compare/v2.6.0...v2.6.4) - improve hint when hot reloads aren't accepted, update `strip-ansi` dependency (major)
 
 # 0.7.2 / 2016-01-15
 
