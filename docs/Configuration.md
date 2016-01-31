@@ -72,6 +72,8 @@ module.exports = {
 }
 ```
 
+nwb commands are run in the current working directory, so if you need to configure additional Babel plugins, you can just use their names and let Babel import them.
+
 e.g. to install and use the [babel-plugin-react-html-attrs](https://github.com/insin/babel-plugin-react-html-attrs#readme) plugin:
 
 ```
@@ -85,11 +87,13 @@ module.exports = {
 }
 ```
 
-If provided, this config will also be used to configure the `babel-loader` Webpack loader if there isn't any other configuration specified for it in [`loaders`](#loaders-object).
+If provided, Babel config will also be used to configure the `babel-loader` Webpack loader if there isn't any other configuration specified for it in [`webpack.loaders`](#loaders-object).
 
 ### Webpack Configuration
 
 #### `webpack`: `Object`
+
+Webpack configuration must be provided in a `webpack` object.
 
 ##### `loaders`: `Object`
 
