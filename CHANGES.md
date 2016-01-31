@@ -11,6 +11,7 @@
 > nwb v0.8 will support the old format and display warning messages about the changes required before upgrading to nwb v0.9.
 
 1. React component and vanilla JS module npm build configuration must now be specificed as a `build` object:
+
   ```
   // < v0.9
   module.exports = {
@@ -34,6 +35,7 @@
   }
   ```
 1. Webpack configuration must now be specified as a `webpack` object:
+
   ```
   // < v0.9
   module.exports = {
@@ -63,6 +65,7 @@
   }
   ```
 1. Webpack `define` config must now be specified in a `plugins` object:
+
   ```
   // < v0.9
   module.exports = {
