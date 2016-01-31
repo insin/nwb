@@ -4,7 +4,12 @@ nwb will look for an `nwb.config.js` file in the current working directory for p
 
 This file should export either a configuration object or a function which creates a configuration object when called.
 
-If a function is exported, it will be called *after* nwb has ensured the appropriate `NODE_ENV` environment variable has been set for the command being run.
+If a function is exported:
+
+* it will be called *after* nwb has ensured the appropriate `NODE_ENV` environment variable has been set for the command being run.
+* it will be passed an object containing the following properties:
+  * `command`: the name of the nwb command currently being executed.
+  * `webpack`: nwb's version of the `webpack` module (for use if you need to [add extra Webpack plugins](#pluginsextra-array) to the generated configuration).
 
 ### Configuration Fields
 
@@ -19,10 +24,11 @@ The object exported or returned by your nwb config can use the following fields:
   * [`webpack.loaders`](#loaders-object)
     * [Default loaders](#default-loaders)
     * [Test loaders](#test-loaders)
-    * [`--auto-install` loader](#autoinstall-loader)
     * [`loaders.extra`](#loadersextra-array)
   * [`webpack.plugins`](#plugins-object)
     * [`plugins.define`](#pluginsdefine-object)
+    * [`plugins.install`](#pluginsinstall-object)
+    * [`plugins.extra`](#pluginsextra-array)
 * Karma Configuration
   * [`karma`](#karma-object)
   * [`karma.tests`](#tests-string)
@@ -165,14 +171,6 @@ Default loaders and their ids are:
 
 * `json` - handles `.json` files using [json-loader][json-loader]
 
-###### `--auto-install` loader
-
-When you use `nwb serve`'s `--auto-install` flag, it will configure a loader to handle installing missing npm dependencies:
-
-* `install` - installs missing npm dependencies using [npm-install-loader][npm-install-loader]
-
-  > Default config: `{query: {cli: {save: true}}}`
-
 ###### Test loaders
 
 When running Karma tests with coverage enabled, the following loader will be added:
@@ -197,7 +195,7 @@ When running Karma tests with coverage enabled, the following loader will be add
 
 ###### `loaders.extra`: `Array`
 
-If you provide an `extra` field in the `loaders` object with a list of loader configuration objects, they will be added to the Webpack configuration.
+A list of extra loaders to be added to generated Webpack configuration.
 
 ##### `plugins`: `Object`
 
@@ -215,6 +213,39 @@ module.exports = {
     plugins: {
       define: {
         __VERSION__: JSON.stringify(require('./package.json').version)
+      }
+    }
+  }
+}
+```
+
+###### `plugins.install`: `Object`
+
+Configures [options for `NpmInstallPlugin`](https://github.com/ericclemmons/npm-install-webpack-plugin#usage), which will be used if you pass `--auto-install` flag to `nwb serve`.
+
+The default options used by nwb are:
+
+```js
+{
+  save: true
+}
+```
+
+###### `plugins.extra`: `Array`
+
+A list of additional plugins to be added to generated Webpack configuration.
+
+```js
+module.exports = function(nwb) {
+  return {
+    type: 'react-app',
+    webpack: {
+      plugins: {
+        extra: [
+          new nwb.webpack.optimize.MinChunkSizePlugin({
+            minChunkSize: 1024
+          })
+        ]
       }
     }
   }

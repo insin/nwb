@@ -1,8 +1,14 @@
+**Breaking Changes:**
+
+- [`npm-install-webpack-plugin`](https://github.com/ericclemmons/npm-install-webpack-plugin) is now used instead of `npm-install-loader` to implement `nwb serve --auto-install`.
+
+  If you were configuring automatic npm installation using a `loaders.install.query.cli` config object, this should be moved to `webpack.plugins.install` instead.
+
 **Changed:**
 
 *`nwb.config.js` format changes:*
 
-nwb v0.8 will support the old format and display warning messages about the changes required before upgrading to nwb v0.9.
+> nwb v0.8 will support the old format and display warning messages about the changes required before upgrading to nwb v0.9.
 
 1. React component and vanilla JS module npm build configuration must now be specificed as a `build` object:
   ```
@@ -84,17 +90,18 @@ nwb v0.8 will support the old format and display warning messages about the chan
 
 - `nwb.config.js` is now only required when running generic build commands: `build`, `clean`, `serve`, `test`
   - `type` config is only required when running a generic build command, but if provided it must be valid.
-- If a function is exported from `nwb.config.js`, it will now be called with an object containing the following properties:
-  - `command` - the nwb command being executed
-  - `webpack` - the webpack module (for configuring extra plugins using nwb's version of webpack)
 - Karma tests now always run just once in a CI environment regardless of the `--server` flag - this allows you to use `--server` in your default `npm test` command if you want to, without needing a separate run script for CI.
 - Development instructions in project templates were moved from `README.md` to a `CONTRIBUTING.md` file, and are now documented using `npm` and `npm run` commands instead of global `nwb` commands.
-- All commands are now run in the current working directory - you no longer need to `require.resolve()` full paths to extra Babel plugins configured in `nwb.config.js`, just use their names as Babel will now be able to import them.
-- Babel polyfills are no longer included Webpack config for Karma, as PhantomJS v2 uses a more recent version of WebKit.
+- All commands are now run in the current working directory - you no longer need to `require.resolve()` full paths to extra Babel plugins configured in `nwb.config.js`, just use their names as normal and Babel will now be able to import them.
+- Upgraded to PhantomJS v2 for Karma tests.
+  - Babel polyfills are no longer included Webpack config for Karma, as PhantomJS v2 uses a more recent version of WebKit.
 
 **Added:**
 
 - Extra webpack plugins can now be added by providing a list of them as `webpack.plugins.extra` config.
+  - To support using webpack's built-in plugins via `extra`, if a function is exported from `nwb.config.js`, it will now be called with an object containing the following properties:
+    - `command` - the nwb command being executed
+    - `webpack` - the webpack module (for configuring extra plugins using nwb's version of webpack)
 - A `test:watch` npm script was added to project template `package.json`.
 
 **Dependencies:**

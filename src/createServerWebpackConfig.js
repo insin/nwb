@@ -13,27 +13,16 @@ export default function(args, buildConfig) {
   let userConfig = getUserConfig(args)
   let pluginConfig = getPluginConfig()
 
-  let {entry, output, ...otherBuildConfig} = buildConfig
+  let {entry, output, plugins = {}, ...otherBuildConfig} = buildConfig
 
   assert(entry, 'an entry file is required to serve a Webpack build')
   assert(output, 'output config is required to serve a Webpack build')
 
   let hotMiddlewareOptions = args.reload ? '?reload=true' : ''
 
-  let postLoaders = []
   if (args['auto-install']) {
     debug('configuring auto-install')
-    postLoaders.push({
-      id: 'install',
-      test: /\.js$/,
-      loader: require.resolve('npm-install-loader'),
-      query: {
-        cli: {
-          save: true
-        }
-      },
-      exclude: /node_modules/
-    })
+    plugins.install = {save: true}
   }
 
   return createWebpackConfig({
@@ -46,7 +35,7 @@ export default function(args, buildConfig) {
       entry
     ],
     output,
-    ...otherBuildConfig,
-    postLoaders
+    plugins,
+    ...otherBuildConfig
   }, pluginConfig, userConfig.webpack)
 }

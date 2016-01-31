@@ -70,7 +70,7 @@
     "file-loader": "0.8.5",
     "html-webpack-plugin": "2.7.2",
     "json-loader": "0.5.4",
-    "npm-install-loader": "1.1.1",
+    "npm-install-webpack-plugin": "2.0.0",
     "style-loader": "0.13.0",
     "url-loader": "0.5.7",
     "webpack-dev-middleware": "1.5.1",

@@ -4,6 +4,7 @@ import path from 'path'
 import chalk from 'chalk'
 import ExtractTextPlugin from 'extract-text-webpack-plugin'
 import HtmlWebpackPlugin from 'html-webpack-plugin'
+import NpmInstallPlugin from 'npm-install-webpack-plugin'
 import qs from 'qs'
 import webpack, {optimize} from 'webpack'
 import merge from 'webpack-merge'
@@ -223,10 +224,11 @@ export function failBuildOnCompilationError() {
  * - the default set of plugins created by this function based on whether or not
  *   a server build is being configured, plus environment variables.
  * - extra plugins managed by this function, whose inclusion is triggered by
- *   providing configuration for them.
+ *   build config, which provides default configuration for them which can be
+ *   tweaked by user plugin config when appropriate.
  * - any extra plugins defined in build and user config.
  */
-export function createPlugins(server, pluginConfig = {}) {
+export function createPlugins(server, buildConfig = {}, userConfig = {}) {
   let {
     // Banner comment to be added to each generated file in a UMD build
     banner,
@@ -236,14 +238,17 @@ export function createPlugins(server, pluginConfig = {}) {
     extra,
     // Options for HtmlWebpackPlugin
     html,
+    // Options for NpmInstallPlugin
+    install,
     // Name to use for a vendor chunk - providing a name causes it to be created.
     vendorChunkName
-  } = pluginConfig
+  } = buildConfig
 
   let plugins = [
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development'),
-      ...define
+      ...define,
+      ...userConfig.define
     }),
     new optimize.DedupePlugin(),
     new optimize.OccurenceOrderPlugin()
@@ -294,12 +299,23 @@ export function createPlugins(server, pluginConfig = {}) {
     }))
   }
 
+  if (install) {
+    plugins.push(new NpmInstallPlugin({
+      ...install,
+      ...userConfig.install
+    }))
+  }
+
   if (banner) {
     plugins.push(new webpack.BannerPlugin(banner))
   }
 
   if (extra) {
     plugins = plugins.concat(extra)
+  }
+
+  if (userConfig.extra) {
+    plugins = plugins.concat(userConfig.extra)
   }
 
   return plugins
@@ -363,7 +379,7 @@ export function getTopLevelLoaderConfig(userLoaderConfig, cssPreprocessors = {})
  * Create a webpack config with a curated set of default loaders suitable for
  * creating a static build (default) or serving an app with hot reloading.
  */
-export default function createWebpackConfig(buildConfig, pluginConfig = {}, userConfig = {}) {
+export default function createWebpackConfig(buildConfig, nwbPluginConfig = {}, userConfig = {}) {
   assert.equal(typeOf(buildConfig), 'object', 'buildConfig is required')
   debug('createWebpackConfig buildConfig = %j', buildConfig)
 
@@ -375,7 +391,6 @@ export default function createWebpackConfig(buildConfig, pluginConfig = {}, user
     // rather than being included as-is.
     loaders = {},
     plugins = {},
-    postLoaders = [],
     resolve = {},
     server = false,
     // Any other build config provided is merged directly into the final webpack
@@ -396,10 +411,9 @@ export default function createWebpackConfig(buildConfig, pluginConfig = {}, user
 
   return merge({
     module: {
-      loaders: createLoaders(server, loaders, userLoaderConfig, pluginConfig),
-      postLoaders: createExtraLoaders(postLoaders, userLoaderConfig)
+      loaders: createLoaders(server, loaders, userLoaderConfig, nwbPluginConfig)
     },
-    plugins: createPlugins(server, merge(buildConfig.plugins, userPluginConfig)),
+    plugins: createPlugins(server, plugins, userPluginConfig),
     resolve: merge({
       extensions: ['', '.web.js', '.js', '.jsx', '.json'],
       // Fall back to resolving runtime dependencies from nwb's dependencies,
@@ -411,6 +425,6 @@ export default function createWebpackConfig(buildConfig, pluginConfig = {}, user
     // Top level loader config can be supplied via user "loaders" config, so we
     // detect, extract and where possible validate it before merging it into the
     // final webpack config object.
-    ...getTopLevelLoaderConfig(userLoaderConfig, pluginConfig.cssPreprocessors)
+    ...getTopLevelLoaderConfig(userLoaderConfig, nwbPluginConfig.cssPreprocessors)
   }, otherUserConfig)
 }
