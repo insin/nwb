@@ -101,6 +101,7 @@
 
 **Added:**
 
+- Project type-specific versions of the `build`, `clean` and `serve` commands are now officially documented for direct use.
 - Extra webpack plugins can now be added by providing a list of them as `webpack.plugins.extra` config.
   - To support using webpack's built-in plugins via `extra`, if a function is exported from `nwb.config.js`, it will now be called with an object containing the following properties:
     - `command` - the nwb command being executed

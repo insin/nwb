@@ -1,6 +1,10 @@
 ## `nwb` Commands
 
-### `new` - create a new project
+### Project Creation Commands
+
+These are optional, but they're a quick way to get started with a new project using the conventions nwb expects.
+
+#### `new` - create a new project
 
 ```
 nwb new <project-type> <name>
@@ -10,7 +14,7 @@ Creates a new directory and initialises a project skeleton in it.
 
 The `name` argument must not be an existing directory.
 
-#### Project Types
+##### Project Types
 
 ```
 nwb new react-app <name>
@@ -52,7 +56,7 @@ Creates a skeleton for a web module with the given name, with an optional UMD bu
 * `--no-jsnext` - disable the npm ES6 modules build
 * `--no-umd` - disable the npm UMD build
 
-### `init` - initialise a project in the current directory
+#### `init` - initialise a project in the current directory
 
 ```
 nwb init <project-type> [name]
@@ -62,7 +66,11 @@ This is the same as `new`, except the `name` argument is optional and the new pr
 
 If  `name` is not provided, the name of the current directory will be used.
 
-### `serve` - serve an app
+### Generic Project Commands
+
+The following commands require a `nwb.config.js` file to be present to specify the appropriate `type` config so nwb knows what to do when they're run - if you always use a config file, you should only have to learn these commands regardless of which type of project you're working on.
+
+#### `serve` - serve an app
 
 ```
 nwb serve
@@ -100,24 +108,7 @@ A demo app is essential to show people what your component can do - as [React Ro
 
 Having a demo which uses your component is also a great way to test it as you prototype and build, quickly seeing what does and doesn't work before committing to a test.
 
-### `test` - run unit tests
-
-```
-nwb test
-```
-
-Runs unit tests once.
-
-**Flags:**
-
-* `--server` - keep the Karma server running and keep running tests on every change. Whether you're writing tests up front or catching up after you're happy with what you've created so far, having them run on every code change makes testing more fun.
-* `--coverage` - create a code coverage report in `coverage/`
-
-**In React component modules:**
-
-Running the test server in tandem with a hot reloading demo app, you can quickly protoype and test your components.
-
-### `build` - create builds
+#### `build` - create builds
 
 ```
 nwb build
@@ -157,10 +148,48 @@ Builds the component in preparation for publishing to npm.
 
 If the module has a `demo/` directory, running `build` will also create a static build of its demo app in `demo/dist/`.
 
-### `clean` - clean up
+#### `clean` - clean up
 
 ```
 nwb clean
 ```
 
 Deletes all built resource directories.
+
+### Project commands
+
+The following commands don't require an `nwb.config.js` file to specify a project type, but it may be required for other configuration depending on the command.
+
+#### `test` - run unit tests
+
+```
+nwb test
+```
+
+Runs unit tests.
+
+**Flags:**
+
+* `--server` - keep the Karma server running and keep running tests on every change. Whether you're writing tests up front or catching up after you're happy with what you've created so far, having them run on every code change makes testing more fun.
+* `--coverage` - create a code coverage report in `coverage/`
+
+**In React component modules:**
+
+Running the test server in tandem with a hot reloading demo app, you can quickly protoype and test your components.
+
+#### Project Type-specific Commands
+
+Project type-specific versions of the generic `build`, `clean` and `serve` commands are also available to run directly - if you use the generic commands, you will see nwb calling these for you:
+
+* `build-demo` - build a demo app from `demo/src/index.js` to `demo/dist/`
+* `build-module` - create an ES5 build for an npm module
+* `build-react-app` - build a react app from `src/index.js` to `public/build/`
+* `build-umd` - create a UMD build for an npm module (this command itself requires configuration, so is useless without a config file)
+* `build-web-app` - build a web app from `src/index.js` to `public/build/`
+* `clean-app` - delete `public/build/`
+* `clean-demo` - delete `demo/dist/`
+* `clean-module` -  delete `coverage/`, `es6/` and `lib/
+* `clean-umd` - delete `umd/`
+* `serve-react-app` - serve React app from `src/index.js`
+* `serve-react-demo` - serve a React demo app from `demo/src/index.js`
+* `serve-web-app` - serve a web app from `src/index.js`
