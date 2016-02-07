@@ -110,18 +110,23 @@
 
 **Dependencies:**
 
+- autoprefixer-loader: v3.1.0 → v3.2.0
 - cross-spawn: v2.1.4 → [v2.1.5](https://github.com/IndigoUnited/node-cross-spawn/compare/2.1.4...2.1.5) - update `which` dependency (minor)
+- expect: v1.13.4 → [v1.14.0](https://github.com/mjackson/expect/blob/master/CHANGES.md#v1140) - new features
 - express: v4.13.3 → v4.13.4 - deps
 - extract-text-webpack-plugin: v0.9.1 → [v1.0.1](https://github.com/webpack//extract-text-webpack-plugin/compare/v0.9.1...v1.0.1) - use webpack-sources
-- html-webpack-plugin: v1.7.0 → v2.7.2
+- html-webpack-plugin: v1.7.0 → v2.8.1
 - inquirer: v0.11.2 → [v0.11.4](https://github.com/SBoudrias/Inquirer.js/compare/v0.11.2...v0.11.4)
 - karma: v0.13.18 → v0.13.19 - socket.io 1.4.5 seems to have fixed the post-test hanging issue
-- mocha: v2.3.4 → [v2.4.4](https://github.com/mochajs/mocha/blob/master/CHANGELOG.md#244--2016-01-27)
-- phantomjs: v1.9.19 → v2.1.2 - update installer to PhantomJS 2.1.1
-- qs: v5.2.0 → [v6.0.2](https://github.com/ljharb/qs/blob/master/CHANGELOG.md#602) - revert ES6 requirement
+- karma-phantomjs-launcher: v0.2.3 → [v1.0.0](https://github.com/karma-runner/karma-phantomjs-launcher/blob/master/CHANGELOG.md#100-2016-01-28) - use phantomjs-prebuild
+- mocha: v2.3.4 → [v2.4.5](https://github.com/mochajs/mocha/blob/master/CHANGELOG.md#245--2016-01-28)
+- phantomjs v1.9.19 → phantomjs-prebuilt v2.1.4 - update installer to PhantomJS 2.x, renamed package
+- qs: v5.2.0 → [v6.1.0](https://github.com/ljharb/qs/blob/master/CHANGELOG.md#610) - revert ES6 requirement, new `allowDots` option and some fixes
+- react-transform-catch-errors: v1.0.1 → v1.0.2 - remove some files from the npm package
+- react-transform-hmr: v1.0.1 → v1.0.2 - remove some files from the npm package
 - resolve: v1.1.6 → [v1.1.7](https://github.com/substack/node-resolve/compare/1.1.6...1.1.7) - fix `node_modules` paths on Windows
 - rimraf: v2.5.0 → [v2.5.1](https://github.com/isaacs/rimraf/compare/v2.5.0...v2.5.1)
-- webpack: v1.12.11 → [v1.12.12](https://github.com/webpack/webpack/compare/v1.12.11...v1.12.12) - fix Windows filename backslash incompatibility
+- webpack: v1.12.11 → [v1.12.13](https://github.com/webpack/webpack/compare/v1.12.11...v1.12.13) - fix Windows filename backslash incompatibility
 - webpack-dev-middleware: v1.4.0 → [v1.5.1](https://github.com/webpack/webpack-dev-middleware/compare/v1.4.0...v1.5.1) - platform-agnostic path joining, use `res.send` when available
 - webpack-hot-middleware: v2.6.0 → [v2.6.4](https://github.com/glenjamin/webpack-hot-middleware/compare/v2.6.0...v2.6.4) - improve hint when hot reloads aren't accepted, update `strip-ansi` dependency (major)
 
