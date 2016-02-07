@@ -44,7 +44,7 @@ Project creation commands:
     ${cyan('web-app')}          a plain JavaScript app
     ${cyan('web-module')}       a plain JavaScript module
 
-Development commands:
+Generic development commands:
   ${green('build')}
     clean and build the project
 
@@ -63,6 +63,32 @@ Development commands:
     run unit tests
     ${cyan('--coverage')}  create a code coverage report
     ${cyan('--server')}    keep running tests on every change
+
+Project type-specific commands:
+  ${green('build-demo')}
+    build a demo app from demo/src/index.js to demo/dist/
+  ${green('build-module')}
+    create an ES5 build for an npm module (ES6 modules build requires config)
+  ${green('build-react-app')}
+    build a react app from src/index.js to public/build/
+  ${green('build-umd')}
+    create a UMD build for an npm module (requires config)
+  ${green('build-web-app')}
+    build a web app from src/index.js to public/build/
+  ${green('clean-app')}
+    delete public/build/
+  ${green('clean-demo')}
+    delete demo/dist/
+  ${green('clean-module')}
+     delete coverage/, es6/ and lib/
+  ${green('clean-umd')}
+    delete umd/
+  ${green('serve-react-app')}
+    serve React app from src/index.js
+  ${green('serve-react-demo')}
+    serve a React demo app from demo/src/index.js
+  ${green('serve-web-app')}
+    serve a web app from src/index.js
 `)
     process.exit(args.help || command ? 0 : 1)
   }

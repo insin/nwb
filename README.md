@@ -167,6 +167,32 @@ Development commands:
     run unit tests
     --coverage  create a code coverage report
     --server    keep running tests on every change
+
+Project type-specific commands:
+  build-demo
+    build a demo app from demo/src/index.js to demo/dist/
+  build-module
+    create an ES5 build for an npm module (ES6 modules build requires config)
+  build-react-app
+    build a react app from src/index.js to public/build/
+  build-umd
+    create a UMD build for an npm module (requires config)
+  build-web-app
+    build a web app from src/index.js to public/build/
+  clean-app
+    delete public/build/
+  clean-demo
+    delete demo/dist/
+  clean-module
+     delete coverage/, es6/ and lib/
+  clean-umd
+    delete umd/
+  serve-react-app
+    serve React app from src/index.js
+  serve-react-demo
+    serve a React demo app from demo/src/index.js
+  serve-web-app
+    serve a web app from src/index.js
 ```
 
 ## Versioning
