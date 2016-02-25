@@ -46,16 +46,22 @@ export default function getUserConfig(args = {}, {required = false} = {}) {
   let userConfig = {}
   let userConfigPath = args.absConfig || path.resolve(args.config || 'nwb.config.js')
 
-  if (required && glob.sync(userConfigPath).length === 0) {
+  // Bail early if a config file is required and doesn't exist
+  let configFileExists = glob.sync(userConfigPath).length !== 0
+  if (required && !configFileExists) {
     throw new UserError(`nwb: couldn't find a config file at ${userConfigPath}`)
   }
 
-  try {
-    userConfig = require(userConfigPath)
-    debug('imported config module from %s', userConfigPath)
-  }
-  catch (e) {
-    throw new UserError(`nwb: couldn't import the config file at ${userConfigPath}`)
+  // If a config file exists, it should be a valid module regardless of whether
+  // or not it's required.
+  if (configFileExists) {
+    try {
+      userConfig = require(userConfigPath)
+      debug('imported config module from %s', userConfigPath)
+    }
+    catch (e) {
+      throw new UserError(`nwb: couldn't import the config file at ${userConfigPath}`)
+    }
   }
 
   if (typeof userConfig == 'function') {

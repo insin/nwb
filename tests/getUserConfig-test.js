@@ -28,8 +28,26 @@ describe('getUserConfig()', () => {
     })
   })
 
+  describe("when a non-required config file can't be found", () => {
+    it('returns default config', () => {
+      let config = getUserConfig({config: 'tests/fixtures/nonexistent.js'})
+      expect(config).toEqual({
+        build: {
+          externals: {},
+          global: '',
+          jsNext: false,
+          umd: false
+        },
+        webpack: {
+          loaders: {},
+          plugins: {}
+        }
+      })
+    })
+  })
+
   describe('when a config function is provided', () => {
-    it('gets passes command and webpack arguments', () => {
+    it('gets passed command and webpack arguments', () => {
       let config = getUserConfig({
         _: ['abc123'],
         config: 'tests/fixtures/return-arguments-config.js'
