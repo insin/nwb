@@ -115,9 +115,12 @@
 - expect: v1.13.4 → [v1.14.0](https://github.com/mjackson/expect/blob/master/CHANGES.md#v1140) - new features
 - express: v4.13.3 → v4.13.4 - deps
 - extract-text-webpack-plugin: v0.9.1 → [v1.0.1](https://github.com/webpack//extract-text-webpack-plugin/compare/v0.9.1...v1.0.1) - use webpack-sources
-- html-webpack-plugin: v1.7.0 → v2.8.1
-- inquirer: v0.11.2 → [v0.11.4](https://github.com/SBoudrias/Inquirer.js/compare/v0.11.2...v0.11.4)
-- karma: v0.13.18 → v0.13.19 - socket.io 1.4.5 seems to have fixed the post-test hanging issue
+- glob: v6.0.3 → v7.0.0 - throw if cwd is not a directory
+- html-webpack-plugin: v1.7.0 → v2.9.0
+- inquirer: v0.11.2 → [v0.12.0](https://github.com/SBoudrias/Inquirer.js/compare/v0.11.2...v0.12.0)
+- karma: v0.13.18 → v0.13.21 - socket.io 1.4.5 seems to have fixed the post-test hanging issue, [bug fixes and new features](https://github.com/karma-runner/karma/releases/tag/v0.13.20)
+- karma-mocha: v0.2.1 → [v0.2.2](https://github.com/karma-runner/karma-mocha/compare/v0.2.1...v0.2.2)
+- karma-mocha-reporter: v1.1.5 → [v1.2.2](https://github.com/litixsoft/karma-mocha-reporter/compare/v1.1.5...v1.2.2) - add diff output for failed tests
 - karma-phantomjs-launcher: v0.2.3 → [v1.0.0](https://github.com/karma-runner/karma-phantomjs-launcher/blob/master/CHANGELOG.md#100-2016-01-28) - use phantomjs-prebuild
 - mocha: v2.3.4 → [v2.4.5](https://github.com/mochajs/mocha/blob/master/CHANGELOG.md#245--2016-01-28)
 - phantomjs v1.9.19 → phantomjs-prebuilt v2.1.4 - update installer to PhantomJS 2.x, renamed package
@@ -125,10 +128,10 @@
 - react-transform-catch-errors: v1.0.1 → v1.0.2 - remove some files from the npm package
 - react-transform-hmr: v1.0.1 → v1.0.2 - remove some files from the npm package
 - resolve: v1.1.6 → [v1.1.7](https://github.com/substack/node-resolve/compare/1.1.6...1.1.7) - fix `node_modules` paths on Windows
-- rimraf: v2.5.0 → [v2.5.1](https://github.com/isaacs/rimraf/compare/v2.5.0...v2.5.1)
-- webpack: v1.12.11 → [v1.12.13](https://github.com/webpack/webpack/compare/v1.12.11...v1.12.13) - fix Windows filename backslash incompatibility
+- rimraf: v2.5.0 → [v2.5.2](https://github.com/isaacs/rimraf/compare/v2.5.0...v2.5.2)
+- webpack: v1.12.11 → [v1.12.14](https://github.com/webpack/webpack/compare/v1.12.11...v1.12.14) - fix Windows filename backslash incompatibility
 - webpack-dev-middleware: v1.4.0 → [v1.5.1](https://github.com/webpack/webpack-dev-middleware/compare/v1.4.0...v1.5.1) - platform-agnostic path joining, use `res.send` when available
-- webpack-hot-middleware: v2.6.0 → [v2.6.4](https://github.com/glenjamin/webpack-hot-middleware/compare/v2.6.0...v2.6.4) - improve hint when hot reloads aren't accepted, update `strip-ansi` dependency (major)
+- webpack-hot-middleware: v2.6.0 → [v2.7.1](https://github.com/glenjamin/webpack-hot-middleware/compare/v2.6.0...v2.7.1) - improve hint when hot reloads aren't accepted, update `strip-ansi` dependency (major), update stats handling
 
 # 0.7.2 / 2016-01-15
 
