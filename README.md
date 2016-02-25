@@ -188,7 +188,7 @@ Project type-specific commands:
   clean-umd
     delete umd/
   serve-react-app
-    serve React app from src/index.js
+    serve a React app from src/index.js
   serve-react-demo
     serve a React demo app from demo/src/index.js
   serve-web-app

@@ -84,7 +84,7 @@ Project type-specific commands:
   ${green('clean-umd')}
     delete umd/
   ${green('serve-react-app')}
-    serve React app from src/index.js
+    serve a React app from src/index.js
   ${green('serve-react-demo')}
     serve a React demo app from demo/src/index.js
   ${green('serve-web-app')}
