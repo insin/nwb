@@ -244,7 +244,7 @@ describe('getTopLevelLoaderConfig()', () => {
           sass: {config: {a: 1}},
           'vendor-sass': {config: {b: 1}}
         }, cssPreprocessors)
-        .toThrow(/this has alraedy been used/)
+        .toThrow(/this has already been used/)
     })
     it('throws if a default config prop is not available', () => {
       expect(getTopLevelLoaderConfig)

@@ -365,7 +365,7 @@ export function getTopLevelLoaderConfig(userLoaderConfig, cssPreprocessors = {})
     }
     else if (configPropertyName in topLevelLoaderConfig) {
       throw new Error(
-        `User config for the ${loaderId} loader cannot be set in ${configPropertyName} - this has alraedy been used.`
+        `User config for the ${loaderId} loader cannot be set in ${configPropertyName} - this has already been used.`
       )
     }
 
