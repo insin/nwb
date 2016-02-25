@@ -1,3 +1,5 @@
+# 0.8.0 / 2016-02-25
+
 **Breaking Changes:**
 
 - [`npm-install-webpack-plugin`](https://github.com/ericclemmons/npm-install-webpack-plugin) is now used instead of `npm-install-loader` to implement `nwb serve --auto-install`.
