@@ -78,8 +78,8 @@
   },
   "devDependencies": {
     "cross-spawn": "2.1.5",
-    "eslint-config-jonnybuchanan": "2.0.x",
-    "eventsource": "0.1.6",
+    "eslint-config-jonnybuchanan": "2.0.3",
+    "eventsource": "0.2.0",
     "isparta": "3.5.3",
     "tree-kill": "1.0.0"
   },
