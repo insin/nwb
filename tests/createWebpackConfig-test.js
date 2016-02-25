@@ -12,7 +12,7 @@ let findLoaderById = (loaders, id) => {
 }
 
 describe('createWebpackConfig()', () => {
-  describe('without any config arguments', () => {
+  context('without any config arguments', () => {
     let config = createWebpackConfig({})
     it('creates a default webpack build config', () => {
       expect(Object.keys(config)).toEqual(['module', 'plugins', 'resolve'])
@@ -31,7 +31,7 @@ describe('createWebpackConfig()', () => {
     })
   })
 
-  describe('with a server=true config argument', () => {
+  context('with a server=true config argument', () => {
     let config = createWebpackConfig({server: true})
     it('creates a server webpack config', () => {
       expect(config.module.loaders.map(loader => loader.loader).join('\n'))
@@ -55,7 +55,7 @@ describe('createWebpackConfig()', () => {
     }
   }
 
-  describe('with plugin config for a CSS preprocessor', () => {
+  context('with plugin config for a CSS preprocessor', () => {
     let config = createWebpackConfig({server: true}, cssPreprocessorPluginConfig)
     it('creates a style loading pipeline', () => {
       let loader = findLoaderById(config.module.loaders, 'sass-pipeline')
@@ -71,7 +71,7 @@ describe('createWebpackConfig()', () => {
     })
   })
 
-  describe('with plugin config for a CSS preprocessor and user config for its loader', () => {
+  context('with plugin config for a CSS preprocessor and user config for its loader', () => {
     let config = createWebpackConfig({server: true}, cssPreprocessorPluginConfig, {
       loaders: {
         sass: {
@@ -91,6 +91,23 @@ describe('createWebpackConfig()', () => {
       let loader = findLoaderById(config.module.loaders, 'vendor-sass-pipeline')
       expect(loader).toExist()
       expect(loader.loader).toMatch(/.*?style-loader.*?css-loader.*?autoprefixer-loader.*?!path\/to\/sass-loader\.js$/)
+    })
+  })
+
+  context('with extra config', () => {
+    it('merges extra config into the generated webpack config', () => {
+      let config = createWebpackConfig({}, {}, {extra: {
+        resolve: {
+          alias: {
+            'test': './test'
+          }
+        },
+        foo: 'bar'
+      }})
+      expect(config.resolve.alias).toEqual({
+        'test': './test'
+      })
+      expect(config.foo).toEqual('bar')
     })
   })
 })

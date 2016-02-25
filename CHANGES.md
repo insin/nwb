@@ -12,7 +12,7 @@
 
 1. React component and vanilla JS module npm build configuration must now be specificed as a `build` object:
 
-  ```
+  ```js
   // < v0.9
   module.exports = {
     type: 'react-component',
@@ -22,7 +22,7 @@
     umd: true
   }
   ```
-  ```
+  ```js
   // v0.9
   module.exports = {
     type: 'react-component',
@@ -36,7 +36,7 @@
   ```
 1. Webpack configuration must now be specified as a `webpack` object:
 
-  ```
+  ```js
   // < v0.9
   module.exports = {
     type: 'react-app',
@@ -49,7 +49,7 @@
     }
   }
   ```
-  ```
+  ```js
   // v0.9
   module.exports = {
     type: 'react-app',
@@ -66,7 +66,7 @@
   ```
 1. Webpack `define` config must now be specified in a `plugins` object:
 
-  ```
+  ```js
   // < v0.9
   module.exports = {
     type: 'react-app',
@@ -75,7 +75,7 @@
     }
   }
   ```
-  ```
+  ```js
   // v0.9
   module.exports = {
     type: 'react-app',
@@ -83,6 +83,30 @@
       plugins: {
         define: {
           __VERSION__: JSON.stringify(require('./package.json').version)
+        }
+      }
+    }
+  }
+  ```
+1. All "extra" Webpack config must be specified in a an `extra` object, including extra loaders. The new object must correspond with Webpack's config file layout.
+
+  ```js
+  // < v0.9
+  module.exports = {
+    type: 'react-app',
+    loaders: {
+      extra: [/* ... */]
+    }
+  }
+  ```
+  ```js
+  // v0.9
+  module.exports = {
+    type: 'react-app',
+    webpack: {
+      extra: {
+        module: {
+          loaders: [/* ... */]
         }
       }
     }
@@ -102,8 +126,8 @@
 **Added:**
 
 - Project type-specific versions of the `build`, `clean` and `serve` commands are now officially documented for direct use.
-- Extra webpack plugins can now be added by providing a list of them as `webpack.plugins.extra` config.
-  - To support using webpack's built-in plugins via `extra`, if a function is exported from `nwb.config.js`, it will now be called with an object containing the following properties:
+- Extra webpack config can now be configured via a `webpack.extra` Object.
+  - To support adding other webpack built-in plugins via `extra`, if a function is exported from `nwb.config.js`, it will now be called with an object containing the following properties:
     - `command` - the nwb command being executed
     - `webpack` - the webpack module (for configuring extra plugins using nwb's version of webpack)
 - A `test:watch` npm script was added to project template `package.json`.

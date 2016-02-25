@@ -159,6 +159,7 @@ export function createLoaders(server, buildConfig = {}, userConfig = {}, pluginC
     // Extra loaders from build config, still configurable via user config when
     // the loaders specify an id.
     ...createExtraLoaders(buildConfig.extra, userConfig),
+    // TODO Remove in nwb 0.9
     // Extra loaders from user config
     ...userConfig.extra || []
   ]
@@ -314,10 +315,6 @@ export function createPlugins(server, buildConfig = {}, userConfig = {}) {
     plugins = plugins.concat(extra)
   }
 
-  if (userConfig.extra) {
-    plugins = plugins.concat(userConfig.extra)
-  }
-
   return plugins
 }
 
@@ -403,10 +400,10 @@ export default function createWebpackConfig(buildConfig, nwbPluginConfig = {}, u
     // "extra" config to define arbitrary additional loaders and plugins.
     loaders: userLoaderConfig = {},
     plugins: userPluginConfig = {},
-    // Any other user webpack config is deep-merged into the generated config
+    // Any extra user webpack config is deep-merged into the generated config
     // object to give the user even more control. This needs to be used very
     // carefully as different nwb commands have different webpack config needs.
-    ...otherUserConfig
+    extra: userExtraWebpackConfig = {}
   } = userConfig
 
   return merge({
@@ -426,5 +423,5 @@ export default function createWebpackConfig(buildConfig, nwbPluginConfig = {}, u
     // detect, extract and where possible validate it before merging it into the
     // final webpack config object.
     ...getTopLevelLoaderConfig(userLoaderConfig, nwbPluginConfig.cssPreprocessors)
-  }, otherUserConfig)
+  }, userExtraWebpackConfig)
 }

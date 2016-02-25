@@ -9,7 +9,7 @@ If a function is exported:
 * it will be called *after* nwb has ensured the appropriate `NODE_ENV` environment variable has been set for the command being run.
 * it will be passed an object containing the following properties:
   * `command`: the name of the nwb command currently being executed.
-  * `webpack`: nwb's version of the `webpack` module (for use if you need to [add extra Webpack plugins](#pluginsextra-array) to the generated configuration).
+  * `webpack`: nwb's version of the `webpack` module (for use if you need to [add extra Webpack plugins](#) to the generated configuration).
 
 ### Configuration Fields
 
@@ -24,11 +24,10 @@ The object exported or returned by your nwb config can use the following fields:
   * [`webpack.loaders`](#loaders-object)
     * [Default loaders](#default-loaders)
     * [Test loaders](#test-loaders)
-    * [`loaders.extra`](#loadersextra-array)
   * [`webpack.plugins`](#plugins-object)
     * [`plugins.define`](#pluginsdefine-object)
     * [`plugins.install`](#pluginsinstall-object)
-    * [`plugins.extra`](#pluginsextra-array)
+  * [`webpack.extra`](#extra-object)
 * Karma Configuration
   * [`karma`](#karma-object)
   * [`karma.tests`](#tests-string)
@@ -44,7 +43,7 @@ The object exported or returned by your nwb config can use the following fields:
     * [`package.json` fields](#packagejson-umd-banner-configuration)
   * [`build.jsNext`](#jsnext-boolean)
 
-#### `type`: `String` (required)
+#### `type`: `String` (required for generic build commands)
 
 nwb uses this field to determine which type of project it's working with when generic build commands like `build` are used.
 
@@ -139,6 +138,8 @@ module.exports = {
 }
 ```
 
+Alternatively, you can also add new properties directly to the top-level Webpack config using [`extra`](#extra-object)
+
 ###### Default Loaders
 
 Default loaders and their ids are:
@@ -197,9 +198,7 @@ When running Karma tests with coverage enabled, the following loader will be add
   }
   ```
 
-###### `loaders.extra`: `Array`
 
-A list of extra loaders to be added to generated Webpack configuration.
 
 ##### `plugins`: `Object`
 
@@ -235,17 +234,29 @@ The default options used by nwb are:
 }
 ```
 
-###### `plugins.extra`: `Array`
+##### `extra`: `Object`
 
-A list of additional plugins to be added to generated Webpack configuration.
+Extra configuration to be merged into the generated Webpack configuration using [webpack-merge](https://github.com/survivejs/webpack-merge#webpack-merge---merge-designed-for-webpack) - see the [Webpack configuration docs](https://webpack.github.io/docs/configuration.html) for the available fields.
+
+Note that you *must* use Webpack's own config structure in this object - e.g. to add an extra loader which isn't managed by nwb's own `webpack.loaders` config, you would need to provide a list of loaders at `webpack.extra.module.loaders`.
 
 ```js
+var path = require('path')
+
 module.exports = function(nwb) {
   return {
     type: 'react-app',
     webpack: {
-      plugins: {
-        extra: [
+      extra: {
+        // Allow the use of require('images/blah.png') to require from an
+        // src/images from anywhere in the the app.
+        resolve: {
+          alias: {
+            'images': path.resolve(__dirname, 'src/images')
+          }
+        },
+        // Example of adding an extra plugin which isn't managed by nwb
+        plugins: [
           new nwb.webpack.optimize.MinChunkSizePlugin({
             minChunkSize: 1024
           })
