@@ -252,7 +252,7 @@ export function createPlugins(server, buildConfig = {}, userConfig = {}) {
       ...userConfig.define
     }),
     new optimize.DedupePlugin(),
-    new optimize.OccurenceOrderPlugin()
+    new optimize.OccurrenceOrderPlugin()
   ]
 
   // Assumption: we're always hot reloading if we're bundling on the server
