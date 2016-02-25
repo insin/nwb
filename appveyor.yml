@@ -4,7 +4,7 @@ branches:
   - next
 
 environment:
-  nodejs_version: "4.2"
+  nodejs_version: "4"
 
 install:
   - ps: Install-Product node $env:nodejs_version
