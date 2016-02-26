@@ -80,25 +80,6 @@ describe('getUserConfig()', () => {
         })
       })
     })
-    // TODO Remove in nwb 0.9
-    context('when pre-0.8 build config is provided', () => {
-      it('gets upgraded to the new format in nwb 0.8', () => {
-        let config = getUserConfig({config: 'tests/fixtures/0.8-build-config-compat.js'})
-        expect(config).toEqual({
-          type: 'react-component',
-          build: {
-            externals: {react: 'React'},
-            global: 'Test',
-            jsNext: true,
-            umd: true
-          },
-          webpack: {
-            loaders: {},
-            plugins: {}
-          }
-        })
-      })
-    })
   })
 
   describe('webpack config', () => {
@@ -108,25 +89,6 @@ describe('getUserConfig()', () => {
         expect(config.webpack).toEqual({
           loaders: {},
           plugins: {}
-        })
-      })
-    })
-    // TODO Remove in nwb 0.9
-    context('when pre-0.8 build config is provided', () => {
-      it('gets upgraded to the new format in nwb 0.8', () => {
-        let config = getUserConfig({config: 'tests/fixtures/0.8-webpack-config-compat.js'})
-        expect(config).toEqual({
-          type: 'react-app',
-          build: {
-            externals: {},
-            global: '',
-            jsNext: false,
-            umd: false
-          },
-          webpack: {
-            loaders: {css: {query: {modules: true}}},
-            plugins: {define: {__TEST__: 42}}
-          }
         })
       })
     })

@@ -1,6 +1,5 @@
 import path from 'path'
 
-import chalk from 'chalk'
 import glob from 'glob'
 import webpack from 'webpack'
 
@@ -19,13 +18,6 @@ const DEFAULT_WEBPACK_CONFIG = {
   loaders: {},
   plugins: {}
 }
-
-// TODO Remove in nwb 0.9
-const BUILD_CONFIG_PROPS = Object.keys(DEFAULT_BUILD_CONFIG)
-let warnedAboutBuildConfig = false
-let warnedAboutDefineConfig = false
-let warnedAboutWebpackConfig = false
-let warnedAboutExtraLoaders = false
 
 function applyDefaultConfig(userConfig, topLevelProp, defaults) {
   if (!(topLevelProp in userConfig)) {
@@ -76,61 +68,6 @@ export default function getUserConfig(args = {}, {required = false} = {}) {
       `nwb: invalid project type configured in ${userConfigPath}: ${userConfig.type}`,
       `nwb: 'type' config must be one of: ${PROJECT_TYPES.join(', ')}`
     )
-  }
-
-  // TODO Remove in nwb 0.9
-  let topLevelBuildConfig = BUILD_CONFIG_PROPS.filter(prop => prop in userConfig)
-  if (topLevelBuildConfig.length > 0) {
-    if (!warnedAboutBuildConfig) {
-      console.warn(chalk.magenta([
-        'nwb: the top level of your nwb config contains the following npm module build configuration:',
-        `nwb: ${topLevelBuildConfig.join(', ')}`,
-        'nwb: from nwb 0.9 onward this must be moved into a "build" object'
-      ].join('\n')))
-      warnedAboutBuildConfig = true
-    }
-    let buildConfig = {...DEFAULT_BUILD_CONFIG}
-    BUILD_CONFIG_PROPS.forEach(prop => {
-      if (prop in userConfig) {
-        buildConfig[prop] = userConfig[prop]
-        delete userConfig[prop]
-      }
-    })
-    userConfig.build = buildConfig
-  }
-  let toplevelWebpackConfig = ['define', 'loaders'].filter(prop => prop in userConfig)
-  if (toplevelWebpackConfig.length > 0) {
-    if (!warnedAboutWebpackConfig) {
-      console.warn(chalk.magenta([
-        'nwb: the top level of your nwb config contains the following webpack configuration:',
-        `nwb: ${toplevelWebpackConfig.join(', ')}`,
-        'nwb: from nwb 0.9 onward this must this to be moved into a "webpack" object'
-      ].join('\n')))
-      warnedAboutWebpackConfig = true
-    }
-    let webpackConfig = {...DEFAULT_WEBPACK_CONFIG}
-    // 0.8 config props don't match 0.9, so manually upgrade them one at a time
-    if ('define' in userConfig) {
-      if (!warnedAboutDefineConfig) {
-        console.warn(chalk.magenta(
-          'nwb: from nwb 0.9 onward webpack "define" config must be inside a "plugins" object'
-        ))
-        warnedAboutDefineConfig = true
-      }
-      webpackConfig.plugins.define = userConfig.define
-      delete userConfig.define
-    }
-    if ('loaders' in userConfig) {
-      webpackConfig.loaders = userConfig.loaders
-      delete userConfig.loaders
-    }
-    if (webpackConfig.loaders.extra && !warnedAboutExtraLoaders) {
-      console.warn(chalk.magenta(
-        'nwb: from nwb 0.9 onward extra webpack loaders must be defined in webpack.extra.module.loaders'
-      ))
-      warnedAboutExtraLoaders = true
-    }
-    userConfig.webpack = webpackConfig
   }
 
   // Set defaults for config objects

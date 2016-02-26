@@ -158,10 +158,7 @@ export function createLoaders(server, buildConfig = {}, userConfig = {}, pluginC
     }),
     // Extra loaders from build config, still configurable via user config when
     // the loaders specify an id.
-    ...createExtraLoaders(buildConfig.extra, userConfig),
-    // TODO Remove in nwb 0.9
-    // Extra loaders from user config
-    ...userConfig.extra || []
+    ...createExtraLoaders(buildConfig.extra, userConfig)
   ]
 
   if (pluginConfig.cssPreprocessors) {

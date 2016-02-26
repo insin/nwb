@@ -1,10 +1,14 @@
+**Removed:**
+
+- Backwards compatibility for `nwb.config.js` format changes made in 0.8.
+
 # 0.8.1 / 2016-03-03
 
 **Dependencies:**
 
 - karma-mocha-reporter: v1.2.2 → [v1.2.3](https://github.com/litixsoft/karma-mocha-reporter/compare/v1.2.2...v1.2.3) - don't fail test suites containing skipped tests
 
-# 0.8.0 / 2016-02-25
+# 0.8.0 / 2016-02-26
 
 **Breaking Changes:**
 
