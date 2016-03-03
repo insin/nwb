@@ -38,7 +38,7 @@
     "resolve": "1.1.7",
     "rimraf": "2.5.2",
     "temp": "0.8.3",
-    "webpack-merge": "0.7.3",
+    "webpack-merge": "0.8.3",
 
     "babel": "5.8.34",
     "babel-core": "5.8.34",
@@ -74,7 +74,7 @@
     "style-loader": "0.13.0",
     "url-loader": "0.5.7",
     "webpack-dev-middleware": "1.5.1",
-    "webpack-hot-middleware": "2.7.1"
+    "webpack-hot-middleware": "2.9.1"
   },
   "devDependencies": {
     "cross-spawn": "2.1.5",

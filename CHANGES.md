@@ -2,6 +2,11 @@
 
 - Backwards compatibility for `nwb.config.js` format changes made in 0.8.
 
+**Dependencies:**
+
+- webpack-hot-middleware: v2.7.1 → [v2.9.1](https://github.com/glenjamin/webpack-hot-middleware/compare/v2.7.1...v2.9.1) - improved error overlay styling
+- webpack-merge: v0.7.3 → [v0.8.3](https://github.com/survivejs/webpack-merge/blob/master/CHANGELOG.md#083--2016-03-02) - change merging behavior so only loaders get prepended
+
 # 0.8.1 / 2016-03-03
 
 **Dependencies:**
