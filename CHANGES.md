@@ -1,3 +1,5 @@
+# 0.8.1 / 2016-03-03
+
 **Dependencies:**
 
 - karma-mocha-reporter: v1.2.2 → [v1.2.3](https://github.com/litixsoft/karma-mocha-reporter/compare/v1.2.2...v1.2.3) - don't fail test suites containing skipped tests
