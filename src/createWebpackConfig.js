@@ -12,6 +12,11 @@ import merge from 'webpack-merge'
 import debug from './debug'
 import {endsWith, typeOf} from './utils'
 
+// Default query configuration for file-loader and url-loader
+const FILE_LOADER_DEFAULTS = {
+  name: '[name].[ext]?[hash]'
+}
+
 // Top-level property names reserved for webpack config
 // From http://webpack.github.io/docs/configuration.html
 const WEBPACK_RESERVED = 'context entry output module resolve resolveLoader externals target bail profile cache watch watchOptions debug devtool devServer node amd loader recordsPath recordsInputPath recordsOutputPath plugins'.split(' ')
@@ -134,23 +139,31 @@ export function createLoaders(server, buildConfig = {}, userConfig = {}, pluginC
       test: /\.(gif|png)$/,
       loader: require.resolve('url-loader'),
       query: {
-        limit: 10240
+        limit: 10240,
+        ...FILE_LOADER_DEFAULTS
       }
     }),
     loader('jpeg', {
       test: /\.jpe?g$/,
-      loader: require.resolve('file-loader')
+      loader: require.resolve('file-loader'),
+      query: {
+        ...FILE_LOADER_DEFAULTS
+      }
     }),
     loader('fonts', {
       test: /\.(otf|svg|ttf|woff|woff2)(\?v=\d+\.\d+\.\d+)?$/,
       loader: require.resolve('url-loader'),
       query: {
-        limit: 10240
+        limit: 10240,
+        ...FILE_LOADER_DEFAULTS
       }
     }),
     loader('eot', {
       test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,
-      loader: require.resolve('file-loader')
+      loader: require.resolve('file-loader'),
+      query: {
+        ...FILE_LOADER_DEFAULTS
+      }
     }),
     loader('json', {
       test: /\.json$/,
@@ -265,7 +278,9 @@ export function createPlugins(server, buildConfig = {}, userConfig = {}) {
   }
 
   if (!server) {
-    plugins.push(new ExtractTextPlugin(`[name].css`))
+    plugins.push(new ExtractTextPlugin(`[name].css`, {
+      ...userConfig.extractText
+    }))
 
     // Move modules imported from node_modules into a vendor chunk
     if (vendorChunkName) {
@@ -293,7 +308,8 @@ export function createPlugins(server, buildConfig = {}, userConfig = {}) {
   if (html) {
     plugins.push(new HtmlWebpackPlugin({
       template: path.join(__dirname, '../templates/webpack-template.html'),
-      ...html
+      ...html,
+      ...userConfig.html
     }))
   }
 

@@ -36,7 +36,7 @@ See the [Configuration docs](/docs/Configuration.md#configuration) for details.
 
 * Source and demo directory structures - nwb currently assumes these will be where its skeleton projects put them, in particular:
   * The entry point for all projects is assumed to be `src/index.js`
-  * The HTML entry point for webapps is assumed to be `public/index.html`, with built resources in `public/build/`
+  * The template for an HTML entry point for webapps is assumed to be `src/index.html`, with built resources in `dist/`. `<script>` and `<link>` tags for generated JavaScript and CSS bundles will be injected into this template when building.
   * The entry point for demo apps is assumed to be `demo/src/index.js`, with built resources in `demo/dist/`
 
 ### Not Currently Considered

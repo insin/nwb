@@ -1,3 +1,17 @@
+import fs from 'fs-extra'
+import glob from 'glob'
+
+const GITKEEP_RE = /\.gitkeep$/
+
+export function copyPublicDir(from, to) {
+  fs.ensureDirSync(to)
+  if (glob.sync(`${from}/`).length !== 0) {
+    fs.copySync(from, to, {
+      filter(file) { return !GITKEEP_RE.test(file) }
+    })
+  }
+}
+
 export function createBanner(pkg) {
   let banner = `${pkg.name} ${pkg.version}`
   if (pkg.homepage) {

@@ -1,5 +1,6 @@
 import path from 'path'
 
+import {copyPublicDir} from '../utils'
 import webpackBuild from '../webpackBuild'
 
 // Use a config function, as this won't be called until after NODE_ENV has been
@@ -13,13 +14,17 @@ let buildConfig = () => {
     },
     output: {
       filename: '[name].js',
-      path: path.resolve('public/build'),
-      publicPath: '/build/'
+      path: path.resolve('dist'),
+      publicPath: '/'
     },
     plugins: {
+      html: {
+        template: path.resolve('src/index.html')
+      },
       vendorChunkName: 'vendor'
     }
   }
+
   if (process.env.NODE_ENV === 'production') {
     config.loaders = {
       babel: {
@@ -32,11 +37,14 @@ let buildConfig = () => {
       }
     }
   }
+
   return config
 }
 
 export default function(args, cb) {
   require('./clean-app')(args)
+
+  copyPublicDir('public', 'dist')
 
   console.log(`nwb: build-react-app`)
   webpackBuild(args, buildConfig, cb)

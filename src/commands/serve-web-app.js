@@ -7,9 +7,14 @@ export default function(args, cb) {
   webpackServer(args, {
     entry: path.resolve('src/index.js'),
     output: {
-      path: path.resolve('public/build'),
+      path: path.resolve('dist'),
       filename: 'app.js',
-      publicPath: '/build/'
+      publicPath: '/'
+    },
+    plugins: {
+      html: {
+        template: path.resolve('src/index.html')
+      }
     },
     server: {
       staticPath: path.resolve('public')

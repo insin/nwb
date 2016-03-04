@@ -1,6 +1,28 @@
+**Breaking Changes:**
+
+- Changes to how React and web apps are built:
+  - Builds are now generated in `dist/` instead of `public/build/`
+  - `index.html` for builds is now generated based on a template in `src/index.html`, instead of using a static `public/index.html`
+
+    **Upgrading existing projects:**
+
+    - move your `public/index.html` to `src/index.html` and delete the `<link>` and `<script>` tags for `vendor` and `app` resources. These will now be injected at build time.
+    - replace `/public/build` in your `.gitignore` with `/dist/`
+
+  - `public/` is now only for public files - any contents in this directory will now be copied to `dist/` at the start of a build. The development server will also serve static content from `public/`.
+
 **Removed:**
 
 - Backwards compatibility for `nwb.config.js` format changes made in 0.8.
+
+**Added:**
+
+- The `ExtractTextPlugin` used to extract CSS when building can now be configured using `webpack.plugins.extractText` config - this allows you to configure the `allChunks` setting if you want all CSS to be extracted when using code splitting.
+- The `HtmlWebpackPlugin` used to generate an `index.html` when building can now be configured using `webpack.plugins.html` config.
+
+**Changed:**
+
+- Static resources handled by Webpack's `file-loader` will now be referenced with a cachebusting query param hash.
 
 **Dependencies:**
 

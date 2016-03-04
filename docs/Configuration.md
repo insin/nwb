@@ -222,6 +222,42 @@ module.exports = {
 }
 ```
 
+###### `plugins.extractText`: `Object`
+
+Configures [options for `ExtractTextWebpackPlugin`](https://github.com/webpack/extract-text-webpack-plugin#readme).
+
+This can be used to control whether or not CSS is extracted from all chunks in an app which uses code splitting, or only the initial chunk:
+
+```js
+module.exports = {
+  webpack: {
+    plugins: {
+      extractText: {
+        allChunks: true
+      }
+    }
+  }
+}
+```
+
+###### `plugins.html`: `Object`
+
+Configures [options for  `HtmlWebpackPlugin`](https://github.com/ampedandwired/html-webpack-plugin#readme).
+
+e.g. if you have a `favicon.ico` in your `src/` directory, you can include it in the `index.html` generated when your app is built and have it copied to the output directory like so:
+
+```js
+module.exports = {
+  webpack: {
+    plugins: {
+      html: {
+        favicon: 'src/favicon.ico'
+      }
+    }
+  }
+}
+```
+
 ###### `plugins.install`: `Object`
 
 Configures [options for `NpmInstallPlugin`](https://github.com/ericclemmons/npm-install-webpack-plugin#usage), which will be used if you pass `--auto-install` flag to `nwb serve`.

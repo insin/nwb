@@ -70,13 +70,13 @@ Project type-specific commands:
   ${green('build-module')}
     create an ES5 build for an npm module (ES6 modules build requires config)
   ${green('build-react-app')}
-    build a react app from src/index.js to public/build/
+    build a react app from src/index.js to dist/
   ${green('build-umd')}
     create a UMD build for an npm module (requires config)
   ${green('build-web-app')}
-    build a web app from src/index.js to public/build/
+    build a web app from src/index.js to dist/
   ${green('clean-app')}
-    delete public/build/
+    delete dist/
   ${green('clean-demo')}
     delete demo/dist/
   ${green('clean-module')}

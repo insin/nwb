@@ -118,9 +118,9 @@ Builds the project.
 
 **In React/web apps:**
 
-A static build will be created in `public/build/`, with `app.js` and `app.css` files plus any other resources used.
+A static build will be created in `dist/`, with `app.js` and `app.css` files plus any other resources used.
 
-Separate `vendor.js` and `vendor.css` files will be built for any dependencies used from `node_modules`.
+Separate `vendor.js` and `vendor.css` files will be built for any dependencies used from `node_modules/`.
 
 By default, static builds are created in production mode. Code will be minified and have dead code elimination performed on it (for example to remove unreachable, or development-mode only, code).
 
@@ -183,13 +183,13 @@ Project type-specific versions of the generic `build`, `clean` and `serve` comma
 
 * `build-demo` - build a demo app from `demo/src/index.js` to `demo/dist/`
 * `build-module` - create an ES5 build for an npm module
-* `build-react-app` - build a react app from `src/index.js` to `public/build/`
+* `build-react-app` - build a react app from `src/index.js` to `dist/`
 * `build-umd` - create a UMD build for an npm module (this command itself requires configuration, so is useless without a config file)
-* `build-web-app` - build a web app from `src/index.js` to `public/build/`
-* `clean-app` - delete `public/build/`
+* `build-web-app` - build a web app from `src/index.js` to `dist/`
+* `clean-app` - delete `dist/`
 * `clean-demo` - delete `demo/dist/`
 * `clean-module` -  delete `coverage/`, `es6/` and `lib/
 * `clean-umd` - delete `umd/`
-* `serve-react-app` - serve React app from `src/index.js`
+* `serve-react-app` - serve a React app from `src/index.js`
 * `serve-react-demo` - serve a React demo app from `demo/src/index.js`
 * `serve-web-app` - serve a web app from `src/index.js`

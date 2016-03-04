@@ -40,7 +40,7 @@ describe('command: build', function() {
         process.chdir(path.join(tmpDir, 'test-app'))
         cli(['build'], err => {
           expect(err).toNotExist('No errors building a React app')
-          builtAppSource = fs.readFileSync('public/build/app.js', 'utf8')
+          builtAppSource = fs.readFileSync('dist/app.js', 'utf8')
           done()
         })
       })
@@ -48,9 +48,10 @@ describe('command: build', function() {
     after(tearDown)
 
     it('creates a build with sourcemaps', () => {
-      expect(glob.sync('*', {cwd: path.resolve('public/build')})).toEqual([
+      expect(glob.sync('*', {cwd: path.resolve('dist')})).toEqual([
         'app.js',
         'app.js.map',
+        'index.html',
         'vendor.js',
         'vendor.js.map'
       ])

@@ -4,9 +4,14 @@ export default function() {
   return {
     entry: path.resolve('src/index.js'),
     output: {
-      path: path.resolve('public/build'),
+      path: path.resolve('dist'),
       filename: 'app.js',
-      publicPath: '/build/'
+      publicPath: '/'
+    },
+    plugins: {
+      html: {
+        template: path.resolve('src/index.html')
+      }
     },
     staticPath: path.resolve('public')
   }

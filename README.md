@@ -174,13 +174,13 @@ Project type-specific commands:
   build-module
     create an ES5 build for an npm module (ES6 modules build requires config)
   build-react-app
-    build a react app from src/index.js to public/build/
+    build a react app from src/index.js to dist/
   build-umd
     create a UMD build for an npm module (requires config)
   build-web-app
-    build a web app from src/index.js to public/build/
+    build a web app from src/index.js to dist/
   clean-app
-    delete public/build/
+    delete dist/
   clean-demo
     delete demo/dist/
   clean-module
