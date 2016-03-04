@@ -54,7 +54,7 @@
 
     "karma": "0.13.21",
     "isparta-loader": "1.0.0",
-    "karma-coverage": "0.5.3",
+    "karma-coverage": "0.5.4",
     "karma-mocha": "0.2.2",
     "karma-mocha-reporter": "1.2.3",
     "karma-phantomjs-launcher": "1.0.0",
@@ -82,7 +82,7 @@
   "devDependencies": {
     "cross-spawn": "2.1.5",
     "eslint-config-jonnybuchanan": "2.0.3",
-    "eventsource": "0.2.0",
+    "eventsource": "0.2.1",
     "isparta": "3.5.3",
     "tree-kill": "1.0.0"
   },

@@ -26,6 +26,7 @@
 
 **Dependencies:**
 
+- karma-coverage: v0.5.3 → [v0.5.4](https://github.com/karma-runner/karma-coverage/releases/tag/v0.5.4) - bug fixes
 - webpack-hot-middleware: v2.7.1 → [v2.9.1](https://github.com/glenjamin/webpack-hot-middleware/compare/v2.7.1...v2.9.1) - improved error overlay styling
 - webpack-merge: v0.7.3 → [v0.8.3](https://github.com/survivejs/webpack-merge/blob/master/CHANGELOG.md#083--2016-03-02) - change merging behavior so only loaders get prepended
 
