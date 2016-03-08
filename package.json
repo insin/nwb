@@ -36,7 +36,7 @@
     "glob" : "7.0.5",
     "inquirer": "1.1.2",
     "minimist": "1.2.0",
-    "qs": "6.2.0",
+    "qs": "6.2.1",
     "resolve": "1.1.7",
     "rimraf": "2.5.3",
     "temp": "0.8.3",
@@ -46,7 +46,7 @@
     "babel-core": "6.11.4",
     "babel-polyfill": "6.9.1",
     "babel-runtime": "6.9.2",
-    "deduped-babel-presets": "0.0.19",
+    "deduped-babel-presets": "0.0.20",
 
     "express": "4.14.0",
     "connect-history-api-fallback": "1.2.0",
