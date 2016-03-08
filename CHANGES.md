@@ -68,7 +68,6 @@
 **Changed:**
 
 - [`babel-plugin-istanbul`](https://github.com/istanbuljs/babel-plugin-istanbul) is now used to instrument code for test coverage instead of `isparta-loader`.
-- [`babel.loose`](https://github.com/insin/nwb/blob/0.12/docs/Configuration.md#loose-boolean) is now a boolean flag to enable loose mode in all Babel 6 plugins which support it.
 - Updated the default Webpack `UglifyJsPlugin` options to strip comments from output and use the `screw_ie8` setting for every step.
 - Any `module.noParse` Webpack config added by nwb is now specified as an Array so any user-provided config for it in `webpack.extra` (which should also be specified as an Array) can be merged into it.
 - Required `<meta>` tags in HTML templates are now all first thing in `<head>`
@@ -81,10 +80,10 @@
 **Dependencies:**
 
 - autoprefixer: v6.3.6 → [v6.3.7](https://github.com/postcss/autoprefixer/blob/master/CHANGELOG.md#637)
-- babel v5.8.38 → babel-cli v6.11.4
+- babel v5.8.38 → [babel-cli](https://babeljs.io/docs/usage/cli/) v6.11.4
 - babel-core: v5.8.38 → v6.11.4
 - babel-loader: v5.4.0 → v6.2.4
-- babel-polyfill v6.9.1
+- [babel-polyfill](https://babeljs.io/docs/usage/polyfill/): v6.9.1
 - babel-runtime: v5.8.29 → v6.9.2
 - deduped-babel-presets v0.0.9
 - expect: v1.20.1 → [v1.20.2](https://github.com/mjackson/expect/compare/v1.20.1...v1.20.2)
