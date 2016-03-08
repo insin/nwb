@@ -254,6 +254,20 @@ function suppressManifestFiles() {
 }
 
 /**
+ * Inject a <script> tag containing the Webpack manifest prior to HtmlPlugin
+ * injecting tags for generated assets.
+ */
+function injectManifest() {
+  this.plugin('compilation', (compilation) => {
+    compilation.plugin('html-webpack-plugin-before-html-processing', (htmlPluginData, cb) => {
+      let {assets, html} = htmlPluginData
+      htmlPluginData.html = html.replace('</body>', `${assets.webpackManifest}</body>`)
+      cb()
+    })
+  })
+}
+
+/**
  * Final webpack plugin config consists of:
  * - the default set of plugins created by this function based on whether or not
  *   a server build is being configured, whether or not the build is for an
@@ -324,6 +338,8 @@ export function createPlugins(server, buildConfig = {}, userConfig = {}) {
         // Make the Webpack manifest's contents available for inlining in the
         // HTML template.
         new InlineManifestPlugin({name: 'webpackManifest'}),
+        // Automatically inject the manifest as part of HTML generation
+        injectManifest,
       )
     }
   }

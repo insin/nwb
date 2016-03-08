@@ -7,14 +7,9 @@
   - Babel 6 implicitly depends on npm3's automatic deduplication - to support use of npm2 (which is still the default version bundled with Node v4), presets are managed by [deduped-babel-presets](https://github.com/insin/deduped-babel-presets), whichs avoids the extra time and space which would otherwise be taken installing a huge number of duplicated dependencies.
   - Babel 6 introduced [a number of breaking changes](https://github.com/babel/babel/blob/master/CHANGELOG.md#600) which you may need to account for in your codebase if you've been using nwb or Babel 5 on its own.
     - In particular, interop with CommonJS exports was removed as it allowed you to write broken ES6 code. Kent C. Dodds has [a post about this which is worth reading](https://medium.com/@kentcdodds/misunderstanding-es6-modules-upgrading-babel-tears-and-a-solution-ad2d5ab93ce0). If you're writing React components or other npm modules which may be consumed in ES5 using `require()`, you may want to switch to using `module.exports` directly to avoid introducing a breaking change requiring users to tag a `.default` onto their `require()` calls.
-- Added support for long-term caching by including a deterministic hash in generated `.js` and `.css` filenames.
-  - To support this, you **must** add the following line to your app's HTML template:
-
-    ```
-    <%= htmlWebpackPlugin.files.webpackManifest %>
-    ```
-
-    The default template and app skeleton templates now place this prior to the `</body>` closing tag.
+- Added support for long-term caching by including a deterministic hash in generated `.js` and `.css` filenames [[#73](https://github.com/insin/nwb/issues/73)]
+  - The Webpack manifest (required for module loading) is now extracted and automatically injected prior to the `</body>` tag, so your HTML template *must* have a `</body>` tag.
+  - Production app builds will now generate files as `[name].[8 char hash].[ext]` instead of `[name].[ext]` - if you have any post-build processing which depend on the old filenames, it will need to be updated.
 
 **`nwb.config.js` Config Format Changes:**
 

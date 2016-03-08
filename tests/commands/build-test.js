@@ -32,6 +32,7 @@ describe('command: build', function() {
 
   describe('building a React app', () => {
     let builtAppSource
+    let builtHTML
 
     before(done => {
       setUp()
@@ -41,6 +42,7 @@ describe('command: build', function() {
         cli(['build'], err => {
           expect(err).toNotExist('No errors building a React app')
           builtAppSource = fs.readFileSync(glob.sync('dist/app*.js')[0], 'utf8')
+          builtHTML = fs.readFileSync('dist/index.html', 'utf8')
           done()
         })
       })
@@ -58,6 +60,9 @@ describe('command: build', function() {
     })
     it('generates displayName for React.createClass calls in the build', () => {
       expect(builtAppSource).toInclude('displayName:"App"')
+    })
+    it('injects the Webpack manifest into generated HTML', () => {
+      expect(builtHTML).toInclude('window.webpackJsonp')
     })
   })
 
