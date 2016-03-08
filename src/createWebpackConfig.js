@@ -7,6 +7,7 @@ import HtmlWebpackPlugin from 'html-webpack-plugin'
 import NpmInstallPlugin from 'npm-install-webpack-plugin'
 import qs from 'qs'
 import webpack, {optimize} from 'webpack'
+import failPlugin from 'webpack-fail-plugin'
 import merge from 'webpack-merge'
 
 import createBabelConfig from './createBabelConfig'
@@ -238,21 +239,6 @@ export function createExtraLoaders(extraLoaders = [], userConfig = {}) {
 }
 
 /**
- * A webpack plugin which forces the build to fail by exiting with a non-zero
- * code when there are compilation errors. This is intended for use on a CI
- * server which is running webpack builds.
- */
-export function failBuildOnCompilationError() {
-  this.plugin('done', ({compilation}) => {
-    if (compilation.errors && compilation.errors.length > 0) {
-      console.error(red('nwb: webpack build failed:'))
-      compilation.errors.forEach(error => console.error(red(error.message)))
-      process.exit(1)
-    }
-  })
-}
-
-/**
  * Final webpack plugin config consists of:
  * - the default set of plugins created by this function based on whether or not
  *   a server build is being configured, plus environment variables.
@@ -279,8 +265,9 @@ export function createPlugins(server, buildConfig = {}, userConfig = {}) {
     )
   }
 
+  // Fail the build if there are compilation errors when running on CI
   if (process.env.CONTINUOUS_INTEGRATION === 'true') {
-    plugins.unshift(failBuildOnCompilationError)
+    plugins.push(failPlugin)
   }
 
   if (!server) {

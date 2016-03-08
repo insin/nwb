@@ -91,6 +91,7 @@
 - karma-phantomjs-launcher: v1.0.0 → [v1.0.1](https://github.com/karma-runner/karma-phantomjs-launcher/blob/master/CHANGELOG.md#101-2016-06-23)
 - npm-install-webpack-plugin: v4.0.1 → [v4.0.4](https://github.com/ericclemmons/npm-install-webpack-plugin/blob/master/CHANGELOG.md#404-2016-06-30)
 - rimraf: v2.5.2 → [v2.5.3](https://github.com/isaacs/rimraf/compare/v2.5.2...v2.5.3)
+- webpack-fail-plugin: v1.0.5
 - webpack-hot-middleware: v2.10.0 → [v2.12.1](https://github.com/glenjamin/webpack-hot-middleware/compare/v2.10.0...v2.12.1)
 
 # 0.11.1 / 2016-07-16
