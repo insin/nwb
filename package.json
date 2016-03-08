@@ -71,6 +71,7 @@
     "extract-text-webpack-plugin": "1.0.1",
     "file-loader": "0.9.0",
     "html-webpack-plugin": "2.22.0",
+    "inline-manifest-webpack-plugin": "3.0.1",
     "json-loader": "0.5.4",
     "npm-install-webpack-plugin": "4.0.4",
     "postcss-loader": "0.9.1",
@@ -78,7 +79,8 @@
     "url-loader": "0.5.7",
     "webpack-dev-middleware": "1.6.1",
     "webpack-fail-plugin": "1.0.5",
-    "webpack-hot-middleware": "2.12.1"
+    "webpack-hot-middleware": "2.12.1",
+    "webpack-md5-hash": "0.0.5"
   },
   "devDependencies": {
     "cross-env": "2.0.0",

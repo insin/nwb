@@ -40,7 +40,7 @@ describe('command: build', function() {
         process.chdir(path.join(tmpDir, 'test-app'))
         cli(['build'], err => {
           expect(err).toNotExist('No errors building a React app')
-          builtAppSource = fs.readFileSync('dist/app.js', 'utf8')
+          builtAppSource = fs.readFileSync(glob.sync('dist/app*.js')[0], 'utf8')
           done()
         })
       })
@@ -48,12 +48,12 @@ describe('command: build', function() {
     after(tearDown)
 
     it('creates a build with sourcemaps', () => {
-      expect(glob.sync('*', {cwd: path.resolve('dist')})).toEqual([
-        'app.js',
-        'app.js.map',
+      expect(glob.sync('*', {cwd: path.resolve('dist')})).toMatch([
+        /^app\.\w{8}\.js/,
+        /^app\.\w{8}\.js\.map/,
         'index.html',
-        'vendor.js',
-        'vendor.js.map',
+        /^vendor\.\w{8}\.js/,
+        /^vendor\.\w{8}\.js\.map/,
       ])
     })
     it('generates displayName for React.createClass calls in the build', () => {
@@ -97,14 +97,14 @@ describe('command: build', function() {
         .toInclude('root["TestComponent"]')
     })
     it('builds the demo app with a sourcemap', () => {
-      expect(glob.sync('*', {cwd: path.resolve('demo/dist')})).toEqual([
-        'demo.js',
-        'demo.js.map',
+      expect(glob.sync('*', {cwd: path.resolve('demo/dist')})).toMatch([
+        /^demo\.\w{8}\.js/,
+        /^demo\.\w{8}\.js\.map/,
         'index.html',
       ])
     })
     it('generates displayName for React.createClass calls in the demo build', () => {
-      expect(fs.readFileSync('demo/dist/demo.js', 'utf8'))
+      expect(fs.readFileSync(glob.sync('demo/dist/demo*.js')[0], 'utf8'))
         .toInclude('displayName:"Demo"')
     })
   })

@@ -5,12 +5,15 @@ import {copyPublicDir} from '../utils'
 import webpackBuild from '../webpackBuild'
 import cleanApp from './clean-app'
 
-// Use a config function, as this won't be called until after NODE_ENV has been
-// set by webpackBuild() and we don't want these optimisations in development
-// builds.
-let buildConfig = (args) => {
+// Using a config function as webpackBuild() sets NODE_ENV to production if it
+// hasn't been set by the user and we don't want production optimisations in
+// development builds.
+function buildConfig(args) {
   let entry = args._[1] || 'src/index.js'
   let dist = args._[2] || 'dist'
+
+  let production = process.env.NODE_ENV === 'production'
+  let filenamePattern = production ? '[name].[chunkhash:8].js' : '[name].js'
 
   let config = {
     babel: {
@@ -21,12 +24,16 @@ let buildConfig = (args) => {
       app: path.resolve(entry),
     },
     output: {
-      filename: '[name].js',
+      filename: filenamePattern,
+      chunkFilename: filenamePattern,
       path: path.resolve(dist),
       publicPath: '/',
     },
     plugins: {
-      html: getDefaultHTMLConfig(),
+      html: {
+        ...getDefaultHTMLConfig(),
+        chunksSortMode: 'none',
+      },
       vendorChunkName: 'vendor',
     },
   }
@@ -40,7 +47,7 @@ let buildConfig = (args) => {
     }
   }
 
-  if (process.env.NODE_ENV === 'production') {
+  if (production) {
     config.babel.presets.push('react-prod')
   }
 

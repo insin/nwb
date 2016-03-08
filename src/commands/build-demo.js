@@ -9,6 +9,9 @@ import cleanDemo from './clean-demo'
 export default function buildDemo(args, cb) {
   let pkg = require(path.resolve('package.json'))
 
+  let production = process.env.NODE_ENV === 'production'
+  let filenamePattern = production ? '[name].[chunkhash:8].js' : '[name].js'
+
   cleanDemo(args)
 
   console.log('nwb: build-demo')
@@ -21,11 +24,13 @@ export default function buildDemo(args, cb) {
       demo: path.resolve('demo/src/index.js'),
     },
     output: {
-      filename: '[name].js',
+      filename: filenamePattern,
+      chunkFilename: filenamePattern,
       path: path.resolve('demo/dist'),
     },
     plugins: {
       html: {
+        chunksSortMode: 'none',
         mountId: 'demo',
         title: `${pkg.name} ${pkg.version} Demo`,
       },

@@ -3,11 +3,13 @@ import path from 'path'
 import autoprefixer from 'autoprefixer'
 import {red} from 'chalk'
 import ExtractTextPlugin from 'extract-text-webpack-plugin'
-import HtmlWebpackPlugin from 'html-webpack-plugin'
+import HtmlPlugin from 'html-webpack-plugin'
+import InlineManifestPlugin from 'inline-manifest-webpack-plugin'
 import NpmInstallPlugin from 'npm-install-webpack-plugin'
 import qs from 'qs'
 import webpack, {optimize} from 'webpack'
 import failPlugin from 'webpack-fail-plugin'
+import WebpackMd5Hash from 'webpack-md5-hash'
 import merge from 'webpack-merge'
 
 import createBabelConfig from './createBabelConfig'
@@ -239,79 +241,126 @@ export function createExtraLoaders(extraLoaders = [], userConfig = {}) {
 }
 
 /**
+ * Prevent files from the Webpack manifest chunk being emitted, as the manifest
+ * will be inlined into the generated HTML file instead.
+ */
+function suppressManifestFiles() {
+  this.plugin('emit', function(compilation, callback) {
+    Object.keys(compilation.assets)
+      .filter(filename => /^manifest/.test(filename))
+      .forEach(filename => delete compilation.assets[filename])
+    callback()
+  })
+}
+
+/**
  * Final webpack plugin config consists of:
  * - the default set of plugins created by this function based on whether or not
- *   a server build is being configured, plus environment variables.
+ *   a server build is being configured, whether or not the build is for an
+ *   app (for which HTML will be generated), plus environment variables.
  * - extra plugins managed by this function, whose inclusion is triggered by
  *   build config, which provides default configuration for them which can be
  *   tweaked by user plugin config when appropriate.
- * - any extra plugins defined in build and user config.
+ * - any extra plugins defined in build and user config (extra user plugins are
+ *   handled by the final merge of webpack.extra config).
  */
 export function createPlugins(server, buildConfig = {}, userConfig = {}) {
-  let plugins = [
-    new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development'),
-      ...buildConfig.define,
-      ...userConfig.define,
-    }),
-    new optimize.OccurenceOrderPlugin()
-  ]
+  let production = process.env.NODE_ENV === 'production'
 
-  // Assumption: we're always hot reloading if we're bundling on the server
-  if (server) {
-    plugins.unshift(
-      new webpack.HotModuleReplacementPlugin(),
-      new webpack.NoErrorsPlugin()
-    )
-  }
+  let plugins = []
 
   // Fail the build if there are compilation errors when running on CI
   if (process.env.CONTINUOUS_INTEGRATION === 'true') {
     plugins.push(failPlugin)
   }
 
+  // Assumption: we're always hot reloading if we're bundling on the server
+  if (server) {
+    plugins.push(
+      new webpack.HotModuleReplacementPlugin(),
+      new webpack.NoErrorsPlugin(),
+    )
+  }
+
+  plugins.push(
+    new webpack.DefinePlugin({
+      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development'),
+      ...buildConfig.define,
+      ...userConfig.define,
+    }),
+    new optimize.OccurenceOrderPlugin(),
+  )
+
   if (!server) {
-    plugins.push(new ExtractTextPlugin('[name].css', {
+    // Extract CSS into files
+    let cssFilename = production ? `[name].[contenthash:8].css` : '[name].css'
+    plugins.push(new ExtractTextPlugin(cssFilename, {
       ...userConfig.extractText,
     }))
 
-    // Move modules imported from node_modules into a vendor chunk
+    // Move modules imported from node_modules/ into a vendor chunk when enabled
     if (userConfig.vendorBundle !== false && buildConfig.vendorChunkName) {
       plugins.push(new optimize.CommonsChunkPlugin({
         name: buildConfig.vendorChunkName,
         minChunks(module, count) {
           return (
             module.resource &&
-            module.resource.indexOf(path.resolve('node_modules')) === 0
+            module.resource.indexOf('node_modules') !== -1
           )
         }
       }))
     }
+
+    if (buildConfig.html) {
+      plugins.push(
+        // The MD5 Hash plugin seems to make [chunkhash] for .js files behave
+        // like [contenthash] does for extracted .css files, which is essential
+        // for deterministic hashing.
+        new WebpackMd5Hash(),
+        // The Webpack manifest is normally folded into the last chunk, changing
+        // its hash - prevent this by extracting the manifest into its own
+        // chunk - also essential for deterministic hashing.
+        new optimize.CommonsChunkPlugin({name: 'manifest'}),
+        // Make the Webpack manifest's contents available for inlining in the
+        // HTML template.
+        new InlineManifestPlugin({name: 'webpackManifest'}),
+      )
+    }
   }
 
-  if (process.env.NODE_ENV === 'production') {
-    plugins.push(new optimize.DedupePlugin())
-    plugins.push(new optimize.UglifyJsPlugin(merge({
-      compress: {
-        screw_ie8: true,
-        warnings: false,
-      },
-      mangle: {
-        screw_ie8: true,
-      },
-      output: {
-        comments: false,
-        screw_ie8: true,
-      },
-    }, userConfig.uglify)))
+  if (production) {
+    plugins.push(
+      new optimize.DedupePlugin(),
+      new optimize.UglifyJsPlugin(merge({
+        compress: {
+          screw_ie8: true,
+          warnings: false,
+        },
+        mangle: {
+          screw_ie8: true,
+        },
+        output: {
+          comments: false,
+          screw_ie8: true,
+        },
+      }, userConfig.uglify)),
+    )
   }
 
   if (buildConfig.html) {
-    plugins.push(new HtmlWebpackPlugin({
-      template: path.join(__dirname, '../templates/webpack-template.html'),
-      ...buildConfig.html,
-      ...userConfig.html,
-    }))
+    plugins.push(
+      // Generate the app's HTML file
+      new HtmlPlugin({
+        template: path.join(__dirname, '../templates/webpack-template.html'),
+        ...buildConfig.html,
+        ...userConfig.html,
+      }),
+    )
+    if (!server) {
+      // Prevent manifest chunk files being emitted after the manifest has been
+      // inlined into the HTML - plugin order matters here!
+      plugins.push(suppressManifestFiles)
+    }
   }
 
   if (buildConfig.install) {

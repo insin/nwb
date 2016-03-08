@@ -90,8 +90,8 @@ export function processUserConfig({args, required = DEFAULT_REQUIRED, userConfig
     invalidConfig('type', userConfig.type, `must be one of: ${PROJECT_TYPES.join(', ')}`)
   }
 
-  // Set defaults for config objects, as build config can contribute to webpack
-  // config regardless of whether the user provided any.
+  // Set defaults for config objects so we don't have to existence-check them
+  // everywhere.
   applyDefaultConfig(userConfig, 'babel', DEFAULT_BABEL_CONFIG)
   applyDefaultConfig(userConfig, 'build', DEFAULT_BUILD_CONFIG)
   applyDefaultConfig(userConfig, 'webpack', DEFAULT_WEBPACK_CONFIG)
@@ -163,6 +163,9 @@ export default function getUserConfig(args = {}, {required = DEFAULT_REQUIRED} =
     try {
       userConfig = require(userConfigPath)
       debug('imported config module from %s', userConfigPath)
+      // Delete the file from the require cache as some builds need to import
+      // it multiple times with a different NODE_ENV in place.
+      delete require.cache[userConfigPath]
     }
     catch (e) {
       throw new UserError(`nwb: couldn't import the config file at ${userConfigPath}: ${e}`)

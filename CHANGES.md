@@ -7,6 +7,14 @@
   - Babel 6 implicitly depends on npm3's automatic deduplication - to support use of npm2 (which is still the default version bundled with Node v4), presets are managed by [deduped-babel-presets](https://github.com/insin/deduped-babel-presets), whichs avoids the extra time and space which would otherwise be taken installing a huge number of duplicated dependencies.
   - Babel 6 introduced [a number of breaking changes](https://github.com/babel/babel/blob/master/CHANGELOG.md#600) which you may need to account for in your codebase if you've been using nwb or Babel 5 on its own.
     - In particular, interop with CommonJS exports was removed as it allowed you to write broken ES6 code. Kent C. Dodds has [a post about this which is worth reading](https://medium.com/@kentcdodds/misunderstanding-es6-modules-upgrading-babel-tears-and-a-solution-ad2d5ab93ce0). If you're writing React components or other npm modules which may be consumed in ES5 using `require()`, you may want to switch to using `module.exports` directly to avoid introducing a breaking change requiring users to tag a `.default` onto their `require()` calls.
+- Added support for long-term caching by including a deterministic hash in generated `.js` and `.css` filenames.
+  - To support this, you **must** add the following line to your app's HTML template:
+
+    ```
+    <%= htmlWebpackPlugin.files.webpackManifest %>
+    ```
+
+    The default template and app skeleton templates now place this prior to the `</body>` closing tag.
 
 **`nwb.config.js` Config Format Changes:**
 
@@ -84,6 +92,7 @@
 - file-loader: v0.8.5 → [v0.9.0](https://github.com/webpack/file-loader/compare/v0.8.5...v0.9.0)
 - glob: v7.0.3 → [v7.0.5](https://github.com/isaacs/node-glob/compare/v7.0.3...v7.0.5)
 - html-webpack-plugin: v2.19.0 → [v2.22.0](https://github.com/ampedandwired/html-webpack-plugin/blob/master/CHANGELOG.md#v2220)
+- [inline-manifest-webpack-plugin](https://github.com/szrenwei/inline-manifest-webpack-plugin): v3.0.1
 - inquirer: v1.0.3 → [v1.1.2](https://github.com/SBoudrias/Inquirer.js/compare/v1.0.3...v1.1.2)
 - karma: v0.13.22 → [v1.1.1](https://github.com/karma-runner/karma/blob/master/CHANGELOG.md#111-2016-07-07)
 - karma-coverage: v1.0.0 → [v1.1.0](https://github.com/karma-runner/karma-coverage/blob/master/CHANGELOG.md#110-2016-07-07)
@@ -92,8 +101,9 @@
 - npm-install-webpack-plugin: v4.0.1 → [v4.0.4](https://github.com/ericclemmons/npm-install-webpack-plugin/blob/master/CHANGELOG.md#404-2016-06-30)
 - qs: v6.2.0 → [v6.2.1](https://github.com/ljharb/qs/blob/master/CHANGELOG.md#621)
 - rimraf: v2.5.2 → [v2.5.3](https://github.com/isaacs/rimraf/compare/v2.5.2...v2.5.3)
-- webpack-fail-plugin: v1.0.5
+- [webpack-fail-plugin](https://github.com/TiddoLangerak/webpack-fail-plugin): v1.0.5
 - webpack-hot-middleware: v2.10.0 → [v2.12.1](https://github.com/glenjamin/webpack-hot-middleware/compare/v2.10.0...v2.12.1)
+- [webpack-md5-hash](https://github.com/erm0l0v/webpack-md5-hash): v0.0.5
 
 # 0.11.1 / 2016-07-16
 
