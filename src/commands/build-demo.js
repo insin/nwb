@@ -16,7 +16,7 @@ export default function buildDemo(args, cb) {
     babel: {
       presets: ['react'],
     },
-    devtool: 'sourcemap',
+    devtool: 'source-map',
     entry: {
       demo: path.resolve('demo/src/index.js'),
     },
