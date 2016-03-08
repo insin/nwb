@@ -14,7 +14,7 @@ import {endsWith, typeOf} from './utils'
 
 // Default query configuration for file-loader and url-loader
 const FILE_LOADER_DEFAULTS = {
-  name: '[name].[ext]?[hash]'
+  name: '[name].[hash:8].[ext]'
 }
 
 // Top-level property names reserved for webpack config
