@@ -22,7 +22,7 @@
 
 **Changed:**
 
-- Static resources handled by Webpack's `file-loader` will now be referenced with a cachebusting query param hash.
+- Static resources handled by Webpack's `file-loader` now include a hash in their filenames for cachebusting when they change.
 
 **Dependencies:**
 
