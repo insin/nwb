@@ -10,7 +10,7 @@ import webpack from 'webpack'
  *
  * If static path config is provided, express will serve static content from it.
  */
-export default function server(webpackConfig, {fallback, noInfo, port, staticPath}, cb) {
+export default function server(webpackConfig, {fallback, host, noInfo, port, staticPath}, cb) {
   let app = express()
   let compiler = webpack(webpackConfig)
 
@@ -32,8 +32,8 @@ export default function server(webpackConfig, {fallback, noInfo, port, staticPat
     app.use(express.static(staticPath))
   }
 
-  app.listen(port, 'localhost', err => {
+  app.listen(port, host, err => {
     if (err) return cb(err)
-    console.log(chalk.green(`nwb: dev server listening at http://localhost:${port}`))
+    console.log(chalk.green(`nwb: dev server listening at http://${host}:${port}`))
   })
 }

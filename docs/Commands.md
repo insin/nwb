@@ -86,6 +86,7 @@ Starts a development server which serves an app with hot module reloading.
 
 * `--auto-install` - automatically install missing npm dependencies, for convenience during initial development/prototyping. By default, installed dependencies will also be saved to your app's package.json.
 * `--fallback` - fall back to serving the index page from any path, for developing React apps which use the HTML5 History API
+* `--host=localhost` - change the hostname the dev server binds to
 * `--info` - print info about Webpack modules after rebuilds
 * `--port=3000` - change the port the dev server runs on
 * `--reload` - auto-reload the page when webpack gets stuck

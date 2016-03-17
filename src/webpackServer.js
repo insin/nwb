@@ -17,6 +17,7 @@ export default function(args, buildConfig, cb) {
 
   devServer(webpackConfig, {
     fallback: !!args.fallback,
+    host: args.host || 'localhost',
     noInfo: !args.info,
     port: args.port || 3000,
     staticPath: server.staticPath

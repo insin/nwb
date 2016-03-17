@@ -159,6 +159,7 @@ Development commands:
     serve an app, or a component's demo app, with hot reloading
     --auto-install  auto install missing npm dependencies
     --fallback      serve the index page from any path
+    --host          hostname to bind the dev server to (default: localhost)
     --info          show webpack module info
     --port          port to run the dev server on (default: 3000)
     --reload        auto reload the page if hot reloading fails

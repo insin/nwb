@@ -55,6 +55,7 @@ Generic development commands:
     serve an app, or a component's demo app, with hot reloading
     ${cyan('--auto-install')}  auto install missing npm dependencies
     ${cyan('--fallback')}      serve the index page from any path
+    ${cyan('--host')}          hostname to bind the dev server to ${cyan('(default: localhost)')}
     ${cyan('--info')}          show webpack module info
     ${cyan('--port')}          port to run the dev server on ${cyan('(default: 3000)')}
     ${cyan('--reload')}        auto reload the page if hot reloading fails

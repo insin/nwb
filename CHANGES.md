@@ -17,6 +17,7 @@
 
 **Added:**
 
+- Added a `--host` option when running the dev server
 - The `ExtractTextPlugin` used to extract CSS when building can now be configured using `webpack.plugins.extractText` config - this allows you to configure the `allChunks` setting if you want all CSS to be extracted when using code splitting.
 - The `HtmlWebpackPlugin` used to generate an `index.html` when building can now be configured using `webpack.plugins.html` config.
 
