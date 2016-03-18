@@ -1,3 +1,33 @@
+## Reporting Bugs
+
+Is the version of `nwb` you're using installed globally or locally?
+
+Which versions of Node.js, npm and nwb are you using?
+
+```
+node -v
+npm -v
+# Only if nwb is installed and being used globally
+nwb -v
+```
+
+Which modules are installed in your project?
+
+```
+npm ls --depth=0
+```
+
+Do you have any other potential sources of Babel config in your project, or in a parent directory, such as a `.babelrc`?
+
+Also, please try setting the `DEBUG` environment variable to `nwb` before running to check what your generated config looks like:
+
+```
+# *nix
+export DEBUG=nwb
+# Windows
+set DEBUG=nwb
+```
+
 ## Developing
 
 - `npm test` will lint, build and run all tests.
