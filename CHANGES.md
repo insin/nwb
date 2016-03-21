@@ -1,8 +1,8 @@
 **Breaking Changes:**
 
-- Changes to how React and web apps are built:
+- Changes to how React and plain JS web apps are built:
   - Builds are now generated in `dist/` instead of `public/build/`
-  - `index.html` for builds is now generated based on a template in `src/index.html`, instead of using a static `public/index.html`
+  - `index.html` for builds is now generated based on a template in `src/index.html`, instead of using a static `public/index.html` [[#34](https://github.com/insin/nwb/issues/34)]
 
     **Upgrading existing projects:**
 
@@ -13,18 +13,18 @@
 
 **Removed:**
 
-- Backwards compatibility for `nwb.config.js` format changes made in 0.8.
+- Backwards compatibility for `nwb.config.js` format changes made in 0.8 have been removed.
 
 **Added:**
 
-- Added a `--host` option when running the dev server
-- The `ExtractTextPlugin` used to extract CSS when building can now be configured using `webpack.plugins.extractText` config - this allows you to configure the `allChunks` setting if you want all CSS to be extracted when using code splitting.
-- The `HtmlWebpackPlugin` used to generate an `index.html` when building can now be configured using `webpack.plugins.html` config.
+- Added a `--host` option when running the dev server [[#50](https://github.com/insin/nwb/issues/50)]
+- `ExtractTextPlugin` (used to extract CSS when building) can now be configured using `webpack.plugins.extractText` config - this allows you to configure the `allChunks` setting if you want all CSS to be extracted when using code splitting.
+- `HtmlWebpackPlugin` (used to generate an `index.html` when building) can now be configured using `webpack.plugins.html` config.
 
 **Changed:**
 
-- `breakConfig: true` has been added to default `babel-loader` config to avoid `.babelrc` files found by Babel's config resolution from breaking builds. All Babel configuration is expected to be in `nwb.config.js`.
-- Static resources handled by Webpack's `file-loader` now include a hash in their filenames for cachebusting when they change.
+- `breakConfig: true` has been added to default `babel-loader` config to avoid `.babelrc` files being resolved by Babel - all Babel configuration is expected to be in `nwb.config.js` [[#63](https://github.com/insin/nwb/issues/63)]
+- Static resources handled by Webpack's `file-loader` now include a hash in their filenames for cachebusting when they change [[#38](https://github.com/insin/nwb/issues/38)]
 
 **Dependencies:**
 
