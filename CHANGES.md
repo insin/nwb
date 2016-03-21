@@ -23,6 +23,7 @@
 
 **Changed:**
 
+- `breakConfig: true` has been added to default `babel-loader` config to avoid `.babelrc` files found by Babel's config resolution from breaking builds. All Babel configuration is expected to be in `nwb.config.js`.
 - Static resources handled by Webpack's `file-loader` now include a hash in their filenames for cachebusting when they change.
 
 **Dependencies:**

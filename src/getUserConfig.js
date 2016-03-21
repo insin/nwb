@@ -52,7 +52,7 @@ export default function getUserConfig(args = {}, {required = false} = {}) {
       debug('imported config module from %s', userConfigPath)
     }
     catch (e) {
-      throw new UserError(`nwb: couldn't import the config file at ${userConfigPath}`)
+      throw new UserError(`nwb: couldn't import the config file at ${userConfigPath}: ${e}`)
     }
   }
 

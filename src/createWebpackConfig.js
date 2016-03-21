@@ -121,7 +121,10 @@ export function createLoaders(server, buildConfig = {}, userConfig = {}, pluginC
     loader('babel', {
       test: /\.jsx?$/,
       loader: require.resolve('babel-loader'),
-      exclude: /node_modules/
+      exclude: /node_modules/,
+      query: {
+        breakConfig: true
+      }
     }),
     loader('css-pipeline', {
       test: /\.css$/,
