@@ -28,6 +28,8 @@
 
 **Dependencies:**
 
+- babel: v5.8.34 → v5.8.38 - left-pad transitive dependency drama
+- babel-core: v5.8.34 → v5.8.38 - left-pad transitive dependency drama
 - connect-history-api-fallback: v1.1.0 → v1.2.0 - support custom `Accept` headers
 - copy-template-dir: v1.2.0 → v1.2.1 - support large template folders
 - expect: v1.14.0 → [v1.16.0](https://github.com/mjackson/expect/compare/v1.14.0...v1.16.0) - mostly packaging changes?

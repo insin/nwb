@@ -40,8 +40,8 @@
     "temp": "0.8.3",
     "webpack-merge": "0.8.4",
 
-    "babel": "5.8.34",
-    "babel-core": "5.8.34",
+    "babel": "5.8.38",
+    "babel-core": "5.8.38",
     "babel-plugin-react-display-name": "2.0.0",
     "babel-plugin-react-transform": "1.1.1",
     "babel-runtime": "5.8.29",
