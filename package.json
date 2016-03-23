@@ -27,10 +27,10 @@
   "dependencies": {
     "argv-set-env": "1.0.1",
     "chalk": "1.1.1",
-    "copy-template-dir": "1.2.0",
+    "copy-template-dir": "1.2.1",
     "debug": "2.2.0",
     "eventsource-polyfill": "0.9.6",
-    "fs-extra": "0.26.5",
+    "fs-extra": "0.26.7",
     "glob" : "7.0.3",
     "inquirer": "0.12.0",
     "minimist": "1.2.0",
@@ -38,7 +38,7 @@
     "resolve": "1.1.7",
     "rimraf": "2.5.2",
     "temp": "0.8.3",
-    "webpack-merge": "0.8.3",
+    "webpack-merge": "0.8.4",
 
     "babel": "5.8.34",
     "babel-core": "5.8.34",
@@ -50,9 +50,9 @@
     "redbox-noreact": "1.0.0",
 
     "express": "4.13.4",
-    "connect-history-api-fallback": "1.1.0",
+    "connect-history-api-fallback": "1.2.0",
 
-    "karma": "0.13.21",
+    "karma": "0.13.22",
     "isparta-loader": "1.0.0",
     "karma-coverage": "0.5.5",
     "karma-mocha": "0.2.2",
@@ -60,10 +60,10 @@
     "karma-phantomjs-launcher": "1.0.0",
     "karma-sourcemap-loader": "0.3.7",
     "karma-webpack": "1.7.0",
-    "phantomjs-prebuilt": "2.1.5",
+    "phantomjs-prebuilt": "2.1.6",
 
     "mocha": "2.4.5",
-    "expect": "1.14.0",
+    "expect": "1.16.0",
 
     "webpack": "1.12.14",
     "autoprefixer-loader": "3.2.0",
@@ -71,13 +71,13 @@
     "css-loader": "0.23.1",
     "extract-text-webpack-plugin": "1.0.1",
     "file-loader": "0.8.5",
-    "html-webpack-plugin": "2.9.0",
+    "html-webpack-plugin": "2.14.0",
     "json-loader": "0.5.4",
     "npm-install-webpack-plugin": "3.0.0",
     "style-loader": "0.13.0",
     "url-loader": "0.5.7",
     "webpack-dev-middleware": "1.5.1",
-    "webpack-hot-middleware": "2.9.1"
+    "webpack-hot-middleware": "2.10.0"
   },
   "devDependencies": {
     "cross-spawn": "2.1.5",
