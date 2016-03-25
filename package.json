@@ -74,9 +74,9 @@
     "html-webpack-plugin": "2.14.0",
     "json-loader": "0.5.4",
     "npm-install-webpack-plugin": "3.0.0",
-    "style-loader": "0.13.0",
+    "style-loader": "0.13.1",
     "url-loader": "0.5.7",
-    "webpack-dev-middleware": "1.5.1",
+    "webpack-dev-middleware": "1.6.0",
     "webpack-hot-middleware": "2.10.0"
   },
   "devDependencies": {
