@@ -1,3 +1,7 @@
+**Fixed:**
+
+* `style-loader` was not being specified to apply styles from additional chunks when extracting CSS.
+
 # 0.9.0 / 2016-03-26
 
 **Breaking Changes:**

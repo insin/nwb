@@ -100,7 +100,10 @@ export function createStyleLoader(loader, server, {
     return combineLoaders(loaders)
   }
   else {
-    return ExtractTextPlugin.extract(combineLoaders(loaders))
+    return ExtractTextPlugin.extract(
+      require.resolve('style-loader'),
+      combineLoaders(loaders)
+    )
   }
 }
 
