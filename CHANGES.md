@@ -1,3 +1,7 @@
+**Dependencies:**
+
+- webpack-dev-middleware: v1.6.0 → [v1.6.1](https://github.com/webpack/webpack-dev-middleware/compare/v1.6.0...v1.6.1) - fixes request path issue introduced in 1.6.0
+
 # 0.9.1 / 2016-03-26
 
 **Fixed:**
