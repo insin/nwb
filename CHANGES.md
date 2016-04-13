@@ -1,3 +1,7 @@
+**Breaking Changes:**
+
+- React v15 is now installed by app/component templates.
+
 # 0.9.2 / 2016-03-27
 
 **Dependencies:**

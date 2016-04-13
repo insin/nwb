@@ -6,7 +6,7 @@ import copyTemplateDir from 'copy-template-dir'
 import inquirer from 'inquirer'
 
 import {
-  REACT_APP, REACT_COMPONENT, REACT_VERSION as reactVersion, WEB_APP, WEB_MODULE, PROJECT_TYPES
+  REACT_APP, REACT_COMPONENT, REACT_VERSION, WEB_APP, WEB_MODULE, PROJECT_TYPES
 } from './constants'
 import debug from './debug'
 import {UserError} from './errors'
@@ -60,7 +60,7 @@ export function getWebModulePrefs(args, done) {
 }
 
 function installReact(targetDir) {
-  let command = `npm install react@${reactVersion} react-dom@${reactVersion}`
+  let command = `npm install react@${REACT_VERSION} react-dom@${REACT_VERSION}`
   debug(`${targetDir} $ ${command}`)
   execSync(command, {
     cwd: targetDir,
@@ -92,7 +92,7 @@ export function validateProjectType(projectType) {
 const PROJECT_CREATORS = {
   [REACT_APP](args, name, targetDir, cb) {
     let templateDir = path.join(__dirname, `../templates/${REACT_APP}`)
-    let templateVars = {name, nwbVersion, reactVersion}
+    let templateVars = {name, nwbVersion, REACT_VERSION}
     copyTemplateDir(templateDir, targetDir, templateVars, (err, createdFiles) => {
       if (err) return cb(err)
       logCreatedFiles(targetDir, createdFiles)
@@ -106,7 +106,7 @@ const PROJECT_CREATORS = {
     getWebModulePrefs(args, ({umd, globalVariable, jsNext}) => {
       let templateDir = path.join(__dirname, `../templates/${REACT_COMPONENT}`)
       let templateVars = npmModuleVars(
-        {umd, globalVariable, jsNext, name, nwbVersion, reactVersion}
+        {umd, globalVariable, jsNext, name, nwbVersion, REACT_VERSION}
       )
       copyTemplateDir(templateDir, targetDir, templateVars, (err, createdFiles) => {
         if (err) return cb(err)
