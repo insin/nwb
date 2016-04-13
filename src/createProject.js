@@ -56,7 +56,7 @@ export function getWebModulePrefs(args, done) {
       message: 'Do you want to create an ES6 modules build for npm?',
       default: jsNext
     }
-  ], done)
+  ]).then(answers => done(null, answers), error => done(error))
 }
 
 function installReact(targetDir) {
