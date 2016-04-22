@@ -103,7 +103,8 @@ const PROJECT_CREATORS = {
   },
 
   [REACT_COMPONENT](args, name, targetDir, cb) {
-    getWebModulePrefs(args, ({umd, globalVariable, jsNext}) => {
+    getWebModulePrefs(args, (err, {umd, globalVariable, jsNext}) => {
+      if (err) return cb(err)
       let templateDir = path.join(__dirname, `../templates/${REACT_COMPONENT}`)
       let templateVars = npmModuleVars(
         {umd, globalVariable, jsNext, name, nwbVersion, REACT_VERSION}
@@ -129,7 +130,8 @@ const PROJECT_CREATORS = {
   },
 
   [WEB_MODULE](args, name, targetDir, cb) {
-    getWebModulePrefs(args, ({umd, globalVariable, jsNext}) => {
+    getWebModulePrefs(args, (err, {umd, globalVariable, jsNext}) => {
+      if (err) return cb(err)
       let templateDir = path.join(__dirname, `../templates/${WEB_MODULE}`)
       let templateVars = npmModuleVars(
         {umd, globalVariable, jsNext, name, nwbVersion}
