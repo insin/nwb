@@ -9,12 +9,15 @@
 **Dependencies:**
 
 - chalk: v1.1.1 → [v1.1.3](https://github.com/chalk/chalk/compare/v1.1.1...v1.1.3) - update deps
-- cross-spawn: v2.1.5 → [v2.2.2](https://github.com/IndigoUnited/node-cross-spawn/compare/2.1.5...2.2.2) - update deps
-- html-webpack-plugin: v2.14.0 → [v2.15.0](https://github.com/ampedandwired/html-webpack-plugin/blob/master/CHANGELOG.md#v2150)
-- inquirer: v0.12.0 → [v1.0.0](https://github.com/SBoudrias/Inquirer.js/compare/v0.12.0...v1.0.0) - switch to Promise-based API
+- cross-spawn: v2.1.5 → [v2.2.3](https://github.com/IndigoUnited/node-cross-spawn/compare/2.1.5...2.2.3) - update deps
+- expect: v1.16.0 → [v1.18.0](https://github.com/mjackson/expect/blob/master/CHANGES.md#v1180)
+- fs-extra: v0.26.7 → [v0.28.0](https://github.com/jprichardson/node-fs-extra/blob/master/CHANGELOG.md#0280--2016-04-17)
+- html-webpack-plugin: v2.14.0 → [v2.16.0](https://github.com/ampedandwired/html-webpack-plugin/blob/master/CHANGELOG.md#v2160)
+- inquirer: v0.12.0 → [v1.0.2](https://github.com/SBoudrias/Inquirer.js/compare/v0.12.0...v1.0.2) - switch to Promise-based API
+- karma-mocha-reporter: v2.0.0 → [v2.0.1](https://github.com/litixsoft/karma-mocha-reporter/compare/v2.0.0...v2.0.1)
 - phantomjs-prebuilt: v2.1.6 → [v2.1.7](https://github.com/Medium/phantomjs/releases/tag/v2.1.7)
-- webpack: v1.12.14 → [v1.12.15](https://github.com/webpack/webpack/compare/v1.12.14...v1.12.15)
-- webpack-merge: v0.8.4 → [v0.10.0](https://github.com/survivejs/webpack-merge/blob/master/CHANGELOG.md#0100--2016-04-10)
+- webpack: v1.12.14 → [v1.13.0](https://github.com/webpack/webpack/compare/v1.12.14...v1.13.0)
+- webpack-merge: v0.8.4 → [v0.12.0](https://github.com/survivejs/webpack-merge/blob/master/CHANGELOG.md#0120--2016-04-19)
 
 # 0.9.2 / 2016-03-27
 
