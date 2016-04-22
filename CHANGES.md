@@ -2,6 +2,10 @@
 
 - React v15 is now installed by app/component templates.
 
+**Changed:**
+
+- The dev server now logs an initial `webpack building...` message so you know you're waiting for the initial build.
+
 **Dependencies:**
 
 - chalk: v1.1.1 → [v1.1.3](https://github.com/chalk/chalk/compare/v1.1.1...v1.1.3) - update deps
