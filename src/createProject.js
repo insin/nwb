@@ -59,8 +59,8 @@ export function getWebModulePrefs(args, done) {
   ]).then(answers => done(null, answers), error => done(error))
 }
 
-function installReact(targetDir) {
-  let command = `npm install react@${REACT_VERSION} react-dom@${REACT_VERSION}`
+function installReact({targetDir, reactVersion, dev = false}) {
+  let command = `npm install --save${dev ? '-dev' : ''} react@${reactVersion} react-dom@${reactVersion}`
   debug(`${targetDir} $ ${command}`)
   execSync(command, {
     cwd: targetDir,
@@ -92,12 +92,18 @@ export function validateProjectType(projectType) {
 const PROJECT_CREATORS = {
   [REACT_APP](args, name, targetDir, cb) {
     let templateDir = path.join(__dirname, `../templates/${REACT_APP}`)
-    let templateVars = {name, nwbVersion, REACT_VERSION}
+    let reactVersion = args.react || REACT_VERSION
+    let templateVars = {name, nwbVersion, reactVersion}
     copyTemplateDir(templateDir, targetDir, templateVars, (err, createdFiles) => {
       if (err) return cb(err)
       logCreatedFiles(targetDir, createdFiles)
       console.log('nwb: installing dependencies')
-      installReact(targetDir)
+      try {
+        installReact({targetDir, reactVersion})
+      }
+      catch (e) {
+        return cb(e)
+      }
       cb()
     })
   },
@@ -106,14 +112,20 @@ const PROJECT_CREATORS = {
     getWebModulePrefs(args, (err, {umd, globalVariable, jsNext}) => {
       if (err) return cb(err)
       let templateDir = path.join(__dirname, `../templates/${REACT_COMPONENT}`)
+      let reactVersion = args.react || REACT_VERSION
       let templateVars = npmModuleVars(
-        {umd, globalVariable, jsNext, name, nwbVersion, REACT_VERSION}
+        {umd, globalVariable, jsNext, name, nwbVersion, reactVersion}
       )
       copyTemplateDir(templateDir, targetDir, templateVars, (err, createdFiles) => {
         if (err) return cb(err)
         logCreatedFiles(targetDir, createdFiles)
         console.log('nwb: installing dependencies')
-        installReact(targetDir)
+        try {
+          installReact({targetDir, reactVersion, dev: true})
+        }
+        catch (e) {
+          return cb(e)
+        }
         cb()
       })
     })

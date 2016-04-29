@@ -22,9 +22,7 @@
     "react": "{{reactVersion}}"
   },
   "devDependencies": {
-    "nwb": "{{nwbVersion}}",
-    "react": "{{reactVersion}}",
-    "react-dom": "{{reactVersion}}"
+    "nwb": "{{nwbVersion}}"
   },
   "author": "",
   "homepage": "",

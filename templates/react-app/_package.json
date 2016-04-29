@@ -11,8 +11,6 @@
     "test:watch": "nwb test --server"
   },
   "dependencies": {
-    "react": "{{reactVersion}}",
-    "react-dom": "{{reactVersion}}"
   },
   "devDependencies": {
     "nwb": "{{nwbVersion}}"

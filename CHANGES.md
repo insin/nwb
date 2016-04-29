@@ -6,6 +6,10 @@
 
 - The dev server now logs an initial `webpack building...` message so you know you're waiting for the initial build.
 
+**Added:**
+
+- Added a `--react` option to allow you to set the version of React which will be installed when creating apps or components. This defaults to whatever the stable version of React was when the version of `nwb` you're using was released.
+
 **Dependencies:**
 
 - chalk: v1.1.1 → [v1.1.3](https://github.com/chalk/chalk/compare/v1.1.1...v1.1.3) - update deps

@@ -141,6 +141,7 @@ Project creation commands:
   -g, --global  global variable name to export in the UMD build
   --no-jsnext   disable npm ES6 modules build
   --no-umd      disable npm UMD module build
+  --react       version of React to install for React apps and components
 
   Project types:
     react-app        a React app

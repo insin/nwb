@@ -37,6 +37,7 @@ Project creation commands:
   ${cyan('-g, --global')}  global variable name to export in the UMD build
   ${cyan('--no-jsnext')}   disable npm ES6 modules build
   ${cyan('--no-umd')}      disable npm UMD module build
+  ${cyan('--react')}       version of React to install for React apps and components
 
   Project types:
     ${cyan('react-app')}        a React app

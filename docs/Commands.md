@@ -56,6 +56,10 @@ Creates a skeleton for a web module with the given name, with an optional UMD bu
 * `--no-jsnext` - disable the npm ES6 modules build
 * `--no-umd` - disable the npm UMD build
 
+**React app/component flags:**
+
+* `--react` - set the version of react which will be installed (and set as a `peerDependency` for components). Defaults to whatever the stable version of React was when the version of `nwb` you're using was released.
+
 #### `init` - initialise a project in the current directory
 
 ```
