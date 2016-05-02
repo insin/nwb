@@ -403,7 +403,7 @@ export default function createWebpackConfig(buildConfig, nwbPluginConfig = {}, u
   // command being run. Each command configures a default, working webpack
   // configuration for the task it needs to perform.
   let {
-    // These build config items are used to creating chunks of webpack config,
+    // These build config items are used to create chunks of webpack config,
     // rather than being included as-is.
     loaders = {},
     plugins = {},
