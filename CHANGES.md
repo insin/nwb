@@ -19,7 +19,7 @@
 - html-webpack-plugin: v2.14.0 → [v2.16.0](https://github.com/ampedandwired/html-webpack-plugin/blob/master/CHANGELOG.md#v2160)
 - inquirer: v0.12.0 → [v1.0.2](https://github.com/SBoudrias/Inquirer.js/compare/v0.12.0...v1.0.2) - switch to Promise-based API
 - karma-mocha-reporter: v2.0.0 → [v2.0.2](https://github.com/litixsoft/karma-mocha-reporter/compare/v2.0.0...v2.0.2)
-- npm-install-webpack-plugin: v3.0.0 → [v3.1.1](https://github.com/ericclemmons/npm-install-webpack-plugin/blob/master/CHANGELOG.md#311-2016-04-30)
+- npm-install-webpack-plugin: v3.0.0 → [v3.1.1](https://github.com/ericclemmons/npm-install-webpack-plugin/blob/master/CHANGELOG.md#311-2016-04-30) [[#77](https://github.com/insin/nwb/issues/77)]
 - phantomjs-prebuilt: v2.1.6 → [v2.1.7](https://github.com/Medium/phantomjs/releases/tag/v2.1.7)
 - webpack: v1.12.14 → [v1.13.0](https://github.com/webpack/webpack/compare/v1.12.14...v1.13.0)
 - webpack-merge: v0.8.4 → [v0.12.0](https://github.com/survivejs/webpack-merge/blob/master/CHANGELOG.md#0120--2016-04-19)
