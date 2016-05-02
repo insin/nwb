@@ -10,7 +10,8 @@ let moduleArgs = (args, cb) => {
 
 describe('getWebModulePrefs()', () => {
   it('set umd=false by default', done => {
-    moduleArgs([], settings => {
+    moduleArgs([], (err, settings) => {
+      expect(err).toNotExist()
       expect(settings).toEqual({
         globalVariable: '',
         jsNext: true,
@@ -20,7 +21,8 @@ describe('getWebModulePrefs()', () => {
     })
   })
   it('implicitly set umd=true with a --global variable', done => {
-    moduleArgs(['--global=Test'], settings => {
+    moduleArgs(['--global=Test'], (err, settings) => {
+      expect(err).toNotExist()
       expect(settings).toEqual({
         globalVariable: 'Test',
         jsNext: true,
@@ -30,7 +32,8 @@ describe('getWebModulePrefs()', () => {
     })
   })
   it('implicitly set umd=true with a -g variable', done => {
-    moduleArgs(['-g', 'Test'], settings => {
+    moduleArgs(['-g', 'Test'], (err, settings) => {
+      expect(err).toNotExist()
       expect(settings).toEqual({
         globalVariable: 'Test',
         jsNext: true,
@@ -40,19 +43,22 @@ describe('getWebModulePrefs()', () => {
     })
   })
   it('set umd=false with --no-umd', done => {
-    moduleArgs(['--no-umd'], settings => {
+    moduleArgs(['--no-umd'], (err, settings) => {
+      expect(err).toNotExist()
       expect(settings.umd).toBe(false)
       done()
     })
   })
   it('set umd=false with --umd=false', done => {
-    moduleArgs(['--no-umd'], settings => {
+    moduleArgs(['--no-umd'], (err, settings) => {
+      expect(err).toNotExist()
       expect(settings.umd).toBe(false)
       done()
     })
   })
   it('set jsNext=false with --no-jsnext', done => {
-    moduleArgs(['--no-jsnext'], settings => {
+    moduleArgs(['--no-jsnext'], (err, settings) => {
+      expect(err).toNotExist()
       expect(settings.jsNext).toBe(false)
       done()
     })
