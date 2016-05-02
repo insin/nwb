@@ -33,7 +33,7 @@ export function getWebModulePrefs(args, done) {
   }
 
   if (args.f || args.force) {
-    return done({umd, globalVariable, jsNext})
+    return done(null, {umd, globalVariable, jsNext})
   }
 
   inquirer.prompt([
@@ -56,7 +56,7 @@ export function getWebModulePrefs(args, done) {
       message: 'Do you want to create an ES6 modules build for npm?',
       default: jsNext
     }
-  ]).then(answers => done(null, answers), error => done(error))
+  ]).then(answers => done(null, answers), err => done(err))
 }
 
 function installReact({targetDir, reactVersion, dev = false}) {
@@ -109,8 +109,9 @@ const PROJECT_CREATORS = {
   },
 
   [REACT_COMPONENT](args, name, targetDir, cb) {
-    getWebModulePrefs(args, (err, {umd, globalVariable, jsNext}) => {
+    getWebModulePrefs(args, (err, prefs) => {
       if (err) return cb(err)
+      let {umd, globalVariable, jsNext} = prefs
       let templateDir = path.join(__dirname, `../templates/${REACT_COMPONENT}`)
       let reactVersion = args.react || REACT_VERSION
       let templateVars = npmModuleVars(
@@ -142,8 +143,9 @@ const PROJECT_CREATORS = {
   },
 
   [WEB_MODULE](args, name, targetDir, cb) {
-    getWebModulePrefs(args, (err, {umd, globalVariable, jsNext}) => {
+    getWebModulePrefs(args, (err, prefs) => {
       if (err) return cb(err)
+      let {umd, globalVariable, jsNext} = prefs
       let templateDir = path.join(__dirname, `../templates/${WEB_MODULE}`)
       let templateVars = npmModuleVars(
         {umd, globalVariable, jsNext, name, nwbVersion}
