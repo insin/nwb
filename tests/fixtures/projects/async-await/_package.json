@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "test project",
   "dependencies": {
+    "babel-runtime": "5.8.29",
     "react": "15.x",
     "react-dom": "15.x"
   }
