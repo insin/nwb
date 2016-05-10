@@ -1,5 +1,9 @@
 # master (not yet released)
 
+**Note for npm3 users:**
+
+If your project uses Babel 5's `stage: 0, optional: ['runtime']` config for fetures like `async/await` and you're upgrading to React 15, you will need to add `"babel-runtime": "5.8.29"` to your own dependencies.
+
 **Breaking Changes:**
 
 - React v15 is now installed by app/component templates.
