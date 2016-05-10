@@ -11,6 +11,7 @@ If your project uses Babel 5's `stage: 0, optional: ['runtime']` config for fetu
 **Changed:**
 
 - The dev server now logs an initial `webpack building...` message so you know you're waiting for the initial build.
+- npm scripts in the skeletons generated for `react-app` and `web-app` projects now use project type-specific commands, so the `nwb.config.js` included with them can be deleted if you don't need any config tweaks.
 
 **Added:**
 

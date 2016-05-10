@@ -4,9 +4,9 @@
   "description": "Describe {{name}} here",
   "private": true,
   "scripts": {
-    "build": "nwb build",
-    "clean": "nwb clean",
-    "start": "nwb serve --reload",
+    "build": "nwb build-web-app",
+    "clean": "nwb clean-app",
+    "start": "nwb serve-web-app --reload",
     "test": "nwb test",
     "test:watch": "nwb test --server"
   },
