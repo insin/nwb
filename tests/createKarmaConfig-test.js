@@ -1,6 +1,6 @@
 import expect from 'expect'
 
-import {
+import createKarmaConfig, {
   processPluginConfig,
   findPlugin,
   getKarmaConfig
@@ -123,5 +123,26 @@ describe('getKarmaConfig()', function() {
       expect(findPlugin(plugins, 'reporter:mocha')).toExist()
       expect(findPlugin(plugins, 'framework: chai')).toExist()
     })
+  })
+})
+
+describe('createKarmaConfig()', () => {
+  it('includes default mocha reporter config', () => {
+    let config = createKarmaConfig({}, {})
+    expect(config.mochaReporter).toEqual({showDiff: true})
+  })
+  it('merges any extra config given into the generated config', () => {
+    let config = createKarmaConfig({}, {
+      karma: {
+        extra: {
+          browsers: ['Chrome'],
+          mochaReporter: {
+            output: 'autowatch'
+          }
+        }
+      }
+    })
+    expect(config.browsers).toEqual(['PhantomJS', 'Chrome'])
+    expect(config.mochaReporter).toEqual({output: 'autowatch', showDiff: true})
   })
 })

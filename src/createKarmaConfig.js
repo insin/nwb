@@ -5,10 +5,11 @@ process.env.NODE_ENV = 'test'
 
 import path from 'path'
 
+import merge from 'webpack-merge'
+
 import createWebpackConfig from './createWebpackConfig'
 import debug from './debug'
 import getPluginConfig from './getPluginConfig'
-import getUserConfig from './getUserConfig'
 import {typeOf} from './utils'
 
 const DEFAULT_TESTS = 'tests/**/*-test.js'
@@ -121,8 +122,7 @@ export function getKarmaConfig({codeCoverage = false} = {}, userConfig = {}) {
   return {plugins, frameworks, reporters, extraLoaders}
 }
 
-export default function(args, {codeCoverage, singleRun}) {
-  let userConfig = getUserConfig(args)
+export default function({codeCoverage, singleRun}, userConfig) {
   let userKarma = userConfig.karma || {}
   let pluginConfig = getPluginConfig()
 
@@ -133,10 +133,12 @@ export default function(args, {codeCoverage, singleRun}) {
   }
 
   let webpackConfig = createWebpackConfig({
-    server: true,
     devtool: 'inline-source-map',
     loaders: {
       extra: extraLoaders
+    },
+    node: {
+      fs: 'empty'
     },
     resolve: {
       alias: {
@@ -145,16 +147,11 @@ export default function(args, {codeCoverage, singleRun}) {
       // Fall back to resolving runtime dependencies from nwb's dependencies
       fallback: path.join(__dirname, '../node_modules')
     },
-    node: {
-      fs: 'empty'
-    }
+    server: true
   }, pluginConfig, userConfig.webpack)
 
-  let karmaConfig = {
-    plugins,
+  let karmaConfig = merge({
     browsers: ['PhantomJS'],
-    frameworks,
-    reporters,
     coverageReporter: {
       dir: path.resolve('coverage'),
       reporters: [
@@ -163,13 +160,19 @@ export default function(args, {codeCoverage, singleRun}) {
       ]
     },
     files: [testFiles],
+    frameworks,
+    mochaReporter: {
+      showDiff: true
+    },
+    plugins,
     preprocessors,
+    reporters,
+    singleRun,
     webpack: webpackConfig,
     webpackServer: {
       noInfo: true
-    },
-    singleRun
-  }
+    }
+  }, userKarma.extra)
 
   debug('karma config %o', karmaConfig)
   return karmaConfig

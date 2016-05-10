@@ -54,6 +54,7 @@
     "connect-history-api-fallback": "1.2.0",
 
     "karma": "0.13.22",
+    "diff": "2.2.2",
     "isparta-loader": "1.0.0",
     "karma-coverage": "1.0.0",
     "karma-mocha": "1.0.1",

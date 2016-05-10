@@ -34,6 +34,7 @@ The object exported or returned by your nwb config can use the following fields:
   * [`karma.frameworks`](#frameworks-arraystring--plugin)
   * [`karma.reporters`](#reporters-arraystring--plugin)
   * [`karma.plugins`](#plugins-arrayplugin)
+  * [`karma.extra`](#extra-object-1)
 * npm Build Configuration
   * [`build`](#build-object)
   * UMD build config
@@ -402,6 +403,27 @@ module.exports = {
 ##### `plugins`: `Array<Plugin>`
 
 A list of plugins to be loaded by Karma - this should be used in combination with `frameworks` and `reporters` as necessary.
+
+##### `extra`: `Object`
+
+Extra configuration to be merged into the generated Karma configuration using [webpack-merge](https://github.com/survivejs/webpack-merge#webpack-merge---merge-designed-for-webpack).
+
+Note that you *must* use Karma's own config structure in this object.
+
+e.g. to tweak the configuration of the default Mocha reporter:
+
+```js
+module.exports = {
+  karma: {
+    extra: {
+      mochaReporter: {
+        divider: '°º¤ø,¸¸,ø¤º°`°º¤ø,¸,ø¤°º¤ø,¸¸,ø¤º°`°º¤ø,¸',
+        output: 'autowatch'
+      }
+    }
+  }
+}
+```
 
 ### npm Build Configuration
 

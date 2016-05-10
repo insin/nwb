@@ -10,11 +10,13 @@ If your project uses Babel 5's `stage: 0, optional: ['runtime']` config for fetu
 
 **Changed:**
 
+- Default Karma config now includes `showDiff: true` config for the default Mocha reporter.
 - The dev server now logs an initial `webpack building...` message so you know you're waiting for the initial build.
 - npm scripts in the skeletons generated for `react-app` and `web-app` projects now use project type-specific commands, so the `nwb.config.js` included with them can be deleted if you don't need any config tweaks.
 
 **Added:**
 
+- Extra Karma config can now be configured via a `karma.extra` Object.
 - Added a `--react` option to allow you to set the version of React which will be installed when creating apps or components. This defaults to whatever the stable version of React was when the version of `nwb` you're using was released.
 
 **Dependencies:**
