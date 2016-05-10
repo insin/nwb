@@ -9,7 +9,7 @@ export default function(args, cb) {
 
   copyPublicDir('public', 'dist')
 
-  console.log(`nwb: build-web-app`)
+  console.log('nwb: build-web-app')
   webpackBuild(args, {
     devtool: 'source-map',
     entry: {

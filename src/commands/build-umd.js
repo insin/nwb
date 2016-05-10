@@ -15,7 +15,7 @@ export default function(args, cb) {
 
   if (!build.umd) {
     return cb(new UserError(
-      `nwb: the UMD build for this module hasn't been enabled in nwb.config.js`
+      'nwb: the UMD build for this module hasn\'t been enabled in nwb.config.js'
     ))
   }
 

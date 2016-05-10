@@ -21,7 +21,7 @@ export default function(args, cb) {
 
   let name = args._[2]
   if (!name) {
-    return cb(new UserError(`nwb: a project name must be provided`))
+    return cb(new UserError('nwb: a project name must be provided'))
   }
   if (glob.sync(`${name}/`).length !== 0) {
     return cb(new UserError(`nwb: ${name}/ directory already exists`))

@@ -33,7 +33,7 @@ export let combineLoaders = loaders =>
 export function mergeLoaderConfig(defaultConfig = {}, buildConfig = {}, userConfig = {}) {
   // Don't include a 'config' object if the user provided one - this will be
   // configured at the top level instead.
-  let {config, ...userLoaderConfig} = userConfig
+  let {config, ...userLoaderConfig} = userConfig // eslint-disable-line no-unused-vars
   let loader = merge(defaultConfig, buildConfig, userLoaderConfig)
   if (loader.query && Object.keys(loader.query).length === 0) {
     delete loader.query
@@ -284,7 +284,7 @@ export function createPlugins(server, buildConfig = {}, userConfig = {}) {
   }
 
   if (!server) {
-    plugins.push(new ExtractTextPlugin(`[name].css`, {
+    plugins.push(new ExtractTextPlugin('[name].css', {
       ...userConfig.extractText
     }))
 

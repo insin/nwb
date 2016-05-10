@@ -7,7 +7,7 @@ import serveReact from '../serveReact'
 
 export default function(args, cb) {
   if (args._.length === 1) {
-    return cb(new UserError(`usage: nwb serve-react <entry module>`))
+    return cb(new UserError('usage: nwb serve-react <entry module>'))
   }
 
   let entry = args._[1]

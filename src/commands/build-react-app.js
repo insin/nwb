@@ -46,6 +46,6 @@ export default function(args, cb) {
 
   copyPublicDir('public', 'dist')
 
-  console.log(`nwb: build-react-app`)
+  console.log('nwb: build-react-app')
   webpackBuild(args, buildConfig, cb)
 }
