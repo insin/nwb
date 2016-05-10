@@ -6,24 +6,21 @@ import getUserConfig from '../src/getUserConfig'
 describe('getUserConfig()', () => {
   describe("when a required config file can't be found", () => {
     it('throws an error', () => {
-      expect(getUserConfig)
-        .withArgs({config: 'tests/fixtures/nonexistent.js'}, {required: true})
+      expect(() => getUserConfig({config: 'tests/fixtures/nonexistent.js'}, {required: true}))
         .toThrow(/couldn't find a config file/)
     })
   })
 
   describe('when the config file is invalid or otherwise causes an error', () => {
     it('throws an error', () => {
-      expect(getUserConfig)
-        .withArgs({config: 'tests/fixtures/invalid-config.js'})
+      expect(() => getUserConfig({config: 'tests/fixtures/invalid-config.js'}))
         .toThrow(/couldn't import the config file/)
     })
   })
 
   describe('when the config file has an invalid type', () => {
     it('throws an error', () => {
-      expect(getUserConfig)
-        .withArgs({config: 'tests/fixtures/invalid-type-config.js'})
+      expect(() => getUserConfig({config: 'tests/fixtures/invalid-type-config.js'}))
         .toThrow(/invalid project type configured/)
     })
   })
