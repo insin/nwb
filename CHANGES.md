@@ -6,7 +6,7 @@ If your project uses Babel 5's `stage: 0, optional: ['runtime']` config for fetu
 
 **Breaking Changes:**
 
-- React v15 is now installed by app/component templates.
+- React v15 is now installed into React app/component skeletons by default.
 
 **Changed:**
 
@@ -26,12 +26,12 @@ If your project uses Babel 5's `stage: 0, optional: ['runtime']` config for fetu
 - cross-spawn: v2.1.5 → [v2.2.3](https://github.com/IndigoUnited/node-cross-spawn/compare/2.1.5...2.2.3) - update deps
 - expect: v1.16.0 → [v1.20.1](https://github.com/mjackson/expect/blob/master/CHANGES.md#v1201)
 - fs-extra: v0.26.7 → [v0.30.0](https://github.com/jprichardson/node-fs-extra/blob/master/CHANGELOG.md#0300--2016-04-28)
-- html-webpack-plugin: v2.14.0 → [v2.16.1](https://github.com/ampedandwired/html-webpack-plugin/blob/master/CHANGELOG.md#v2161)
+- html-webpack-plugin: v2.14.0 → [v2.17.0](https://github.com/ampedandwired/html-webpack-plugin/blob/master/CHANGELOG.md#v2170)
 - inquirer: v0.12.0 → [v1.0.2](https://github.com/SBoudrias/Inquirer.js/compare/v0.12.0...v1.0.2) - switch to Promise-based API
 - karma-coverage: v0.5.5 → [v1.0.0](https://github.com/karma-runner/karma-coverage/compare/v0.5.5...v1.0.0)
 - karma-mocha: v0.2.2 → [v1.0.1](https://github.com/karma-runner/karma-mocha/compare/v0.2.2...v1.0.1)
 - karma-mocha-reporter: v2.0.0 → [v2.0.3](https://github.com/litixsoft/karma-mocha-reporter/compare/v2.0.0...v2.0.3)
-- npm-install-webpack-plugin: v3.0.0 → [v3.1.1](https://github.com/ericclemmons/npm-install-webpack-plugin/blob/master/CHANGELOG.md#311-2016-04-30) [[#77](https://github.com/insin/nwb/issues/77)]
+- npm-install-webpack-plugin: v3.0.0 → [v3.1.2](https://github.com/ericclemmons/npm-install-webpack-plugin/blob/master/CHANGELOG.md#v312-2016-05-12) [[#77](https://github.com/insin/nwb/issues/77)]
 - phantomjs-prebuilt: v2.1.6 → [v2.1.7](https://github.com/Medium/phantomjs/releases/tag/v2.1.7)
 - qs v6.1.0 → [v6.2.0](https://github.com/ljharb/qs/blob/master/CHANGELOG.md#620)
 - webpack: v1.12.14 → [v1.13.0](https://github.com/webpack/webpack/compare/v1.12.14...v1.13.0)
