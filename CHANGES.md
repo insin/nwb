@@ -1,3 +1,7 @@
+**Changed:**
+
+- Restored default use of the Babel polyfill in Karma config so tests can assume a more-or-less ES2015 environment.
+
 # 0.10.0 / 2016-05-16
 
 **Breaking Changes:**

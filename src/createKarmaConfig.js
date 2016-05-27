@@ -129,6 +129,7 @@ export default function({codeCoverage, singleRun}, userConfig) {
   let {plugins, frameworks, reporters, extraLoaders} = getKarmaConfig({codeCoverage}, userConfig)
   let testFiles = path.resolve(userKarma.tests || DEFAULT_TESTS)
   let preprocessors = {
+    [require.resolve('babel-core/lib/polyfill')]: ['webpack'],
     [testFiles]: ['webpack', 'sourcemap']
   }
 
@@ -159,7 +160,10 @@ export default function({codeCoverage, singleRun}, userConfig) {
         {type: 'lcovonly', subdir: '.'}
       ]
     },
-    files: [testFiles],
+    files: [
+      require.resolve('babel-core/lib/polyfill'),
+      testFiles
+    ],
     frameworks,
     mochaReporter: {
       showDiff: true
