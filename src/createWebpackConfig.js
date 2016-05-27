@@ -1,6 +1,7 @@
 import assert from 'assert'
 import path from 'path'
 
+import autoprefixer from 'autoprefixer'
 import chalk from 'chalk'
 import ExtractTextPlugin from 'extract-text-webpack-plugin'
 import HtmlWebpackPlugin from 'html-webpack-plugin'
@@ -82,10 +83,19 @@ export function createStyleLoader(loader, server, {
   let name = styleLoaderName(prefix)
   let loaders = [
     loader(name('css'), {
-      loader: require.resolve('css-loader')
+      loader: require.resolve('css-loader'),
+      query: {
+        // Apply postcss-loader to @imports
+        importLoaders: 1
+      }
     }),
-    loader(name('autoprefixer'), {
-      loader: require.resolve('autoprefixer-loader')
+    loader(name('postcss'), {
+      loader: require.resolve('postcss-loader'),
+      query: {
+        // Config for the default pipeline (prefix == null) will come from
+        // top-level postcss.plugins.
+        pack: prefix
+      }
     })
   ]
 
@@ -392,6 +402,24 @@ export function getTopLevelLoaderConfig(userLoaderConfig, cssPreprocessors = {})
 }
 
 /**
+ * Create top-level PostCSS plugin config for each style pipeline.
+ */
+export function createPostCSSConfig(userPostCSSConfig, cssPreprocessors = {}) {
+  // postcss-loader throws an error if a pack name is provided but isn't
+  // configured, so we need to set the default PostCSS plugins for every single
+  // style pipeline.
+  let postcss = {
+    plugins: [autoprefixer],
+    vendor: [autoprefixer]
+  }
+  Object.keys(cssPreprocessors).forEach(id => {
+    postcss[id] = [autoprefixer]
+  })
+  // PostCSS plugins provided by the user will completely overwrite defaults
+  return {...postcss, ...userPostCSSConfig}
+}
+
+/**
  * Create a webpack config with a curated set of default loaders suitable for
  * creating a static build (default) or serving an app with hot reloading.
  */
@@ -415,17 +443,17 @@ export default function createWebpackConfig(buildConfig, nwbPluginConfig = {}, u
   } = buildConfig
 
   let {
-    // Loader and plugin config is managed by nwb, with the ability to use
-    // "extra" config to define arbitrary additional loaders and plugins.
+    // These pieces of user config are managed in a specific way by nwb
     loaders: userLoaderConfig = {},
     plugins: userPluginConfig = {},
+    postcss: userPostCSSConfig = {},
     // Any extra user webpack config is deep-merged into the generated config
     // object to give the user even more control. This needs to be used very
     // carefully as different nwb commands have different webpack config needs.
     extra: userExtraWebpackConfig = {}
   } = userConfig
 
-  return merge({
+  let webpackConfig = {
     module: {
       loaders: createLoaders(server, loaders, userLoaderConfig, nwbPluginConfig)
     },
@@ -437,10 +465,14 @@ export default function createWebpackConfig(buildConfig, nwbPluginConfig = {}, u
       // ['runtime'] for async/await.
       fallback: path.join(__dirname, '../node_modules')
     }, resolve),
+    postcss: createPostCSSConfig(userPostCSSConfig, nwbPluginConfig.cssPreprocessors),
     ...otherBuildConfig,
     // Top level loader config can be supplied via user "loaders" config, so we
     // detect, extract and where possible validate it before merging it into the
     // final webpack config object.
     ...getTopLevelLoaderConfig(userLoaderConfig, nwbPluginConfig.cssPreprocessors)
-  }, userExtraWebpackConfig)
+  }
+
+  // Merge any extra config the user provided into the final webpack config
+  return merge(webpackConfig, userExtraWebpackConfig)
 }

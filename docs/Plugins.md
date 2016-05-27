@@ -59,13 +59,13 @@ Given the above, nwb will create these additional Webpack loaders:
 1. A `sass-pipeline` loader which handles the app's own `.scss` and chains the following loaders:
 
   - sass (id: `sass`)
-    - autoprefixer (id: `sass-autoprefixer`)
+    - postcss (id: `sass-postcss`)
       - css (`sass-css`)
         - style `sass-style` (only when serving)
 
 1. A `vendor-sass-pipeline` loader which handles `.scss` required from node_modules, using the same chain of loaders with different ids:
 
   - sass (id: `vendor-sass`)
-    - autoprefixer (id: `vendor-sass-autoprefixer`)
+    - postcss (id: `vendor-sass-postcss`)
       - css (`vendor-sass-css`)
         - style `vendor-sass-style` (only when serving)

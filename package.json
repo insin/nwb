@@ -68,7 +68,7 @@
     "expect": "1.20.1",
 
     "webpack": "1.13.0",
-    "autoprefixer-loader": "3.2.0",
+    "autoprefixer": "6.3.6",
     "babel-loader": "5.4.0",
     "css-loader": "0.23.1",
     "extract-text-webpack-plugin": "1.0.1",
@@ -76,6 +76,7 @@
     "html-webpack-plugin": "2.17.0",
     "json-loader": "0.5.4",
     "npm-install-webpack-plugin": "3.1.2",
+    "postcss-loader": "0.9.1",
     "style-loader": "0.13.1",
     "url-loader": "0.5.7",
     "webpack-dev-middleware": "1.6.1",

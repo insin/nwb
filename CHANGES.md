@@ -1,3 +1,12 @@
+**Breaking Changes:**
+
+- Replaced the deprecated `autoprefixer-loader` with `postcss-loader` in default style pipelines- it's configured to do the same autoprefixing by default [[#57](https://github.com/insin/nwb/issues/57)]
+  - If you were configuring vendor prefixing using `webpack.loaders.autoprefixer`, you will now need to manage an `autprefixer` dependency yourself and use `webpack.postcss` to perform this configuration.
+
+**Added:**
+
+- Added `webpack.postcss` config to customise the PostCSS plugins applied to each style pipeline.
+
 **Changed:**
 
 - Restored default use of the Babel polyfill in Karma config so tests can assume a more-or-less ES2015 environment.

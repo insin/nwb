@@ -24,6 +24,7 @@ The object exported or returned by your nwb config can use the following fields:
   * [`webpack.loaders`](#loaders-object)
     * [Default loaders](#default-loaders)
     * [Test loaders](#test-loaders)
+  * [`webpack.postcss`](#postcss-object)
   * [`webpack.plugins`](#plugins-object)
     * [`plugins.define`](#pluginsdefine-object)
     * [`plugins.install`](#pluginsinstall-object)
@@ -157,7 +158,7 @@ Default loaders and their ids are:
 
   * `style` - (only when serving) applies styles using [style-loader][style-loader]
   * `css` - handles URLs, minification and CSS Modules using [css-loader][css-loader]
-  * `autoprefixer` - automatically adds vendor prefixes to CSS using [autoprefixer-loader][autoprefixer-loader]
+  * `postcss` - processes CSS with PostCSS plugins using [postcss-loader][postcss-loader]; by default, this is configured to automatically add vendor prefixes to CSS using [autoprefixer][autoprefixer]
 
 * `vendor-css-pipeline` - handles `.css` files required from `node_modules`, with the same set of chained loaders as `css-pipeline` but with a `vendor-` prefix in their id.
 
@@ -198,8 +199,6 @@ When running Karma tests with coverage enabled, the following loader will be add
     }
   }
   ```
-
-
 
 ##### `plugins`: `Object`
 
@@ -270,6 +269,32 @@ The default options used by nwb are:
   save: true
 }
 ```
+
+##### `postcss`: `Object`
+
+By default, nwb configures the `postcss-loader` in each style pipeline to automatically add vendor prefixes to CSS rules.
+
+You can configure a `postcss` object to provide your own list of PostCSS plugins to be used for each pipeline, which will completely overwrite nwb's default configuration.
+
+PostCSS plugins for the default style pipeline (applied to your app's own CSS) must be configured using a `plugins` property:
+
+```js
+module.exports = {
+  webpack: {
+    postcss: {
+      plugins: [
+        require('precss'),
+        require('autoprefixer'),
+        require('cssnano')
+      ]
+    }
+  }
+}
+```
+
+Plugins for other style pipelines are configured using their prefix as a property name: `vendor` for anything imported out of `node_modules/`, `sass` if you're using the `nwb-sass` preprocessor plugin, etc.
+
+Your app is responsible for managing its own PostCSS plugin dependencies - between the size of the PostCSS ecosystem and the number of different configuration options `postcss-loader` supports, PostCSS could do with its own equivalent of nwb to manage dependencies and configuration!
 
 ##### `extra`: `Object`
 
@@ -488,13 +513,14 @@ module.exports = {
 }
 ```
 
-[autoprefixer-loader]: https://github.com/passy/autoprefixer-loader/
-[babel-loader]: https://github.com/babel/babel-loader
-[CSS Modules]: https://github.com/css-modules/css-modules
+[autoprefixer]: https://github.com/postcss/autoprefixer/
+[babel-loader]: https://github.com/babel/babel-loader/
+[CSS Modules]: https://github.com/css-modules/css-modules/
 [css-loader]: https://github.com/webpack/css-loader/
 [file-loader]: https://github.com/webpack/file-loader/
-[isparta-loader]: https://github.com/deepsweet/isparta-loader
+[isparta-loader]: https://github.com/deepsweet/isparta-loader/
 [json-loader]: https://github.com/webpack/json-loader/
-[npm-install-loader]: https://github.com/ericclemmons/npm-install-loader
+[npm-install-loader]: https://github.com/ericclemmons/npm-install-loader/
+[postcss-loader]: https://github.com/postcss/postcss-loader/
 [style-loader]: https://github.com/webpack/style-loader/
 [url-loader]: https://github.com/webpack/url-loader/

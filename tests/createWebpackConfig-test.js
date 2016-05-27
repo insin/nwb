@@ -1,7 +1,9 @@
+import autoprefixer from 'autoprefixer'
 import expect from 'expect'
 
 import createWebpackConfig, {
   combineLoaders,
+  createPostCSSConfig,
   getTopLevelLoaderConfig,
   mergeLoaderConfig,
   styleLoaderName
@@ -15,12 +17,12 @@ describe('createWebpackConfig()', () => {
   context('without any config arguments', () => {
     let config = createWebpackConfig({})
     it('creates a default webpack build config', () => {
-      expect(Object.keys(config)).toEqual(['module', 'plugins', 'resolve'])
+      expect(Object.keys(config)).toEqual(['module', 'plugins', 'resolve', 'postcss'])
       expect(config.module.loaders.map(loader => loader.loader).join('\n'))
         .toContain('babel-loader')
         .toContain('extract-text-webpack-plugin')
         .toContain('css-loader')
-        .toContain('autoprefixer-loader')
+        .toContain('postcss-loader')
         .toContain('url-loader')
         .toContain('file-loader')
         .toContain('json-loader')
@@ -38,7 +40,7 @@ describe('createWebpackConfig()', () => {
         .toContain('babel-loader')
         .toContain('style-loader')
         .toContain('css-loader')
-        .toContain('autoprefixer-loader')
+        .toContain('postcss-loader')
         .toContain('url-loader')
         .toContain('file-loader')
         .toContain('json-loader')
@@ -60,13 +62,13 @@ describe('createWebpackConfig()', () => {
     it('creates a style loading pipeline', () => {
       let loader = findLoaderById(config.module.loaders, 'sass-pipeline')
       expect(loader).toExist()
-      expect(loader.loader).toMatch(/.*?style-loader.*?css-loader.*?autoprefixer-loader.*?!path\/to\/sass-loader\.js$/)
+      expect(loader.loader).toMatch(/.*?style-loader.*?css-loader.*?postcss-loader.*?!path\/to\/sass-loader\.js$/)
       expect(loader.exclude.test('node_modules')).toBe(true, 'app loader should exclude node_modules')
     })
     it('creates a vendor style loading pipeline', () => {
       let loader = findLoaderById(config.module.loaders, 'vendor-sass-pipeline')
       expect(loader).toExist()
-      expect(loader.loader).toMatch(/.*?style-loader.*?css-loader.*?autoprefixer-loader.*?!path\/to\/sass-loader\.js$/)
+      expect(loader.loader).toMatch(/.*?style-loader.*?css-loader.*?postcss-loader.*?!path\/to\/sass-loader\.js$/)
       expect(loader.include.test('node_modules')).toBe(true, 'vendor loader should include node_modules')
     })
   })
@@ -85,12 +87,12 @@ describe('createWebpackConfig()', () => {
     it('applies user config to the preprocessor loader', () => {
       let loader = findLoaderById(config.module.loaders, 'sass-pipeline')
       expect(loader).toExist()
-      expect(loader.loader).toMatch(/.*?style-loader.*?css-loader.*?autoprefixer-loader.*?!path\/to\/sass-loader\.js\?a=1&b=2$/)
+      expect(loader.loader).toMatch(/.*?style-loader.*?css-loader.*?postcss-loader.*?!path\/to\/sass-loader\.js\?a=1&b=2$/)
     })
     it('only applies user config to the appropriate loader', () => {
       let loader = findLoaderById(config.module.loaders, 'vendor-sass-pipeline')
       expect(loader).toExist()
-      expect(loader.loader).toMatch(/.*?style-loader.*?css-loader.*?autoprefixer-loader.*?!path\/to\/sass-loader\.js$/)
+      expect(loader.loader).toMatch(/.*?style-loader.*?css-loader.*?postcss-loader.*?!path\/to\/sass-loader\.js$/)
     })
   })
 
@@ -263,6 +265,29 @@ describe('getTopLevelLoaderConfig()', () => {
     it('throws if a default config prop is not available', () => {
       expect(() => getTopLevelLoaderConfig({less: {config: {a: 1}}}, cssPreprocessors))
         .toThrow(/The less CSS preprocessor loader doesn't support a default top-level config object/)
+    })
+  })
+})
+
+describe('createPostCSSConfig()', () => {
+  it('creates default plugin config', () => {
+    expect(createPostCSSConfig({})).toEqual({
+      plugins: [autoprefixer],
+      vendor: [autoprefixer]
+    })
+  })
+  it('creates default plugin config for CSS preprocessors', () => {
+    expect(createPostCSSConfig({}, {less: {}, sass: {}})).toEqual({
+      plugins: [autoprefixer],
+      vendor: [autoprefixer],
+      less: [autoprefixer],
+      sass: [autoprefixer]
+    })
+  })
+  it('overwrites plugin config with user config', () => {
+    expect(createPostCSSConfig({plugins: [1, 2, 3]})).toEqual({
+      plugins: [1, 2, 3],
+      vendor: [autoprefixer]
     })
   })
 })
