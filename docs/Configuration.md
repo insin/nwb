@@ -28,6 +28,7 @@ The object exported or returned by your nwb config can use the following fields:
   * [`webpack.plugins`](#plugins-object)
     * [`plugins.define`](#pluginsdefine-object)
     * [`plugins.install`](#pluginsinstall-object)
+    * [`plugins.vendorBundle`](#pluginsvendorbundle-boolean)
   * [`webpack.extra`](#extra-object)
 * Karma Configuration
   * [`karma`](#karma-object)
@@ -269,6 +270,10 @@ The default options used by nwb are:
   save: true
 }
 ```
+
+###### `plugins.vendorBundle`: `Boolean`
+
+Setting this to `false` disables extraction of anything imported from `node_modules/` into a `vendor` bundle.
 
 ##### `postcss`: `Object`
 

@@ -299,7 +299,7 @@ export function createPlugins(server, buildConfig = {}, userConfig = {}) {
     }))
 
     // Move modules imported from node_modules into a vendor chunk
-    if (vendorChunkName) {
+    if (userConfig.vendorBundle !== false && vendorChunkName) {
       plugins.push(new optimize.CommonsChunkPlugin({
         name: vendorChunkName,
         minChunks(module, count) {

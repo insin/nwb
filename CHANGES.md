@@ -6,6 +6,7 @@
 **Added:**
 
 - Added `webpack.postcss` config to customise the PostCSS plugins applied to each style pipeline.
+- Added `webpack.plugins.vendorBundle` to disable extracting anything imported from `node_modules/` into a separate `vendor` bundle.
 
 **Changed:**
 
