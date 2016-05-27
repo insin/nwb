@@ -27,6 +27,8 @@ The object exported or returned by your nwb config can use the following fields:
   * [`webpack.postcss`](#postcss-object)
   * [`webpack.plugins`](#plugins-object)
     * [`plugins.define`](#pluginsdefine-object)
+    * [`plugins.extractText`](#pluginsextracttext-object)
+    * [`plugins.html`](#pluginshtml-object)
     * [`plugins.install`](#pluginsinstall-object)
     * [`plugins.vendorBundle`](#pluginsvendorbundle-boolean)
   * [`webpack.extra`](#extra-object)
@@ -243,7 +245,7 @@ module.exports = {
 
 ###### `plugins.html`: `Object`
 
-Configures [options for  `HtmlWebpackPlugin`](https://github.com/ampedandwired/html-webpack-plugin#readme).
+Configures [options for `HtmlWebpackPlugin`](https://github.com/ampedandwired/html-webpack-plugin#readme).
 
 e.g. if you have a `favicon.ico` in your `src/` directory, you can include it in the `index.html` generated when your app is built and have it copied to the output directory like so:
 
