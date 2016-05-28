@@ -265,14 +265,6 @@ module.exports = {
 
 Configures [options for `NpmInstallPlugin`](https://github.com/ericclemmons/npm-install-webpack-plugin#usage), which will be used if you pass `--auto-install` flag to `nwb serve`.
 
-The default options used by nwb are:
-
-```js
-{
-  save: true
-}
-```
-
 ###### `plugins.vendorBundle`: `Boolean`
 
 Setting this to `false` disables extraction of anything imported from `node_modules/` into a `vendor` bundle.

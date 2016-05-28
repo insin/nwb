@@ -88,8 +88,8 @@ Starts a development server which serves an app with hot module reloading.
 
 **Flags:**
 
-* `--auto-install` - automatically install missing npm dependencies, for convenience during initial development/prototyping. By default, installed dependencies will also be saved to your app's package.json.
-* `--fallback` - fall back to serving the index page from any path, for developing React apps which use the HTML5 History API
+* `--auto-install` - automatically install missing npm dependencies and save them to your app's package.json, for convenience during initial development/prototyping
+* `--fallback` - fall back to serving the index page from any path, for developing apps which use the History API
 * `--host=localhost` - change the hostname the dev server binds to
 * `--info` - print info about Webpack modules after rebuilds
 * `--port=3000` - change the port the dev server runs on
@@ -125,7 +125,7 @@ Builds the project.
 
 A static build will be created in `dist/`, with `app.js` and `app.css` files plus any other resources used.
 
-Separate `vendor.js` and `vendor.css` files will be built for any dependencies used from `node_modules/`.
+By default, separate `vendor.js` and `vendor.css` files will be built for any dependencies used from `node_modules/`.
 
 By default, static builds are created in production mode. Code will be minified and have dead code elimination performed on it (for example to remove unreachable, or development-mode only, code).
 

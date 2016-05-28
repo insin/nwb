@@ -1,7 +1,6 @@
 import assert from 'assert'
 
 import createWebpackConfig from './createWebpackConfig'
-import debug from './debug'
 import getPluginConfig from './getPluginConfig'
 import getUserConfig from './getUserConfig'
 
@@ -21,8 +20,7 @@ export default function(args, buildConfig) {
   let hotMiddlewareOptions = args.reload ? '?reload=true' : ''
 
   if (args['auto-install']) {
-    debug('configuring auto-install')
-    plugins.install = {save: true}
+    plugins.install = {}
   }
 
   return createWebpackConfig({
