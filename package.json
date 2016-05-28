@@ -10,8 +10,8 @@
   "scripts": {
     "build": "npm run lint && rimraf lib && babel src --loose all --out-dir lib",
     "build:watch": "rimraf lib && babel src --watch --loose all --out-dir lib",
-    "lint": "eslint src tests",
-    "lint:fix": "eslint src tests --fix",
+    "lint": "eslint *.js src tests",
+    "lint:fix": "eslint *.js src tests --fix",
     "test": "npm run build && mocha --compilers js:babel-core/register tests/*-test.js tests/commands/*-test.js",
     "test:coverage": "npm run build && babel-node node_modules/isparta/bin/isparta cover --report html --report lcov node_modules/mocha/bin/_mocha -- tests/*-test.js tests/commands/*-test.js",
     "test:watch": "mocha --watch --compilers js:babel-core/register tests/*-test.js"
