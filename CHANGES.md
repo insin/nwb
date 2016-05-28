@@ -12,6 +12,13 @@
 
 - Restored default use of the Babel polyfill in Karma config so tests can assume a more-or-less ES2015 environment.
 
+**Dependencies:**
+
+- mocha: v2.4.5 → [v2.5.3](https://github.com/mochajs/mocha/blob/master/CHANGELOG.md#253--2016-05-25)
+- npm-install-webpack-plugin: v3.1.2 → [v4.0.0](https://github.com/ericclemmons/npm-install-webpack-plugin/blob/master/CHANGELOG.md#400-2016-05-23)
+- webpack: v1.13.0 → [v1.13.1](https://github.com/webpack/webpack/compare/v1.13.0...v1.13.1)
+- webpack-merge: v0.12.0 → [v0.13.0](https://github.com/survivejs/webpack-merge/blob/master/CHANGELOG.md#0130--2016-05-24)
+
 # 0.10.0 / 2016-05-16
 
 **Breaking Changes:**
