@@ -35,6 +35,7 @@ The object exported or returned by your nwb config can use the following fields:
 * Karma Configuration
   * [`karma`](#karma-object)
   * [`karma.tests`](#tests-string)
+    * [Test context module](#test-context-module)
   * [`karma.frameworks`](#frameworks-arraystring--plugin)
   * [`karma.reporters`](#reporters-arraystring--plugin)
   * [`karma.plugins`](#plugins-arrayplugin)
@@ -185,7 +186,7 @@ Default loaders and their ids are:
 
 When running Karma tests with coverage enabled, the following loader will be added:
 
-* `isparta` - handles instrumentation of source files for coverage analysis [isparta-loader][isparta-loader]
+* `isparta` - handles instrumentation of source files for coverage analysis using [isparta-loader][isparta-loader]
 
   > Default config: `{include: path.join(cwd, 'src')}` (where cwd is the directory you ran `nwb test` from).
 
@@ -349,6 +350,34 @@ module.exports = {
   }
 }
 ```
+
+###### Test context module
+
+If you need to run some code before any of your tests run, the recommended way is to create a context module for Webpack to load and use `tests` config to point to it. You will need to use use [`require.context()`](https://webpack.github.io/docs/context.html#require-context) in this module to specify which test files to run.
+
+For example, if you need to configure an assertion library before running any tests and your tests are in `.spec.js` files under `src/`, you could create the following `tests.webpack.js` module in the root of your project...
+
+```js
+var chai = require('chai')
+var chaiEnzyme = require('chai-enzyme')
+
+chai.use(chaiEnzyme())
+
+var context = require.context('./src', true, /\.spec\.js$/)
+context.keys().forEach(context)
+```
+
+...then point to it in `nwb.config.js`:
+
+```js
+module.exports = {
+  karma: {
+    tests: 'tests.webpack.js'
+  }
+}
+```
+
+A context module is also commonly used to load polyfills, but you don't need to worry about that - nwb handles injecting Babel's polyfills into Karma tests for you.
 
 ##### `frameworks`: `Array<String | Plugin>`
 
