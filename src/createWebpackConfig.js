@@ -136,6 +136,7 @@ export function createLoaders(server, buildConfig = {}, userConfig = {}, pluginC
       loader: require.resolve('babel-loader'),
       exclude: /node_modules/,
       query: {
+        // Ignore any .babelrc files in the app's path
         breakConfig: true
       }
     }),
