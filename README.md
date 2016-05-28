@@ -97,7 +97,7 @@ nwb: test
 
 nwb v0.7 added an `--auto-install` flag to `nwb serve` which automatically installs and saves missing dependencies from npm.
 
-![nwb serve --auto-install example](/docs/auto-install.gif)
+![nwb serve --auto-install example](/resources/auto-install.gif)
 
 ### Creating and customising a new React app
 
