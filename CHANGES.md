@@ -1,6 +1,6 @@
 **Breaking Changes:**
 
-- Replaced the deprecated `autoprefixer-loader` with `postcss-loader` in default style pipelines- it's configured to do the same autoprefixing by default [[#57](https://github.com/insin/nwb/issues/57)]
+- Replaced the deprecated `autoprefixer-loader` with `postcss-loader` in default style pipelines - it's configured to do the same autoprefixing by default [[#57](https://github.com/insin/nwb/issues/57)]
   - If you were configuring vendor prefixing using `webpack.loaders.autoprefixer`, you will now need to manage an `autprefixer` dependency yourself and use `webpack.postcss` to perform this configuration.
 
 **Added:**
