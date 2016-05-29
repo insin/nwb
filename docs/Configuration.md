@@ -16,7 +16,7 @@ If a function is exported:
 The object exported or returned by your nwb config can use the following fields:
 
 * nwb Configuration
-  * [`type`](#type-string-required)
+  * [`type`](#type-string-required-for-generic-build-commands)
 * Babel Configuration
   * [`babel`](#babel-object)
 * Webpack Configuration
