@@ -18,6 +18,7 @@
 
 - mocha: v2.4.5 → [v2.5.3](https://github.com/mochajs/mocha/blob/master/CHANGELOG.md#253--2016-05-25)
 - npm-install-webpack-plugin: v3.1.2 → [v4.0.0](https://github.com/ericclemmons/npm-install-webpack-plugin/blob/master/CHANGELOG.md#400-2016-05-23) - saving is on by default and [a new `dev` option controls](https://github.com/ericclemmons/npm-install-webpack-plugin#usage) where installed dependencies get saved to
+- redbox-noreact: v1.0.0 → [v1.1.0](https://github.com/insin/redbox-noreact/blob/master/CHANGES.md#110--2016-05-29)
 - webpack: v1.13.0 → [v1.13.1](https://github.com/webpack/webpack/compare/v1.13.0...v1.13.1)
 - webpack-merge: v0.12.0 → [v0.13.0](https://github.com/survivejs/webpack-merge/blob/master/CHANGELOG.md#0130--2016-05-24)
 
