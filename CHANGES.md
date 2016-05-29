@@ -1,16 +1,17 @@
 **Breaking Changes:**
 
 - Replaced the deprecated `autoprefixer-loader` with `postcss-loader` in default style pipelines - it's configured to do the same autoprefixing by default [[#57](https://github.com/insin/nwb/issues/57)]
-  - If you were configuring vendor prefixing using `webpack.loaders.autoprefixer`, you will now need to manage an `autprefixer` dependency yourself and use `webpack.postcss` to perform this configuration.
+  - If you were configuring vendor prefixing using `webpack.loaders.autoprefixer`, you will now need to manage an `autprefixer` dependency yourself and use [`webpack.postcss`](https://github.com/insin/nwb/blob/v0.11.0/docs/Configuration.md#postcss-object) to perform this configuration.
 
 **Added:**
 
-- Added `webpack.postcss` config to customise the PostCSS plugins applied to each style pipeline.
-- Added `webpack.plugins.vendorBundle` to disable extracting anything imported from `node_modules/` into a separate `vendor` bundle [[#106](https://github.com/insin/nwb/issues/106)]
+- Added [`webpack.postcss` config](https://github.com/insin/nwb/blob/v0.11.0/docs/Configuration.md#postcss-object) to customise the PostCSS plugins applied to each style pipeline.
+- Added [`webpack.plugins.vendorBundle` config](https://github.com/insin/nwb/blob/v0.11.0/docs/Configuration.md#pluginsvendorbundle-boolean) to disable extracting anything imported from `node_modules/` out into a separate `vendor` chunk [[#106](https://github.com/insin/nwb/issues/106)]
+- Added [documentation for creating and using a test context module](https://github.com/insin/nwb/blob/v0.11.0/docs/Configuration.md#test-context-module) if there's code you need to run prior to any tests running, such as configuring your assertion library with new assertions.
 
 **Changed:**
 
-- Restored default use of the Babel polyfill in Karma config so tests can assume a more-or-less ES2015 environment.
+- Restored default use of the Babel polyfill in Karma config so tests (and their dependencies) can assume a modern environment.
 
 **Dependencies:**
 
