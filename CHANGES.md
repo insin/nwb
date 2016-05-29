@@ -5,6 +5,7 @@
 
 **Added:**
 
+- Added [`webpack.compat` config](https://github.com/insin/nwb/blob/v0.11.0/docs/Configuration.md#compat-object) to enable compatibility configuration for modules which are commonly problematic with Webpack - initially this includes support for Enzyme, Moment.js and Sinon.js 1.x.
 - Added [`webpack.postcss` config](https://github.com/insin/nwb/blob/v0.11.0/docs/Configuration.md#postcss-object) to customise the PostCSS plugins applied to each style pipeline.
 - Added [`webpack.plugins.vendorBundle` config](https://github.com/insin/nwb/blob/v0.11.0/docs/Configuration.md#pluginsvendorbundle-boolean) to disable extracting anything imported from `node_modules/` out into a separate `vendor` chunk [[#106](https://github.com/insin/nwb/issues/106)]
 - Added [documentation for creating and using a test context module](https://github.com/insin/nwb/blob/v0.11.0/docs/Configuration.md#test-context-module) if there's code you need to run prior to any tests running, such as configuring your assertion library with new assertions.

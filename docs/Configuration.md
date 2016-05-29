@@ -31,6 +31,7 @@ The object exported or returned by your nwb config can use the following fields:
     * [`plugins.html`](#pluginshtml-object)
     * [`plugins.install`](#pluginsinstall-object)
     * [`plugins.vendorBundle`](#pluginsvendorbundle-boolean)
+  * [`webpack.compat`](#compat-object)
   * [`webpack.extra`](#extra-object)
 * Karma Configuration
   * [`karma`](#karma-object)
@@ -295,6 +296,38 @@ module.exports = {
 Plugins for other style pipelines are configured using their prefix as a property name: `vendor` for anything imported out of `node_modules/`, `sass` if you're using the `nwb-sass` preprocessor plugin, etc.
 
 Your app is responsible for managing its own PostCSS plugin dependencies - between the size of the PostCSS ecosystem and the number of different configuration options `postcss-loader` supports, PostCSS could do with its own equivalent of nwb to manage dependencies and configuration!
+
+##### `compat`: `Object`
+
+Certain libraries require specific configuration to play nicely with Webpack - nwb can take care of the details for you if you use a `compat` object to tell it when you're using them. The following libraries are supported:
+
+###### `enzyme`: `Boolean`
+
+Set to `true` for [Enzyme](http://airbnb.io/enzyme/) compatibility - this assumes you're using the latest version of React (v15).
+
+###### `moment`: `Object`
+
+If you use [Moment.js](http://momentjs.com/) in a Webpack build, all the locales it supports will be imported by default. Provide an object with a `locales` Array specifying language codes for the locales you want to load.
+
+###### `sinon`: `Boolean`
+
+Set to `true` for [Sinon.js](http://sinonjs.org/) 1.x compatibility.
+
+Here's an example config showing the use of every `compat` setting:
+
+```js
+module.exports = {
+  webpack: {
+    compat: {
+      enzyme: true,
+      moment: {
+        locales: ['de', 'en-gb', 'es', 'fr', 'it']
+      },
+      sinon: true
+    }
+  }
+}
+```
 
 ##### `extra`: `Object`
 

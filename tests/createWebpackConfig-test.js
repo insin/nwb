@@ -3,6 +3,8 @@ import expect from 'expect'
 
 import createWebpackConfig, {
   combineLoaders,
+  COMPAT_CONFIGS,
+  getCompatConfig,
   createPostCSSConfig,
   getTopLevelLoaderConfig,
   mergeLoaderConfig,
@@ -96,8 +98,19 @@ describe('createWebpackConfig()', () => {
     })
   })
 
+  context('with compat config', () => {
+    it('creates and merges compat config', () => {
+      let config = createWebpackConfig({}, {}, {
+        compat: {
+          enzyme: true
+        }
+      })
+      expect(config.externals).toEqual(COMPAT_CONFIGS.enzyme.externals)
+    })
+  })
+
   context('with extra config', () => {
-    it('merges extra config into the generated webpack config', () => {
+    it('merges extra config', () => {
       let config = createWebpackConfig({}, {}, {extra: {
         resolve: {
           alias: {
@@ -289,5 +302,33 @@ describe('createPostCSSConfig()', () => {
       plugins: [1, 2, 3],
       vendor: [autoprefixer]
     })
+  })
+})
+
+describe('getCompatConfig()', () => {
+  it('returns null if nothing was configured', () => {
+    expect(getCompatConfig()).toBe(null)
+  })
+  it('skips unknown config', () => {
+    expect(getCompatConfig({flarbus: true})).toBe(null)
+  })
+  it('skips falsy config', () => {
+    expect(getCompatConfig({enzyme: false, moment: false, sinon: false})).toBe(null)
+  })
+  it('supports enzyme', () => {
+    expect(getCompatConfig({enzyme: true})).toEqual(COMPAT_CONFIGS.enzyme)
+  })
+  it('supports moment', () => {
+    let config = getCompatConfig({moment: {locales: ['de', 'en-gb']}})
+    expect(config.plugins).toExist()
+    expect(config.plugins.length).toBe(1)
+    expect(config.plugins[0].resourceRegExp).toEqual(/moment[\\\/]locale$/)
+    expect(config.plugins[0].newContentRegExp).toEqual(/^\.\/(de|en-gb)$/)
+  })
+  it('skips invalid moment config', () => {
+    expect(getCompatConfig({moment: {}})).toBe(null)
+  })
+  it('supports sinon', () => {
+    expect(getCompatConfig({sinon: true})).toEqual(COMPAT_CONFIGS.sinon)
   })
 })

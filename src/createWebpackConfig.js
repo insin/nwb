@@ -420,6 +420,64 @@ export function createPostCSSConfig(userPostCSSConfig, cssPreprocessors = {}) {
   return {...postcss, ...userPostCSSConfig}
 }
 
+export const COMPAT_CONFIGS = {
+  enzyme: {
+    externals: {
+      'react/addons': true,
+      'react/lib/ExecutionEnvironment': true,
+      'react/lib/ReactContext': true
+    }
+  },
+  moment({locales}) {
+    if (!Array.isArray(locales)) {
+      console.error(chalk.red("nwb: webpack.compat.moment config must provide a 'locales' Array"))
+      return
+    }
+    return {
+      plugins: [
+        new webpack.ContextReplacementPlugin(
+          /moment[\\\/]locale$/,
+          new RegExp(`^\\.\\/(${locales.join('|')})$`)
+        )
+      ]
+    }
+  },
+  sinon: {
+    module: {
+      noParse: /[/\\]sinon\.js/
+    },
+    resolve: {
+      alias: {
+        sinon: 'sinon/pkg/sinon'
+      }
+    }
+  }
+}
+
+/**
+ * Create a chunk of webpack config containing compatibility tweaks for
+ * libraries which are known to cause issues, to be merged into the generated
+ * config.
+ * Returns null if there's nothing to merge based on user config.
+ */
+export function getCompatConfig(userCompatConfig = {}) {
+  let configs = []
+  Object.keys(userCompatConfig).map(lib => {
+    if (!userCompatConfig[lib]) return
+    if (!COMPAT_CONFIGS.hasOwnProperty(lib)) {
+      console.error(chalk.red(`nwb: unknown property in webpack.compat config: ${lib}`))
+      return
+    }
+    let compatConfig = COMPAT_CONFIGS[lib]
+    if (typeof compatConfig == 'function') {
+      compatConfig = compatConfig(userCompatConfig[lib])
+      if (!compatConfig) return
+    }
+    configs.push(compatConfig)
+  })
+  return configs.length > 0 ? merge(...configs) : null
+}
+
 /**
  * Create a webpack config with a curated set of default loaders suitable for
  * creating a static build (default) or serving an app with hot reloading.
@@ -447,11 +505,7 @@ export default function createWebpackConfig(buildConfig, nwbPluginConfig = {}, u
     // These pieces of user config are managed in a specific way by nwb
     loaders: userLoaderConfig = {},
     plugins: userPluginConfig = {},
-    postcss: userPostCSSConfig = {},
-    // Any extra user webpack config is deep-merged into the generated config
-    // object to give the user even more control. This needs to be used very
-    // carefully as different nwb commands have different webpack config needs.
-    extra: userExtraWebpackConfig = {}
+    postcss: userPostCSSConfig = {}
   } = userConfig
 
   let webpackConfig = {
@@ -474,6 +528,20 @@ export default function createWebpackConfig(buildConfig, nwbPluginConfig = {}, u
     ...getTopLevelLoaderConfig(userLoaderConfig, nwbPluginConfig.cssPreprocessors)
   }
 
-  // Merge any extra config the user provided into the final webpack config
-  return merge(webpackConfig, userExtraWebpackConfig)
+  // Create and merge compatibility configuration into the generated config if
+  // specified.
+  if (userConfig.compat) {
+    let compatConfig = getCompatConfig(userConfig.compat)
+    if (compatConfig) {
+      webpackConfig = merge(webpackConfig, compatConfig)
+    }
+  }
+
+  // Any extra user webpack config is merged into the generated config to give
+  // them even more control.
+  if (userConfig.extra) {
+    webpackConfig = merge(webpackConfig, userConfig.extra)
+  }
+
+  return webpackConfig
 }
