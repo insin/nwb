@@ -32,6 +32,14 @@ function applyDefaultConfig(userConfig, topLevelProp, defaults) {
   }
 }
 
+/**
+ * Allow plugin configuration for the app's own CSS only to be provided as an
+ * Array instad of an object with a defaults property.
+ */
+function prepareWebpackPostCSSConfig(postcss) {
+  return Array.isArray(postcss) ? {defaults: postcss} : postcss
+}
+
 export default function getUserConfig(args = {}, {required = false} = {}) {
   // Try to load default user config, or use a config file path we were given
   // (undocumented).
@@ -73,6 +81,10 @@ export default function getUserConfig(args = {}, {required = false} = {}) {
   // Set defaults for config objects
   applyDefaultConfig(userConfig, 'build', DEFAULT_BUILD_CONFIG)
   applyDefaultConfig(userConfig, 'webpack', DEFAULT_WEBPACK_CONFIG)
+
+  if (userConfig.webpack.postcss) {
+    userConfig.webpack.postcss = prepareWebpackPostCSSConfig(userConfig.webpack.postcss)
+  }
 
   // If the user provided Babel config, automatically apply it to babel-loader
   // as query config unless there's already some set.

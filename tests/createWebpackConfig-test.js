@@ -285,21 +285,21 @@ describe('getTopLevelLoaderConfig()', () => {
 describe('createPostCSSConfig()', () => {
   it('creates default plugin config', () => {
     expect(createPostCSSConfig({})).toEqual({
-      plugins: [autoprefixer],
+      defaults: [autoprefixer],
       vendor: [autoprefixer]
     })
   })
   it('creates default plugin config for CSS preprocessors', () => {
     expect(createPostCSSConfig({}, {less: {}, sass: {}})).toEqual({
-      plugins: [autoprefixer],
+      defaults: [autoprefixer],
       vendor: [autoprefixer],
       less: [autoprefixer],
       sass: [autoprefixer]
     })
   })
   it('overwrites plugin config with user config', () => {
-    expect(createPostCSSConfig({plugins: [1, 2, 3]})).toEqual({
-      plugins: [1, 2, 3],
+    expect(createPostCSSConfig({defaults: [1, 2, 3]})).toEqual({
+      defaults: [1, 2, 3],
       vendor: [autoprefixer]
     })
   })

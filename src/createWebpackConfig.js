@@ -95,8 +95,6 @@ export function createStyleLoader(loader, server, {
     loader(name('postcss'), {
       loader: require.resolve('postcss-loader'),
       query: {
-        // Config for the default pipeline (prefix == null) will come from
-        // top-level postcss.plugins.
         pack: prefix
       }
     })
@@ -398,7 +396,7 @@ export function createPostCSSConfig(userPostCSSConfig, cssPreprocessors = {}) {
   // configured, so we need to set the default PostCSS plugins for every single
   // style pipeline.
   let postcss = {
-    plugins: [autoprefixer],
+    defaults: [autoprefixer],
     vendor: [autoprefixer]
   }
   Object.keys(cssPreprocessors).forEach(id => {
