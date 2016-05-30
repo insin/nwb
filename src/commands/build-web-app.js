@@ -1,5 +1,6 @@
 import path from 'path'
 
+import {getDefaultHTMLConfig} from '../appConfig'
 import {copyPublicDir} from '../utils'
 
 import webpackBuild from '../webpackBuild'
@@ -21,9 +22,7 @@ export default function(args, cb) {
       publicPath: '/'
     },
     plugins: {
-      html: {
-        template: path.resolve('src/index.html')
-      },
+      html: getDefaultHTMLConfig(),
       vendorChunkName: 'vendor'
     }
   }, cb)

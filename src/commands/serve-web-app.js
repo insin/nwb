@@ -1,5 +1,6 @@
 import path from 'path'
 
+import {getDefaultHTMLConfig} from '../appConfig'
 import webpackServer from '../webpackServer'
 
 export default function(args, cb) {
@@ -12,9 +13,7 @@ export default function(args, cb) {
       publicPath: '/'
     },
     plugins: {
-      html: {
-        template: path.resolve('src/index.html')
-      }
+      html: getDefaultHTMLConfig()
     },
     server: {
       staticPath: path.resolve('public')

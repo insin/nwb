@@ -1,5 +1,7 @@
 import path from 'path'
 
+import {getDefaultHTMLConfig} from './appConfig'
+
 export default function() {
   return {
     entry: path.resolve('src/index.js'),
@@ -9,9 +11,7 @@ export default function() {
       publicPath: '/'
     },
     plugins: {
-      html: {
-        template: path.resolve('src/index.html')
-      }
+      html: getDefaultHTMLConfig()
     },
     staticPath: path.resolve('public')
   }
