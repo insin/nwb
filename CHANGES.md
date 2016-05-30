@@ -7,7 +7,7 @@
 
 > For deprecations, nwb v0.11 will support the old format and display warning messages about the changes required.
 
-* `webpack.plugins` is deprecated - config under `webpack.plugins` should be moved up into `webpack` instead. Having certain config under a `plugins` prop was an implementation detail which wasn't relevant to end-users.
+* `webpack.plugins` is deprecated - config under `webpack.plugins` should be moved up into `webpack` instead. Having certain config under a `plugins` prop was an implementation detail which wasn't relevant to end-users [[#113](https://github.com/insin/nwb/issues/113)]
 
   ```js
   // < v0.11
@@ -29,7 +29,7 @@
     }
   }
   ```
-* Support for flatter [Wwebpack loader configuration](https://github.com/insin/nwb/blob/v0.11.0/docs/Configuration.md#loaders-object) was added. Having a `query` object is now optional - loader query configuration can now be placed directly under the loader's id:
+* Support for flatter [Wwebpack loader configuration](https://github.com/insin/nwb/blob/v0.11.0/docs/Configuration.md#loaders-object) was added. Having a `query` object is now optional - loader query configuration can now be placed directly under the loader's id [[#113](https://github.com/insin/nwb/issues/113)]
 
   ```js
   // < v0.11
@@ -60,8 +60,8 @@
 
 **Added:**
 
-- Added [`webpack.compat` config](https://github.com/insin/nwb/blob/v0.11.0/docs/Configuration.md#compat-object) to enable compatibility configuration for modules which are commonly problematic with Webpack - initially this includes support for Enzyme, Moment.js and Sinon.js 1.x.
-- Added [`webpack.postcss` config](https://github.com/insin/nwb/blob/v0.11.0/docs/Configuration.md#postcss-object) to customise the PostCSS plugins applied to each style pipeline.
+- Added [`webpack.compat` config](https://github.com/insin/nwb/blob/v0.11.0/docs/Configuration.md#compat-object) to enable compatibility configuration for modules which are commonly problematic with Webpack - initially this includes support for Enzyme, Moment.js and Sinon.js 1.x [[#108](https://github.com/insin/nwb/issues/108)]
+- Added [`webpack.postcss` config](https://github.com/insin/nwb/blob/v0.11.0/docs/Configuration.md#postcss-object) to customise the PostCSS plugins applied to each style pipeline [[#57](https://github.com/insin/nwb/issues/57)]
 - Added [`webpack.vendorBundle` config](https://github.com/insin/nwb/blob/v0.11.0/docs/Configuration.md#vendorbundle-boolean) to disable extracting anything imported from `node_modules/` out into a separate `vendor` chunk [[#106](https://github.com/insin/nwb/issues/106)]
 - Added [documentation for creating and using a test context module](https://github.com/insin/nwb/blob/v0.11.0/docs/Configuration.md#test-context-module) if there's code you need to run prior to any tests running, such as configuring your assertion library with new assertions.
 
