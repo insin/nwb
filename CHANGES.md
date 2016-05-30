@@ -3,16 +3,71 @@
 - Replaced the deprecated `autoprefixer-loader` with `postcss-loader` in default style pipelines - it's configured to do the same autoprefixing by default [[#57](https://github.com/insin/nwb/issues/57)]
   - If you were configuring vendor prefixing using `webpack.loaders.autoprefixer`, you will now need to manage an `autprefixer` dependency yourself and use [`webpack.postcss`](https://github.com/insin/nwb/blob/v0.11.0/docs/Configuration.md#postcss-object) to perform this configuration.
 
+**`nwb.config.js` Config Format Changes:**
+
+> For deprecations, nwb v0.11 will support the old format and display warning messages about the changes required.
+
+* `webpack.plugins` is deprecated - config under `webpack.plugins` should be moved up into `webpack` instead. Having certain config under a `plugins` prop was an implementation detail which wasn't relevant to end-users.
+
+  ```js
+  // < v0.11
+  module.exports = {
+    webpack: {
+      plugins: {
+        define: {...},
+        html: {...}
+      }
+    }
+  }
+  ```
+  ```js
+  // v0.11
+  module.exports = {
+    webpack: {
+      define: {...},
+      html: {...}
+    }
+  }
+  ```
+* Support for flatter [Wwebpack loader configuration](https://github.com/insin/nwb/blob/v0.11.0/docs/Configuration.md#loaders-object) was added. Having a `query` object is now optional - loader query configuration can now be placed directly under the loader's id:
+
+  ```js
+  // < v0.11
+  module.exports = {
+    webpack: {
+      loaders: {
+        css: {
+          query: {
+            modules: true
+          }
+        }
+      }
+    }
+  }
+  ```
+  ```js
+  // v0.11
+  module.exports = {
+    webpack: {
+      loaders: {
+        css: {
+          modules: true
+        }
+      }
+    }
+  }
+  ```
+
 **Added:**
 
 - Added [`webpack.compat` config](https://github.com/insin/nwb/blob/v0.11.0/docs/Configuration.md#compat-object) to enable compatibility configuration for modules which are commonly problematic with Webpack - initially this includes support for Enzyme, Moment.js and Sinon.js 1.x.
 - Added [`webpack.postcss` config](https://github.com/insin/nwb/blob/v0.11.0/docs/Configuration.md#postcss-object) to customise the PostCSS plugins applied to each style pipeline.
-- Added [`webpack.plugins.vendorBundle` config](https://github.com/insin/nwb/blob/v0.11.0/docs/Configuration.md#pluginsvendorbundle-boolean) to disable extracting anything imported from `node_modules/` out into a separate `vendor` chunk [[#106](https://github.com/insin/nwb/issues/106)]
+- Added [`webpack.vendorBundle` config](https://github.com/insin/nwb/blob/v0.11.0/docs/Configuration.md#vendorbundle-boolean) to disable extracting anything imported from `node_modules/` out into a separate `vendor` chunk [[#106](https://github.com/insin/nwb/issues/106)]
 - Added [documentation for creating and using a test context module](https://github.com/insin/nwb/blob/v0.11.0/docs/Configuration.md#test-context-module) if there's code you need to run prior to any tests running, such as configuring your assertion library with new assertions.
 
 **Changed:**
 
-- Apps are no longer required to provide their own HTML template. The default template path of `src/index.html` will continue to be used if it exists. If an alternative template is not provided via [`webpack.plugins.html` config](https://github.com/insin/nwb/blob/v0.11.0/docs/Configuration.md#pluginshtml-object), nwb will now fall back to using a basic template.
+- Apps are no longer required to provide their own HTML template. The default template path of `src/index.html` will continue to be used if it exists. If an alternative template is not provided via [`webpack.html` config](https://github.com/insin/nwb/blob/v0.11.0/docs/Configuration.md#html-object), nwb will now fall back to using a basic template.
 - Restored default use of the Babel polyfill in Karma config so tests (and their dependencies) can assume a modern environment.
 
 **Dependencies:**
@@ -87,7 +142,7 @@
 
 **Removed:**
 
-- Backwards compatibility for `nwb.config.js` format changes made in 0.8 have been removed.
+- Backwards compatibility for `nwb.config.js` format changes made in 0.8 has been removed.
 
 **Added:**
 
@@ -135,13 +190,11 @@
 
   If you were configuring automatic npm installation using a `loaders.install.query.cli` config object, this should be moved to `webpack.plugins.install` instead.
 
-**Changed:**
-
-*`nwb.config.js` format changes:*
+**`nwb.config.js` Config Format Changes:**
 
 > nwb v0.8 will support the old format and display warning messages about the changes required before upgrading to nwb v0.9.
 
-1. React component and vanilla JS module npm build configuration must now be specificed as a `build` object:
+* React component and vanilla JS module npm build configuration must now be specificed as a `build` object:
 
   ```js
   // < v0.9
@@ -165,7 +218,7 @@
     }
   }
   ```
-1. Webpack configuration must now be specified as a `webpack` object:
+* Webpack configuration must now be specified as a `webpack` object:
 
   ```js
   // < v0.9
@@ -195,7 +248,7 @@
     }
   }
   ```
-1. Webpack `define` config must now be specified in a `plugins` object:
+* Webpack `define` config must now be specified in a `plugins` object:
 
   ```js
   // < v0.9
@@ -219,7 +272,7 @@
     }
   }
   ```
-1. All "extra" Webpack config must be specified in a an `extra` object, including extra loaders. The new object must correspond with Webpack's config file layout.
+* All "extra" Webpack config must be specified in a an `extra` object, including extra loaders. The new object must correspond with Webpack's config file layout.
 
   ```js
   // < v0.9

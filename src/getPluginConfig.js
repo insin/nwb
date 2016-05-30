@@ -5,6 +5,10 @@ import merge from 'webpack-merge'
 
 import debug from './debug'
 
+/**
+ * Look for nwb-* plugin dependencies in package.json, import them and merge the
+ * plugin config objects they export.
+ */
 export default function getPluginConfig(cwd = process.cwd()) {
   let pkg = require(path.join(cwd, 'package.json'))
   let plugins = [

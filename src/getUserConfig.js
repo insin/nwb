@@ -1,5 +1,6 @@
 import path from 'path'
 
+import {magenta} from 'chalk'
 import glob from 'glob'
 import webpack from 'webpack'
 
@@ -15,8 +16,7 @@ const DEFAULT_BUILD_CONFIG = {
 }
 
 const DEFAULT_WEBPACK_CONFIG = {
-  loaders: {},
-  plugins: {}
+  loaders: {}
 }
 
 function applyDefaultConfig(userConfig, topLevelProp, defaults) {
@@ -30,6 +30,22 @@ function applyDefaultConfig(userConfig, topLevelProp, defaults) {
       }
     })
   }
+}
+
+/**
+ * Move loader query config tweaks into a query object, allowing users to
+ * provide a flat config.
+ */
+export function prepareWebpackLoaderConfig(loaders) {
+  Object.keys(loaders).forEach(loaderId => {
+    let loader = loaders[loaderId]
+    if (loader.query) return loader
+    let {config, exclude, include, test, ...query} = loader // eslint-disable-line no-unused-vars
+    if (Object.keys(query).length > 0) {
+      loader.query = query
+      Object.keys(query).forEach(prop => delete loader[prop])
+    }
+  })
 }
 
 /**
@@ -81,6 +97,16 @@ export default function getUserConfig(args = {}, {required = false} = {}) {
   // Set defaults for config objects
   applyDefaultConfig(userConfig, 'build', DEFAULT_BUILD_CONFIG)
   applyDefaultConfig(userConfig, 'webpack', DEFAULT_WEBPACK_CONFIG)
+
+  if (userConfig.webpack.plugins) {
+    console.log(magenta('nwb: webpack.plugins in nwb.config.js is deprecated as of nwb 0.11 - put this config directly under webpack instead'))
+    userConfig.webpack = {...userConfig.webpack, ...userConfig.webpack.plugins}
+    delete userConfig.webpack.plugins
+  }
+
+  if (userConfig.webpack.loaders) {
+    prepareWebpackLoaderConfig(userConfig.webpack.loaders)
+  }
 
   if (userConfig.webpack.postcss) {
     userConfig.webpack.postcss = prepareWebpackPostCSSConfig(userConfig.webpack.postcss)

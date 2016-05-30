@@ -24,13 +24,12 @@ The object exported or returned by your nwb config can use the following fields:
   * [`webpack.loaders`](#loaders-object)
     * [Default loaders](#default-loaders)
     * [Test loaders](#test-loaders)
-  * [`webpack.plugins`](#plugins-object)
-    * [`plugins.define`](#pluginsdefine-object)
-    * [`plugins.extractText`](#pluginsextracttext-object)
-    * [`plugins.html`](#pluginshtml-object)
-    * [`plugins.install`](#pluginsinstall-object)
-    * [`plugins.vendorBundle`](#pluginsvendorbundle-boolean)
-  * [`webpack.postcss`](#postcss-object)
+  * [`webpack.define`](#define-object)
+  * [`webpack.extractText`](#extracttext-object)
+  * [`webpack.html`](#html-object)
+  * [`webpack.install`](#install-object)
+  * [`webpack.vendorBundle`](#vendorbundle-boolean)
+  * [`webpack.postcss`](#postcss-array-object)
   * [`webpack.compat`](#compat-object)
   * [`webpack.extra`](#extra-object)
 * Karma Configuration
@@ -99,7 +98,7 @@ If provided, Babel config will also be used to configure the `babel-loader` Webp
 
 #### `webpack`: `Object`
 
-Webpack configuration must be provided in a `webpack` object.
+Webpack configuration can be provided in a `webpack` object.
 
 ##### `loaders`: `Object`
 
@@ -107,17 +106,32 @@ Each [Webpack loader](https://webpack.github.io/docs/loaders.html) configured by
 
 To customise a loader, add a prop to the `loaders` object matching its id with a configuration object.
 
-Refer to each loader's documentation for configuration options which can be set via `query`.
+Refer to each loader's documentation (linked to for each [default loader](#default-loaders) documented below) for configuration options which can be set.
 
-e.g., to enable [CSS Modules][CSS Modules]:
+Generic loader options such as `include` and `exclude` can be configured alongside loader-specific query options - you can also use an explicit `query` object if necessary to separate this configuration.
+
+e.g. to enable [CSS Modules][CSS Modules] for your app's CSS, the following loader configs are equivalent:
 
 ```js
 module.exports = {
   webpack: {
     loaders: {
       css: {
+        modules: true,
+        localIdentName: '[hash:base64:5]'
+      }
+    }
+  }
+}
+```
+```js
+module.exports = {
+  webpack: {
+    loaders: {
+      css: {
         query: {
-          modules: true
+          modules: true,
+          localIdentName: '[hash:base64:5]'
         }
       }
     }
@@ -125,7 +139,7 @@ module.exports = {
 }
 ```
 
-If a loader supports configuration via a top-level webpack configuration property, this can be provided as `config`. This is primarily for loaders which can't be configured via `query` as they have configuration which can't be serialised, such as instances of plugins.
+If a loader supports configuration via a top-level webpack configuration property, this can be provided as a `config` prop. This is primarily for loaders which can't be configured via query parameters as they have configuration which can't be serialised, such as instances of plugins.
 
 e.g. to use the `nib` plugin with the [Stylus](http://learnboost.github.io/stylus/) preprocessor provided by [nwb-stylus](https://github.com/insin/nwb-stylus):
 
@@ -149,9 +163,9 @@ Alternatively, you can also add new properties directly to the top-level Webpack
 
 ###### Default Loaders
 
-Default loaders and their ids are:
+Default loaders configured by nwb and the ids it gives them are:
 
-* `babel` - handles `.js` and `.jsx` files with [babel-loader][babel-loader]
+* `babel` - handles `.js` (and `.jsx`) files with [babel-loader][babel-loader]
 
   > Default config: `{exclude: /node_modules/}`
 
@@ -165,19 +179,19 @@ Default loaders and their ids are:
   * `css` - handles URLs, minification and CSS Modules using [css-loader][css-loader]
   * `postcss` - processes CSS with PostCSS plugins using [postcss-loader][postcss-loader]; by default, this is configured to automatically add vendor prefixes to CSS using [autoprefixer][autoprefixer]
 
-* `vendor-css-pipeline` - handles `.css` files required from `node_modules`, with the same set of chained loaders as `css-pipeline` but with a `vendor-` prefix in their id.
+* `vendor-css-pipeline` - handles `.css` files required from `node_modules/`, with the same set of chained loaders as `css-pipeline` but with a `vendor-` prefix in their id.
 
   > Default config: `{include: /node_modules/}`
 
 * `graphics` - handles `.gif` and `.png` files using using [url-loader][url-loader]
 
-  > Default config: `{query: {limit: 10240}}`
+  > Default config: `{limit: 10240}`
 
 * `jpeg` - handles `.jpeg` files using [file-loader][file-loader]
 
 * `fonts` - handles `.otf`, `.svg`, `.ttf`, `.woff` and `.woff2` files using [url-loader][url-loader]
 
-  > Default config: `{query: {limit: 10240}}`
+  > Default config: `{limit: 10240}`
 
 * `eot` - handles `.eot` files using [file-loader][file-loader]
 
@@ -205,29 +219,25 @@ When running Karma tests with coverage enabled, the following loader will be add
   }
   ```
 
-##### `plugins`: `Object`
-
-###### `plugins.define`: `Object`
+##### `define`: `Object`
 
 By default, nwb will use Webpack's [`DefinePlugin`](https://webpack.github.io/docs/list-of-plugins.html#defineplugin) to replace all occurances of `process.env.NODE_ENV` with a string containing `NODE_ENV`'s current value.
 
-You can configure a `plugins.define` object to add your own constant values.
+You can configure a `define` object to add your own constant values.
 
 e.g. to replace all occurrences of `__VERSION__` with a string containing your app's version from its `package.json`:
 
 ```js
 module.exports = {
   webpack: {
-    plugins: {
-      define: {
-        __VERSION__: JSON.stringify(require('./package.json').version)
-      }
+    define: {
+      __VERSION__: JSON.stringify(require('./package.json').version)
     }
   }
 }
 ```
 
-###### `plugins.extractText`: `Object`
+##### `extractText`: `Object`
 
 Configures [options for `ExtractTextWebpackPlugin`](https://github.com/webpack/extract-text-webpack-plugin#readme).
 
@@ -236,16 +246,14 @@ This can be used to control whether or not CSS is extracted from all chunks in a
 ```js
 module.exports = {
   webpack: {
-    plugins: {
-      extractText: {
-        allChunks: true
-      }
+    extractText: {
+      allChunks: true
     }
   }
 }
 ```
 
-###### `plugins.html`: `Object`
+##### `html`: `Object`
 
 For apps, nwb will look for a `src/index.html` template to inject `<link>` and `<script>` tags into for each CSS and JavaScript bundle generated by Webpack.
 
@@ -254,10 +262,8 @@ Use `template`config if you have an HTML file elsewhere you want to use:
 ```js
 module.exports = {
   webpack: {
-    plugins: {
-      html: {
-        template: 'html/index.html'
-      }
+    html: {
+      template: 'html/index.html'
     }
   }
 }
@@ -276,11 +282,9 @@ If you don't have a template at `src/index.html` or specify one via `template`, 
 ```js
 module.exports = {
   webpack: {
-    plugins: {
-      html: {
-        mountId: 'root',
-        title: 'Unimaginative documentation example'
-      }
+    html: {
+      mountId: 'root',
+      title: 'Unimaginative documentation example'
     }
   }
 }
@@ -291,39 +295,55 @@ Oher [`HtmlWebpackPlugin` options](https://github.com/ampedandwired/html-webpack
 ```js
 module.exports = {
   webpack: {
-    plugins: {
-      html: {
-        favicon: 'src/favicon.ico'
-      }
+    html: {
+      favicon: 'src/favicon.ico'
     }
   }
 }
 ```
 
-###### `plugins.install`: `Object`
+##### `install`: `Object`
 
 Configures [options for `NpmInstallPlugin`](https://github.com/ericclemmons/npm-install-webpack-plugin#usage), which will be used if you pass `--auto-install` flag to `nwb serve`.
 
-###### `plugins.vendorBundle`: `Boolean`
+##### `vendorBundle`: `Boolean`
 
 Setting this to `false` disables extraction of anything imported from `node_modules/` into a `vendor` bundle.
 
-##### `postcss`: `Object`
+##### `postcss`: `Array | Object`
 
 By default, nwb configures the `postcss-loader` in each style pipeline to automatically add vendor prefixes to CSS rules.
 
-You can configure a `postcss` object to provide your own list of PostCSS plugins to be used for each pipeline, which will completely overwrite nwb's default configuration.
+Use `postcss` configuration to provide your own list of PostCSS plugins to be used for each pipeline, which will completely overwrite nwb's default configuration.
 
-PostCSS plugins for the default style pipeline (applied to your app's own CSS) must be configured using a `plugins` property:
+If you're *only* configuring PostCSS plugins for your app's own CSS, you can just provide a list:
 
 ```js
 module.exports = {
   webpack: {
+    postcss: [
+      require('precss'),
+      require('autoprefixer'),
+      require('cssnano')
+    ]
+  }
+}
+```
+
+Use an object if you're configuring other style pipelines or additional style pipeline. When using an object, PostCSS plugins for the default style pipeline (applied to your app's own CSS) must be configured using a `defaults` property:
+
+```js
+var autoprefixer = require('autoprefixer')
+module.exports = {
+  webpack: {
     postcss: {
-      plugins: [
+      defaults: [
         require('precss'),
-        require('autoprefixer'),
+        autoprefixer,
         require('cssnano')
+      ],
+      vendor: [
+        autoprefixer({add: false})
       ]
     }
   }

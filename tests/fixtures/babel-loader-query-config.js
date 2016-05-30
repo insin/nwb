@@ -9,11 +9,9 @@ module.exports = {
     loaders: {
       babel: {
         exclude: 'test',
-        query: {
-          loose: 'all',
-          stage: 0,
-          optional: ['runtime']
-        }
+        loose: 'all',
+        stage: 0,
+        optional: ['runtime']
       }
     }
   }

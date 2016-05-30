@@ -491,7 +491,7 @@ export default function createWebpackConfig(buildConfig, nwbPluginConfig = {}, u
     module: {
       loaders: createLoaders(server, loaders, userConfig.loaders, nwbPluginConfig)
     },
-    plugins: createPlugins(server, plugins, userConfig.plugins),
+    plugins: createPlugins(server, plugins, userConfig),
     resolve: merge({
       extensions: ['', '.web.js', '.js', '.jsx', '.json'],
       // Fall back to resolving runtime dependencies from nwb's dependencies,
