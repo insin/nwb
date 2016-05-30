@@ -29,7 +29,7 @@
     }
   }
   ```
-* Support for flatter [Wwebpack loader configuration](https://github.com/insin/nwb/blob/v0.11.0/docs/Configuration.md#loaders-object) was added. Having a `query` object is now optional - loader query configuration can now be placed directly under the loader's id [[#113](https://github.com/insin/nwb/issues/113)]
+* Support for flatter [Webpack loader configuration](https://github.com/insin/nwb/blob/v0.11.0/docs/Configuration.md#loaders-object) was added. Having a `query` object is now optional - loader query configuration can now be placed directly under the loader's id [[#113](https://github.com/insin/nwb/issues/113)]
 
   ```js
   // < v0.11
@@ -60,14 +60,14 @@
 
 **Added:**
 
-- Added [`webpack.compat` config](https://github.com/insin/nwb/blob/v0.11.0/docs/Configuration.md#compat-object) to enable compatibility configuration for modules which are commonly problematic with Webpack - initially this includes support for Enzyme, Moment.js and Sinon.js 1.x [[#108](https://github.com/insin/nwb/issues/108)]
+- Added [`webpack.compat` config](https://github.com/insin/nwb/blob/v0.11.0/docs/Configuration.md#compat-object) to enable compatibility tweaks for modules which are known to be problematic with Webpack - initially this includes support for Enzyme, Moment.js and Sinon.js 1.x [[#108](https://github.com/insin/nwb/issues/108)]
 - Added [`webpack.postcss` config](https://github.com/insin/nwb/blob/v0.11.0/docs/Configuration.md#postcss-object) to customise the PostCSS plugins applied to each style pipeline [[#57](https://github.com/insin/nwb/issues/57)]
-- Added [`webpack.vendorBundle` config](https://github.com/insin/nwb/blob/v0.11.0/docs/Configuration.md#vendorbundle-boolean) to disable extracting anything imported from `node_modules/` out into a separate `vendor` chunk [[#106](https://github.com/insin/nwb/issues/106)]
-- Added [documentation for creating and using a test context module](https://github.com/insin/nwb/blob/v0.11.0/docs/Configuration.md#test-context-module) if there's code you need to run prior to any tests running, such as configuring your assertion library with new assertions.
+- Added [`webpack.vendorBundle` config](https://github.com/insin/nwb/blob/v0.11.0/docs/Configuration.md#vendorbundle-boolean) to disable automatically extracting anything imported from `node_modules/` out into a separate `vendor` chunk [[#106](https://github.com/insin/nwb/issues/106)]
+- Added [documentation for creating and using a test context module](https://github.com/insin/nwb/blob/v0.11.0/docs/Configuration.md#test-context-module) if there's code you need to run prior to tests running, such as configuring your assertion library with new assertions.
 
 **Changed:**
 
-- Apps are no longer required to provide their own HTML template. The default template path of `src/index.html` will continue to be used if it exists. If an alternative template is not provided via [`webpack.html` config](https://github.com/insin/nwb/blob/v0.11.0/docs/Configuration.md#html-object), nwb will now fall back to using a basic template.
+- Apps are no longer required to provide their own HTML template. The default template path of `src/index.html` will continue to be used if a file exists there. If an alternative template is not provided via [`webpack.html` config](https://github.com/insin/nwb/blob/v0.11.0/docs/Configuration.md#html-object), nwb will now fall back to using a basic template.
 - Restored default use of the Babel polyfill in Karma config so tests (and their dependencies) can assume a modern environment.
 
 **Dependencies:**
