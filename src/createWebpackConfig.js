@@ -22,6 +22,9 @@ const FILE_LOADER_DEFAULTS = {
 // From http://webpack.github.io/docs/configuration.html
 const WEBPACK_RESERVED = 'context entry output module resolve resolveLoader externals target bail profile cache watch watchOptions debug devtool devServer node amd loader recordsPath recordsInputPath recordsOutputPath plugins'.split(' ')
 
+/**
+ * Create a loader string from a list of {loader, query} objects.
+ */
 export let combineLoaders = loaders =>
   loaders.map(loader => {
     let query = qs.stringify(loader.query, {arrayFormat: 'brackets'})
@@ -257,25 +260,10 @@ export function failBuildOnCompilationError() {
  * - any extra plugins defined in build and user config.
  */
 export function createPlugins(server, buildConfig = {}, userConfig = {}) {
-  let {
-    // Banner comment to be added to each generated file in a UMD build
-    banner,
-    // Extra constant replacements for DefinePlugin
-    define,
-    // Escape hatch for adding new build-specific plugins
-    extra,
-    // Options for HtmlWebpackPlugin
-    html,
-    // Options for NpmInstallPlugin
-    install,
-    // Name to use for a vendor chunk - providing a name causes it to be created.
-    vendorChunkName
-  } = buildConfig
-
   let plugins = [
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development'),
-      ...define,
+      ...buildConfig.define,
       ...userConfig.define
     }),
     new optimize.DedupePlugin(),
@@ -300,9 +288,9 @@ export function createPlugins(server, buildConfig = {}, userConfig = {}) {
     }))
 
     // Move modules imported from node_modules into a vendor chunk
-    if (userConfig.vendorBundle !== false && vendorChunkName) {
+    if (userConfig.vendorBundle !== false && buildConfig.vendorChunkName) {
       plugins.push(new optimize.CommonsChunkPlugin({
-        name: vendorChunkName,
+        name: buildConfig.vendorChunkName,
         minChunks(module, count) {
           return (
             module.resource &&
@@ -322,27 +310,27 @@ export function createPlugins(server, buildConfig = {}, userConfig = {}) {
     }))
   }
 
-  if (html) {
+  if (buildConfig.html) {
     plugins.push(new HtmlWebpackPlugin({
       template: path.join(__dirname, '../templates/webpack-template.html'),
-      ...html,
+      ...buildConfig.html,
       ...userConfig.html
     }))
   }
 
-  if (install) {
+  if (buildConfig.install) {
     plugins.push(new NpmInstallPlugin({
-      ...install,
+      ...buildConfig.install,
       ...userConfig.install
     }))
   }
 
-  if (banner) {
-    plugins.push(new webpack.BannerPlugin(banner))
+  if (buildConfig.banner) {
+    plugins.push(new webpack.BannerPlugin(buildConfig.banner))
   }
 
-  if (extra) {
-    plugins = plugins.concat(extra)
+  if (buildConfig.extra) {
+    plugins = plugins.concat(buildConfig.extra)
   }
 
   return plugins
@@ -501,18 +489,11 @@ export default function createWebpackConfig(buildConfig, nwbPluginConfig = {}, u
     ...otherBuildConfig
   } = buildConfig
 
-  let {
-    // These pieces of user config are managed in a specific way by nwb
-    loaders: userLoaderConfig = {},
-    plugins: userPluginConfig = {},
-    postcss: userPostCSSConfig = {}
-  } = userConfig
-
   let webpackConfig = {
     module: {
-      loaders: createLoaders(server, loaders, userLoaderConfig, nwbPluginConfig)
+      loaders: createLoaders(server, loaders, userConfig.loaders, nwbPluginConfig)
     },
-    plugins: createPlugins(server, plugins, userPluginConfig),
+    plugins: createPlugins(server, plugins, userConfig.plugins),
     resolve: merge({
       extensions: ['', '.web.js', '.js', '.jsx', '.json'],
       // Fall back to resolving runtime dependencies from nwb's dependencies,
@@ -520,12 +501,12 @@ export default function createWebpackConfig(buildConfig, nwbPluginConfig = {}, u
       // ['runtime'] for async/await.
       fallback: path.join(__dirname, '../node_modules')
     }, resolve),
-    postcss: createPostCSSConfig(userPostCSSConfig, nwbPluginConfig.cssPreprocessors),
+    postcss: createPostCSSConfig(userConfig.postcss, nwbPluginConfig.cssPreprocessors),
     ...otherBuildConfig,
     // Top level loader config can be supplied via user "loaders" config, so we
     // detect, extract and where possible validate it before merging it into the
     // final webpack config object.
-    ...getTopLevelLoaderConfig(userLoaderConfig, nwbPluginConfig.cssPreprocessors)
+    ...getTopLevelLoaderConfig(userConfig.loaders, nwbPluginConfig.cssPreprocessors)
   }
 
   // Create and merge compatibility configuration into the generated config if
