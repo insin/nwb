@@ -91,9 +91,9 @@ nwb: test
 ...
 ```
 
-### Example projects
+## Example Projects
 
-#### Github Issues
+### Github Issues
 
 [react-nwb-github-issues](https://github.com/insin/react-nwb-github-issues) is a clone of the ember-cli [github-issues-demo](https://github.com/wycats/github-issues-demo) demo app, showing development of a React app from scratch using nwb.
 
@@ -105,7 +105,7 @@ Selected commits of interest:
 
 *Note: this example app initially tries to stick close to the original version commit-by-commit for the sake of comparison, by using [async-props](https://github.com/rackt/async-props), which is currently in pre-release.*
 
-#### Yelp Clone
+### Yelp Clone
 
 [react-yelp-clone](https://github.com/insin/react-yelp-clone) takes the app created in the [Build a Yelp Clone](https://www.fullstackreact.com/articles/react-tutorial-cloning-yelp/) React tutorial and uses nwb for its development tooling, with a custom `nwb.config.js` to support the same setup.
 
