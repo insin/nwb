@@ -137,8 +137,10 @@ export function createLoaders(server, buildConfig = {}, userConfig = {}, pluginC
       loader: require.resolve('babel-loader'),
       exclude: /node_modules/,
       query: {
-        // Ignore any .babelrc files in the app's path
-        breakConfig: true
+        // Ignore any .babelrc files in the app or its path
+        breakConfig: true,
+        // Cache transformations to the filesystem (in default OS temp dir)
+        cacheDirectory: true
       }
     }),
     loader('css-pipeline', {

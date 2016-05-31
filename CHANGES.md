@@ -69,6 +69,7 @@
 
 - Apps are no longer required to provide their own HTML template. The default template path of `src/index.html` will continue to be used if a file exists there. If an alternative template is not provided via [`webpack.html` config](https://github.com/insin/nwb/blob/v0.11.0/docs/Configuration.md#html-object), nwb will now fall back to using a basic template.
 - Restored default use of the Babel polyfill in Karma config so tests (and their dependencies) can assume a modern environment.
+- Default `babel-loader` config now uses [`cacheDirectory: true` for a speedup](https://github.com/babel/babel-loader#babel-loader-is-slow).
 
 **Dependencies:**
 
