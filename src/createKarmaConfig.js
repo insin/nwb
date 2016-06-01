@@ -10,7 +10,7 @@ import merge from 'webpack-merge'
 import createWebpackConfig from './createWebpackConfig'
 import debug from './debug'
 import getPluginConfig from './getPluginConfig'
-import {typeOf} from './utils'
+import {deepToString, typeOf} from './utils'
 
 const DEFAULT_TESTS = 'tests/**/*-test.js'
 
@@ -178,6 +178,6 @@ export default function({codeCoverage, singleRun}, userConfig) {
     }
   }, userKarma.extra)
 
-  debug('karma config %o', karmaConfig)
+  debug('karma config: %s', deepToString(karmaConfig))
   return karmaConfig
 }

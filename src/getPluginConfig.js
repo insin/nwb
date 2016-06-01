@@ -4,6 +4,7 @@ import resolve from 'resolve'
 import merge from 'webpack-merge'
 
 import debug from './debug'
+import {deepToString} from './utils'
 
 /**
  * Look for nwb-* plugin dependencies in package.json, import them and merge the
@@ -17,15 +18,19 @@ export default function getPluginConfig(cwd = process.cwd()) {
   ].filter(dep => /^nwb-/.test(dep))
 
   debug('%s nwb-* dependencies in package.json', plugins.length)
-  if (plugins.length) {
-    debug('nwb-* dependencies %o', plugins)
+  if (!plugins.length) {
+    return {}
   }
+
+  debug('nwb-* dependencies: %o', plugins)
 
   let pluginConfig = {}
   plugins.forEach(plugin => {
     let pluginModule = require(resolve.sync(plugin, {basedir: cwd}))
     pluginConfig = merge(pluginConfig, pluginModule)
   })
+
+  debug('plugin config: %s', deepToString(pluginConfig))
 
   return pluginConfig
 }

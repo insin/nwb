@@ -16,7 +16,7 @@ describe('getUserConfig()', () => {
 
   it('throws an error when the config file has an invalid type', () => {
     expect(() => getUserConfig({config: 'tests/fixtures/invalid-type-config.js'}))
-      .toThrow(/invalid project type configured/)
+      .toThrow(/invalid type config/)
   })
 
   it("returns default config when a non-required config file can't be found", () => {

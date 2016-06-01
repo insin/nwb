@@ -7,6 +7,7 @@ import webpack from 'webpack'
 import {PROJECT_TYPES} from './constants'
 import debug from './debug'
 import {UserError} from './errors'
+import {deepToString, typeOf} from './utils'
 
 const DEFAULT_BUILD_CONFIG = {
   externals: {},
@@ -19,6 +20,10 @@ const DEFAULT_WEBPACK_CONFIG = {
   loaders: {}
 }
 
+/**
+ * Populate defaults for absent top level config, or fill in absent config which
+ * is relied on downstream with default values.
+ */
 function applyDefaultConfig(userConfig, topLevelProp, defaults) {
   if (!(topLevelProp in userConfig)) {
     userConfig[topLevelProp] = {...defaults}
@@ -80,34 +85,42 @@ export default function getUserConfig(args = {}, {required = false} = {}) {
     }
   }
 
-  if (typeof userConfig == 'function') {
+  // Config modules can export a function if they need to access the current
+  // command or the webpack dependency nwb manages for them.
+  if (typeOf(userConfig) === 'function') {
     userConfig = userConfig({
       command: args._[0],
       webpack
     })
   }
 
-  if ((required || 'type' in userConfig) && PROJECT_TYPES.indexOf(userConfig.type) === -1) {
+  function invalidConfig(type, value, message) {
     throw new UserError(
-      `nwb: invalid project type configured in ${userConfigPath}: ${userConfig.type}`,
-      `nwb: 'type' config must be one of: ${PROJECT_TYPES.join(', ')}`
+      `nwb: invalid ${type} config in ${userConfigPath}: ${value}`,
+      `nwb: ${type} ${message}`
     )
   }
 
-  // Set defaults for config objects
+  if ((required || 'type' in userConfig) && PROJECT_TYPES.indexOf(userConfig.type) === -1) {
+    invalidConfig('type', userConfig.type, `must be one of: ${PROJECT_TYPES.join(', ')}`)
+  }
+
+  // Set defaults for config objects, as build config can contribute to webpack
+  // config regardless of whether the user provided any.
   applyDefaultConfig(userConfig, 'build', DEFAULT_BUILD_CONFIG)
   applyDefaultConfig(userConfig, 'webpack', DEFAULT_WEBPACK_CONFIG)
 
+  // TODO Remove in a future version
   if (userConfig.webpack.plugins) {
-    console.log(magenta('nwb: webpack.plugins in nwb.config.js is deprecated as of nwb 0.11 - put this config directly under webpack instead'))
+    console.log(magenta(`nwb: webpack.plugins in ${userConfigPath} is deprecated as of nwb 0.11 - put this config directly under webpack instead`))
     userConfig.webpack = {...userConfig.webpack, ...userConfig.webpack.plugins}
     delete userConfig.webpack.plugins
   }
 
+  // Expand webpack config where convenience shorthand is supported
   if (userConfig.webpack.loaders) {
     prepareWebpackLoaderConfig(userConfig.webpack.loaders)
   }
-
   if (userConfig.webpack.postcss) {
     userConfig.webpack.postcss = prepareWebpackPostCSSConfig(userConfig.webpack.postcss)
   }
@@ -117,15 +130,13 @@ export default function getUserConfig(args = {}, {required = false} = {}) {
   if (userConfig.babel) {
     if (!userConfig.webpack.loaders.babel) {
       userConfig.webpack.loaders.babel = {query: userConfig.babel}
-      debug('added babel-loader with user babel config')
     }
     else if (!userConfig.webpack.loaders.babel.query) {
       userConfig.webpack.loaders.babel.query = userConfig.babel
-      debug('added query to babel-loader with user babel config')
     }
   }
 
-  debug('final user config: %o', userConfig)
+  debug('user config: %s', deepToString(userConfig))
 
   return userConfig
 }

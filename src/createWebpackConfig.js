@@ -1,4 +1,3 @@
-import assert from 'assert'
 import path from 'path'
 
 import autoprefixer from 'autoprefixer'
@@ -11,7 +10,7 @@ import webpack, {optimize} from 'webpack'
 import merge from 'webpack-merge'
 
 import debug from './debug'
-import {endsWith, typeOf} from './utils'
+import {deepToString, endsWith} from './utils'
 
 // Default query configuration for file-loader and url-loader
 const FILE_LOADER_DEFAULTS = {
@@ -398,11 +397,11 @@ export function createPostCSSConfig(userPostCSSConfig, cssPreprocessors = {}) {
   // configured, so we need to set the default PostCSS plugins for every single
   // style pipeline.
   let postcss = {
-    defaults: [autoprefixer],
-    vendor: [autoprefixer]
+    defaults: [autoprefixer()],
+    vendor: [autoprefixer()]
   }
   Object.keys(cssPreprocessors).forEach(id => {
-    postcss[id] = [autoprefixer]
+    postcss[id] = [autoprefixer()]
   })
   // PostCSS plugins provided by the user will completely overwrite defaults
   return {...postcss, ...userPostCSSConfig}
@@ -471,8 +470,7 @@ export function getCompatConfig(userCompatConfig = {}) {
  * creating a static build (default) or serving an app with hot reloading.
  */
 export default function createWebpackConfig(buildConfig, nwbPluginConfig = {}, userConfig = {}) {
-  assert.equal(typeOf(buildConfig), 'object', 'buildConfig is required')
-  debug('createWebpackConfig buildConfig = %j', buildConfig)
+  debug('createWebpackConfig buildConfig: %s', deepToString(buildConfig))
 
   // Final webpack config is primarily driven by build configuration for the nwb
   // command being run. Each command configures a default, working webpack

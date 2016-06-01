@@ -1,4 +1,3 @@
-import autoprefixer from 'autoprefixer'
 import expect from 'expect'
 
 import createWebpackConfig, {
@@ -284,24 +283,13 @@ describe('getTopLevelLoaderConfig()', () => {
 
 describe('createPostCSSConfig()', () => {
   it('creates default plugin config', () => {
-    expect(createPostCSSConfig({})).toEqual({
-      defaults: [autoprefixer],
-      vendor: [autoprefixer]
-    })
+    expect(createPostCSSConfig({})).toIncludeKeys(['defaults', 'vendor'])
   })
   it('creates default plugin config for CSS preprocessors', () => {
-    expect(createPostCSSConfig({}, {less: {}, sass: {}})).toEqual({
-      defaults: [autoprefixer],
-      vendor: [autoprefixer],
-      less: [autoprefixer],
-      sass: [autoprefixer]
-    })
+    expect(createPostCSSConfig({}, {less: {}, sass: {}})).toIncludeKeys(['defaults', 'vendor', 'less', 'sass'])
   })
   it('overwrites plugin config with user config', () => {
-    expect(createPostCSSConfig({defaults: [1, 2, 3]})).toEqual({
-      defaults: [1, 2, 3],
-      vendor: [autoprefixer]
-    })
+    expect(createPostCSSConfig({defaults: [1, 2, 3]}).defaults).toEqual([1, 2, 3])
   })
 })
 

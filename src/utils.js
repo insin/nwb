@@ -1,3 +1,5 @@
+import util from 'util'
+
 import fs from 'fs-extra'
 import glob from 'glob'
 
@@ -34,6 +36,13 @@ export function createWebpackExternals(externals = {}) {
     }
     return webpackExternals
   }, {})
+}
+
+/**
+ * Log objects in their entirety so we can see everything in debug output.
+ */
+export function deepToString(object) {
+  return util.inspect(object, {colors: true, depth: null})
 }
 
 /**
