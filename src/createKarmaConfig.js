@@ -1,8 +1,3 @@
-require('argv-set-env')()
-
-// Force the environment to test
-process.env.NODE_ENV = 'test'
-
 import path from 'path'
 
 import merge from 'webpack-merge'
