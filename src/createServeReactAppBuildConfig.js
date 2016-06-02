@@ -1,5 +1,3 @@
-import assert from 'assert'
-
 import resolve from 'resolve'
 
 import {UserError} from './errors'
@@ -15,9 +13,6 @@ export default function(config) {
     plugins,
     staticPath = null
   } = config
-
-  assert(entry, 'entry config is required to serve a React app')
-  assert(output, 'output config is required to serve a React app')
 
   // Find the locally-installed version of React
   let reactPath

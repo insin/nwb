@@ -1,5 +1,3 @@
-import assert from 'assert'
-
 import createWebpackConfig from './createWebpackConfig'
 import getPluginConfig from './getPluginConfig'
 import getUserConfig from './getUserConfig'
@@ -11,12 +9,7 @@ import getUserConfig from './getUserConfig'
 export default function(args, buildConfig) {
   let userConfig = getUserConfig(args)
   let pluginConfig = getPluginConfig()
-
   let {entry, output, plugins = {}, ...otherBuildConfig} = buildConfig
-
-  assert(entry, 'an entry file is required to serve a Webpack build')
-  assert(output, 'output config is required to serve a Webpack build')
-
   let hotMiddlewareOptions = args.reload ? '?reload=true' : ''
 
   if (args['auto-install']) {
