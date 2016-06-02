@@ -1,3 +1,8 @@
+/**
+ * This module makes base build config for serving a react app accessible to
+ * middleware.
+ */
+
 import path from 'path'
 
 import {getDefaultHTMLConfig} from './appConfig'

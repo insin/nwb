@@ -1,3 +1,8 @@
+/**
+ * This module makes creation of final build config for serving a react app
+ * accessible to middleware.
+ */
+
 import resolve from 'resolve'
 
 import {UserError} from './errors'
