@@ -7,7 +7,7 @@ These are optional, but they're a quick way to get started with a new project us
 #### `new` - create a new project
 
 ```
-nwb new <project-type> <name>
+nwb new <project_type> <name>
 ```
 
 Creates a new directory and initialises a project skeleton in it.
@@ -63,7 +63,7 @@ Creates a skeleton for a web module with the given name, with an optional UMD bu
 #### `init` - initialise a project in the current directory
 
 ```
-nwb init <project-type> [name]
+nwb init <project_type> [name]
 ```
 
 This is the same as `new`, except the `name` argument is optional and the new project is initialised in the current directory.
@@ -77,7 +77,7 @@ The following commands require a `nwb.config.js` file to be present to specify t
 #### `serve` - serve an app
 
 ```
-nwb serve
+nwb serve [entry]
 ```
 
 Starts a development server which serves an app with hot module reloading.
@@ -85,6 +85,8 @@ Starts a development server which serves an app with hot module reloading.
 * JavaScript and CSS changes will be applied on the fly without refreshing the page.
 * Syntax errors made while the development server is running will appear as an overlay in your browser.
 * Rendering errors in React components will also appear as an overlay.
+
+Passing an argument for `entry` allows you to customise the entry point for your React or web app.
 
 **Flags:**
 
@@ -116,18 +118,18 @@ Having a demo which uses your component is also a great way to test it as you pr
 #### `build` - create builds
 
 ```
-nwb build
+nwb build [entry] [dist_dir]
 ```
 
 Builds the project.
 
 **In React/web apps:**
 
-A static build will be created in `dist/`, with `app.js` and `app.css` files plus any other resources used.
+Default behaviour:
 
-By default, separate `vendor.js` and `vendor.css` files will be built for any dependencies used from `node_modules/`.
-
-By default, static builds are created in production mode. Code will be minified and have dead code elimination performed on it (for example to remove unreachable, or development-mode only, code).
+* A static build will be created in `dist/`, with `app.js` and `app.css` files plus any other resources used.
+* Separate `vendor.js` and `vendor.css` files will be built for any dependencies used from `node_modules/`.
+* Static builds are created in production mode. Code will be minified and have dead code elimination performed on it (for example to remove unreachable, or development-mode only, code).
 
 To create a development build, set the `NODE_ENV` environment variable to `'development'` when running the `build` command; nwb supports a cross-platform way of doing this, using [argv-set-env](https://github.com/kentcdodds/argv-set-env):
 
@@ -138,6 +140,8 @@ nwb build --set-env-NODE_ENV=development
 # Won't work on Windows
 NODE_ENV=development nwb build
 ```
+
+Passing arguments for `entry` and `dist_dir` allows you to customise the entry point for your app and the directory it gets build into.
 
 **In React apps only:**
 
@@ -153,13 +157,17 @@ Builds the component in preparation for publishing to npm.
 
 If the module has a `demo/` directory, running `build` will also create a static build of its demo app in `demo/dist/`.
 
+Passing an argument for `entry` allows you to customise the entry point for the UMD build of your app.
+
 #### `clean` - clean up
 
 ```
-nwb clean
+nwb clean [dist_dir]
 ```
 
 Deletes all built resource directories.
+
+For React and web apps, passing an argument for `dist_dir` allows you to customise the output directory which will be deleted.
 
 ### Project commands
 
@@ -182,19 +190,30 @@ Runs unit tests.
 
 Running the test server in tandem with a hot reloading demo app, you can quickly protoype and test your components.
 
-#### Project Type-specific Commands
+#### Project-type-specific Commands
 
-Project type-specific versions of the generic `build`, `clean` and `serve` commands are also available to run directly - if you use the generic commands, you will see nwb calling these for you:
+Project-type-specific versions of the generic `build`, `clean` and `serve` commands are also available to run directly - if you use the generic commands, you will see nwb calling these for you:
 
 * `build-demo` - build a demo app from `demo/src/index.js` to `demo/dist/`
+
 * `build-module` - create an ES5 build for an npm module
-* `build-react-app` - build a react app from `src/index.js` to `dist/`
-* `build-umd` - create a UMD build for an npm module (this command itself requires configuration, so is useless without a config file)
-* `build-web-app` - build a web app from `src/index.js` to `dist/`
-* `clean-app` - delete `dist/`
+
+* `build-react-app [entry] [dist_dir]` - build a react app from `entry` (default: `src/index.js`) to `dist_dir` (default: `dist/`)
+
+* `build-umd [entry]` - create a UMD build for an npm module starting from `entry` (default: `src/index.js`) (this command requires configuration)
+
+* `build-web-app [entry] [dist_dir]` - build a web app from `entry` (default: `src/index.js`) to `dist_dir` (default: `dist/`)
+
+* `clean-app [dist_dir]` - delete `dist_dir` (default: `dist/`)
+
 * `clean-demo` - delete `demo/dist/`
+
 * `clean-module` -  delete `coverage/`, `es6/` and `lib/
+
 * `clean-umd` - delete `umd/`
-* `serve-react-app` - serve a React app from `src/index.js`
+
+* `serve-react-app [entry]` - serve a React app from `entry` (default: `src/index.js`)
+
 * `serve-react-demo` - serve a React demo app from `demo/src/index.js`
-* `serve-web-app` - serve a web app from `src/index.js`
+
+* `serve-web-app [entry]` - serve a web app from `entry` (default: `src/index.js`)

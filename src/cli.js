@@ -20,24 +20,30 @@ export default function(argv, cb) {
   }
 
   if (args.help || !command || /^h(elp)?$/.test(command)) {
-    console.log(`Usage: ${green('nwb')} ${yellow('<command>')}
+    console.log(`Usage:
+  ${green('nwb')} ${yellow('<command>')} ${cyan('[options]')}
 
 Options:
   ${cyan('-h, --help')}     display this help message
   ${cyan('-v, --version')}  print nwb's version
 
 Project creation commands:
-  ${green('init')} ${yellow('<project-type>')} ${cyan('[name]')}
+  ${green('init')} ${yellow('<project_type>')} ${cyan('[name]')}
     initialise a project in the current directory
 
-  ${green('new')} ${yellow('<project-type> <name>')}
+  ${green('new')} ${yellow('<project_type> <name>')}
     create a project in a new directory
 
-  ${cyan('-f, --force')}   force project creation, don't ask questions
-  ${cyan('-g, --global')}  global variable name to export in the UMD build
-  ${cyan('--no-jsnext')}   disable npm ES6 modules build
-  ${cyan('--no-umd')}      disable npm UMD module build
-  ${cyan('--react')}       version of React to install for React apps and components
+  Positional arguments:
+    ${cyan('project_type')}  project type - see the list below
+    ${cyan('name')}          project name ${cyan('[default: current directory name]')}
+
+  Options:
+    ${cyan('-f, --force')}   force project creation, don't ask questions
+    ${cyan('-g, --global')}  global variable name to export in the UMD build
+    ${cyan('--no-jsnext')}   disable npm ES6 modules build
+    ${cyan('--no-umd')}      disable npm UMD module build
+    ${cyan('--react')}       version of React to install for React apps & components
 
   Project types:
     ${cyan('react-app')}        a React app
@@ -46,6 +52,9 @@ Project creation commands:
     ${cyan('web-module')}       a plain JavaScript module
 
 Generic development commands:
+  Positional arguments for these commands depend on the type of project they're
+  being run in. See the applicable project-type-specific commands below.
+
   ${green('build')}
     clean and build the project
 
@@ -54,43 +63,62 @@ Generic development commands:
 
   ${green('serve')}
     serve an app, or a component's demo app, with hot reloading
-    ${cyan('--auto-install')}  auto install missing npm dependencies
-    ${cyan('--fallback')}      serve the index page from any path
-    ${cyan('--host')}          hostname to bind the dev server to ${cyan('(default: localhost)')}
-    ${cyan('--info')}          show webpack module info
-    ${cyan('--port')}          port to run the dev server on ${cyan('(default: 3000)')}
-    ${cyan('--reload')}        auto reload the page if hot reloading fails
+
+    Options:
+      ${cyan('--auto-install')}  auto install missing npm dependencies
+      ${cyan('--fallback')}      serve the index page from any path
+      ${cyan('--host')}          hostname to bind the dev server to ${cyan('[default: localhost]')}
+      ${cyan('--info')}          show webpack module info
+      ${cyan('--port')}          port to run the dev server on ${cyan('[default: 3000]')}
+      ${cyan('--reload')}        auto reload the page if hot reloading fails
 
   ${green('test')}
     run unit tests
-    ${cyan('--coverage')}  create a code coverage report
-    ${cyan('--server')}    keep running tests on every change
 
-Project type-specific commands:
+    Options:
+      ${cyan('--coverage')}  create a code coverage report
+      ${cyan('--server')}    keep running tests on every change
+
+Project-type-specific commands:
   ${green('build-demo')}
     build a demo app from demo/src/index.js to demo/dist/
+
   ${green('build-module')}
     create an ES5 build for an npm module (ES6 modules build requires config)
-  ${green('build-react-app')}
-    build a react app from src/index.js to dist/
-  ${green('build-umd')}
-    create a UMD build for an npm module (requires config)
-  ${green('build-web-app')}
-    build a web app from src/index.js to dist/
-  ${green('clean-app')}
-    delete dist/
+
+  ${green('build-react-app')} ${cyan('[entry] [dist_dir]')}
+    build a React app from ${cyan('entry')} to ${cyan('dist_dir')}
+
+  ${green('build-umd')} ${cyan('[entry]')}
+    create a UMD build for an npm module from ${cyan('entry')} (requires config)
+
+  ${green('build-web-app')} ${cyan('[entry] [dist_dir]')}
+    build a web app from ${cyan('entry')} to ${cyan('dist_dir')}
+
+  ${green('clean-app')} ${cyan('[dist_dir]')}
+    delete ${cyan('dist_dir')}
+
   ${green('clean-demo')}
     delete demo/dist/
+
   ${green('clean-module')}
-     delete coverage/, es6/ and lib/
+    delete coverage/, es6/ and lib/
+
   ${green('clean-umd')}
     delete umd/
-  ${green('serve-react-app')}
-    serve a React app from src/index.js
+
+  ${green('serve-react-app')} ${cyan('[entry]')}
+    serve a React app from ${cyan('entry')}
+
   ${green('serve-react-demo')}
     serve a React demo app from demo/src/index.js
-  ${green('serve-web-app')}
-    serve a web app from src/index.js
+
+  ${green('serve-web-app')} ${cyan('[entry]')}
+    serve a web app from ${cyan('entry')}
+
+  Positional arguments:
+    ${cyan('entry')}     entry point ${cyan('[default: src/index.js]')}
+    ${cyan('dist_dir')}  build output directory ${cyan('[default: dist/]')}
 `)
     process.exit(args.help || command ? 0 : 1)
   }

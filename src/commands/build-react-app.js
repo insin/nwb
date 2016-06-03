@@ -7,15 +7,18 @@ import webpackBuild from '../webpackBuild'
 // Use a config function, as this won't be called until after NODE_ENV has been
 // set by webpackBuild() and we don't want these optimisations in development
 // builds.
-let buildConfig = () => {
+let buildConfig = (args) => {
+  let entry = args._[1] || 'src/index.js'
+  let dist = args._[2] || 'dist'
+
   let config = {
     devtool: 'source-map',
     entry: {
-      app: path.resolve('src/index.js')
+      app: path.resolve(entry)
     },
     output: {
       filename: '[name].js',
-      path: path.resolve('dist'),
+      path: path.resolve(dist),
       publicPath: '/'
     },
     plugins: {
@@ -41,10 +44,11 @@ let buildConfig = () => {
 }
 
 export default function(args, cb) {
-  require('./clean-app')(args)
+  let dist = args._[2] || 'dist'
 
-  copyPublicDir('public', 'dist')
+  require('./clean-app')({_: ['clean-app', dist]})
 
   console.log('nwb: build-react-app')
+  copyPublicDir('public', dist)
   webpackBuild(args, buildConfig, cb)
 }

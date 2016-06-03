@@ -19,6 +19,7 @@ Your app's version of the Express module must be passed as the first argument.
 ###### `options`
 
 * `autoInstall` - automatically install missing npm dependencies. Default: `false`
+* `entry` - entry point for the app. Default: `src/index.js`
 * `info` - print info about Webpack modules after rebuilds. Default: `false`
 
 #### Example

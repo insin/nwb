@@ -7,11 +7,14 @@ import path from 'path'
 
 import {getDefaultHTMLConfig} from './appConfig'
 
-export default function() {
+export default function(args) {
+  let entry = path.resolve(args._[1] || 'src/index.js')
+  let dist = path.resolve(args._[2] || 'dist')
+
   return {
-    entry: path.resolve('src/index.js'),
+    entry: path.resolve(entry),
     output: {
-      path: path.resolve('dist'),
+      path: path.resolve(dist),
       filename: 'app.js',
       publicPath: '/'
     },

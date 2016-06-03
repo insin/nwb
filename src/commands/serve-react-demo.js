@@ -7,6 +7,7 @@ import serveReact from '../serveReact'
  */
 export default function(args, cb) {
   let pkg = require(path.resolve('package.json'))
+
   console.log('nwb: serve-react-demo')
   serveReact(args, {
     entry: path.resolve('demo/src/index.js'),

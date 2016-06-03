@@ -1,4 +1,3 @@
-import assert from 'assert'
 import path from 'path'
 
 import getUserConfig from '../getUserConfig'
@@ -15,14 +14,13 @@ export default function(args, cb) {
 
   if (!build.umd) {
     return cb(new UserError(
-      'nwb: the UMD build for this module hasn\'t been enabled in nwb.config.js'
+      "nwb: the UMD build for this module hasn't been enabled in nwb.config.js"
     ))
   }
 
-  assert(build.global, 'build.global config is required to create a UMD build')
-
+  let entry = args._[1] || 'src/index.js'
   let buildConfig = {
-    entry: path.resolve('src/index.js'),
+    entry: path.resolve(entry),
     output: {
       filename: `${pkg.name}.js`,
       library: build.global,

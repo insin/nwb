@@ -22,7 +22,7 @@ export default function webpackBuild(args, buildConfig = {}, cb) {
   let userConfig = getUserConfig(args)
   let pluginConfig = getPluginConfig()
   if (typeof buildConfig == 'function') {
-    buildConfig = buildConfig()
+    buildConfig = buildConfig(args)
   }
 
   let webpackConfig = createWebpackConfig({

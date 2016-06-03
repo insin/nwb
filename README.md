@@ -132,24 +132,30 @@ This video shows the resulting example of using nwb to create a new React projec
 ## Usage
 
 ```
-Usage: nwb <command>
+Usage:
+  nwb <command> [options]
 
 Options:
   -h, --help     display this help message
   -v, --version  print nwb's version
 
 Project creation commands:
-  init <project-type> [name]
+  init <project_type> [name]
     initialise a project in the current directory
 
-  new <project-type> <name>
+  new <project_type> <name>
     create a project in a new directory
 
-  -f, --force   force project creation, don't ask questions
-  -g, --global  global variable name to export in the UMD build
-  --no-jsnext   disable npm ES6 modules build
-  --no-umd      disable npm UMD module build
-  --react       version of React to install for React apps and components
+  Positional arguments:
+    project_type  project type - see the list below
+    name          project name [default: current directory name]
+
+  Options:
+    -f, --force   force project creation, don't ask questions
+    -g, --global  global variable name to export in the UMD build
+    --no-jsnext   disable npm ES6 modules build
+    --no-umd      disable npm UMD module build
+    --react       version of React to install for React apps & components
 
   Project types:
     react-app        a React app
@@ -157,7 +163,10 @@ Project creation commands:
     web-app          a plain JavaScript app
     web-module       a plain JavaScript module
 
-Development commands:
+Generic development commands:
+  Positional arguments for these commands depend on the type of project they're
+  being run in. See the applicable project-type-specific commands below.
+
   build
     clean and build the project
 
@@ -166,43 +175,62 @@ Development commands:
 
   serve
     serve an app, or a component's demo app, with hot reloading
-    --auto-install  auto install missing npm dependencies
-    --fallback      serve the index page from any path
-    --host          hostname to bind the dev server to (default: localhost)
-    --info          show webpack module info
-    --port          port to run the dev server on (default: 3000)
-    --reload        auto reload the page if hot reloading fails
+
+    Options:
+      --auto-install  auto install missing npm dependencies
+      --fallback      serve the index page from any path
+      --host          hostname to bind the dev server to [default: localhost]
+      --info          show webpack module info
+      --port          port to run the dev server on [default: 3000]
+      --reload        auto reload the page if hot reloading fails
 
   test
     run unit tests
-    --coverage  create a code coverage report
-    --server    keep running tests on every change
 
-Project type-specific commands:
+    Options:
+      --coverage  create a code coverage report
+      --server    keep running tests on every change
+
+Project-type-specific commands:
   build-demo
     build a demo app from demo/src/index.js to demo/dist/
+
   build-module
     create an ES5 build for an npm module (ES6 modules build requires config)
-  build-react-app
-    build a react app from src/index.js to dist/
-  build-umd
-    create a UMD build for an npm module (requires config)
-  build-web-app
-    build a web app from src/index.js to dist/
-  clean-app
-    delete dist/
+
+  build-react-app [entry] [dist_dir]
+    build a React app from entry to dist_dir
+
+  build-umd [entry]
+    create a UMD build for an npm module from entry (requires config)
+
+  build-web-app [entry] [dist_dir]
+    build a web app from entry to dist_dir
+
+  clean-app [dist_dir]
+    delete dist_dir
+
   clean-demo
     delete demo/dist/
+
   clean-module
-     delete coverage/, es6/ and lib/
+    delete coverage/, es6/ and lib/
+
   clean-umd
     delete umd/
-  serve-react-app
-    serve a React app from src/index.js
+
+  serve-react-app [entry]
+    serve a React app from entry
+
   serve-react-demo
     serve a React demo app from demo/src/index.js
-  serve-web-app
-    serve a web app from src/index.js
+
+  serve-web-app [entry]
+    serve a web app from entry
+
+  Positional arguments:
+    entry     entry point [default: src/index.js]
+    dist_dir  build output directory [default: dist/]
 ```
 
 ## Versioning
