@@ -93,6 +93,12 @@ nwb: test
 
 ## Example Projects
 
+### Yelp Clone
+
+[react-yelp-clone](https://github.com/insin/react-yelp-clone) takes the app created in the [Build a Yelp Clone](https://www.fullstackreact.com/articles/react-tutorial-cloning-yelp/) React tutorial and uses nwb for its development tooling, with a custom `nwb.config.js` to support the same setup.
+
+[Check out the diff](https://github.com/insin/react-yelp-clone/compare/master...nwb) to see the effect using nwb has on the amount of `devDependencies` and configuration which needs to be managed.
+
 ### Github Issues
 
 [react-nwb-github-issues](https://github.com/insin/react-nwb-github-issues) is a clone of the ember-cli [github-issues-demo](https://github.com/wycats/github-issues-demo) demo app, showing development of a React app from scratch using nwb.
@@ -104,12 +110,6 @@ Selected commits of interest:
 * [Installing a dependency which manages and `require()`s its own CSS dependency](https://github.com/insin/react-nwb-github-issues/commit/cad3abd4ec47f78bf50194ec1bd7cbfb1068e733) - the CSS and its image/font dependencies were hot reloaded into the running app when this change was made
 
 *Note: this example app initially tries to stick close to the original version commit-by-commit for the sake of comparison, by using [async-props](https://github.com/rackt/async-props), which is currently in pre-release.*
-
-### Yelp Clone
-
-[react-yelp-clone](https://github.com/insin/react-yelp-clone) takes the app created in the [Build a Yelp Clone](https://www.fullstackreact.com/articles/react-tutorial-cloning-yelp/) React tutorial and uses nwb for its development tooling, with a custom `nwb.config.js` to support the same setup.
-
-[Check out the diff](https://github.com/insin/react-yelp-clone/compare/master...nwb) to see the effect using nwb has on the amount of `devDependencies` and configuration which needs to be managed.
 
 ## Other Examples
 

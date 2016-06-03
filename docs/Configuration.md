@@ -4,16 +4,14 @@ nwb will look for an `nwb.config.js` file in the current working directory for p
 
 This file should export either a configuration object or a function which creates a configuration object when called.
 
-If a function is exported:
+If a function is exported, it will be passed an object containing the following properties:
 
-* it will be called *after* nwb has ensured the appropriate `NODE_ENV` environment variable has been set for the command being run.
-* it will be passed an object containing the following properties:
-  * `command`: the name of the nwb command currently being executed.
-  * `webpack`: nwb's version of the `webpack` module (for use if you need to [add extra Webpack plugins](#) to the generated configuration).
+* `command`: the name of the nwb command currently being executed.
+* `webpack`: nwb's version of the `webpack` module.
 
 ### Configuration Fields
 
-The object exported or returned by your nwb config can use the following fields:
+The configuration object created by your nwb config can use the following fields:
 
 * nwb Configuration
   * [`type`](#type-string-required-for-generic-build-commands)
@@ -322,15 +320,15 @@ If you're *only* configuring PostCSS plugins for your app's own CSS, you can jus
 module.exports = {
   webpack: {
     postcss: [
-      require('precss'),
-      require('autoprefixer'),
-      require('cssnano')
+      require('precss')(),
+      require('autoprefixer')(),
+      require('cssnano')()
     ]
   }
 }
 ```
 
-Use an object if you're configuring other style pipelines or additional style pipeline. When using an object, PostCSS plugins for the default style pipeline (applied to your app's own CSS) must be configured using a `defaults` property:
+Use an object if you're configuring other style pipelines. When using an object, PostCSS plugins for the default style pipeline (applied to your app's own CSS) must be configured using a `defaults` property:
 
 ```js
 var autoprefixer = require('autoprefixer')
@@ -338,9 +336,9 @@ module.exports = {
   webpack: {
     postcss: {
       defaults: [
-        require('precss'),
-        autoprefixer,
-        require('cssnano')
+        require('precss')(),
+        autoprefixer(),
+        require('cssnano')()
       ],
       vendor: [
         autoprefixer({add: false})
@@ -353,6 +351,8 @@ module.exports = {
 Plugins for other style pipelines are configured using their prefix as a property name: `vendor` for anything imported out of `node_modules/`, `sass` if you're using the `nwb-sass` preprocessor plugin, etc.
 
 Your app is responsible for managing its own PostCSS plugin dependencies - between the size of the PostCSS ecosystem and the number of different configuration options `postcss-loader` supports, PostCSS could do with its own equivalent of nwb to manage dependencies and configuration!
+
+It's recommended to create instances of PostCSS plugins in your config, as opposed to passing a module, in case you ever need to make use of debug output (enabled by setting a `DEBUG` environment variable to `nwb`) to examine generated config.
 
 ##### `compat`: `Object`
 

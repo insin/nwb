@@ -23,25 +23,33 @@ To speed up developing new projects, **nwb can also [generate skeleton projects]
 ### What's Configurable?
 
 * Babel 5 settings
-* Webpack loader settings
-* Adding extra Webpack loaders
-* Webpack [`DefinePlugin`](https://webpack.github.io/docs/list-of-plugins.html#defineplugin) replacements
-* Adding extra Webpack plugins
-* Karma settings for test files, frameworks, reporters and plugins
-* CSS preprocessors can be added as [nwb plugins](/docs/Plugins.md#css-preprocessors)
+* Webpack settings
+  * Default sets of loaders and plugins are provided and made configurable
+  * Additional CSS preprocessors can be added as [nwb plugins](/docs/Plugins.md#css-preprocessors)
+  * Extra config can be merged into the generated Webpack config
+* Karma settings
+  * A default testing setup is provided
+  * Additional plugins, frameworks and reporters can be configured
+  * Extra config can be merged into the generated Webpack config
+* Project layout
+  * Entry point for apps and UMD builds (default: `src/index.js`)
+  * Directory apps are built to (default: `dist/`)
+  * HTML template for apps (default: `src/index.html`), falling back to a basic default template if none is provided.
 
 See the [Configuration docs](/docs/Configuration.md#configuration) for details.
 
 ### Not Configurable... Yet
 
-* Source and demo directory structures - nwb currently assumes these will be where its skeleton projects put them, in particular:
-  * The entry point for all projects is assumed to be `src/index.js`
-  * The template for an HTML entry point for webapps is assumed to be `src/index.html`, with built resources in `dist/`. `<script>` and `<link>` tags for generated JavaScript and CSS bundles will be injected into this template when building.
-  * The entry point for demo apps is assumed to be `demo/src/index.js`, with built resources in `demo/dist/`
+* Project layout
+  * Source is assumed to be under `src/`
+  * Static resources for apps are assumed to be in `public/`
+  * The entry point for React component demo apps is assumed to be `demo/src/index.js`, with built resources in `demo/dist/`
 
 ### Not Currently Considered
 
 * How you actually write your React apps - React apps are all about what happens in the code; the workflow tends to be install it, import it where you need it and use it.
+
+### Not Considered
 
 * Code style - linting is left in your hands, as code style is too controversial a topic to make any default choice about.
 
