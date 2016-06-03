@@ -16,7 +16,7 @@ const States = {
 }
 
 describe('command: serve', function() {
-  this.timeout(60000)
+  this.timeout(90000)
 
   describe('serving a new React app with hot reloading', () => {
     let cli = require('../../src/cli')
@@ -59,12 +59,12 @@ describe('command: serve', function() {
 
           // Change a file to trigger a reload after the HMR client connects
           hmrClient.onopen = () => {
-            console.log('HMR open: changing file in 1s')
+            console.log('HMR open: changing file in 5s')
             setTimeout(() => {
               state = States.CHANGED_FILE
               let content = fs.readFileSync('./src/App.js', 'utf-8')
               fs.writeFileSync('./src/App.js', content.replace('Welcome to', 'Change'))
-            }, 1000)
+            }, 5000)
           }
 
           // Fail on EventSource errors
