@@ -20,7 +20,7 @@ const States = {
 }
 
 describe('sample projects', function() {
-  this.timeout(60000)
+  this.timeout(90000)
 
   describe('async-await project', () => {
     let originalCwd
