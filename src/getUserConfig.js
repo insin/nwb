@@ -112,7 +112,7 @@ export default function getUserConfig(args = {}, {required = false} = {}) {
 
   // TODO Remove in a future version
   if (userConfig.webpack.plugins) {
-    console.log(magenta(`nwb: webpack.plugins in ${userConfigPath} is deprecated as of nwb 0.11 - put this config directly under webpack instead`))
+    console.log(magenta(`nwb: webpack.plugins is deprecated as of nwb v0.11 - put this config directly under webpack in ${userConfigPath} instead`))
     userConfig.webpack = {...userConfig.webpack, ...userConfig.webpack.plugins}
     delete userConfig.webpack.plugins
   }
