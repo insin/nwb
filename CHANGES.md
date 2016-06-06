@@ -68,9 +68,9 @@
 - The entry point for apps and npm module UMD builds can now be specified as an argument to [`build` and `serve` commands](https://github.com/insin/nwb/blob/v0.11.0/docs/Commands.md#project-type-specific-commands). The default is still `src/index.js`. [[#115](https://github.com/insin/nwb/issues/115)]
 - The directory web apps are built into can now be specified as an argument to [`build`, `clean` and `serve` commands](https://github.com/insin/nwb/blob/v0.11.0/docs/Commands.md#project-type-specific-commands). The default is still `dist/`.
 - Added [`webpack.compat` config](https://github.com/insin/nwb/blob/v0.11.0/docs/Configuration.md#compat-object) to enable compatibility tweaks for modules which are known to be problematic with Webpack - initially this includes support for Enzyme, Moment.js and Sinon.js 1.x [[#108](https://github.com/insin/nwb/issues/108)]
-- Added [`webpack.postcss` config](https://github.com/insin/nwb/blob/v0.11.0/docs/Configuration.md#postcss-object) to customise the PostCSS plugins applied to each style pipeline [[#57](https://github.com/insin/nwb/issues/57)]
+- Added [`webpack.postcss` config](https://github.com/insin/nwb/blob/v0.11.0/docs/Configuration.md#postcss-array--object) to customise the PostCSS plugins applied to each style pipeline [[#57](https://github.com/insin/nwb/issues/57)]
 - Added [`webpack.vendorBundle` config](https://github.com/insin/nwb/blob/v0.11.0/docs/Configuration.md#vendorbundle-boolean) to disable automatically extracting anything imported from `node_modules/` out into a separate `vendor` chunk [[#106](https://github.com/insin/nwb/issues/106)]
-- Added [documentation for creating and using a test context module](https://github.com/insin/nwb/blob/v0.11.0/docs/Configuration.md#test-context-module) if there's code you need to run prior to tests running, such as configuring your assertion library with new assertions.
+- Added [documentation for creating and using a test context module](https://github.com/insin/nwb/blob/v0.11.0/docs/Testing.md#using-a-test-context-module) if there's code you need to run prior to tests running, such as configuring your assertion library with additional assertions.
 - Added a `--config` option to allow you to specify your own config file instead of `nwb.config.js`.
 
 **Changed:**

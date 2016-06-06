@@ -1,51 +1,70 @@
 ## Configuration
 
-nwb will look for an `nwb.config.js` file in the current working directory for project-specific configuration.
+### What's Configurable?
 
-This file should export either a configuration object or a function which creates a configuration object when called.
+- Babel 5 settings
+- Webpack settings
+  - Default sets of loaders and plugins are provided and made configurable
+  - Additional CSS preprocessors can be added as [nwb plugins](/docs/Plugins.md#css-preprocessors)
+  - Extra config can be deep-merged into the generated Webpack config
+- Karma settings
+  - Additional plugins, frameworks and reporters can be configured
+  - Extra config can be deep-merged into the generated Webpack config
+- Project layout
+  - Entry point for apps and UMD builds *[default: `src/index.js`]*
+  - Directory apps are built to *[default: `dist/`]*
+  - HTML template for apps *[default: `src/index.html`]*, falling back to a default template if none is provided.
 
-If a function is exported, it will be passed an object containing the following properties:
+### Not Configurable... Yet
 
-* `command`: the name of the nwb command currently being executed.
-* `webpack`: nwb's version of the `webpack` module.
+- Project layout
+  - Source is assumed to be under `src/`
+  - Static resources for apps are assumed to be in `public/`
+  - The entry point for React component demo apps is assumed to be `demo/src/index.js`, with built resources in `demo/dist/`
 
-### Configuration Fields
+### Configuration File
+
+nwb will look for an `nwb.config.js` file in the current working directory for project-specific configuration, or you can specify a configuration file using the `--config` option.
+
+This file should export either a configuration object or a function which creates a configuration object when called. If a function is exported, it will be passed an object containing the following properties:
+
+- `command`: the name of the nwb command currently being executed.
+- `webpack`: nwb's version of the `webpack` module.
 
 The configuration object created by your nwb config can use the following fields:
 
-* nwb Configuration
-  * [`type`](#type-string-required-for-generic-build-commands)
-* Babel Configuration
-  * [`babel`](#babel-object)
-* Webpack Configuration
-  * [`webpack`](#webpack-object)
-  * [`webpack.loaders`](#loaders-object)
-    * [Default loaders](#default-loaders)
-    * [Test loaders](#test-loaders)
-  * [`webpack.define`](#define-object)
-  * [`webpack.extractText`](#extracttext-object)
-  * [`webpack.html`](#html-object)
-  * [`webpack.install`](#install-object)
-  * [`webpack.vendorBundle`](#vendorbundle-boolean)
-  * [`webpack.postcss`](#postcss-array-object)
-  * [`webpack.compat`](#compat-object)
-  * [`webpack.extra`](#extra-object)
-* Karma Configuration
-  * [`karma`](#karma-object)
-  * [`karma.tests`](#tests-string)
-    * [Test context module](#test-context-module)
-  * [`karma.frameworks`](#frameworks-arraystring--plugin)
-  * [`karma.reporters`](#reporters-arraystring--plugin)
-  * [`karma.plugins`](#plugins-arrayplugin)
-  * [`karma.extra`](#extra-object-1)
-* npm Build Configuration
-  * [`build`](#build-object)
-  * UMD build config
-    * [`build.umd`](#umd-boolean)
-    * [`build.global`](#global-string-required-for-umd-build)
-    * [`build.externals`](#externals-object-for-umd-build)
-    * [`package.json` fields](#packagejson-umd-banner-configuration)
-  * [`build.jsNext`](#jsnext-boolean)
+- nwb Configuration
+  - [`type`](#type-string-required-for-generic-build-commands)
+- Babel Configuration
+  - [`babel`](#babel-object)
+- Webpack Configuration
+  - [`webpack`](#webpack-object)
+  - [`webpack.loaders`](#loaders-object)
+    - [Default loaders](#default-loaders)
+    - [Test loaders](#test-loaders)
+  - [`webpack.define`](#define-object)
+  - [`webpack.extractText`](#extracttext-object)
+  - [`webpack.html`](#html-object)
+  - [`webpack.install`](#install-object)
+  - [`webpack.vendorBundle`](#vendorbundle-boolean)
+  - [`webpack.postcss`](#postcss-array--object)
+  - [`webpack.compat`](#compat-object)
+  - [`webpack.extra`](#extra-object)
+- Karma Configuration
+  - [`karma`](#karma-object)
+  - [`karma.tests`](#tests-string)
+  - [`karma.frameworks`](#frameworks-arraystring--plugin)
+  - [`karma.reporters`](#reporters-arraystring--plugin)
+  - [`karma.plugins`](#plugins-arrayplugin)
+  - [`karma.extra`](#extra-object-1)
+- npm Build Configuration
+  - [`build`](#build-object)
+  - UMD build config
+    - [`build.umd`](#umd-boolean)
+    - [`build.global`](#global-string-required-for-umd-build)
+    - [`build.externals`](#externals-object-for-umd-build)
+    - [`package.json` fields](#packagejson-umd-banner-configuration)
+  - [`build.jsNext`](#jsnext-boolean)
 
 #### `type`: `String` (required for generic build commands)
 
@@ -53,10 +72,10 @@ nwb uses this field to determine which type of project it's working with when ge
 
 It must be one of:
 
-* `'react-app'`
-* `'react-component'`
-* `'web-app'`
-* `'web-module'`
+- `'react-app'`
+- `'react-component'`
+- `'web-app'`
+- `'web-module'`
 
 ### Babel Configuration
 
@@ -163,43 +182,43 @@ Alternatively, you can also add new properties directly to the top-level Webpack
 
 Default loaders configured by nwb and the ids it gives them are:
 
-* `babel` - handles `.js` (and `.jsx`) files with [babel-loader][babel-loader]
+- `babel` - handles `.js` (and `.jsx`) files with [babel-loader][babel-loader]
 
   > Default config: `{exclude: /node_modules/}`
 
-* `css-pipeline` - handles your app's own`.css` files by chaining together a number of loaders:
+- `css-pipeline` - handles your app's own`.css` files by chaining together a number of loaders:
 
   > Default config: `{exclude: /node_modules/}`
 
   Chained loaders are:
 
-  * `style` - (only when serving) applies styles using [style-loader][style-loader]
-  * `css` - handles URLs, minification and CSS Modules using [css-loader][css-loader]
-  * `postcss` - processes CSS with PostCSS plugins using [postcss-loader][postcss-loader]; by default, this is configured to automatically add vendor prefixes to CSS using [autoprefixer][autoprefixer]
+  - `style` - (only when serving) applies styles using [style-loader][style-loader]
+  - `css` - handles URLs, minification and CSS Modules using [css-loader][css-loader]
+  - `postcss` - processes CSS with PostCSS plugins using [postcss-loader][postcss-loader]; by default, this is configured to automatically add vendor prefixes to CSS using [autoprefixer][autoprefixer]
 
-* `vendor-css-pipeline` - handles `.css` files required from `node_modules/`, with the same set of chained loaders as `css-pipeline` but with a `vendor-` prefix in their id.
+- `vendor-css-pipeline` - handles `.css` files required from `node_modules/`, with the same set of chained loaders as `css-pipeline` but with a `vendor-` prefix in their id.
 
   > Default config: `{include: /node_modules/}`
 
-* `graphics` - handles `.gif` and `.png` files using using [url-loader][url-loader]
+- `graphics` - handles `.gif` and `.png` files using using [url-loader][url-loader]
 
   > Default config: `{limit: 10240}`
 
-* `jpeg` - handles `.jpeg` files using [file-loader][file-loader]
+- `jpeg` - handles `.jpeg` files using [file-loader][file-loader]
 
-* `fonts` - handles `.otf`, `.svg`, `.ttf`, `.woff` and `.woff2` files using [url-loader][url-loader]
+- `fonts` - handles `.otf`, `.svg`, `.ttf`, `.woff` and `.woff2` files using [url-loader][url-loader]
 
   > Default config: `{limit: 10240}`
 
-* `eot` - handles `.eot` files using [file-loader][file-loader]
+- `eot` - handles `.eot` files using [file-loader][file-loader]
 
-* `json` - handles `.json` files using [json-loader][json-loader]
+- `json` - handles `.json` files using [json-loader][json-loader]
 
 ###### Test loaders
 
 When running Karma tests with coverage enabled, the following loader will be added:
 
-* `isparta` - handles instrumentation of source files for coverage analysis using [isparta-loader][isparta-loader]
+- `isparta` - handles instrumentation of source files for coverage analysis using [isparta-loader][isparta-loader]
 
   > Default config: `{include: path.join(cwd, 'src')}` (where cwd is the directory you ran `nwb test` from).
 
@@ -269,11 +288,11 @@ module.exports = {
 
 If you don't have a template at `src/index.html` or specify one via `template`, nwb will fall back to using a basic template which has the following properties you can configure:
 
-* `title` - contents for `<title>`
+- `title` - contents for `<title>`
 
   > Default: the value of `name` from your app's `package.json`
 
-* `mountId` - the `id` for the `<div>` provided for your app to mount itself into
+- `mountId` - the `id` for the `<div>` provided for your app to mount itself into
 
   > Default: `'app'`
 
@@ -441,34 +460,6 @@ module.exports = {
 }
 ```
 
-###### Test context module
-
-If you need to run some code before any of your tests run, the recommended way is to create a context module for Webpack to load and use `tests` config to point to it. You will need to use use [`require.context()`](https://webpack.github.io/docs/context.html#require-context) in this module to specify which test files to run.
-
-For example, if you need to configure an assertion library before running any tests and your tests are in `.spec.js` files under `src/`, you could create the following `tests.webpack.js` module in the root of your project...
-
-```js
-var chai = require('chai')
-var chaiEnzyme = require('chai-enzyme')
-
-chai.use(chaiEnzyme())
-
-var context = require.context('./src', true, /\.spec\.js$/)
-context.keys().forEach(context)
-```
-
-...then point to it in `nwb.config.js`:
-
-```js
-module.exports = {
-  karma: {
-    tests: 'tests.webpack.js'
-  }
-}
-```
-
-A context module is also commonly used to load polyfills, but you don't need to worry about that - nwb handles injecting Babel's polyfills into Karma tests for you.
-
 ##### `frameworks`: `Array<String | Plugin>`
 
 You must provide the plugin for any custom framework you want to use and manage it as a dependency yourself. Customise the testing framework plugin(s) Karma uses with the `frameworks` and `plugins` props:
@@ -605,10 +596,10 @@ module.exports = {
 
 A banner comment added to UMD builds will use as many of the following `package.json` fields as are present:
 
-* `name`
-* `version`
-* `homepage`
-* `license`
+- `name`
+- `version`
+- `homepage`
+- `license`
 
 If all fields are present the banner will be in this format:
 

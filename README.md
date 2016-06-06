@@ -5,39 +5,76 @@
 [![npm package][npm-badge]][npm]
 [![Coveralls][coveralls-badge]][coveralls]
 
-nwb is a development tool for [React](https://facebook.github.io/react/) apps and components, and plain JavaScript web apps and npm modules.
+nwb is a development tool for [React](https://facebook.github.io/react/) apps, React components and other browser-focused npm modules.
 
-It's effectively a frontend for [Babel](http://babeljs.io/), [Webpack](https://webpack.github.io/) and [Karma](http://karma-runner.github.io), which allows you to get started with these tools without having to learn them up-front, and to use them together in a common way across your projects without copying dependencies and configuration.
+---
 
-----
+It provides the following commands for using [Babel](http://babeljs.io/), [Webpack](https://webpack.github.io/) and [Karma](http://karma-runner.github.io) together so you can get started developing quickly and reduce the amount of `devDependencies` and configuration boilerplate in your projects:
 
-nwb provides [development commands](/docs/Commands.md#nwb-commands) for:
+- [`react`](/docs/Commands.md#react) is for quick development of React apps, starting from a single `.js` file and building up:
+  - `react run app.js` starts a development server.
+  - `react build app.js` creates a static build.
 
-* creating **static builds** for apps, including production optimisations for React apps
-* creating **ES5, UMD and ES6 module builds** for React components and other npm modules
-* **serving React apps** and component demos with *hot module reloading* and *syntax/`render()` error overlays*
-* **serving plain JavaScript web apps** with *auto-reloading* on code changes and *syntax error overlays*
-* **running unit tests** with *code coverage*
+- [`nwb`](/docs/Commands.md#nwb) is for common development tasks in a project's `package.json` scripts:
+  - `nwb start` starts a development server.
+  - `nwb test` runs unit tests.
+  - `nwb build` creates a static build.
 
-nwb **owns the dependencies** for development tools so you don't have to copy the same `devDependencies` between projects and deal with keeping them up to date yourself.
+---
 
-It also **dynamically generates configuration**, so you don't have to copy configuration boilerplate between projects, while an **`nwb.config.js`** file allows you to [tweak configuration](/docs/Configuration.md#configuration) to suit your project.
+**Table of Contents**
 
-To speed up developing new projects, **nwb can also [generate skeleton projects](/docs/Commands.md#new---create-a-new-project)** which are ready for deployment or publishing out of the box, and are preconfigured for running unit tests on [Travis CI](https://travis-ci.org/).
+- [Install](#install)
+- [Why?](#why-)
+- [Quick Start Examples](#quick-start-examples)
+- [Documentation](/docs/#table-of-contents)
+- [Usage](#usage)
+  - [Quick React Development](#quick-react-development)
+  - [Projects](#projects)
+- [Versioning](#versioning)
 
 ## Install
 
-Installing globally gives you an `nwb` command:
+Installing globally provides `react` and `nwb` commands for quick React development and generating project skeletons preconfigured for development with nwb:
 
 ```
 npm install -g nwb
 ```
 
-## [Documentation](/docs/#table-of-contents)
+Installing into a project provides an `nwb` command for use in `package.json` `scripts`:
+
+```
+npm install --save-dev nwb
+```
+
+## Why?
+
+nwb **gets you started quickly** with workflows for starting from a single `.js` file and building up, or [generating skeleton projects](/docs/Commands.md#new) ready for deployment or publishing out of the box, preconfigured for running unit tests on [Travis CI](https://travis-ci.org/).
+
+nwb **owns core development dependencies** so you don't have to copy the same `devDependencies` between projects and deal with keeping them up to date yourself.
+
+nwb **dynamically generates configuration**, so you don't have to copy configuration boilerplate between projects. It generates a baseline default configuration and allows you to [use an `nwb.config.js` file to tweak or add to the default configuration](/docs/Configuration.md#configuration) to suit your project.
 
 ## Quick Start Examples
 
-Create a new React app and start a hot reloading development server which automatically installs missing dependencies from npm when they're required:
+*(Assuming a global install of nwb)*
+
+Start developing a React app from a single file, automatically installing missing dependencies from npm when they're required; create a static build for distribution:
+
+```
+$ touch app.js
+...
+$ react run app.js --auto-install
+nwb: serve-react
+nwb: dev server listening at http://localhost:3000
+...
+$ react build app.js
+nwb: clean-app
+nwb: build-react
+...
+```
+
+Create a new React app project and start a development server:
 
 ```
 $ nwb new react-app github-issues
@@ -45,13 +82,13 @@ $ nwb new react-app github-issues
 nwb: installing dependencies
 ...
 $ cd github-issues
-$ nwb serve --auto-install
+$ npm start
 nwb: serve-react-app
 nwb: dev server listening at http://localhost:3000
 ...
 ```
 
-Create a new React component module and start hot reloading its demo app:
+Create a new React component project and start a development server for its demo app:
 
 ```
 $ nwb new react-component react-thing
@@ -62,93 +99,84 @@ $ nwb new react-component react-thing
 nwb: installing dependencies
 ...
 $ cd react-thing
-$ nwb serve
+$ npm start
 nwb: serve-react-demo
 nwb: dev server listening at http://localhost:3000
 ...
 ```
 
-Create a new web app and start a development server which reloads on every change:
-
-```
-$ nwb new web-app secret-prototype
-...
-$ cd secret-prototype
-$ nwb serve --reload
-nwb: serve-web-app
-nwb: dev server listening at http://localhost:3000
-...
-```
-
-Create a new web module without being asked any questions and run tests on every change as you develop it:
-
-```
-$ nwb new web-module get-form-data -f
-...
-$ cd get-form-data
-$ nwb test --server
-nwb: test
-...
-```
-
-## Example Projects
-
-### Yelp Clone
-
-[react-yelp-clone](https://github.com/insin/react-yelp-clone) takes the app created in the [Build a Yelp Clone](https://www.fullstackreact.com/articles/react-tutorial-cloning-yelp/) React tutorial and uses nwb for its development tooling, with a custom `nwb.config.js` to support the same setup.
-
-[Check out the diff](https://github.com/insin/react-yelp-clone/compare/master...nwb) to see the effect using nwb has on the amount of `devDependencies` and configuration which needs to be managed.
-
-### Github Issues
-
-[react-nwb-github-issues](https://github.com/insin/react-nwb-github-issues) is a clone of the ember-cli [github-issues-demo](https://github.com/wycats/github-issues-demo) demo app, showing development of a React app from scratch using nwb.
-
-Selected commits of interest:
-
-* [The skeleton React app created by `nwb new react-app`](https://github.com/insin/react-nwb-github-issues/commit/b7559f598b38dc5493915cf1e5c40aaf90a082ff)
-* [Installing a CSS preprocessor plugin](https://github.com/insin/react-nwb-github-issues/commit/b8e4c880ab174353dc231668e2ab48d1899ed268) - nwb automatically detects and uses CSS preprocessor plugins from your dependencies
-* [Installing a dependency which manages and `require()`s its own CSS dependency](https://github.com/insin/react-nwb-github-issues/commit/cad3abd4ec47f78bf50194ec1bd7cbfb1068e733) - the CSS and its image/font dependencies were hot reloaded into the running app when this change was made
-
-*Note: this example app initially tries to stick close to the original version commit-by-commit for the sake of comparison, by using [async-props](https://github.com/rackt/async-props), which is currently in pre-release.*
-
-## Other Examples
-
-### Automatically installing dependencies from npm
-
-nwb v0.7 added an `--auto-install` flag to `nwb serve` which automatically installs and saves missing dependencies from npm.
-
-![nwb serve --auto-install example](/resources/auto-install.gif)
-
-### Creating and customising a new React app
-
-Just after nwb v0.6 was released, someone on [Reactiflux](http://www.reactiflux.com/) asked this question:
-
-> hey guys, i need to prove a concept quickly, i need a boilerplate with react and some kind of mobile ui framework like ratchet, does anyone know of a good boilerplate like that?
-
-This video shows the resulting example of using nwb to create a new React project, installing [Ratchet](http://goratchet.com/) from npm and using its CSS, and [using the nwb config file to configure Babel](/docs/Configuration.md#babel-configuration) with a [plugin to make it more convenient to copy and paste HTML samples](https://github.com/insin/babel-plugin-react-html-attrs) from Ratchet's docs:
-
-[![nwb v0.6.0 example on YouTube](https://img.youtube.com/vi/jTuyiw-xzdo/0.jpg)](https://www.youtube.com/watch?v=jTuyiw-xzdo)
+## [Documentation](/docs/#table-of-contents)
 
 ## Usage
 
+### Quick React Development
+
+The `react` command handles quick React development and prototyping, starting from a single `.js` file and working up.
+
 ```
-Usage:
-  nwb <command> [options]
+Usage: react (run|build) [options]
 
 Options:
+  -c, --config   config file to use [default: nwb.config.js]
+  -h, --help     display this help message
+  -v, --version  print nwb's version
+
+Commands:
+  react run <entry> [options]
+    Serve a React app for development.
+
+    Arguments:
+      entry           entry point for the app
+
+    Options:
+      --auto-install  auto install missing npm dependencies
+      --fallback      serve the index page from any path
+      --host          hostname to bind the dev server to [default: localhost]
+      --info          show webpack module info
+      --mount-id      id for the <div> the app will render into [default: app]
+      --port          port to run the dev server on [default: 3000]
+      --reload        auto reload the page if hot reloading fails
+      --title         contents for <title> [default: React App]
+
+  react build <entry> [dist_dir] [options]
+    Create a static build for a React app.
+
+    Arguments:
+      entry       entry point for the app
+      dist_dir    build output directory [default: dist/]
+
+    Options:
+      --mount-id  id for the <div> the app will render into [default: app]
+      --title     contents for <title> [default: React App]
+      --vendor    create a separate vendor bundle
+```
+
+### Projects
+
+The `nwb` command handles development of projects with an established directory layout and tests.
+
+```
+Usage: nwb <command>
+
+Options:
+  -c, --config   config file to use [default: nwb.config.js]
   -h, --help     display this help message
   -v, --version  print nwb's version
 
 Project creation commands:
-  init <project_type> [name]
-    initialise a project in the current directory
+  init <project_type> [name] [options]
+    Initialise a project in the current directory.
 
-  new <project_type> <name>
-    create a project in a new directory
+    Arguments:
+      project_type  project type - see the list below
+      name          project name [default: working directory name]
 
-  Positional arguments:
-    project_type  project type - see the list below
-    name          project name [default: current directory name]
+  new <project_type> <name> [options]
+    Create a project in a new directory.
+
+    Arguments:
+      project_type  project type - see the list below
+      name          project name
 
   Options:
     -f, --force   force project creation, don't ask questions
@@ -164,17 +192,17 @@ Project creation commands:
     web-module       a plain JavaScript module
 
 Generic development commands:
-  Positional arguments for these commands depend on the type of project they're
-  being run in. See the applicable project-type-specific commands below.
+  Arguments for these commands depend on the type of project they're being run
+  in. See the applicable project-type-specific commands below.
 
   build
-    clean and build the project
+    Clean and build the project.
 
   clean
-    delete built resources
+    Delete built resources.
 
   serve
-    serve an app, or a component's demo app, with hot reloading
+    Serve an app, or a component's demo app, with hot reloading.
 
     Options:
       --auto-install  auto install missing npm dependencies
@@ -185,7 +213,7 @@ Generic development commands:
       --reload        auto reload the page if hot reloading fails
 
   test
-    run unit tests
+    Run unit tests.
 
     Options:
       --coverage  create a code coverage report
@@ -193,42 +221,42 @@ Generic development commands:
 
 Project-type-specific commands:
   build-demo
-    build a demo app from demo/src/index.js to demo/dist/
+    Build a demo app from demo/src/index.js to demo/dist/.
 
   build-module
-    create an ES5 build for an npm module (ES6 modules build requires config)
+    Create an ES5 build for an npm module (ES6 modules build requires config).
 
   build-react-app [entry] [dist_dir]
-    build a React app from entry to dist_dir
+    Build a React app from entry to dist_dir.
 
   build-umd [entry]
-    create a UMD build for an npm module from entry (requires config)
+    Create a UMD build for an npm module from entry (requires config).
 
   build-web-app [entry] [dist_dir]
-    build a web app from entry to dist_dir
+    Build a web app from entry to dist_dir.
 
   clean-app [dist_dir]
-    delete dist_dir
+    Delete dist_dir.
 
   clean-demo
-    delete demo/dist/
+    Delete demo/dist/.
 
   clean-module
-    delete coverage/, es6/ and lib/
+    Delete coverage/, es6/ and lib/.
 
   clean-umd
-    delete umd/
+    Delete umd/.
 
   serve-react-app [entry]
-    serve a React app from entry
+    Serve a React app from entry
 
   serve-react-demo
-    serve a React demo app from demo/src/index.js
+    Serve a React demo app from demo/src/index.js.
 
   serve-web-app [entry]
-    serve a web app from entry
+    Serve a web app from entry.
 
-  Positional arguments:
+  Arguments:
     entry     entry point [default: src/index.js]
     dist_dir  build output directory [default: dist/]
 ```

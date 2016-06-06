@@ -1,4 +1,4 @@
-## Project Types
+## Projects
 
 nwb supports creation and development of the following project types:
 
@@ -10,7 +10,7 @@ The React component template includes a React demo app in `demo/src/`.
 
 **Web apps** - web applications which don't use React.
 
-**Web modules** - "web module" is just a shorter way of saying "a module which will be published to npm and is expected to be able to run in a browser as a dependency of a webapp"... except we just had to say that anyway,
+**Web modules** - "web module" is just a shorter way of saying "a module which will be published to npm and is expected to be able to run in a browser as a dependency of a webapp"... except we just had to say that anyway...............
 
 All project templates are pre-configured to:
 

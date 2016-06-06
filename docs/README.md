@@ -1,9 +1,11 @@
 ## Table of Contents
 
-* [Introduction](/docs/Introduction.md)
-* [Project Types](/docs/ProjectTypes.md)
-* [`nwb` commands](/docs/Commands.md)
-* [Testing](/docs/Testing.md)
-* [Configuration](/docs/Configuration.md)
-* [Plugins](/docs/Plugins.md)
-* [Middleware](/docs/Middleware.md)
+* [Commands](/docs/Commands.md#commands)
+  * [`react`](/docs/Commands.md#react)
+  * [`nwb`](/docs/Commands.md#nwb)
+* [Configuration](/docs/Configuration.md#configuration)
+* [Testing](/docs/Testing.md#testing)
+* [Plugins](/docs/Plugins.md#plugins)
+* [Middleware](/docs/Middleware.md#middleware)
+* [Projects](/docs/Projects.md#projects)
+* [Examples](/docs/Examples.md#examples)
