@@ -9,16 +9,17 @@ nwb is a development tool for [React](https://facebook.github.io/react/) apps, R
 
 ---
 
-It provides the following commands for using [Babel](http://babeljs.io/), [Webpack](https://webpack.github.io/) and [Karma](http://karma-runner.github.io) together so you can get started developing quickly and reduce the amount of `devDependencies` and configuration boilerplate in your projects:
+It provides commands for using [Babel](http://babeljs.io/), [Webpack](https://webpack.github.io/) and [Karma](http://karma-runner.github.io) together so you can get started developing quickly and reduce the amount of `devDependencies` and configuration boilerplate in your projects:
 
 - [`react`](/docs/Commands.md#react) is for quick development of React apps, starting from a single `.js` file and building up:
   - `react run app.js` starts a development server.
   - `react build app.js` creates a static build.
 
-- [`nwb`](/docs/Commands.md#nwb) is for common development tasks in a project's `package.json` scripts:
+- [`nwb`](/docs/Commands.md#nwb) is for common development tasks in a project's `package.json` `scripts`:
   - `nwb start` starts a development server.
   - `nwb test` runs unit tests.
   - `nwb build` creates a static build.
+  - `nwb new` creates skeleton projects.
 
 ---
 
@@ -35,7 +36,7 @@ It provides the following commands for using [Babel](http://babeljs.io/), [Webpa
 
 ## Install
 
-Installing globally provides `react` and `nwb` commands for quick React development and generating project skeletons preconfigured for development with nwb:
+Installing globally provides `react` and `nwb` commands for quick React development and generating project skeletons preconfigured for development using nwb:
 
 ```
 npm install -g nwb
@@ -51,15 +52,15 @@ npm install --save-dev nwb
 
 nwb **gets you started quickly** with workflows for starting from a single `.js` file and building up, or [generating skeleton projects](/docs/Commands.md#new) ready for deployment or publishing out of the box, preconfigured for running unit tests on [Travis CI](https://travis-ci.org/).
 
-nwb **owns core development dependencies** so you don't have to copy the same `devDependencies` between projects and deal with keeping them up to date yourself.
+nwb **owns core development dependencies** so you don't have to copy the same `devDependencies` between projects and deal with keeping them up to date individually.
 
-nwb **dynamically generates configuration**, so you don't have to copy configuration boilerplate between projects. It generates a baseline default configuration and allows you to [use an `nwb.config.js` file to tweak or add to the default configuration](/docs/Configuration.md#configuration) to suit your project.
+nwb **dynamically generates configuration**, so you don't have to copy configuration boilerplate between projects. It generates a baseline default configuration and allows you to [use a single configuration file to tweak or add to the default configuration](/docs/Configuration.md#configuration) to suit your project.
 
 ## Quick Start Examples
 
 *(Assuming a global install of nwb)*
 
-Start developing a React app from a single file, automatically installing missing dependencies from npm when they're required; create a static build for distribution:
+Start developing a React app from a single file, automatically installing missing dependencies from npm when they're required; then create a static build for distribution:
 
 ```
 $ touch app.js
@@ -111,7 +112,7 @@ nwb: dev server listening at http://localhost:3000
 
 ### Quick React Development
 
-The `react` command handles quick React development and prototyping, starting from a single `.js` file and working up.
+The `react` command provides quick React development, starting from a single `.js` file and working up.
 
 ```
 Usage: react (run|build) [options]
@@ -153,7 +154,7 @@ Commands:
 
 ### Projects
 
-The `nwb` command handles development of projects with an established directory layout and tests.
+The `nwb` command handles development tasks for different types of projects.
 
 ```
 Usage: nwb <command>
@@ -164,14 +165,7 @@ Options:
   -v, --version  print nwb's version
 
 Project creation commands:
-  init <project_type> [name] [options]
-    Initialise a project in the current directory.
-
-    Arguments:
-      project_type  project type - see the list below
-      name          project name [default: working directory name]
-
-  new <project_type> <name> [options]
+  nwb new <project_type> <name> [options]
     Create a project in a new directory.
 
     Arguments:
@@ -185,6 +179,13 @@ Project creation commands:
     --no-umd      disable npm UMD module build
     --react       version of React to install for React apps & components
 
+  nwb init <project_type> [name] [options]
+    Initialise a project in the current directory.
+
+    Arguments:
+      project_type  project type - see the list below
+      name          project name [default: working directory name]
+
   Project types:
     react-app        a React app
     react-component  a React component module with a demo app
@@ -193,15 +194,15 @@ Project creation commands:
 
 Generic development commands:
   Arguments for these commands depend on the type of project they're being run
-  in. See the applicable project-type-specific commands below.
+  in. See the applicable project type-specific commands below.
 
-  build
+  nwb build
     Clean and build the project.
 
-  clean
+  nwb clean
     Delete built resources.
 
-  serve
+  nwb serve
     Serve an app, or a component's demo app, with hot reloading.
 
     Options:
@@ -212,48 +213,48 @@ Generic development commands:
       --port          port to run the dev server on [default: 3000]
       --reload        auto reload the page if hot reloading fails
 
-  test
+  nwb test
     Run unit tests.
 
     Options:
       --coverage  create a code coverage report
       --server    keep running tests on every change
 
-Project-type-specific commands:
-  build-demo
+Project type-specific commands:
+  nwb build-demo
     Build a demo app from demo/src/index.js to demo/dist/.
 
-  build-module
+  nwb build-module
     Create an ES5 build for an npm module (ES6 modules build requires config).
 
-  build-react-app [entry] [dist_dir]
+  nwb build-react-app [entry] [dist_dir]
     Build a React app from entry to dist_dir.
 
-  build-umd [entry]
+  nwb build-umd [entry]
     Create a UMD build for an npm module from entry (requires config).
 
-  build-web-app [entry] [dist_dir]
+  nwb build-web-app [entry] [dist_dir]
     Build a web app from entry to dist_dir.
 
-  clean-app [dist_dir]
+  nwb clean-app [dist_dir]
     Delete dist_dir.
 
-  clean-demo
+  nwb clean-demo
     Delete demo/dist/.
 
-  clean-module
+  nwb clean-module
     Delete coverage/, es6/ and lib/.
 
-  clean-umd
+  nwb clean-umd
     Delete umd/.
 
-  serve-react-app [entry]
+  nwb serve-react-app [entry]
     Serve a React app from entry
 
-  serve-react-demo
+  nwb serve-react-demo
     Serve a React demo app from demo/src/index.js.
 
-  serve-web-app [entry]
+  nwb serve-web-app [entry]
     Serve a web app from entry.
 
   Arguments:
@@ -285,14 +286,14 @@ This is what versions mean during nwb's initial development:
 
 *Operating system icons created with [Icons8](https://icons8.com/)*
 
-[travis-badge]: https://img.shields.io/travis/insin/nwb/master.svg?style=flat-square
+[travis-badge]: https://img.shields.io/travis/insin/nwb/master.png?style=flat-square
 [travis]: https://travis-ci.org/insin/nwb
 
-[appveyor-badge]: https://img.shields.io/appveyor/ci/insin/nwb/master.svg?style=flat-square
+[appveyor-badge]: https://img.shields.io/appveyor/ci/insin/nwb/master.png?style=flat-square
 [appveyor]: https://ci.appveyor.com/project/insin/nwb
 
-[npm-badge]: https://img.shields.io/npm/v/nwb.svg?style=flat-square
+[npm-badge]: https://img.shields.io/npm/v/nwb.png?style=flat-square
 [npm]: https://www.npmjs.org/package/nwb
 
-[coveralls-badge]: https://img.shields.io/coveralls/insin/nwb/master.svg?style=flat-square
+[coveralls-badge]: https://img.shields.io/coveralls/insin/nwb/master.png?style=flat-square
 [coveralls]: https://coveralls.io/github/insin/nwb

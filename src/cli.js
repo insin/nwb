@@ -21,7 +21,7 @@ export default function(argv, cb) {
   }
 
   if (args.help || !command || /^h(elp)?$/.test(command)) {
-    console.log(`Usage: ${cmd('nwb')} ${req('<command>')}
+    console.log(`Usage: ${cmd('nwb')} ${req('<command>')} ${opt('[options]')}
 
 Options:
   ${opt('-c, --config')}   config file to use ${opt('[default: nwb.config.js]')}
@@ -29,19 +29,19 @@ Options:
   ${opt('-v, --version')}  print nwb's version
 
 Project creation commands:
-  ${cmd('init')} ${req('<project_type>')} ${opt('[name] [options]')}
-    Initialise a project in the current directory.
-
-    Arguments:
-      ${req('project_type')}  project type - see the list below
-      ${opt('name')}          project name ${opt('[default: working directory name]')}
-
-  ${cmd('new')} ${req('<project_type> <name>')} ${opt('[options]')}
+  ${cmd('nwb new')} ${req('<project_type> <name>')} ${opt('[options]')}
     Create a project in a new directory.
 
     Arguments:
       ${req('project_type')}  project type - see the list below
       ${req('name')}          project name
+
+  ${cmd('nwb init')} ${req('<project_type>')} ${opt('[name] [options]')}
+    Initialise a project in the current directory.
+
+    Arguments:
+      ${req('project_type')}  project type - see the list below
+      ${opt('name')}          project name ${opt('[default: working directory name]')}
 
   Options:
     ${opt('-f, --force')}   force project creation, don't ask questions
@@ -58,15 +58,15 @@ Project creation commands:
 
 Generic development commands:
   Arguments for these commands depend on the type of project they're being run
-  in. See the applicable project-type-specific commands below.
+  in. See the applicable project type-specific commands below.
 
-  ${cmd('build')}
+  ${cmd('nwb build')}
     Clean and build the project.
 
-  ${cmd('clean')}
+  ${cmd('nwb clean')}
     Delete built resources.
 
-  ${cmd('serve')}
+  ${cmd('nwb serve')}
     Serve an app, or a component's demo app, with hot reloading.
 
     Options:
@@ -77,48 +77,48 @@ Generic development commands:
       ${opt('--port')}          port to run the dev server on ${opt('[default: 3000]')}
       ${opt('--reload')}        auto reload the page if hot reloading fails
 
-  ${cmd('test')}
+  ${cmd('nwb test')}
     Run unit tests.
 
     Options:
       ${opt('--coverage')}  create a code coverage report
       ${opt('--server')}    keep running tests on every change
 
-Project-type-specific commands:
-  ${cmd('build-demo')}
+Project type-specific commands:
+  ${cmd('nwb build-demo')}
     Build a demo app from demo/src/index.js to demo/dist/.
 
-  ${cmd('build-module')}
+  ${cmd('nwb build-module')}
     Create an ES5 build for an npm module (ES6 modules build requires config).
 
-  ${cmd('build-react-app')} ${opt('[entry] [dist_dir]')}
+  ${cmd('nwb build-react-app')} ${opt('[entry] [dist_dir]')}
     Build a React app from ${opt('entry')} to ${opt('dist_dir')}.
 
-  ${cmd('build-umd')} ${opt('[entry]')}
+  ${cmd('nwb build-umd')} ${opt('[entry]')}
     Create a UMD build for an npm module from ${opt('entry')} (requires config).
 
-  ${cmd('build-web-app')} ${opt('[entry] [dist_dir]')}
+  ${cmd('nwb build-web-app')} ${opt('[entry] [dist_dir]')}
     Build a web app from ${opt('entry')} to ${opt('dist_dir')}.
 
-  ${cmd('clean-app')} ${opt('[dist_dir]')}
+  ${cmd('nwb clean-app')} ${opt('[dist_dir]')}
     Delete ${opt('dist_dir')}.
 
-  ${cmd('clean-demo')}
+  ${cmd('nwb clean-demo')}
     Delete demo/dist/.
 
-  ${cmd('clean-module')}
+  ${cmd('nwb clean-module')}
     Delete coverage/, es6/ and lib/.
 
-  ${cmd('clean-umd')}
+  ${cmd('nwb clean-umd')}
     Delete umd/.
 
-  ${cmd('serve-react-app')} ${opt('[entry]')}
+  ${cmd('nwb serve-react-app')} ${opt('[entry]')}
     Serve a React app from ${opt('entry')}
 
-  ${cmd('serve-react-demo')}
+  ${cmd('nwb serve-react-demo')}
     Serve a React demo app from demo/src/index.js.
 
-  ${cmd('serve-web-app')} ${opt('[entry]')}
+  ${cmd('nwb serve-web-app')} ${opt('[entry]')}
     Serve a web app from ${opt('entry')}.
 
   Arguments:
