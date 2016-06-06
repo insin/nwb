@@ -265,7 +265,6 @@ export function createPlugins(server, buildConfig = {}, userConfig = {}) {
       ...buildConfig.define,
       ...userConfig.define
     }),
-    new optimize.DedupePlugin(),
     new optimize.OccurenceOrderPlugin()
   ]
 
@@ -301,6 +300,7 @@ export function createPlugins(server, buildConfig = {}, userConfig = {}) {
   }
 
   if (process.env.NODE_ENV === 'production') {
+    plugins.push(new optimize.DedupePlugin())
     plugins.push(new optimize.UglifyJsPlugin({
       compress: {
         screw_ie8: true,

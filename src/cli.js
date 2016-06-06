@@ -1,4 +1,4 @@
-import {cyan, green, red, yellow} from 'chalk'
+import {cyan as opt, green as cmd, red, yellow as req} from 'chalk'
 import parseArgs from 'minimist'
 
 import pkg from '../package.json'
@@ -6,6 +6,7 @@ import pkg from '../package.json'
 export default function(argv, cb) {
   let args = parseArgs(argv, {
     alias: {
+      c: 'config',
       h: 'help',
       v: 'version'
     },
@@ -20,111 +21,115 @@ export default function(argv, cb) {
   }
 
   if (args.help || !command || /^h(elp)?$/.test(command)) {
-    console.log(`Usage:
-  ${green('nwb')} ${yellow('<command>')} ${cyan('[options]')}
+    console.log(`Usage: ${cmd('nwb')} ${req('<command>')}
 
 Options:
-  ${cyan('-h, --help')}     display this help message
-  ${cyan('-v, --version')}  print nwb's version
+  ${opt('-c, --config')}   config file to use ${opt('[default: nwb.config.js]')}
+  ${opt('-h, --help')}     display this help message
+  ${opt('-v, --version')}  print nwb's version
 
 Project creation commands:
-  ${green('init')} ${yellow('<project_type>')} ${cyan('[name]')}
-    initialise a project in the current directory
+  ${cmd('init')} ${req('<project_type>')} ${opt('[name] [options]')}
+    Initialise a project in the current directory.
 
-  ${green('new')} ${yellow('<project_type> <name>')}
-    create a project in a new directory
+    Arguments:
+      ${req('project_type')}  project type - see the list below
+      ${opt('name')}          project name ${opt('[default: working directory name]')}
 
-  Positional arguments:
-    ${cyan('project_type')}  project type - see the list below
-    ${cyan('name')}          project name ${cyan('[default: current directory name]')}
+  ${cmd('new')} ${req('<project_type> <name>')} ${opt('[options]')}
+    Create a project in a new directory.
+
+    Arguments:
+      ${req('project_type')}  project type - see the list below
+      ${req('name')}          project name
 
   Options:
-    ${cyan('-f, --force')}   force project creation, don't ask questions
-    ${cyan('-g, --global')}  global variable name to export in the UMD build
-    ${cyan('--no-jsnext')}   disable npm ES6 modules build
-    ${cyan('--no-umd')}      disable npm UMD module build
-    ${cyan('--react')}       version of React to install for React apps & components
+    ${opt('-f, --force')}   force project creation, don't ask questions
+    ${opt('-g, --global')}  global variable name to export in the UMD build
+    ${opt('--no-jsnext')}   disable npm ES6 modules build
+    ${opt('--no-umd')}      disable npm UMD module build
+    ${opt('--react')}       version of React to install for React apps & components
 
   Project types:
-    ${cyan('react-app')}        a React app
-    ${cyan('react-component')}  a React component module with a demo app
-    ${cyan('web-app')}          a plain JavaScript app
-    ${cyan('web-module')}       a plain JavaScript module
+    ${req('react-app')}        a React app
+    ${req('react-component')}  a React component module with a demo app
+    ${req('web-app')}          a plain JavaScript app
+    ${req('web-module')}       a plain JavaScript module
 
 Generic development commands:
-  Positional arguments for these commands depend on the type of project they're
-  being run in. See the applicable project-type-specific commands below.
+  Arguments for these commands depend on the type of project they're being run
+  in. See the applicable project-type-specific commands below.
 
-  ${green('build')}
-    clean and build the project
+  ${cmd('build')}
+    Clean and build the project.
 
-  ${green('clean')}
-    delete built resources
+  ${cmd('clean')}
+    Delete built resources.
 
-  ${green('serve')}
-    serve an app, or a component's demo app, with hot reloading
-
-    Options:
-      ${cyan('--auto-install')}  auto install missing npm dependencies
-      ${cyan('--fallback')}      serve the index page from any path
-      ${cyan('--host')}          hostname to bind the dev server to ${cyan('[default: localhost]')}
-      ${cyan('--info')}          show webpack module info
-      ${cyan('--port')}          port to run the dev server on ${cyan('[default: 3000]')}
-      ${cyan('--reload')}        auto reload the page if hot reloading fails
-
-  ${green('test')}
-    run unit tests
+  ${cmd('serve')}
+    Serve an app, or a component's demo app, with hot reloading.
 
     Options:
-      ${cyan('--coverage')}  create a code coverage report
-      ${cyan('--server')}    keep running tests on every change
+      ${opt('--auto-install')}  auto install missing npm dependencies
+      ${opt('--fallback')}      serve the index page from any path
+      ${opt('--host')}          hostname to bind the dev server to ${opt('[default: localhost]')}
+      ${opt('--info')}          show webpack module info
+      ${opt('--port')}          port to run the dev server on ${opt('[default: 3000]')}
+      ${opt('--reload')}        auto reload the page if hot reloading fails
+
+  ${cmd('test')}
+    Run unit tests.
+
+    Options:
+      ${opt('--coverage')}  create a code coverage report
+      ${opt('--server')}    keep running tests on every change
 
 Project-type-specific commands:
-  ${green('build-demo')}
-    build a demo app from demo/src/index.js to demo/dist/
+  ${cmd('build-demo')}
+    Build a demo app from demo/src/index.js to demo/dist/.
 
-  ${green('build-module')}
-    create an ES5 build for an npm module (ES6 modules build requires config)
+  ${cmd('build-module')}
+    Create an ES5 build for an npm module (ES6 modules build requires config).
 
-  ${green('build-react-app')} ${cyan('[entry] [dist_dir]')}
-    build a React app from ${cyan('entry')} to ${cyan('dist_dir')}
+  ${cmd('build-react-app')} ${opt('[entry] [dist_dir]')}
+    Build a React app from ${opt('entry')} to ${opt('dist_dir')}.
 
-  ${green('build-umd')} ${cyan('[entry]')}
-    create a UMD build for an npm module from ${cyan('entry')} (requires config)
+  ${cmd('build-umd')} ${opt('[entry]')}
+    Create a UMD build for an npm module from ${opt('entry')} (requires config).
 
-  ${green('build-web-app')} ${cyan('[entry] [dist_dir]')}
-    build a web app from ${cyan('entry')} to ${cyan('dist_dir')}
+  ${cmd('build-web-app')} ${opt('[entry] [dist_dir]')}
+    Build a web app from ${opt('entry')} to ${opt('dist_dir')}.
 
-  ${green('clean-app')} ${cyan('[dist_dir]')}
-    delete ${cyan('dist_dir')}
+  ${cmd('clean-app')} ${opt('[dist_dir]')}
+    Delete ${opt('dist_dir')}.
 
-  ${green('clean-demo')}
-    delete demo/dist/
+  ${cmd('clean-demo')}
+    Delete demo/dist/.
 
-  ${green('clean-module')}
-    delete coverage/, es6/ and lib/
+  ${cmd('clean-module')}
+    Delete coverage/, es6/ and lib/.
 
-  ${green('clean-umd')}
-    delete umd/
+  ${cmd('clean-umd')}
+    Delete umd/.
 
-  ${green('serve-react-app')} ${cyan('[entry]')}
-    serve a React app from ${cyan('entry')}
+  ${cmd('serve-react-app')} ${opt('[entry]')}
+    Serve a React app from ${opt('entry')}
 
-  ${green('serve-react-demo')}
-    serve a React demo app from demo/src/index.js
+  ${cmd('serve-react-demo')}
+    Serve a React demo app from demo/src/index.js.
 
-  ${green('serve-web-app')} ${cyan('[entry]')}
-    serve a web app from ${cyan('entry')}
+  ${cmd('serve-web-app')} ${opt('[entry]')}
+    Serve a web app from ${opt('entry')}.
 
-  Positional arguments:
-    ${cyan('entry')}     entry point ${cyan('[default: src/index.js]')}
-    ${cyan('dist_dir')}  build output directory ${cyan('[default: dist/]')}
+  Arguments:
+    ${opt('entry')}     entry point ${opt('[default: src/index.js]')}
+    ${opt('dist_dir')}  build output directory ${opt('[default: dist/]')}
 `)
     process.exit(args.help || command ? 0 : 1)
   }
 
   let unknownCommand = () => {
-    console.error(`${red('nwb: unknown command:')} ${yellow(command)}`)
+    console.error(`${red('nwb: unknown command:')} ${req(command)}`)
     process.exit(1)
   }
 

@@ -3,34 +3,16 @@
  * accessible to middleware.
  */
 
-import resolve from 'resolve'
-
-import {UserError} from './errors'
+import merge from 'webpack-merge'
 
 /**
  * Creates a build configuration object which will be used to create a Webpack
- * config for serving a React app.
+ * config for serving a React app. Ensures React is available to do so.
  */
 export default function(config) {
-  let {
-    entry,
-    output,
-    plugins,
-    staticPath = null
-  } = config
+  let {staticPath = null, ...otherConfig} = config
 
-  // Find the locally-installed version of React
-  let reactPath
-  try {
-    reactPath = resolve.sync('react', {basedir: process.cwd()})
-  }
-  catch (e) {
-    throw new UserError('nwb: React must be installed locally to serve a React app')
-  }
-
-  return {
-    entry,
-    output,
+  return merge(otherConfig, {
     loaders: {
       babel: {
         // Configure hot reloading and error catching via react-transform
@@ -43,20 +25,19 @@ export default function(config) {
             'react-transform': {
               transforms: [{
                 transform: require.resolve('react-transform-hmr'),
-                imports: [reactPath],
+                imports: ['react'],
                 locals: ['module']
               }, {
                 transform: require.resolve('react-transform-catch-errors'),
-                imports: [reactPath, require.resolve('redbox-noreact')]
+                imports: ['react', require.resolve('redbox-noreact')]
               }]
             }
           }
         }
       }
     },
-    plugins,
     server: {
       staticPath
     }
-  }
+  })
 }

@@ -5,7 +5,8 @@
   "license": "MIT",
   "author": "Jonny Buchanan <jonathan.buchanan@gmail.com>",
   "bin": {
-    "nwb": "lib/bin/nwb.js"
+    "nwb": "lib/bin/nwb.js",
+    "react": "lib/bin/react.js"
   },
   "scripts": {
     "build": "npm run lint && rimraf lib && babel src --loose all --out-dir lib",

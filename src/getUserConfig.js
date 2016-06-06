@@ -63,13 +63,12 @@ function prepareWebpackPostCSSConfig(postcss) {
 
 export default function getUserConfig(args = {}, {required = false} = {}) {
   // Try to load default user config, or use a config file path we were given
-  // (undocumented).
   let userConfig = {}
-  let userConfigPath = args.absConfig || path.resolve(args.config || 'nwb.config.js')
+  let userConfigPath = path.resolve(args.config || 'nwb.config.js')
 
   // Bail early if a config file is required and doesn't exist
   let configFileExists = glob.sync(userConfigPath).length !== 0
-  if (required && !configFileExists) {
+  if ((args.config || required) && !configFileExists) {
     throw new UserError(`nwb: couldn't find a config file at ${userConfigPath}`)
   }
 

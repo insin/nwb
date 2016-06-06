@@ -60,19 +60,26 @@
 
 **Added:**
 
+- Installing globally now adds a `react` command for quick React development starting from a single file.
+  - `react run entry.js` runs a development server.
+  - `react build entry.js` creates a static build.
+  - For these commands, Babel is preconfigured to allow you to use all of its Stage 0 features out of the box, including `async`/`await`.
+  - These are implemented by (the previously undocumented) `serve-react` and (new) `build-react` nwb commands.
 - The entry point for apps and npm module UMD builds can now be specified as an argument to [`build` and `serve` commands](https://github.com/insin/nwb/blob/v0.11.0/docs/Commands.md#project-type-specific-commands). The default is still `src/index.js`. [[#115](https://github.com/insin/nwb/issues/115)]
 - The directory web apps are built into can now be specified as an argument to [`build`, `clean` and `serve` commands](https://github.com/insin/nwb/blob/v0.11.0/docs/Commands.md#project-type-specific-commands). The default is still `dist/`.
 - Added [`webpack.compat` config](https://github.com/insin/nwb/blob/v0.11.0/docs/Configuration.md#compat-object) to enable compatibility tweaks for modules which are known to be problematic with Webpack - initially this includes support for Enzyme, Moment.js and Sinon.js 1.x [[#108](https://github.com/insin/nwb/issues/108)]
 - Added [`webpack.postcss` config](https://github.com/insin/nwb/blob/v0.11.0/docs/Configuration.md#postcss-object) to customise the PostCSS plugins applied to each style pipeline [[#57](https://github.com/insin/nwb/issues/57)]
 - Added [`webpack.vendorBundle` config](https://github.com/insin/nwb/blob/v0.11.0/docs/Configuration.md#vendorbundle-boolean) to disable automatically extracting anything imported from `node_modules/` out into a separate `vendor` chunk [[#106](https://github.com/insin/nwb/issues/106)]
 - Added [documentation for creating and using a test context module](https://github.com/insin/nwb/blob/v0.11.0/docs/Configuration.md#test-context-module) if there's code you need to run prior to tests running, such as configuring your assertion library with new assertions.
+- Added a `--config` option to allow you to specify your own config file instead of `nwb.config.js`.
 
 **Changed:**
 
 - Apps are no longer required to provide their own HTML template. The default template path of `src/index.html` will continue to be used if a file exists there. If an alternative template is not provided via [`webpack.html` config](https://github.com/insin/nwb/blob/v0.11.0/docs/Configuration.md#html-object), nwb will now fall back to using a basic template.
 - Restored default use of the Babel polyfill in Karma config so tests (and their dependencies) can assume a modern environment.
 - Default `babel-loader` config now uses [`cacheDirectory: true` for a speedup](https://github.com/babel/babel-loader#babel-loader-is-slow).
-* Improved debug output (activated with a `DEBUG=nwb` environment variable) to print config objects in full - if you're configuring plugin objects (e.g. PostCSS plugins), it's recommended to create instances of them if you want to use debug output.
+- Improved debug output (activated with a `DEBUG=nwb` environment variable) to print config objects in full - if you're configuring plugin objects (e.g. PostCSS plugins), it's recommended to create instances of them if you want to use debug output.
+- `webpack.optimize.DedupePlugin` is now only used for production builds, as recommended in the Webpack docs.
 
 **Dependencies:**
 

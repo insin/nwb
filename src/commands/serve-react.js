@@ -1,32 +1,50 @@
 import path from 'path'
 
-import glob from 'glob'
+import resolve from 'resolve'
 
 import {UserError} from '../errors'
 import serveReact from '../serveReact'
+import {installReact} from '../utils'
 
+/**
+ * Serve a standalone React entry module.
+ */
 export default function(args, cb) {
   if (args._.length === 1) {
-    return cb(new UserError('usage: nwb serve-react <entry module>'))
+    return cb(new UserError('nwb: serve-react: an entry module must be specified'))
   }
 
-  let entry = args._[1]
-  if (glob.sync(entry).length === 0) {
-    return cb(new UserError(`entry module not found: ${path.resolve(entry)}`))
+  // Install React if it's not available
+  try {
+    resolve.sync('react', {basedir: process.cwd()})
   }
+  catch (e) {
+    console.log('nwb: React is not available locally, installing...')
+    installReact()
+  }
+
+  let entry = path.resolve(args._[1])
 
   console.log('nwb: serve-react')
   serveReact(args, {
     entry,
     output: {
       filename: 'app.js',
-      path: __dirname,
+      path: process.cwd(),
       publicPath: '/'
+    },
+    loaders: {
+      babel: {
+        query: {
+          stage: 0,
+          optional: ['runtime']
+        }
+      }
     },
     plugins: {
       html: {
         mountId: args['mount-id'] || 'app',
-        title: args.title || 'nwb: serve-react'
+        title: args.title || 'React App'
       }
     }
   }, cb)

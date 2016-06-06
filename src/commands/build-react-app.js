@@ -43,6 +43,9 @@ let buildConfig = (args) => {
   return config
 }
 
+/**
+ * Build a React app.
+ */
 export default function(args, cb) {
   let dist = args._[2] || 'dist'
 

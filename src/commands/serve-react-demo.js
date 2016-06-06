@@ -3,7 +3,7 @@ import path from 'path'
 import serveReact from '../serveReact'
 
 /**
- * Serve a web module React demo app from demo/src/index.js.
+ * Serve a React demo app from demo/src/index.js.
  */
 export default function(args, cb) {
   let pkg = require(path.resolve('package.json'))

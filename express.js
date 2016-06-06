@@ -23,6 +23,7 @@ module.exports = function(express, options) {
   var args = {
     _: ['serve-react-app', options.entry],
     'auto-install': !!options.autoInstall,
+    config: options.config,
     info: !!options.info
   }
 

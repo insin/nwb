@@ -11,7 +11,14 @@ import {deepToString} from './utils'
  * plugin config objects they export.
  */
 export default function getPluginConfig(cwd = process.cwd()) {
-  let pkg = require(path.join(cwd, 'package.json'))
+  let pkg
+  try {
+    pkg = require(path.join(cwd, 'package.json'))
+  }
+  catch (e) {
+    return {}
+  }
+
   let plugins = [
     ...Object.keys(pkg.dependencies || {}),
     ...Object.keys(pkg.devDependencies || {})

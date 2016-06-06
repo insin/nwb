@@ -1,5 +1,4 @@
 import path from 'path'
-import {execSync} from 'child_process'
 
 import chalk from 'chalk'
 import copyTemplateDir from 'copy-template-dir'
@@ -8,9 +7,9 @@ import inquirer from 'inquirer'
 import {
   REACT_APP, REACT_COMPONENT, REACT_VERSION, WEB_APP, WEB_MODULE, PROJECT_TYPES
 } from './constants'
-import debug from './debug'
 import {UserError} from './errors'
 import pkg from '../package.json'
+import {installReact} from './utils'
 
 let nwbVersion = pkg.version.split('.').slice(0, 2).concat('x').join('.')
 
@@ -59,15 +58,6 @@ export function getWebModulePrefs(args, done) {
   ]).then(answers => done(null, answers), err => done(err))
 }
 
-function installReact({targetDir, reactVersion, dev = false}) {
-  let command = `npm install --save${dev ? '-dev' : ''} react@${reactVersion} react-dom@${reactVersion}`
-  debug(`${targetDir} $ ${command}`)
-  execSync(command, {
-    cwd: targetDir,
-    stdio: [0, 1, 2]
-  })
-}
-
 function logCreatedFiles(targetDir, createdFiles) {
   createdFiles.sort().forEach(createdFile => {
     let relativePath = path.relative(targetDir, createdFile)
@@ -99,7 +89,7 @@ const PROJECT_CREATORS = {
       logCreatedFiles(targetDir, createdFiles)
       console.log('nwb: installing dependencies')
       try {
-        installReact({targetDir, reactVersion})
+        installReact({cwd: targetDir, version: reactVersion, save: true})
       }
       catch (e) {
         return cb(e)
@@ -122,7 +112,7 @@ const PROJECT_CREATORS = {
         logCreatedFiles(targetDir, createdFiles)
         console.log('nwb: installing dependencies')
         try {
-          installReact({targetDir, reactVersion, dev: true})
+          installReact({cwd: targetDir, version: reactVersion, dev: true, save: true})
         }
         catch (e) {
           return cb(e)

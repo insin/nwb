@@ -20,7 +20,7 @@ describe('getUserConfig()', () => {
   })
 
   it("returns default config when a non-required config file can't be found", () => {
-    let config = getUserConfig({config: 'tests/fixtures/nonexistent.js'})
+    let config = getUserConfig()
     expect(config).toEqual({
       build: {
         externals: {},

@@ -1,7 +1,10 @@
+import {execSync} from 'child_process'
 import util from 'util'
 
 import fs from 'fs-extra'
 import glob from 'glob'
+
+import debug from './debug'
 
 const GITKEEP_RE = /\.gitkeep$/
 
@@ -50,6 +53,15 @@ export function deepToString(object) {
  */
 export function endsWith(s1, s2) {
   return s1.lastIndexOf(s2) === s1.length - s2.length
+}
+
+/**
+ * Install react for the user when it's needed.
+ */
+export function installReact({dev = false, save = false, cwd = process.cwd(), version = 'latest'} = {}) {
+  let command = `npm install${save ? ` --save${dev ? '-dev' : ''}` : ''} react@${version} react-dom@${version}`
+  debug(`${cwd} $ ${command}`)
+  execSync(command, {cwd, stdio: [0, 1, 2]})
 }
 
 /**
