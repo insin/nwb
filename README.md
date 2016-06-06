@@ -54,7 +54,7 @@ nwb **gets you started quickly** with workflows for starting from a single `.js`
 
 nwb **owns core development dependencies** so you don't have to copy the same `devDependencies` between projects and deal with keeping them up to date individually.
 
-nwb **dynamically generates configuration**, so you don't have to copy configuration boilerplate between projects. It generates a baseline default configuration and allows you to [use a single configuration file to tweak or add to the default configuration](/docs/Configuration.md#configuration) to suit your project.
+nwb **dynamically generates configuration**, so you don't have to copy configuration boilerplate between projects. It generates a baseline default configuration and allows you to [use a single configuration file to tweak or add to the default configuration](/docs/Configuration.md#configuration-file) to suit your project.
 
 ## Quick Start Examples
 
