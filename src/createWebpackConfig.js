@@ -1,7 +1,7 @@
 import path from 'path'
 
 import autoprefixer from 'autoprefixer'
-import chalk from 'chalk'
+
 import ExtractTextPlugin from 'extract-text-webpack-plugin'
 import HtmlWebpackPlugin from 'html-webpack-plugin'
 import NpmInstallPlugin from 'npm-install-webpack-plugin'
@@ -9,6 +9,7 @@ import qs from 'qs'
 import webpack, {optimize} from 'webpack'
 import merge from 'webpack-merge'
 
+import {red} from './colours'
 import debug from './debug'
 import {deepToString, endsWith} from './utils'
 
@@ -242,8 +243,8 @@ export function createExtraLoaders(extraLoaders = [], userConfig = {}) {
 export function failBuildOnCompilationError() {
   this.plugin('done', ({compilation}) => {
     if (compilation.errors && compilation.errors.length > 0) {
-      console.error(chalk.red('nwb: webpack build failed:'))
-      compilation.errors.forEach(error => console.error(chalk.red(error.message)))
+      console.error(red('nwb: webpack build failed:'))
+      compilation.errors.forEach(error => console.error(red(error.message)))
       process.exit(1)
     }
   })
@@ -417,7 +418,7 @@ export const COMPAT_CONFIGS = {
   },
   moment({locales}) {
     if (!Array.isArray(locales)) {
-      console.error(chalk.red("nwb: webpack.compat.moment config must provide a 'locales' Array"))
+      console.error(red("nwb: webpack.compat.moment config must provide a 'locales' Array"))
       return
     }
     return {
@@ -452,7 +453,7 @@ export function getCompatConfig(userCompatConfig = {}) {
   Object.keys(userCompatConfig).map(lib => {
     if (!userCompatConfig[lib]) return
     if (!COMPAT_CONFIGS.hasOwnProperty(lib)) {
-      console.error(chalk.red(`nwb: unknown property in webpack.compat config: ${lib}`))
+      console.error(red(`nwb: unknown property in webpack.compat config: ${lib}`))
       return
     }
     let compatConfig = COMPAT_CONFIGS[lib]

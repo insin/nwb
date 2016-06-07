@@ -1,9 +1,9 @@
 import path from 'path'
 
-import chalk from 'chalk'
 import copyTemplateDir from 'copy-template-dir'
 import inquirer from 'inquirer'
 
+import {green} from './colours'
 import {
   REACT_APP, REACT_COMPONENT, REACT_VERSION, WEB_APP, WEB_MODULE, PROJECT_TYPES
 } from './constants'
@@ -61,7 +61,7 @@ export function getWebModulePrefs(args, done) {
 function logCreatedFiles(targetDir, createdFiles) {
   createdFiles.sort().forEach(createdFile => {
     let relativePath = path.relative(targetDir, createdFile)
-    console.log(`  ${chalk.green('create')} ${relativePath}`)
+    console.log(`  ${green('create')} ${relativePath}`)
   })
 }
 

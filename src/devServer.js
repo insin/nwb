@@ -1,7 +1,8 @@
-import chalk from 'chalk'
 import history from 'connect-history-api-fallback'
 import express from 'express'
 import webpack from 'webpack'
+
+import {green} from './colours'
 
 /**
  * Start an express server which uses webpack-dev-middleware to build and serve
@@ -34,7 +35,7 @@ export default function server(webpackConfig, {fallback, host, noInfo, port, sta
 
   app.listen(port, host, err => {
     if (err) return cb(err)
-    console.log(chalk.green(`nwb: dev server listening at http://${host}:${port}`))
+    console.log(green(`nwb: dev server listening at http://${host}:${port}`))
     console.log('webpack building...')
   })
 }
