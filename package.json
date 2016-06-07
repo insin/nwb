@@ -96,9 +96,7 @@
   },
   "keywords": [
     "npm",
-    "web",
-    "builder",
-    "nwb",
-    "react"
+    "react",
+    "cli"
   ]
 }
