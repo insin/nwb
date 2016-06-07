@@ -50,11 +50,13 @@ npm install --save-dev nwb
 
 ## Why?
 
-nwb **gets you started quickly** with workflows for starting from a single `.js` file and building up, or [generating skeleton projects](/docs/Commands.md#new) ready for deployment or publishing out of the box, preconfigured for running unit tests on [Travis CI](https://travis-ci.org/).
+nwb **gets you started quickly**, with workflows for starting from a single `.js` file and building up, or [generating skeleton projects](/docs/Commands.md#new) ready for deployment or publishing out of the box, preconfigured for running unit tests locally and on [Travis CI](https://travis-ci.org/).
 
-nwb **owns core development dependencies** so you don't have to copy the same `devDependencies` between projects and deal with keeping them up to date individually.
+nwb **owns core development dependencies** so you don't have to copy the same `devDependencies` between projects and deal with keeping them up to date individually. Here's an [example of the effect nwb has](https://github.com/insin/react-yelp-clone/compare/master...nwb) on the amount of `devDependencies` and configuration you need to manage.
 
-nwb **dynamically generates configuration**, so you don't have to copy configuration boilerplate between projects. It generates a baseline default configuration and allows you to [use a single configuration file to tweak or add to the default configuration](/docs/Configuration.md#configuration-file) to suit your project.
+nwb **dynamically generates configuration**, so you don't have to copy configuration boilerplate between projects. It generates a comprehensive baseline configuration and allows you to [use a single configuration file to tweak or add to it](/docs/Configuration.md#configuration-file) to suit your project.
+
+For example, each of the [default Webpack loaders](https://github.com/insin/nwb/blob/master/docs/Configuration.md#default-loaders) nwb configures has a unique id you can use to [layer configuration tweaks](https://github.com/insin/nwb/blob/master/docs/Configuration.md#loaders-object) on top.
 
 ## Quick Start Examples
 
