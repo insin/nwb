@@ -1,3 +1,5 @@
+# 0.11.0 / 2016-06-08
+
 **Breaking Changes:**
 
 - Replaced the deprecated `autoprefixer-loader` with `postcss-loader` in default style pipelines - it's configured to do the same autoprefixing by default [[#57](https://github.com/insin/nwb/issues/57)]
