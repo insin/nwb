@@ -76,7 +76,7 @@
     "file-loader": "0.8.5",
     "html-webpack-plugin": "2.19.0",
     "json-loader": "0.5.4",
-    "npm-install-webpack-plugin": "4.0.0",
+    "npm-install-webpack-plugin": "4.0.1",
     "postcss-loader": "0.9.1",
     "style-loader": "0.13.1",
     "url-loader": "0.5.7",
