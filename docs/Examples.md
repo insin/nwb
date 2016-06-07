@@ -11,7 +11,7 @@
 
 #### Yelp Clone
 
-[react-yelp-clone](https://github.com/insin/react-yelp-clone) takes the app created in the [Build a Yelp Clone](https://www.fullstackreact.com/articles/react-tutorial-cloning-yelp/) React tutorial and uses nwb for its development tooling, with a custom `nwb.config.js` to support the same setup.
+[react-yelp-clone](https://github.com/insin/react-yelp-clone/tree/nwb) takes the app created in the [Build a Yelp Clone](https://www.fullstackreact.com/articles/react-tutorial-cloning-yelp/) React tutorial and uses nwb for its development tooling, with a custom `nwb.config.js` to support the same setup.
 
 [Check out the diff](https://github.com/insin/react-yelp-clone/compare/master...nwb) to see the effect using nwb has on the amount of `devDependencies` and configuration which needs to be managed.
 
