@@ -1,6 +1,7 @@
 ## Examples
 
 - [Example Projects](#example-projects)
+  - [Bootstrap 4 with Sass](#bootstrap-4-with-sass)
   - [Yelp Clone](#yelp-clone)
   - [Github Issues](#github-issues)
 - [Other Examples](#other-examples)
@@ -8,6 +9,11 @@
   - [Creating and customising a new React app](#creating-and-customising-a-new-react-app)
 
 ### Example Projects
+
+#### Bootstrap 4 with Sass
+
+- Article: [Using Bootstrap 4 from source with React and nwb](https://medium.com/@jbscript/using-bootstrap-4-from-source-with-react-and-nwb-f26caf395952)
+- Repo: https://github.com/insin/bootstrap-4-nwb
 
 #### Yelp Clone
 
