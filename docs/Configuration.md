@@ -381,13 +381,27 @@ Certain libraries require specific configuration to play nicely with Webpack - n
 
 Set to `true` for [Enzyme](http://airbnb.io/enzyme/) compatibility - this assumes you're using the latest version of React (v15).
 
+###### `json-schema`: `Boolean`
+
+Set to `true` to prevent a transitive [json-schema](https://github.com/kriszyp/json-schema) dependency from [breaking your Webpack build](https://github.com/kriszyp/json-schema/issues/59). Failure in this case manifests itself something like so:
+
+```
+Error: define cannot be used indirect
+
+webpack:///(webpack)/buildin/amd-define.js
+```
+
 ###### `moment`: `Object`
 
-If you use [Moment.js](http://momentjs.com/) in a Webpack build, all the locales it supports will be imported by default. Provide an object with a `locales` Array specifying language codes for the locales you want to load.
+If you use [Moment.js](http://momentjs.com/) in a Webpack build, all the locales it supports will be imported by default and your build will be about 139KB larger than you were expecting!
+
+Provide an object with a `locales` Array specifying language codes for the locales you want to load.
 
 ###### `sinon`: `Boolean`
 
 Set to `true` for [Sinon.js](http://sinonjs.org/) 1.x compatibility.
+
+---
 
 Here's an example config showing the use of every `compat` setting:
 
@@ -396,6 +410,7 @@ module.exports = {
   webpack: {
     compat: {
       enzyme: true,
+      'json-schema': true,
       moment: {
         locales: ['de', 'en-gb', 'es', 'fr', 'it']
       },

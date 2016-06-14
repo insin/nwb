@@ -311,7 +311,7 @@ describe('getCompatConfig()', () => {
     let config = getCompatConfig({moment: {locales: ['de', 'en-gb']}})
     expect(config.plugins).toExist()
     expect(config.plugins.length).toBe(1)
-    expect(config.plugins[0].resourceRegExp).toEqual(/moment[\\\/]locale$/)
+    expect(config.plugins[0].resourceRegExp).toEqual(/moment[/\\]locale$/)
     expect(config.plugins[0].newContentRegExp).toEqual(/^\.\/(de|en-gb)$/)
   })
   it('skips invalid moment config', () => {

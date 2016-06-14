@@ -1,5 +1,10 @@
+**Added:**
+
+- `webpack.compat` now supports `'json-schema': true` to prevent a transitive `json-schema` dependency breaking Webpack builds.
+
 **Changed:**
 
+- Any `module.noParse` Webpack config added by nwb is now specified as an Array so any user-provided config for it in `webpack.extra` (which should also be specified as an Array) can be merged into it.
 - Required `<meta>` tags in HTML templates are now all first thing in `<head>`
 - Added `shrink-to-fit=no` to the `viewport` `<meta>` tag for Safari
 
