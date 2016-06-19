@@ -26,7 +26,7 @@ It provides commands for using [Babel](http://babeljs.io/), [Webpack](https://we
 **Table of Contents**
 
 - [Install](#install)
-- [Why?](#why-)
+- [Why?](#why)
 - [Quick Start Examples](#quick-start-examples)
 - [Documentation](/docs/#table-of-contents)
 - [Usage](#usage)
