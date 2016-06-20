@@ -27,6 +27,7 @@ It provides commands for using [Babel](http://babeljs.io/), [Webpack](https://we
 
 - [Install](#install)
 - [Why?](#why)
+- [Features](#features)
 - [Quick Start Examples](#quick-start-examples)
 - [Documentation](/docs/#table-of-contents)
 - [Usage](#usage)
@@ -57,6 +58,43 @@ nwb **owns core development dependencies** so you don't have to copy the same `d
 nwb **dynamically generates configuration**, so you don't have to copy configuration boilerplate between projects. It generates a comprehensive baseline configuration and allows you to [use a single configuration file to tweak or add to it](/docs/Configuration.md#configuration-file) to suit your project.
 
 For example, each of the [default Webpack loaders](https://github.com/insin/nwb/blob/master/docs/Configuration.md#default-loaders) nwb configures has a unique id you can use to [layer configuration tweaks](https://github.com/insin/nwb/blob/master/docs/Configuration.md#loaders-object) on top.
+
+## Features
+
+- A `devDependency`, not a boilerplate - manage your base development setup with a version number.
+- Supports development of web apps and npm modules, with specific tooling for React projects.
+- ES6 with Babel 5.
+- Webpack preconfigured to load JavaScript, CSS, images, font resources and JSON.
+- PostCSS with `autoprefixer`.
+- Plugin modules which add [`.scss`](https://github.com/insin/nwb-sass), [`.less`](https://github.com/insin/nwb-less) and [`.styl`](https://github.com/insin/nwb-stylus) loading support.
+- Separate CSS loading configuration for dependencies from `node_modules/`.
+
+**Development:**
+
+- Development server with Hot Module Reloading with Webpack & `react-transform-hmr`, syntax error overlays with `webpack-hot-middleware` and React `render()` error catching  with `react-transform-catch-errors`.
+- Express middleware for serving a development build from your own server.
+- Automatic installation of dependencies from npm while developing with `webpack-install-plugin`.
+
+**Testing:**
+
+- Karma & Webpack preconfigured to run unit tests in PhantomJS using Mocha & Expect.
+- Testing preconfigured for code coverage.
+
+**Production:**
+
+- Optimised Webpack production builds.
+- Source maps.
+- Additional production optimisations for React apps (inline elements and constant elements).
+- Automatic creation of a `vendor` bundle from `node_modules/` dependencies.
+- Extraction of CSS into files.
+- Automatic `index.html` creation with `html-webpack-plugin`.
+- ES5, ES6 module and UMD builds for npm modules.
+
+**Configuration:**
+
+- Single configuration file for customising Babel, Webpack, Karma and npm builds.
+- Declarative config for tweaking webpack loader and plugin settings.
+- Compatibility toggles for libraries which commonly cause Webpack issues.
 
 ## Quick Start Examples
 
