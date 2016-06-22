@@ -5,6 +5,7 @@
   - [Yelp Clone](#yelp-clone)
   - [Github Issues](#github-issues)
 - [Other Examples](#other-examples)
+  - [Kendo UI For React with nwb](#kendo-ui-for-react-with-nwb)
   - [Automatically installing dependencies from npm](#automatically-installing-dependencies-from-npm)
   - [Creating and customising a new React app](#creating-and-customising-a-new-react-app)
 
@@ -34,6 +35,14 @@ Selected commits of interest:
 *Note: this example app initially tries to stick close to the original version commit-by-commit for the sake of comparison, by using [async-props](https://github.com/rackt/async-props), which is currently in pre-release.*
 
 ### Other Examples
+
+#### Kendo UI For React with nwb
+
+Tutorial video by [Cody Lindley](https://twitter.com/codylindley) of creating a new React app with nwb and getting started with Kendo UI components, auto-installing new dependencies from the development server and doing some Babel `stage` config via `nwb.config.js`:
+
+[![Kendo UI For React with nwb on YouTube](https://img.youtube.com/vi/n-1eSuDQsbg/0.jpg)](https://www.youtube.com/watch?v=n-1eSuDQsbg)
+
+Good tip from this video: use `--` to pass additional flags to `npm run` commands: `npm start -- --auto-install`.
 
 #### Automatically installing dependencies from npm
 
