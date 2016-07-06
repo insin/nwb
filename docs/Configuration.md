@@ -419,6 +419,13 @@ module.exports = function(nwb) {
     type: 'react-app',
     webpack: {
       extra: {
+        // Example of adding an extra loader which isn't managed by nwb,
+        // assuming you've installed html-loader in your project.
+        module: {
+          loaders: [
+            {test: /\.html$/, loader: 'html'}
+          ]
+        },
         // Allow the use of require('images/blah.png') to require from an
         // src/images from anywhere in the the app.
         resolve: {
