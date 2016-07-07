@@ -9,6 +9,23 @@
 - Required `<meta>` tags in HTML templates are now all first thing in `<head>`
 - Added `shrink-to-fit=no` to the `viewport` `<meta>` tag for Safari
 
+**Dependencies:**
+
+- autoprefixer: v6.3.6 → [v6.3.7](https://github.com/postcss/autoprefixer/blob/master/CHANGELOG.md#637)
+- expect: v1.20.1 → [v1.20.2](https://github.com/mjackson/expect/compare/v1.20.1...v1.20.2)
+- express: v4.13.4 → [v4.14.0](https://github.com/expressjs/express/blob/master/History.md#4140--2016-06-16)
+- file-loader: v0.8.5 → [v0.9.0](https://github.com/webpack/file-loader/compare/v0.8.5...v0.9.0)
+- glob: v7.0.3 → [v7.0.5](https://github.com/isaacs/node-glob/compare/v7.0.3...v7.0.5)
+- html-webpack-plugin: v2.19.0 → [v2.22.0](https://github.com/ampedandwired/html-webpack-plugin/blob/master/CHANGELOG.md#v2220)
+- inquirer: v1.0.3 → [v1.1.1](https://github.com/SBoudrias/Inquirer.js/compare/v1.0.3...v1.1.1)
+- karma: v0.13.22 → [v1.1.1](https://github.com/karma-runner/karma/blob/master/CHANGELOG.md#111-2016-07-07)
+- karma-coverage: v1.0.0 → [v1.1.0](https://github.com/karma-runner/karma-coverage/blob/master/CHANGELOG.md#110-2016-07-07)
+- karma-mocha-reporter: v2.0.3 → [v2.0.4](https://github.com/litixsoft/karma-mocha-reporter/compare/v2.0.3...v2.0.4)
+- karma-phantomjs-launcher: v1.0.0 → [v1.0.1](https://github.com/karma-runner/karma-phantomjs-launcher/blob/master/CHANGELOG.md#101-2016-06-23)
+- npm-install-webpack-plugin: v4.0.1 → [v4.0.4](https://github.com/ericclemmons/npm-install-webpack-plugin/blob/master/CHANGELOG.md#404-2016-06-30)
+- rimraf: v2.5.2 → [v2.5.3](https://github.com/isaacs/rimraf/compare/v2.5.2...v2.5.3)
+- webpack-hot-middleware: v2.10.0 → [v2.12.1](https://github.com/glenjamin/webpack-hot-middleware/compare/v2.10.0...v2.12.1)
+
 # 0.11.1 / 2016-07-16
 
 **Fixed:**
