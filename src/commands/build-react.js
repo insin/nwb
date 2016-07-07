@@ -38,7 +38,16 @@ let buildConfig = (args) => {
     }
   }
 
-  if (process.env.NODE_ENV === 'production') {
+  if (args.preact) {
+    config.resolve = {
+      alias: {
+        'react': 'preact-compat',
+        'react-dom': 'preact-compat'
+      }
+    }
+  }
+
+  if (process.env.NODE_ENV === 'production' && !args.preact) {
     config.loaders.babel.query.optional = [
       'optimisation.react.inlineElements',
       'optimisation.react.constantElements'

@@ -1,5 +1,6 @@
 **Added:**
 
+- Added a `--preact` flag to React app builds to create a [preact-compat](https://github.com/developit/preact-compat)-compatible build. This is a drop-in way to try [preact](https://github.com/developit/preact) with your React app [[#124](https://github.com/insin/nwb/issues/124)]
 - `webpack.compat` now supports `'json-schema': true` to prevent a transitive `json-schema` dependency breaking Webpack builds.
 
 **Changed:**

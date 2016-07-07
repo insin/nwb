@@ -66,6 +66,7 @@ react build <entry> [dist_dir] [options]
 
 - `--mount-id` - `id` for the `<div>` the app will render into *[default: app]*
 - `--title` - contents for `<title>` *[default: React App]*
+- `--preact` - create a [preact-compat](https://github.com/developit/preact-compat#usage-with-webpack)-compatible build
 - `--vendor` - create a separate vendor bundle
 
 ### `nwb`
@@ -232,7 +233,6 @@ In production mode builds, the Babel 5 [constant-elements](https://github.com/ba
 Builds the component in preparation for publishing to npm.
 
 Passing an argument for `entry` allows you to customise the entry point for the UMD build of your app.
-
 
 - An ES5 build will be created in `lib/`
 - If enabled, UMD builds will be created in `umd/`
