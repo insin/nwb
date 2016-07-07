@@ -1,8 +1,7 @@
+import {green} from 'chalk'
 import history from 'connect-history-api-fallback'
 import express from 'express'
 import webpack from 'webpack'
-
-import {green} from './colours'
 
 /**
  * Start an express server which uses webpack-dev-middleware to build and serve

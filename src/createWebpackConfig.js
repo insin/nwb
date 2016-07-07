@@ -1,7 +1,7 @@
 import path from 'path'
 
 import autoprefixer from 'autoprefixer'
-
+import {red} from 'chalk'
 import ExtractTextPlugin from 'extract-text-webpack-plugin'
 import HtmlWebpackPlugin from 'html-webpack-plugin'
 import NpmInstallPlugin from 'npm-install-webpack-plugin'
@@ -9,7 +9,6 @@ import qs from 'qs'
 import webpack, {optimize} from 'webpack'
 import merge from 'webpack-merge'
 
-import {red} from './colours'
 import debug from './debug'
 import {deepToString, endsWith} from './utils'
 

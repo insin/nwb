@@ -3,10 +3,10 @@
 // TODO These imports are in the "wrong" order per project convention, but
 //      ESLint's spaced-comment rule is flagging a shebang followed by a
 //      destructured import as an error due to babel/babel-eslint#163
+import {cyan as opt, green as cmd, red, yellow as req} from 'chalk'
 import parseArgs from 'minimist'
 
 import pkg from '../../package.json'
-import {cyan as opt, green as cmd, red, yellow as req} from '../colours'
 import {UserError} from '../errors'
 
 const COMMAND_MODULES = {

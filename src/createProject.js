@@ -1,9 +1,9 @@
 import path from 'path'
 
+import {green} from 'chalk'
 import copyTemplateDir from 'copy-template-dir'
 import inquirer from 'inquirer'
 
-import {green} from './colours'
 import {
   REACT_APP, REACT_COMPONENT, REACT_VERSION, WEB_APP, WEB_MODULE, PROJECT_TYPES
 } from './constants'

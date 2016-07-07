@@ -1,9 +1,9 @@
 import path from 'path'
 
+import {magenta} from 'chalk'
 import glob from 'glob'
 import webpack from 'webpack'
 
-import {magenta} from './colours'
 import {PROJECT_TYPES} from './constants'
 import debug from './debug'
 import {UserError} from './errors'

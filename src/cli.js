@@ -1,7 +1,7 @@
+import {cyan as opt, green as cmd, red, yellow as req} from 'chalk'
 import parseArgs from 'minimist'
 
 import pkg from '../package.json'
-import {cyan as opt, green as cmd, red, yellow as req} from './colours'
 
 export default function(argv, cb) {
   let args = parseArgs(argv, {

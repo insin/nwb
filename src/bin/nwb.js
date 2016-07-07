@@ -1,7 +1,8 @@
 #!/usr/bin/env node
 
+import {red} from 'chalk'
+
 import cli from '../cli'
-import {red} from '../colours'
 import {UserError} from '../errors'
 
 function handleError(error) {
