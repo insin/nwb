@@ -302,12 +302,19 @@ export function createPlugins(server, buildConfig = {}, userConfig = {}) {
 
   if (process.env.NODE_ENV === 'production') {
     plugins.push(new optimize.DedupePlugin())
-    plugins.push(new optimize.UglifyJsPlugin({
+    plugins.push(new optimize.UglifyJsPlugin(merge({
       compress: {
         screw_ie8: true,
-        warnings: false
-      }
-    }))
+        warnings: false,
+      },
+      mangle: {
+        screw_ie8: true,
+      },
+      output: {
+        comments: false,
+        screw_ie8: true,
+      },
+    }, userConfig.uglify)))
   }
 
   if (buildConfig.html) {

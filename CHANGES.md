@@ -1,10 +1,12 @@
 **Added:**
 
+- Added `webpack.uglify` config to allow customisation of Webpack `UglifyJsPlugin` options.
 - Added a `--preact` flag to React app builds to create a [preact-compat](https://github.com/developit/preact-compat)-compatible build. This is a drop-in way to try [preact](https://github.com/developit/preact) with your React app [[#124](https://github.com/insin/nwb/issues/124)]
 - `webpack.compat` now supports `'json-schema': true` to prevent a transitive `json-schema` dependency breaking Webpack builds.
 
 **Changed:**
 
+- Updated default Webpack `UglifyJsPlugin` options to strip comments from output and use the `screw_ie8` setting for every step.
 - Any `module.noParse` Webpack config added by nwb is now specified as an Array so any user-provided config for it in `webpack.extra` (which should also be specified as an Array) can be merged into it.
 - Required `<meta>` tags in HTML templates are now all first thing in `<head>`
 - Added `shrink-to-fit=no` to the `viewport` `<meta>` tag for Safari
