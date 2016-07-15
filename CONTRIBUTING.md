@@ -7,7 +7,7 @@ Which versions of Node.js, npm and nwb are you using?
 ```
 node -v
 npm -v
-# Only if nwb is installed and being used globally
+# If nwb is being used as a global install
 nwb -v
 ```
 
@@ -34,7 +34,7 @@ set DEBUG=nwb
 
   This takes a few minutes to run and requires network access to install dependencies for tests which create projects.
 
-  The last set of tests check that nwb exits correctly when running `nwb test` in a project, so you'll see output for the failure of these tests. On a successful test run, the last line will be something along the lines of `90 passing (3m)`.
+  The last set of tests check that nwb exits correctly when running `nwb test` in a project, so you'll see *expected* failure output for these tests at the end of the run. On a successful test run, the last line will be something along the lines of `90 passing (3m)`.
 
 - `npm run test:coverage` is the same as the above, plus creation of a code coverage report.
 
@@ -42,4 +42,4 @@ set DEBUG=nwb
 
 - `npm run test:watch` will watch files and run all non-command tests on every change.
 
-  This is for quick feedback while developing; command tests are not run as they're relatively slow.
+  This is for quick feedback while developing; command/project tests are not run as they're relatively slow.
