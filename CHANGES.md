@@ -1,3 +1,5 @@
+# 0.11.1 / 2016-07-16
+
 **Fixed:**
 
 - PostCSS config was not being created for the vendor/`node_modules/` loader for CSS preprocessor plugins.
