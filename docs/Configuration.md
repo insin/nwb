@@ -447,13 +447,13 @@ Use an object if you're configuring other style pipelines. When using an object,
 
 ```js
 var autoprefixer = require('autoprefixer')
-{
+var precss = require('precss')
+module.exports = {
   webpack: {
     postcss: {
       defaults: [
-        require('precss')(),
-        autoprefixer(),
-        require('cssnano')()
+        precss(),
+        autoprefixer()
       ],
       vendor: [
         autoprefixer({add: false})
