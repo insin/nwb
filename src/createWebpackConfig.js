@@ -398,14 +398,19 @@ export function createPostCSSConfig(userPostCSSConfig, cssPreprocessors = {}) {
   // configured, so we need to set the default PostCSS plugins for every single
   // style pipeline.
   let postcss = {
-    defaults: [autoprefixer()],
-    vendor: [autoprefixer()]
+    defaults: createDefaultPostCSSPlugins(),
+    vendor: createDefaultPostCSSPlugins()
   }
   Object.keys(cssPreprocessors).forEach(id => {
-    postcss[id] = [autoprefixer()]
+    postcss[id] = createDefaultPostCSSPlugins()
+    postcss[`vendor-${id}`] = createDefaultPostCSSPlugins()
   })
-  // PostCSS plugins provided by the user will completely overwrite defaults
+  // Any PostCSS plugins provided by the user will completely overwrite defaults
   return {...postcss, ...userPostCSSConfig}
+}
+
+function createDefaultPostCSSPlugins() {
+  return [autoprefixer()]
 }
 
 export const COMPAT_CONFIGS = {

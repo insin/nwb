@@ -286,7 +286,8 @@ describe('createPostCSSConfig()', () => {
     expect(createPostCSSConfig({})).toIncludeKeys(['defaults', 'vendor'])
   })
   it('creates default plugin config for CSS preprocessors', () => {
-    expect(createPostCSSConfig({}, {less: {}, sass: {}})).toIncludeKeys(['defaults', 'vendor', 'less', 'sass'])
+    expect(createPostCSSConfig({}, {less: {}, sass: {}}))
+      .toIncludeKeys(['defaults', 'vendor', 'less', 'vendor-less', 'sass', 'vendor-sass'])
   })
   it('overwrites plugin config with user config', () => {
     expect(createPostCSSConfig({defaults: [1, 2, 3]}).defaults).toEqual([1, 2, 3])
