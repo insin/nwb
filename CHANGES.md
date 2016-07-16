@@ -2,7 +2,7 @@
 
 **Fixed:**
 
-- PostCSS config was not being created for the vendor/`node_modules/` loader for CSS preprocessor plugins.
+- PostCSS config was not being created for the vendor/`node_modules/` loader for CSS preprocessor plugins [[#129](https://github.com/insin/nwb/issues/129)]
 
 # 0.11.0 / 2016-06-08
 
