@@ -116,7 +116,7 @@ export default function createKarmaConfig({codeCoverage, singleRun}, userConfig)
   let testFiles = path.resolve(userKarma.tests || DEFAULT_TESTS)
 
   let babel = {
-    presets: ['react']
+    presets: ['react'] // XXX
   }
   if (codeCoverage) {
     babel.plugins = [
