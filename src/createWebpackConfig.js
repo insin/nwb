@@ -32,7 +32,7 @@ export let combineLoaders = loaders =>
   }).join('!')
 
 /**
- * Merge webpack loader config ({test, loader, query, inclue, exclude}) objects.
+ * Merge webpack loader config ({test, loader, query, include, exclude}) objects.
  */
 export function mergeLoaderConfig(defaultConfig = {}, buildConfig = {}, userConfig = {}) {
   // Don't include a 'config' object if the user provided one - this will be
@@ -80,8 +80,8 @@ export let styleLoaderName = (prefix) =>
  * or a server build.
  */
 export function createStyleLoader(loader, server, {
+  preprocessor = null,
   prefix = null,
-  extraLoader = null
 } = {}) {
   let name = styleLoaderName(prefix)
   let loaders = [
@@ -100,8 +100,8 @@ export function createStyleLoader(loader, server, {
     })
   ]
 
-  if (extraLoader) {
-    loaders.push(loader(name(extraLoader.id), extraLoader.config))
+  if (preprocessor) {
+    loaders.push(loader(name(preprocessor.id), preprocessor.config))
   }
 
   if (server) {
@@ -203,8 +203,8 @@ export function createLoaders(server, buildConfig = {}, userConfig = {}, pluginC
         loader(`${id}-pipeline`, {
           test,
           loader: createStyleLoader(loader, server, {
-            extraLoader: {id, config},
             prefix: id,
+            preprocessor: {id, config},
           }),
           exclude: /node_modules/
         })
@@ -213,8 +213,8 @@ export function createLoaders(server, buildConfig = {}, userConfig = {}, pluginC
         loader(`vendor-${id}-pipeline`, {
           test,
           loader: createStyleLoader(loader, server, {
-            extraLoader: {id, config},
             prefix: `vendor-${id}`,
+            preprocessor: {id, config},
           }),
           include: /node_modules/
         })
