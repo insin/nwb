@@ -1,4 +1,4 @@
- ## Middleware
+## Middleware
 
 nwb provides middleware for serving a hot reloading React app from your own server.
 
