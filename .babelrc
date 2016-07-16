@@ -1,6 +1,0 @@
-{
-  "presets": [
-    "deduped-babel-presets/es2015-loose",
-    "deduped-babel-presets/stage-2"
-  ]
-}

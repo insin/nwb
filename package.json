@@ -14,7 +14,7 @@
     "lint": "eslint *.js src tests",
     "lint:fix": "eslint *.js src tests --fix",
     "test": "npm run build && mocha --compilers js:babel-core/register tests/*-test.js tests/commands/*-test.js",
-    "test:coverage": "npm run build && babel-node node_modules/isparta/bin/isparta cover --report html --report lcov node_modules/mocha/bin/_mocha -- tests/*-test.js tests/commands/*-test.js",
+    "test:coverage": "cross-env NODE_ENV=test nyc mocha tests/*-test.js tests/commands/*-test.js",
     "test:watch": "mocha --watch --compilers js:babel-core/register tests/*-test.js"
   },
   "files": [
@@ -46,14 +46,13 @@
     "babel-core": "6.10.4",
     "babel-polyfill": "6.9.1",
     "babel-runtime": "6.9.2",
-    "deduped-babel-presets": "0.0.9",
+    "deduped-babel-presets": "0.0.18",
 
     "express": "4.14.0",
     "connect-history-api-fallback": "1.2.0",
 
     "karma": "1.1.1",
     "diff": "2.2.3",
-    "isparta-loader": "2.0.0",
     "karma-coverage": "1.1.0",
     "karma-mocha": "1.1.1",
     "karma-mocha-reporter": "2.0.4",
@@ -81,10 +80,11 @@
     "webpack-hot-middleware": "2.12.1"
   },
   "devDependencies": {
+    "cross-env": "2.0.0",
     "cross-spawn": "4.0.0",
     "eslint-config-jonnybuchanan": "4.2.1",
     "eventsource": "0.2.1",
-    "isparta": "4.0.0",
+    "nyc": "7.0.0",
     "tree-kill": "1.1.0"
   },
   "repository": {
@@ -93,5 +93,31 @@
   },
   "keywords": [
     "react"
-  ]
+  ],
+  "babel": {
+    "presets": [
+      "deduped-babel-presets/es2015-loose",
+      "deduped-babel-presets/stage-2"
+    ],
+    "env": {
+      "test": {
+        "plugins": [
+          ["deduped-babel-presets/plugins/istanbul", {
+            "include": "src"
+          }]
+        ]
+      }
+    }
+  },
+  "nyc": {
+    "instrument": false,
+    "reporter": [
+      "lcov",
+      "text-summary"
+    ],
+    "require": [
+      "babel-core/register"
+    ],
+    "sourceMap": false
+  }
 }

@@ -39,23 +39,20 @@ describe('getKarmaConfig()', function() {
       'reporter:mocha',
     ]
     it('defaults to Mocha', () => {
-      let {frameworks, reporters, plugins, extraLoaders} = getKarmaConfig({codeCoverage: false})
+      let {frameworks, reporters, plugins} = getKarmaConfig({codeCoverage: false})
       expect(frameworks).toEqual(['mocha'])
       expect(reporters).toEqual(['mocha'])
-      expect(extraLoaders).toEqual([])
       expectedDefaultPlugins.forEach(plugin =>
         expect(findPlugin(plugins, plugin)).toExist()
       )
     })
     it('adds coverage config when asked to', () => {
-      let {frameworks, reporters, plugins, extraLoaders} = getKarmaConfig({codeCoverage: true})
+      let {frameworks, reporters, plugins} = getKarmaConfig({codeCoverage: true})
       expect(frameworks).toEqual(['mocha'])
       expect(reporters).toEqual(['mocha', 'coverage'])
       expectedDefaultPlugins.concat(['preprocessor:coverage']).forEach(plugin => {
         expect(findPlugin(plugins, plugin)).toExist()
       })
-      expect(extraLoaders.length).toEqual(1)
-      expect(extraLoaders[0].loader).toInclude('isparta-loader')
     })
   })
 

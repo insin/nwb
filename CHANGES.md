@@ -58,6 +58,7 @@
 
 **Changed:**
 
+- [`babel-plugin-istanbul`](https://github.com/istanbuljs/babel-plugin-istanbul) is now used to instrument code for test coverage instead of `isparta-loader`.
 - [`babel.loose`](https://github.com/insin/nwb/blob/0.12/docs/Configuration.md#loose-boolean) is now a boolean flag to enable loose mode in all Babel 6 plugins which support it.
 - Updated the default Webpack `UglifyJsPlugin` options to strip comments from output and use the `screw_ie8` setting for every step.
 - Any `module.noParse` Webpack config added by nwb is now specified as an Array so any user-provided config for it in `webpack.extra` (which should also be specified as an Array) can be merged into it.

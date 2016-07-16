@@ -52,8 +52,6 @@ export function getKarmaConfig({codeCoverage = false} = {}, userConfig = {}) {
   let {karma: userKarma = {}} = userConfig
 
   let frameworks = []
-  // Extra webpack loaders required for the generated Karma config.
-  let extraLoaders = []
   // Default reporter to be used if the user configures their own framework but
   // not their own reporter, as the mocha reporter doesn't play nicely with TAP
   // output and who knows which others.
@@ -104,47 +102,29 @@ export function getKarmaConfig({codeCoverage = false} = {}, userConfig = {}) {
   }
 
   if (codeCoverage) {
-    extraLoaders.push({
-      id: 'isparta',
-      test: /\.jsx?$/,
-      loader: require.resolve('isparta-loader'),
-      include: path.resolve('src'),
-    })
-    reporters.push('coverage')
     plugins.push(require('karma-coverage'))
+    reporters.push('coverage')
   }
 
-  return {plugins, frameworks, reporters, extraLoaders}
+  return {plugins, frameworks, reporters}
 }
 
-export default function createKarmaConfig({babel, codeCoverage, singleRun}, userConfig) {
+export default function createKarmaConfig({codeCoverage, singleRun}, userConfig) {
   let userKarma = userConfig.karma || {}
-  let pluginConfig = getPluginConfig()
 
-  let {plugins, frameworks, reporters, extraLoaders} = getKarmaConfig({codeCoverage}, userConfig)
+  let {plugins, frameworks, reporters} = getKarmaConfig({codeCoverage}, userConfig)
   let testFiles = path.resolve(userKarma.tests || DEFAULT_TESTS)
-  let preprocessors = {
-    [testFiles]: ['webpack', 'sourcemap']
-  }
 
-  let webpackConfig = createWebpackConfig({
-    babel,
-    devtool: 'inline-source-map',
-    loaders: {
-      extra: extraLoaders,
-    },
-    node: {
-      fs: 'empty',
-    },
-    resolve: {
-      alias: {
-        'src': path.resolve('src'),
-      },
-      // Fall back to resolving runtime dependencies from nwb's dependencies
-      fallback: path.join(__dirname, '../node_modules'),
-    },
-    server: true,
-  }, pluginConfig, userConfig)
+  let babel = {
+    presets: ['react']
+  }
+  if (codeCoverage) {
+    babel.plugins = [
+      [require('deduped-babel-presets/pluginpaths/istanbul'), {
+        include: 'src'
+      }]
+    ]
+  }
 
   let karmaConfig = merge({
     browsers: ['PhantomJS'],
@@ -164,10 +144,26 @@ export default function createKarmaConfig({babel, codeCoverage, singleRun}, user
       showDiff: true,
     },
     plugins,
-    preprocessors,
+    preprocessors: {
+      [testFiles]: ['webpack', 'sourcemap'],
+    },
     reporters,
     singleRun,
-    webpack: webpackConfig,
+    webpack: createWebpackConfig({
+      babel,
+      devtool: 'inline-source-map',
+      node: {
+        fs: 'empty',
+      },
+      resolve: {
+        alias: {
+          'src': path.resolve('src'),
+        },
+        // Fall back to resolving runtime dependencies from nwb's dependencies
+        fallback: path.join(__dirname, '../node_modules'),
+      },
+      server: true,
+    }, getPluginConfig(), userConfig),
     webpackServer: {
       noInfo: true,
     },

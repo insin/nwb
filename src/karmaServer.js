@@ -4,7 +4,7 @@ import {Server} from 'karma'
 import createKarmaConfig from './createKarmaConfig'
 import getUserConfig from './getUserConfig'
 
-export default function karmaServer(args, {presets}, cb) {
+export default function karmaServer(args, cb) {
   argvSetEnv()
 
   // Force the environment to test
@@ -14,7 +14,6 @@ export default function karmaServer(args, {presets}, cb) {
 
   let userConfig = getUserConfig(args)
   let karmaConfig = createKarmaConfig({
-    babel: {presets},
     codeCoverage: isCi || !!args.coverage,
     singleRun: isCi || !args.server,
   }, userConfig)

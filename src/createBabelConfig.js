@@ -3,6 +3,7 @@ const DEFAULT_STAGE = 2
 export default function createBabelConfig(buildConfig = {}, userConfig = {}) {
   let {
     native,
+    plugins: buildPlugins = [],
     presets: buildPresets,
     runtime: buildRuntime,
     stage: buildStage = DEFAULT_STAGE,
@@ -10,7 +11,7 @@ export default function createBabelConfig(buildConfig = {}, userConfig = {}) {
 
   let {
     loose,
-    plugins,
+    plugins: userPlugins = [],
     presets: userPresets,
     runtime: userRuntime,
     stage: userStage,
@@ -52,12 +53,15 @@ export default function createBabelConfig(buildConfig = {}, userConfig = {}) {
   }
 
   if (userPresets) {
-    presets = presets.concat(userPresets)
+    presets = [...presets, ...userPresets]
   }
 
   let config = {presets}
-  if (plugins) {
+
+  let plugins = [...buildPlugins, ...userPlugins]
+  if (plugins.length > 0) {
     config.plugins = plugins
   }
+
   return config
 }
