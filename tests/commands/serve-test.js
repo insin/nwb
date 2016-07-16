@@ -8,18 +8,19 @@ import rimraf from 'rimraf'
 import temp from 'temp'
 import kill from 'tree-kill'
 
+import cli from '../../src/cli'
+
 const States = {
   INIT: 'INIT',
   INIT_OK: 'INIT_OK',
   CHANGED_FILE: 'CHANGED_FILE',
-  REBUILDING: 'REBUILDING'
+  REBUILDING: 'REBUILDING',
 }
 
 describe('command: serve', function() {
   this.timeout(90000)
 
   describe('serving a new React app with hot reloading', () => {
-    let cli = require('../../src/cli')
     let originalCwd
     let tmpDir
     let server

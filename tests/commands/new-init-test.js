@@ -6,7 +6,7 @@ import glob from 'glob'
 import rimraf from 'rimraf'
 import temp from 'temp'
 
-let cli = require('../../src/cli')
+import cli from '../../src/cli'
 
 const DEP_VERSION_RE = /\d+\.\d+\.x/
 
@@ -31,7 +31,7 @@ function reactAppAssertions(dir, name, err, done) {
     'src/index.js',
     'tests',
     'tests/.eslintrc',
-    'tests/App-test.js'
+    'tests/App-test.js',
   ])
   expect(glob.sync('node_modules/*', {
     cwd: path.resolve(dir)
@@ -65,7 +65,7 @@ function reactComponentAssertions(dir, name, err, done) {
     'src/index.js',
     'tests',
     'tests/.eslintrc',
-    'tests/index-test.js'
+    'tests/index-test.js',
   ])
   expect(glob.sync('node_modules/*', {
     cwd: path.resolve(dir)
@@ -82,7 +82,7 @@ function reactComponentAssertions(dir, name, err, done) {
       externals: {react: 'React'},
       global: '',
       jsNext: true,
-      umd: false
+      umd: false,
     }
   })
   done()
@@ -107,7 +107,7 @@ function webAppAssertions(dir, name, err, done) {
     'src/index.js',
     'tests',
     'tests/.eslintrc',
-    'tests/index-test.js'
+    'tests/index-test.js',
   ])
   let pkg = require(path.resolve(dir, 'package.json'))
   expect(pkg.name).toBe(name)
@@ -133,7 +133,7 @@ function webModuleAssertions(dir, name, err, done) {
     'src/index.js',
     'tests',
     'tests/.eslintrc',
-    'tests/index-test.js'
+    'tests/index-test.js',
   ])
   let pkg = require(path.resolve(dir, 'package.json'))
   expect(pkg.name).toBe(name)
@@ -146,8 +146,8 @@ function webModuleAssertions(dir, name, err, done) {
       externals: {},
       global: '',
       jsNext: true,
-      umd: false
-    }
+      umd: false,
+    },
   })
   done()
 }

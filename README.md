@@ -62,12 +62,12 @@ For example, each of the [default Webpack loaders](https://github.com/insin/nwb/
 ## Features
 
 - A `devDependency`, not a boilerplate - manage your base development setup with a version number.
-- Supports development of web apps and npm modules, with specific tooling for React projects.
-- ES6 with Babel 5.
-- Webpack preconfigured to load JavaScript, CSS, images, font resources and JSON.
+- Supports development of web apps and npm modules, with specific tooling for React apps and components.
+- Use ES6/ES2015 and experimental JavaScript features with Babel 6.
+- Webpack preconfigured to load JavaScript, CSS, images, font resources and JSON files.
 - PostCSS with `autoprefixer`.
 - Plugin modules which add [`.scss`](https://github.com/insin/nwb-sass), [`.less`](https://github.com/insin/nwb-less) and [`.styl`](https://github.com/insin/nwb-stylus) loading support.
-- Separate CSS loading configuration for dependencies from `node_modules/`.
+- Separate CSS loading configuration for dependencies from `node_modules/`, should you need it.
 
 **Development:**
 
@@ -77,15 +77,15 @@ For example, each of the [default Webpack loaders](https://github.com/insin/nwb/
 
 **Testing:**
 
-- Karma & Webpack preconfigured to run unit tests in PhantomJS using Mocha & Expect.
+- Karma & Webpack preconfigured to run unit tests in PhantomJS using a default Mocha & Expect setup.
 - Testing preconfigured for code coverage.
 
 **Production:**
 
 - Optimised Webpack production builds.
 - Source maps.
-- Additional production optimisations for React apps (inline elements and constant elements).
-- Automatic creation of a `vendor` bundle from `node_modules/` dependencies.
+- Additional production optimisations for React apps (inline elements and remove prop types).
+- Automatic creation of a vendor bundle from `node_modules/` dependencies.
 - Extraction of CSS into files.
 - Automatic `index.html` creation with `html-webpack-plugin`.
 - ES5, ES6 module and UMD builds for npm modules.

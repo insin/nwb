@@ -11,7 +11,7 @@ describe('getPluginConfig()', () => {
       cssPreprocessors: {
         fake: {
           loader: 'path/to/fake.js',
-          test: /\.fake$/
+          test: /\.fake$/,
         }
       }
     })

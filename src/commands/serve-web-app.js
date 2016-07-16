@@ -3,7 +3,7 @@ import path from 'path'
 import {getDefaultHTMLConfig} from '../appConfig'
 import webpackServer from '../webpackServer'
 
-export default function(args, cb) {
+export default function serveWebApp(args, cb) {
   let entry = args._[1] || 'src/index.js'
   let dist = args._[2] || 'dist'
 
@@ -13,13 +13,13 @@ export default function(args, cb) {
     output: {
       path: path.resolve(dist),
       filename: 'app.js',
-      publicPath: '/'
+      publicPath: '/',
     },
     plugins: {
-      html: getDefaultHTMLConfig()
+      html: getDefaultHTMLConfig(),
     },
     server: {
-      staticPath: path.resolve('public')
-    }
+      staticPath: path.resolve('public'),
+    },
   }, cb)
 }

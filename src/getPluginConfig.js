@@ -21,7 +21,7 @@ export default function getPluginConfig(cwd = process.cwd()) {
 
   let plugins = [
     ...Object.keys(pkg.dependencies || {}),
-    ...Object.keys(pkg.devDependencies || {})
+    ...Object.keys(pkg.devDependencies || {}),
   ].filter(dep => /^nwb-/.test(dep))
 
   debug('%s nwb-* dependencies in package.json', plugins.length)

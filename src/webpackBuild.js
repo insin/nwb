@@ -27,20 +27,22 @@ export default function webpackBuild(args, buildConfig = {}, cb) {
 
   let webpackConfig = createWebpackConfig({
     ...buildConfig,
-    server: false
-  }, pluginConfig, userConfig.webpack)
+    server: false,
+  }, pluginConfig, userConfig)
 
   debug('webpack config: %s', deepToString(webpackConfig))
 
   let compiler = webpack(webpackConfig)
   compiler.run((err, stats) => {
     if (err) return cb(err)
-    console.log(stats.toString({
-      children: false,
-      chunks: false,
-      colors: true,
-      modules: false
-    }))
+    console.log(
+      stats.toString({
+        children: false,
+        chunks: false,
+        colors: true,
+        modules: false,
+      })
+    )
     cb()
   })
 }

@@ -1,6 +1,6 @@
 import exec from '../exec'
 
-export default function(args) {
+export default function cleanUMD(args) {
   console.log('nwb: clean-umd')
   exec('rimraf', ['umd'])
 }

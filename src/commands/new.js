@@ -6,7 +6,7 @@ import {PROJECT_TYPES} from '../constants'
 import createProject, {validateProjectType} from '../createProject'
 import {UserError} from '../errors'
 
-export default function(args, cb) {
+export default function new_(args, cb) {
   if (args._.length === 1) {
     return cb(new UserError(`usage: nwb new [${PROJECT_TYPES.join('|')}] <name>`))
   }

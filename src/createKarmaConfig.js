@@ -64,7 +64,7 @@ export function getKarmaConfig({codeCoverage = false} = {}, userConfig = {}) {
   let plugins = [
     require('karma-phantomjs-launcher'),
     require('karma-sourcemap-loader'),
-    require('karma-webpack')
+    require('karma-webpack'),
   ]
 
   // Frameworks can be configured as a list containing names of bundled
@@ -108,7 +108,7 @@ export function getKarmaConfig({codeCoverage = false} = {}, userConfig = {}) {
       id: 'isparta',
       test: /\.jsx?$/,
       loader: require.resolve('isparta-loader'),
-      include: path.resolve('src')
+      include: path.resolve('src'),
     })
     reporters.push('coverage')
     plugins.push(require('karma-coverage'))
@@ -117,34 +117,34 @@ export function getKarmaConfig({codeCoverage = false} = {}, userConfig = {}) {
   return {plugins, frameworks, reporters, extraLoaders}
 }
 
-export default function({codeCoverage, singleRun}, userConfig) {
+export default function createKarmaConfig({babel, codeCoverage, singleRun}, userConfig) {
   let userKarma = userConfig.karma || {}
   let pluginConfig = getPluginConfig()
 
   let {plugins, frameworks, reporters, extraLoaders} = getKarmaConfig({codeCoverage}, userConfig)
   let testFiles = path.resolve(userKarma.tests || DEFAULT_TESTS)
   let preprocessors = {
-    [require.resolve('babel-core/lib/polyfill')]: ['webpack'],
     [testFiles]: ['webpack', 'sourcemap']
   }
 
   let webpackConfig = createWebpackConfig({
+    babel,
     devtool: 'inline-source-map',
     loaders: {
-      extra: extraLoaders
+      extra: extraLoaders,
     },
     node: {
-      fs: 'empty'
+      fs: 'empty',
     },
     resolve: {
       alias: {
-        'src': path.resolve('src')
+        'src': path.resolve('src'),
       },
       // Fall back to resolving runtime dependencies from nwb's dependencies
-      fallback: path.join(__dirname, '../node_modules')
+      fallback: path.join(__dirname, '../node_modules'),
     },
-    server: true
-  }, pluginConfig, userConfig.webpack)
+    server: true,
+  }, pluginConfig, userConfig)
 
   let karmaConfig = merge({
     browsers: ['PhantomJS'],
@@ -152,16 +152,16 @@ export default function({codeCoverage, singleRun}, userConfig) {
       dir: path.resolve('coverage'),
       reporters: [
         {type: 'html', subdir: 'html'},
-        {type: 'lcovonly', subdir: '.'}
+        {type: 'lcovonly', subdir: '.'},
       ]
     },
     files: [
-      require.resolve('babel-core/lib/polyfill'),
-      testFiles
+      require.resolve('babel-polyfill/dist/polyfill.js'),
+      testFiles,
     ],
     frameworks,
     mochaReporter: {
-      showDiff: true
+      showDiff: true,
     },
     plugins,
     preprocessors,
@@ -169,8 +169,8 @@ export default function({codeCoverage, singleRun}, userConfig) {
     singleRun,
     webpack: webpackConfig,
     webpackServer: {
-      noInfo: true
-    }
+      noInfo: true,
+    },
   }, userKarma.extra)
 
   debug('karma config: %s', deepToString(karmaConfig))

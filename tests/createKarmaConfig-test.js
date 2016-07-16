@@ -36,7 +36,7 @@ describe('getKarmaConfig()', function() {
       'preprocessor:sourcemap',
       'webpackPlugin',
       'framework:mocha',
-      'reporter:mocha'
+      'reporter:mocha',
     ]
     it('defaults to Mocha', () => {
       let {frameworks, reporters, plugins, extraLoaders} = getKarmaConfig({codeCoverage: false})
@@ -66,8 +66,8 @@ describe('getKarmaConfig()', function() {
     it('defaults the reporter to dots if only a framework plugin is configured', () => {
       let {frameworks, reporters, plugins} = getKarmaConfig({codeCoverage: false}, {
         karma: {
-          frameworks: [tapeFramework]
-        }
+          frameworks: [tapeFramework],
+        },
       })
       expect(frameworks).toEqual(['tape'])
       expect(reporters).toEqual(['dots'])
@@ -77,8 +77,8 @@ describe('getKarmaConfig()', function() {
       let {frameworks, reporters, plugins} = getKarmaConfig({codeCoverage: false}, {
         karma: {
           frameworks: ['tape'],
-          plugins: [tapeFramework]
-        }
+          plugins: [tapeFramework],
+        },
       })
       expect(frameworks).toEqual(['tape'])
       expect(reporters).toEqual(['dots'])
@@ -88,8 +88,8 @@ describe('getKarmaConfig()', function() {
       let {frameworks, reporters, plugins} = getKarmaConfig({codeCoverage: false}, {
         karma: {
           frameworks: [tapeFramework],
-          reporters: [tapReporter]
-        }
+          reporters: [tapReporter],
+        },
       })
       expect(frameworks).toEqual(['tape'])
       expect(reporters).toEqual(['tap'])
@@ -101,8 +101,8 @@ describe('getKarmaConfig()', function() {
         karma: {
           frameworks: ['tape'],
           reporters: ['tap'],
-          plugins: [tapeFramework, tapReporter]
-        }
+          plugins: [tapeFramework, tapReporter],
+        },
       })
       expect(frameworks).toEqual(['tape'])
       expect(reporters).toEqual(['tap'])
@@ -114,8 +114,8 @@ describe('getKarmaConfig()', function() {
         karma: {
           frameworks: ['mocha', 'chai', 'chai-as-promised'],
           reporters: ['mocha'],
-          plugins: [{'framework: chai': []}]
-        }
+          plugins: [{'framework: chai': []}],
+        },
       })
       expect(frameworks).toEqual(['mocha', 'chai', 'chai-as-promised'])
       expect(reporters).toEqual(['mocha'])
@@ -137,8 +137,8 @@ describe('createKarmaConfig()', () => {
         extra: {
           browsers: ['Chrome'],
           mochaReporter: {
-            output: 'autowatch'
-          }
+            output: 'autowatch',
+          },
         }
       }
     })

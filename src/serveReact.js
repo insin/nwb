@@ -6,6 +6,6 @@ import webpackServer from './webpackServer'
  * configuring babel-loader with react-transform plugins for hot loading and
  * error catching.
  */
-export default function(args, config, cb) {
+export default function serveReact(args, config, cb) {
   webpackServer(args, createServeReactAppBuildConfig(config), cb)
 }

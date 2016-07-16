@@ -7,14 +7,14 @@ describe('utility functions', () => {
     it('uses name and version', () => {
       expect(createBanner({
         name: 'test',
-        version: '1.0.0'
+        version: '1.0.0',
       })).toEqual('test 1.0.0')
     })
     it('uses homepage if available', () => {
       expect(createBanner({
         name: 'test',
         version: '1.0.0',
-        homepage: 'foo.com'
+        homepage: 'foo.com',
       })).toEqual('test 1.0.0 - foo.com')
     })
     it('uses license if available', () => {
@@ -22,7 +22,7 @@ describe('utility functions', () => {
         name: 'test',
         version: '1.0.0',
         homepage: 'foo.com',
-        license: 'MIT'
+        license: 'MIT',
       })).toEqual('test 1.0.0 - foo.com\nMIT Licensed')
     })
   })
@@ -37,7 +37,7 @@ describe('utility functions', () => {
           amd: 'react',
           commonjs: 'react',
           commonjs2: 'react',
-          root: 'React'
+          root: 'React',
         }
       })
     })

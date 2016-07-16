@@ -16,7 +16,7 @@ const States = {
   INIT: 'INIT',
   INIT_OK: 'INIT_OK',
   CHANGED_FILE: 'CHANGED_FILE',
-  REBUILDING: 'REBUILDING'
+  REBUILDING: 'REBUILDING',
 }
 
 describe('sample projects', function() {

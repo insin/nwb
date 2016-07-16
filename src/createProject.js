@@ -40,20 +40,20 @@ export function getWebModulePrefs(args, done) {
       type: 'confirm',
       name: 'umd',
       message: 'Do you want to create a UMD build for npm?',
-      default: umd
+      default: umd,
     },
     {
       when: ({umd}) => umd,
       type: 'input',
       name: 'globalVariable',
       message: 'Which global variable should the UMD build export?',
-      default: globalVariable
+      default: globalVariable,
     },
     {
       type: 'confirm',
       name: 'jsNext',
       message: 'Do you want to create an ES6 modules build for npm?',
-      default: jsNext
+      default: jsNext,
     }
   ]).then(answers => done(null, answers), err => done(err))
 }
@@ -149,6 +149,6 @@ const PROJECT_CREATORS = {
   }
 }
 
-export default function(args, type, name, dir, cb) {
+export default function createProject(args, type, name, dir, cb) {
   PROJECT_CREATORS[type](args, name, dir, cb)
 }

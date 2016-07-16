@@ -35,7 +35,7 @@ export function createWebpackExternals(externals = {}) {
       root: globalName,
       commonjs2: packageName,
       commonjs: packageName,
-      amd: packageName
+      amd: packageName,
     }
     return webpackExternals
   }, {})

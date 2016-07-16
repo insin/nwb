@@ -1,7 +1,7 @@
 import expect from 'expect'
 import webpack from 'webpack'
 
-import getUserConfig, {prepareWebpackLoaderConfig} from '../src/getUserConfig'
+import getUserConfig, {prepareWebpackLoaderConfig, processUserConfig} from '../src/getUserConfig'
 
 describe('getUserConfig()', () => {
   it("throws an error when a required config file can't be found", () => {
@@ -14,111 +14,161 @@ describe('getUserConfig()', () => {
       .toThrow(/couldn't import the config file/)
   })
 
-  it('throws an error when the config file has an invalid type', () => {
-    expect(() => getUserConfig({config: 'tests/fixtures/invalid-type-config.js'}))
-      .toThrow(/invalid type config/)
-  })
-
   it("returns default config when a non-required config file can't be found", () => {
     let config = getUserConfig()
     expect(config).toEqual({
+      babel: {},
       build: {
         externals: {},
         global: '',
         jsNext: false,
-        umd: false
+        umd: false,
       },
-      webpack: {
-        loaders: {}
-      }
+      webpack: {},
+    })
+  })
+})
+
+describe('processUserConfig()', () => {
+  context('validation', () => {
+    it('throws an error if the config file has an invalid type', () => {
+      expect(() => processUserConfig({
+        userConfig: {
+          type: 'invalid'
+        }
+      })).toThrow(/invalid type config/)
+    })
+    it('throws an error if babel.stage is not a number or falsy', () => {
+      expect(() => processUserConfig({
+        userConfig: {
+          babel: {stage: []}
+        }
+      })).toThrow(/must be a number, or falsy/)
+    })
+    it('throws an error if babel.stage is less than 0', () => {
+      expect(() => processUserConfig({
+        userConfig: {
+          babel: {stage: -1}
+        }
+      })).toThrow(/must be between 0 and 3/)
+    })
+    it('throws an error if babel.stage is greater than 3', () => {
+      expect(() => processUserConfig({
+        userConfig: {
+          babel: {stage: 4}
+        }
+      })).toThrow(/must be between 0 and 3/)
+    })
+    it('throws an error if babel.presets is not an array', () => {
+      expect(() => processUserConfig({
+        userConfig: {
+          babel: {presets: 'some-preset'}
+        }
+      })).toThrow(/must be an array/)
+    })
+    it('throws an error if babel.plugins is not an array', () => {
+      expect(() => processUserConfig({
+        userConfig: {
+          babel: {plugins: 'some-plugin'}
+        }
+      })).toThrow(/must be an array/)
+    })
+    it('throws an error if babel.runtime is not valid', () => {
+      expect(() => processUserConfig({
+        userConfig: {
+          babel: {runtime: 'welp'}
+        }
+      })).toThrow(/must be boolean or one of: 'helpers', 'regenerator', 'polyfill'/)
     })
   })
 
-  it('gets passed command and webpack arguments when a config function is provided', () => {
-    let config = getUserConfig({
-      _: ['abc123'],
-      config: 'tests/fixtures/return-arguments-config.js'
+  it('passes command and webpack arguments when a config function is provided', () => {
+    let config = processUserConfig({
+      args: {_: ['abc123']},
+      userConfig(args) {
+        return {
+          command: args.command,
+          webpack: args.webpack,
+        }
+      }
     })
     expect(config.command).toEqual('abc123')
     expect(config.webpack).toEqual(webpack)
   })
 
-  it('defaults config when none is provided', () => {
-    let config = getUserConfig({config: 'tests/fixtures/minimal-module-config.js'})
+  it('defaults top-level config when none is provided', () => {
+    let config = processUserConfig({
+      userConfig: {
+        type: 'web-module',
+      },
+    })
     expect(config).toEqual({
       type: 'web-module',
+      babel: {},
       build: {
         externals: {},
         global: '',
         jsNext: false,
         umd: false
       },
-      webpack: {
-        loaders: {}
-      }
+      webpack: {},
     })
   })
 
-  it('defaults missing config when partial config is provided', () => {
-    let config = getUserConfig({config: 'tests/fixtures/partial-build-config.js'})
+  it('defaults missing build config when partial config is provided', () => {
+    let config = processUserConfig({
+      userConfig: {
+        type: 'web-module',
+        build: {
+          umd: true,
+          global: 'Test',
+        },
+      },
+    })
     expect(config.build).toEqual({
       externals: {},
       global: 'Test',
       jsNext: false,
-      umd: true
+      umd: true,
     })
   })
 
-  context('when babel config is provided', () => {
-    it('creates a babel-loader config if there was none', () => {
-      let config = getUserConfig({config: 'tests/fixtures/babel-only-config.js'})
-      expect(config.webpack.loaders).toEqual({
-        babel: {
-          query: {
-            loose: 'all',
-            stage: 0,
-            optional: ['runtime']
-          }
-        }
-      })
-    })
-    it('adds the config to existing babel-loader config if it had no query', () => {
-      let config = getUserConfig({config: 'tests/fixtures/babel-loader-config.js'})
-      expect(config.webpack.loaders).toEqual({
-        babel: {
-          exclude: 'test',
-          query: {
-            loose: 'all'
-          }
-        }
-      })
-    })
-    it('does nothing if existing babel-loader config already has a query', () => {
-      let config = getUserConfig({config: 'tests/fixtures/babel-loader-query-config.js'})
-      expect(config.webpack.loaders).toEqual({
-        babel: {
-          exclude: 'test',
-          query: {
-            loose: 'all',
-            stage: 0,
-            optional: ['runtime']
-          }
-        }
-      })
-    })
-  })
-
+  // TODO Remove in a future release
   it('moves plugins to webpack for 0.11 back-compat', () => {
-    let config = getUserConfig({config: 'tests/fixtures/0.11-webpack-plugins.js'})
-    expect(config.webpack).toEqual({
-      loaders: {},
-      define: {
-        __TEST__: 42
-      },
-      html: {
-        template: 'test.html'
+    let config = processUserConfig({
+      userConfig: {
+        webpack: {
+          plugins: {
+            define: {
+              __TEST__: 42,
+            },
+            html: {
+              template: 'test.html',
+            },
+          }
+        }
       }
     })
+    expect(config.webpack).toEqual({
+      define: {
+        __TEST__: 42,
+      },
+      html: {
+        template: 'test.html',
+      },
+    })
+  })
+
+  // TODO Remove in a future release
+  it('converts babel.loose to boolean for 0.12 back-compat', () => {
+    let config = processUserConfig({
+      userConfig: {
+        babel: {
+          loose: 'all',
+        }
+      }
+    })
+    expect(config.babel).toEqual({loose: true})
   })
 })
 
@@ -131,10 +181,10 @@ describe('prepareWebpackLoaderConfig()', () => {
         exclude: /exclude/,
         config: {a: 42},
         query: {
-          a: 42
+          a: 42,
         },
-        other: true
-      }
+        other: true,
+      },
     }
     prepareWebpackLoaderConfig(config)
     expect(config.css).toEqual({
@@ -143,9 +193,9 @@ describe('prepareWebpackLoaderConfig()', () => {
       exclude: /exclude/,
       config: {a: 42},
       query: {
-        a: 42
+        a: 42,
       },
-      other: true
+      other: true,
     })
   })
   it('moves non-loader props into a query object', () => {
@@ -156,8 +206,8 @@ describe('prepareWebpackLoaderConfig()', () => {
         exclude: /exclude/,
         config: {a: 42},
         modules: true,
-        localIdentName: 'asdf'
-      }
+        localIdentName: 'asdf',
+      },
     }
     prepareWebpackLoaderConfig(config)
     expect(config.css).toEqual({
@@ -167,8 +217,8 @@ describe('prepareWebpackLoaderConfig()', () => {
       config: {a: 42},
       query: {
         modules: true,
-        localIdentName: 'asdf'
-      }
+        localIdentName: 'asdf',
+      },
     })
   })
 })

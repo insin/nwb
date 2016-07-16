@@ -4,9 +4,9 @@
 
 CSS preprocessors provide a Webpack loader which processes modules written in alternative style languages, with the resulting CSS being passed through the standard nwb CSS pipeline.
 
-* [nwb-less](https://github.com/insin/nwb-less) - adds processing of `.less` files
-* [nwb-sass](https://github.com/insin/nwb-sass) - adds processing of `.scss` files
-* [nwb-stylus](https://github.com/insin/nwb-stylus) - adds processing of `.styl` files
+- [nwb-less](https://github.com/insin/nwb-less) - adds processing of `.less` files
+- [nwb-sass](https://github.com/insin/nwb-sass) - adds processing of `.scss` files
+- [nwb-stylus](https://github.com/insin/nwb-stylus) - adds processing of `.styl` files
 
 ----
 
@@ -23,8 +23,8 @@ CSS preprocessor plugins must export a configuration object in the following for
    ```js
    {
       cssPreprocessors: {
-        'preprocessor id here': {
-          test: /\.regexp for filenames to be preprocessed$/,
+        'unique preprocessor id': {
+          test: /\.fileextension$/,
           loader: 'absolute path to a webpack loader module.js',
           defaultConfig: 'default top-level webpack config prop for loader',
           ...{other: 'webpack loader config, e.g. default query config'}
@@ -39,7 +39,7 @@ If the preprocessor's webpack loader supports reading configuration from a top-l
 
 ----
 
-As a concrete example, this is a working implementation of a Sass preprocessor plugin:
+As a concrete example, this is a complete, working implementation of a Sass preprocessor plugin:
 
 ```js
 module.exports = {

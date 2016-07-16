@@ -2,10 +2,10 @@ var assert = require('assert')
 
 var webpack = require('webpack')
 
-var createServeReactAppConfig = require('./lib/createServeReactAppConfig')
-var createServeReactAppBuildConfig = require('./lib/createServeReactAppBuildConfig')
-var createServerWebpackConfig = require('./lib/createServerWebpackConfig')
-var debug = require('./lib/debug')
+var createServeReactAppConfig = require('./lib/createServeReactAppConfig').default
+var createServeReactAppBuildConfig = require('./lib/createServeReactAppBuildConfig').default
+var createServerWebpackConfig = require('./lib/createServerWebpackConfig').default
+var debug = require('./lib/debug').default
 
 /**
  * Express middleware for serving a React app with hot reloading - equivalent to

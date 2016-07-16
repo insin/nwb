@@ -3,11 +3,11 @@ import expect from 'expect'
 import createWebpackConfig, {
   combineLoaders,
   COMPAT_CONFIGS,
-  getCompatConfig,
   createPostCSSConfig,
+  getCompatConfig,
   getTopLevelLoaderConfig,
   mergeLoaderConfig,
-  styleLoaderName
+  styleLoaderName,
 } from '../src/createWebpackConfig'
 
 let findLoaderById = (loaders, id) => {
@@ -53,7 +53,7 @@ describe('createWebpackConfig()', () => {
     cssPreprocessors: {
       sass: {
         test: /\.scss$/,
-        loader: 'path/to/sass-loader.js'
+        loader: 'path/to/sass-loader.js',
       }
     }
   }
@@ -76,11 +76,13 @@ describe('createWebpackConfig()', () => {
 
   context('with plugin config for a CSS preprocessor and user config for its loader', () => {
     let config = createWebpackConfig({server: true}, cssPreprocessorPluginConfig, {
-      loaders: {
-        sass: {
-          query: {
-            a: 1,
-            b: 2
+      webpack: {
+        loaders: {
+          sass: {
+            query: {
+              a: 1,
+              b: 2,
+            }
           }
         }
       }
@@ -100,8 +102,10 @@ describe('createWebpackConfig()', () => {
   context('with compat config', () => {
     it('creates and merges compat config', () => {
       let config = createWebpackConfig({}, {}, {
-        compat: {
-          enzyme: true
+        webpack: {
+          compat: {
+            enzyme: true,
+          }
         }
       })
       expect(config.externals).toEqual(COMPAT_CONFIGS.enzyme.externals)
@@ -110,17 +114,19 @@ describe('createWebpackConfig()', () => {
 
   context('with extra config', () => {
     it('merges extra config', () => {
-      let config = createWebpackConfig({}, {}, {extra: {
-        resolve: {
-          alias: {
-            'test': './test'
+      let config = createWebpackConfig({}, {}, {
+        webpack: {
+          extra: {
+            resolve: {
+              alias: {
+                'test': './test',
+              }
+            },
+            foo: 'bar',
           }
-        },
-        foo: 'bar'
-      }})
-      expect(config.resolve.alias).toEqual({
-        'test': './test'
+        }
       })
+      expect(config.resolve.alias).toEqual({'test': './test'})
       expect(config.foo).toEqual('bar')
     })
   })
@@ -155,26 +161,26 @@ describe('mergeLoaderConfig()', () => {
     expect(mergeLoaderConfig(
       {...loader, query: {a: 1}},
       {query: {b: 2}},
-      {query: {c: 3}}
+      {query: {c: 3}},
     )).toEqual({
       test: TEST_RE,
       loader: 'one',
       exclude: EXCLUDE_RE,
-      query: {a: 1, b: 2, c: 3}
+      query: {a: 1, b: 2, c: 3},
     })
   })
   it('only adds a query prop if the merged query has props', () => {
     expect(mergeLoaderConfig(loader, {}, {})).toEqual({
       test: TEST_RE,
       loader: 'one',
-      exclude: EXCLUDE_RE
+      exclude: EXCLUDE_RE,
     })
   })
   it('removes the merged query when it has no properties', () => {
     expect(mergeLoaderConfig(loader, {}, {query: {}})).toEqual({
       test: TEST_RE,
       loader: 'one',
-      exclude: EXCLUDE_RE
+      exclude: EXCLUDE_RE,
     })
   })
   it('appends lists when merging queries', () => {
@@ -187,15 +193,15 @@ describe('mergeLoaderConfig()', () => {
       loader: 'one',
       exclude: EXCLUDE_RE,
       query: {
-        optional: ['two', 'three']
-      }
+        optional: ['two', 'three'],
+      },
     })
   })
   it('deep merges queries', () => {
     expect(mergeLoaderConfig(
       loader,
       {query: {nested: {a: true}}},
-      {query: {nested: {b: true}}}
+      {query: {nested: {b: true}}},
     )).toEqual({
       test: TEST_RE,
       loader: 'one',
@@ -203,7 +209,7 @@ describe('mergeLoaderConfig()', () => {
       query: {
         nested: {
           a: true,
-          b: true
+          b: true,
         }
       }
     })
@@ -214,14 +220,14 @@ describe('combineLoaders()', () => {
   it('stringifies query strings, appends them and joins loaders', () => {
     expect(combineLoaders([
       {loader: 'one', query: {a: 1, b: 2}},
-      {loader: 'two', query: {c: 3, d: 4}}
+      {loader: 'two', query: {c: 3, d: 4}},
     ])).toEqual('one?a=1&b=2!two?c=3&d=4')
   })
   it('only appends a ? if query is non-empty', () => {
     expect(combineLoaders([
       {loader: 'one', query: {a: 1, b: 2}},
       {loader: 'two', query: {}},
-      {loader: 'three'}
+      {loader: 'three'},
     ])).toEqual('one?a=1&b=2!two!three')
   })
 })
@@ -255,11 +261,11 @@ describe('getTopLevelLoaderConfig()', () => {
       sass: {
         test: /\.scss$/,
         loader: 'path/to/sass-loader.js',
-        defaultConfig: 'sassLoader'
+        defaultConfig: 'sassLoader',
       },
       less: {
         test: /\.less$/,
-        loader: 'path/to/less-loader.js'
+        loader: 'path/to/less-loader.js',
       }
     }
 
@@ -270,7 +276,7 @@ describe('getTopLevelLoaderConfig()', () => {
     it('throws if the same config prop is configured twice', () => {
       expect(() => getTopLevelLoaderConfig({
         sass: {config: {a: 1}},
-        'vendor-sass': {config: {b: 1}}
+        'vendor-sass': {config: {b: 1}},
       }, cssPreprocessors))
         .toThrow(/this has already been used/)
     })

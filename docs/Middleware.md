@@ -1,4 +1,4 @@
- ## Middleware
+## Middleware
 
 nwb provides middleware for serving a hot reloading React app from your own server.
 
@@ -18,10 +18,10 @@ Your app's version of the Express module must be passed as the first argument.
 
 ###### `options`
 
-* `autoInstall` - automatically install missing npm dependencies *[default: `false`]*
+- `autoInstall` - automatically install missing npm dependencies *[default: `false`]*
 - `config` - path to a config file *[default: nwb.config.js]*
-* `entry` - entry point for the app *[default: src/index.js]*
-* `info` - print info about Webpack modules after rebuilds *[default: `false`]*
+- `entry` - entry point for the app *[default: src/index.js]*
+- `info` - print info about Webpack modules after rebuilds *[default: `false`]*
 
 #### Example
 

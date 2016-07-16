@@ -22,8 +22,8 @@ export default function server(webpackConfig, {fallback, host, noInfo, port, sta
     noInfo,
     publicPath: webpackConfig.output.publicPath,
     stats: {
-      colors: true
-    }
+      colors: true,
+    },
   }))
 
   app.use(require('webpack-hot-middleware')(compiler))

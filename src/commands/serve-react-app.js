@@ -4,7 +4,7 @@ import createServeReactAppConfig from '../createServeReactAppConfig'
 /**
  * Serve a React app.
  */
-export default function(args, cb) {
+export default function serveReactApp(args, cb) {
   console.log('nwb: serve-react-app')
   serveReact(args, createServeReactAppConfig(args), cb)
 }

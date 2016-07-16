@@ -1,25 +1,89 @@
+**Breaking Changes:**
+
+- Upgraded from Babel 5 to Babel 6 [[#12](https://github.com/insin/nwb/issues/12)]
+  - [`babel` config](https://github.com/insin/nwb/blob/0.12/docs/Configuration.md#babel-configuration) in `nwb.config.js` is no longer directly equivalent to what you would normally put in a [`.babelrc` file](https://babeljs.io/docs/usage/babelrc/).
+  - nwb implements its own support for a Babel 6 equivalent of Babel 5's `stage` config to [choose which experimental features are enabled](https://github.com/insin/nwb/blob/0.12/docs/Configuration.md#stage-number--false), including defaulting to [Stage 2](https://babeljs.io/docs/plugins/preset-stage-2/)
+    - The custom preset used for [Stage 1](https://babeljs.io/docs/plugins/preset-stage-1/) features (and [Stage 0](https://babeljs.io/docs/plugins/preset-stage-0/), which includes Stage 1 features) includes the [Babel Legacy Decorator transform plugin](https://github.com/loganfsmyth/babel-plugin-transform-decorators-legacy) to support use of decorators. See its [Best Effort documentation](https://github.com/loganfsmyth/babel-plugin-transform-decorators-legacy#best-effort) for differences you will need to take into account if you were using Babel 5 decorators.
+  - Babel 6 implicitly depends on npm3's automatic deduplication - to support use of npm2 (which is still the default version bundled with Node v4), presets are managed by [deduped-babel-presets](https://github.com/insin/deduped-babel-presets), whichs avoids the extra time and space which would otherwise be taken installing a huge number of duplicated dependencies.
+  - Babel 6 introduced [a number of breaking changes](https://github.com/babel/babel/blob/master/CHANGELOG.md#600) which you may need to account for in your codebase if you've been using nwb or Babel 5 on its own.
+    - In particular, interop with CommonJS exports was removed as it allowed you to write broken ES6 code. Kent C. Dodds has [a post about this which is worth reading](https://medium.com/@kentcdodds/misunderstanding-es6-modules-upgrading-babel-tears-and-a-solution-ad2d5ab93ce0). If you're writing React components or other npm modules which may be consumed in ES5 using `require()`, you may want to switch to using `module.exports` directly to avoid introducing a breaking change requiring users to tag a `.default` onto their `require()` calls.
+
+**`nwb.config.js` Config Format Changes:**
+
+- The Babel [runtime transform](https://babeljs.io/docs/plugins/transform-runtime/) is now enabled using new [`runtime` config](https://github.com/insin/nwb/blob/0.12/docs/Configuration.md#runtime-string--boolean) instead of Babel 5's `optional` config:
+
+  ```js
+  // < v0.12
+  module.exports = {
+    babel: {
+      optional: ['runtime']
+    }
+  }
+  ```
+  ```js
+  // v0.12
+  module.exports = {
+    babel: {
+      runtime: true
+    }
+  }
+  ```
+
+- [Loose mode](http://www.2ality.com/2015/12/babel6-loose-mode.html) is now enabled for Babel plugins which support it [using `loose` as a boolean](https://github.com/insin/nwb/blob/0.12/docs/Configuration.md#loose-boolean) instead of Babel 5's string config:
+
+  ```js
+  // < v0.12
+  module.exports = {
+    babel: {
+      loose: 'all'
+    }
+  }
+  ```
+  ```js
+  // v0.12
+  module.exports = {
+    babel: {
+      loose: true
+    }
+  }
+  ```
+
 **Added:**
 
-- Added `webpack.uglify` config to allow customisation of Webpack `UglifyJsPlugin` options.
-- Added a `--preact` flag to React app builds to create a [preact-compat](https://github.com/developit/preact-compat)-compatible build. This is a drop-in way to try [preact](https://github.com/developit/preact) with your React app [[#124](https://github.com/insin/nwb/issues/124)]
-- `webpack.compat` now supports `'json-schema': true` to prevent a transitive `json-schema` dependency breaking Webpack builds.
+- Production React builds now remove propTypes using [babel-plugin-transform-react-remove-prop-types](https://github.com/oliviertassinari/babel-plugin-transform-react-remove-prop-types) [[#97](https://github.com/insin/nwb/issues/97)]
+- Added [`babel.runtime` config](https://github.com/insin/nwb/blob/0.12/docs/Configuration.md#runtime-string--boolean) to enable the Babel runtime transform, replacing Babel 5's `optional` config. You can use all the features of the transform or pick and choose.
+- Added [`webpack.uglify` config](https://github.com/insin/nwb/blob/0.12/docs/Configuration.md#uglify-object) to allow customisation of Webpack `UglifyJsPlugin` options.
+- Added a [`--preact` flag](https://github.com/insin/nwb/blob/0.12/docs/Commands.md#build-1) to React app builds to create a [preact-compat](https://github.com/developit/preact-compat)-compatible build. This is a drop-in way to try [preact](https://github.com/developit/preact) with your React apps [[#124](https://github.com/insin/nwb/issues/124)]
+- [`webpack.compat` config](https://github.com/insin/nwb/blob/0.12/docs/Configuration.md#compat-object) now supports `'json-schema': true` to prevent a transitive [`json-schema`](https://github.com/kriszyp/json-schema) dependency breaking Webpack builds. This usually manifests itself as a `Uncaught Error: define cannot be used indirect` error.
 
 **Changed:**
 
-- Updated default Webpack `UglifyJsPlugin` options to strip comments from output and use the `screw_ie8` setting for every step.
+- [`babel.loose`](https://github.com/insin/nwb/blob/0.12/docs/Configuration.md#loose-boolean) is now a boolean flag to enable loose mode in all Babel 6 plugins which support it.
+- Updated the default Webpack `UglifyJsPlugin` options to strip comments from output and use the `screw_ie8` setting for every step.
 - Any `module.noParse` Webpack config added by nwb is now specified as an Array so any user-provided config for it in `webpack.extra` (which should also be specified as an Array) can be merged into it.
 - Required `<meta>` tags in HTML templates are now all first thing in `<head>`
-- Added `shrink-to-fit=no` to the `viewport` `<meta>` tag for Safari
+- Added `shrink-to-fit=no` to the `viewport` `<meta>` tag in HTML templates for Safari.
+
+**Removed:**
+
+- The Babel 6 equivalent of Babel 5's inline element transform is not used in production builds, as it currently depends on having `Symbol` polyfilled to work in older browsers, which has the potential to introduce breaking changes to your production build.
 
 **Dependencies:**
 
 - autoprefixer: v6.3.6 → [v6.3.7](https://github.com/postcss/autoprefixer/blob/master/CHANGELOG.md#637)
+- babel v5.8.38 → babel-cli v6.10.1
+- babel-core: v5.8.38 → v6.10.4
+- babel-loader: v5.4.0 → v6.2.4
+- babel-polyfill v6.9.1
+- babel-runtime: v5.8.29 → v6.9.2
+- deduped-babel-presets v0.0.9
 - expect: v1.20.1 → [v1.20.2](https://github.com/mjackson/expect/compare/v1.20.1...v1.20.2)
 - express: v4.13.4 → [v4.14.0](https://github.com/expressjs/express/blob/master/History.md#4140--2016-06-16)
 - file-loader: v0.8.5 → [v0.9.0](https://github.com/webpack/file-loader/compare/v0.8.5...v0.9.0)
 - glob: v7.0.3 → [v7.0.5](https://github.com/isaacs/node-glob/compare/v7.0.3...v7.0.5)
 - html-webpack-plugin: v2.19.0 → [v2.22.0](https://github.com/ampedandwired/html-webpack-plugin/blob/master/CHANGELOG.md#v2220)
 - inquirer: v1.0.3 → [v1.1.2](https://github.com/SBoudrias/Inquirer.js/compare/v1.0.3...v1.1.2)
+- isparta-loader: v1.0.0 → v2.0.0
 - karma: v0.13.22 → [v1.1.1](https://github.com/karma-runner/karma/blob/master/CHANGELOG.md#111-2016-07-07)
 - karma-coverage: v1.0.0 → [v1.1.0](https://github.com/karma-runner/karma-coverage/blob/master/CHANGELOG.md#110-2016-07-07)
 - karma-mocha-reporter: v2.0.3 → [v2.0.4](https://github.com/litixsoft/karma-mocha-reporter/compare/v2.0.3...v2.0.4)
@@ -39,7 +103,7 @@
 **Breaking Changes:**
 
 - Replaced the deprecated `autoprefixer-loader` with `postcss-loader` in default style pipelines - it's configured to do the same autoprefixing by default [[#57](https://github.com/insin/nwb/issues/57)]
-  - If you were configuring vendor prefixing using `webpack.loaders.autoprefixer`, you will now need to manage an `autprefixer` dependency yourself and use [`webpack.postcss`](https://github.com/insin/nwb/blob/v0.11.0/docs/Configuration.md#postcss-object) to perform this configuration.
+  - If you were configuring vendor prefixing using `webpack.loaders.autoprefixer`, you will now need to manage an `autprefixer` dependency yourself and use [`webpack.postcss`](https://github.com/insin/nwb/blob/0.11/docs/Configuration.md#postcss-object) to perform this configuration.
 
 **`nwb.config.js` Config Format Changes:**
 
@@ -67,7 +131,7 @@
     }
   }
   ```
-* Support for flatter [Webpack loader configuration](https://github.com/insin/nwb/blob/v0.11.0/docs/Configuration.md#loaders-object) was added. Having a `query` object is now optional - loader query configuration can now be placed directly under the loader's id [[#113](https://github.com/insin/nwb/issues/113)]
+* Support for flatter [Webpack loader configuration](https://github.com/insin/nwb/blob/0.11/docs/Configuration.md#loaders-object) was added. Having a `query` object is now optional - loader query configuration can now be placed directly under the loader's id [[#113](https://github.com/insin/nwb/issues/113)]
 
   ```js
   // < v0.11
@@ -103,17 +167,17 @@
   - `react build entry.js` creates a static build.
   - For these commands, Babel is preconfigured to allow you to use all of its Stage 0 features out of the box, including `async`/`await`.
   - These are implemented by (the previously undocumented) `serve-react` and (new) `build-react` nwb commands.
-- The entry point for apps and npm module UMD builds can now be specified as an argument to [`build` and `serve` commands](https://github.com/insin/nwb/blob/v0.11.0/docs/Commands.md#project-type-specific-commands). The default is still `src/index.js`. [[#115](https://github.com/insin/nwb/issues/115)]
-- The directory web apps are built into can now be specified as an argument to [`build`, `clean` and `serve` commands](https://github.com/insin/nwb/blob/v0.11.0/docs/Commands.md#project-type-specific-commands). The default is still `dist/`.
-- Added [`webpack.compat` config](https://github.com/insin/nwb/blob/v0.11.0/docs/Configuration.md#compat-object) to enable compatibility tweaks for modules which are known to be problematic with Webpack - initially this includes support for Enzyme, Moment.js and Sinon.js 1.x [[#108](https://github.com/insin/nwb/issues/108)]
-- Added [`webpack.postcss` config](https://github.com/insin/nwb/blob/v0.11.0/docs/Configuration.md#postcss-array--object) to customise the PostCSS plugins applied to each style pipeline [[#57](https://github.com/insin/nwb/issues/57)]
-- Added [`webpack.vendorBundle` config](https://github.com/insin/nwb/blob/v0.11.0/docs/Configuration.md#vendorbundle-boolean) to disable automatically extracting anything imported from `node_modules/` out into a separate `vendor` chunk [[#106](https://github.com/insin/nwb/issues/106)]
-- Added [documentation for creating and using a test context module](https://github.com/insin/nwb/blob/v0.11.0/docs/Testing.md#using-a-test-context-module) if there's code you need to run prior to tests running, such as configuring your assertion library with additional assertions.
+- The entry point for apps and npm module UMD builds can now be specified as an argument to [`build` and `serve` commands](https://github.com/insin/nwb/blob/0.11/docs/Commands.md#project-type-specific-commands). The default is still `src/index.js`. [[#115](https://github.com/insin/nwb/issues/115)]
+- The directory web apps are built into can now be specified as an argument to [`build`, `clean` and `serve` commands](https://github.com/insin/nwb/blob/0.11/docs/Commands.md#project-type-specific-commands). The default is still `dist/`.
+- Added [`webpack.compat` config](https://github.com/insin/nwb/blob/0.11/docs/Configuration.md#compat-object) to enable compatibility tweaks for modules which are known to be problematic with Webpack - initially this includes support for Enzyme, Moment.js and Sinon.js 1.x [[#108](https://github.com/insin/nwb/issues/108)]
+- Added [`webpack.postcss` config](https://github.com/insin/nwb/blob/0.11/docs/Configuration.md#postcss-array--object) to customise the PostCSS plugins applied to each style pipeline [[#57](https://github.com/insin/nwb/issues/57)]
+- Added [`webpack.vendorBundle` config](https://github.com/insin/nwb/blob/0.11/docs/Configuration.md#vendorbundle-boolean) to disable automatically extracting anything imported from `node_modules/` out into a separate `vendor` chunk [[#106](https://github.com/insin/nwb/issues/106)]
+- Added [documentation for creating and using a test context module](https://github.com/insin/nwb/blob/0.11/docs/Testing.md#using-a-test-context-module) if there's code you need to run prior to tests running, such as configuring your assertion library with additional assertions.
 - Added a `--config` option to allow you to specify your own config file instead of `nwb.config.js`.
 
 **Changed:**
 
-- Apps are no longer required to provide their own HTML template. The default template path of `src/index.html` will continue to be used if a file exists there. If an alternative template is not provided via [`webpack.html` config](https://github.com/insin/nwb/blob/v0.11.0/docs/Configuration.md#html-object), nwb will now fall back to using a basic template.
+- Apps are no longer required to provide their own HTML template. The default template path of `src/index.html` will continue to be used if a file exists there. If an alternative template is not provided via [`webpack.html` config](https://github.com/insin/nwb/blob/0.11/docs/Configuration.md#html-object), nwb will now fall back to using a basic template.
 - Restored default use of the Babel polyfill in Karma config so tests (and their dependencies) can assume a modern environment.
 - Default `babel-loader` config now uses [`cacheDirectory: true` for a speedup](https://github.com/babel/babel-loader#babel-loader-is-slow).
 - Improved debug output (activated with a `DEBUG=nwb` environment variable) to print config objects in full - if you're configuring plugin objects (e.g. PostCSS plugins), it's recommended to create instances of them if you want to use debug output.

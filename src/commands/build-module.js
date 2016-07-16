@@ -1,41 +1,8 @@
-import fs from 'fs'
-import path from 'path'
+import moduleBuild from '../moduleBuild'
 
-import temp from 'temp'
-
-import debug from '../debug'
-import exec from '../exec'
-import getUserConfig from '../getUserConfig'
-
-export default function(args) {
-  require('./clean-module')(args)
-
-  let es6 = path.resolve('es6')
-  let lib = path.resolve('lib')
-  let src = path.resolve('src')
-
-  let babelArgs = [src, '--out-dir', lib]
-
-  // Write any user babel config to a temporary file to point babel at via the
-  // babelrc option.
-  let userConfig = getUserConfig(args)
-  if (userConfig.babel) {
-    var babelrc = temp.openSync()
-    debug('writing babelrc to %s', babelrc.path)
-    fs.writeSync(babelrc.fd, JSON.stringify(userConfig.babel))
-    fs.closeSync(babelrc.fd)
-    babelArgs.push('--babelrc', babelrc.path)
-  }
-
-  console.log('nwb: build-module (es5)')
-  exec('babel', babelArgs)
-
-  if (userConfig.build.jsNext) {
-    babelArgs[2] = es6
-    babelArgs.push('--blacklist=es6.modules')
-    console.log('nwb: build-module (es6)')
-    exec('babel', babelArgs)
-  }
-
-  temp.cleanupSync()
+/**
+ * Create a module's ES5 and ES6 modules builds.
+ */
+export default function buildModule(args) {
+  moduleBuild(args, {presets: ['react']})
 }

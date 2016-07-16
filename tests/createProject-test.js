@@ -15,7 +15,7 @@ describe('getWebModulePrefs()', () => {
       expect(settings).toEqual({
         globalVariable: '',
         jsNext: true,
-        umd: false
+        umd: false,
       })
       done()
     })
@@ -26,7 +26,7 @@ describe('getWebModulePrefs()', () => {
       expect(settings).toEqual({
         globalVariable: 'Test',
         jsNext: true,
-        umd: true
+        umd: true,
       })
       done()
     })
@@ -37,7 +37,7 @@ describe('getWebModulePrefs()', () => {
       expect(settings).toEqual({
         globalVariable: 'Test',
         jsNext: true,
-        umd: true
+        umd: true,
       })
       done()
     })

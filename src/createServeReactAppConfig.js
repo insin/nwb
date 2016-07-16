@@ -7,7 +7,7 @@ import path from 'path'
 
 import {getDefaultHTMLConfig} from './appConfig'
 
-export default function(args) {
+export default function createServeReactAppConfig(args) {
   let entry = path.resolve(args._[1] || 'src/index.js')
   let dist = path.resolve(args._[2] || 'dist')
 
@@ -16,11 +16,11 @@ export default function(args) {
     output: {
       path: path.resolve(dist),
       filename: 'app.js',
-      publicPath: '/'
+      publicPath: '/',
     },
     plugins: {
-      html: getDefaultHTMLConfig()
+      html: getDefaultHTMLConfig(),
     },
-    staticPath: path.resolve('public')
+    staticPath: path.resolve('public'),
   }
 }

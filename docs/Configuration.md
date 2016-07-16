@@ -1,42 +1,29 @@
 ## Configuration
 
-### What's Configurable?
-
-- Babel 5 settings
-- Webpack settings
-  - Default sets of loaders and plugins are provided and made configurable
-  - Additional CSS preprocessors can be added as [nwb plugins](/docs/Plugins.md#css-preprocessors)
-  - Extra config can be deep-merged into the generated Webpack config
-- Karma settings
-  - Additional plugins, frameworks and reporters can be configured
-  - Extra config can be deep-merged into the generated Webpack config
-- Project layout
-  - Entry point for apps and UMD builds *[default: `src/index.js`]*
-  - Directory apps are built to *[default: `dist/`]*
-  - HTML template for apps *[default: `src/index.html`]*, falling back to a default template if none is provided.
-
-### Not Configurable... Yet
-
-- Project layout
-  - Source is assumed to be under `src/`
-  - Static resources for apps are assumed to be in `public/`
-  - The entry point for React component demo apps is assumed to be `demo/src/index.js`, with built resources in `demo/dist/`
-
 ### Configuration File
 
-nwb will look for an `nwb.config.js` file in the current working directory for project-specific configuration, or you can specify a configuration file using the `--config` option.
+nwb will look for an `nwb.config.js` module in the current working directory for project-specific configuration, or you can specify a configuration module using the `--config` option.
 
-This file should export either a configuration object or a function which creates a configuration object when called. If a function is exported, it will be passed an object containing the following properties:
+This module should export either a configuration object or a function which creates a configuration object when called.
+
+If a function is exported, it will be passed an object with the following properties:
 
 - `command`: the name of the nwb command currently being executed.
 - `webpack`: nwb's version of the `webpack` module.
 
-The configuration object created by your nwb config can use the following fields:
+### Configuration Object Format
+
+The configuration object provided by your nwb config module can use the following fields:
 
 - nwb Configuration
   - [`type`](#type-string-required-for-generic-build-commands)
 - Babel Configuration
   - [`babel`](#babel-object)
+  - [`babel.stage`](#stage-number--false)
+  - [`babel.loose`](#loose-boolean)
+  - [`babel.runtime`](#runtime-string--boolean)
+  - [`babel.plugins`](#plugins-array)
+  - [`babel.presets`](#plugins-array)
 - Webpack Configuration
   - [`webpack`](#webpack-object)
   - [`webpack.loaders`](#loaders-object)
@@ -82,25 +69,107 @@ It must be one of:
 
 #### `babel`: `Object`
 
-Use this object to provide your own options for Babel (version 5) - [see the Babel 5 options documentation](https://github.com/babel/babel.github.io/blob/862b43db93e48762671267034a50c30c00e433e2/docs/usage/options.md).
+[Babel](https://babeljs.io/) configuration can be provided in a `babel` object, using the following properties.
 
-e.g. to use `async`/`await` transforms, you will need to configure Babel's `stage` and `optional` settings:
+For Webpack builds, any Babel config provided will be used to configure `babel-loader` - you can also provide additional configuration in [`webpack.loaders`](#loaders-object) if necessary.
+
+##### `stage`: `Number | false`
+
+*(A Babel 6 equivalent of Babel 5's `stage` config)*
+
+Controls which Babel preset will be used to enable use of experimental, proposed and upcoming JavaScript features in your code:
+
+- [Stage 0](https://babeljs.io/docs/plugins/preset-stage-0) - `do {...}` expressions, `::` function bind operator
+- [Stage 1](https://babeljs.io/docs/plugins/preset-stage-1) - class properties , export extensions; also includes the [Babel Legacy Decorator transform plugin](https://github.com/loganfsmyth/babel-plugin-transform-decorators-legacy) to enable use of `@decorator` syntax in Babel 6
+- [Stage 2](https://babeljs.io/docs/plugins/preset-stage-2) (default) - object rest/spread syntax
+- [Stage 3](https://babeljs.io/docs/plugins/preset-stage-3) - trailing function commas, `async`/`await`, `**` exponentiation operator
+
+e.g. if you want to use decorators in your app, you should set `stage` to `1`:
 
 ```js
 module.exports = {
-  babel: {
-    stage: 0,
-    optional: ['runtime']
+  babel {
+    stage: 1
   }
 }
 ```
 
-nwb commands are run in the current working directory, so if you need to configure additional Babel plugins, you can just use their names and let Babel import them.
+Stage 2 is used by default - to disable use of a stage preset entirely, set `stage` to `false`:
+
+```js
+module.exports = {
+  babel {
+    stage: false
+  }
+}
+```
+
+##### `loose`: `Boolean`
+
+Some Babel plugins have a [loose mode](http://www.2ality.com/2015/12/babel6-loose-mode.html) in which they output simpler, potentially faster code rather than following the semantics of the ES6 spec closely.
+
+Loose mode also turns off some useful errors which are present in normal mode, so you might find it useful to develop with normal mode and use loose mode as a production optimisation.
+
+e.g. to enable loose mode only for production builds:
+
+```js
+module.exports = {
+  babel {
+    loose: process.env.NODE_ENV === 'production'
+  }
+}
+```
+
+##### `runtime`: `String | Boolean`
+
+Babel's [runtime transform](https://babeljs.io/docs/plugins/transform-runtime/)does 3 things:
+
+1. It *always* imports modules from `babel-runtime` instead of duplicating **helpers** in every module which needs them.
+2. By default, it imports a local **polyfill** for new ES6 builtins (`Promise`) and static methods (e.g. `Object.assign`) when they're used in your code.
+3. By default, it imports the **regenerator** runtime required to use `async`/`await` when needed.
+
+If you want to enable all of these, set `runtime` to `true` .
+
+```js
+module.exports = {
+  babel: {
+    runtime: true
+  }
+}
+```
+
+If you want to pick and choose, you can use `'helpers'`, `'polyfill'` or `'regenerator'`.
+
+e.g. if you use `async`/`await` (which is a Stage 3 feature, so enabled by default) but you're already handling polyfilling of ES6 built-ins you need, use `'regenerator'`:
+
+```js
+module.exports = {
+  babel: {
+    runtime: 'regenerator'
+  }
+}
+```
+
+e.g. if you're polyfilling all the features your code needs globally and you just want to import `babel-runtime` helpers instead of duplicating them, use `'helpers'`:
+
+```js
+module.exports = {
+  babel: {
+    runtime: 'helpers'
+  }
+}
+```
+
+##### `plugins`: `Array`
+
+Additional Babel plugins to use.
+
+nwb commands are run in the current working directory, so if you need to configure additional Babel plugins or presets, you can install them locally, pass their names and let Babel import them for you.
 
 e.g. to install and use the [babel-plugin-react-html-attrs](https://github.com/insin/babel-plugin-react-html-attrs#readme) plugin:
 
 ```
-npm install babel-plugin-react-html-attrs@1.x
+npm install babel-plugin-react-html-attrs
 ```
 ```js
 module.exports = {
@@ -110,13 +179,15 @@ module.exports = {
 }
 ```
 
-If provided, Babel config will also be used to configure the `babel-loader` Webpack loader if there isn't any other configuration specified for it in [`webpack.loaders`](#loaders-object).
+##### `presets`: `Array`
+
+Additional Babel presets to use.
 
 ### Webpack Configuration
 
 #### `webpack`: `Object`
 
-Webpack configuration can be provided in a `webpack` object.
+[Webpack](https://webpack.github.io/) configuration can be provided in a `webpack` object, using the following properties:
 
 ##### `loaders`: `Object`
 
@@ -164,7 +235,7 @@ e.g. to use the `nib` plugin with the [Stylus](http://learnboost.github.io/stylu
 ```js
 var nib = require('nib')
 
-module.exports = {
+{
   webpack: {
     loaders: {
       stylus: {
@@ -226,7 +297,7 @@ When running Karma tests with coverage enabled, the following loader will be add
   You may need to tweak this loader if you're [changing where Karma looks for tests](#tests-string) - e.g. if you're colocating tests in `__tests__` directories, you will want to configure isparta-loader to ignore these:
 
   ```js
-  module.exports = {
+  {
     webpack: {
       loaders: {
         isparta: {
@@ -333,7 +404,7 @@ Configures [options for Webpack's `UglifyJsPlugin`](https://webpack.github.io/do
 Any additional options provided will be merged into nwb's defaults, which are:
 
 ```js
-{
+module.exports = {
   compress: {
     screw_ie8: true,
     warnings: false,
@@ -376,7 +447,7 @@ Use an object if you're configuring other style pipelines. When using an object,
 
 ```js
 var autoprefixer = require('autoprefixer')
-module.exports = {
+{
   webpack: {
     postcss: {
       defaults: [
@@ -454,7 +525,7 @@ Note that you *must* use Webpack's own config structure in this object - e.g. to
 ```js
 var path = require('path')
 
-module.exports = function(nwb) {
+function(nwb) {
   return {
     type: 'react-app',
     webpack: {
@@ -487,11 +558,11 @@ module.exports = function(nwb) {
 
 ### Karma Configuration
 
-Karma defaults to using the Mocha framework and reporter plugins, but it's possible to configure your own, as well as where it looks for tests.
+nwb's default [Karma](http://karma-runner.github.io/) configuration uses the [Mocha](https://mochajs.org/) framework and reporter plugins for it, but you can configure your own preferences.
 
 #### `karma`: `Object`
 
-Karma configuration is defined in a `karma` object, using the following fields:
+Karma configuration can be provided in a `karma` object, using the following properties:
 
 ##### `tests`: `String`
 

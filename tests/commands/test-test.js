@@ -6,10 +6,11 @@ import expect from 'expect'
 import rimraf from 'rimraf'
 import temp from 'temp'
 
+import cli from '../../src/cli'
+
 describe('command: test', function() {
   this.timeout(60000)
 
-  let cli = require('../../src/cli')
   let originalCwd
   let tmpDir
 

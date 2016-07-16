@@ -3,14 +3,14 @@ import parseArgs from 'minimist'
 
 import pkg from '../package.json'
 
-export default function(argv, cb) {
+export default function cli(argv, cb) {
   let args = parseArgs(argv, {
     alias: {
       c: 'config',
       h: 'help',
-      v: 'version'
+      v: 'version',
     },
-    boolean: ['help', 'version']
+    boolean: ['help', 'version'],
   })
 
   let command = args._[0]
@@ -147,9 +147,6 @@ Project type-specific commands:
     unknownCommand()
   }
 
-  let commandModule = require(commandModulePath)
-  if (commandModule.default) {
-    commandModule = commandModule.default
-  }
+  let commandModule = require(commandModulePath).default
   commandModule(args, cb)
 }

@@ -9,6 +9,7 @@ import qs from 'qs'
 import webpack, {optimize} from 'webpack'
 import merge from 'webpack-merge'
 
+import createBabelConfig from './createBabelConfig'
 import debug from './debug'
 import {deepToString, endsWith} from './utils'
 
@@ -88,14 +89,14 @@ export function createStyleLoader(loader, server, {
       loader: require.resolve('css-loader'),
       query: {
         // Apply postcss-loader to @imports
-        importLoaders: 1
-      }
+        importLoaders: 1,
+      },
     }),
     loader(name('postcss'), {
       loader: require.resolve('postcss-loader'),
       query: {
-        pack: prefix
-      }
+        pack: prefix,
+      },
     })
   ]
 
@@ -104,9 +105,11 @@ export function createStyleLoader(loader, server, {
   }
 
   if (server) {
-    loaders.unshift(loader(name('style'), {
-      loader: require.resolve('style-loader')
-    }))
+    loaders.unshift(
+      loader(name('style'), {
+        loader: require.resolve('style-loader'),
+      })
+    )
     return combineLoaders(loaders)
   }
   else {
@@ -136,61 +139,61 @@ export function createLoaders(server, buildConfig = {}, userConfig = {}, pluginC
       loader: require.resolve('babel-loader'),
       exclude: /node_modules/,
       query: {
-        // Ignore any .babelrc files in the app or its path
-        breakConfig: true,
+        // Don't look for .babelrc files
+        babelrc: false,
         // Cache transformations to the filesystem (in default OS temp dir)
-        cacheDirectory: true
+        cacheDirectory: true,
       }
     }),
     loader('css-pipeline', {
       test: /\.css$/,
       loader: createStyleLoader(loader, server),
-      exclude: /node_modules/
+      exclude: /node_modules/,
     }),
     loader('vendor-css-pipeline', {
       test: /\.css$/,
       loader: createStyleLoader(loader, server, {
-        prefix: 'vendor'
+        prefix: 'vendor',
       }),
-      include: /node_modules/
+      include: /node_modules/,
     }),
     loader('graphics', {
       test: /\.(gif|png)$/,
       loader: require.resolve('url-loader'),
       query: {
         limit: 10240,
-        ...FILE_LOADER_DEFAULTS
-      }
+        ...FILE_LOADER_DEFAULTS,
+      },
     }),
     loader('jpeg', {
       test: /\.jpe?g$/,
       loader: require.resolve('file-loader'),
       query: {
-        ...FILE_LOADER_DEFAULTS
-      }
+        ...FILE_LOADER_DEFAULTS,
+      },
     }),
     loader('fonts', {
       test: /\.(otf|svg|ttf|woff|woff2)(\?v=\d+\.\d+\.\d+)?$/,
       loader: require.resolve('url-loader'),
       query: {
         limit: 10240,
-        ...FILE_LOADER_DEFAULTS
-      }
+        ...FILE_LOADER_DEFAULTS,
+      },
     }),
     loader('eot', {
       test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,
       loader: require.resolve('file-loader'),
       query: {
-        ...FILE_LOADER_DEFAULTS
-      }
+        ...FILE_LOADER_DEFAULTS,
+      },
     }),
     loader('json', {
       test: /\.json$/,
-      loader: require.resolve('json-loader')
+      loader: require.resolve('json-loader'),
     }),
     // Extra loaders from build config, still configurable via user config when
     // the loaders specify an id.
-    ...createExtraLoaders(buildConfig.extra, userConfig)
+    ...createExtraLoaders(buildConfig.extra, userConfig),
   ]
 
   if (pluginConfig.cssPreprocessors) {
@@ -201,7 +204,7 @@ export function createLoaders(server, buildConfig = {}, userConfig = {}, pluginC
           test,
           loader: createStyleLoader(loader, server, {
             extraLoader: {id, config},
-            prefix: id
+            prefix: id,
           }),
           exclude: /node_modules/
         })
@@ -211,7 +214,7 @@ export function createLoaders(server, buildConfig = {}, userConfig = {}, pluginC
           test,
           loader: createStyleLoader(loader, server, {
             extraLoader: {id, config},
-            prefix: `vendor-${id}`
+            prefix: `vendor-${id}`,
           }),
           include: /node_modules/
         })
@@ -263,7 +266,7 @@ export function createPlugins(server, buildConfig = {}, userConfig = {}) {
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development'),
       ...buildConfig.define,
-      ...userConfig.define
+      ...userConfig.define,
     }),
     new optimize.OccurenceOrderPlugin()
   ]
@@ -282,7 +285,7 @@ export function createPlugins(server, buildConfig = {}, userConfig = {}) {
 
   if (!server) {
     plugins.push(new ExtractTextPlugin('[name].css', {
-      ...userConfig.extractText
+      ...userConfig.extractText,
     }))
 
     // Move modules imported from node_modules into a vendor chunk
@@ -320,14 +323,14 @@ export function createPlugins(server, buildConfig = {}, userConfig = {}) {
     plugins.push(new HtmlWebpackPlugin({
       template: path.join(__dirname, '../templates/webpack-template.html'),
       ...buildConfig.html,
-      ...userConfig.html
+      ...userConfig.html,
     }))
   }
 
   if (buildConfig.install) {
     plugins.push(new NpmInstallPlugin({
       ...buildConfig.install,
-      ...userConfig.install
+      ...userConfig.install,
     }))
   }
 
@@ -405,7 +408,7 @@ export function createPostCSSConfig(userPostCSSConfig, cssPreprocessors = {}) {
   // style pipeline.
   let postcss = {
     defaults: createDefaultPostCSSPlugins(),
-    vendor: createDefaultPostCSSPlugins()
+    vendor: createDefaultPostCSSPlugins(),
   }
   Object.keys(cssPreprocessors).forEach(id => {
     postcss[id] = createDefaultPostCSSPlugins()
@@ -424,13 +427,13 @@ export const COMPAT_CONFIGS = {
     externals: {
       'react/addons': true,
       'react/lib/ExecutionEnvironment': true,
-      'react/lib/ReactContext': true
+      'react/lib/ReactContext': true,
     }
   },
   'json-schema': {
     module: {
-      noParse: [/node_modules[/\\]json-schema[/\\]lib[/\\]validate\.js/]
-    }
+      noParse: [/node_modules[/\\]json-schema[/\\]lib[/\\]validate\.js/],
+    },
   },
   moment({locales}) {
     if (!Array.isArray(locales)) {
@@ -448,14 +451,14 @@ export const COMPAT_CONFIGS = {
   },
   sinon: {
     module: {
-      noParse: [/[/\\]sinon\.js/]
+      noParse: [/[/\\]sinon\.js/],
     },
     resolve: {
       alias: {
-        sinon: 'sinon/pkg/sinon'
-      }
-    }
-  }
+        sinon: 'sinon/pkg/sinon',
+      },
+    },
+  },
 }
 
 /**
@@ -495,39 +498,45 @@ export default function createWebpackConfig(buildConfig, nwbPluginConfig = {}, u
   let {
     // These build config items are used to create chunks of webpack config,
     // rather than being included as-is.
-    loaders = {},
-    plugins = {},
-    resolve = {},
+    babel: buildBabelConfig = {},
+    loaders: buildLoaderConfig = {},
+    plugins: buildPluginConfig = {},
+    resolve: buildResolveConfig = {},
     server = false,
     // Any other build config provided is merged directly into the final webpack
     // config to provide the rest of the default config.
     ...otherBuildConfig
   } = buildConfig
 
+  let userWebpackConfig = userConfig.webpack || {}
+
+  // Generate config for babel-loader and set it as loader config for the build
+  buildLoaderConfig.babel = {query: createBabelConfig(buildBabelConfig, userConfig.babel)}
+
   let webpackConfig = {
     module: {
-      loaders: createLoaders(server, loaders, userConfig.loaders, nwbPluginConfig)
+      loaders: createLoaders(server, buildLoaderConfig, userWebpackConfig.loaders, nwbPluginConfig)
     },
-    plugins: createPlugins(server, plugins, userConfig),
+    plugins: createPlugins(server, buildPluginConfig, userWebpackConfig),
     resolve: merge({
       extensions: ['', '.web.js', '.js', '.jsx', '.json'],
       // Fall back to resolving runtime dependencies from nwb's dependencies,
       // e.g. for babel-runtime when using Babel stage: 0 and optional:
       // ['runtime'] for async/await.
       fallback: path.join(__dirname, '../node_modules')
-    }, resolve),
-    postcss: createPostCSSConfig(userConfig.postcss, nwbPluginConfig.cssPreprocessors),
+    }, buildResolveConfig),
+    postcss: createPostCSSConfig(userWebpackConfig.postcss, nwbPluginConfig.cssPreprocessors),
     ...otherBuildConfig,
     // Top level loader config can be supplied via user "loaders" config, so we
     // detect, extract and where possible validate it before merging it into the
     // final webpack config object.
-    ...getTopLevelLoaderConfig(userConfig.loaders, nwbPluginConfig.cssPreprocessors)
+    ...getTopLevelLoaderConfig(userWebpackConfig.loaders, nwbPluginConfig.cssPreprocessors),
   }
 
   // Create and merge compatibility configuration into the generated config if
   // specified.
-  if (userConfig.compat) {
-    let compatConfig = getCompatConfig(userConfig.compat)
+  if (userWebpackConfig.compat) {
+    let compatConfig = getCompatConfig(userWebpackConfig.compat)
     if (compatConfig) {
       webpackConfig = merge(webpackConfig, compatConfig)
     }
@@ -535,8 +544,8 @@ export default function createWebpackConfig(buildConfig, nwbPluginConfig = {}, u
 
   // Any extra user webpack config is merged into the generated config to give
   // them even more control.
-  if (userConfig.extra) {
-    webpackConfig = merge(webpackConfig, userConfig.extra)
+  if (userWebpackConfig.extra) {
+    webpackConfig = merge(webpackConfig, userWebpackConfig.extra)
   }
 
   return webpackConfig

@@ -53,14 +53,11 @@ describe('command: build', function() {
         'app.js.map',
         'index.html',
         'vendor.js',
-        'vendor.js.map'
+        'vendor.js.map',
       ])
     })
     it('generates displayName for React.createClass calls in the build', () => {
       expect(builtAppSource).toInclude('displayName:"App"')
-    })
-    it('creates a production-optimised build with inline elements by default', () => {
-      expect(builtAppSource).toExclude('.createElement(')
     })
   })
 
@@ -80,19 +77,19 @@ describe('command: build', function() {
 
     it('creates an ES5 build', () => {
       expect(glob.sync('*', {cwd: path.resolve('lib')})).toEqual([
-        'index.js'
+        'index.js',
       ])
     })
     it('creates an ES6 build', () => {
       expect(glob.sync('*', {cwd: path.resolve('es6')})).toEqual([
-        'index.js'
+        'index.js',
       ])
     })
     it('creates a UMD build with a sourcemap', () => {
       expect(glob.sync('*', {cwd: path.resolve('umd')})).toEqual([
         'test-component.js',
         'test-component.min.js',
-        'test-component.min.js.map'
+        'test-component.min.js.map',
       ])
     })
     it('exports the configured global in the UMD build', () => {
@@ -103,7 +100,7 @@ describe('command: build', function() {
       expect(glob.sync('*', {cwd: path.resolve('demo/dist')})).toEqual([
         'demo.js',
         'demo.js.map',
-        'index.html'
+        'index.html',
       ])
     })
     it('generates displayName for React.createClass calls in the demo build', () => {

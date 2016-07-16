@@ -3,6 +3,7 @@ import path from 'path'
 import {getDefaultHTMLConfig} from '../appConfig'
 import {copyPublicDir} from '../utils'
 import webpackBuild from '../webpackBuild'
+import cleanApp from './clean-app'
 
 // Use a config function, as this won't be called until after NODE_ENV has been
 // set by webpackBuild() and we don't want these optimisations in development
@@ -12,41 +13,35 @@ let buildConfig = (args) => {
   let dist = args._[2] || 'dist'
 
   let config = {
+    babel: {
+      presets: ['react'],
+    },
     devtool: 'source-map',
     entry: {
-      app: path.resolve(entry)
+      app: path.resolve(entry),
     },
     output: {
       filename: '[name].js',
       path: path.resolve(dist),
-      publicPath: '/'
+      publicPath: '/',
     },
     plugins: {
       html: getDefaultHTMLConfig(),
-      vendorChunkName: 'vendor'
-    }
+      vendorChunkName: 'vendor',
+    },
   }
 
   if (args.preact) {
     config.resolve = {
       alias: {
         'react': 'preact-compat',
-        'react-dom': 'preact-compat'
-      }
+        'react-dom': 'preact-compat',
+      },
     }
   }
 
-  if (process.env.NODE_ENV === 'production' && !args.preact) {
-    config.loaders = {
-      babel: {
-        query: {
-          optional: [
-            'optimisation.react.inlineElements',
-            'optimisation.react.constantElements'
-          ]
-        }
-      }
-    }
+  if (process.env.NODE_ENV === 'production') {
+    config.babel.presets.push('react-prod')
   }
 
   return config
@@ -55,10 +50,10 @@ let buildConfig = (args) => {
 /**
  * Build a React app.
  */
-export default function(args, cb) {
+export default function buildReactApp(args, cb) {
   let dist = args._[2] || 'dist'
 
-  require('./clean-app')({_: ['clean-app', dist]})
+  cleanApp({_: ['clean-app', dist]})
 
   console.log('nwb: build-react-app')
   copyPublicDir('public', dist)

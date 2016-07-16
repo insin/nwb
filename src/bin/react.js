@@ -8,7 +8,7 @@ import {UserError} from '../errors'
 
 const COMMAND_MODULES = {
   build: 'build-react',
-  run: 'serve-react'
+  run: 'serve-react',
 }
 
 function handleError(error) {
@@ -28,9 +28,9 @@ let args = parseArgs(process.argv.slice(2), {
   alias: {
     c: 'config',
     h: 'help',
-    v: 'version'
+    v: 'version',
   },
-  boolean: ['help', 'version']
+  boolean: ['help', 'version'],
 })
 
 let command = args._[0]
@@ -86,10 +86,7 @@ if (!COMMAND_MODULES.hasOwnProperty(command)) {
   process.exit(1)
 }
 
-let commandModule = require(`../commands/${COMMAND_MODULES[command]}`)
-if (commandModule.default) {
-  commandModule = commandModule.default
-}
+let commandModule = require(`../commands/${COMMAND_MODULES[command]}`).default
 
 try {
   commandModule(args, err => {

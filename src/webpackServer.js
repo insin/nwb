@@ -6,7 +6,7 @@ import {deepToString} from './utils'
 /**
  * Start a development server with Webpack using a given build configuration.
  */
-export default function(args, buildConfig, cb) {
+export default function webpackServer(args, buildConfig, cb) {
   // Force environment to development
   process.env.NODE_ENV = 'development'
 
@@ -21,6 +21,6 @@ export default function(args, buildConfig, cb) {
     host: args.host || 'localhost',
     noInfo: !args.info,
     port: args.port || 3000,
-    staticPath: server.staticPath
+    staticPath: server.staticPath,
   }, cb)
 }

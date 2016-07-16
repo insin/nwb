@@ -1,6 +1,6 @@
 ## Testing
 
-[Karma](http://karma-runner.github.io/) is used as a test runner and [Webpack](https://webpack.github.io/) is used to instrument and bundle test code.
+nwb uses [Karma](http://karma-runner.github.io/) as a test runner, with [Webpack](https://webpack.github.io/) to instrument and bundle test code.
 
 - [Default Settings](#default-settings)
   - [Example Test](#example-test)
@@ -8,13 +8,13 @@
 - [Using a Test Context Module](#using-a-test-context-module)
 - [Code Coverage](#code-coverage)
 
-### Default Settings
+### Default Testing Setup
 
 By default, tests are written in `*-test.js` files in the `tests/` directory.
 
 [Mocha](https://mochajs.org/) is configured as the default test framework and [expect](https://github.com/mjackson/expect) is made available by default for assertions and spies without having to install it in your own `devDependencies`.
 
-Don't worry if none of the above is to your taste, as [Karma can be configured using the nwb config file](/docs/Configuration.md#karma-object).
+If you'd rather set things up differently, [Karma can be configured using the nwb config file](/docs/Configuration.md#karma-object).
 
 #### Example Test
 
@@ -41,13 +41,13 @@ For example, if the following directory structure exists in your project:
 ```
 src/
   components/
-    Finagler.js
+    MyComponent.js
 ```
 
 Then your tests can import this component like so:
 
 ```js
-import Finagler from 'src/components/Finagler'
+import MyComponent from 'src/components/MyComponent'
 ```
 
 ### Using a Test Context Module

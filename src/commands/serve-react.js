@@ -9,7 +9,7 @@ import {installReact} from '../utils'
 /**
  * Serve a standalone React entry module.
  */
-export default function(args, cb) {
+export default function serveReact_(args, cb) {
   if (args._.length === 1) {
     return cb(new UserError('nwb: serve-react: an entry module must be specified'))
   }
@@ -27,25 +27,21 @@ export default function(args, cb) {
 
   console.log('nwb: serve-react')
   serveReact(args, {
+    babel: {
+      stage: 0,
+      runtime: true,
+    },
     entry,
     output: {
       filename: 'app.js',
       path: process.cwd(),
-      publicPath: '/'
-    },
-    loaders: {
-      babel: {
-        query: {
-          stage: 0,
-          optional: ['runtime']
-        }
-      }
+      publicPath: '/',
     },
     plugins: {
       html: {
         mountId: args['mount-id'] || 'app',
-        title: args.title || 'React App'
-      }
-    }
+        title: args.title || 'React App',
+      },
+    },
   }, cb)
 }
