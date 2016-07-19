@@ -14,7 +14,7 @@
     "lint": "eslint *.js src tests",
     "lint:fix": "eslint *.js src tests --fix",
     "test": "npm run build && mocha --compilers js:babel-core/register tests/*-test.js tests/commands/*-test.js",
-    "test:coverage": "cross-env NODE_ENV=test nyc mocha tests/*-test.js tests/commands/*-test.js",
+    "test:coverage": "npm run build && cross-env NODE_ENV=test nyc mocha tests/*-test.js tests/commands/*-test.js",
     "test:watch": "mocha --watch --compilers js:babel-core/register tests/*-test.js"
   },
   "files": [
