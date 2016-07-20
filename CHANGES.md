@@ -72,8 +72,8 @@
 **Dependencies:**
 
 - autoprefixer: v6.3.6 → [v6.3.7](https://github.com/postcss/autoprefixer/blob/master/CHANGELOG.md#637)
-- babel v5.8.38 → babel-cli v6.10.1
-- babel-core: v5.8.38 → v6.10.4
+- babel v5.8.38 → babel-cli v6.11.4
+- babel-core: v5.8.38 → v6.11.4
 - babel-loader: v5.4.0 → v6.2.4
 - babel-polyfill v6.9.1
 - babel-runtime: v5.8.29 → v6.9.2
