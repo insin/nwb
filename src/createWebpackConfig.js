@@ -509,6 +509,10 @@ export default function createWebpackConfig(buildConfig, nwbPluginConfig = {}, u
   } = buildConfig
 
   let userWebpackConfig = userConfig.webpack || {}
+  let userResolveConfig = {}
+  if (userWebpackConfig.aliases) {
+    userResolveConfig.alias = userWebpackConfig.aliases
+  }
 
   // Generate config for babel-loader and set it as loader config for the build
   buildLoaderConfig.babel = {query: createBabelConfig(buildBabelConfig, userConfig.babel)}
@@ -521,10 +525,9 @@ export default function createWebpackConfig(buildConfig, nwbPluginConfig = {}, u
     resolve: merge({
       extensions: ['', '.web.js', '.js', '.jsx', '.json'],
       // Fall back to resolving runtime dependencies from nwb's dependencies,
-      // e.g. for babel-runtime when using Babel stage: 0 and optional:
-      // ['runtime'] for async/await.
-      fallback: path.join(__dirname, '../node_modules')
-    }, buildResolveConfig),
+      // e.g. for babel-runtime when using the transform-runtime plugin.
+      fallback: path.join(__dirname, '../node_modules'),
+    }, buildResolveConfig, userResolveConfig),
     postcss: createPostCSSConfig(userWebpackConfig.postcss, nwbPluginConfig.cssPreprocessors),
     ...otherBuildConfig,
     // Top level loader config can be supplied via user "loaders" config, so we

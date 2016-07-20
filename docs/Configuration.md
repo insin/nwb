@@ -29,6 +29,7 @@ The configuration object provided by your nwb config module can use the followin
   - [`webpack.loaders`](#loaders-object)
     - [Default loaders](#default-loaders)
     - [Test loaders](#test-loaders)
+  - [`webpack.aliases`](#aliases-object)
   - [`webpack.define`](#define-object)
   - [`webpack.extractText`](#extracttext-object)
   - [`webpack.html`](#html-object)
@@ -308,6 +309,31 @@ When running Karma tests with coverage enabled, the following loader will be add
   }
   ```
 
+##### `aliases`: `Object`
+
+Configures [Webpack aliases](https://webpack.github.io/docs/resolving.html#aliasing), which allow you to control module resolution. Typically aliases are used to make it easier to import certain modules from within any depth of nested directories in an app.
+
+e.g.:
+
+```js
+module.exports = {
+  webpack: {
+    aliases: {
+      // Enable use of 'images/file.png' paths in JavaScript and
+      // "~images/file.png" paths in stylesheets to require an image from
+      // src/images from anywhere in the the app.
+      'images': path.resolve('src/images'),
+      // Enable use of require('src/path/to/module.js') for top-down imports
+      // from anywhere in the app, to promote writing location-independent
+      // code by avoiding ../ directory traversal.
+      'src': path.resolve('src')
+    }
+  }
+}
+```
+
+You should be careful to avoid creating aliases which conflict with the names of any npm packages you use or will be likely to use in the future.
+
 ##### `define`: `Object`
 
 By default, nwb will use Webpack's [`DefinePlugin`](https://webpack.github.io/docs/list-of-plugins.html#defineplugin) to replace all occurances of `process.env.NODE_ENV` with a string containing `NODE_ENV`'s current value.
@@ -536,13 +562,6 @@ function(nwb) {
           loaders: [
             {test: /\.html$/, loader: 'html'}
           ]
-        },
-        // Allow the use of require('images/blah.png') to require from an
-        // src/images from anywhere in the the app.
-        resolve: {
-          alias: {
-            'images': path.resolve('src/images')
-          }
         },
         // Example of adding an extra plugin which isn't managed by nwb
         plugins: [

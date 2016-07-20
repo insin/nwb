@@ -99,6 +99,35 @@ describe('createWebpackConfig()', () => {
     })
   })
 
+  context('with aliases config', () => {
+    it('sets up resolve.alias', () => {
+      let config = createWebpackConfig({}, {}, {
+        webpack: {
+          aliases: {
+            src: 'test'
+          }
+        }
+      })
+      expect(config.resolve.alias.src).toEqual('test')
+    })
+    it('overwrites build resolve.alias config', () => {
+      let config = createWebpackConfig({
+        resolve: {
+          alias: {
+            src: 'fail'
+          }
+        }
+      }, {}, {
+        webpack: {
+          aliases: {
+            src: 'pass'
+          }
+        }
+      })
+      expect(config.resolve.alias.src).toEqual('pass')
+    })
+  })
+
   context('with compat config', () => {
     it('creates and merges compat config', () => {
       let config = createWebpackConfig({}, {}, {

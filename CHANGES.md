@@ -50,6 +50,7 @@
 
 **Added:**
 
+- Added [`webpack.aliases` config](https://github.com/insin/nwb/blob/0.12/docs/Configuration.md#aliases-object) to set up module resolving aliases, as a convenient alternative to using `webpack.extra.resolve.alias` config [[#125](https://github.com/insin/nwb/issues/125)]
 - Production React builds now remove propTypes using [babel-plugin-transform-react-remove-prop-types](https://github.com/oliviertassinari/babel-plugin-transform-react-remove-prop-types) [[#97](https://github.com/insin/nwb/issues/97)]
 - Added [`babel.runtime` config](https://github.com/insin/nwb/blob/0.12/docs/Configuration.md#runtime-string--boolean) to enable the Babel runtime transform, replacing Babel 5's `optional` config. You can use all the features of the transform or pick and choose.
 - Added [`webpack.uglify` config](https://github.com/insin/nwb/blob/0.12/docs/Configuration.md#uglify-object) to allow customisation of Webpack `UglifyJsPlugin` options.
