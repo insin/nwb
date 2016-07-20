@@ -46,7 +46,7 @@
     "babel-core": "6.10.4",
     "babel-polyfill": "6.9.1",
     "babel-runtime": "6.9.2",
-    "deduped-babel-presets": "0.0.18",
+    "deduped-babel-presets": "0.0.19",
 
     "express": "4.14.0",
     "connect-history-api-fallback": "1.2.0",

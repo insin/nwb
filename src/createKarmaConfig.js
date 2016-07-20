@@ -120,7 +120,7 @@ export default function createKarmaConfig({codeCoverage, singleRun}, userConfig)
   }
   if (codeCoverage) {
     babel.plugins = [
-      [require('deduped-babel-presets/pluginpaths/istanbul'), {
+      [require.resolve('deduped-babel-presets/plugins/istanbul'), {
         include: 'src'
       }]
     ]
