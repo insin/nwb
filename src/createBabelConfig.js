@@ -22,7 +22,7 @@ export default function createBabelConfig(buildConfig = {}, userConfig = {}) {
   // ES2015 preset
   presets.push(
     require.resolve(
-      `deduped-babel-presets/es2015${loose ? '-loose' : ''}${native ? '-native' : ''}`
+      `../babel-presets/es2015${loose ? '-loose' : ''}${native ? '-native' : ''}`
     )
   )
 
@@ -30,14 +30,14 @@ export default function createBabelConfig(buildConfig = {}, userConfig = {}) {
   let stage = userStage != null ? userStage : buildStage
   if (typeof stage == 'number') {
     presets.push(
-      require.resolve(`deduped-babel-presets/stage-${stage}`)
+      require.resolve(`../babel-presets/stage-${stage}`)
     )
   }
 
-  // Additional build presets (preset names from deduped-babel-presets)
+  // Additional build presets
   if (Array.isArray(buildPresets)) {
     buildPresets.forEach(preset => {
-      presets.push(require.resolve(`deduped-babel-presets/${preset}`))
+      presets.push(require.resolve(`../babel-presets/${preset}`))
     })
   }
 
@@ -45,10 +45,10 @@ export default function createBabelConfig(buildConfig = {}, userConfig = {}) {
   let runtime = userRuntime != null ? userRuntime : buildRuntime
   if (runtime) {
     if (runtime === true) {
-      presets.push(require.resolve(`deduped-babel-presets/runtime`))
+      presets.push(require.resolve(`../babel-presets/runtime`))
     }
     else {
-      presets.push(require.resolve(`deduped-babel-presets/runtime-${runtime}`))
+      presets.push(require.resolve(`../babel-presets/runtime-${runtime}`))
     }
   }
 

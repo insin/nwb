@@ -4,7 +4,6 @@
   - [`babel` config](https://github.com/insin/nwb/blob/0.12/docs/Configuration.md#babel-configuration) in `nwb.config.js` is no longer directly equivalent to what you would normally put in a [`.babelrc` file](https://babeljs.io/docs/usage/babelrc/).
   - nwb implements its own support for a Babel 6 equivalent of Babel 5's `stage` config to [choose which experimental features are enabled](https://github.com/insin/nwb/blob/0.12/docs/Configuration.md#stage-number--false), including defaulting to [Stage 2](https://babeljs.io/docs/plugins/preset-stage-2/)
     - The custom preset used for [Stage 1](https://babeljs.io/docs/plugins/preset-stage-1/) features (and [Stage 0](https://babeljs.io/docs/plugins/preset-stage-0/), which includes Stage 1 features) includes the [Babel Legacy Decorator transform plugin](https://github.com/loganfsmyth/babel-plugin-transform-decorators-legacy) to support use of decorators. See its [Best Effort documentation](https://github.com/loganfsmyth/babel-plugin-transform-decorators-legacy#best-effort) for differences you will need to take into account if you were using Babel 5 decorators.
-  - Babel 6 implicitly depends on npm3's automatic deduplication - to support use of npm2 (which is still the default version bundled with Node v4), presets are managed by [deduped-babel-presets](https://github.com/insin/deduped-babel-presets), whichs avoids the extra time and space which would otherwise be taken installing a huge number of duplicated dependencies.
   - Babel 6 introduced [a number of breaking changes](https://github.com/babel/babel/blob/master/CHANGELOG.md#600) which you may need to account for in your codebase if you've been using nwb or Babel 5 on its own.
     - In particular, interop with CommonJS exports was removed as it allowed you to write broken ES6 code. Kent C. Dodds has [a post about this which is worth reading](https://medium.com/@kentcdodds/misunderstanding-es6-modules-upgrading-babel-tears-and-a-solution-ad2d5ab93ce0). If you're writing React components or other npm modules which may be consumed in ES5 using `require()`, you may want to switch to using `module.exports` directly to avoid introducing a breaking change requiring users to tag a `.default` onto their `require()` calls.
 - Added support for long-term caching by including a deterministic hash in generated `.js` and `.css` filenames [[#73](https://github.com/insin/nwb/issues/73)]
@@ -75,12 +74,7 @@
 **Dependencies:**
 
 - autoprefixer: v6.3.6 → [v6.3.7](https://github.com/postcss/autoprefixer/blob/master/CHANGELOG.md#637)
-- babel v5.8.38 → [babel-cli](https://babeljs.io/docs/usage/cli/) v6.11.4
-- babel-core: v5.8.38 → v6.11.4
-- babel-loader: v5.4.0 → v6.2.4
-- [babel-polyfill](https://babeljs.io/docs/usage/polyfill/): v6.9.1
-- babel-runtime: v5.8.29 → v6.9.2
-- [deduped-babel-presets](https://github.com/insin/deduped-babel-presets): v0.0.21
+- babel-* v5 → babel-* v6!
 - expect: v1.20.1 → [v1.20.2](https://github.com/mjackson/expect/compare/v1.20.1...v1.20.2)
 - express: v4.13.4 → [v4.14.0](https://github.com/expressjs/express/blob/master/History.md#4140--2016-06-16)
 - file-loader: v0.8.5 → [v0.9.0](https://github.com/webpack/file-loader/compare/v0.8.5...v0.9.0)

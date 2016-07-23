@@ -18,6 +18,7 @@
     "test:watch": "mocha --watch --compilers js:babel-core/register tests/*-test.js"
   },
   "files": [
+    "babel-presets",
     "docs",
     "lib",
     "templates",
@@ -38,15 +39,34 @@
     "minimist": "1.2.0",
     "qs": "6.2.1",
     "resolve": "1.1.7",
-    "rimraf": "2.5.3",
+    "rimraf": "2.5.4",
     "temp": "0.8.3",
     "webpack-merge": "0.14.0",
 
     "babel-cli": "6.11.4",
     "babel-core": "6.11.4",
+    "babel-plugin-istanbul": "1.1.0",
+    "babel-plugin-react-display-name": "2.0.0",
+    "babel-plugin-react-transform": "2.0.2",
+    "babel-plugin-transform-decorators-legacy": "1.3.4",
+    "babel-plugin-transform-do-expressions": "6.8.0",
+    "babel-plugin-transform-exponentiation-operator": "6.8.0",
+    "babel-plugin-transform-function-bind": "6.8.0",
+    "babel-plugin-transform-react-constant-elements": "6.9.1",
+    "babel-plugin-transform-react-remove-prop-types": "0.2.7",
+    "babel-plugin-transform-runtime": "6.9.0",
     "babel-polyfill": "6.9.1",
+    "babel-preset-es2015": "6.9.0",
+    "babel-preset-es2016": "6.11.3",
+    "babel-preset-react": "6.11.1",
+    "babel-preset-stage-1": "6.5.0",
+    "babel-preset-stage-2": "6.11.0",
+    "babel-preset-stage-3": "6.11.0",
     "babel-runtime": "6.9.2",
-    "deduped-babel-presets": "0.0.21",
+    "modify-babel-preset": "2.1.0",
+    "react-transform-catch-errors": "1.0.2",
+    "react-transform-hmr": "1.0.4",
+    "redbox-noreact": "1.1.0",
 
     "express": "4.14.0",
     "connect-history-api-fallback": "1.2.0",
@@ -83,12 +103,17 @@
     "webpack-md5-hash": "0.0.5"
   },
   "devDependencies": {
+    "bundle-deps": "1.0.0",
     "cross-env": "2.0.0",
     "cross-spawn": "4.0.0",
     "eslint-config-jonnybuchanan": "4.2.1",
     "eventsource": "0.2.1",
     "nyc": "7.0.0",
+    "shelljs": "0.7.1",
     "tree-kill": "1.1.0"
+  },
+  "optionalDependencies": {
+    "fsevents": "1.0.14"
   },
   "repository": {
     "type": "git",
@@ -99,13 +124,13 @@
   ],
   "babel": {
     "presets": [
-      "deduped-babel-presets/es2015-loose",
-      "deduped-babel-presets/stage-2"
+      "./babel-presets/es2015-loose",
+      "./babel-presets/stage-2"
     ],
     "env": {
       "test": {
         "plugins": [
-          ["deduped-babel-presets/plugins/istanbul", {
+          ["babel-plugin-istanbul", {
             "include": "src"
           }]
         ]

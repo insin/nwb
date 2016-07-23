@@ -7,8 +7,8 @@ describe('createBabelConfig()', () => {
     it('generates default Babel config', () => {
       expect(createBabelConfig()).toEqual({
         presets: [
-          require.resolve('deduped-babel-presets/es2015'),
-          require.resolve('deduped-babel-presets/stage-2'),
+          require.resolve('../babel-presets/es2015'),
+          require.resolve('../babel-presets/stage-2'),
         ]
       })
     })
@@ -23,11 +23,11 @@ describe('createBabelConfig()', () => {
         runtime: true,
       })).toEqual({
         presets: [
-          require.resolve('deduped-babel-presets/es2015-native'),
-          require.resolve('deduped-babel-presets/stage-0'),
-          require.resolve('deduped-babel-presets/react'),
-          require.resolve('deduped-babel-presets/react-hmre'),
-          require.resolve('deduped-babel-presets/runtime'),
+          require.resolve('../babel-presets/es2015-native'),
+          require.resolve('../babel-presets/stage-0'),
+          require.resolve('../babel-presets/react'),
+          require.resolve('../babel-presets/react-hmre'),
+          require.resolve('../babel-presets/runtime'),
         ],
       })
     })
@@ -43,9 +43,9 @@ describe('createBabelConfig()', () => {
         presets: ['test-preset'],
       })).toEqual({
         presets: [
-          require.resolve('deduped-babel-presets/es2015-loose'),
-          require.resolve('deduped-babel-presets/stage-0'),
-          require.resolve('deduped-babel-presets/runtime'),
+          require.resolve('../babel-presets/es2015-loose'),
+          require.resolve('../babel-presets/stage-0'),
+          require.resolve('../babel-presets/runtime'),
           'test-preset',
         ],
         plugins: ['test-plugin'],
@@ -57,9 +57,9 @@ describe('createBabelConfig()', () => {
           runtime,
         })).toEqual({
           presets: [
-            require.resolve('deduped-babel-presets/es2015'),
-            require.resolve('deduped-babel-presets/stage-2'),
-            require.resolve(`deduped-babel-presets/runtime-${runtime}`),
+            require.resolve('../babel-presets/es2015'),
+            require.resolve('../babel-presets/stage-2'),
+            require.resolve(`../babel-presets/runtime-${runtime}`),
           ]
         })
       })
@@ -70,31 +70,31 @@ describe('createBabelConfig()', () => {
     it('overrides build stage config with user stage config', () => {
       expect(createBabelConfig({stage: 3}, {stage: 1})).toEqual({
         presets: [
-          require.resolve('deduped-babel-presets/es2015'),
-          require.resolve('deduped-babel-presets/stage-1'),
+          require.resolve('../babel-presets/es2015'),
+          require.resolve('../babel-presets/stage-1'),
         ],
       })
     })
     it('cancels default stage config', () => {
       expect(createBabelConfig({}, {stage: false})).toEqual({
         presets: [
-          require.resolve('deduped-babel-presets/es2015'),
+          require.resolve('../babel-presets/es2015'),
         ],
       })
     })
     it('cancels build runtime config', () => {
       expect(createBabelConfig({runtime: true}, {runtime: false})).toEqual({
         presets: [
-          require.resolve('deduped-babel-presets/es2015'),
-          require.resolve('deduped-babel-presets/stage-2'),
+          require.resolve('../babel-presets/es2015'),
+          require.resolve('../babel-presets/stage-2'),
         ],
       })
     })
     it('uses build and user config to configure a loose es2015 preset with native modules', () => {
       expect(createBabelConfig({native: true}, {loose: true})).toEqual({
         presets: [
-          require.resolve('deduped-babel-presets/es2015-loose-native'),
-          require.resolve('deduped-babel-presets/stage-2'),
+          require.resolve('../babel-presets/es2015-loose-native'),
+          require.resolve('../babel-presets/stage-2'),
         ],
       })
     })
