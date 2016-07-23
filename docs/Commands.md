@@ -209,9 +209,10 @@ Passing arguments for `entry` and `dist_dir` allows you to customise the entry p
 
 Default behaviour:
 
-- A static build will be created in `dist/`, with `app.js` and `app.css` files plus any other resources used.
-- Separate `vendor.js` and `vendor.css` files will be built for any dependencies used from `node_modules/`.
+- A static build will be created in `dist/`, with app `.js` and `.css` files plus any other resources used.
+- Separate vendor `.js` and `.css` files will be built for any dependencies imported from `node_modules/`.
 - Static builds are created in production mode. Code will be minified and have dead code elimination performed on it (for example to remove unreachable, or development-mode only, code).
+- To support long-term caching, generated `.js` and `.css` filenames will contain a deterministic hash, which will only change when the contents of the files change.
 
 To create a development build, set the `NODE_ENV` environment variable to `'development'` when running the `build` command; nwb supports a cross-platform way of doing this, using [argv-set-env](https://github.com/kentcdodds/argv-set-env):
 
@@ -227,7 +228,7 @@ NODE_ENV=development nwb build
 
 In production mode builds, Babel [react-constant-elements](http://babeljs.io/docs/plugins/transform-react-constant-elements/) and [react-remove-prop-types](https://github.com/oliviertassinari/babel-plugin-transform-react-remove-prop-types) transforms will be used.
 
-When building React apps, you can also pass a `--preact` flag to configure Webpack to use [Preact](https://github.com/developit/preact) via the [`preact-compat`](https://github.com/developit/preact-compat) module (both of which must be installed separately). If your app and its dependencies are  compatible with Preact, this can be a quick way to reduce the size of your bundled code.
+When building React apps, you can also pass a `--preact` flag to configure Webpack to use [Preact](https://github.com/developit/preact) via the [`preact-compat`](https://github.com/developit/preact-compat) module (both of which must be installed separately). If your app and its dependencies are  compatible with Preact, this can be a quick and easy way to reduce the size of your app.
 
 **In React component modules and other web modules:**
 
