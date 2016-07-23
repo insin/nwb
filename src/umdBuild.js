@@ -13,9 +13,9 @@ export default function umdBuild(args, {presets}, cb) {
   let pkg = require(path.resolve('package.json'))
   let userConfig = getUserConfig(args)
 
-  if (!userConfig.build.umd) {
+  if (!userConfig.npm.umd) {
     return cb(new UserError(
-      "nwb: the UMD build for this module hasn't been enabled in nwb.config.js"
+      "nwb: the UMD build for this module hasn't been configured in your nwb config file"
     ))
   }
 
@@ -25,11 +25,11 @@ export default function umdBuild(args, {presets}, cb) {
     entry: path.resolve(entry),
     output: {
       filename: `${pkg.name}.js`,
-      library: userConfig.build.global,
+      library: userConfig.npm.umd.global,
       libraryTarget: 'umd',
       path: path.resolve('umd'),
     },
-    externals: createWebpackExternals(userConfig.build.externals),
+    externals: createWebpackExternals(userConfig.npm.externals),
     plugins: {
       banner: createBanner(pkg),
     },

@@ -18,12 +18,7 @@ describe('getUserConfig()', () => {
     let config = getUserConfig()
     expect(config).toEqual({
       babel: {},
-      build: {
-        externals: {},
-        global: '',
-        jsNext: false,
-        umd: false,
-      },
+      npm: {},
       webpack: {},
     })
   })
@@ -99,6 +94,14 @@ describe('processUserConfig()', () => {
       })
       expect(config.webpack.postcss).toEqual({defaults: ['test']})
     })
+    it('allows a String to be used for npm UMD build config', () => {
+      let config = processUserConfig({
+        userConfig: {
+          npm: {umd: 'test'}
+        }
+      })
+      expect(config.npm.umd).toEqual({global: 'test'})
+    })
   })
 
   it('passes command and webpack arguments when a config function is provided', () => {
@@ -124,31 +127,8 @@ describe('processUserConfig()', () => {
     expect(config).toEqual({
       type: 'web-module',
       babel: {},
-      build: {
-        externals: {},
-        global: '',
-        jsNext: false,
-        umd: false
-      },
+      npm: {},
       webpack: {},
-    })
-  })
-
-  it('defaults missing build config when partial config is provided', () => {
-    let config = processUserConfig({
-      userConfig: {
-        type: 'web-module',
-        build: {
-          umd: true,
-          global: 'Test',
-        },
-      },
-    })
-    expect(config.build).toEqual({
-      externals: {},
-      global: 'Test',
-      jsNext: false,
-      umd: true,
     })
   })
 
@@ -188,6 +168,29 @@ describe('processUserConfig()', () => {
       }
     })
     expect(config.babel).toEqual({loose: true})
+  })
+
+  // TODO Remove in a future release
+  it('upgrades build config to npm config for 0.12 back-compat', () => {
+    let config = processUserConfig({
+      userConfig: {
+        build: {
+          externals: {'react': 'React'},
+          global: 'MyComponent',
+          jsNext: true,
+          umd: true,
+        }
+      },
+      userConfigPath: '/test/path/to/nwb.config.js'
+    })
+    expect(config.build).toNotExist()
+    expect(config.npm).toEqual({
+      jsNext: true,
+      umd: {
+        externals: {'react': 'React'},
+        global: 'MyComponent',
+      }
+    })
   })
 })
 

@@ -4,6 +4,7 @@ import {cyan as opt, green as cmd, red, yellow as req} from 'chalk'
 import parseArgs from 'minimist'
 
 import pkg from '../../package.json'
+import {CONFIG_FILE_NAME} from '../constants'
 import {UserError} from '../errors'
 
 const COMMAND_MODULES = {
@@ -44,7 +45,7 @@ if (args.help || !command || /^h(elp)?$/.test(command)) {
   console.log(`Usage: ${cmd('react')} ${req('(run|build)')} ${opt('[options]')}
 
 Options:
-  ${opt('-c, --config')}   config file to use ${opt('[default: nwb.config.js]')}
+  ${opt('-c, --config')}   config file to use ${opt(`[default: ${CONFIG_FILE_NAME}]`)}
   ${opt('-h, --help')}     display this help message
   ${opt('-v, --version')}  print nwb's version
 

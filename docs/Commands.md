@@ -109,31 +109,30 @@ Creates a skeleton for a JavaScript app with the given name.
 
 ```
 nwb new react-component <component-name> [options]
-? Do you want to create a UMD build for npm? Y/n
+? Do you want to create a UMD build? y/N
 ? Which global variable should the UMD build export?
-? Do you want to create an ES6 modules build for npm? Y/n
+? Do you want to create an ES6 modules build? y/N
 ```
 
 Creates a skeleton for a React component with the given name, with an optional UMD build exporting a specified global variable and an optional ES6 modules build for tree-shaking bundlers.
 
 ```
 nwb new web-module <module-name> [options]
-? Do you want to create a UMD build for npm? Y/n
+? Do you want to create a UMD build? y/N
 ? Which global variable should the UMD build export?
-? Do you want to create an ES6 modules build for npm? Y/n
+? Do you want to create an ES6 modules build? y/N
 ```
 
 Creates a skeleton for a web module with the given name, with an optional UMD build exporting a specified global variable and an optional ES6 modules build for tree-shaking bundlers.
 
 **Options:**
 
-- `-f, --force` - force creation of the new project without asking any questions, using whichever default settings are necessary as a result
+- `-f, --force` - force creation of the new project without asking any questions, using whichever default settings are necessary as a result.
 
 **React component and web module options:**
 
-- `-g, --global` - provide a global variable to be exported by the UMD build, implicitly enabling the UMD build
-- `--no-jsnext` - disable the npm ES6 modules build
-- `--no-umd` - disable the npm UMD build
+- `--jsnext` - enable the npm ES6 modules build
+- `--umd=<var>` - enable the npm UMD build by providing a global variable name to be exported
 
 **React app/component options:**
 

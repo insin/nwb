@@ -2,6 +2,7 @@ import {cyan as opt, green as cmd, red, yellow as req} from 'chalk'
 import parseArgs from 'minimist'
 
 import pkg from '../package.json'
+import {CONFIG_FILE_NAME} from './constants'
 
 export default function cli(argv, cb) {
   let args = parseArgs(argv, {
@@ -24,7 +25,7 @@ export default function cli(argv, cb) {
     console.log(`Usage: ${cmd('nwb')} ${req('<command>')} ${opt('[options]')}
 
 Options:
-  ${opt('-c, --config')}   config file to use ${opt('[default: nwb.config.js]')}
+  ${opt('-c, --config')}   config file to use ${opt(`[default: ${CONFIG_FILE_NAME}]`)}
   ${opt('-h, --help')}     display this help message
   ${opt('-v, --version')}  print nwb's version
 
@@ -44,11 +45,10 @@ Project creation commands:
       ${opt('name')}          project name ${opt('[default: working directory name]')}
 
   Options:
-    ${opt('-f, --force')}   force project creation, don't ask questions
-    ${opt('-g, --global')}  global variable name to export in the UMD build
-    ${opt('--no-jsnext')}   disable npm ES6 modules build
-    ${opt('--no-umd')}      disable npm UMD module build
-    ${opt('--react')}       version of React to install for React apps & components
+    ${opt('-f, --force')}  force project creation, don't ask questions
+    ${opt('--jsnext')}     enable an ES6 modules build
+    ${opt('--react')}      version of React to install for React apps & components
+    ${opt('--umd=<var>')}  enable a UMD build which exports the given global variable
 
   Project types:
     ${req('react-app')}        a React app

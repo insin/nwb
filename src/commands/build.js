@@ -24,7 +24,7 @@ export default function build(args, cb) {
   }
   else if (userConfig.type === REACT_COMPONENT || userConfig.type === WEB_MODULE) {
     buildModule(args)
-    if (userConfig.build.umd) {
+    if (userConfig.npm.umd) {
       buildUMD(args, () => runBuildDemo(args, cb))
     }
     else {

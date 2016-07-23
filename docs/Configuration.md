@@ -17,14 +17,14 @@ The configuration object provided by your nwb config module can use the followin
 
 - nwb Configuration
   - [`type`](#type-string-required-for-generic-build-commands)
-- Babel Configuration
+- [Babel Configuration](#babel-configuration)
   - [`babel`](#babel-object)
   - [`babel.stage`](#stage-number--false)
   - [`babel.loose`](#loose-boolean)
   - [`babel.runtime`](#runtime-string--boolean)
   - [`babel.plugins`](#plugins-array)
   - [`babel.presets`](#plugins-array)
-- Webpack Configuration
+- [Webpack Configuration](#webpack-configuration)
   - [`webpack`](#webpack-object)
   - [`webpack.loaders`](#loaders-object)
     - [Default loaders](#default-loaders)
@@ -40,21 +40,21 @@ The configuration object provided by your nwb config module can use the followin
   - [`webpack.postcss`](#postcss-array--object)
   - [`webpack.compat`](#compat-object)
   - [`webpack.extra`](#extra-object)
-- Karma Configuration
+- [Karma Configuration](#karma-configuration)
   - [`karma`](#karma-object)
   - [`karma.tests`](#tests-string)
   - [`karma.frameworks`](#frameworks-arraystring--plugin)
   - [`karma.reporters`](#reporters-arraystring--plugin)
   - [`karma.plugins`](#plugins-arrayplugin)
   - [`karma.extra`](#extra-object-1)
-- npm Build Configuration
-  - [`build`](#build-object)
-  - UMD build config
-    - [`build.umd`](#umd-boolean)
-    - [`build.global`](#global-string-required-for-umd-build)
-    - [`build.externals`](#externals-object-for-umd-build)
+- [npm Build Configuration](#npm-build-configuration)
+  - [`npm`](#npm-object)
+  - [`npm.jsNext`](#jsnext-boolean)
+  - UMD build
+    - [`npm.umd`](#umd-string--object)
+      - [`umd.global`](#global-string-required-for-umd-build)
+      - [`umd.externals`](#externals-object)
     - [`package.json` fields](#packagejson-umd-banner-configuration)
-  - [`build.jsNext`](#jsnext-boolean)
 
 #### `type`: `String` (required for generic build commands)
 
@@ -268,7 +268,7 @@ Default loaders configured by nwb and the ids it gives them are:
 
   - `style` - (only when serving) applies styles using [style-loader][style-loader]
   - `css` - handles URLs, minification and CSS Modules using [css-loader][css-loader]
-  - `postcss` - processes CSS with PostCSS plugins using [postcss-loader][postcss-loader]; by default, this is configured to automatically add vendor prefixes to CSS using [autoprefixer][autoprefixer]
+  - `postcss` - processes CSS with PostCSS plugins using [postcss-loader][postcss-loader]; by default, this is configured to automatically add vendor prefixes to CSS using [Autoprefixer][autoprefixer]
 
 - `vendor-css-pipeline` - handles `.css` files required from `node_modules/`, with the same set of chained loaders as `css-pipeline` but with a `vendor-` prefix in their id.
 
@@ -337,9 +337,11 @@ You should be careful to avoid creating aliases which conflict with the names of
 
 ##### `autoprefixer`: `String | Object`
 
-Configure [Autoprefixer options](https://github.com/postcss/autoprefixer#options) for Autoprefixer in nwb's default PostCSS configuration.
+Configures [Autoprefixer options](https://github.com/postcss/autoprefixer#options) for nwb's default PostCSS configuration.
 
-If you just want to configure the range of browsers prefix addition/removal is based on (Autoprefixer's own default is `'> 1%, last 2 versions, Firefox ESR'`), you can use a String, e.g. if you want to make sure Autoprefixer also adds or keeps prefixes required for iOS 8 devices:
+If you just need to configure the range of browsers prefix addition/removal is based on (Autoprefixer's own default is `'> 1%, last 2 versions, Firefox ESR'`), you can use a String.
+
+e.g. if you want to make sure Autoprefixer also adds or keeps prefixes required for iOS 8 devices:
 
 ```js
 module.exports = {
@@ -349,7 +351,9 @@ module.exports = {
 }
 ```
 
-Use an Object if you need to avail of any of Autoprefixer's other options, e.g. if you also want to disable removal of prefixes which aren't required for the configured range of browsers:
+Use an Object if you need to set any of Autoprefixer's other options.
+
+e.g. if you also want to disable removal of prefixes which aren't required for the configured range of browsers:
 
 ```js
 module.exports = {
@@ -726,19 +730,43 @@ module.exports = {
 
 ### npm Build Configuration
 
-#### `build`: `Object`
+#### `npm`: `Object`
 
-By default, `nwb build` creates an ES5 build of your React component or vanilla JS module's code for publishing to npm. Additional npm build configuration is defined in a `build` object, using the following fields:
+By default, `nwb build` creates an ES5 build of your React component or vanilla JS module's code for publishing to npm. Additional npm build configuration is defined in a `npm` object, using the following fields:
 
-##### `umd`: `Boolean`
+##### `jsNext`: `Boolean`
 
-Determines whether or not nwb will create a UMD build when you run `nwb build` for a React component or web module.
+Determines whether or not nwb will create an ES6 modules build for tree-shaking module bundlers when you run `nwb build` for a React component or web module.
 
-##### `global`: `String` (*required* for UMD build)
+```js
+module.exports = {
+  npm: {
+    jsNext: true
+  }
+}
+```
+
+##### `umd`: `String | Object`
+
+Configures creation of a UMD build when you run `nwb build` for a React component or web module.
+
+If you just need to configure the global variable the UMD build will export, you can use a String:
+
+```js
+module.exports = {
+  npm: {
+    umd: 'MyLibrary'
+  }
+}
+```
+
+If you also have some external dependencies to configure, you must use an Object containing the following properties:
+
+###### `global`: `String` (*required* for UMD build)
 
 The name of the global variable the UMD build will export.
 
-##### `externals`: `Object` (for UMD build)
+###### `externals`: `Object`
 
 A mapping from `peerDependency` module names to the global variables they're expected to be available as for use by the UMD build.
 
@@ -773,18 +801,6 @@ If all fields are present the banner will be in this format:
  * nwb 0.6.0 - https://github.com/insin/nwb
  * MIT Licensed
  */
-```
-
-##### `jsNext`: `Boolean`
-
-Determines whether or not nwb will create an ES6 modules build for tree-shaking module bundlers when you run `nwb build` for a React component or web module.
-
-```js
-module.exports = {
-  build: {
-    jsNext: true
-  }
-}
 ```
 
 [autoprefixer]: https://github.com/postcss/autoprefixer/

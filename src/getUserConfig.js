@@ -4,42 +4,14 @@ import {magenta} from 'chalk'
 import glob from 'glob'
 import webpack from 'webpack'
 
-import {PROJECT_TYPES} from './constants'
+import {CONFIG_FILE_NAME, PROJECT_TYPES} from './constants'
 import debug from './debug'
 import {UserError} from './errors'
 import {deepToString, typeOf} from './utils'
 
 const DEFAULT_REQUIRED = false
 
-const DEFAULT_BABEL_CONFIG = {}
-
-const DEFAULT_BUILD_CONFIG = {
-  externals: {},
-  global: '',
-  jsNext: false,
-  umd: false,
-}
-
-const DEFAULT_WEBPACK_CONFIG = {}
-
 const BABEL_RUNTIME_OPTIONS = ['helpers', 'regenerator', 'polyfill']
-
-/**
- * Populate defaults for absent top level config, or fill in absent config which
- * is relied on downstream with default values.
- */
-function applyDefaultConfig(userConfig, topLevelProp, defaults) {
-  if (!(topLevelProp in userConfig)) {
-    userConfig[topLevelProp] = {...defaults}
-  }
-  else {
-    Object.keys(defaults).forEach(prop => {
-      if (!(prop in userConfig[topLevelProp])) {
-        userConfig[topLevelProp][prop] = defaults[prop]
-      }
-    })
-  }
-}
 
 /**
  * Move loader query config tweaks into a query object, allowing users to
@@ -55,6 +27,35 @@ export function prepareWebpackLoaderConfig(loaders) {
       Object.keys(query).forEach(prop => delete loader[prop])
     }
   })
+}
+
+// TODO Remove in a future version
+let warnedAboutBuildChange = false
+function upgradeBuildConfig(build, userConfigPath) {
+  let npm = {}
+  if (build.jsNext) {
+    npm.jsNext = !!build.jsNext
+  }
+  if (build.umd) {
+    let hasExternals = !!build.externals && Object.keys(build.externals).length > 0
+    if (!hasExternals) {
+      npm.umd = build.global
+    }
+    else {
+      npm.umd = {global: build.global, externals: build.externals}
+    }
+  }
+  if (!warnedAboutBuildChange) {
+    console.log(magenta([
+      'nwb: "build" config is deprecated in favour of "npm" config as of nwb v0.12',
+      'nwb: I can automatically upgrade your config to the new format for this build',
+      'nwb: This is the equivalent "npm" config for your current "build" config:',
+      JSON.stringify({npm}, null, 2),
+      `nwb: Please update your configuration file: ${userConfigPath}`,
+    ].join('\n')))
+    warnedAboutBuildChange = true
+  }
+  return npm
 }
 
 /**
@@ -82,15 +83,21 @@ export function processUserConfig({args, required = DEFAULT_REQUIRED, userConfig
     invalidConfig('type', userConfig.type, `must be one of: ${PROJECT_TYPES.join(', ')}`)
   }
 
+  // TODO Remove in a future version
+  if (userConfig.build) {
+    userConfig.npm = upgradeBuildConfig(userConfig.build, userConfigPath)
+    delete userConfig.build
+  }
+
   // Set defaults for config objects so we don't have to existence-check them
   // everywhere.
-  applyDefaultConfig(userConfig, 'babel', DEFAULT_BABEL_CONFIG)
-  applyDefaultConfig(userConfig, 'build', DEFAULT_BUILD_CONFIG)
-  applyDefaultConfig(userConfig, 'webpack', DEFAULT_WEBPACK_CONFIG)
+  void ['babel', 'npm', 'webpack'].forEach(prop => {
+    if (!(prop in userConfig)) userConfig[prop] = {}
+  })
 
   // Validate babel config
   if (!!userConfig.babel.stage || userConfig.babel.stage === 0) {
-    if (typeof userConfig.babel.stage != 'number') {
+    if (typeOf(userConfig.babel.stage) !== 'number') {
       invalidConfig('babel.stage', userConfig.babel.stage, 'must be a number, or falsy to disable use of a stage preset')
     }
     if (userConfig.babel.stage < 0 || userConfig.babel.stage > 3) {
@@ -104,9 +111,14 @@ export function processUserConfig({args, required = DEFAULT_REQUIRED, userConfig
     invalidConfig('babel.plugins', userConfig.babel.plugins, 'must be an array')
   }
   if ('runtime' in userConfig.babel &&
-      typeof userConfig.babel.runtime != 'boolean' &&
+      typeOf(userConfig.babel.runtime) !== 'boolean' &&
       BABEL_RUNTIME_OPTIONS.indexOf(userConfig.babel.runtime) === -1) {
     invalidConfig('babel.runtime', userConfig.babel.runtime, "must be boolean or one of: 'helpers', 'regenerator', 'polyfill'")
+  }
+
+  // Modify npm build config where convenience shorthand is supported
+  if (typeOf(userConfig.npm.umd) === 'string') {
+    userConfig.npm.umd = {global: userConfig.npm.umd}
   }
 
   // Modify webpack config where convenience shorthand is supported
@@ -128,7 +140,7 @@ export function processUserConfig({args, required = DEFAULT_REQUIRED, userConfig
   }
 
   // TODO Remove in a future version
-  if ('loose' in userConfig.babel && typeof userConfig.babel.loose != 'boolean') {
+  if ('loose' in userConfig.babel && typeOf(userConfig.babel.loose) !== 'boolean') {
     console.log(magenta('nwb: babel.loose config is boolean as of nwb v0.12 - converting to boolean for the current build'))
     userConfig.babel.loose = !!userConfig.babel.loose
   }
@@ -144,7 +156,7 @@ export function processUserConfig({args, required = DEFAULT_REQUIRED, userConfig
 export default function getUserConfig(args = {}, {required = DEFAULT_REQUIRED} = {}) {
   // Try to load default user config, or use a config file path we were given
   let userConfig = {}
-  let userConfigPath = path.resolve(args.config || 'nwb.config.js')
+  let userConfigPath = path.resolve(args.config || CONFIG_FILE_NAME)
 
   // Bail early if a config file is required and doesn't exist
   let configFileExists = glob.sync(userConfigPath).length !== 0

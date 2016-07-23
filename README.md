@@ -133,9 +133,9 @@ Create a new React component project and start a development server for its demo
 
 ```
 $ nwb new react-component react-thing
-? Do you want to create a UMD build for npm? Yes
+? Do you want to create a UMD build? Yes
 ? Which global variable should the UMD build export? ReactThing
-? Do you want to create an ES6 modules build for npm? Yes
+? Do you want to create an ES6 modules build? No
 ...
 nwb: installing dependencies
 ...
@@ -213,11 +213,10 @@ Project creation commands:
       name          project name
 
   Options:
-    -f, --force   force project creation, don't ask questions
-    -g, --global  global variable name to export in the UMD build
-    --no-jsnext   disable npm ES6 modules build
-    --no-umd      disable npm UMD module build
-    --react       version of React to install for React apps & components
+    -f, --force  force project creation, don't ask questions
+    --jsnext     enable an ES6 modules build
+    --react      version of React to install for React apps & components
+    --umd=<var>  enable a UMD build which exports the given global variable
 
   nwb init <project_type> [name] [options]
     Initialise a project in the current directory.

@@ -1,3 +1,4 @@
+import fs from 'fs'
 import path from 'path'
 
 import {green} from 'chalk'
@@ -5,7 +6,7 @@ import copyTemplateDir from 'copy-template-dir'
 import inquirer from 'inquirer'
 
 import {
-  REACT_APP, REACT_COMPONENT, REACT_VERSION, WEB_APP, WEB_MODULE, PROJECT_TYPES
+  CONFIG_FILE_NAME, PROJECT_TYPES, REACT_APP, REACT_COMPONENT, REACT_VERSION, WEB_APP, WEB_MODULE
 } from './constants'
 import {UserError} from './errors'
 import pkg from '../package.json'
@@ -13,46 +14,50 @@ import {installReact} from './utils'
 
 let nwbVersion = pkg.version.split('.').slice(0, 2).concat('x').join('.')
 
-export function getWebModulePrefs(args, done) {
-  // Determine defaults based on arguments
-  let umd = true
-  if (args.umd === false) {
-    umd = false
-  }
-  else if (args.g || args.global) {
-    umd = true
-  }
-  else if (args.f || args.force) {
-    umd = false
-  }
-  let globalVariable = args.g || args.global || ''
-  let jsNext = true
-  if (args.jsnext === false) {
-    jsNext = false
-  }
+// Hack to generate simple config file contents without JSON formatting
+let toSource = (obj) => JSON.stringify(obj, null, 2)
+                            .replace(/"([^"]+)":/g, '$1:')
+                            .replace(/"/g, "'")
 
-  if (args.f || args.force) {
-    return done(null, {umd, globalVariable, jsNext})
+function writeConfigFile(dir, config) {
+  fs.writeFileSync(
+    path.join(dir, CONFIG_FILE_NAME),
+    `module.exports = ${toSource(config)}`
+  )
+}
+
+export function getWebModulePrefs(args, done) {
+  let umd = args.umd || ''
+  let jsNext = args.jsnext === true
+
+  // Don't ask questions if the user doesn't want them, or already told us all
+  // the answers.
+  if ((args.f || args.force) || ('umd' in args && 'jsnext' in args)) {
+    return done(null, {umd, jsNext})
   }
 
   inquirer.prompt([
     {
+      when: () => !('umd' in args),
       type: 'confirm',
-      name: 'umd',
-      message: 'Do you want to create a UMD build for npm?',
-      default: umd,
+      name: 'createUMD',
+      message: 'Do you want to create a UMD build?',
+      default: false,
     },
     {
-      when: ({umd}) => umd,
+      when: ({createUMD}) => createUMD,
       type: 'input',
-      name: 'globalVariable',
-      message: 'Which global variable should the UMD build export?',
-      default: globalVariable,
+      name: 'umd',
+      message: 'Which global variable name should the UMD build export?',
+      validate(input) {
+        return input.trim() ? true : 'Required to create a UMD build'
+      },
     },
     {
+      when: () => !('jsnext' in args),
       type: 'confirm',
       name: 'jsNext',
-      message: 'Do you want to create an ES6 modules build for npm?',
+      message: 'Do you want to create an ES6 modules build?',
       default: jsNext,
     }
   ]).then(answers => done(null, answers), err => done(err))
@@ -101,14 +106,25 @@ const PROJECT_CREATORS = {
   [REACT_COMPONENT](args, name, targetDir, cb) {
     getWebModulePrefs(args, (err, prefs) => {
       if (err) return cb(err)
-      let {umd, globalVariable, jsNext} = prefs
+      let {umd, jsNext} = prefs
       let templateDir = path.join(__dirname, `../templates/${REACT_COMPONENT}`)
       let reactVersion = args.react || REACT_VERSION
       let templateVars = npmModuleVars(
-        {umd, globalVariable, jsNext, name, nwbVersion, reactVersion}
+        {jsNext, name, nwbVersion, reactVersion}
       )
       copyTemplateDir(templateDir, targetDir, templateVars, (err, createdFiles) => {
         if (err) return cb(err)
+        if (umd || jsNext) {
+          let config = {type: 'react-component', npm: {}}
+          if (jsNext) config.npm.jsNext = jsNext
+          if (umd) config.npm.umd = {global: umd, externals: {react: 'React'}}
+          try {
+            writeConfigFile(targetDir, config)
+          }
+          catch (e) {
+            return cb(e)
+          }
+        }
         logCreatedFiles(targetDir, createdFiles)
         console.log('nwb: installing dependencies')
         try {
@@ -135,13 +151,24 @@ const PROJECT_CREATORS = {
   [WEB_MODULE](args, name, targetDir, cb) {
     getWebModulePrefs(args, (err, prefs) => {
       if (err) return cb(err)
-      let {umd, globalVariable, jsNext} = prefs
+      let {umd, jsNext} = prefs
       let templateDir = path.join(__dirname, `../templates/${WEB_MODULE}`)
       let templateVars = npmModuleVars(
-        {umd, globalVariable, jsNext, name, nwbVersion}
+        {jsNext, name, nwbVersion}
       )
       copyTemplateDir(templateDir, targetDir, templateVars, (err, createdFiles) => {
         if (err) return cb(err)
+        if (umd || jsNext) {
+          let config = {type: 'web-module', npm: {}}
+          if (jsNext) config.npm.jsNext = jsNext
+          if (umd) config.npm.umd = umd
+          try {
+            writeConfigFile(targetDir, config)
+          }
+          catch (e) {
+            return cb(e)
+          }
+        }
         logCreatedFiles(targetDir, createdFiles)
         cb()
       })

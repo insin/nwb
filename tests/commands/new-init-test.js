@@ -78,11 +78,12 @@ function reactComponentAssertions(dir, name, err, done) {
   let config = require(path.resolve(dir, 'nwb.config.js'))
   expect(config).toEqual({
     type: 'react-component',
-    build: {
-      externals: {react: 'React'},
-      global: '',
+    npm: {
       jsNext: true,
-      umd: false,
+      umd: {
+        global: 'MyComponent',
+        externals: {react: 'React'},
+      },
     }
   })
   done()
@@ -137,17 +138,10 @@ function webModuleAssertions(dir, name, err, done) {
   ])
   let pkg = require(path.resolve(dir, 'package.json'))
   expect(pkg.name).toBe(name)
-  expect(pkg['jsnext:main']).toBe('es6/index.js')
   expect(pkg.devDependencies.nwb).toMatch(DEP_VERSION_RE)
   let config = require(path.resolve(dir, 'nwb.config.js'))
   expect(config).toEqual({
-    type: 'web-module',
-    build: {
-      externals: {},
-      global: '',
-      jsNext: true,
-      umd: false,
-    },
+    type: 'web-module'
   })
   done()
 }
@@ -216,7 +210,7 @@ describe('command: nwb new', function() {
   })
 
   it('creates a new React component with a given name', done => {
-    cli(['new', 'react-component', 'test-component', '-f'], err => {
+    cli(['new', 'react-component', 'test-component', '--umd=MyComponent', '--jsnext'], err => {
       reactComponentAssertions('test-component', 'test-component', err, done)
     })
   })
@@ -285,7 +279,7 @@ describe('command: nwb init', function() {
   })
 
   it('initialises a React component in the current directory', done => {
-    cli(['init', 'react-component', '-f'], err => {
+    cli(['init', 'react-component', '--umd=MyComponent', '--jsnext'], err => {
       reactComponentAssertions('.', defaultName, err, done)
     })
   })

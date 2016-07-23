@@ -13,6 +13,34 @@
 
 **`nwb.config.js` Config Format Changes:**
 
+> For deprecations, nwb v0.11 will support the old format and display warning messages about the changes required.
+
+- `build` config is deprecated in favour of new [`npm` config](https://github.com/insin/nwb/blob/0.12/docs/Configuration.md#npm-object), which is a slightly different format. To help you upgrade, nwb will auto-upgrade any `build` config it finds for the current build and log out the equivalent `npm` config.
+
+  ```js
+  // < v0.12
+  module.exports = {
+    build: {
+      jsNext: true,
+      umd: true,
+      global: 'MyComponent',
+      externals: {'react': 'React'}
+    }
+  }
+  ```
+  ```js
+  // v0.12
+  module.exports = {
+    npm: {
+      jsNext: true,
+      umd: {
+        global: 'MyComponent',
+        externals: {'react': 'React'}
+      }
+    }
+  }
+  ```
+
 - The Babel [runtime transform](https://babeljs.io/docs/plugins/transform-runtime/) is now enabled using new [`runtime` config](https://github.com/insin/nwb/blob/0.12/docs/Configuration.md#runtime-string--boolean) instead of Babel 5's `optional` config:
 
   ```js
@@ -63,6 +91,7 @@
 
 **Changed:**
 
+- UMD and ES6 modules builds now default to off when creating React component/web module projects.
 - Disabled `css-loader`'s use of Autoprefixer - nwb's PostCSS configuration is now the only source of prefix addition and removal [[#132](https://github.com/insin/nwb/issues/132)]
 - [`babel-plugin-istanbul`](https://github.com/istanbuljs/babel-plugin-istanbul) is now used to instrument code for test coverage instead of `isparta-loader`.
 - Updated the default Webpack `UglifyJsPlugin` options to strip comments from output and use the `screw_ie8` setting for every step.
@@ -72,6 +101,7 @@
 
 **Removed:**
 
+- Dropped the `-g, --global` arg for enabling a UMD build when creating a React component/web module project in favour of passing a name to the `--umd` arg instead.
 - The Babel 6 equivalent of Babel 5's inline element transform is not used in production builds, as it currently depends on having `Symbol` polyfilled to work in older browsers, which has the potential to introduce breaking changes to your production build.
 
 **Dependencies:**

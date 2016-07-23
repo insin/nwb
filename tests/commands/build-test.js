@@ -69,7 +69,7 @@ describe('command: build', function() {
   describe('building a React component and its demo app', () => {
     before(done => {
       setUp()
-      cli(['new', 'react-component', 'test-component', '--global=TestComponent', '-f'], err => {
+      cli(['new', 'react-component', 'test-component', '--umd=TestComponent', '--jsnext'], err => {
         expect(err).toNotExist('No errors creating a new React component')
         process.chdir(path.join(tmpDir, 'test-component'))
         cli(['build'], err => {

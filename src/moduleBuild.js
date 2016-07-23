@@ -29,7 +29,7 @@ export default function moduleBuild(args, {presets} = {}) {
     ...getBabelArgs(createBabelConfig({presets}, userConfig.babel)),
   ])
 
-  if (userConfig.build.jsNext) {
+  if (userConfig.npm.jsNext) {
     console.log('nwb: build-module (es6 modules)')
     exec('babel', [
       src,
