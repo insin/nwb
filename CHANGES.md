@@ -1,5 +1,6 @@
 **Breaking Changes:**
 
+- Dropped Node.js v0.12 support. Based on the `engines` config of nwb's direct dependencies, v4.2.0 is now the minimum version. nwb probably still works on v0.12, but it's not being tested.
 - Upgraded from Babel 5 to Babel 6 [[#12](https://github.com/insin/nwb/issues/12)]
   - [`babel` config](https://github.com/insin/nwb/blob/0.12/docs/Configuration.md#babel-configuration) in `nwb.config.js` is no longer directly equivalent to what you would normally put in a [`.babelrc` file](https://babeljs.io/docs/usage/babelrc/).
   - nwb implements its own support for a Babel 6 equivalent of Babel 5's `stage` config to [choose which experimental features are enabled](https://github.com/insin/nwb/blob/0.12/docs/Configuration.md#stage-number--false), including defaulting to [Stage 2](https://babeljs.io/docs/plugins/preset-stage-2/)
