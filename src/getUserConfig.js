@@ -58,14 +58,6 @@ export function prepareWebpackLoaderConfig(loaders) {
 }
 
 /**
- * Allow plugin configuration for the app's own CSS only to be provided as an
- * Array instad of an object with a defaults property.
- */
-function prepareWebpackPostCSSConfig(postcss) {
-  return Array.isArray(postcss) ? {defaults: postcss} : postcss
-}
-
-/**
  * Validate user config and perform any necessary validation and transformation
  * to it.
  */
@@ -118,11 +110,14 @@ export function processUserConfig({args, required = DEFAULT_REQUIRED, userConfig
   }
 
   // Modify webpack config where convenience shorthand is supported
+  if (typeOf(userConfig.webpack.autoprefixer) === 'string') {
+    userConfig.webpack.autoprefixer = {browsers: userConfig.webpack.autoprefixer}
+  }
   if (userConfig.webpack.loaders) {
     prepareWebpackLoaderConfig(userConfig.webpack.loaders)
   }
-  if (userConfig.webpack.postcss) {
-    userConfig.webpack.postcss = prepareWebpackPostCSSConfig(userConfig.webpack.postcss)
+  if (typeOf(userConfig.webpack.postcss) === 'array') {
+    userConfig.webpack.postcss = {defaults: userConfig.webpack.postcss}
   }
 
   // TODO Remove in a future version

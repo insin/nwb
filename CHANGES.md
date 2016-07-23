@@ -53,6 +53,7 @@
 
 **Added:**
 
+- Added [`webpack.autoprefixer` config](https://github.com/insin/nwb/blob/0.12/docs/Configuration.md#autoprefixer-string--object) to configure Autoprefixer in nwb's default PostCSS configuration [[#132](https://github.com/insin/nwb/issues/132)]
 - Added [`webpack.aliases` config](https://github.com/insin/nwb/blob/0.12/docs/Configuration.md#aliases-object) to set up module resolving aliases, as a convenient alternative to using `webpack.extra.resolve.alias` config [[#125](https://github.com/insin/nwb/issues/125)]
 - Production React builds now remove propTypes using [babel-plugin-transform-react-remove-prop-types](https://github.com/oliviertassinari/babel-plugin-transform-react-remove-prop-types) [[#97](https://github.com/insin/nwb/issues/97)]
 - Added [`babel.runtime` config](https://github.com/insin/nwb/blob/0.12/docs/Configuration.md#runtime-string--boolean) to enable the Babel runtime transform, replacing Babel 5's `optional` config. You can use all the features of the transform or pick and choose.
@@ -62,6 +63,7 @@
 
 **Changed:**
 
+- Disabled `css-loader`'s use of Autoprefixer - nwb's PostCSS configuration is now the only source of prefix addition and removal [[#132](https://github.com/insin/nwb/issues/132)]
 - [`babel-plugin-istanbul`](https://github.com/istanbuljs/babel-plugin-istanbul) is now used to instrument code for test coverage instead of `isparta-loader`.
 - Updated the default Webpack `UglifyJsPlugin` options to strip comments from output and use the `screw_ie8` setting for every step.
 - Any `module.noParse` Webpack config added by nwb is now specified as an Array so any user-provided config for it in `webpack.extra` (which should also be specified as an Array) can be merged into it.

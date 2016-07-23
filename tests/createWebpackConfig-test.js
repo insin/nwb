@@ -325,7 +325,7 @@ describe('createPostCSSConfig()', () => {
       .toIncludeKeys(['defaults', 'vendor', 'less', 'vendor-less', 'sass', 'vendor-sass'])
   })
   it('overwrites plugin config with user config', () => {
-    expect(createPostCSSConfig({defaults: [1, 2, 3]}).defaults).toEqual([1, 2, 3])
+    expect(createPostCSSConfig({postcss: {defaults: [1, 2, 3]}}).defaults).toEqual([1, 2, 3])
   })
 })
 

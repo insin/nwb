@@ -30,6 +30,7 @@ The configuration object provided by your nwb config module can use the followin
     - [Default loaders](#default-loaders)
     - [Test loaders](#test-loaders)
   - [`webpack.aliases`](#aliases-object)
+  - [`webpack.autoprefixer`](#autoprefixer-string--object)
   - [`webpack.define`](#define-object)
   - [`webpack.extractText`](#extracttext-object)
   - [`webpack.html`](#html-object)
@@ -333,6 +334,33 @@ module.exports = {
 ```
 
 You should be careful to avoid creating aliases which conflict with the names of any npm packages you use or will be likely to use in the future.
+
+##### `autoprefixer`: `String | Object`
+
+Configure [Autoprefixer options](https://github.com/postcss/autoprefixer#options) for Autoprefixer in nwb's default PostCSS configuration.
+
+If you just want to configure the range of browsers prefix addition/removal is based on (Autoprefixer's own default is `'> 1%, last 2 versions, Firefox ESR'`), you can use a String, e.g. if you want to make sure Autoprefixer also adds or keeps prefixes required for iOS 8 devices:
+
+```js
+module.exports = {
+  webpack: {
+    autoprefixer: '> 1%, last 2 versions, Firefox ESR, ios >= 8'
+  }
+}
+```
+
+Use an Object if you need to avail of any of Autoprefixer's other options, e.g. if you also want to disable removal of prefixes which aren't required for the configured range of browsers:
+
+```js
+module.exports = {
+  webpack: {
+    autoprefixer: {
+      browsers: '> 1%, last 2 versions, Firefox ESR, ios >= 8',
+      remove: false,
+    }
+  }
+}
+```
 
 ##### `define`: `Object`
 

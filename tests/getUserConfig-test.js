@@ -30,7 +30,7 @@ describe('getUserConfig()', () => {
 })
 
 describe('processUserConfig()', () => {
-  context('validation', () => {
+  describe('validation', () => {
     it('throws an error if the config file has an invalid type', () => {
       expect(() => processUserConfig({
         userConfig: {
@@ -79,6 +79,25 @@ describe('processUserConfig()', () => {
           babel: {runtime: 'welp'}
         }
       })).toThrow(/must be boolean or one of: 'helpers', 'regenerator', 'polyfill'/)
+    })
+  })
+
+  describe('convenience shorthand', () => {
+    it('allows a browser String to be used for autoprefixer config', () => {
+      let config = processUserConfig({
+        userConfig: {
+          webpack: {autoprefixer: 'test'}
+        }
+      })
+      expect(config.webpack.autoprefixer).toEqual({browsers: 'test'})
+    })
+    it('allows an Array to be used for default PostCSS plugin config', () => {
+      let config = processUserConfig({
+        userConfig: {
+          webpack: {postcss: ['test']}
+        }
+      })
+      expect(config.webpack.postcss).toEqual({defaults: ['test']})
     })
   })
 
@@ -173,7 +192,7 @@ describe('processUserConfig()', () => {
 })
 
 describe('prepareWebpackLoaderConfig()', () => {
-  it('does nothing if query is already present', () => {
+  it('does nothing if a query object is already present', () => {
     let config = {
       css: {
         test: /test/,

@@ -91,6 +91,8 @@ export function createStyleLoader(loader, server, {
     loader(name('css'), {
       loader: require.resolve('css-loader'),
       query: {
+        // Prevent cssnano from using Autoprefixer to remove prefixes
+        autoprefixer: false,
         // Apply postcss-loader to @imports
         importLoaders: 1,
       },
@@ -454,24 +456,24 @@ export function getTopLevelLoaderConfig(userLoaderConfig, cssPreprocessors = {})
 /**
  * Create top-level PostCSS plugin config for each style pipeline.
  */
-export function createPostCSSConfig(userPostCSSConfig, cssPreprocessors = {}) {
+export function createPostCSSConfig(userWebpackConfig, cssPreprocessors = {}) {
   // postcss-loader throws an error if a pack name is provided but isn't
   // configured, so we need to set the default PostCSS plugins for every single
   // style pipeline.
   let postcss = {
-    defaults: createDefaultPostCSSPlugins(),
-    vendor: createDefaultPostCSSPlugins(),
+    defaults: createDefaultPostCSSPlugins(userWebpackConfig),
+    vendor: createDefaultPostCSSPlugins(userWebpackConfig),
   }
   Object.keys(cssPreprocessors).forEach(id => {
-    postcss[id] = createDefaultPostCSSPlugins()
-    postcss[`vendor-${id}`] = createDefaultPostCSSPlugins()
+    postcss[id] = createDefaultPostCSSPlugins(userWebpackConfig)
+    postcss[`vendor-${id}`] = createDefaultPostCSSPlugins(userWebpackConfig)
   })
   // Any PostCSS plugins provided by the user will completely overwrite defaults
-  return {...postcss, ...userPostCSSConfig}
+  return {...postcss, ...userWebpackConfig.postcss}
 }
 
-function createDefaultPostCSSPlugins() {
-  return [autoprefixer()]
+function createDefaultPostCSSPlugins(userWebpackConfig) {
+  return [autoprefixer(userWebpackConfig.autoprefixer || {})]
 }
 
 export const COMPAT_CONFIGS = {
@@ -580,7 +582,7 @@ export default function createWebpackConfig(buildConfig, nwbPluginConfig = {}, u
       // e.g. for babel-runtime when using the transform-runtime plugin.
       fallback: path.join(__dirname, '../node_modules'),
     }, buildResolveConfig, userResolveConfig),
-    postcss: createPostCSSConfig(userWebpackConfig.postcss, nwbPluginConfig.cssPreprocessors),
+    postcss: createPostCSSConfig(userWebpackConfig, nwbPluginConfig.cssPreprocessors),
     ...otherBuildConfig,
     // Top level loader config can be supplied via user "loaders" config, so we
     // detect, extract and where possible validate it before merging it into the
