@@ -3,8 +3,7 @@ import path from 'path'
 import autoprefixer from 'autoprefixer'
 import {red} from 'chalk'
 import ExtractTextPlugin from 'extract-text-webpack-plugin'
-import HtmlPlugin from 'html-webpack-plugin'
-import InlineManifestPlugin from 'inline-manifest-webpack-plugin'
+import HtmlWebpackPlugin from 'html-webpack-plugin'
 import NpmInstallPlugin from 'npm-install-webpack-plugin'
 import qs from 'qs'
 import webpack, {optimize} from 'webpack'
@@ -239,34 +238,6 @@ export function createExtraLoaders(extraLoaders = [], userConfig = {}) {
 }
 
 /**
- * Prevent files from the Webpack manifest chunk being emitted, as the manifest
- * will be inlined into the generated HTML file instead.
- */
-function suppressManifestFiles() {
-  this.plugin('emit', function(compilation, callback) {
-    Object.keys(compilation.assets)
-      .filter(filename => /^manifest/.test(filename))
-      .forEach(filename => delete compilation.assets[filename])
-    callback()
-  })
-}
-
-/**
- * Inject a <script> tag containing the Webpack manifest prior to HtmlPlugin
- * injecting tags for generated assets.
- */
-function injectManifest() {
-  this.plugin('compilation', (compilation) => {
-    compilation.plugin('html-webpack-plugin-before-html-processing', (htmlPluginData, cb) => {
-      let {assets, html} = htmlPluginData
-      let manifest = assets.webpackManifest.replace(/\n(<\/script>)$/, '$1') // OCD
-      htmlPluginData.html = html.replace('</body>', `${manifest}</body>`)
-      cb()
-    })
-  })
-}
-
-/**
  * Final webpack plugin config consists of:
  * - the default set of plugins created by this function based on whether or not
  *   a server build is being configured, whether or not the build is for an
@@ -334,11 +305,31 @@ export function createPlugins(server, buildConfig = {}, userConfig = {}) {
         // its hash - prevent this by extracting the manifest into its own
         // chunk - also essential for deterministic hashing.
         new optimize.CommonsChunkPlugin({name: 'manifest'}),
-        // Make the Webpack manifest's contents available for inlining in the
-        // HTML template.
-        new InlineManifestPlugin({name: 'webpackManifest'}),
-        // Automatically inject the manifest as part of HTML generation
-        injectManifest,
+        // Inject the Webpack manifest into the generated HTML as a <script>
+        function injectManifest() {
+          this.plugin('compilation', (compilation) => {
+            compilation.plugin('html-webpack-plugin-before-html-processing', (data, cb) => {
+              Object.keys(compilation.assets).forEach(key => {
+                if (key.indexOf('manifest.') !== 0) return
+                let {children} = compilation.assets[key]
+                if (children && children[0]) {
+                  data.html = data.html.replace(
+                    '</body>',
+                    `<script>${children[0]._value}</script></body>`
+                  )
+                  // Remove the manifest from HtmlWebpackPlugin's assets to
+                  // prevent a <script> tag being created for it.
+                  var manifestIndex = data.assets.js.indexOf(data.assets.publicPath + key)
+                  data.assets.js.splice(manifestIndex, 1)
+                  delete data.assets.chunks.manifest
+                }
+                // Prevent manifest .js and .js.map files being emitted
+                delete compilation.assets[key]
+              })
+              cb()
+            })
+          })
+        }
       )
     }
   }
@@ -365,17 +356,13 @@ export function createPlugins(server, buildConfig = {}, userConfig = {}) {
   if (buildConfig.html) {
     plugins.push(
       // Generate the app's HTML file
-      new HtmlPlugin({
+      new HtmlWebpackPlugin({
+        chunksSortMode: 'dependency',
         template: path.join(__dirname, '../templates/webpack-template.html'),
         ...buildConfig.html,
         ...userConfig.html,
       }),
     )
-    if (!server) {
-      // Prevent manifest chunk files being emitted after the manifest has been
-      // inlined into the HTML - plugin order matters here!
-      plugins.push(suppressManifestFiles)
-    }
   }
 
   if (buildConfig.install) {

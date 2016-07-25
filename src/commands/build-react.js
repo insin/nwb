@@ -32,7 +32,6 @@ function buildConfig(args) {
     },
     plugins: {
       html: {
-        chunksSortMode: 'none',
         mountId: args['mount-id'] || 'app',
         title: args.title || 'React App',
       },

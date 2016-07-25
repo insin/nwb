@@ -30,7 +30,6 @@ export default function buildDemo(args, cb) {
     },
     plugins: {
       html: {
-        chunksSortMode: 'none',
         mountId: 'demo',
         title: `${pkg.name} ${pkg.version} Demo`,
       },

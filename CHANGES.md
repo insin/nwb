@@ -122,7 +122,6 @@
 - file-loader: v0.8.5 → [v0.9.0](https://github.com/webpack/file-loader/compare/v0.8.5...v0.9.0)
 - glob: v7.0.3 → [v7.0.5](https://github.com/isaacs/node-glob/compare/v7.0.3...v7.0.5)
 - html-webpack-plugin: v2.19.0 → [v2.22.0](https://github.com/ampedandwired/html-webpack-plugin/blob/master/CHANGELOG.md#v2220)
-- [inline-manifest-webpack-plugin](https://github.com/szrenwei/inline-manifest-webpack-plugin): v3.0.1
 - inquirer: v1.0.3 → [v1.1.2](https://github.com/SBoudrias/Inquirer.js/compare/v1.0.3...v1.1.2)
 - karma: v0.13.22 → [v1.1.2](https://github.com/karma-runner/karma/blob/master/CHANGELOG.md#112-2016-07-26)
 - karma-chrome-launcher v1.0.1

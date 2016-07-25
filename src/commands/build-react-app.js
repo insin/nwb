@@ -30,10 +30,7 @@ function buildConfig(args) {
       publicPath: '/',
     },
     plugins: {
-      html: {
-        ...getDefaultHTMLConfig(),
-        chunksSortMode: 'none',
-      },
+      html: getDefaultHTMLConfig(),
       vendorChunkName: 'vendor',
     },
   }

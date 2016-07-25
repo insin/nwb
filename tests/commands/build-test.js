@@ -64,6 +64,16 @@ describe('command: build', function() {
     it('injects the Webpack manifest into generated HTML', () => {
       expect(builtHTML).toInclude('window.webpackJsonp')
     })
+    it('does not generate a <script src> for the manifest', () => {
+      expect(builtHTML).toNotInclude('src="/manifest"')
+    })
+    it('injects scripts in the correct order', () => {
+      let appIndex = builtHTML.indexOf('src="/app')
+      let vendorIndex = builtHTML.indexOf('src="/vendor')
+      expect(appIndex).toNotBe(-1)
+      expect(vendorIndex).toNotBe(-1)
+      expect(vendorIndex).toBeLessThan(appIndex)
+    })
   })
 
   describe('building a React component and its demo app', () => {
