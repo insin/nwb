@@ -1,12 +1,26 @@
 ## Plugins
 
+Plugin modules provide additional functionality - if you have one installed in your project, nwb will automatically find it when creating configuration and integrate the functionality it provides .
+
 ### CSS Preprocessors
 
-CSS preprocessors provide a Webpack loader which processes modules written in alternative style languages, with the resulting CSS being passed through the standard nwb CSS pipeline.
+CSS preprocessors convert styles in alternative style languages to CSS, with the resulting CSS being passed through the standard nwb CSS pipeline.
 
-- [nwb-less](https://github.com/insin/nwb-less) - adds processing of `.less` files
-- [nwb-sass](https://github.com/insin/nwb-sass) - adds processing of `.scss` files
-- [nwb-stylus](https://github.com/insin/nwb-stylus) - adds processing of `.styl` files
+- [nwb-less](https://github.com/insin/nwb-less) - adds processing of `.less` files which use [Less syntax](http://lesscss.org/)
+- [nwb-sass](https://github.com/insin/nwb-sass) - adds processing of `.scss` files which use [Sass syntax](http://sass-lang.com/)
+- [nwb-stylus](https://github.com/insin/nwb-stylus) - adds processing of `.styl` files which use [Stylus syntax](http://stylus-lang.com/)
+
+e.g. if you want to use Sass in your project, install nwb-sass...
+
+```
+npm install --save-dev nwb-sass
+```
+
+...and you can now import `.scss` files:
+
+```js
+require('./styles.scss')
+```
 
 ----
 

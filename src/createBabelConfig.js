@@ -1,3 +1,5 @@
+import {typeOf} from './utils'
+
 const DEFAULT_STAGE = 2
 
 export default function createBabelConfig(buildConfig = {}, userConfig = {}) {
@@ -18,6 +20,11 @@ export default function createBabelConfig(buildConfig = {}, userConfig = {}) {
   } = userConfig
 
   let presets = []
+
+  // Default to loose mode in production builds when not explicitly configured
+  if (typeOf(loose) === 'undefined') {
+    loose = process.env.NODE_ENV === 'production'
+  }
 
   // ES2015 preset
   presets.push(

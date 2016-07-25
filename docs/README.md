@@ -5,7 +5,7 @@
   - [`nwb`](/docs/Commands.md#nwb)
 - [Configuration](/docs/Configuration.md#configuration)
   - [Configuration File](/docs/Configuration.md#configuration-file)
-  - [Configuration Object Format](/docs/Configuration.md#configuration-object-format)
+  - [Configuration Object](/docs/Configuration.md#configuration-object)
     - [Babel Configuration](/docs/Configuration.md#babel-configuration)
     - [Webpack Configuration](/docs/Configuration.md#webpack-configuration)
     - [Karma Configuration](/docs/Configuration.md#karma-configuration)

@@ -1,45 +1,77 @@
 ## Configuration
 
+nwb's default setup can get you developing, testing and building production-ready apps and npm-ready components out of the box without any configuration.
+
+If you need to tweak the default setup to suit your project's needs, or you want to use some of the other features the Babel, Karma and Webpack ecosystems have to offer, you can provide a configuration file.
+
+> You can also add new functionality by installing a [plugin module](/docs/Plugins.md#plugins).
+
 ### Configuration File
 
-nwb will look for an `nwb.config.js` module in the current working directory for project-specific configuration, or you can specify a configuration module using the `--config` option.
+By default, nwb will look for an `nwb.config.js` file in the current working directory for configuration.
 
-This module should export either a configuration object or a function which creates a configuration object when called.
+You can also specify a configuration file using the `--config` option:
+
+```
+nwb --config ./config/nwb.js
+```
+
+This file should export either a configuration object...
+
+```js
+module.exports = {
+  // ...
+}
+```
+
+...or a function which returns a configuration object when called:
+
+```js
+module.exports = function(args) {
+  return {
+    // ...
+  }
+}
+```
 
 If a function is exported, it will be passed an object with the following properties:
 
-- `command`: the name of the nwb command currently being executed.
-- `webpack`: nwb's version of the `webpack` module.
+- `command`: the name of the command currently being executed, e.g. `'build'` or `'test'`
+- `webpack`: nwb's version of the `webpack` module, giving you access to the other plugins webpack provides
 
-### Configuration Object Format
+#### Example Configuration Files
 
-The configuration object provided by your nwb config module can use the following fields:
+- [react-hn's `nwb.config.js`](https://github.com/insin/react-hn/blob/concat/nwb.config.js) is a simple configuration file with minor tweaks to Babel and Webpack config.
+- [React Yelp Clone's `nwb.config.js`](https://github.com/insin/react-yelp-clone/blob/nwb/nwb.config.js) configures Babel, Karma and Webpack to allow nwb to be dropped into an existing app to handle its development tooling, [reducing the amount of `devDependencies` and configuration](https://github.com/insin/react-yelp-clone/compare/master...nwb) which need to be managed.
+
+### Configuration Object
+
+The configuration object can include the following properties:
 
 - nwb Configuration
   - [`type`](#type-string-required-for-generic-build-commands)
 - [Babel Configuration](#babel-configuration)
   - [`babel`](#babel-object)
-  - [`babel.stage`](#stage-number--false)
-  - [`babel.loose`](#loose-boolean)
-  - [`babel.runtime`](#runtime-string--boolean)
-  - [`babel.plugins`](#plugins-array)
-  - [`babel.presets`](#plugins-array)
+  - [`babel.loose`](#loose-boolean) - enable loose mode for Babel plugins which support it
+  - [`babel.plugins`](#plugins-array) - extra Babel plugins to be used
+  - [`babel.presets`](#plugins-array) - extra Babel presets to be used
+  - [`babel.runtime`](#runtime-string--boolean) - enable the `transform-runtime` plugin with different configurations
+  - [`babel.stage`](#stage-number--false) - control which experimental and upcoming JavaScript features can be used
 - [Webpack Configuration](#webpack-configuration)
   - [`webpack`](#webpack-object)
-  - [`webpack.loaders`](#loaders-object)
-    - [Default loaders](#default-loaders)
-    - [Test loaders](#test-loaders)
-  - [`webpack.aliases`](#aliases-object)
-  - [`webpack.autoprefixer`](#autoprefixer-string--object)
-  - [`webpack.define`](#define-object)
-  - [`webpack.extractText`](#extracttext-object)
-  - [`webpack.html`](#html-object)
-  - [`webpack.install`](#install-object)
-  - [`webpack.uglify`](#uglify-object)
-  - [`webpack.vendorBundle`](#vendorbundle-boolean)
-  - [`webpack.postcss`](#postcss-array--object)
-  - [`webpack.compat`](#compat-object)
-  - [`webpack.extra`](#extra-object)
+  - [`webpack.aliases`](#aliases-object) - rewrite certain import paths
+  - [`webpack.autoprefixer`](#autoprefixer-string--object) - options for Autoprefixer
+  - [`webpack.compat`](#compat-object) - enable Webpack compatibility tweaks for commonly-used modules
+  - [`webpack.define`](#define-object) - options for `DefinePlugin`, for replacing certain expressions with values
+  - [`webpack.extractText`](#extracttext-object) - options for `ExtractTextPlugin`
+  - [`webpack.html`](#html-object) - options for `HtmlPlugin`
+  - [`webpack.install`](#install-object) - options for `NpmInstallPlugin`
+  - [`webpack.loaders`](#loaders-object) - tweak the configuration of the default Webpack loaders
+    - [Default Loaders](#default-loaders)
+  - [`webpack.postcss`](#postcss-array--object) - a custom list of PostCSS plugins
+  - [`webpack.uglify`](#uglify-object) - options for Webpack's `UglifyJsPlugin`
+  - [`webpack.vendorBundle`](#vendorbundle-boolean) - control creation of a separate vendor bundle
+  - [`webpack.extra`](#extra-object) - an escape hatch for extra Webpack config, which will be merged into the generated config
 - [Karma Configuration](#karma-configuration)
   - [`karma`](#karma-object)
   - [`karma.browsers`](#browsers-arraystring--plugin) - browsers tests are run in
@@ -54,7 +86,7 @@ The configuration object provided by your nwb config module can use the followin
   - [`npm`](#npm-object)
   - [`npm.jsNext`](#jsnext-boolean)
   - UMD build
-    - [`npm.umd`](#umd-string--object)
+    - [`npm.umd`](#umd-string--object) - enable a UMD build which exports a global variable
       - [`umd.global`](#global-string-required-for-umd-build)
       - [`umd.externals`](#externals-object)
     - [`package.json` fields](#packagejson-umd-banner-configuration)
@@ -78,58 +110,52 @@ It must be one of:
 
 For Webpack builds, any Babel config provided will be used to configure `babel-loader` - you can also provide additional configuration in [`webpack.loaders`](#loaders-object) if necessary.
 
-##### `stage`: `Number | false`
-
-*(A Babel 6 equivalent of Babel 5's `stage` config)*
-
-Controls which Babel preset will be used to enable use of experimental, proposed and upcoming JavaScript features in your code:
-
-- [Stage 0](https://babeljs.io/docs/plugins/preset-stage-0) - `do {...}` expressions, `::` function bind operator
-- [Stage 1](https://babeljs.io/docs/plugins/preset-stage-1) - class properties , export extensions; also includes the [Babel Legacy Decorator transform plugin](https://github.com/loganfsmyth/babel-plugin-transform-decorators-legacy) to enable use of `@decorator` syntax in Babel 6
-- [Stage 2](https://babeljs.io/docs/plugins/preset-stage-2) (default) - object rest/spread syntax
-- [Stage 3](https://babeljs.io/docs/plugins/preset-stage-3) - trailing function commas, `async`/`await`, `**` exponentiation operator
-
-e.g. if you want to use decorators in your app, you should set `stage` to `1`:
-
-```js
-module.exports = {
-  babel {
-    stage: 1
-  }
-}
-```
-
-Stage 2 is used by default - to disable use of a stage preset entirely, set `stage` to `false`:
-
-```js
-module.exports = {
-  babel {
-    stage: false
-  }
-}
-```
-
 ##### `loose`: `Boolean`
 
 Some Babel plugins have a [loose mode](http://www.2ality.com/2015/12/babel6-loose-mode.html) in which they output simpler, potentially faster code rather than following the semantics of the ES6 spec closely.
 
-Loose mode also turns off some useful errors which are present in normal mode, so you might find it useful to develop with normal mode and use loose mode as a production optimisation.
+**Loose mode is enabled by default for production builds**, as a performance optimisation.
 
-e.g. to enable loose mode only for production builds:
+If you want to use loose mode all the time, set `loose` to `true`, or if you want to disable its default use in production builds, set it to `false`.
+
+e.g. to enable loose mode all the time:
 
 ```js
 module.exports = {
   babel {
-    loose: process.env.NODE_ENV === 'production'
+    loose: true
   }
 }
 ```
 
+##### `plugins`: `Array`
+
+Additional Babel plugins to use.
+
+nwb commands are run in the current working directory, so if you need to configure additional Babel plugins or presets, you can install them locally, pass their names and let Babel import them for you.
+
+e.g. to install and use the [babel-plugin-react-html-attrs](https://github.com/insin/babel-plugin-react-html-attrs#readme) plugin:
+
+```
+npm install babel-plugin-react-html-attrs
+```
+```js
+module.exports = {
+  babel: {
+    plugins: ['react-html-attrs']
+  }
+}
+```
+
+##### `presets`: `Array`
+
+Additional Babel presets to use.
+
 ##### `runtime`: `String | Boolean`
 
-Babel's [runtime transform](https://babeljs.io/docs/plugins/transform-runtime/)does 3 things:
+Babel's [runtime transform](https://babeljs.io/docs/plugins/transform-runtime/) does 3 things:
 
-1. It *always* imports modules from `babel-runtime` instead of duplicating **helpers** in every module which needs them.
+1. It *always* imports small helper modules from `babel-runtime` instead of duplicating **helpers** in every module which needs them.
 2. By default, it imports a local **polyfill** for new ES6 builtins (`Promise`) and static methods (e.g. `Object.assign`) when they're used in your code.
 3. By default, it imports the **regenerator** runtime required to use `async`/`await` when needed.
 
@@ -165,34 +191,238 @@ module.exports = {
 }
 ```
 
-##### `plugins`: `Array`
+##### `stage`: `Number | false`
 
-Additional Babel plugins to use.
+*(A Babel 6 equivalent of Babel 5's `stage` config)*
 
-nwb commands are run in the current working directory, so if you need to configure additional Babel plugins or presets, you can install them locally, pass their names and let Babel import them for you.
+Controls which Babel preset will be used to enable use of experimental, proposed and upcoming JavaScript features in your code, grouped by the stage they're at in the TC39 process for proposing new JavaScript features:
 
-e.g. to install and use the [babel-plugin-react-html-attrs](https://github.com/insin/babel-plugin-react-html-attrs#readme) plugin:
+| Stage | TC39 Category | Features |
+| ----- | ------------- | -------- |
+| [0](https://babeljs.io/docs/plugins/preset-stage-0) | Strawman, just an idea |`do {...}` expressions, `::` function bind operator |
+| [1](https://babeljs.io/docs/plugins/preset-stage-1) | Proposal: this is worth working on | class properties, export extensions, `@decorator` syntax ( using the [Babel Legacy Decorator plugin](https://github.com/loganfsmyth/babel-plugin-transform-decorators-legacy)) |
+| [2](https://babeljs.io/docs/plugins/preset-stage-2) | Draft: initial spec | object rest/spread syntax - **enabled by default** |
+| [3](https://babeljs.io/docs/plugins/preset-stage-3) | Candidate: complete spec and initial browser implementations | trailing function commas, `async`/`await`, `**` exponentiation operator |
 
-```
-npm install babel-plugin-react-html-attrs
-```
+e.g. if you want to use decorators in your app, you should set `stage` to `1`:
+
 ```js
 module.exports = {
-  babel: {
-    plugins: ['react-html-attrs']
+  babel {
+    stage: 1
   }
 }
 ```
 
-##### `presets`: `Array`
+Stage 2 is enabled by default - to disable use of a stage preset entirely, set `stage` to `false`:
 
-Additional Babel presets to use.
+```js
+module.exports = {
+  babel {
+    stage: false
+  }
+}
+```
 
 ### Webpack Configuration
 
 #### `webpack`: `Object`
 
 [Webpack](https://webpack.github.io/) configuration can be provided in a `webpack` object, using the following properties:
+
+##### `aliases`: `Object`
+
+Configures [Webpack aliases](https://webpack.github.io/docs/resolving.html#aliasing), which allow you to control module resolution. Typically aliases are used to make it easier to import certain modules from within any depth of nested directories in an app.
+
+e.g.:
+
+```js
+module.exports = {
+  webpack: {
+    aliases: {
+      // Enable use of 'img/file.png' paths in JavaScript and
+      // "~images/file.png" paths in stylesheets to require an image from
+      // src/images from anywhere in the the app.
+      'img': path.resolve('src/images'),
+      // Enable use of require('src/path/to/module.js') for top-down imports
+      // from anywhere in the app, to promote writing location-independent
+      // code by avoiding ../ directory traversal.
+      'src': path.resolve('src')
+    }
+  }
+}
+```
+
+You should be careful to avoid creating aliases which conflict with the names of Node.js builtins or npm packages, as you will then be unable to import them.
+
+##### `autoprefixer`: `String | Object`
+
+Configures [Autoprefixer options](https://github.com/postcss/autoprefixer#options) for nwb's default PostCSS configuration.
+
+If you just need to configure the range of browsers prefix addition/removal is based on (Autoprefixer's own default is `'> 1%, last 2 versions, Firefox ESR'`), you can use a String.
+
+e.g. if you want to make sure Autoprefixer also adds or keeps prefixes required for iOS 8 devices:
+
+```js
+module.exports = {
+  webpack: {
+    autoprefixer: '> 1%, last 2 versions, Firefox ESR, ios >= 8'
+  }
+}
+```
+
+Use an Object if you need to set any of Autoprefixer's other options.
+
+e.g. if you also want to disable removal of prefixes which aren't required for the configured range of browsers:
+
+```js
+module.exports = {
+  webpack: {
+    autoprefixer: {
+      browsers: '> 1%, last 2 versions, Firefox ESR, ios >= 8',
+      remove: false,
+    }
+  }
+}
+```
+
+You can check which browsers your Autoprefixer configuration will target using the [browserl.ist](browserl.ist) service.
+
+##### `compat`: `Object`
+
+Certain libraries require specific configuration to play nicely with Webpack - nwb can take care of the details for you if you use a `compat` object to tell it when you're using them. The following libraries are supported:
+
+###### `enzyme`: `Boolean`
+
+Set to `true` for [Enzyme](http://airbnb.io/enzyme/) compatibility - this assumes you're using the latest version of React (v15).
+
+###### `json-schema`: `Boolean`
+
+Set to `true` to prevent a transitive [json-schema](https://github.com/kriszyp/json-schema) dependency from [breaking your Webpack build](https://github.com/kriszyp/json-schema/issues/59). Failure in this case manifests itself something like so:
+
+```
+Error: define cannot be used indirect
+
+webpack:///(webpack)/buildin/amd-define.js
+```
+
+###### `moment`: `Object`
+
+If you use [Moment.js](http://momentjs.com/) in a Webpack build, all the locales it supports will be imported by default and your build will be about 139KB larger than you were expecting!
+
+Provide an object with a `locales` Array specifying language codes for the locales you want to load.
+
+###### `sinon`: `Boolean`
+
+Set to `true` for [Sinon.js](http://sinonjs.org/) 1.x compatibility.
+
+---
+
+Here's an example config showing the use of every `compat` setting:
+
+```js
+module.exports = {
+  webpack: {
+    compat: {
+      enzyme: true,
+      'json-schema': true,
+      moment: {
+        locales: ['de', 'en-gb', 'es', 'fr', 'it']
+      },
+      sinon: true
+    }
+  }
+}
+```
+
+##### `define`: `Object`
+
+By default, nwb will use Webpack's [`DefinePlugin`](https://webpack.github.io/docs/list-of-plugins.html#defineplugin) to replace all occurances of `process.env.NODE_ENV` with a string containing `NODE_ENV`'s current value.
+
+You can configure a `define` object to add your own constant values.
+
+e.g. to replace all occurrences of `__VERSION__` with a string containing your app's version from its `package.json`:
+
+```js
+module.exports = {
+  webpack: {
+    define: {
+      __VERSION__: JSON.stringify(require('./package.json').version)
+    }
+  }
+}
+```
+
+##### `extractText`: `Object`
+
+Configures [options for `ExtractTextWebpackPlugin`](https://github.com/webpack/extract-text-webpack-plugin#readme).
+
+This can be used to control whether or not CSS is extracted from all chunks in an app which uses code splitting, or only the initial chunk:
+
+```js
+module.exports = {
+  webpack: {
+    extractText: {
+      allChunks: true
+    }
+  }
+}
+```
+
+##### `html`: `Object`
+
+Configures [options for `HtmlWebpackPlugin`](https://github.com/ampedandwired/html-webpack-plugin#readme).
+
+For apps, nwb will look for a `src/index.html` template to inject `<link>` and `<script>` tags into for each CSS and JavaScript bundle generated by Webpack.
+
+Use `template`config if you have an HTML file elsewhere you want to use:
+
+```js
+module.exports = {
+  webpack: {
+    html: {
+      template: 'html/index.html'
+    }
+  }
+}
+```
+
+If you don't have a template at `src/index.html` or specify one via `template`, nwb will fall back to using a basic template which has the following properties you can configure:
+
+- `title` - contents for `<title>`
+
+  > Default: the value of `name` from your app's `package.json`
+
+- `mountId` - the `id` for the `<div>` provided for your app to mount itself into
+
+  > Default: `'app'`
+
+```js
+module.exports = {
+  webpack: {
+    html: {
+      mountId: 'root',
+      title: 'Unimaginative documentation example'
+    }
+  }
+}
+```
+
+Other `HtmlWebpackPlugin` options can also be used. e.g. if you have a `favicon.ico` in your `src/` directory, you can include it in the `index.html` generated when your app is built and have it copied to the output directory like so:
+
+```js
+module.exports = {
+  webpack: {
+    html: {
+      favicon: 'src/favicon.ico'
+    }
+  }
+}
+```
+
+##### `install`: `Object`
+
+Configures [options for `NpmInstallPlugin`](https://github.com/ericclemmons/npm-install-webpack-plugin#usage), which will be used if you pass `--auto-install` flag to `nwb serve`.
 
 ##### `loaders`: `Object`
 
@@ -291,199 +521,6 @@ Default loaders configured by nwb and the ids it gives them are:
 
 - `json` - handles `.json` files using [json-loader][json-loader]
 
-###### Test loaders
-
-When running Karma tests with coverage enabled, the following loader will be added:
-
-- `isparta` - handles instrumentation of source files for coverage analysis using [isparta-loader][isparta-loader]
-
-  > Default config: `{include: path.join(cwd, 'src')}` (where cwd is the directory you ran `nwb test` from).
-
-  You may need to tweak this loader if you're [changing where Karma looks for tests](#tests-string) - e.g. if you're colocating tests in `__tests__` directories, you will want to configure isparta-loader to ignore these:
-
-  ```js
-  {
-    webpack: {
-      loaders: {
-        isparta: {
-          exclude: /__tests__/
-        }
-      }
-    }
-  }
-  ```
-
-##### `aliases`: `Object`
-
-Configures [Webpack aliases](https://webpack.github.io/docs/resolving.html#aliasing), which allow you to control module resolution. Typically aliases are used to make it easier to import certain modules from within any depth of nested directories in an app.
-
-e.g.:
-
-```js
-module.exports = {
-  webpack: {
-    aliases: {
-      // Enable use of 'images/file.png' paths in JavaScript and
-      // "~images/file.png" paths in stylesheets to require an image from
-      // src/images from anywhere in the the app.
-      'images': path.resolve('src/images'),
-      // Enable use of require('src/path/to/module.js') for top-down imports
-      // from anywhere in the app, to promote writing location-independent
-      // code by avoiding ../ directory traversal.
-      'src': path.resolve('src')
-    }
-  }
-}
-```
-
-You should be careful to avoid creating aliases which conflict with the names of any npm packages you use or will be likely to use in the future.
-
-##### `autoprefixer`: `String | Object`
-
-Configures [Autoprefixer options](https://github.com/postcss/autoprefixer#options) for nwb's default PostCSS configuration.
-
-If you just need to configure the range of browsers prefix addition/removal is based on (Autoprefixer's own default is `'> 1%, last 2 versions, Firefox ESR'`), you can use a String.
-
-e.g. if you want to make sure Autoprefixer also adds or keeps prefixes required for iOS 8 devices:
-
-```js
-module.exports = {
-  webpack: {
-    autoprefixer: '> 1%, last 2 versions, Firefox ESR, ios >= 8'
-  }
-}
-```
-
-Use an Object if you need to set any of Autoprefixer's other options.
-
-e.g. if you also want to disable removal of prefixes which aren't required for the configured range of browsers:
-
-```js
-module.exports = {
-  webpack: {
-    autoprefixer: {
-      browsers: '> 1%, last 2 versions, Firefox ESR, ios >= 8',
-      remove: false,
-    }
-  }
-}
-```
-
-##### `define`: `Object`
-
-By default, nwb will use Webpack's [`DefinePlugin`](https://webpack.github.io/docs/list-of-plugins.html#defineplugin) to replace all occurances of `process.env.NODE_ENV` with a string containing `NODE_ENV`'s current value.
-
-You can configure a `define` object to add your own constant values.
-
-e.g. to replace all occurrences of `__VERSION__` with a string containing your app's version from its `package.json`:
-
-```js
-module.exports = {
-  webpack: {
-    define: {
-      __VERSION__: JSON.stringify(require('./package.json').version)
-    }
-  }
-}
-```
-
-##### `extractText`: `Object`
-
-Configures [options for `ExtractTextWebpackPlugin`](https://github.com/webpack/extract-text-webpack-plugin#readme).
-
-This can be used to control whether or not CSS is extracted from all chunks in an app which uses code splitting, or only the initial chunk:
-
-```js
-module.exports = {
-  webpack: {
-    extractText: {
-      allChunks: true
-    }
-  }
-}
-```
-
-##### `html`: `Object`
-
-Configures [options for `HtmlWebpackPlugin`](https://github.com/ampedandwired/html-webpack-plugin#readme).
-
-For apps, nwb will look for a `src/index.html` template to inject `<link>` and `<script>` tags into for each CSS and JavaScript bundle generated by Webpack.
-
-Use `template`config if you have an HTML file elsewhere you want to use:
-
-```js
-module.exports = {
-  webpack: {
-    html: {
-      template: 'html/index.html'
-    }
-  }
-}
-```
-
-If you don't have a template at `src/index.html` or specify one via `template`, nwb will fall back to using a basic template which has the following properties you can configure:
-
-- `title` - contents for `<title>`
-
-  > Default: the value of `name` from your app's `package.json`
-
-- `mountId` - the `id` for the `<div>` provided for your app to mount itself into
-
-  > Default: `'app'`
-
-```js
-module.exports = {
-  webpack: {
-    html: {
-      mountId: 'root',
-      title: 'Unimaginative documentation example'
-    }
-  }
-}
-```
-
-Other `HtmlWebpackPlugin` options can also be used. e.g. if you have a `favicon.ico` in your `src/` directory, you can include it in the `index.html` generated when your app is built and have it copied to the output directory like so:
-
-```js
-module.exports = {
-  webpack: {
-    html: {
-      favicon: 'src/favicon.ico'
-    }
-  }
-}
-```
-
-##### `install`: `Object`
-
-Configures [options for `NpmInstallPlugin`](https://github.com/ericclemmons/npm-install-webpack-plugin#usage), which will be used if you pass `--auto-install` flag to `nwb serve`.
-
-##### `uglify`: `Object`
-
-Configures [options for Webpack's `UglifyJsPlugin`](https://webpack.github.io/docs/list-of-plugins.html#uglifyjsplugin), which will be used when creating production builds.
-
-Any additional options provided will be merged into nwb's defaults, which are:
-
-```js
-module.exports = {
-  compress: {
-    screw_ie8: true,
-    warnings: false,
-  },
-  mangle: {
-    screw_ie8: true,
-  },
-  output: {
-    comments: false,
-    screw_ie8: true,
-  },
-}
-```
-
-##### `vendorBundle`: `Boolean`
-
-Setting this to `false` disables extraction of anything imported from `node_modules/` into a `vendor` bundle.
-
 ##### `postcss`: `Array | Object`
 
 By default, nwb configures the `postcss-loader` in each style pipeline to automatically add vendor prefixes to CSS rules.
@@ -497,8 +534,7 @@ module.exports = {
   webpack: {
     postcss: [
       require('precss')(),
-      require('autoprefixer')(),
-      require('cssnano')()
+      require('autoprefixer')()
     ]
   }
 }
@@ -530,52 +566,31 @@ Your app is responsible for managing its own PostCSS plugin dependencies - betwe
 
 It's recommended to create instances of PostCSS plugins in your config, as opposed to passing a module, in case you ever need to make use of debug output (enabled by setting a `DEBUG` environment variable to `nwb`) to examine generated config.
 
-##### `compat`: `Object`
+##### `uglify`: `Object`
 
-Certain libraries require specific configuration to play nicely with Webpack - nwb can take care of the details for you if you use a `compat` object to tell it when you're using them. The following libraries are supported:
+Configures [options for Webpack's `UglifyJsPlugin`](https://webpack.github.io/docs/list-of-plugins.html#uglifyjsplugin), which will be used when creating production builds.
 
-###### `enzyme`: `Boolean`
-
-Set to `true` for [Enzyme](http://airbnb.io/enzyme/) compatibility - this assumes you're using the latest version of React (v15).
-
-###### `json-schema`: `Boolean`
-
-Set to `true` to prevent a transitive [json-schema](https://github.com/kriszyp/json-schema) dependency from [breaking your Webpack build](https://github.com/kriszyp/json-schema/issues/59). Failure in this case manifests itself something like so:
-
-```
-Error: define cannot be used indirect
-
-webpack:///(webpack)/buildin/amd-define.js
-```
-
-###### `moment`: `Object`
-
-If you use [Moment.js](http://momentjs.com/) in a Webpack build, all the locales it supports will be imported by default and your build will be about 139KB larger than you were expecting!
-
-Provide an object with a `locales` Array specifying language codes for the locales you want to load.
-
-###### `sinon`: `Boolean`
-
-Set to `true` for [Sinon.js](http://sinonjs.org/) 1.x compatibility.
-
----
-
-Here's an example config showing the use of every `compat` setting:
+Any additional options provided will be merged into nwb's defaults, which are:
 
 ```js
 module.exports = {
-  webpack: {
-    compat: {
-      enzyme: true,
-      'json-schema': true,
-      moment: {
-        locales: ['de', 'en-gb', 'es', 'fr', 'it']
-      },
-      sinon: true
-    }
-  }
+  compress: {
+    screw_ie8: true,
+    warnings: false,
+  },
+  mangle: {
+    screw_ie8: true,
+  },
+  output: {
+    comments: false,
+    screw_ie8: true,
+  },
 }
 ```
+
+##### `vendorBundle`: `Boolean`
+
+Setting this to `false` disables extraction of anything imported from `node_modules/` into a `vendor` bundle.
 
 ##### `extra`: `Object`
 
