@@ -16,11 +16,6 @@ import createBabelConfig from './createBabelConfig'
 import debug from './debug'
 import {deepToString, endsWith} from './utils'
 
-// Default query configuration for file-loader and url-loader
-const FILE_LOADER_DEFAULTS = {
-  name: '[name].[hash:8].[ext]'
-}
-
 // Top-level property names reserved for webpack config
 // From http://webpack.github.io/docs/configuration.html
 const WEBPACK_RESERVED = 'context entry output module resolve resolveLoader externals target bail profile cache watch watchOptions debug devtool devServer node amd loader recordsPath recordsInputPath recordsOutputPath plugins'.split(' ')
@@ -138,9 +133,12 @@ export function createStyleLoader(loader, server, {
 export function createLoaders(server, buildConfig = {}, userConfig = {}, pluginConfig = {}) {
   let loader = loaderConfigFactory(buildConfig, userConfig)
 
+  // Filename pattern for file-loader and url-loader
+  let name = process.env.NODE_ENV === 'production' ? '[name].[hash:8].[ext]' : '[name].[ext]'
+
   let loaders = [
     loader('babel', {
-      test: /\.jsx?$/,
+      test: /\.js$/,
       loader: require.resolve('babel-loader'),
       exclude: /node_modules/,
       query: {
@@ -163,33 +161,31 @@ export function createLoaders(server, buildConfig = {}, userConfig = {}, pluginC
       include: /node_modules/,
     }),
     loader('graphics', {
-      test: /\.(gif|png)$/,
+      test: /\.(gif|png|svg)$/,
       loader: require.resolve('url-loader'),
       query: {
-        limit: 10240,
-        ...FILE_LOADER_DEFAULTS,
+        name,
       },
     }),
     loader('jpeg', {
       test: /\.jpe?g$/,
       loader: require.resolve('file-loader'),
       query: {
-        ...FILE_LOADER_DEFAULTS,
+        name,
       },
     }),
     loader('fonts', {
-      test: /\.(otf|svg|ttf|woff|woff2)(\?v=\d+\.\d+\.\d+)?$/,
+      test: /\.(otf|ttf|woff|woff2)(\?v=\d+\.\d+\.\d+)?$/,
       loader: require.resolve('url-loader'),
       query: {
-        limit: 10240,
-        ...FILE_LOADER_DEFAULTS,
+        name,
       },
     }),
     loader('eot', {
       test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,
       loader: require.resolve('file-loader'),
       query: {
-        ...FILE_LOADER_DEFAULTS,
+        name,
       },
     }),
     loader('json', {

@@ -3,6 +3,8 @@
 - Dropped Node.js v0.12 support.
   - Based on the `engines` config of nwb's direct dependencies, v4.2.0 is now the minimum version.
   - nwb *probably* still works with Node.js v0.12, but it's not being tested.
+- Dropped support for the `.jsx` extension - [it's dead, Jim](https://github.com/facebookincubator/create-react-app/issues/87#issuecomment-234627904).
+  - You can use [`webpack.loaders` config](https://github.com/insin/nwb/blob/0.12/docs/Configuration.md#loaders-object) to add it back to `babel-loader`'s `test` config if you're using `.jsx` files and can't reasonably migrate away.
 - Upgraded from Babel 5 to Babel 6 [[#12](https://github.com/insin/nwb/issues/12)]
   - [`babel` config](https://github.com/insin/nwb/blob/0.12/docs/Configuration.md#babel-configuration) in `nwb.config.js` is no longer directly equivalent to what you would normally put in a [`.babelrc` file](https://babeljs.io/docs/usage/babelrc/).
   - nwb implements its own support for a Babel 6 equivalent of Babel 5's `stage` config to [choose which experimental features are enabled](https://github.com/insin/nwb/blob/0.12/docs/Configuration.md#stage-number--false). It also defaults to [Stage 2](https://babeljs.io/docs/plugins/preset-stage-2/)
@@ -90,6 +92,8 @@
 
 **Changed:**
 
+- `file-loader` filenames now only include a hash in production builds.
+- Moved handling of `.svg` files from the `fonts` loader to the `graphics` loader.
 - [Loose mode](http://www.2ality.com/2015/12/babel6-loose-mode.html) for Babel plugins is now enabled by default. [`babel.loose` config](https://github.com/insin/nwb/blob/0.12/docs/Configuration.md#loose-boolean) is now Boolean, and is only needed if you want to disable loose mode (e.g. in non-production environments to check for normal mode errors).
 - Changed default testing configuration to support co-location of tests and a wider range of test file names and locations:
   - Test files can be `-test.js`, `.test.js` or `.spec.js` files anywhere underneath a `src/`, `test/` or `tests/` directory.
@@ -104,6 +108,7 @@
 
 **Removed:**
 
+- Removed default `limit` config from the `graphics` and `fonts` loaders - if you want resources smaller than a given size to be inlined, configure `limit` using [`webpack.loaders` config](https://github.com/insin/nwb/blob/0.12/docs/Configuration.md#loaders-object).
 - Dropped the `-g, --global` arg for enabling a UMD build when creating a React component/web module project in favour of passing a name to the `--umd` arg instead.
 - The Babel 6 equivalent of Babel 5's inline element transform is not used in production builds, as it currently depends on having `Symbol` polyfilled to work in older browsers, which has the potential to introduce breaking changes to your production build.
 

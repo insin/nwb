@@ -522,9 +522,9 @@ Alternatively, you can also add new properties directly to the top-level Webpack
 
 Default loaders configured by nwb and the ids it gives them are:
 
-- `babel` - handles `.js` (and `.jsx`) files with [babel-loader][babel-loader]
+- `babel` - handles `.js` files with [babel-loader][babel-loader]
 
-  > Default config: `{exclude: /node_modules/}`
+  > Default config: `{exclude: /node_modules/, query: {babelrc: false, cacheDirectory: true}}`
 
 - `css-pipeline` - handles your app's own`.css` files by chaining together a number of loaders:
 
@@ -533,26 +533,28 @@ Default loaders configured by nwb and the ids it gives them are:
   Chained loaders are:
 
   - `style` - (only when serving) applies styles using [style-loader][style-loader]
+
   - `css` - handles URLs, minification and CSS Modules using [css-loader][css-loader]
+
+    > Default config: `{query: {autoprefixer: false, importLoaders: 1}}`
+
   - `postcss` - processes CSS with PostCSS plugins using [postcss-loader][postcss-loader]; by default, this is configured to automatically add vendor prefixes to CSS using [Autoprefixer][autoprefixer]
 
 - `vendor-css-pipeline` - handles `.css` files required from `node_modules/`, with the same set of chained loaders as `css-pipeline` but with a `vendor-` prefix in their id.
 
   > Default config: `{include: /node_modules/}`
 
-- `graphics` - handles `.gif` and `.png` files using using [url-loader][url-loader]
-
-  > Default config: `{limit: 10240}`
+- `graphics` - handles `.gif`, `.png` and `.svg` files using using [url-loader][url-loader]
 
 - `jpeg` - handles `.jpeg` files using [file-loader][file-loader]
 
-- `fonts` - handles `.otf`, `.svg`, `.ttf`, `.woff` and `.woff2` files using [url-loader][url-loader]
-
-  > Default config: `{limit: 10240}`
+- `fonts` - handles `.otf`, `.ttf`, `.woff` and `.woff2` files using [url-loader][url-loader]
 
 - `eot` - handles `.eot` files using [file-loader][file-loader]
 
 - `json` - handles `.json` files using [json-loader][json-loader]
+
+**Note:** default `file-loader` and `url-loader` configuration depends on the environment. For production, they use `{query: {name: '[name].[hash:8].[ext]'}}`, otherwise `{query: {name: '[name].[ext]'}}`.
 
 ##### `postcss`: `Array<Plugin> | Object<String, Array<Plugin>>`
 
