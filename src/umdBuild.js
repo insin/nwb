@@ -9,7 +9,7 @@ import webpackBuild from './webpackBuild'
 /**
  * Create a module's UMD builds.
  */
-export default function umdBuild(args, {presets}, cb) {
+export default function umdBuild(args, babelConfig, cb) {
   let pkg = require(path.resolve('package.json'))
   let userConfig = getUserConfig(args)
 
@@ -21,7 +21,7 @@ export default function umdBuild(args, {presets}, cb) {
 
   let entry = args._[1] || 'src/index.js'
   let buildConfig = {
-    babel: {presets},
+    babel: babelConfig,
     entry: path.resolve(entry),
     output: {
       filename: `${pkg.name}.js`,

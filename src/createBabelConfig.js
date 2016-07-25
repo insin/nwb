@@ -12,6 +12,7 @@ export default function createBabelConfig(buildConfig = {}, userConfig = {}) {
   } = buildConfig
 
   let {
+    cherryPick,
     loose,
     plugins: userPlugins = [],
     presets: userPresets,
@@ -66,6 +67,11 @@ export default function createBabelConfig(buildConfig = {}, userConfig = {}) {
   let config = {presets}
 
   let plugins = [...buildPlugins, ...userPlugins]
+
+  if (cherryPick) {
+    plugins.push([require.resolve('babel-plugin-lodash'), {id: cherryPick}])
+  }
+
   if (plugins.length > 0) {
     config.plugins = plugins
   }

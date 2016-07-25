@@ -52,6 +52,7 @@ The configuration object can include the following properties:
   - [`type`](#type-string-required-for-generic-build-commands)
 - [Babel Configuration](#babel-configuration)
   - [`babel`](#babel-object)
+  - [`babel.cherryPick`](#cherrypick-string--arraystring) - enable cherry-picking for destructured `import` statements
   - [`babel.loose`](#loose-boolean) - enable loose mode for Babel plugins which support it
   - [`babel.plugins`](#plugins-array) - extra Babel plugins to be used
   - [`babel.presets`](#plugins-array) - extra Babel presets to be used
@@ -109,6 +110,38 @@ It must be one of:
 [Babel](https://babeljs.io/) configuration can be provided in a `babel` object, using the following properties.
 
 For Webpack builds, any Babel config provided will be used to configure `babel-loader` - you can also provide additional configuration in [`webpack.loaders`](#loaders-object) if necessary.
+
+##### `cherryPick`: `String | Array<String>`
+
+**Note:** this feature only works if you're using ES6 `import` syntax.
+
+Module names to apply `import` cherry-picking to.
+
+If you import a module with destructuring, the entire module will normally be included in your build, even though you're only using specific pieces:
+
+```js
+import {Col, Grid, Row} from 'react-bootstrap'
+```
+
+The usual workaround for this is individually import submodules, which is tedious and bloats import sections in your code:
+
+```js
+import Col from 'react-bootstrap/lib/Col'
+import Grid from 'react-bootstrap/lib/Grid'
+import Row from 'react-bootstrap/lib/Row'
+```
+
+If you use `cherryPick` config, you can keep writing code like the first example, but transpile to the same code as the second, by specifying the module name(s) to apply a cherry-picking transform to:
+
+```js
+module.exports = {
+  babel: {
+    cherryPick: 'react-bootstrap'
+  }
+}
+```
+
+This is implemented using [babel-plugin-lodash](https://github.com/lodash/babel-plugin-lodash) - please check its issues for compatibility problems with modules you're using `cherryPick` with and report any new ones you find.
 
 ##### `loose`: `Boolean`
 

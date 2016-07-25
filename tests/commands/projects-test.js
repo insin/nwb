@@ -160,4 +160,42 @@ describe('sample projects', function() {
       expect(buildResults.errors).toEqual([])
     })
   })
+
+  describe('cherry-pick project', () => {
+    let originalCwd
+    let originalNodeEnv
+    let tmpDir
+
+    before(done => {
+      originalCwd = process.cwd()
+      originalNodeEnv = process.env.NODE_ENV
+      delete process.env.NODE_ENV
+      tmpDir = temp.mkdirSync('cherry-pick')
+      copyTemplateDir(path.join(__dirname, '../fixtures/projects/cherry-pick'), tmpDir, {}, err => {
+        if (err) return done(err)
+        process.chdir(tmpDir)
+        execSync('npm install', {stdio: [0, 1, 2]})
+        cli(['build'], err => {
+          expect(err).toNotExist()
+          done()
+        })
+      })
+    })
+
+    after(done => {
+      process.chdir(originalCwd)
+      process.env.NODE_ENV = originalNodeEnv
+      rimraf(tmpDir, err => {
+        done(err)
+      })
+    })
+
+    it('transpiles to a cherry-picked version', () => {
+      let content = fs.readFileSync(path.join(tmpDir, 'lib/index.js'), 'utf-8')
+      expect(content)
+        .toInclude("require('react-bootstrap/lib/Col')")
+        .toInclude("require('react-bootstrap/lib/Grid')")
+        .toInclude("require('react-bootstrap/lib/Row')")
+    })
+  })
 })

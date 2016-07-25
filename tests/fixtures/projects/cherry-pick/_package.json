@@ -1,0 +1,10 @@
+{
+  "name": "cherry-pick-project",
+  "version": "1.0.0",
+  "description": "test project",
+  "dependencies": {
+    "react": "15.x",
+    "react-bootstrap": "0.30.0",
+    "react-dom": "15.x"
+  }
+}

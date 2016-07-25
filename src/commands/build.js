@@ -8,9 +8,12 @@ import buildReactApp from './build-react-app'
 import buildUMD from './build-umd'
 import buildWebApp from './build-web-app'
 
-function runBuildDemo(args, cb) {
+function maybeBuildDemo(args, cb) {
   if (glob.sync('demo/').length > 0) {
     buildDemo(args, cb)
+  }
+  else {
+    cb()
   }
 }
 
@@ -25,10 +28,10 @@ export default function build(args, cb) {
   else if (userConfig.type === REACT_COMPONENT || userConfig.type === WEB_MODULE) {
     buildModule(args)
     if (userConfig.npm.umd) {
-      buildUMD(args, () => runBuildDemo(args, cb))
+      buildUMD(args, () => maybeBuildDemo(args, cb))
     }
     else {
-      runBuildDemo(args, cb)
+      maybeBuildDemo(args, cb)
     }
   }
 }
