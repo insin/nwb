@@ -73,7 +73,8 @@
 
     "karma": "1.1.1",
     "diff": "2.2.3",
-    "karma-coverage": "1.1.0",
+    "karma-chrome-launcher": "1.0.1",
+    "karma-coverage": "1.1.1",
     "karma-mocha": "1.1.1",
     "karma-mocha-reporter": "2.0.4",
     "karma-phantomjs-launcher": "1.0.1",

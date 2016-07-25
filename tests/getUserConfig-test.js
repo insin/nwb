@@ -18,6 +18,7 @@ describe('getUserConfig()', () => {
     let config = getUserConfig()
     expect(config).toEqual({
       babel: {},
+      karma: {},
       npm: {},
       webpack: {},
     })
@@ -127,6 +128,7 @@ describe('processUserConfig()', () => {
     expect(config).toEqual({
       type: 'web-module',
       babel: {},
+      karma: {},
       npm: {},
       webpack: {},
     })

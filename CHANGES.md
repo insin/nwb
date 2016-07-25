@@ -81,8 +81,29 @@
   }
   ```
 
+- `karma.tests` config is deprecated in favour of new [`karma.testContext`](https://github.com/insin/nwb/blob/0.12/docs/Configuration.md#testcontext-string) and [`karma.testFiles` config](https://github.com/insin/nwb/blob/0.12/docs/Configuration.md#testfiles-string--arraystring), depending on which was being specified. If `karma.tests` is present, nwb will attempt to detect the appropriate new config to use it for, or will otherwise fall back to the new default config.
+
+  ```
+  // < v0.12                         // v0.12
+  module.exports = {                 module.exports = {
+    karma: {                           karma: {
+      tests: 'tests.webpack.js'  =>      testContext: 'tests.webpack.js'
+    }                                  }
+  }                                  }
+  ```
+  ```
+  // < v0.12                         // v0.12
+  module.exports = {                 module.exports = {
+    karma: {                           karma: {
+      tests: 'test/**.test.js'   =>      testFiles: 'test/**.test.js'
+    }                                  }
+  }                                  }
+  ```
+
 **Added:**
 
+- Added [`karma.testDirs` config](https://github.com/insin/nwb/blob/0.12/docs/Configuration.md#testdirs-string--arraystring) to control which directories are excluded from code coverage reporting.
+- Added [`karma.browsers` config](https://github.com/insin/nwb/blob/0.12/docs/Configuration.md#browsers-string--arrayplugin) to customise which browsers tests are run in. The plugin to support use of `'Chrome'` in this config is also available by default.
 - Added [`webpack.autoprefixer` config](https://github.com/insin/nwb/blob/0.12/docs/Configuration.md#autoprefixer-string--object) to configure Autoprefixer in nwb's default PostCSS configuration [[#132](https://github.com/insin/nwb/issues/132)]
 - Added [`webpack.aliases` config](https://github.com/insin/nwb/blob/0.12/docs/Configuration.md#aliases-object) to set up module resolving aliases, as a convenient alternative to using `webpack.extra.resolve.alias` config [[#125](https://github.com/insin/nwb/issues/125)]
 - Production React builds now remove propTypes using [babel-plugin-transform-react-remove-prop-types](https://github.com/oliviertassinari/babel-plugin-transform-react-remove-prop-types) [[#97](https://github.com/insin/nwb/issues/97)]
@@ -93,6 +114,9 @@
 
 **Changed:**
 
+- Changed default testing configuration to support co-location of tests and a wider range of test file names and locations:
+  - Test files can be `-test.js`, `.test.js` or `.spec.js` files anywhere underneath a `src/`, `test/` or `tests/` directory.
+  - Code coverage will now automatically ignore other code underneath `test/`, `tests/` or any `__tests__/` directory anywhere underneath source.
 - UMD and ES6 modules builds now default to off when creating React component/web module projects.
 - Disabled `css-loader`'s use of Autoprefixer - nwb's PostCSS configuration is now the only source of prefix addition and removal [[#132](https://github.com/insin/nwb/issues/132)]
 - [`babel-plugin-istanbul`](https://github.com/istanbuljs/babel-plugin-istanbul) is now used to instrument code for test coverage instead of `isparta-loader`.
@@ -118,7 +142,8 @@
 - [inline-manifest-webpack-plugin](https://github.com/szrenwei/inline-manifest-webpack-plugin): v3.0.1
 - inquirer: v1.0.3 → [v1.1.2](https://github.com/SBoudrias/Inquirer.js/compare/v1.0.3...v1.1.2)
 - karma: v0.13.22 → [v1.1.1](https://github.com/karma-runner/karma/blob/master/CHANGELOG.md#111-2016-07-07)
-- karma-coverage: v1.0.0 → [v1.1.0](https://github.com/karma-runner/karma-coverage/blob/master/CHANGELOG.md#110-2016-07-07)
+- karma-chrome-launcher v1.0.1
+- karma-coverage: v1.0.0 → [v1.1.1](https://github.com/karma-runner/karma-coverage/blob/master/CHANGELOG.md#111-2016-07-23)
 - karma-mocha-reporter: v2.0.3 → [v2.0.4](https://github.com/litixsoft/karma-mocha-reporter/compare/v2.0.3...v2.0.4)
 - karma-phantomjs-launcher: v1.0.0 → [v1.0.1](https://github.com/karma-runner/karma-phantomjs-launcher/blob/master/CHANGELOG.md#101-2016-06-23)
 - npm-install-webpack-plugin: v4.0.1 → [v4.0.4](https://github.com/ericclemmons/npm-install-webpack-plugin/blob/master/CHANGELOG.md#404-2016-06-30)

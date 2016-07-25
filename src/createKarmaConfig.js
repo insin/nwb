@@ -7,12 +7,20 @@ import debug from './debug'
 import getPluginConfig from './getPluginConfig'
 import {deepToString, typeOf} from './utils'
 
-const DEFAULT_TESTS = 'tests/**/*-test.js'
+// The following defaults are combined into a single extglob-style pattern to
+// avoid generating "pattern ... does not match any file" warnings.
+
+// Exclude top-level test dirs and __tests__ dirs under src/ from code coverage.
+const DEFAULT_TEST_DIRS = ['test/', 'tests/', 'src/**/__tests__/']
+// Not every file in a test directory is a test and tests may also be co-located
+// with the code they test, so determine tests by suffix.
+const DEFAULT_TEST_FILES = ['+(src|test?(s))/**/*+(-test|.spec|.test).js']
 
 /**
- * Framework and reporter config can be passed as strings or as plugin objects.
- * This handles figuring out which names and plugins have been provided and
- * automatically extracting a framework name from a plugin object.
+ * Browser, framework and reporter config can be passed as strings or as plugin
+ * objects. This handles figuring out which names and plugins have been provided
+ * and automatically extracting the first browser/framework/reporter name from a
+ * plugin object.
  */
 export function processPluginConfig(configs) {
   let names = []
@@ -46,41 +54,38 @@ export function findPlugin(plugins, findId) {
 }
 
 /**
- * Handles creation of Karma config which can vary or be configured by the user.
+ * Handles creation of Karma config based on Karma plugins.
  */
-export function getKarmaConfig({codeCoverage = false} = {}, userConfig = {}) {
+export function getKarmaPluginConfig({codeCoverage = false} = {}, userConfig = {}) {
   let {karma: userKarma = {}} = userConfig
 
-  let frameworks = []
-  // Default reporter to be used if the user configures their own framework but
-  // not their own reporter, as the mocha reporter doesn't play nicely with TAP
-  // output and who knows which others.
-  let reporters = ['dots']
-  // You don't seem to be able to mix specifying your own plugins with having
-  // them magically located for you, so we're going to have to build a complete
-  // list ourselves.
+  let browsers = ['PhantomJS']
+  let frameworks = ['mocha']
   let plugins = [
-    require('karma-phantomjs-launcher'),
     require('karma-sourcemap-loader'),
     require('karma-webpack'),
   ]
+  // Default reporter if the user configure their own frameworks
+  let reporters = ['dots']
 
-  // Frameworks can be configured as a list containing names of bundled
-  // frameworks, or framework plugin objects.
+  // Browsers, frameworks and reporters can be configured as a list containing
+  // names of bundled plugins, or plugin objects.
+  if (userKarma.browsers) {
+    let [browserNames, browserPlugins] = processPluginConfig(userKarma.browsers)
+    browsers = browserNames
+    plugins = plugins.concat(browserPlugins)
+  }
+
   if (userKarma.frameworks) {
     let [frameworkNames, frameworkPlugins] = processPluginConfig(userKarma.frameworks)
     frameworks = frameworkNames
     plugins = plugins.concat(frameworkPlugins)
   }
   else {
-    // If the user didn't specify their own framework, use the Mocha framework
-    // and reporter.
-    frameworks = ['mocha']
+    // Use the Mocha reporter by default if the user didn't configure frameworks
     reporters = ['mocha']
   }
 
-  // Reporters can be configured as a list containing names of bundled
-  // reporters, or reporter plugin objects.
   if (userKarma.reporters) {
     let [reporterNames, reporterPlugins] = processPluginConfig(userKarma.reporters)
     reporters = reporterNames
@@ -92,13 +97,19 @@ export function getKarmaConfig({codeCoverage = false} = {}, userConfig = {}) {
     plugins = plugins.concat(userKarma.plugins)
   }
 
-  // Ensure nwb's version of mocha plugins get loaded if they're going to be
-  // used and haven't been provided by the user.
+  // Ensure nwb's version of plugins get loaded if they're going to be used and =
+  // haven't been provided by the user.
   if (frameworks.indexOf('mocha') !== -1 && !findPlugin(plugins, 'framework:mocha')) {
     plugins.push(require('karma-mocha'))
   }
   if (reporters.indexOf('mocha') !== -1 && !findPlugin(plugins, 'reporter:mocha')) {
     plugins.push(require('karma-mocha-reporter'))
+  }
+  if (browsers.indexOf('PhantomJS') !== -1 && !findPlugin(plugins, 'launcher:PhantomJS')) {
+    plugins.push(require('karma-phantomjs-launcher'))
+  }
+  if (browsers.indexOf('Chrome') !== -1 && !findPlugin(plugins, 'launcher:Chrome')) {
+    plugins.push(require('karma-chrome-launcher'))
   }
 
   if (codeCoverage) {
@@ -106,14 +117,34 @@ export function getKarmaConfig({codeCoverage = false} = {}, userConfig = {}) {
     reporters.push('coverage')
   }
 
-  return {plugins, frameworks, reporters}
+  return {browsers, frameworks, plugins, reporters}
 }
 
 export default function createKarmaConfig({codeCoverage, singleRun}, userConfig) {
   let userKarma = userConfig.karma || {}
 
-  let {plugins, frameworks, reporters} = getKarmaConfig({codeCoverage}, userConfig)
-  let testFiles = path.resolve(userKarma.tests || DEFAULT_TESTS)
+  let {browsers, frameworks, plugins, reporters} = getKarmaPluginConfig({codeCoverage}, userConfig)
+
+  let testDirs = userKarma.testDir || userKarma.testDirs || DEFAULT_TEST_DIRS
+  if (typeOf(testDirs) === 'string') testDirs = [testDirs]
+  let testFiles = userKarma.testFiles || DEFAULT_TEST_FILES
+  if (typeOf(testFiles) === 'string') testFiles = [testFiles]
+
+  // Polyfill by default for browsers which lack features (hello PhantomJS)
+  let files = [require.resolve('babel-polyfill/dist/polyfill.js')]
+  let preprocessors = {}
+
+  if (userConfig.testContext) {
+    files.push(userConfig.testContext)
+    preprocessors[userConfig.testContext] = ['webpack', 'sourcemap']
+  }
+  else {
+    files = files.concat(testFiles)
+    testFiles.forEach(testGlob => {
+      files.push(testGlob)
+      preprocessors[testGlob] = ['webpack', 'sourcemap']
+    })
+  }
 
   let babel = {
     presets: ['react'] // XXX
@@ -121,43 +152,38 @@ export default function createKarmaConfig({codeCoverage, singleRun}, userConfig)
   if (codeCoverage) {
     babel.plugins = [
       [require.resolve('babel-plugin-istanbul'), {
-        include: 'src'
+        exclude: [...testDirs, ...testFiles],
       }]
     ]
   }
 
   let karmaConfig = merge({
-    browsers: ['PhantomJS'],
+    browsers,
     coverageReporter: {
       dir: path.resolve('coverage'),
       reporters: [
         {type: 'html', subdir: 'html'},
         {type: 'lcovonly', subdir: '.'},
-      ]
+      ],
     },
-    files: [
-      require.resolve('babel-polyfill/dist/polyfill.js'),
-      testFiles,
-    ],
+    files,
     frameworks,
     mochaReporter: {
       showDiff: true,
     },
     plugins,
-    preprocessors: {
-      [testFiles]: ['webpack', 'sourcemap'],
-    },
+    preprocessors,
     reporters,
     singleRun,
     webpack: createWebpackConfig({
       babel,
-      devtool: 'inline-source-map',
+      devtool: 'cheap-module-inline-source-map',
       node: {
         fs: 'empty',
       },
       resolve: {
         alias: {
-          'src': path.resolve('src'),
+          src: path.resolve('src'),
         },
         // Fall back to resolving runtime dependencies from nwb's dependencies
         fallback: path.join(__dirname, '../node_modules'),

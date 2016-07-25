@@ -1,6 +1,7 @@
+import fs from 'fs'
 import path from 'path'
 
-import {magenta} from 'chalk'
+import {magenta as dep} from 'chalk'
 import glob from 'glob'
 import webpack from 'webpack'
 
@@ -29,8 +30,12 @@ export function prepareWebpackLoaderConfig(loaders) {
   })
 }
 
-// TODO Remove in a future version
+let warnedAboutBabelLoose = false
 let warnedAboutBuildChange = false
+let warnedAboutKarmaTests = false
+let warnedAboutWebpackPlugins = false
+
+// TODO Remove in a future version
 function upgradeBuildConfig(build, userConfigPath) {
   let npm = {}
   if (build.jsNext) {
@@ -46,13 +51,11 @@ function upgradeBuildConfig(build, userConfigPath) {
     }
   }
   if (!warnedAboutBuildChange) {
-    console.log(magenta([
-      'nwb: "build" config is deprecated in favour of "npm" config as of nwb v0.12',
-      'nwb: I can automatically upgrade your config to the new format for this build',
-      'nwb: This is the equivalent "npm" config for your current "build" config:',
-      JSON.stringify({npm}, null, 2),
-      `nwb: Please update your configuration file: ${userConfigPath}`,
-    ].join('\n')))
+    console.log(dep('nwb: "build" config is deprecated in favour of "npm" config as of nwb v0.12'))
+    console.log(dep('nwb: I can automatically upgrade your config to the new format for this build'))
+    console.log(dep('nwb: This is the equivalent "npm" config for your current "build" config:'))
+    console.log(dep(JSON.stringify({npm}, null, 2)))
+    console.log(dep(`nwb: Please update your configuration file: ${userConfigPath}`))
     warnedAboutBuildChange = true
   }
   return npm
@@ -91,11 +94,11 @@ export function processUserConfig({args, required = DEFAULT_REQUIRED, userConfig
 
   // Set defaults for config objects so we don't have to existence-check them
   // everywhere.
-  void ['babel', 'npm', 'webpack'].forEach(prop => {
+  void ['babel', 'karma', 'npm', 'webpack'].forEach(prop => {
     if (!(prop in userConfig)) userConfig[prop] = {}
   })
 
-  // Validate babel config
+  // Babel config
   if (!!userConfig.babel.stage || userConfig.babel.stage === 0) {
     if (typeOf(userConfig.babel.stage) !== 'number') {
       invalidConfig('babel.stage', userConfig.babel.stage, 'must be a number, or falsy to disable use of a stage preset')
@@ -115,13 +118,46 @@ export function processUserConfig({args, required = DEFAULT_REQUIRED, userConfig
       BABEL_RUNTIME_OPTIONS.indexOf(userConfig.babel.runtime) === -1) {
     invalidConfig('babel.runtime', userConfig.babel.runtime, "must be boolean or one of: 'helpers', 'regenerator', 'polyfill'")
   }
+  // TODO Remove in a future version
+  if ('loose' in userConfig.babel && typeOf(userConfig.babel.loose) !== 'boolean') {
+    if (!warnedAboutBabelLoose) {
+      console.log(dep('nwb: babel.loose config is boolean as of nwb v0.12 - converting to boolean for the current build'))
+      warnedAboutBabelLoose = true
+    }
+    userConfig.babel.loose = !!userConfig.babel.loose
+  }
 
-  // Modify npm build config where convenience shorthand is supported
+  // Karma config
+  // TODO Removed in a future version
+  if (userConfig.karma.tests) {
+    let log = !warnedAboutKarmaTests
+    if (log) console.log(dep(`nwb: karma.tests is deprecated as of nwb v0.12`))
+    if (userConfig.karma.tests.indeOf('*') === -1) {
+      if (log) console.log(dep(`nwb: karma.tests appears to be a glob, using it as karma.testFiles for this build`))
+      userConfig.karma.testFiles = userConfig.karma.tests
+    }
+    else if (glob.sync(userConfig.karma.tests, {nodir: true}).length === 1 &&
+             fs.readFileSync(userConfig.karma.tests, 'utf8').indexOf('require.context') !== -1) {
+      if (log) console.log(dep(`nwb: karma.tests appears to be a Webpack context module, using it as karma.testContext for this build`))
+      userConfig.karma.testContext = userConfig.karma.tests
+    }
+    else if (log) {
+      console.log(dep(`nwb: if karma.tests points at a Webpack context module, use karma.testContext instead`))
+      console.log(dep(`nwb: if karma.tests is a file glob, use karma.testFiles instead`))
+      console.log(dep(`nwb: falling back to default config for this build`))
+    }
+    if (log) {
+      warnedAboutKarmaTests = true
+    }
+    delete userConfig.karma.tests
+  }
+
+  // npm build config
   if (typeOf(userConfig.npm.umd) === 'string') {
     userConfig.npm.umd = {global: userConfig.npm.umd}
   }
 
-  // Modify webpack config where convenience shorthand is supported
+  // Webpack config
   if (typeOf(userConfig.webpack.autoprefixer) === 'string') {
     userConfig.webpack.autoprefixer = {browsers: userConfig.webpack.autoprefixer}
   }
@@ -131,18 +167,14 @@ export function processUserConfig({args, required = DEFAULT_REQUIRED, userConfig
   if (typeOf(userConfig.webpack.postcss) === 'array') {
     userConfig.webpack.postcss = {defaults: userConfig.webpack.postcss}
   }
-
   // TODO Remove in a future version
   if (userConfig.webpack.plugins) {
-    console.log(magenta(`nwb: webpack.plugins is deprecated as of nwb v0.11 - put this config directly under webpack in ${userConfigPath} instead`))
+    if (!warnedAboutWebpackPlugins) {
+      console.log(dep(`nwb: webpack.plugins is deprecated as of nwb v0.11 - put this config directly under webpack in ${userConfigPath} instead`))
+      warnedAboutWebpackPlugins = true
+    }
     userConfig.webpack = {...userConfig.webpack, ...userConfig.webpack.plugins}
     delete userConfig.webpack.plugins
-  }
-
-  // TODO Remove in a future version
-  if ('loose' in userConfig.babel && typeOf(userConfig.babel.loose) !== 'boolean') {
-    console.log(magenta('nwb: babel.loose config is boolean as of nwb v0.12 - converting to boolean for the current build'))
-    userConfig.babel.loose = !!userConfig.babel.loose
   }
 
   debug('user config: %s', deepToString(userConfig))

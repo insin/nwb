@@ -42,11 +42,14 @@ The configuration object provided by your nwb config module can use the followin
   - [`webpack.extra`](#extra-object)
 - [Karma Configuration](#karma-configuration)
   - [`karma`](#karma-object)
-  - [`karma.tests`](#tests-string)
-  - [`karma.frameworks`](#frameworks-arraystring--plugin)
-  - [`karma.reporters`](#reporters-arraystring--plugin)
-  - [`karma.plugins`](#plugins-arrayplugin)
-  - [`karma.extra`](#extra-object-1)
+  - [`karma.browsers`](#browsers-arraystring--plugin) - browsers tests are run in
+  - [`karma.frameworks`](#frameworks-arraystring--plugin) - testing framework
+  - [`karma.plugins`](#plugins-arrayplugin) - additional Karma plugins
+  - [`karma.reporters`](#reporters-arraystring--plugin) - test results reporter
+  - [`karma.testContext`](#testcontext-string) - point to a Webpack context module for your tests
+  - [`karma.testDirs`](#testdirs-string--arraystring) - directories containing test code which should be ignored in code coverage
+  - [`karma.testFiles`](#testfiles-string--arraystring) - patterns for test files
+  - [`karma.extra`](#extra-object-1) - an escape hatch for extra Karma config, which will be merged into the generated config
 - [npm Build Configuration](#npm-build-configuration)
   - [`npm`](#npm-object)
   - [`npm.jsNext`](#jsnext-boolean)
@@ -615,23 +618,59 @@ nwb's default [Karma](http://karma-runner.github.io/) configuration uses the [Mo
 
 Karma configuration can be provided in a `karma` object, using the following properties:
 
-##### `tests`: `String`
+##### `browsers`: `Array<String | Plugin>`
 
-By default, Karma will attempt to run tests from `'tests/**/*-test.js'` - you can configure this using the `tests` property.
+> Default: `['PhantomJS']`
 
-e.g. if you want to colocate your tests with your source:
+A list of browsers to run tests in.
+
+PhantomJS is the default as it's installed by default with nwb and should be able to run in any environment.
+
+The launcher plugin for Chrome is also included, so if you want to run tests in Chrome, you can just name it:
 
 ```js
 module.exports = {
   karma: {
-    tests: 'src/**/*-test.js'
+    browsers: ['Chrome']
+  }
+}
+```
+
+For other browsers, you will also need to supply a plugin and manage that dependency yourself:
+
+```js
+module.exports = {
+  karma: {
+    browsers: ['Firefox'],
+    plugins: [
+      require('karma-firefox-launcher')
+    ]
+  }
+}
+```
+
+nwb can also use the first browser defined in a launcher plugin if you pass it in `browsers`:
+
+```js
+module.exports = {
+  karma: {
+    browsers: [
+      'Chrome',
+      require('karma-firefox-launcher')
+    ]
   }
 }
 ```
 
 ##### `frameworks`: `Array<String | Plugin>`
 
-You must provide the plugin for any custom framework you want to use and manage it as a dependency yourself. Customise the testing framework plugin(s) Karma uses with the `frameworks` and `plugins` props:
+> Default: `['mocha']`
+
+Karma testing framework plugins.
+
+You must provide the plugin for any custom framework you want to use and manage it as a dependency yourself.
+
+e.g. if you're using a testing framework which produces [TAP](https://testanything.org/) output (such as [tape](https://github.com/substack/tape)). this is how you would use `frameworks` and `plugins` props to configure Karma:
 
 ```
 npm install --save-dev karma-tap
@@ -672,9 +711,41 @@ module.exports = {
 }
 ```
 
-If you're configuring frameworks and you want to use the Mocha framework managed by nwb, just pass its name as in the above example.
+**Note:** If you're configuring frameworks and you want to use the Mocha framework plugin managed by nwb, just pass its name as in the above example.
+
+##### `testContext`: `String`
+
+Use this configuration to point to a [Webpack context module](/docs/Testing.md#using-a-test-context-module) for your tests if you need to run code prior to any tests being run, such as customising the assertion library you're using, or global before and after hooks.
+
+If you provide a context module, it is responsible for including tests via Webpack's  `require.context()` - see the [example in the Testing docs](/docs/Testing.md#using-a-test-context-module).
+
+If the default [`testFiles`](#testfiles-string--arraystring) config wouldn't have picked up your tests, you must also configure it so they can be excluded from code coverage.
+
+##### `testDirs`: `String | Array<String>`
+
+> Default: `['test/', 'tests/', 'src/**/__tests__/']`
+
+Globs for directories containing test code.
+
+These are used to exclude test utility code from code coverage.
+
+##### `testFiles`: `String | Array<String>`
+
+> Default: `.spec.js`, `.test.js` or `-test.js` files anywhere under `src/`, `test/` or `tests/`
+
+[Minimatch glob patterns](https://github.com/isaacs/minimatch) for test files.
+
+If [`karma.testContext`](#testcontext-string) is not being used, this controls which files Karma will run tests from.
+
+This is also used to exclude tests from code coverage, so if you're using [`karma.testContext`](#testcontext-string) and the default patterns wouldn't have picked up your tests, configure this as well to exclude then from code coverage.
+
+##### `plugins`: `Array<Plugin>`
+
+A list of plugins to be loaded by Karma - this should be used in combination with [`browsers`](#browsers-arraystring--plugin), [`frameworks`](#frameworks-arraystring--plugin) and [`reporters`](#reporters-arraystring--plugin) config as necessary.
 
 ##### `reporters`: `Array<String | Plugin>`
+
+> Default: `['mocha']`
 
 Customising reporters follows the same principle as frameworks, just using the `reporters` prop instead.
 
@@ -702,10 +773,6 @@ module.exports = {
   }
 }
 ```
-
-##### `plugins`: `Array<Plugin>`
-
-A list of plugins to be loaded by Karma - this should be used in combination with `frameworks` and `reporters` as necessary.
 
 ##### `extra`: `Object`
 
