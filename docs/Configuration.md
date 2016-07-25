@@ -54,8 +54,8 @@ The configuration object can include the following properties:
   - [`babel`](#babel-object)
   - [`babel.cherryPick`](#cherrypick-string--arraystring) - enable cherry-picking for destructured `import` statements
   - [`babel.loose`](#loose-boolean) - enable loose mode for Babel plugins which support it
-  - [`babel.plugins`](#plugins-array) - extra Babel plugins to be used
-  - [`babel.presets`](#plugins-array) - extra Babel presets to be used
+  - [`babel.plugins`](#plugins-arraystring--array) - extra Babel plugins to be used
+  - [`babel.presets`](#presets-arraystring) - extra Babel presets to be used
   - [`babel.runtime`](#runtime-string--boolean) - enable the `transform-runtime` plugin with different configurations
   - [`babel.stage`](#stage-number--false) - control which experimental and upcoming JavaScript features can be used
 - [Webpack Configuration](#webpack-configuration)
@@ -69,7 +69,7 @@ The configuration object can include the following properties:
   - [`webpack.install`](#install-object) - options for `NpmInstallPlugin`
   - [`webpack.loaders`](#loaders-object) - tweak the configuration of the default Webpack loaders
     - [Default Loaders](#default-loaders)
-  - [`webpack.postcss`](#postcss-array--object) - a custom list of PostCSS plugins
+  - [`webpack.postcss`](#postcss-arrayplugin--objectstring-arrayplugin) - custom PostCSS plugins
   - [`webpack.uglify`](#uglify-object) - options for Webpack's `UglifyJsPlugin`
   - [`webpack.vendorBundle`](#vendorbundle-boolean) - control creation of a separate vendor bundle
   - [`webpack.extra`](#extra-object) - an escape hatch for extra Webpack config, which will be merged into the generated config
@@ -161,7 +161,7 @@ module.exports = {
 }
 ```
 
-##### `plugins`: `Array`
+##### `plugins`: `Array<String | Array>`
 
 Additional Babel plugins to use.
 
@@ -180,7 +180,7 @@ module.exports = {
 }
 ```
 
-##### `presets`: `Array`
+##### `presets`: `Array<String>`
 
 Additional Babel presets to use.
 
@@ -554,7 +554,7 @@ Default loaders configured by nwb and the ids it gives them are:
 
 - `json` - handles `.json` files using [json-loader][json-loader]
 
-##### `postcss`: `Array | Object`
+##### `postcss`: `Array<Plugin> | Object<String, Array<Plugin>>`
 
 By default, nwb configures the `postcss-loader` in each style pipeline to automatically add vendor prefixes to CSS rules.
 

@@ -192,13 +192,13 @@ describe('sample projects', function() {
       })
     })
 
-    it('transpiles to a cherry-picked version', () => {
+    it('the ES5 build transpiles to a cherry-picked version', () => {
       expect(content)
         .toInclude("require('react-bootstrap/lib/Col')")
         .toInclude("require('react-bootstrap/lib/Grid')")
         .toInclude("require('react-bootstrap/lib/Row')")
     })
-    it('transpiles to a CommonJS interop export', () => {
+    it('the ES5 build includes a CommonJS interop export', () => {
       expect(content).toInclude("module.exports = exports['default']")
     })
   })

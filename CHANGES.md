@@ -5,7 +5,7 @@
   - nwb *probably* still works with Node.js v0.12, but it's not being tested.
 - Upgraded from Babel 5 to Babel 6 [[#12](https://github.com/insin/nwb/issues/12)]
   - [`babel` config](https://github.com/insin/nwb/blob/0.12/docs/Configuration.md#babel-configuration) in `nwb.config.js` is no longer directly equivalent to what you would normally put in a [`.babelrc` file](https://babeljs.io/docs/usage/babelrc/).
-  - nwb implements its own support for a Babel 6 equivalent of Babel 5's `stage` config to [choose which experimental features are enabled](https://github.com/insin/nwb/blob/0.12/docs/Configuration.md#stage-number--false), including defaulting to [Stage 2](https://babeljs.io/docs/plugins/preset-stage-2/)
+  - nwb implements its own support for a Babel 6 equivalent of Babel 5's `stage` config to [choose which experimental features are enabled](https://github.com/insin/nwb/blob/0.12/docs/Configuration.md#stage-number--false). It also defaults to [Stage 2](https://babeljs.io/docs/plugins/preset-stage-2/)
     - The custom preset used for [Stage 1](https://babeljs.io/docs/plugins/preset-stage-1/) features (and [Stage 0](https://babeljs.io/docs/plugins/preset-stage-0/), which includes Stage 1 features) includes the [Babel Legacy Decorator transform plugin](https://github.com/loganfsmyth/babel-plugin-transform-decorators-legacy) to support use of decorators. See its [Best Effort documentation](https://github.com/loganfsmyth/babel-plugin-transform-decorators-legacy#best-effort) for differences you will need to take into account if you were using Babel 5 decorators.
   - Babel 6 introduced [a number of breaking changes](https://github.com/babel/babel/blob/master/CHANGELOG.md#600) which you may need to account for in your codebase if you've been using nwb or Babel 5 on its own.
     - Babel 6 interop with CommonJS exports was removed as it allowed you to write broken ES6 code. Kent C. Dodds has [a post about this which is well worth reading](https://medium.com/@kentcdodds/misunderstanding-es6-modules-upgrading-babel-tears-and-a-solution-ad2d5ab93ce0) to understand what *not* to do. When creating an ES5 build for npm, nwb preserves CommonJS interop using the [`add-module-exports`](https://github.com/59naga/babel-plugin-add-module-exports) plugin, to avoid forcing people using your npm packages via CommonJS having to tag a `.default` onto every `require()` call.
@@ -15,7 +15,7 @@
 
 **`nwb.config.js` Config Format Changes:**
 
-> For deprecations, nwb v0.11 will support the old format and display warning messages about the changes required.
+> For deprecations, nwb v0.12 will support the old format and display warning messages about the changes required.
 
 - `build` config is deprecated in favour of new [`npm` config](https://github.com/insin/nwb/blob/0.12/docs/Configuration.md#npm-object), which is a slightly different format. To help you upgrade, nwb will auto-upgrade any `build` config it finds for the current build and log out the equivalent `npm` config.
 

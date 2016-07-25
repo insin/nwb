@@ -263,7 +263,8 @@ function injectManifest() {
   this.plugin('compilation', (compilation) => {
     compilation.plugin('html-webpack-plugin-before-html-processing', (htmlPluginData, cb) => {
       let {assets, html} = htmlPluginData
-      htmlPluginData.html = html.replace('</body>', `${assets.webpackManifest}</body>`)
+      let manifest = assets.webpackManifest.replace(/\n(<\/script>)$/, '$1') // OCD
+      htmlPluginData.html = html.replace('</body>', `${manifest}</body>`)
       cb()
     })
   })
