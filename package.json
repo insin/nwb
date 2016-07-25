@@ -41,7 +41,7 @@
     "resolve": "1.1.7",
     "rimraf": "2.5.4",
     "temp": "0.8.3",
-    "webpack-merge": "0.14.0",
+    "webpack-merge": "0.14.1",
 
     "babel-cli": "6.11.4",
     "babel-core": "6.11.4",
@@ -71,7 +71,7 @@
     "express": "4.14.0",
     "connect-history-api-fallback": "1.2.0",
 
-    "karma": "1.1.1",
+    "karma": "1.1.2",
     "diff": "2.2.3",
     "karma-chrome-launcher": "1.0.1",
     "karma-coverage": "1.1.1",
@@ -80,7 +80,7 @@
     "karma-phantomjs-launcher": "1.0.1",
     "karma-sourcemap-loader": "0.3.7",
     "karma-webpack": "1.7.0",
-    "phantomjs-prebuilt": "2.1.7",
+    "phantomjs-prebuilt": "2.1.8",
 
     "mocha": "2.5.3",
     "expect": "1.20.2",
@@ -109,8 +109,8 @@
     "cross-spawn": "4.0.0",
     "eslint-config-jonnybuchanan": "4.2.1",
     "eventsource": "0.2.1",
-    "nyc": "7.0.0",
-    "shelljs": "0.7.1",
+    "nyc": "7.1.0",
+    "shelljs": "0.7.2",
     "tree-kill": "1.1.0"
   },
   "optionalDependencies": {

@@ -115,17 +115,19 @@
 - html-webpack-plugin: v2.19.0 → [v2.22.0](https://github.com/ampedandwired/html-webpack-plugin/blob/master/CHANGELOG.md#v2220)
 - [inline-manifest-webpack-plugin](https://github.com/szrenwei/inline-manifest-webpack-plugin): v3.0.1
 - inquirer: v1.0.3 → [v1.1.2](https://github.com/SBoudrias/Inquirer.js/compare/v1.0.3...v1.1.2)
-- karma: v0.13.22 → [v1.1.1](https://github.com/karma-runner/karma/blob/master/CHANGELOG.md#111-2016-07-07)
+- karma: v0.13.22 → [v1.1.2](https://github.com/karma-runner/karma/blob/master/CHANGELOG.md#112-2016-07-26)
 - karma-chrome-launcher v1.0.1
 - karma-coverage: v1.0.0 → [v1.1.1](https://github.com/karma-runner/karma-coverage/blob/master/CHANGELOG.md#111-2016-07-23)
 - karma-mocha-reporter: v2.0.3 → [v2.0.4](https://github.com/litixsoft/karma-mocha-reporter/compare/v2.0.3...v2.0.4)
 - karma-phantomjs-launcher: v1.0.0 → [v1.0.1](https://github.com/karma-runner/karma-phantomjs-launcher/blob/master/CHANGELOG.md#101-2016-06-23)
 - npm-install-webpack-plugin: v4.0.1 → [v4.0.4](https://github.com/ericclemmons/npm-install-webpack-plugin/blob/master/CHANGELOG.md#404-2016-06-30)
+- phantomjs-prebuilt: v2.1.7 → [v2.1.8](https://github.com/Medium/phantomjs/releases/tag/v2.1.8)
 - qs: v6.2.0 → [v6.2.1](https://github.com/ljharb/qs/blob/master/CHANGELOG.md#621)
 - rimraf: v2.5.2 → [v2.5.3](https://github.com/isaacs/rimraf/compare/v2.5.2...v2.5.3)
 - [webpack-fail-plugin](https://github.com/TiddoLangerak/webpack-fail-plugin): v1.0.5
 - webpack-hot-middleware: v2.10.0 → [v2.12.1](https://github.com/glenjamin/webpack-hot-middleware/compare/v2.10.0...v2.12.1)
 - [webpack-md5-hash](https://github.com/erm0l0v/webpack-md5-hash): v0.0.5
+- webpack-merge: v0.14.0 → [v0.14.1](https://github.com/survivejs/webpack-merge/blob/master/CHANGELOG.md#0141--2016-07-25)
 
 # 0.11.1 / 2016-07-16
 
