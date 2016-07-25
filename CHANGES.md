@@ -129,7 +129,7 @@
 - qs: v6.2.0 → [v6.2.1](https://github.com/ljharb/qs/blob/master/CHANGELOG.md#621)
 - rimraf: v2.5.2 → [v2.5.3](https://github.com/isaacs/rimraf/compare/v2.5.2...v2.5.3)
 - [webpack-fail-plugin](https://github.com/TiddoLangerak/webpack-fail-plugin): v1.0.5
-- webpack-hot-middleware: v2.10.0 → [v2.12.1](https://github.com/glenjamin/webpack-hot-middleware/compare/v2.10.0...v2.12.1)
+- webpack-hot-middleware: v2.10.0 → [v2.12.2](https://github.com/glenjamin/webpack-hot-middleware/compare/v2.10.0...v2.12.2)
 - [webpack-md5-hash](https://github.com/erm0l0v/webpack-md5-hash): v0.0.5
 - webpack-merge: v0.14.0 → [v0.14.1](https://github.com/survivejs/webpack-merge/blob/master/CHANGELOG.md#0141--2016-07-25)
 
