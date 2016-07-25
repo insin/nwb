@@ -162,6 +162,7 @@ describe('sample projects', function() {
   })
 
   describe('cherry-pick project', () => {
+    let content
     let originalCwd
     let originalNodeEnv
     let tmpDir
@@ -177,6 +178,7 @@ describe('sample projects', function() {
         execSync('npm install', {stdio: [0, 1, 2]})
         cli(['build'], err => {
           expect(err).toNotExist()
+          content = fs.readFileSync(path.join(tmpDir, 'lib/index.js'), 'utf-8')
           done()
         })
       })
@@ -191,11 +193,13 @@ describe('sample projects', function() {
     })
 
     it('transpiles to a cherry-picked version', () => {
-      let content = fs.readFileSync(path.join(tmpDir, 'lib/index.js'), 'utf-8')
       expect(content)
         .toInclude("require('react-bootstrap/lib/Col')")
         .toInclude("require('react-bootstrap/lib/Grid')")
         .toInclude("require('react-bootstrap/lib/Row')")
+    })
+    it('transpiles to a CommonJS interop export', () => {
+      expect(content).toInclude("module.exports = exports['default']")
     })
   })
 })

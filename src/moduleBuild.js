@@ -25,9 +25,10 @@ function runBabel(src, outDir, buildBabelConfig, userBabelConfig) {
 }
 
 export default function moduleBuild(args, babelConfig) {
+  // XXX Babel doesn't support passing the path to a babelrc file any more
   if (glob.sync('.babelrc').length > 0) {
     throw new UserError(
-      'nwb: Unable to create a module build as there is a .babelrc in your project',
+      'nwb: Unable to build the module as there is a .babelrc in your project',
       'nwb: I need to write a temporary .babelrc to configure the build',
     )
   }
@@ -38,7 +39,10 @@ export default function moduleBuild(args, babelConfig) {
   let userConfig = getUserConfig(args)
 
   console.log('nwb: build-module (es5)')
-  runBabel(src, path.resolve('lib'), babelConfig, userConfig.babel)
+  runBabel(src, path.resolve('lib'), {
+    ...babelConfig,
+    plugins: [require.resolve('babel-plugin-add-module-exports')],
+  }, userConfig.babel)
 
   if (userConfig.npm.jsNext) {
     console.log('nwb: build-module (es6 modules)')
