@@ -53,6 +53,8 @@ describe('command: build', function() {
       expect(glob.sync('*', {cwd: path.resolve('dist')})).toMatch([
         /^app\.\w{8}\.js/,
         /^app\.\w{8}\.js\.map/,
+        /^app\.\w{8}\.css/,
+        /^app\.\w{8}\.css\.map/,
         'index.html',
         /^vendor\.\w{8}\.js/,
         /^vendor\.\w{8}\.js\.map/,
