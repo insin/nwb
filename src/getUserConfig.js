@@ -118,7 +118,7 @@ export function processUserConfig({args, required = DEFAULT_REQUIRED, userConfig
       BABEL_RUNTIME_OPTIONS.indexOf(userConfig.babel.runtime) === -1) {
     invalidConfig('babel.runtime', userConfig.babel.runtime, "must be boolean or one of: 'helpers', 'regenerator', 'polyfill'")
   }
-  // TODO Remove in a future version
+  // TODO Remove in a future version - don't convert, just validate
   if ('loose' in userConfig.babel && typeOf(userConfig.babel.loose) !== 'boolean') {
     if (!warnedAboutBabelLoose) {
       console.log(dep('nwb: babel.loose config is boolean as of nwb v0.12 - converting to boolean for the current build'))

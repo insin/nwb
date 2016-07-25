@@ -21,9 +21,9 @@ export default function createBabelConfig(buildConfig = {}, userConfig = {}) {
 
   let presets = []
 
-  // Default to loose mode in production builds when not explicitly configured
+  // Default to loose mode unless explicitly configured
   if (typeOf(loose) === 'undefined') {
-    loose = process.env.NODE_ENV === 'production'
+    loose = true
   }
 
   // ES2015 preset

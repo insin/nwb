@@ -114,16 +114,16 @@ For Webpack builds, any Babel config provided will be used to configure `babel-l
 
 Some Babel plugins have a [loose mode](http://www.2ality.com/2015/12/babel6-loose-mode.html) in which they output simpler, potentially faster code rather than following the semantics of the ES6 spec closely.
 
-**Loose mode is enabled by default for production builds**, as a performance optimisation.
+**Loose mode is enabled by default with nwb**.
 
-If you want to use loose mode all the time, set `loose` to `true`, or if you want to disable its default use in production builds, set it to `false`.
+If you want to disable loose mode (e.g. to check your code works in the stricter normal mode for forward-compatibility purposes), set it to `false`.
 
-e.g. to enable loose mode all the time:
+e.g. to disable loose mode only when running tests:
 
 ```js
 module.exports = {
   babel {
-    loose: true
+    loose: process.env.NODE_ENV === 'test'
   }
 }
 ```

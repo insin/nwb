@@ -43,16 +43,18 @@
   }                              }
   ```
 
-- [Loose mode](http://www.2ality.com/2015/12/babel6-loose-mode.html) is now enabled for Babel plugins which support it [using `loose` as a boolean](https://github.com/insin/nwb/blob/0.12/docs/Configuration.md#loose-boolean) instead of Babel 5's string config:
+- [Loose mode](http://www.2ality.com/2015/12/babel6-loose-mode.html) is now enabled by default for Babel plugins which support it.
 
   ```
-  // < v0.12              // v0.12
-  module.exports = {      module.exports = {
-    babel: {                babel: {
-      loose: 'all'    =>      loose: true
-    }                       }
-  }                       }
+  // < v0.12
+  module.exports = {
+    babel: {
+      loose: 'all'    =>  ...nothing
+    }
+  }
   ```
+
+  [`loose` config](https://github.com/insin/nwb/blob/0.12/docs/Configuration.md#loose-boolean) is now Boolean instead of Babel 5's string config, and is now only used to disable loose mode.
 
 - `karma.tests` config is deprecated in favour of new [`karma.testContext`](https://github.com/insin/nwb/blob/0.12/docs/Configuration.md#testcontext-string) and [`karma.testFiles` config](https://github.com/insin/nwb/blob/0.12/docs/Configuration.md#testfiles-string--arraystring), depending on which was being specified. If `karma.tests` is present, nwb will attempt to detect the appropriate new config to use it for, or will otherwise fall back to the new default config.
 
@@ -87,7 +89,7 @@
 
 **Changed:**
 
-- [Loose mode](http://www.2ality.com/2015/12/babel6-loose-mode.html) for Babel plugins is now on by default in production builds, as an optimisation. This is less strict and may allow some illegal code to work, but this should be caught during development and testing, which default to normal mode [[facebookincubator/create-react-app#198](https://github.com/facebookincubator/create-react-app/issues/198)]
+- [Loose mode](http://www.2ality.com/2015/12/babel6-loose-mode.html) for Babel plugins is now enabled by default. [`babel.loose` config](https://github.com/insin/nwb/blob/0.12/docs/Configuration.md#loose-boolean) is now Boolean, and is only needed if you want to disable loose mode (e.g. in non-production environments to check for normal mode errors).
 - Changed default testing configuration to support co-location of tests and a wider range of test file names and locations:
   - Test files can be `-test.js`, `.test.js` or `.spec.js` files anywhere underneath a `src/`, `test/` or `tests/` directory.
   - Code coverage will now automatically ignore other code underneath `test/`, `tests/` or any `__tests__/` directory anywhere underneath source.
