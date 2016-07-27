@@ -240,6 +240,36 @@ export function createExtraLoaders(extraLoaders = [], userConfig = {}) {
 }
 
 /**
+ * Plugin for HtmlWebpackPlugin which inlines content for an extracted Webpack
+ * manifest into the HTML page in a <script> tag before other emitted asssets
+ * are injected by HtmlWebpackPlugin itself.
+ */
+function injectManifestPlugin() {
+  this.plugin('compilation', (compilation) => {
+    compilation.plugin('html-webpack-plugin-before-html-processing', (data, cb) => {
+      Object.keys(compilation.assets).forEach(key => {
+        if (key.indexOf('manifest.') !== 0) return
+        let {children} = compilation.assets[key]
+        if (children && children[0]) {
+          data.html = data.html.replace(
+            '</body>',
+            `<script>${children[0]._value}</script></body>`
+          )
+          // Remove the manifest from HtmlWebpackPlugin's assets to
+          // prevent a <script> tag being created for it.
+          var manifestIndex = data.assets.js.indexOf(data.assets.publicPath + key)
+          data.assets.js.splice(manifestIndex, 1)
+          delete data.assets.chunks.manifest
+        }
+        // Prevent manifest .js and .js.map files being emitted
+        delete compilation.assets[key]
+      })
+      cb()
+    })
+  })
+}
+
+/**
  * Final webpack plugin config consists of:
  * - the default set of plugins created by this function based on whether or not
  *   a server build is being configured, whether or not the build is for an
@@ -318,30 +348,7 @@ export function createPlugins(server, buildConfig = {}, userConfig = {}) {
         // chunk - also essential for deterministic hashing.
         new optimize.CommonsChunkPlugin({name: 'manifest'}),
         // Inject the Webpack manifest into the generated HTML as a <script>
-        function injectManifest() {
-          this.plugin('compilation', (compilation) => {
-            compilation.plugin('html-webpack-plugin-before-html-processing', (data, cb) => {
-              Object.keys(compilation.assets).forEach(key => {
-                if (key.indexOf('manifest.') !== 0) return
-                let {children} = compilation.assets[key]
-                if (children && children[0]) {
-                  data.html = data.html.replace(
-                    '</body>',
-                    `<script>${children[0]._value}</script></body>`
-                  )
-                  // Remove the manifest from HtmlWebpackPlugin's assets to
-                  // prevent a <script> tag being created for it.
-                  var manifestIndex = data.assets.js.indexOf(data.assets.publicPath + key)
-                  data.assets.js.splice(manifestIndex, 1)
-                  delete data.assets.chunks.manifest
-                }
-                // Prevent manifest .js and .js.map files being emitted
-                delete compilation.assets[key]
-              })
-              cb()
-            })
-          })
-        }
+        injectManifestPlugin,
       )
     }
   }
