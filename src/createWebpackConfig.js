@@ -11,6 +11,7 @@ import failPlugin from 'webpack-fail-plugin'
 import WebpackMd5Hash from 'webpack-md5-hash'
 import merge from 'webpack-merge'
 
+import HashedModuleIdsPlugin from '../vendor/HashedModuleIdsPlugin'
 import createBabelConfig from './createBabelConfig'
 import debug from './debug'
 import {deepToString, endsWith} from './utils'
@@ -272,9 +273,9 @@ export function createPlugins(server, buildConfig = {}, userConfig = {}) {
       ...buildConfig.define,
       ...userConfig.define,
     }),
-    new optimize.OccurenceOrderPlugin(),
   )
 
+  // If we're not serving, we're creating a static build
   if (!server) {
     // Extract CSS into files
     let cssFilename = production ? `[name].[contenthash:8].css` : '[name].css'
@@ -295,8 +296,13 @@ export function createPlugins(server, buildConfig = {}, userConfig = {}) {
       }))
     }
 
+    // If we're generating an HTML file, we must be building a webapp, so
+    // configure deterministic hashing for long-term caching.
     if (buildConfig.html) {
       plugins.push(
+        // Generate stable module ids by hashing module paths instead of
+        // assigning integers.
+        new HashedModuleIdsPlugin(),
         // The MD5 Hash plugin seems to make [chunkhash] for .js files behave
         // like [contenthash] does for extracted .css files, which is essential
         // for deterministic hashing.
