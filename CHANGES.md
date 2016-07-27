@@ -109,14 +109,14 @@
 **Removed:**
 
 - Removed default `limit` config from the `graphics` and `fonts` loaders - if you want resources smaller than a given size to be inlined, configure `limit` using [`webpack.loaders` config](https://github.com/insin/nwb/blob/0.12/docs/Configuration.md#loaders-object).
-- Dropped the `-g, --global` arg for enabling a UMD build when creating a React component/web module project in favour of passing a name to the `--umd` arg instead.
+- Dropped the `-g, --global` argument for enabling a UMD build when creating a React component/web module project, in favour of passing a name to the `--umd` argument instead.
 - The Babel 6 equivalent of Babel 5's inline element transform is not used in production builds, as it currently depends on having `Symbol` polyfilled to work in older browsers, which has the potential to introduce breaking changes to your production build.
 
 **Dependencies:**
 
 - autoprefixer: v6.3.6 → [v6.3.7](https://github.com/postcss/autoprefixer/blob/master/CHANGELOG.md#637)
-- babel-* v5 → babel-* v6!
-- babel-plugin-lodash v3.2.6
+- babel* v5 → babel* v6
+- [babel-plugin-lodash](https://github.com/lodash/babel-plugin-lodash): v3.2.6
 - expect: v1.20.1 → [v1.20.2](https://github.com/mjackson/expect/compare/v1.20.1...v1.20.2)
 - express: v4.13.4 → [v4.14.0](https://github.com/expressjs/express/blob/master/History.md#4140--2016-06-16)
 - file-loader: v0.8.5 → [v0.9.0](https://github.com/webpack/file-loader/compare/v0.8.5...v0.9.0)
