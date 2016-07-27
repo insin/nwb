@@ -87,7 +87,7 @@ if (!COMMAND_MODULES.hasOwnProperty(command)) {
   process.exit(1)
 }
 
-let commandModule = require(`../commands/${COMMAND_MODULES[command]}`).default
+let commandModule = require(`../commands/${COMMAND_MODULES[command]}`)
 
 try {
   commandModule(args, err => {

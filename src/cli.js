@@ -147,6 +147,6 @@ Project type-specific commands:
     unknownCommand()
   }
 
-  let commandModule = require(commandModulePath).default
+  let commandModule = require(commandModulePath)
   commandModule(args, cb)
 }

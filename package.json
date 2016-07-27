@@ -130,6 +130,9 @@
       "./babel-presets/es2015-loose",
       "./babel-presets/stage-2"
     ],
+    "plugins": [
+      "babel-plugin-add-module-exports"
+    ],
     "env": {
       "test": {
         "plugins": [
