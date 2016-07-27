@@ -267,6 +267,7 @@ export function createPlugins(server, buildConfig = {}, userConfig = {}) {
         new webpack.NoErrorsPlugin(),
       )
     }
+    plugins.push(new webpack.NamedModulesPlugin())
   }
 
   plugins.push(
