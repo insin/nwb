@@ -1,6 +1,7 @@
 import path from 'path'
 
 import autoprefixer from 'autoprefixer'
+import CaseSensitivePathsPlugin from 'case-sensitive-paths-webpack-plugin'
 import {red} from 'chalk'
 import ExtractTextPlugin from 'extract-text-webpack-plugin'
 import HtmlWebpackPlugin from 'html-webpack-plugin'
@@ -252,7 +253,9 @@ export function createExtraLoaders(extraLoaders = [], userConfig = {}) {
 export function createPlugins(server, buildConfig = {}, userConfig = {}) {
   let production = process.env.NODE_ENV === 'production'
 
-  let plugins = []
+  let plugins = [
+    new CaseSensitivePathsPlugin(),
+  ]
 
   // Fail the build if there are compilation errors when running on CI
   if (process.env.CONTINUOUS_INTEGRATION === 'true') {

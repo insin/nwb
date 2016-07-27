@@ -79,6 +79,7 @@
 
 **Added:**
 
+- Case-sensitivity of `require`/`import` paths is now enforced by the [`CaseSensitivePathsPlugin`](https://github.com/Urthen/case-sensitive-paths-webpack-plugin) for Webpack.
 - Added [`babel.cherryPick` config](https://github.com/insin/nwb/blob/0.12/docs/Configuration.md#cherrypick-string--arraystring) which allows you to specify modules for which destructured imports should transpile to cherry-picked submodule imports [[#141](https://github.com/insin/nwb/issues/141)]
 - Added [`karma.testDirs` config](https://github.com/insin/nwb/blob/0.12/docs/Configuration.md#testdirs-string--arraystring) to control which directories are excluded from code coverage reporting.
 - Added [`karma.browsers` config](https://github.com/insin/nwb/blob/0.12/docs/Configuration.md#browsers-string--arrayplugin) to customise which browsers tests are run in. The plugin to support use of `'Chrome'` in this config is also available by default.
@@ -117,6 +118,7 @@
 - autoprefixer: v6.3.6 → [v6.3.7](https://github.com/postcss/autoprefixer/blob/master/CHANGELOG.md#637)
 - babel* v5 → babel* v6
 - [babel-plugin-lodash](https://github.com/lodash/babel-plugin-lodash): v3.2.6
+- [case-sensitive-paths-webpack-plugin](https://github.com/Urthen/case-sensitive-paths-webpack-plugin): v1.1.2
 - expect: v1.20.1 → [v1.20.2](https://github.com/mjackson/expect/compare/v1.20.1...v1.20.2)
 - express: v4.13.4 → [v4.14.0](https://github.com/expressjs/express/blob/master/History.md#4140--2016-06-16)
 - file-loader: v0.8.5 → [v0.9.0](https://github.com/webpack/file-loader/compare/v0.8.5...v0.9.0)
