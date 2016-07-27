@@ -259,12 +259,14 @@ export function createPlugins(server, buildConfig = {}, userConfig = {}) {
     plugins.push(failPlugin)
   }
 
-  // Assumption: we're always hot reloading if we're bundling on the server
   if (server) {
-    plugins.push(
-      new webpack.HotModuleReplacementPlugin(),
-      new webpack.NoErrorsPlugin(),
-    )
+    // HMR is enable by default when serving
+    if (server.hot !== false) {
+      plugins.push(
+        new webpack.HotModuleReplacementPlugin(),
+        new webpack.NoErrorsPlugin(),
+      )
+    }
   }
 
   plugins.push(

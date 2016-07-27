@@ -188,7 +188,9 @@ export default function createKarmaConfig({codeCoverage, singleRun}, userConfig)
         // Fall back to resolving runtime dependencies from nwb's dependencies
         fallback: path.join(__dirname, '../node_modules'),
       },
-      server: true,
+      server: {
+        hot: false,
+      },
     }, getPluginConfig(), userConfig),
     webpackServer: {
       noInfo: true,
