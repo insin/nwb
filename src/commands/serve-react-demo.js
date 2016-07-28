@@ -13,7 +13,7 @@ export default function serveReactDemo(args, cb) {
     babel: {
       presets: ['react', 'react-hmre'],
     },
-    entry: path.resolve('demo/src/index.js'),
+    entry: [path.resolve('demo/src/index.js')],
     output: {
       filename: 'demo.js',
       // This doesn't really matter, as files will be served from memory

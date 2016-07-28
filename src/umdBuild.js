@@ -30,6 +30,7 @@ export default function umdBuild(args, babelConfig, cb) {
       path: path.resolve('umd'),
     },
     externals: createWebpackExternals(userConfig.npm.externals),
+    polyfill: false,
     plugins: {
       banner: createBanner(pkg),
     },

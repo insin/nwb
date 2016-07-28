@@ -22,8 +22,7 @@ export default function createServerWebpackConfig(args, buildConfig) {
       // Polyfill EventSource for IE, as webpack-hot-middleware/client uses it
       require.resolve('eventsource-polyfill'),
       require.resolve('webpack-hot-middleware/client') + hotMiddlewareOptions,
-      entry,
-    ],
+    ].concat(entry),
     output,
     plugins,
     server: true,

@@ -21,7 +21,7 @@ export default function buildDemo(args, cb) {
     },
     devtool: 'source-map',
     entry: {
-      demo: path.resolve('demo/src/index.js'),
+      demo: [path.resolve('demo/src/index.js')],
     },
     output: {
       filename: filenamePattern,

@@ -50,6 +50,7 @@ The configuration object can include the following properties:
 
 - nwb Configuration
   - [`type`](#type-string-required-for-generic-build-commands)
+  - [`polyfill`](#polyfill-boolean) - control automatic polyfilling
 - [Babel Configuration](#babel-configuration)
   - [`babel`](#babel-object)
   - [`babel.cherryPick`](#cherrypick-string--arraystring) - enable cherry-picking for destructured `import` statements
@@ -102,6 +103,20 @@ It must be one of:
 - `'react-component'`
 - `'web-app'`
 - `'web-module'`
+
+#### `polyfill`: `Boolean`
+
+For apps, nwb will provide polyfills for `Promise` and `fetch` by default so you can make use of `async`/`await` and generators without any configuration.
+
+To disable this, set `polyfill` to `false`:
+
+```js
+module.exports = {
+  babel: {
+    polyfill: false
+  }
+}
+```
 
 ### Babel Configuration
 
@@ -186,35 +201,15 @@ Additional Babel presets to use.
 
 ##### `runtime`: `String | Boolean`
 
-Babel's [runtime transform](https://babeljs.io/docs/plugins/transform-runtime/) does 3 things:
+Babel's [runtime transform](https://babeljs.io/docs/plugins/transform-runtime/) does 3 things by default:
 
-1. It *always* imports small helper modules from `babel-runtime` instead of duplicating **helpers** in every module which needs them.
-2. By default, it imports a local **polyfill** for new ES6 builtins (`Promise`) and static methods (e.g. `Object.assign`) when they're used in your code.
-3. By default, it imports the **regenerator** runtime required to use `async`/`await` when needed.
+1. Imports helper modules from `babel-runtime` instead of duplicating **helpers** in every module which needs them.
+2. Imports a local **polyfill** for new ES6 builtins (`Promise`) and static methods (e.g. `Object.assign`) when they're used in your code.
+3. Imports the **regenerator** runtime required to use `async`/`await` when needed.
 
-If you want to enable all of these, set `runtime` to `true` .
+nwb's default config turns the regenerator runtime import on so you can use `async`/`await` and generators by default.
 
-```js
-module.exports = {
-  babel: {
-    runtime: true
-  }
-}
-```
-
-If you want to pick and choose, you can use `'helpers'`, `'polyfill'` or `'regenerator'`.
-
-e.g. if you use `async`/`await` (which is a Stage 3 feature, so enabled by default) but you're already handling polyfilling of ES6 built-ins you need, use `'regenerator'`:
-
-```js
-module.exports = {
-  babel: {
-    runtime: 'regenerator'
-  }
-}
-```
-
-e.g. if you're polyfilling all the features your code needs globally and you just want to import `babel-runtime` helpers instead of duplicating them, use `'helpers'`:
+To enable an additional feature, you can name it (either `'helpers'` or `'polyfill'`):
 
 ```js
 module.exports = {
@@ -223,6 +218,10 @@ module.exports = {
   }
 }
 ```
+
+To enable all features, set `runtime` to `true`.
+
+To disable use of the runtime transform, set `runtime` to `false`.
 
 ##### `stage`: `Number | false`
 

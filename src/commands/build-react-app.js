@@ -21,7 +21,7 @@ function buildConfig(args) {
     },
     devtool: 'source-map',
     entry: {
-      app: path.resolve(entry),
+      app: [path.resolve(entry)],
     },
     output: {
       filename: filenamePattern,

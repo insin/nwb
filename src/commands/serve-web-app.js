@@ -9,7 +9,7 @@ export default function serveWebApp(args, cb) {
 
   console.log('nwb: serve-web-app')
   webpackServer(args, {
-    entry: path.resolve(entry),
+    entry: [path.resolve(entry)],
     output: {
       path: path.resolve(dist),
       filename: 'app.js',

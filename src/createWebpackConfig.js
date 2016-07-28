@@ -15,7 +15,7 @@ import merge from 'webpack-merge'
 import HashedModuleIdsPlugin from '../vendor/HashedModuleIdsPlugin'
 import createBabelConfig from './createBabelConfig'
 import debug from './debug'
-import {deepToString, endsWith} from './utils'
+import {deepToString, endsWith, typeOf} from './utils'
 import WebpackDXPlugin from './WebpackDXPlugin'
 
 // Top-level property names reserved for webpack config
@@ -535,7 +535,7 @@ export function getCompatConfig(userCompatConfig = {}) {
       return
     }
     let compatConfig = COMPAT_CONFIGS[lib]
-    if (typeof compatConfig == 'function') {
+    if (typeOf(compatConfig) === 'function') {
       compatConfig = compatConfig(userCompatConfig[lib])
       if (!compatConfig) return
     }
@@ -544,6 +544,15 @@ export function getCompatConfig(userCompatConfig = {}) {
   return configs.length > 0 ? merge(...configs) : null
 }
 
+function addPolyfillsToEntry(entry) {
+  let polyfills = require.resolve('./polyfills')
+  if (typeOf(entry) === 'array') {
+    entry.unshift(polyfills)
+  }
+  else {
+    entry[Object.keys(entry)[0]].unshift(polyfills)
+  }
+}
 /**
  * Create a webpack config with a curated set of default loaders suitable for
  * creating a static build (default) or serving an app with hot reloading.
@@ -558,7 +567,9 @@ export default function createWebpackConfig(buildConfig, nwbPluginConfig = {}, u
     // These build config items are used to create chunks of webpack config,
     // rather than being included as-is.
     babel: buildBabelConfig = {},
+    entry,
     loaders: buildLoaderConfig = {},
+    polyfill: buildPolyfill,
     plugins: buildPluginConfig = {},
     resolve: buildResolveConfig = {},
     server = false,
@@ -566,6 +577,11 @@ export default function createWebpackConfig(buildConfig, nwbPluginConfig = {}, u
     // config to provide the rest of the default config.
     ...otherBuildConfig
   } = buildConfig
+
+  // Add default polyfills to the entry chunk
+  if (buildPolyfill !== false && userConfig.polyfill !== false) {
+    entry = addPolyfillsToEntry(entry)
+  }
 
   let userWebpackConfig = userConfig.webpack || {}
   let userResolveConfig = {}
@@ -577,6 +593,7 @@ export default function createWebpackConfig(buildConfig, nwbPluginConfig = {}, u
   buildLoaderConfig.babel = {query: createBabelConfig(buildBabelConfig, userConfig.babel)}
 
   let webpackConfig = {
+    entry,
     module: {
       loaders: createLoaders(server, buildLoaderConfig, userWebpackConfig.loaders, nwbPluginConfig)
     },

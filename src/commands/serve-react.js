@@ -23,15 +23,14 @@ export default function serveReact_(args, cb) {
     installReact()
   }
 
-  let entry = path.resolve(args._[1])
+  let entry = args._[1]
 
   console.log('nwb: serve-react')
   serveReact(args, {
     babel: {
       stage: 0,
-      runtime: true,
     },
-    entry,
+    entry: [path.resolve(entry)],
     output: {
       filename: 'app.js',
       path: process.cwd(),

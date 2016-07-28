@@ -12,7 +12,7 @@ import {deepToString, typeOf} from './utils'
 
 const DEFAULT_REQUIRED = false
 
-const BABEL_RUNTIME_OPTIONS = ['helpers', 'regenerator', 'polyfill']
+const BABEL_RUNTIME_OPTIONS = ['helpers', 'polyfill']
 
 /**
  * Move loader query config tweaks into a query object, allowing users to
@@ -116,7 +116,16 @@ export function processUserConfig({args, required = DEFAULT_REQUIRED, userConfig
   if ('runtime' in userConfig.babel &&
       typeOf(userConfig.babel.runtime) !== 'boolean' &&
       BABEL_RUNTIME_OPTIONS.indexOf(userConfig.babel.runtime) === -1) {
-    invalidConfig('babel.runtime', userConfig.babel.runtime, "must be boolean or one of: 'helpers', 'regenerator', 'polyfill'")
+    // TODO Remove in a future version
+    if (typeOf(userConfig.babel.runtime) === 'array' &&
+        userConfig.babel.runtime.join(',') === 'runtime') {
+      userConfig.babel.runtime = true
+      console.log(dep("nwb: babel.runtime config is boolean, 'helpers' or 'polyfill' as of nwb v0.12"))
+      console.log(dep("nwb: converting ['runtime'] to true for the current build"))
+    }
+    else {
+      invalidConfig('babel.runtime', userConfig.babel.runtime, "must be boolean, 'helpers' or 'polyfill'")
+    }
   }
   // TODO Remove in a future version - don't convert, just validate
   if ('loose' in userConfig.babel && typeOf(userConfig.babel.loose) !== 'boolean') {

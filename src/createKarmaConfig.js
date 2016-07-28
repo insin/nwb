@@ -181,6 +181,7 @@ export default function createKarmaConfig({codeCoverage, singleRun}, userConfig)
       node: {
         fs: 'empty',
       },
+      polyfill: false,
       resolve: {
         alias: {
           src: path.resolve('src'),

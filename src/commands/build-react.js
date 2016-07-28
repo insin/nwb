@@ -18,11 +18,10 @@ function buildConfig(args) {
     babel: {
       stage: 0,
       presets: ['react'],
-      runtime: true,
     },
     devtool: 'source-map',
     entry: {
-      app: path.resolve(entry),
+      app: [path.resolve(entry)]
     },
     output: {
       filename: filenamePattern,

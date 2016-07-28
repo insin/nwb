@@ -7,7 +7,6 @@ export default function createBabelConfig(buildConfig = {}, userConfig = {}) {
     native,
     plugins: buildPlugins = [],
     presets: buildPresets,
-    runtime: buildRuntime,
     stage: buildStage = DEFAULT_STAGE,
   } = buildConfig
 
@@ -49,17 +48,6 @@ export default function createBabelConfig(buildConfig = {}, userConfig = {}) {
     })
   }
 
-  // Runtime transform
-  let runtime = userRuntime != null ? userRuntime : buildRuntime
-  if (runtime) {
-    if (runtime === true) {
-      presets.push(require.resolve(`../babel-presets/runtime`))
-    }
-    else {
-      presets.push(require.resolve(`../babel-presets/runtime-${runtime}`))
-    }
-  }
-
   if (userPresets) {
     presets = [...presets, ...userPresets]
   }
@@ -68,6 +56,27 @@ export default function createBabelConfig(buildConfig = {}, userConfig = {}) {
 
   let plugins = [...buildPlugins, ...userPlugins]
 
+  // The Runtime transform imports various things into a module based on usage.
+  // Turn regenerator on by default to enable use of async/await and generators
+  // without configuration.
+  let runtimeTransformOptions = {
+    helpers: false,
+    polyfill: false,
+    regenerator: true,
+  }
+  if (userRuntime !== false) {
+    if (userRuntime === true) {
+      // Enable all features
+      runtimeTransformOptions = {}
+    }
+    else if (typeOf(userRuntime) === 'string') {
+      // Enable the named feature
+      runtimeTransformOptions[userRuntime] = true
+    }
+    plugins.push([require.resolve('babel-plugin-transform-runtime'), runtimeTransformOptions])
+  }
+
+  // The lodash plugin support generic cherry-picking for named modules
   if (cherryPick) {
     plugins.push([require.resolve('babel-plugin-lodash'), {id: cherryPick}])
   }
