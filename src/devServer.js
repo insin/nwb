@@ -33,10 +33,17 @@ export default function server(webpackConfig, {fallback, host, port, staticPath}
     app.use(express.static(staticPath))
   }
 
-  app.listen(port, host, (err) => {
+  function onServerStart(err) {
     if (err) return cb(err)
     clearConsole()
     console.log(cyan('Starting the development server...'))
     console.log()
-  })
+  }
+
+  if (host) {
+    app.listen(port, host, onServerStart)
+  }
+  else {
+    app.listen(port, onServerStart)
+  }
 }
