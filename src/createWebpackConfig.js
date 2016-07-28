@@ -16,6 +16,7 @@ import HashedModuleIdsPlugin from '../vendor/HashedModuleIdsPlugin'
 import createBabelConfig from './createBabelConfig'
 import debug from './debug'
 import {deepToString, endsWith} from './utils'
+import WebpackDXPlugin from './WebpackDXPlugin'
 
 // Top-level property names reserved for webpack config
 // From http://webpack.github.io/docs/configuration.html
@@ -293,11 +294,12 @@ export function createPlugins(server, buildConfig = {}, userConfig = {}) {
   }
 
   if (server) {
-    // HMR is enable by default when serving
+    // HMR is enabled by default when serving
     if (server.hot !== false) {
       plugins.push(
         new webpack.HotModuleReplacementPlugin(),
         new webpack.NoErrorsPlugin(),
+        new WebpackDXPlugin(),
       )
     }
     plugins.push(new webpack.NamedModulesPlugin())

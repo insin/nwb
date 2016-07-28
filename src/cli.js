@@ -73,7 +73,6 @@ Generic development commands:
       ${opt('--auto-install')}  auto install missing npm dependencies
       ${opt('--fallback')}      serve the index page from any path
       ${opt('--host')}          hostname to bind the dev server to ${opt('[default: localhost]')}
-      ${opt('--info')}          show webpack module info
       ${opt('--port')}          port to run the dev server on ${opt('[default: 3000]')}
       ${opt('--reload')}        auto reload the page if hot reloading fails
 

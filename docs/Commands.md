@@ -43,7 +43,6 @@ react run <entry> [options]
 - `--auto-install` - auto install missing npm dependencies
 - `--fallback` - serve the index page from any path
 - `--host` - hostname to bind the dev server to *[default: localhost]*
-- `--info` - show webpack module info
 - `--mount-id` - `id` for the `<div>` the app will render into *[default: app]*
 - `--port` - port to run the dev server on *[default: 3000]*
 - `--reload` - auto reload the page if hot reloading fails
@@ -173,7 +172,6 @@ Passing an argument for `entry` allows you to customise the entry point for your
 - `--auto-install` - automatically install missing npm dependencies and save them to your app's `package.json`
 - `--fallback` - fall back to serving the index page from any path, for developing apps which use the History API
 - `--host` - change the hostname the dev server binds to *[default: localhost]*
-- `--info` - print info about Webpack modules after rebuilds
 - `--port` - change the port the dev server runs on *[default: 3000]*
 - `--reload` - auto-reload the page when webpack gets stuck
 

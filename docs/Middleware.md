@@ -21,7 +21,6 @@ Your app's version of the Express module must be passed as the first argument.
 - `autoInstall` - automatically install missing npm dependencies *[default: `false`]*
 - `config` - path to a config file *[default: nwb.config.js]*
 - `entry` - entry point for the app *[default: src/index.js]*
-- `info` - print info about Webpack modules after rebuilds *[default: `false`]*
 
 #### Example
 

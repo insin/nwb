@@ -24,7 +24,6 @@ module.exports = function(express, options) {
     _: ['serve-react-app', options.entry],
     'auto-install': !!options.autoInstall,
     config: options.config,
-    info: !!options.info
   }
 
   var webpackConfig = createServerWebpackConfig(
@@ -41,14 +40,14 @@ module.exports = function(express, options) {
   var router = express.Router()
 
   router.use(require('webpack-dev-middleware')(compiler, {
-    noInfo: !args.info,
+    noInfo: true,
     publicPath: webpackConfig.output.publicPath,
-    stats: {
-      colors: true
-    }
+    quiet: true,
   }))
 
-  router.use(require('webpack-hot-middleware')(compiler))
+  router.use(require('webpack-hot-middleware')(compiler, {
+    log: false,
+  }))
 
   return router
 }
