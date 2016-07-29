@@ -21,13 +21,13 @@ export default function new_(args, cb) {
 
   let name = args._[2]
   if (!name) {
-    return cb(new UserError('nwb: a project name must be provided'))
+    return cb(new UserError('A project name must be provided'))
   }
   if (glob.sync(`${name}/`).length !== 0) {
-    return cb(new UserError(`nwb: ${name}/ directory already exists`))
+    return cb(new UserError(`A ${name}/ directory already exists`))
   }
 
   let targetDir = path.resolve(name)
-  console.log(`nwb: new ${projectType}`)
+  console.log(`Creating a ${projectType} project`)
   createProject(args, projectType, name, targetDir, cb)
 }

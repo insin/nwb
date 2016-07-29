@@ -13,7 +13,7 @@ function handleError(error) {
     error.report.log()
   }
   else {
-    console.error(red('nwb: error running command'))
+    console.error(red(`Error running command: ${error.message}`))
     if (error.stack) {
       console.error(error.stack)
     }

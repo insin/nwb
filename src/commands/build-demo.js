@@ -1,6 +1,9 @@
 import path from 'path'
 
+import ora from 'ora'
+
 import webpackBuild from '../webpackBuild'
+import {logGzippedFileSizes} from '../webpackUtils'
 import cleanDemo from './clean-demo'
 
 /**
@@ -14,7 +17,7 @@ export default function buildDemo(args, cb) {
 
   cleanDemo(args)
 
-  console.log('nwb: build-demo')
+  let spinner = ora('Building demo').start()
   webpackBuild(args, {
     babel: {
       presets: ['react'],
@@ -34,5 +37,14 @@ export default function buildDemo(args, cb) {
         title: `${pkg.name} ${pkg.version} Demo`,
       },
     },
-  }, cb)
+  }, (err, stats) => {
+    if (err) {
+      spinner.fail()
+      return cb(err)
+    }
+    spinner.succeed()
+    console.log()
+    logGzippedFileSizes(stats)
+    cb()
+  })
 }

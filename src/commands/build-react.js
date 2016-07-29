@@ -1,7 +1,10 @@
 import path from 'path'
 
+import ora from 'ora'
+
 import {UserError} from '../errors'
 import webpackBuild from '../webpackBuild'
+import {logGzippedFileSizes} from '../webpackUtils'
 import cleanApp from './clean-app'
 
 // Using a config function as webpackBuild() sets NODE_ENV to production if it
@@ -60,13 +63,22 @@ function buildConfig(args) {
  */
 export default function buildReact(args, cb) {
   if (args._.length === 1) {
-    return cb(new UserError('nwb: build-react: an entry module must be specified'))
+    return cb(new UserError('An entry module must be given.'))
   }
 
   let dist = args._[2] || 'dist'
 
   cleanApp({_: ['clean-app', dist]})
 
-  console.log('nwb: build-react')
-  webpackBuild(args, buildConfig, cb)
+  let spinner = ora('Building React app').start()
+  webpackBuild(args, buildConfig, (err, stats) => {
+    if (err) {
+      spinner.fail()
+      return cb(err)
+    }
+    spinner.succeed()
+    console.log()
+    logGzippedFileSizes(stats)
+    cb()
+  })
 }

@@ -1,11 +1,14 @@
 import {execSync} from 'child_process'
 import util from 'util'
 
+import argvSetEnv from 'argv-set-env'
+
 import debug from './debug'
 
 export function clearConsole() {
-  // This will completely wipe your scrollback in cmd.exe on Windows - recommend
-  // using the start command to launch nwb's dev server in a new prompt.
+  if (process.env.NWB_DISABLE_CLEAR_CONSOLE) return
+  // This will completely wipe scrollback in cmd.exe on Windows - recommend
+  // using the `start` command to launch nwb's dev server in a new prompt.
   process.stdout.write('\x1bc')
 }
 
@@ -46,6 +49,17 @@ export function deepToString(object) {
   return util.inspect(object, {colors: true, depth: null})
 }
 
+export function defaultNodeEnv(nodeEnv) {
+  // Set cross-platform environment variables based on any --set-env-NAME
+  // arguments passed to the command.
+  argvSetEnv()
+  // Don't override environment it's been set
+  if (!process.env.NODE_ENV) {
+    // Default environment for a build
+    process.env.NODE_ENV = nodeEnv
+  }
+}
+
 /**
  * String.prototype.endsWith() is behind the --harmony flag in Node.js v0.12.
  */
@@ -59,7 +73,7 @@ export function endsWith(s1, s2) {
 export function installReact({dev = false, save = false, cwd = process.cwd(), version = 'latest'} = {}) {
   let command = `npm install${save ? ` --save${dev ? '-dev' : ''}` : ''} react@${version} react-dom@${version}`
   debug(`${cwd} $ ${command}`)
-  execSync(command, {cwd, stdio: [0, 1, 2]})
+  execSync(command, {cwd, stdio: 'inherit'})
 }
 
 /**

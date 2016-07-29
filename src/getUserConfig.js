@@ -368,7 +368,7 @@ export default function getUserConfig(args = {}, options = {}) {
   // Bail early if a config file is required and doesn't exist
   let configFileExists = glob.sync(userConfigPath).length !== 0
   if ((args.config || required) && !configFileExists) {
-    throw new UserError(`nwb: couldn't find a config file at ${userConfigPath}`)
+    throw new UserError(`Couldn't find a config file at ${userConfigPath}`)
   }
 
   // If a config file exists, it should be a valid module regardless of whether
@@ -382,7 +382,7 @@ export default function getUserConfig(args = {}, options = {}) {
       delete require.cache[userConfigPath]
     }
     catch (e) {
-      throw new UserError(`nwb: couldn't import the config file at ${userConfigPath}: ${e}`)
+      throw new UserError(`Couldn't import the config file at ${userConfigPath}: ${e}`)
     }
   }
 

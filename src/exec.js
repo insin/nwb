@@ -9,5 +9,5 @@ import debug from './debug'
 export default function exec(bin, args, options = {}) {
   let command = `${require.resolve(`.bin/${bin}`)} ${args.join(' ')}`
   debug('executing command: %s', command)
-  execSync(command, {...options, stdio: [0, 1, 2]})
+  execSync(command, {...options, stdio: 'inherit'})
 }

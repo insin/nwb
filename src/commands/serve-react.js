@@ -11,7 +11,7 @@ import {installReact} from '../utils'
  */
 export default function serveReact_(args, cb) {
   if (args._.length === 1) {
-    return cb(new UserError('nwb: serve-react: an entry module must be specified'))
+    return cb(new UserError('An entry module must be specified.'))
   }
 
   // Install React if it's not available
@@ -19,7 +19,7 @@ export default function serveReact_(args, cb) {
     resolve.sync('react', {basedir: process.cwd()})
   }
   catch (e) {
-    console.log('nwb: React is not available locally, installing...')
+    console.log('React is not available locally, installing...')
     installReact()
   }
 

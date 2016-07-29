@@ -2,7 +2,7 @@ import path from 'path'
 
 import autoprefixer from 'autoprefixer'
 import CaseSensitivePathsPlugin from 'case-sensitive-paths-webpack-plugin'
-import {red} from 'chalk'
+import chalk from 'chalk'
 import CopyPlugin from 'copy-webpack-plugin'
 import ExtractTextPlugin from 'extract-text-webpack-plugin'
 import HtmlPlugin from 'html-webpack-plugin'
@@ -17,7 +17,7 @@ import HashedModuleIdsPlugin from '../vendor/HashedModuleIdsPlugin'
 import createBabelConfig from './createBabelConfig'
 import debug from './debug'
 import {deepToString, endsWith, typeOf} from './utils'
-import BuildStatusPlugin from './WebpackBuildStatusPlugin'
+import DevServerStatusPlugin from './WebpackDevServerStatusPlugin'
 
 // Top-level property names reserved for webpack config
 // From http://webpack.github.io/docs/configuration.html
@@ -309,28 +309,21 @@ export function createPlugins(server, buildConfig = {}, userConfig = {}) {
   }
 
   if (server) {
-    // HMR isn't enabled when running tests
-    if (!server.test) {
-      let url = `http://${server.host || 'localhost'}:${server.port}/`
+    // HMR is enabled by default but can be explicitly disabled
+    if (server.hot !== false) {
       plugins.push(
         new webpack.HotModuleReplacementPlugin(),
         new webpack.NoErrorsPlugin(),
-        new BuildStatusPlugin({
-          mode: 'serve',
-          message: `The app is running at ${url}`
-        }),
       )
-    }
-    else {
-      plugins.push(new BuildStatusPlugin({mode: 'test'}))
+      if (buildConfig.status) {
+        plugins.push(new DevServerStatusPlugin(buildConfig.status))
+      }
     }
     // Use paths as names when serving
     plugins.push(new webpack.NamedModulesPlugin())
   }
-  else {
-    plugins.push(new BuildStatusPlugin({mode: 'build'}))
-  }
 
+  // Replace certain expressions with values
   plugins.push(
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development'),
@@ -527,10 +520,6 @@ export const COMPAT_CONFIGS = {
     },
   },
   moment({locales}) {
-    if (!Array.isArray(locales)) {
-      console.error(red("nwb: webpack.compat.moment config must provide a 'locales' Array"))
-      return
-    }
     return {
       plugins: [
         new webpack.ContextReplacementPlugin(
@@ -562,10 +551,6 @@ export function getCompatConfig(userCompatConfig = {}) {
   let configs = []
   Object.keys(userCompatConfig).map(lib => {
     if (!userCompatConfig[lib]) return
-    if (!COMPAT_CONFIGS.hasOwnProperty(lib)) {
-      console.error(red(`nwb: unknown property in webpack.compat config: ${lib}`))
-      return
-    }
     let compatConfig = COMPAT_CONFIGS[lib]
     if (typeOf(compatConfig) === 'function') {
       compatConfig = compatConfig(userCompatConfig[lib])

@@ -1,7 +1,7 @@
 import fs from 'fs'
 import path from 'path'
 
-import {green} from 'chalk'
+import chalk from 'chalk'
 import copyTemplateDir from 'copy-template-dir'
 import inquirer from 'inquirer'
 
@@ -22,7 +22,7 @@ let toSource = (obj) => JSON.stringify(obj, null, 2)
 function writeConfigFile(dir, config) {
   fs.writeFileSync(
     path.join(dir, CONFIG_FILE_NAME),
-    `module.exports = ${toSource(config)}`
+    `module.exports = ${toSource(config)}\n`
   )
 }
 
@@ -66,7 +66,7 @@ export function getWebModulePrefs(args, done) {
 function logCreatedFiles(targetDir, createdFiles) {
   createdFiles.sort().forEach(createdFile => {
     let relativePath = path.relative(targetDir, createdFile)
-    console.log(`  ${green('create')} ${relativePath}`)
+    console.log(`  ${chalk.green('create')} ${relativePath}`)
   })
 }
 
@@ -78,10 +78,10 @@ export function npmModuleVars(vars) {
 
 export function validateProjectType(projectType) {
   if (!projectType) {
-    throw new UserError(`nwb: a project type must be provided, one of: ${PROJECT_TYPES.join(', ')}`)
+    throw new UserError(`A project type must be provided, one of: ${PROJECT_TYPES.join(', ')}`)
   }
   if (PROJECT_TYPES.indexOf(projectType) === -1) {
-    throw new UserError(`nwb: project type must be one of: ${PROJECT_TYPES.join(', ')}`)
+    throw new UserError(`Project type must be one of: ${PROJECT_TYPES.join(', ')}`)
   }
 }
 
@@ -93,7 +93,7 @@ const PROJECT_CREATORS = {
     copyTemplateDir(templateDir, targetDir, templateVars, (err, createdFiles) => {
       if (err) return cb(err)
       logCreatedFiles(targetDir, createdFiles)
-      console.log('nwb: installing dependencies')
+      console.log('Installing dependencies...')
       try {
         installReact({cwd: targetDir, version: reactVersion, save: true})
       }
@@ -127,7 +127,7 @@ const PROJECT_CREATORS = {
           }
         }
         logCreatedFiles(targetDir, createdFiles)
-        console.log('nwb: installing dependencies')
+        console.log('Installing dependencies...')
         try {
           installReact({cwd: targetDir, version: reactVersion, dev: true, save: true})
         }

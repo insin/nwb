@@ -43,7 +43,7 @@ describe('command: serve', function() {
         // Start the HMR EventSource client when the initial build completes
         server.stdout.on('data', data => {
           console.log(`server stdout: ${data}`)
-          if (state === States.INIT && /webpack built \w+ in \d+ms/.test(data)) {
+          if (state === States.INIT && /Compiled successfully/.test(data)) {
             state = States.INIT_OK
             startHMRClient()
           }

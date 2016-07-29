@@ -8,6 +8,8 @@ import temp from 'temp'
 
 import cli from '../../src/cli'
 
+let stripHashes = (files) => files.map(file => file.replace(/\.\w{8}\./, '.'))
+
 describe('command: build', function() {
   this.timeout(60000)
 
@@ -21,7 +23,6 @@ describe('command: build', function() {
     delete process.env.NODE_ENV
     tmpDir = temp.mkdirSync('nwb-test')
     process.chdir(tmpDir)
-    return {originalCwd, originalNodeEnv, tmpDir}
   }
 
   function tearDown(done) {
@@ -36,28 +37,29 @@ describe('command: build', function() {
 
     before(done => {
       setUp()
-      cli(['new', 'react-app', 'test-app'], err => {
+      cli(['new', 'react-app', 'test-app'], (err) => {
         expect(err).toNotExist('No errors creating a new React app')
         process.chdir(path.join(tmpDir, 'test-app'))
-        cli(['build'], err => {
+        cli(['build'], (err) => {
           expect(err).toNotExist('No errors building a React app')
           builtAppSource = fs.readFileSync(glob.sync('dist/app*.js')[0], 'utf8')
           builtHTML = fs.readFileSync('dist/index.html', 'utf8')
-          done()
+          done(err)
         })
       })
     })
     after(tearDown)
 
     it('creates a build with sourcemaps', () => {
-      expect(glob.sync('*', {cwd: path.resolve('dist')})).toMatch([
-        /^app\.\w{8}\.js/,
-        /^app\.\w{8}\.js\.map/,
-        /^app\.\w{8}\.css/,
-        /^app\.\w{8}\.css\.map/,
+      let files = stripHashes((glob.sync('*', {cwd: path.resolve('dist')}))).sort()
+      expect(files).toEqual([
+        'app.css',
+        'app.css.map',
+        'app.js',
+        'app.js.map',
         'index.html',
-        /^vendor\.\w{8}\.js/,
-        /^vendor\.\w{8}\.js\.map/,
+        'vendor.js',
+        'vendor.js.map',
       ])
     })
     it('generates displayName for React.createClass calls in the build', () => {
@@ -79,14 +81,14 @@ describe('command: build', function() {
   })
 
   describe('building a React component and its demo app', () => {
-    before(done => {
+    before((done) => {
       setUp()
-      cli(['new', 'react-component', 'test-component', '--umd=TestComponent', '--native-modules'], err => {
+      cli(['new', 'react-component', 'test-component', '--umd=TestComponent', '--native-modules'], (err) => {
         expect(err).toNotExist('No errors creating a new React component')
         process.chdir(path.join(tmpDir, 'test-component'))
-        cli(['build'], err => {
+        cli(['build'], (err) => {
           expect(err).toNotExist('No errors building a React component')
-          done()
+          done(err)
         })
       })
     })

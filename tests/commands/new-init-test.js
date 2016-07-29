@@ -179,21 +179,21 @@ describe('command: nwb new', function() {
     it('requires a project type', done => {
       cli(['new', ''], err => {
         expect(err).toExist()
-        expect(err.message).toContain('a project type must be provided')
+        expect(err.message).toContain('A project type must be provided')
         done()
       })
     })
     it('requires a valid project type', done => {
       cli(['new', 'test-app'], err => {
         expect(err).toExist()
-        expect(err.message).toContain('project type must be one of')
+        expect(err.message).toContain('Project type must be one of')
         done()
       })
     })
     it('requires a project name', done => {
       cli(['new', 'web-module'], err => {
         expect(err).toExist()
-        expect(err.message).toContain('a project name must be provided')
+        expect(err.message).toContain('A project name must be provided')
         done()
       })
     })
@@ -263,14 +263,14 @@ describe('command: nwb init', function() {
     it('requires a project type', done => {
       cli(['init', ''], err => {
         expect(err).toExist()
-        expect(err.message).toContain('a project type must be provided')
+        expect(err.message).toContain('A project type must be provided')
         done()
       })
     })
     it('requires a valid project type', done => {
       cli(['init', 'test-app'], err => {
         expect(err).toExist()
-        expect(err.message).toContain('project type must be one of')
+        expect(err.message).toContain('Project type must be one of')
         done()
       })
     })

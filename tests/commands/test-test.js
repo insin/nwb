@@ -90,7 +90,7 @@ describe('command: test', function() {
       fs.writeFileSync('./tests/index-test.js', content.replace('Welcome to', 'X'))
       try {
         execSync(['node', path.join(__dirname, '../../lib/bin/nwb.js'), 'test'].join(' '), {
-          stdio: [0, 1, 2]
+          stdio: 'inherit'
         })
         done(new Error('test should have failed'))
       }

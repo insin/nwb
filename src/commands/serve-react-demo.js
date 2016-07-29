@@ -9,14 +9,11 @@ export default function serveReactDemo(args, cb) {
   let pkg = require(path.resolve('package.json'))
 
   serveReact(args, {
-    babel: {
-      presets: ['react', 'react-hmre'],
-    },
     entry: [path.resolve('demo/src/index.js')],
     output: {
       filename: 'demo.js',
       // This doesn't really matter, as files will be served from memory
-      path: __dirname,
+      path: process.cwd(),
       publicPath: '/',
     },
     plugins: {

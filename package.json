@@ -9,13 +9,13 @@
     "react": "./lib/bin/react.js"
   },
   "scripts": {
-    "build": "npm run lint && rimraf lib && babel src --out-dir lib",
+    "build": "npm run lint && rimraf lib && babel src --out-dir lib --quiet",
     "build:watch": "rimraf lib && babel src --watch --out-dir lib",
     "lint": "eslint *.js babel-presets src tests",
     "lint:fix": "npm run lint -- --fix",
-    "test": "npm run build && mocha --compilers js:babel-core/register tests/*-test.js tests/commands/*-test.js",
-    "test:coverage": "npm run build && cross-env NODE_ENV=test nyc mocha tests/*-test.js tests/commands/*-test.js",
-    "test:watch": "mocha --watch --compilers js:babel-core/register tests/*-test.js"
+    "test": "npm run build && cross-env NODE_ENV=test NWB_DISABLE_CLEAR_CONSOLE=true mocha --compilers js:babel-core/register tests/*-test.js tests/commands/*-test.js",
+    "test:coverage": "npm run build && cross-env NODE_ENV=test NWB_DISABLE_CLEAR_CONSOLE=true nyc mocha tests/*-test.js tests/commands/*-test.js",
+    "test:watch": "cross-env NODE_ENV=test mocha --watch --compilers js:babel-core/register tests/*-test.js"
   },
   "files": [
     "babel-presets",
@@ -41,6 +41,7 @@
     "gzip-size": "3.0.0",
     "inquirer": "1.1.2",
     "minimist": "1.2.0",
+    "ora": "0.3.0",
     "promise": "7.1.1",
     "qs": "6.2.1",
     "resolve": "1.1.7",

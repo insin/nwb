@@ -1,6 +1,3 @@
 module.exports = {
-  type: 'react-app',
-  babel: {
-    runtime: 'regenerator'
-  }
+  type: 'react-app'
 }

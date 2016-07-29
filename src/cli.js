@@ -138,7 +138,7 @@ Helper commands:
   }
 
   let unknownCommand = () => {
-    console.error(`${red('nwb: unknown command:')} ${req(command)}`)
+    console.error(`${red('Unknown command:')} ${req(command)}`)
     process.exit(1)
   }
 

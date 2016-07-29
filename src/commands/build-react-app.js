@@ -1,7 +1,10 @@
 import path from 'path'
 
+import ora from 'ora'
+
 import {getDefaultHTMLConfig} from '../appConfig'
 import webpackBuild from '../webpackBuild'
+import {logGzippedFileSizes} from '../webpackUtils'
 import cleanApp from './clean-app'
 
 // Using a config function as webpackBuild() sets NODE_ENV to production if it
@@ -59,6 +62,15 @@ export default function buildReactApp(args, cb) {
 
   cleanApp({_: ['clean-app', dist]})
 
-  console.log('nwb: build-react-app')
-  webpackBuild(args, buildConfig, cb)
+  let spinner = ora('Building React app').start()
+  webpackBuild(args, buildConfig, (err, stats) => {
+    if (err) {
+      spinner.fail()
+      return cb(err)
+    }
+    spinner.succeed()
+    console.log()
+    logGzippedFileSizes(stats)
+    cb()
+  })
 }

@@ -1,37 +1,21 @@
-import glob from 'glob'
-
 import {REACT_APP, REACT_COMPONENT, WEB_APP, WEB_MODULE} from '../constants'
 import getUserConfig from '../getUserConfig'
-import buildDemo from './build-demo'
-import buildModule from './build-module'
 import buildReactApp from './build-react-app'
-import buildUMD from './build-umd'
+import buildReactComponent from './build-react-component'
 import buildWebApp from './build-web-app'
+import buildWebModule from './build-web-module'
 
-function maybeBuildDemo(args, cb) {
-  if (glob.sync('demo/').length > 0) {
-    buildDemo(args, cb)
-  }
-  else {
-    cb()
-  }
+const BUILD_COMMANDS = {
+  [REACT_APP]: buildReactApp,
+  [REACT_COMPONENT]: buildReactComponent,
+  [WEB_APP]: buildWebApp,
+  [WEB_MODULE]: buildWebModule,
 }
 
+/**
+ * Generic build command, invokes the appropriate project type-specific command.
+ */
 export default function build(args, cb) {
   let userConfig = getUserConfig(args, {required: true})
-  if (userConfig.type === REACT_APP) {
-    buildReactApp(args, cb)
-  }
-  else if (userConfig.type === WEB_APP) {
-    buildWebApp(args, cb)
-  }
-  else if (userConfig.type === REACT_COMPONENT || userConfig.type === WEB_MODULE) {
-    buildModule(args)
-    if (userConfig.npm.umd) {
-      buildUMD(args, () => maybeBuildDemo(args, cb))
-    }
-    else {
-      maybeBuildDemo(args, cb)
-    }
-  }
+  BUILD_COMMANDS[userConfig.type](args, cb)
 }

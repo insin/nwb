@@ -51,17 +51,21 @@ export default function webpackServer(args, buildConfig, cb) {
   }
 
   // Other config can be provided by the user via the CLI
-  getServerOptions(args, (err, serverOptions) => {
+  getServerOptions(args, (err, options) => {
     if (err) return cb(err)
-    if (serverOptions === null) return cb()
+    if (options === null) return cb()
 
-    let webpackConfig = createServerWebpackConfig(args, {
-      ...buildConfig,
-      server: serverOptions,
-    })
+    buildConfig.server = true
+    if (!('status' in buildConfig.plugins)) {
+      buildConfig.plugins.status = {
+        message: `The app is running at http://${options.host || 'localhost'}:${options.port}/`,
+      }
+    }
+
+    let webpackConfig = createServerWebpackConfig(args, buildConfig)
 
     debug('webpack config: %s', deepToString(webpackConfig))
 
-    devServer(webpackConfig, serverOptions, cb)
+    devServer(webpackConfig, options, cb)
   })
 }

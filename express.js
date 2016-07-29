@@ -29,7 +29,7 @@ module.exports = function(express, options) {
   var webpackConfig = createServerWebpackConfig(
     args,
     createServeReactAppBuildConfig(
-      createServeReactAppConfig(args)
+      createServeReactAppConfig(args, {plugins: {status: {middleware: true}}})
     )
   )
 

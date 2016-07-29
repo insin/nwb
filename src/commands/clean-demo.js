@@ -1,6 +1,15 @@
 import exec from '../exec'
 
-export default function cleanDemo(args) {
-  console.log('nwb: clean-demo')
-  exec('rimraf', ['demo/dist'])
+import ora from 'ora'
+
+export default function cleanModule(args) {
+  let spinner = ora('Cleaning demo').start()
+  try {
+    exec('rimraf', ['demo/dist'])
+    spinner.succeed()
+  }
+  catch (err) {
+    spinner.fail()
+    throw err
+  }
 }

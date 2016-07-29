@@ -32,10 +32,10 @@ describe('sample projects', function() {
       originalNodeEnv = process.env.NODE_ENV
       delete process.env.NODE_ENV
       tmpDir = temp.mkdirSync('async-await')
-      copyTemplateDir(path.join(__dirname, '../fixtures/projects/async-await'), tmpDir, {}, err => {
+      copyTemplateDir(path.join(__dirname, '../fixtures/projects/async-await'), tmpDir, {}, (err) => {
         if (err) return done(err)
         process.chdir(tmpDir)
-        execSync('npm install', {stdio: [0, 1, 2]})
+        execSync('npm install', {stdio: 'inherit'})
         done()
       })
     })
@@ -77,14 +77,14 @@ describe('sample projects', function() {
       copyTemplateDir(path.join(__dirname, '../fixtures/projects/express-middleware'), tmpDir, {}, err => {
         if (err) return done(err)
 
-        execSync('npm install', {cwd: tmpDir, stdio: [0, 1, 2]})
+        execSync('npm install', {cwd: tmpDir, stdio: 'inherit'})
 
         server = spawn('node', ['server.js'], {cwd: tmpDir})
 
         // Start the HMR EventSource client when the initial build completes
         server.stdout.on('data', data => {
           console.log(`server stdout: ${data}`)
-          if (state === States.INIT && /webpack built \w+ in \d+ms/.test(data)) {
+          if (state === States.INIT && /Compiled successfully/.test(data)) {
             state = States.INIT_OK
             startHMRClient()
           }
@@ -175,7 +175,7 @@ describe('sample projects', function() {
       copyTemplateDir(path.join(__dirname, '../fixtures/projects/cherry-pick'), tmpDir, {}, err => {
         if (err) return done(err)
         process.chdir(tmpDir)
-        execSync('npm install', {stdio: [0, 1, 2]})
+        execSync('npm install', {stdio: 'inherit'})
         cli(['build'], err => {
           expect(err).toNotExist()
           content = fs.readFileSync(path.join(tmpDir, 'lib/index.js'), 'utf-8')

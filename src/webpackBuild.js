@@ -1,23 +1,13 @@
-import argvSetEnv from 'argv-set-env'
 import webpack from 'webpack'
 
 import createWebpackConfig from './createWebpackConfig'
 import debug from './debug'
 import getPluginConfig from './getPluginConfig'
 import getUserConfig from './getUserConfig'
-import {deepToString} from './utils'
+import {deepToString, defaultNodeEnv} from './utils'
 
 export default function webpackBuild(args, buildConfig = {}, cb) {
-  // Don't override environment if it's already set
-  if (!process.env.NODE_ENV) {
-    // Set cross-platform environment variables based on any --set-env-NAME
-    // arguments passed to the command.
-    argvSetEnv()
-    // Default environment for a build
-    if (!process.env.NODE_ENV) {
-      process.env.NODE_ENV = 'production'
-    }
-  }
+  defaultNodeEnv('production')
 
   let userConfig = getUserConfig(args)
   let pluginConfig = getPluginConfig()
@@ -25,10 +15,7 @@ export default function webpackBuild(args, buildConfig = {}, cb) {
     buildConfig = buildConfig(args)
   }
 
-  let webpackConfig = createWebpackConfig({
-    ...buildConfig,
-    server: false,
-  }, pluginConfig, userConfig)
+  let webpackConfig = createWebpackConfig(buildConfig, pluginConfig, userConfig)
 
   debug('webpack config: %s', deepToString(webpackConfig))
 
