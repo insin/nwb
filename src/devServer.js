@@ -24,6 +24,9 @@ export default function server(webpackConfig, {fallback, host, port, staticPath}
     noInfo: true,
     publicPath: webpackConfig.output.publicPath,
     quiet: true,
+    watchOptions: {
+      ignored: /node_modules/,
+    },
   }))
 
   app.use(require('webpack-hot-middleware')(compiler, {
