@@ -12,7 +12,7 @@ export default function createServerWebpackConfig(args, buildConfig) {
   let {entry, output, plugins = {}, ...otherBuildConfig} = buildConfig
   let hotMiddlewareOptions = args.reload ? '?reload=true' : ''
 
-  if (args['auto-install']) {
+  if (args['auto-install'] || args.install) {
     plugins.install = {}
   }
 
