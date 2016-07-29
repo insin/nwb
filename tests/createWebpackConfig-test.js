@@ -32,7 +32,7 @@ describe('createWebpackConfig()', () => {
       expect(config.module.loaders[0].exclude.test('node_modules')).toBe(true)
     })
     it('adds default polyfills to the entry chunk', () => {
-      expect(config.entry).toEqual([require.resolve('../src/polyfills'), 'index.js'])
+      expect(config.entry).toEqual([require.resolve('../polyfills'), 'index.js'])
     })
   })
 
