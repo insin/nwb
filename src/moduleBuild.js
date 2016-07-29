@@ -5,6 +5,7 @@ import glob from 'glob'
 import temp from 'temp'
 
 import cleanModule from './commands/clean-module'
+import {REACT_COMPONENT} from './constants'
 import createBabelConfig from './createBabelConfig'
 import exec from './exec'
 import {UserError} from './errors'
@@ -24,7 +25,7 @@ function runBabel(src, outDir, buildBabelConfig, userBabelConfig) {
   }
 }
 
-export default function moduleBuild(args, babelConfig) {
+export default function moduleBuild(args) {
   // XXX Babel doesn't support passing the path to a babelrc file any more
   if (glob.sync('.babelrc').length > 0) {
     throw new UserError(
@@ -37,6 +38,11 @@ export default function moduleBuild(args, babelConfig) {
 
   let src = path.resolve('src')
   let userConfig = getUserConfig(args)
+
+  let babelConfig = {}
+  if (userConfig.type === REACT_COMPONENT) {
+    babelConfig.presets = ['react']
+  }
 
   console.log('nwb: build-module (es5)')
   runBabel(src, path.resolve('lib'), {

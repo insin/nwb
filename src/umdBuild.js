@@ -1,6 +1,7 @@
 import path from 'path'
 
 import cleanUMD from './commands/clean-umd'
+import {REACT_COMPONENT} from './constants'
 import getUserConfig from './getUserConfig'
 import {UserError} from './errors'
 import {createBanner, createWebpackExternals} from './utils'
@@ -19,10 +20,15 @@ export default function umdBuild(args, babelConfig, cb) {
     ))
   }
 
-  let entry = args._[1] || 'src/index.js'
+  let babel = {}
+  if (userConfig.type === REACT_COMPONENT) {
+    babel.presets = ['react']
+  }
+
+  let entry = path.resolve(args._[1] || 'src/index.js')
   let buildConfig = {
-    babel: babelConfig,
-    entry: path.resolve(entry),
+    babel,
+    entry: [entry],
     output: {
       filename: `${pkg.name}.js`,
       library: userConfig.npm.umd.global,
