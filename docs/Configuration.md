@@ -545,15 +545,15 @@ Default loaders configured by nwb and the ids it gives them are:
 
 - `graphics` - handles `.gif`, `.png` and `.svg` files using using [url-loader][url-loader]
 
-- `jpeg` - handles `.jpeg` files using [file-loader][file-loader]
+- `jpeg` - handles `.jpeg` files using [url-loader][url-loader]
 
-- `fonts` - handles `.otf`, `.ttf`, `.woff` and `.woff2` files using [url-loader][url-loader]
+- `fonts` - handles `.eot`, `.otf`, `.ttf`, `.woff` and `.woff2` files using [url-loader][url-loader]
 
-- `eot` - handles `.eot` files using [file-loader][file-loader]
+- `video` - handles `.mp4`, `.ogg` and `.webm` files using [url-loader][url-loader]
+
+> Default config for all url-loaders in production builds is `{query: {limit: 1, name: '[name].[hash:8].[ext]'}}`, otherwise `{query: {limit: 1, name: '[name].[ext]'}}`. The `limit` config prevents any files being inlined by default, while allowing you to configure `url-loader` to enable inlining if you need it.
 
 - `json` - handles `.json` files using [json-loader][json-loader]
-
-**Note:** default `file-loader` and `url-loader` configuration depends on the environment. For production, they use `{query: {name: '[name].[hash:8].[ext]'}}`, otherwise `{query: {name: '[name].[ext]'}}`.
 
 ##### `postcss`: `Array<Plugin> | Object<String, Array<Plugin>>`
 
@@ -923,7 +923,6 @@ If all fields are present the banner will be in this format:
 [babel-loader]: https://github.com/babel/babel-loader/
 [CSS Modules]: https://github.com/css-modules/css-modules/
 [css-loader]: https://github.com/webpack/css-loader/
-[file-loader]: https://github.com/webpack/file-loader/
 [isparta-loader]: https://github.com/deepsweet/isparta-loader/
 [json-loader]: https://github.com/webpack/json-loader/
 [npm-install-loader]: https://github.com/ericclemmons/npm-install-loader/

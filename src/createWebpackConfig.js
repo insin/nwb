@@ -136,8 +136,13 @@ export function createStyleLoader(loader, server, {
 export function createLoaders(server, buildConfig = {}, userConfig = {}, pluginConfig = {}) {
   let loader = loaderConfigFactory(buildConfig, userConfig)
 
-  // Filename pattern for file-loader and url-loader
-  let name = process.env.NODE_ENV === 'production' ? '[name].[hash:8].[ext]' : '[name].[ext]'
+  // Default query options for url-loader
+  let urlLoaderOptions = {
+    // Don't inline anything by default
+    limit: 1,
+    // Use a hash in production for long-term caching
+    name: process.env.NODE_ENV === 'production' ? '[name].[hash:8].[ext]' : '[name].[ext]',
+  }
 
   let loaders = [
     loader('babel', {
@@ -166,30 +171,22 @@ export function createLoaders(server, buildConfig = {}, userConfig = {}, pluginC
     loader('graphics', {
       test: /\.(gif|png|svg)(\?.*)?$/,
       loader: require.resolve('url-loader'),
-      query: {
-        name,
-      },
+      query: {...urlLoaderOptions},
     }),
     loader('jpeg', {
       test: /\.jpe?g(\?.*)?$/,
-      loader: require.resolve('file-loader'),
-      query: {
-        name,
-      },
+      loader: require.resolve('url-loader'),
+      query: {...urlLoaderOptions},
     }),
     loader('fonts', {
-      test: /\.(otf|ttf|woff|woff2)(\?.*)?$/,
+      test: /\.(eot|otf|ttf|woff|woff2)(\?.*)?$/,
       loader: require.resolve('url-loader'),
-      query: {
-        name,
-      },
+      query: {...urlLoaderOptions},
     }),
-    loader('eot', {
-      test: /\.eot(\?.*)?$/,
-      loader: require.resolve('file-loader'),
-      query: {
-        name,
-      },
+    loader('video', {
+      test: /\.(mp4|ogg|webm)(\?.*)?$/,
+      loader: require.resolve('url-loader'),
+      query: {...urlLoaderOptions},
     }),
     loader('json', {
       test: /\.json$/,

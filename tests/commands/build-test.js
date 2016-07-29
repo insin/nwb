@@ -58,6 +58,7 @@ describe('command: build', function() {
         'app.js',
         'app.js.map',
         'index.html',
+        'react.svg',
         'vendor.js',
         'vendor.js.map',
       ])
