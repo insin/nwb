@@ -116,8 +116,9 @@
 **Dependencies:**
 
 - autoprefixer: v6.3.6 → [v6.3.7](https://github.com/postcss/autoprefixer/blob/master/CHANGELOG.md#637)
-- babel* v5 → babel* v6
+- babel\* v5 → babel\* v6
 - [babel-plugin-lodash](https://github.com/lodash/babel-plugin-lodash): v3.2.6
+- [babel-plugin-transform-react-remove-prop-types](https://github.com/oliviertassinari/babel-plugin-transform-react-remove-prop-types): v0.2.8
 - [case-sensitive-paths-webpack-plugin](https://github.com/Urthen/case-sensitive-paths-webpack-plugin): v1.1.2
 - expect: v1.20.1 → [v1.20.2](https://github.com/mjackson/expect/compare/v1.20.1...v1.20.2)
 - express: v4.13.4 → [v4.14.0](https://github.com/expressjs/express/blob/master/History.md#4140--2016-06-16)
@@ -128,7 +129,7 @@
 - karma: v0.13.22 → [v1.1.2](https://github.com/karma-runner/karma/blob/master/CHANGELOG.md#112-2016-07-26)
 - karma-chrome-launcher v1.0.1
 - karma-coverage: v1.0.0 → [v1.1.1](https://github.com/karma-runner/karma-coverage/blob/master/CHANGELOG.md#111-2016-07-23)
-- karma-mocha-reporter: v2.0.3 → [v2.0.4](https://github.com/litixsoft/karma-mocha-reporter/compare/v2.0.3...v2.0.4)
+- karma-mocha-reporter: v2.0.3 → [v2.0.5](https://github.com/litixsoft/karma-mocha-reporter/compare/v2.0.3...v2.0.5)
 - karma-phantomjs-launcher: v1.0.0 → [v1.0.1](https://github.com/karma-runner/karma-phantomjs-launcher/blob/master/CHANGELOG.md#101-2016-06-23)
 - npm-install-webpack-plugin: v4.0.1 → [v4.0.4](https://github.com/ericclemmons/npm-install-webpack-plugin/blob/master/CHANGELOG.md#404-2016-06-30)
 - phantomjs-prebuilt: v2.1.7 → [v2.1.8](https://github.com/Medium/phantomjs/releases/tag/v2.1.8)
