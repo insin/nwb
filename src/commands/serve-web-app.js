@@ -4,21 +4,19 @@ import {getDefaultHTMLConfig} from '../appConfig'
 import webpackServer from '../webpackServer'
 
 export default function serveWebApp(args, cb) {
-  let entry = args._[1] || 'src/index.js'
-  let dist = args._[2] || 'dist'
+  let entry = path.resolve(args._[1] || 'src/index.js')
+  let dist = path.resolve(args._[2] || 'dist')
 
   webpackServer(args, {
-    entry: [path.resolve(entry)],
+    entry: [entry],
     output: {
-      path: path.resolve(dist),
+      path: dist,
       filename: 'app.js',
       publicPath: '/',
     },
     plugins: {
+      copy: [{from: path.resolve('public'), to: dist}],
       html: getDefaultHTMLConfig(),
-    },
-    server: {
-      staticPath: path.resolve('public'),
     },
   }, cb)
 }

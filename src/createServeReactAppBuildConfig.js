@@ -10,14 +10,9 @@ import merge from 'webpack-merge'
  * config for serving a React app.
  */
 export default function createServeReactAppBuildConfig(config) {
-  let {staticPath = null, ...otherConfig} = config
-
-  return merge(otherConfig, {
+  return merge(config, {
     babel: {
       presets: ['react', 'react-hmre'],
-    },
-    server: {
-      staticPath,
-    },
+    }
   })
 }

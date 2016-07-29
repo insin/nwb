@@ -10,7 +10,7 @@ import {clearConsole} from './utils'
  * assets using Webpack's watch mode, and webpack-hot-middleware to hot reload
  * changes in the browser and display compile error overlays.
  *
- * If static path config is provided, express will serve static content from it.
+ * Static content is handled by CopyPlugin.
  */
 export default function server(webpackConfig, {fallback, host, port, staticPath}, cb) {
   let app = express()
@@ -29,10 +29,6 @@ export default function server(webpackConfig, {fallback, host, port, staticPath}
   app.use(require('webpack-hot-middleware')(compiler, {
     log: false,
   }))
-
-  if (staticPath) {
-    app.use(express.static(staticPath))
-  }
 
   function onServerStart(err) {
     if (err) return cb(err)

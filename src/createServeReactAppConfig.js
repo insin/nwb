@@ -19,8 +19,8 @@ export default function createServeReactAppConfig(args) {
       publicPath: '/',
     },
     plugins: {
+      copy: [{from: path.resolve('public'), to: dist}],
       html: getDefaultHTMLConfig(),
     },
-    staticPath: path.resolve('public'),
   }
 }

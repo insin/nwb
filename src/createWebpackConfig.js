@@ -3,6 +3,7 @@ import path from 'path'
 import autoprefixer from 'autoprefixer'
 import CaseSensitivePathsPlugin from 'case-sensitive-paths-webpack-plugin'
 import {red} from 'chalk'
+import CopyPlugin from 'copy-webpack-plugin'
 import ExtractTextPlugin from 'extract-text-webpack-plugin'
 import HtmlPlugin from 'html-webpack-plugin'
 import NpmInstallPlugin from 'npm-install-webpack-plugin'
@@ -270,6 +271,19 @@ function injectManifestPlugin() {
   })
 }
 
+function getCopyPluginArgs(buildConfig, userConfig) {
+  let patterns = []
+  let options = {}
+  if (buildConfig) {
+    patterns = patterns.concat(buildConfig)
+  }
+  if (userConfig) {
+    patterns = patterns.concat(userConfig.patterns || [])
+    options = userConfig.options || {}
+  }
+  return [patterns, options]
+}
+
 /**
  * Final webpack plugin config consists of:
  * - the default set of plugins created by this function based on whether or not
@@ -384,6 +398,12 @@ export function createPlugins(server, buildConfig = {}, userConfig = {}) {
         ...buildConfig.html,
         ...userConfig.html,
       }),
+    )
+  }
+
+  if (buildConfig.copy) {
+    plugins.push(
+      new CopyPlugin(...getCopyPluginArgs(buildConfig.copy, userConfig.copy))
     )
   }
 

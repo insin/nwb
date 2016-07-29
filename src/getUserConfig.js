@@ -7,7 +7,7 @@ import webpack from 'webpack'
 
 import {CONFIG_FILE_NAME, PROJECT_TYPES} from './constants'
 import debug from './debug'
-import {UserError} from './errors'
+import {ConfigValidationErrors, UserError} from './errors'
 import {deepToString, typeOf} from './utils'
 
 const DEFAULT_REQUIRED = false
@@ -55,7 +55,6 @@ function upgradeBuildConfig(build, userConfigPath) {
     console.log(dep('nwb: I can automatically upgrade your config to the new format for this build'))
     console.log(dep('nwb: This is the equivalent "npm" config for your current "build" config:'))
     console.log(dep(JSON.stringify({npm}, null, 2)))
-    console.log(dep(`nwb: Please update your configuration file: ${userConfigPath}`))
     warnedAboutBuildChange = true
   }
   return npm
@@ -75,11 +74,9 @@ export function processUserConfig({args, required = DEFAULT_REQUIRED, userConfig
     })
   }
 
-  function invalidConfig(type, value, message) {
-    throw new UserError(
-      `nwb: invalid ${type} config in ${userConfigPath}: ${value}`,
-      `nwb: ${type} ${message}`
-    )
+  let validationErrors = []
+  function invalidConfig(config, value, message) {
+    validationErrors.push({config, value, message})
   }
 
   if ((required || 'type' in userConfig) && PROJECT_TYPES.indexOf(userConfig.type) === -1) {
@@ -103,7 +100,7 @@ export function processUserConfig({args, required = DEFAULT_REQUIRED, userConfig
     if (typeOf(userConfig.babel.stage) !== 'number') {
       invalidConfig('babel.stage', userConfig.babel.stage, 'must be a number, or falsy to disable use of a stage preset')
     }
-    if (userConfig.babel.stage < 0 || userConfig.babel.stage > 3) {
+    else if (userConfig.babel.stage < 0 || userConfig.babel.stage > 3) {
       invalidConfig('babel.stage', userConfig.babel.stage, 'must be between 0 and 3')
     }
   }
@@ -118,7 +115,7 @@ export function processUserConfig({args, required = DEFAULT_REQUIRED, userConfig
       BABEL_RUNTIME_OPTIONS.indexOf(userConfig.babel.runtime) === -1) {
     // TODO Remove in a future version
     if (typeOf(userConfig.babel.runtime) === 'array' &&
-        userConfig.babel.runtime.join(',') === 'runtime') {
+        userConfig.babel.runtime[0] === 'runtime') {
       userConfig.babel.runtime = true
       console.log(dep("nwb: babel.runtime config is boolean, 'helpers' or 'polyfill' as of nwb v0.12"))
       console.log(dep("nwb: converting ['runtime'] to true for the current build"))
@@ -170,6 +167,33 @@ export function processUserConfig({args, required = DEFAULT_REQUIRED, userConfig
   if (typeOf(userConfig.webpack.autoprefixer) === 'string') {
     userConfig.webpack.autoprefixer = {browsers: userConfig.webpack.autoprefixer}
   }
+  if ('copy' in userConfig.webpack) {
+    if (typeOf(userConfig.webpack.copy) === 'array') {
+      userConfig.webpack.copy = {patterns: userConfig.webpack.copy}
+    }
+    else if (typeOf(userConfig.webpack.copy) === 'object') {
+      if (!userConfig.webpack.copy.patterns &&
+          !userConfig.webpack.copy.options) {
+        invalidConfig('webpack.copy', userConfig.webpack.copy, 'must include patterns or options when given as an Object')
+      }
+      if (userConfig.webpack.copy.patterns &&
+          typeOf(userConfig.webpack.copy.patterns) !== 'array') {
+        invalidConfig('webpack.copy.patterns',
+                      userConfig.webpack.copy.patterns,
+                      'must be an Array when provided')
+      }
+      if (userConfig.webpack.copy.options &&
+          typeOf(userConfig.webpack.copy.options) !== 'object') {
+        invalidConfig('webpack.copy.options',
+                      userConfig.webpack.copy.options,
+                      'must be an Object when provided')
+      }
+    }
+    else {
+      invalidConfig('webpack.copy', userConfig.webpack.copy, 'must be an Array or an Object')
+    }
+  }
+
   if (userConfig.webpack.loaders) {
     prepareWebpackLoaderConfig(userConfig.webpack.loaders)
   }
@@ -184,6 +208,10 @@ export function processUserConfig({args, required = DEFAULT_REQUIRED, userConfig
     }
     userConfig.webpack = {...userConfig.webpack, ...userConfig.webpack.plugins}
     delete userConfig.webpack.plugins
+  }
+
+  if (validationErrors.length > 0) {
+    throw new ConfigValidationErrors(validationErrors, userConfigPath)
   }
 
   debug('user config: %s', deepToString(userConfig))

@@ -25,83 +25,71 @@ describe('getUserConfig()', () => {
   })
 })
 
+function check(config, path, message) {
+  try {
+    processUserConfig({userConfig: config})
+    expect(config).toNotExist('should have thrown a validation error')
+  }
+  catch (e) {
+    expect(e.errors[0]).toMatch({config: path, message})
+  }
+}
+
+function process(config) {
+  return processUserConfig({userConfig: config})
+}
+
 describe('processUserConfig()', () => {
   describe('validation', () => {
-    it('throws an error if the config file has an invalid type', () => {
-      expect(() => processUserConfig({
-        userConfig: {
-          type: 'invalid'
-        }
-      })).toThrow(/invalid type config/)
+    it('config file has an invalid type', () => {
+      check({type: 'invalid'}, 'type', /must be one of/)
     })
-    it('throws an error if babel.stage is not a number or falsy', () => {
-      expect(() => processUserConfig({
-        userConfig: {
-          babel: {stage: []}
-        }
-      })).toThrow(/must be a number, or falsy/)
+    it('babel.stage is not a number, or falsy', () => {
+      check({babel: {stage: []}}, 'babel.stage', /must be a number, or falsy/)
     })
-    it('throws an error if babel.stage is less than 0', () => {
-      expect(() => processUserConfig({
-        userConfig: {
-          babel: {stage: -1}
-        }
-      })).toThrow(/must be between 0 and 3/)
+    it('babel.stage is out of bounds', () => {
+      check({babel: {stage: -1}}, 'babel.stage', /must be between 0 and 3/)
+      check({babel: {stage: 4}}, 'babel.stage', /must be between 0 and 3/)
     })
-    it('throws an error if babel.stage is greater than 3', () => {
-      expect(() => processUserConfig({
-        userConfig: {
-          babel: {stage: 4}
-        }
-      })).toThrow(/must be between 0 and 3/)
+    it('babel.presets is not an array', () => {
+      check({babel: {presets: 'some-preset'}}, 'babel.presets', /must be an array/)
     })
-    it('throws an error if babel.presets is not an array', () => {
-      expect(() => processUserConfig({
-        userConfig: {
-          babel: {presets: 'some-preset'}
-        }
-      })).toThrow(/must be an array/)
+    it('babel.plugins is not an array', () => {
+      check({babel: {plugins: 'some-plugin'}}, 'babel.plugins', /must be an array/)
     })
-    it('throws an error if babel.plugins is not an array', () => {
-      expect(() => processUserConfig({
-        userConfig: {
-          babel: {plugins: 'some-plugin'}
-        }
-      })).toThrow(/must be an array/)
+    it('babel.runtime is not valid', () => {
+      check({babel: {runtime: 'welp'}}, 'babel.runtime', /must be boolean, 'helpers' or 'polyfill'/)
     })
-    it('throws an error if babel.runtime is not valid', () => {
-      expect(() => processUserConfig({
-        userConfig: {
-          babel: {runtime: 'welp'}
-        }
-      })).toThrow(/must be boolean or one of: 'helpers', 'regenerator', 'polyfill'/)
+    it('webpack.copy is an invalid type', () => {
+      check({webpack: {copy: /test/}}, 'webpack.copy', /must be an Array or an Object/)
+    })
+    it('webpack.copy is an object missing config', () => {
+      check({webpack: {copy: {}}}, 'webpack.copy', /must include patterns or options/)
+    })
+    it('webpack.copy.patterns is not an array', () => {
+      check({webpack: {copy: {patterns: {}}}}, 'webpack.copy.patterns', /must be an Array/)
+    })
+    it('webpack.copy.options is not an object', () => {
+      check({webpack: {copy: {options: []}}}, 'webpack.copy.options', /must be an Object/)
     })
   })
 
   describe('convenience shorthand', () => {
-    it('allows a browser String to be used for autoprefixer config', () => {
-      let config = processUserConfig({
-        userConfig: {
-          webpack: {autoprefixer: 'test'}
-        }
-      })
+    it('allows npm.umd to be a string', () => {
+      let config = process({npm: {umd: 'test'}})
+      expect(config.npm.umd).toEqual({global: 'test'})
+    })
+    it('allows webpack.autoprefixer to be a browser string', () => {
+      let config = process({webpack: {autoprefixer: 'test'}})
       expect(config.webpack.autoprefixer).toEqual({browsers: 'test'})
     })
-    it('allows an Array to be used for default PostCSS plugin config', () => {
-      let config = processUserConfig({
-        userConfig: {
-          webpack: {postcss: ['test']}
-        }
-      })
+    it('allows webpack.postcss to be an array', () => {
+      let config = process({webpack: {postcss: ['test']}})
       expect(config.webpack.postcss).toEqual({defaults: ['test']})
     })
-    it('allows a String to be used for npm UMD build config', () => {
-      let config = processUserConfig({
-        userConfig: {
-          npm: {umd: 'test'}
-        }
-      })
-      expect(config.npm.umd).toEqual({global: 'test'})
+    it('allows webpack.copy to be an array', () => {
+      let config = process({webpack: {copy: ['test']}})
+      expect(config.webpack.copy).toEqual({patterns: ['test']})
     })
   })
 

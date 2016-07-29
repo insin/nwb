@@ -7,3 +7,10 @@ export class UserError {
     this.message = messages.join('\n')
   }
 }
+
+export class ConfigValidationErrors {
+  constructor(errors, configPath) {
+    this.errors = errors
+    this.configPath = configPath
+  }
+}
