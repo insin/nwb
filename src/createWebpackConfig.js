@@ -561,7 +561,7 @@ export function getCompatConfig(userCompatConfig = {}) {
  * Add default polyfills to the head of the entry array.
  */
 function addPolyfillsToEntry(entry) {
-  let polyfills = require.resolve('../polyfills')
+  let polyfills = require.resolve('./polyfills')
   if (typeOf(entry) === 'array') {
     entry.unshift(polyfills)
   }

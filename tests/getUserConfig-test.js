@@ -7,12 +7,12 @@ import getUserConfig, {prepareWebpackLoaderConfig, processUserConfig} from '../s
 describe('getUserConfig()', () => {
   it("throws an error when a required config file can't be found", () => {
     expect(() => getUserConfig({config: 'tests/fixtures/nonexistent.js'}, {required: true}))
-      .toThrow(/couldn't find a config file/)
+      .toThrow(/Couldn't find a config file/)
   })
 
   it('throws an error when the config file is invalid or otherwise causes an error', () => {
     expect(() => getUserConfig({config: 'tests/fixtures/invalid-config.js'}))
-      .toThrow(/couldn't import the config file/)
+      .toThrow(/Couldn't import the config file/)
   })
 
   it("returns default config when a non-required config file can't be found", () => {

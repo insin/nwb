@@ -137,8 +137,9 @@ function upgradeBuildConfig(build, userConfigPath, report = {deprecated() {}}) {
     )
     if (npm.nativeModules) {
       messages.push(
-        '\nyou have a native ES6 modules build enabled, so you should also add "modules": "es6/index.js" to package.json',
-        'this is the default property Webpack 2 will use to look for a native ES6 modules build'
+        '',
+        'you have a native ES6 modules build enabled, so also add "modules": "es6/index.js" to package.json',
+        'this is the default property Webpack 2 will use to look for a native ES6 modules build',
       )
     }
     report.deprecated('build', ...messages)
