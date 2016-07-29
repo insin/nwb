@@ -17,7 +17,7 @@ import HashedModuleIdsPlugin from '../vendor/HashedModuleIdsPlugin'
 import createBabelConfig from './createBabelConfig'
 import debug from './debug'
 import {deepToString, endsWith, typeOf} from './utils'
-import DXPlugin from './WebpackDXPlugin'
+import BuildStatusPlugin from './WebpackBuildStatusPlugin'
 
 // Top-level property names reserved for webpack config
 // From http://webpack.github.io/docs/configuration.html
@@ -309,15 +309,26 @@ export function createPlugins(server, buildConfig = {}, userConfig = {}) {
   }
 
   if (server) {
-    // HMR is enabled by default when serving
-    if (server.hot !== false) {
+    // HMR isn't enabled when running tests
+    if (!server.test) {
+      let url = `http://${server.host || 'localhost'}:${server.port}/`
       plugins.push(
         new webpack.HotModuleReplacementPlugin(),
         new webpack.NoErrorsPlugin(),
-        new DXPlugin({url: `http://${server.host || 'localhost'}:${server.port}/`}),
+        new BuildStatusPlugin({
+          mode: 'serve',
+          message: `The app is running at ${url}`
+        }),
       )
     }
+    else {
+      plugins.push(new BuildStatusPlugin({mode: 'test'}))
+    }
+    // Use paths as names when serving
     plugins.push(new webpack.NamedModulesPlugin())
+  }
+  else {
+    plugins.push(new BuildStatusPlugin({mode: 'build'}))
   }
 
   plugins.push(

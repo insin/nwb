@@ -10,7 +10,7 @@ import debug from './debug'
 const GITKEEP_RE = /\.gitkeep$/
 
 export function clearConsole() {
-  process.stdout.write('\x1B[2J\x1B[0f')
+  process.stdout.write('\x1bc')
 }
 
 export function copyPublicDir(from, to) {

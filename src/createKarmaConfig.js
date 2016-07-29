@@ -190,11 +190,12 @@ export default function createKarmaConfig({codeCoverage, singleRun}, userConfig)
         fallback: path.join(__dirname, '../node_modules'),
       },
       server: {
-        hot: false,
+        test: true,
       },
     }, getPluginConfig(), userConfig),
-    webpackServer: {
+    webpackMiddleware: {
       noInfo: true,
+      quiet: true,
     },
   }, userKarma.extra)
 
