@@ -2,6 +2,13 @@ import expect from 'expect'
 
 import createBabelConfig from '../src/createBabelConfig'
 
+let DEFAULT_RUNTIME_CONFIG =
+  [require.resolve('babel-plugin-transform-runtime'), {
+    helpers: false,
+    polyfill: false,
+    regenerator: true,
+  }]
+
 describe('createBabelConfig()', () => {
   context('without any build or user config', () => {
     it('generates default Babel config', () => {
@@ -9,7 +16,8 @@ describe('createBabelConfig()', () => {
         presets: [
           require.resolve('../babel-presets/es2015-loose'),
           require.resolve('../babel-presets/stage-2'),
-        ]
+        ],
+        plugins: [DEFAULT_RUNTIME_CONFIG]
       })
     })
   })
@@ -20,15 +28,14 @@ describe('createBabelConfig()', () => {
         native: true,
         presets: ['react', 'react-hmre'],
         stage: 0,
-        runtime: true,
       })).toEqual({
         presets: [
           require.resolve('../babel-presets/es2015-loose-native'),
           require.resolve('../babel-presets/stage-0'),
           require.resolve('../babel-presets/react'),
           require.resolve('../babel-presets/react-hmre'),
-          require.resolve('../babel-presets/runtime'),
         ],
+        plugins: [DEFAULT_RUNTIME_CONFIG]
       })
     })
   })
@@ -45,21 +52,30 @@ describe('createBabelConfig()', () => {
         presets: [
           require.resolve('../babel-presets/es2015'),
           require.resolve('../babel-presets/stage-0'),
-          require.resolve('../babel-presets/runtime'),
           'test-preset',
         ],
-        plugins: ['test-plugin'],
+        plugins: [
+          'test-plugin',
+          [require.resolve('babel-plugin-transform-runtime'), {}]
+        ],
       })
     })
     it('chooses runtime transform config', () => {
-      ['helpers', 'regenerator', 'polyfill'].forEach(runtime => {
+      ['helpers', 'polyfill'].forEach(runtime => {
         expect(createBabelConfig({}, {
           runtime,
         })).toEqual({
           presets: [
             require.resolve('../babel-presets/es2015-loose'),
             require.resolve('../babel-presets/stage-2'),
-            require.resolve(`../babel-presets/runtime-${runtime}`),
+          ],
+          plugins: [
+            [require.resolve('babel-plugin-transform-runtime'), {
+              helpers: false,
+              polyfill: false,
+              regenerator: true,
+              [runtime]: true,
+            }]
           ]
         })
       })
@@ -73,6 +89,7 @@ describe('createBabelConfig()', () => {
           require.resolve('../babel-presets/es2015-loose'),
           require.resolve('../babel-presets/stage-1'),
         ],
+        plugins: [DEFAULT_RUNTIME_CONFIG]
       })
     })
     it('cancels default stage config', () => {
@@ -80,10 +97,11 @@ describe('createBabelConfig()', () => {
         presets: [
           require.resolve('../babel-presets/es2015-loose'),
         ],
+        plugins: [DEFAULT_RUNTIME_CONFIG]
       })
     })
-    it('cancels build runtime config', () => {
-      expect(createBabelConfig({runtime: true}, {runtime: false})).toEqual({
+    it('cancels default runtime config', () => {
+      expect(createBabelConfig({}, {runtime: false})).toEqual({
         presets: [
           require.resolve('../babel-presets/es2015-loose'),
           require.resolve('../babel-presets/stage-2'),
