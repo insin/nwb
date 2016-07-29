@@ -11,8 +11,8 @@
   "scripts": {
     "build": "npm run lint && rimraf lib && babel src --out-dir lib",
     "build:watch": "rimraf lib && babel src --watch --out-dir lib",
-    "lint": "eslint *.js src tests",
-    "lint:fix": "eslint *.js src tests --fix",
+    "lint": "eslint *.js babel-presets src tests",
+    "lint:fix": "npm run lint -- --fix",
     "test": "npm run build && mocha --compilers js:babel-core/register tests/*-test.js tests/commands/*-test.js",
     "test:coverage": "npm run build && cross-env NODE_ENV=test nyc mocha tests/*-test.js tests/commands/*-test.js",
     "test:watch": "mocha --watch --compilers js:babel-core/register tests/*-test.js"
