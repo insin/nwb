@@ -15,10 +15,10 @@ let findLoaderById = (loaders, id) => {
 }
 
 describe('createWebpackConfig()', () => {
-  context('without any config arguments', () => {
-    let config = createWebpackConfig({})
+  context('with only entry config', () => {
+    let config = createWebpackConfig({entry: ['index.js']})
     it('creates a default webpack build config', () => {
-      expect(Object.keys(config)).toEqual(['module', 'plugins', 'resolve', 'postcss'])
+      expect(Object.keys(config)).toEqual(['module', 'plugins', 'resolve', 'postcss', 'entry'])
       expect(config.module.loaders.map(loader => loader.loader).join('\n'))
         .toContain('babel-loader')
         .toContain('extract-text-webpack-plugin')
@@ -27,15 +27,18 @@ describe('createWebpackConfig()', () => {
         .toContain('url-loader')
         .toContain('file-loader')
         .toContain('json-loader')
-      expect(config.resolve.extensions).toEqual(['', '.web.js', '.js', '.jsx', '.json'])
+      expect(config.resolve.extensions).toEqual(['', '.js', '.json'])
     })
     it('excludes node_modules from babel-loader', () => {
       expect(config.module.loaders[0].exclude.test('node_modules')).toBe(true)
     })
+    it('adds default polyfills to the entry chunk', () => {
+      expect(config.entry).toEqual([require.resolve('../polyfills'), 'index.js'])
+    })
   })
 
-  context('with a server=true config argument', () => {
-    let config = createWebpackConfig({server: true})
+  context('with server config', () => {
+    let config = createWebpackConfig({entry: ['index.js'], server: {}})
     it('creates a server webpack config', () => {
       expect(config.module.loaders.map(loader => loader.loader).join('\n'))
         .toContain('babel-loader')
@@ -45,7 +48,14 @@ describe('createWebpackConfig()', () => {
         .toContain('url-loader')
         .toContain('file-loader')
         .toContain('json-loader')
-      expect(config.resolve.extensions).toEqual(['', '.web.js', '.js', '.jsx', '.json'])
+      expect(config.resolve.extensions).toEqual(['', '.js', '.json'])
+    })
+  })
+
+  context('with polyfill=false config', () => {
+    let config = createWebpackConfig({entry: ['index.js'], polyfill: false})
+    it('skips default polyfilling', () => {
+      expect(config.entry).toEqual(['index.js'])
     })
   })
 

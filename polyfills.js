@@ -7,3 +7,9 @@ if (typeof Promise === 'undefined') {
 }
 
 require('whatwg-fetch')
+
+// TODO Provide Symbol and Array.from polyfills so array destructuring,
+//      for-of loops and array spread operator will work in non-ES2015
+//      environments by default.
+//      This also lets us add the inline element optimisation, which depends on
+//      Symbol.

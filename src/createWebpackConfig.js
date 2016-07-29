@@ -565,12 +565,16 @@ export function getCompatConfig(userCompatConfig = {}) {
   return configs.length > 0 ? merge(...configs) : null
 }
 
+/**
+ * Add default polyfills to the head of the entry array.
+ */
 function addPolyfillsToEntry(entry) {
-  let polyfills = require.resolve('./polyfills')
+  let polyfills = require.resolve('../polyfills')
   if (typeOf(entry) === 'array') {
     entry.unshift(polyfills)
   }
   else {
+    // Assumption: there will only be one entry point, naming the entry chunk
     entry[Object.keys(entry)[0]].unshift(polyfills)
   }
 }
@@ -600,11 +604,6 @@ export default function createWebpackConfig(buildConfig, nwbPluginConfig = {}, u
     ...otherBuildConfig
   } = buildConfig
 
-  // Add default polyfills to the entry chunk
-  if (buildPolyfill !== false && userConfig.polyfill !== false) {
-    entry = addPolyfillsToEntry(entry)
-  }
-
   let userWebpackConfig = userConfig.webpack || {}
   let userResolveConfig = {}
   if (userWebpackConfig.aliases) {
@@ -615,13 +614,12 @@ export default function createWebpackConfig(buildConfig, nwbPluginConfig = {}, u
   buildLoaderConfig.babel = {query: createBabelConfig(buildBabelConfig, userConfig.babel)}
 
   let webpackConfig = {
-    entry,
     module: {
       loaders: createLoaders(server, buildLoaderConfig, userWebpackConfig.loaders, nwbPluginConfig)
     },
     plugins: createPlugins(server, buildPluginConfig, userWebpackConfig),
     resolve: merge({
-      extensions: ['', '.web.js', '.js', '.jsx', '.json'],
+      extensions: ['', '.js', '.json'],
       // Fall back to resolving runtime dependencies from nwb's dependencies,
       // e.g. for babel-runtime when using the transform-runtime plugin.
       fallback: path.join(__dirname, '../node_modules'),
@@ -632,6 +630,14 @@ export default function createWebpackConfig(buildConfig, nwbPluginConfig = {}, u
     // detect, extract and where possible validate it before merging it into the
     // final webpack config object.
     ...getTopLevelLoaderConfig(userWebpackConfig.loaders, nwbPluginConfig.cssPreprocessors),
+  }
+
+  if (entry) {
+    // Add default polyfills to the entry chunk unless configured not to
+    if (buildPolyfill !== false && userConfig.polyfill !== false) {
+      addPolyfillsToEntry(entry)
+    }
+    webpackConfig.entry = entry
   }
 
   // Create and merge compatibility configuration into the generated config if
