@@ -117,13 +117,15 @@
 
 - autoprefixer: v6.3.6 → [v6.3.7](https://github.com/postcss/autoprefixer/blob/master/CHANGELOG.md#637)
 - babel\* v5 → babel\* v6
+- [babel-plugin-istanbul](https://github.com/istanbuljs/babel-plugin-istanbul/): v1.1.0
 - [babel-plugin-lodash](https://github.com/lodash/babel-plugin-lodash): v3.2.6
-- [babel-plugin-transform-react-remove-prop-types](https://github.com/oliviertassinari/babel-plugin-transform-react-remove-prop-types): v0.2.8
+- [babel-plugin-transform-react-remove-prop-types](https://github.com/oliviertassinari/babel-plugin-transform-react-remove-prop-types): v0.2.9
 - [case-sensitive-paths-webpack-plugin](https://github.com/Urthen/case-sensitive-paths-webpack-plugin): v1.1.2
 - expect: v1.20.1 → [v1.20.2](https://github.com/mjackson/expect/compare/v1.20.1...v1.20.2)
 - express: v4.13.4 → [v4.14.0](https://github.com/expressjs/express/blob/master/History.md#4140--2016-06-16)
+- [figures](https://github.com/sindresorhus/figures): v1.7.0
 - file-loader: v0.8.5 → [v0.9.0](https://github.com/webpack/file-loader/compare/v0.8.5...v0.9.0)
-- glob: v7.0.3 → [v7.0.5](https://github.com/isaacs/node-glob/compare/v7.0.3...v7.0.5)
+- glob: v7.0.3 → [v7.0.5](https://github.com/isaacs/node-glob/https://github.com/Medium/phantomjs/)
 - html-webpack-plugin: v2.19.0 → [v2.22.0](https://github.com/ampedandwired/html-webpack-plugin/blob/master/CHANGELOG.md#v2220)
 - inquirer: v1.0.3 → [v1.1.2](https://github.com/SBoudrias/Inquirer.js/compare/v1.0.3...v1.1.2)
 - karma: v0.13.22 → [v1.1.2](https://github.com/karma-runner/karma/blob/master/CHANGELOG.md#112-2016-07-26)
@@ -132,7 +134,7 @@
 - karma-mocha-reporter: v2.0.3 → [v2.0.5](https://github.com/litixsoft/karma-mocha-reporter/compare/v2.0.3...v2.0.5)
 - karma-phantomjs-launcher: v1.0.0 → [v1.0.1](https://github.com/karma-runner/karma-phantomjs-launcher/blob/master/CHANGELOG.md#101-2016-06-23)
 - npm-install-webpack-plugin: v4.0.1 → [v4.0.4](https://github.com/ericclemmons/npm-install-webpack-plugin/blob/master/CHANGELOG.md#404-2016-06-30)
-- phantomjs-prebuilt: v2.1.7 → [v2.1.8](https://github.com/Medium/phantomjs/releases/tag/v2.1.8)
+- phantomjs-prebuilt: v2.1.7 → [v2.1.9](https://github.com/Medium/phantomjs/releases/tag/2.1.9)
 - qs: v6.2.0 → [v6.2.1](https://github.com/ljharb/qs/blob/master/CHANGELOG.md#621)
 - rimraf: v2.5.2 → [v2.5.3](https://github.com/isaacs/rimraf/compare/v2.5.2...v2.5.3)
 - [webpack-fail-plugin](https://github.com/TiddoLangerak/webpack-fail-plugin): v1.0.5
