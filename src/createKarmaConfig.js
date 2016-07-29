@@ -164,6 +164,7 @@ export default function createKarmaConfig({codeCoverage, singleRun}, userConfig)
       reporters: [
         {type: 'html', subdir: 'html'},
         {type: 'lcovonly', subdir: '.'},
+        {type: 'text-summary'},
       ],
     },
     files,
