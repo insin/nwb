@@ -164,28 +164,28 @@ export function createLoaders(server, buildConfig = {}, userConfig = {}, pluginC
       include: /node_modules/,
     }),
     loader('graphics', {
-      test: /\.(gif|png|svg)$/,
+      test: /\.(gif|png|svg)(\?.*)?$/,
       loader: require.resolve('url-loader'),
       query: {
         name,
       },
     }),
     loader('jpeg', {
-      test: /\.jpe?g$/,
+      test: /\.jpe?g(\?.*)?$/,
       loader: require.resolve('file-loader'),
       query: {
         name,
       },
     }),
     loader('fonts', {
-      test: /\.(otf|ttf|woff|woff2)(\?v=\d+\.\d+\.\d+)?$/,
+      test: /\.(otf|ttf|woff|woff2)(\?.*)?$/,
       loader: require.resolve('url-loader'),
       query: {
         name,
       },
     }),
     loader('eot', {
-      test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,
+      test: /\.eot(\?.*)?$/,
       loader: require.resolve('file-loader'),
       query: {
         name,
