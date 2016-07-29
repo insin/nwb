@@ -5,9 +5,14 @@ import {red, yellow} from 'chalk'
 import debug from './debug'
 
 export function clearConsole() {
+  // This will completely wipe your scrollback in cmd.exe on Windows - recommend
+  // using the start command to launch nwb's dev server in a new prompt.
   process.stdout.write('\x1bc')
 }
 
+/**
+ * Create a banner comment for a UMD build file from package.json config.
+ */
 export function createBanner(pkg) {
   let banner = `${pkg.name} ${pkg.version}`
   if (pkg.homepage) {
@@ -19,6 +24,9 @@ export function createBanner(pkg) {
   return banner
 }
 
+/**
+ * Create Webpack externals config from a module → global variable mapping.
+ */
 export function createWebpackExternals(externals = {}) {
   return Object.keys(externals).reduce((webpackExternals, packageName) => {
     let globalName = externals[packageName]
