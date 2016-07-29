@@ -25,12 +25,12 @@ describe('createBabelConfig()', () => {
   context('with build config', () => {
     it('generates build-configured Babel config', () => {
       expect(createBabelConfig({
-        native: true,
+        nativeModules: true,
         presets: ['react', 'react-hmre'],
         stage: 0,
       })).toEqual({
         presets: [
-          require.resolve('../babel-presets/es2015-loose-native'),
+          require.resolve('../babel-presets/es2015-native-module-loose'),
           require.resolve('../babel-presets/stage-0'),
           require.resolve('../babel-presets/react'),
           require.resolve('../babel-presets/react-hmre'),

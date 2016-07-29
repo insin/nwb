@@ -4,6 +4,6 @@ module.exports = {
     cherryPick: 'react-bootstrap'
   },
   npm: {
-    jsNext: true
+    nativeModules: true
   }
 }

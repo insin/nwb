@@ -50,9 +50,9 @@ export default function moduleBuild(args) {
     plugins: [require.resolve('babel-plugin-add-module-exports')],
   }, userConfig.babel)
 
-  if (userConfig.npm.jsNext) {
+  if (userConfig.npm.nativeModules) {
     console.log('nwb: build-module (es6 modules)')
-    runBabel(src, path.resolve('es6'), {...babelConfig, native: true}, userConfig.babel)
+    runBabel(src, path.resolve('es6'), {...babelConfig, nativeModules: true}, userConfig.babel)
   }
 
   temp.cleanupSync()

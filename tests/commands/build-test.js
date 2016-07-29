@@ -81,7 +81,7 @@ describe('command: build', function() {
   describe('building a React component and its demo app', () => {
     before(done => {
       setUp()
-      cli(['new', 'react-component', 'test-component', '--umd=TestComponent', '--jsnext'], err => {
+      cli(['new', 'react-component', 'test-component', '--umd=TestComponent', '--native-modules'], err => {
         expect(err).toNotExist('No errors creating a new React component')
         process.chdir(path.join(tmpDir, 'test-component'))
         cli(['build'], err => {
@@ -97,7 +97,7 @@ describe('command: build', function() {
         'index.js',
       ])
     })
-    it('creates an ES6 build', () => {
+    it('creates an ES6 modules build', () => {
       expect(glob.sync('*', {cwd: path.resolve('es6')})).toEqual([
         'index.js',
       ])

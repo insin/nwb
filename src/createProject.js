@@ -28,12 +28,12 @@ function writeConfigFile(dir, config) {
 
 export function getWebModulePrefs(args, done) {
   let umd = args.umd || ''
-  let jsNext = args.jsnext === true
+  let nativeModules = args.n === true || args['native-modules'] === true
 
   // Don't ask questions if the user doesn't want them, or already told us all
   // the answers.
-  if ((args.f || args.force) || ('umd' in args && 'jsnext' in args)) {
-    return done(null, {umd, jsNext})
+  if ((args.f || args.force) || ('umd' in args && ('n' in args || 'native-modules' in args))) {
+    return done(null, {umd, nativeModules})
   }
 
   inquirer.prompt([
@@ -54,11 +54,11 @@ export function getWebModulePrefs(args, done) {
       },
     },
     {
-      when: () => !('jsnext' in args),
+      when: () => !('n' in args || 'native-modules' in args),
       type: 'confirm',
-      name: 'jsNext',
-      message: 'Do you want to create an ES6 modules build?',
-      default: jsNext,
+      name: 'nativeModules',
+      message: 'Do you want to create an extra build with native ES6 modules?',
+      default: nativeModules,
     }
   ]).then(answers => done(null, answers), err => done(err))
 }
@@ -71,7 +71,8 @@ function logCreatedFiles(targetDir, createdFiles) {
 }
 
 export function npmModuleVars(vars) {
-  vars.jsNextMain = vars.jsNext ? '\n  "jsnext:main": "es6/index.js",' : ''
+  vars.nativeModulesMain =
+    vars.nativeModules ? '\n  "jsnext:main": "es6/index.js",\n  "modules": "es6/index.js",' : ''
   return vars
 }
 
@@ -106,17 +107,17 @@ const PROJECT_CREATORS = {
   [REACT_COMPONENT](args, name, targetDir, cb) {
     getWebModulePrefs(args, (err, prefs) => {
       if (err) return cb(err)
-      let {umd, jsNext} = prefs
+      let {umd, nativeModules} = prefs
       let templateDir = path.join(__dirname, `../templates/${REACT_COMPONENT}`)
       let reactVersion = args.react || REACT_VERSION
       let templateVars = npmModuleVars(
-        {jsNext, name, nwbVersion, reactVersion}
+        {name, nativeModules, nwbVersion, reactVersion}
       )
       copyTemplateDir(templateDir, targetDir, templateVars, (err, createdFiles) => {
         if (err) return cb(err)
-        if (umd || jsNext) {
+        if (umd || nativeModules) {
           let config = {type: 'react-component', npm: {}}
-          if (jsNext) config.npm.jsNext = jsNext
+          if (nativeModules) config.npm.nativeModules = nativeModules
           if (umd) config.npm.umd = {global: umd, externals: {react: 'React'}}
           try {
             writeConfigFile(targetDir, config)
@@ -151,16 +152,16 @@ const PROJECT_CREATORS = {
   [WEB_MODULE](args, name, targetDir, cb) {
     getWebModulePrefs(args, (err, prefs) => {
       if (err) return cb(err)
-      let {umd, jsNext} = prefs
+      let {umd, nativeModules} = prefs
       let templateDir = path.join(__dirname, `../templates/${WEB_MODULE}`)
       let templateVars = npmModuleVars(
-        {jsNext, name, nwbVersion}
+        {name, nativeModules, nwbVersion}
       )
       copyTemplateDir(templateDir, targetDir, templateVars, (err, createdFiles) => {
         if (err) return cb(err)
-        if (umd || jsNext) {
+        if (umd || nativeModules) {
           let config = {type: 'web-module', npm: {}}
-          if (jsNext) config.npm.jsNext = jsNext
+          if (nativeModules) config.npm.nativeModules = nativeModules
           if (umd) config.npm.umd = umd
           try {
             writeConfigFile(targetDir, config)

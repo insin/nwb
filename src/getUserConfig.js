@@ -109,7 +109,7 @@ let warnedAboutWebpackPlugins = false
 function upgradeBuildConfig(build, userConfigPath, report = {deprecated() {}}) {
   let npm = {}
   if (build.jsNext) {
-    npm.jsNext = !!build.jsNext
+    npm.nativeModules = !!build.jsNext
   }
   if (build.umd) {
     let hasExternals = !!build.externals && Object.keys(build.externals).length > 0
@@ -124,12 +124,18 @@ function upgradeBuildConfig(build, userConfigPath, report = {deprecated() {}}) {
     let messages = [
       `deprecated in favour of ${chalk.green('npm')} config as of nwb v0.12`,
       `nwb will upgrade ${chalk.yellow('build')} config to ${chalk.green('npm')} format during a build`,
-      `equivalent ${chalk.green('npm')} config:\n`,
+      `equivalent ${chalk.green('npm')} config to your current ${chalk.yellow('build')} config:\n`,
     ].concat(
       JSON.stringify({npm}, null, 2)
         .split('\n')
         .map(line => `  ${chalk.cyan(line)}`)
     )
+    if (npm.nativeModules) {
+      messages.push(
+        '\nyou have a native ES6 modules build enabled, so you should also add "modules": "es6/index.js" to package.json',
+        'this is the default property Webpack 2 will use to look for a native ES6 modules build'
+      )
+    }
     report.deprecated('build', ...messages)
     warnedAboutBuildChange = true
   }

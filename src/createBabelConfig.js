@@ -4,7 +4,7 @@ const DEFAULT_STAGE = 2
 
 export default function createBabelConfig(buildConfig = {}, userConfig = {}) {
   let {
-    native,
+    nativeModules,
     plugins: buildPlugins = [],
     presets: buildPresets,
     stage: buildStage = DEFAULT_STAGE,
@@ -26,10 +26,11 @@ export default function createBabelConfig(buildConfig = {}, userConfig = {}) {
     loose = true
   }
 
-  // ES2015 preset
+  // ES2015 and ES2016 presets
   presets.push(
     require.resolve(
-      `../babel-presets/es2015${loose ? '-loose' : ''}${native ? '-native' : ''}`
+      `../babel-presets/es2015${nativeModules ? '-native-modules' : ''}${loose ? '-loose' : ''}`,
+      'babel-preset-es2016',
     )
   )
 

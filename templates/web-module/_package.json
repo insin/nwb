@@ -2,7 +2,7 @@
   "name": "{{name}}",
   "version": "1.0.0",
   "description": "Describe {{name}} here",
-  "main": "lib/index.js",{{jsNextMain}}
+  "main": "lib/index.js",{{nativeModulesMain}}
   "files": [
     "es6",
     "lib",

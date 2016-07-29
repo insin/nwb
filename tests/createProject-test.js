@@ -13,7 +13,7 @@ describe('getWebModulePrefs()', () => {
     moduleArgs([], (err, settings) => {
       expect(err).toNotExist()
       expect(settings).toEqual({
-        jsNext: false,
+        nativeModules: false,
         umd: '',
       })
       done()

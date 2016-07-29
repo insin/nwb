@@ -177,7 +177,7 @@ describe('processUserConfig()', () => {
     })
     expect(config.build).toNotExist()
     expect(config.npm).toEqual({
-      jsNext: true,
+      nativeModules: true,
       umd: {
         externals: {'react': 'React'},
         global: 'MyComponent',
