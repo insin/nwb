@@ -267,6 +267,7 @@
 
 - chalk: v1.1.1 → [v1.1.3](https://github.com/chalk/chalk/compare/v1.1.1...v1.1.3) - update deps
 - cross-spawn: v2.1.5 → [v2.2.3](https://github.com/IndigoUnited/node-cross-spawn/compare/2.1.5...2.2.3) - update deps
+- [detect-port](https://github.com/xudafeng/detect-port/): v1.0.0
 - expect: v1.16.0 → [v1.20.1](https://github.com/mjackson/expect/blob/master/CHANGES.md#v1201)
 - fs-extra: v0.26.7 → [v0.30.0](https://github.com/jprichardson/node-fs-extra/blob/master/CHANGELOG.md#0300--2016-04-28)
 - html-webpack-plugin: v2.14.0 → [v2.17.0](https://github.com/ampedandwired/html-webpack-plugin/blob/master/CHANGELOG.md#v2170)
