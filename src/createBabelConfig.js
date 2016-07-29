@@ -30,8 +30,8 @@ export default function createBabelConfig(buildConfig = {}, userConfig = {}) {
   presets.push(
     require.resolve(
       `../babel-presets/es2015${nativeModules ? '-native-modules' : ''}${loose ? '-loose' : ''}`,
-      'babel-preset-es2016',
-    )
+    ),
+    require.resolve('babel-preset-es2016'),
   )
 
   // Stage preset

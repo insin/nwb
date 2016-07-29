@@ -15,6 +15,7 @@ describe('createBabelConfig()', () => {
       expect(createBabelConfig()).toEqual({
         presets: [
           require.resolve('../babel-presets/es2015-loose'),
+          require.resolve('babel-preset-es2016'),
           require.resolve('../babel-presets/stage-2'),
         ],
         plugins: [DEFAULT_RUNTIME_CONFIG]
@@ -30,7 +31,8 @@ describe('createBabelConfig()', () => {
         stage: 0,
       })).toEqual({
         presets: [
-          require.resolve('../babel-presets/es2015-native-module-loose'),
+          require.resolve('../babel-presets/es2015-native-modules-loose'),
+          require.resolve('babel-preset-es2016'),
           require.resolve('../babel-presets/stage-0'),
           require.resolve('../babel-presets/react'),
           require.resolve('../babel-presets/react-hmre'),
@@ -51,6 +53,7 @@ describe('createBabelConfig()', () => {
       })).toEqual({
         presets: [
           require.resolve('../babel-presets/es2015'),
+          require.resolve('babel-preset-es2016'),
           require.resolve('../babel-presets/stage-0'),
           'test-preset',
         ],
@@ -67,6 +70,7 @@ describe('createBabelConfig()', () => {
         })).toEqual({
           presets: [
             require.resolve('../babel-presets/es2015-loose'),
+            require.resolve('babel-preset-es2016'),
             require.resolve('../babel-presets/stage-2'),
           ],
           plugins: [
@@ -87,6 +91,7 @@ describe('createBabelConfig()', () => {
       expect(createBabelConfig({stage: 3}, {stage: 1})).toEqual({
         presets: [
           require.resolve('../babel-presets/es2015-loose'),
+          require.resolve('babel-preset-es2016'),
           require.resolve('../babel-presets/stage-1'),
         ],
         plugins: [DEFAULT_RUNTIME_CONFIG]
@@ -96,6 +101,7 @@ describe('createBabelConfig()', () => {
       expect(createBabelConfig({}, {stage: false})).toEqual({
         presets: [
           require.resolve('../babel-presets/es2015-loose'),
+          require.resolve('babel-preset-es2016'),
         ],
         plugins: [DEFAULT_RUNTIME_CONFIG]
       })
@@ -104,6 +110,7 @@ describe('createBabelConfig()', () => {
       expect(createBabelConfig({}, {runtime: false})).toEqual({
         presets: [
           require.resolve('../babel-presets/es2015-loose'),
+          require.resolve('babel-preset-es2016'),
           require.resolve('../babel-presets/stage-2'),
         ],
       })
