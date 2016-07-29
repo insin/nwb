@@ -1,12 +1,17 @@
 import {execSync} from 'child_process'
 import util from 'util'
 
+import {red, yellow} from 'chalk'
 import fs from 'fs-extra'
 import glob from 'glob'
 
 import debug from './debug'
 
 const GITKEEP_RE = /\.gitkeep$/
+
+export function clearConsole() {
+  process.stdout.write('\x1B[2J\x1B[0f')
+}
 
 export function copyPublicDir(from, to) {
   fs.ensureDirSync(to)
@@ -62,6 +67,16 @@ export function installReact({dev = false, save = false, cwd = process.cwd(), ve
   let command = `npm install${save ? ` --save${dev ? '-dev' : ''}` : ''} react@${version} react-dom@${version}`
   debug(`${cwd} $ ${command}`)
   execSync(command, {cwd, stdio: [0, 1, 2]})
+}
+
+export function logConfigValidationErrors(error) {
+  console.error(red(`Invalid config in ${error.configPath}:`))
+  console.error()
+  error.errors.forEach(({config, value, message}) => {
+    console.error(`${yellow(config)} is ${util.inspect(value)}`)
+    console.error(`  ${message}`)
+    console.error()
+  })
 }
 
 /**

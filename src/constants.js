@@ -1,5 +1,7 @@
 export const CONFIG_FILE_NAME = 'nwb.config.js'
 
+export const DEFAULT_PORT = process.env.PORT || 3000
+
 export const REACT_VERSION = '15.x'
 
 export const REACT_APP = 'react-app'

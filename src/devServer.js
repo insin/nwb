@@ -1,13 +1,14 @@
 import {cyan} from 'chalk'
-import history from 'connect-history-api-fallback'
+import historyAPIFallback from 'connect-history-api-fallback'
 import express from 'express'
 import webpack from 'webpack'
-import {clearConsole} from './WebpackDXPlugin'
+
+import {clearConsole} from './utils'
 
 /**
- * Start an express server which uses webpack-dev-middleware to build and serve
+ * Start an Express server which uses webpack-dev-middleware to build and serve
  * assets using Webpack's watch mode, and webpack-hot-middleware to hot reload
- * changes in the browser.
+ * changes in the browser and display compile error overlays.
  *
  * If static path config is provided, express will serve static content from it.
  */
@@ -16,7 +17,7 @@ export default function server(webpackConfig, {fallback, host, port, staticPath}
   let compiler = webpack(webpackConfig)
 
   if (fallback) {
-    app.use(history())
+    app.use(historyAPIFallback())
   }
 
   app.use(require('webpack-dev-middleware')(compiler, {
@@ -40,6 +41,7 @@ export default function server(webpackConfig, {fallback, host, port, staticPath}
     console.log()
   }
 
+  // Only provide host config if it was explicitly specified by the user
   if (host) {
     app.listen(port, host, onServerStart)
   }

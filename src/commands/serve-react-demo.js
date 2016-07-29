@@ -8,7 +8,6 @@ import serveReact from '../serveReact'
 export default function serveReactDemo(args, cb) {
   let pkg = require(path.resolve('package.json'))
 
-  console.log('nwb: serve-react-demo')
   serveReact(args, {
     babel: {
       presets: ['react', 'react-hmre'],

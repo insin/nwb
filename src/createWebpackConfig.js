@@ -4,19 +4,19 @@ import autoprefixer from 'autoprefixer'
 import CaseSensitivePathsPlugin from 'case-sensitive-paths-webpack-plugin'
 import {red} from 'chalk'
 import ExtractTextPlugin from 'extract-text-webpack-plugin'
-import HtmlWebpackPlugin from 'html-webpack-plugin'
+import HtmlPlugin from 'html-webpack-plugin'
 import NpmInstallPlugin from 'npm-install-webpack-plugin'
 import qs from 'qs'
 import webpack, {optimize} from 'webpack'
 import failPlugin from 'webpack-fail-plugin'
-import WebpackMd5Hash from 'webpack-md5-hash'
+import Md5HashPlugin from 'webpack-md5-hash'
 import merge from 'webpack-merge'
 
 import HashedModuleIdsPlugin from '../vendor/HashedModuleIdsPlugin'
 import createBabelConfig from './createBabelConfig'
 import debug from './debug'
 import {deepToString, endsWith, typeOf} from './utils'
-import WebpackDXPlugin from './WebpackDXPlugin'
+import DXPlugin from './WebpackDXPlugin'
 
 // Top-level property names reserved for webpack config
 // From http://webpack.github.io/docs/configuration.html
@@ -241,9 +241,9 @@ export function createExtraLoaders(extraLoaders = [], userConfig = {}) {
 }
 
 /**
- * Plugin for HtmlWebpackPlugin which inlines content for an extracted Webpack
+ * Plugin for HtmlPlugin which inlines content for an extracted Webpack
  * manifest into the HTML page in a <script> tag before other emitted asssets
- * are injected by HtmlWebpackPlugin itself.
+ * are injected by HtmlPlugin itself.
  */
 function injectManifestPlugin() {
   this.plugin('compilation', (compilation) => {
@@ -256,7 +256,7 @@ function injectManifestPlugin() {
             '</body>',
             `<script>${children[0]._value}</script></body>`
           )
-          // Remove the manifest from HtmlWebpackPlugin's assets to
+          // Remove the manifest from HtmlPlugin's assets to
           // prevent a <script> tag being created for it.
           var manifestIndex = data.assets.js.indexOf(data.assets.publicPath + key)
           data.assets.js.splice(manifestIndex, 1)
@@ -279,12 +279,13 @@ function injectManifestPlugin() {
  *   build config, which provides default configuration for them which can be
  *   tweaked by user plugin config when appropriate.
  * - any extra plugins defined in build and user config (extra user plugins are
- *   handled by the final merge of webpack.extra config).
+ *   not handled here, but by the final merge of webpack.extra config).
  */
 export function createPlugins(server, buildConfig = {}, userConfig = {}) {
   let production = process.env.NODE_ENV === 'production'
 
   let plugins = [
+    // Enforce case-sensitive import paths
     new CaseSensitivePathsPlugin(),
   ]
 
@@ -299,7 +300,7 @@ export function createPlugins(server, buildConfig = {}, userConfig = {}) {
       plugins.push(
         new webpack.HotModuleReplacementPlugin(),
         new webpack.NoErrorsPlugin(),
-        new WebpackDXPlugin(),
+        new DXPlugin({url: `http://${server.host || 'localhost'}:${server.port}/`}),
       )
     }
     plugins.push(new webpack.NamedModulesPlugin())
@@ -344,7 +345,7 @@ export function createPlugins(server, buildConfig = {}, userConfig = {}) {
         // The MD5 Hash plugin seems to make [chunkhash] for .js files behave
         // like [contenthash] does for extracted .css files, which is essential
         // for deterministic hashing.
-        new WebpackMd5Hash(),
+        new Md5HashPlugin(),
         // The Webpack manifest is normally folded into the last chunk, changing
         // its hash - prevent this by extracting the manifest into its own
         // chunk - also essential for deterministic hashing.
@@ -377,7 +378,7 @@ export function createPlugins(server, buildConfig = {}, userConfig = {}) {
   if (buildConfig.html) {
     plugins.push(
       // Generate the app's HTML file
-      new HtmlWebpackPlugin({
+      new HtmlPlugin({
         chunksSortMode: 'dependency',
         template: path.join(__dirname, '../templates/webpack-template.html'),
         ...buildConfig.html,
@@ -553,6 +554,7 @@ function addPolyfillsToEntry(entry) {
     entry[Object.keys(entry)[0]].unshift(polyfills)
   }
 }
+
 /**
  * Create a webpack config with a curated set of default loaders suitable for
  * creating a static build (default) or serving an app with hot reloading.

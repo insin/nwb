@@ -25,7 +25,6 @@ export default function serveReact_(args, cb) {
 
   let entry = args._[1]
 
-  console.log('nwb: serve-react')
   serveReact(args, {
     babel: {
       stage: 0,

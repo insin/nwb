@@ -1,10 +1,8 @@
 import {green, red, yellow} from 'chalk'
 
-const friendlySyntaxErrorLabel = 'Syntax error:'
+import {clearConsole} from './utils'
 
-export function clearConsole() {
-  process.stdout.write('\x1B[2J\x1B[0f')
-}
+const friendlySyntaxErrorLabel = 'Syntax error:'
 
 function formatMessage(message) {
   return message
@@ -30,12 +28,8 @@ function isLikelyASyntaxError(message) {
 }
 
 export default class WebpackDXPlugin {
-  constructor({clear = true, successMessage = null} = {}) {
-    // Should the plugin clear the console after every rebuild?
-    this.clear = clear
-    // Custom message to display after successful compilation, e.g. the URL the
-    // dev server is running on.
-    this.successMessage = successMessage
+  constructor({url}) {
+    this.url = url
 
     this.done = this.done.bind(this)
     this.invalid = this.invalid.bind(this)
@@ -46,21 +40,15 @@ export default class WebpackDXPlugin {
     compiler.plugin('invalid', this.invalid)
   }
 
-  clearConsole() {
-    if (this.clear) clearConsole()
-  }
-
   done(stats) {
-    this.clearConsole()
+    clearConsole()
     let hasErrors = stats.hasErrors()
     let hasWarnings = stats.hasWarnings()
     if (!hasErrors && !hasWarnings) {
       console.log(green('Compiled successfully!'))
       console.log()
-      if (this.successMessage) {
-        console.log(this.successMessage)
-        console.log()
-      }
+      console.log(`The app is running at ${this.url}`)
+      console.log()
       return
     }
 
@@ -103,7 +91,7 @@ export default class WebpackDXPlugin {
   }
 
   invalid() {
-    this.clearConsole()
+    clearConsole()
     console.log('Compiling...')
   }
 }

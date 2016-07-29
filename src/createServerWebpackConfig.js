@@ -25,7 +25,6 @@ export default function createServerWebpackConfig(args, buildConfig) {
     ].concat(entry),
     output,
     plugins,
-    server: true,
     ...otherBuildConfig,
   }, pluginConfig, userConfig)
 }
