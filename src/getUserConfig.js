@@ -3,11 +3,12 @@ import path from 'path'
 import util from 'util'
 
 import chalk from 'chalk'
+import figures from 'figures'
 import glob from 'glob'
-import symbols from 'log-symbols'
 import webpack from 'webpack'
 
 import {CONFIG_FILE_NAME, PROJECT_TYPES} from './constants'
+import {COMPAT_CONFIGS} from './createWebpackConfig'
 import debug from './debug'
 import {ConfigValidationError, UserError} from './errors'
 import {deepToString, typeOf} from './utils'
@@ -38,6 +39,10 @@ export class UserConfigReport {
     return this.errors.length > 0
   }
 
+  hasSomethingToReport() {
+    return this.errors.length + this.deprecations.length + this.hints.length > 0
+  }
+
   hint(path, ...messages) {
     this.hints.push({path, messages})
   }
@@ -45,8 +50,8 @@ export class UserConfigReport {
   log() {
     console.log(chalk.underline(`nwb config report for ${this.configPath}`))
     console.log()
-    if (this.errors.length + this.deprecations.length + this.hints.length === 0) {
-      console.log(`${symbols.success} ${chalk.green('Nothing to report!')}`)
+    if (!this.hasSomethingToReport()) {
+      console.log(chalk.green(`${figures.tick} Nothing to report!`))
       return
     }
 
@@ -55,7 +60,7 @@ export class UserConfigReport {
       console.log()
     }
     this.errors.forEach(({path, value, message}) => {
-      console.log(`${symbols.error} ${chalk.red(path)} ${chalk.cyan('=')} ${util.inspect(value)}`)
+      console.log(`${chalk.red(`${figures.cross} ${path}`)} ${chalk.cyan('=')} ${util.inspect(value)}`)
       console.log(`  ${message}`)
       console.log()
     })
@@ -64,18 +69,18 @@ export class UserConfigReport {
       console.log()
     }
     this.deprecations.forEach(({path, messages}) => {
-      console.log(`${symbols.warning} ${chalk.yellow(path)}`)
+      console.log(chalk.yellow(`${figures.warning} ${path}`))
       messages.forEach(message => {
         console.log(`  ${message}`)
       })
       console.log()
     })
     if (this.hints.length) {
-      console.log(chalk.blue.underline(`${this.hints.length} Hint${s(this.hints.length)}`))
+      console.log(chalk.cyan.underline(`${this.hints.length} Hint${s(this.hints.length)}`))
       console.log()
     }
     this.hints.forEach(({path, messages}) => {
-      console.log(`${symbols.info} ${chalk.blue(path)}`)
+      console.log(chalk.cyan(`${figures.info} ${path}`))
       messages.forEach(message => {
         console.log(`  ${message}`)
       })
@@ -148,7 +153,7 @@ function upgradeBuildConfig(build, userConfigPath, report = {deprecated() {}}) {
  */
 export function processUserConfig({
     args,
-    checking = false,
+    check = false,
     required = DEFAULT_REQUIRED,
     userConfig,
     userConfigPath,
@@ -274,6 +279,7 @@ export function processUserConfig({
   if (typeOf(userConfig.webpack.autoprefixer) === 'string') {
     userConfig.webpack.autoprefixer = {browsers: userConfig.webpack.autoprefixer}
   }
+
   if ('copy' in userConfig.webpack) {
     if (typeOf(userConfig.webpack.copy) === 'array') {
       userConfig.webpack.copy = {patterns: userConfig.webpack.copy}
@@ -313,12 +319,35 @@ export function processUserConfig({
     }
   }
 
+  if (userConfig.webpack.compat) {
+    let compatProps = Object.keys(userConfig.webpack.compat)
+    let unknownCompatProps = compatProps.filter(prop => !(prop in COMPAT_CONFIGS))
+    if (unknownCompatProps.length !== 0) {
+      report.error(
+        'userConfig.webpack.compat',
+        compatProps,
+        `unknown propert${unknownCompatProps.length === 1 ? 'y' : 'ies'} in webpack.compat.config, ` +
+        `valid properties are: ${Object.keys(COMPAT_CONFIGS).join(', ')}`)
+    }
+
+    if (userConfig.webpack.compat.moment &&
+        typeOf(userConfig.webpack.compat.moment.locales) !== 'array') {
+      report.error(
+        'webpack.compat.moment.locales',
+        webpack.compat.moment.locales,
+        'must be an Array'
+      )
+    }
+  }
+
   if (userConfig.webpack.loaders) {
     prepareWebpackLoaderConfig(userConfig.webpack.loaders)
   }
+
   if (typeOf(userConfig.webpack.postcss) === 'array') {
     userConfig.webpack.postcss = {defaults: userConfig.webpack.postcss}
   }
+
   if (userConfig.webpack.extra &&
       userConfig.webpack.extra.resolve &&
       userConfig.webpack.extra.resolve.alias) {
@@ -344,8 +373,11 @@ export function processUserConfig({
   if (report.hasErrors()) {
     throw new ConfigValidationError(report)
   }
-  if (checking) {
+  if (check) {
     throw report
+  }
+  if (report.hasSomethingToReport()) {
+    report.log()
   }
 
   debug('user config: %s', deepToString(userConfig))
@@ -358,7 +390,7 @@ export function processUserConfig({
  */
 export default function getUserConfig(args = {}, options = {}) {
   let {
-    checking = false,
+    check = false,
     required = DEFAULT_REQUIRED,
   } = options
   // Try to load default user config, or use a config file path we were given
@@ -386,5 +418,5 @@ export default function getUserConfig(args = {}, options = {}) {
     }
   }
 
-  return processUserConfig({args, checking, required, userConfig, userConfigPath})
+  return processUserConfig({args, check, required, userConfig, userConfigPath})
 }

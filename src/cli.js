@@ -72,7 +72,7 @@ Generic development commands:
     Options:
       ${opt('--auto-install')}  auto install missing npm dependencies
       ${opt('--fallback')}      serve the index page from any path
-      ${opt('--host')}          hostname to bind the dev server to ${opt('[default: localhost]')}
+      ${opt('--host')}          hostname to bind the dev server to
       ${opt('--port')}          port to run the dev server on ${opt('[default: 3000]')}
       ${opt('--reload')}        auto reload the page if hot reloading fails
 
@@ -132,7 +132,8 @@ Helper commands:
       ${opt('config')}     path to the file to validate ${opt(`[default: ${CONFIG_FILE_NAME}]`)})
 
     Options:
-      ${opt('-e, --env')}  NODE_ENV to validate with: dev, test or prod
+      ${opt('--command')}  nwb command name to use when checking your config
+      ${opt('-e, --env')}  NODE_ENV to use when checking your config: dev, test or prod
 `)
     process.exit(args.help || command ? 0 : 1)
   }

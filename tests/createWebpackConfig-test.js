@@ -343,9 +343,6 @@ describe('getCompatConfig()', () => {
   it('returns null if nothing was configured', () => {
     expect(getCompatConfig()).toBe(null)
   })
-  it('skips unknown config', () => {
-    expect(getCompatConfig({flarbus: true})).toBe(null)
-  })
   it('skips falsy config', () => {
     expect(getCompatConfig({enzyme: false, moment: false, sinon: false})).toBe(null)
   })
@@ -358,9 +355,6 @@ describe('getCompatConfig()', () => {
     expect(config.plugins.length).toBe(1)
     expect(config.plugins[0].resourceRegExp).toEqual(/moment[/\\]locale$/)
     expect(config.plugins[0].newContentRegExp).toEqual(/^\.\/(de|en-gb)$/)
-  })
-  it('skips invalid moment config', () => {
-    expect(getCompatConfig({moment: {}})).toBe(null)
   })
   it('supports sinon', () => {
     expect(getCompatConfig({sinon: true})).toEqual(COMPAT_CONFIGS.sinon)

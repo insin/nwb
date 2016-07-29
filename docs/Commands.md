@@ -15,6 +15,7 @@ Installing nwb provides the following commands.
     - [`build`](#build-1) - create a build
     - [`test`](#test) - run unit tests
   - [Project Type-specific Commands](#project-type-specific-commands)
+  - [Check Config Command](#check-config-command)
 
 ### `react`
 
@@ -286,6 +287,7 @@ These are used in the `npm scripts` section of `package.json` in project skeleto
 - `build-web-app [entry] [dist_dir]` - build a web app from `entry` *[default: `src/index.js`]* to `dist_dir` *[default: `dist/`]*
 
 - `build-web-module [umd_entry]` - create an ES5 build - and if configured, an ES6 modules build and a UMD build - for a browser-focused npm module, starting from `umd_entry` *[default: `src/index.js`]* for the UMD build.
+
 - `clean-app [dist_dir]` - delete `dist_dir` *[default: `dist/`]*
 
 - `clean-demo` - delete `demo/dist/`
@@ -297,3 +299,20 @@ These are used in the `npm scripts` section of `package.json` in project skeleto
 - `serve-react-demo` - serve a React demo app from `demo/src/index.js`
 
 - `serve-web-app [entry]` - serve a web app from `entry` *[default: `src/index.js`]*
+
+#### Check Config Command
+
+Checks your nwb config file for errors and deprecated usage, and provides usage hints where appropriate (e.g. if there's a more convenient way provided to set certain configuration, or if it's unnecessary)
+
+```
+nwb check-config [config] [options]
+```
+
+**Arguments:**
+
+- `config` - path to the config file to check *[default: nwb.config.js]*
+
+**Options:**
+
+- `--command` - command name to use when loading your config. Use this to test variations if you [export a config function](/docs/Configuration.md#configuration-file) and use the `command` option it provides when creating your config.
+- `--e, --env` - `NODE_ENV` to use when checking your config: `dev`, `test` or `prod`. Use this to test variations if you use `process.env.NODE_ENV` when creating your config.
