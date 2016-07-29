@@ -55,7 +55,6 @@ export default function webpackServer(args, buildConfig, cb) {
     if (err) return cb(err)
     if (options === null) return cb()
 
-    buildConfig.server = true
     if (!('status' in buildConfig.plugins)) {
       buildConfig.plugins.status = {
         message: `The app is running at http://${options.host || 'localhost'}:${options.port}/`,
