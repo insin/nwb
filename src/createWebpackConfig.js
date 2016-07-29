@@ -2,7 +2,6 @@ import path from 'path'
 
 import autoprefixer from 'autoprefixer'
 import CaseSensitivePathsPlugin from 'case-sensitive-paths-webpack-plugin'
-import chalk from 'chalk'
 import CopyPlugin from 'copy-webpack-plugin'
 import ExtractTextPlugin from 'extract-text-webpack-plugin'
 import HtmlPlugin from 'html-webpack-plugin'
@@ -251,8 +250,8 @@ function injectManifestPlugin() {
         let {children} = compilation.assets[key]
         if (children && children[0]) {
           data.html = data.html.replace(
-            '</body>',
-            `<script>${children[0]._value}</script></body>`
+            /^(\s*)<\/body>/m,
+            `$1<script>${children[0]._value}</script>\n$1</body>`
           )
           // Remove the manifest from HtmlPlugin's assets to
           // prevent a <script> tag being created for it.
