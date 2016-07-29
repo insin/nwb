@@ -1,7 +1,6 @@
 import path from 'path'
 
 import {getDefaultHTMLConfig} from '../appConfig'
-import {copyPublicDir} from '../utils'
 import webpackBuild from '../webpackBuild'
 import cleanApp from './clean-app'
 
@@ -27,6 +26,7 @@ function buildConfig(args) {
       publicPath: '/',
     },
     plugins: {
+      copy: [{from: path.resolve('public'), to: dist}],
       html: getDefaultHTMLConfig(),
       vendorChunkName: 'vendor',
     },
@@ -42,6 +42,5 @@ export default function buildWebApp(args, cb) {
   cleanApp({_: ['clean-app', dist]})
 
   console.log(`nwb: build-web-app`)
-  copyPublicDir('public', dist)
   webpackBuild(args, buildConfig, cb)
 }

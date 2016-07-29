@@ -2,24 +2,10 @@ import {execSync} from 'child_process'
 import util from 'util'
 
 import {red, yellow} from 'chalk'
-import fs from 'fs-extra'
-import glob from 'glob'
-
 import debug from './debug'
-
-const GITKEEP_RE = /\.gitkeep$/
 
 export function clearConsole() {
   process.stdout.write('\x1bc')
-}
-
-export function copyPublicDir(from, to) {
-  fs.ensureDirSync(to)
-  if (glob.sync(`${from}/`).length !== 0) {
-    fs.copySync(from, to, {
-      filter(file) { return !GITKEEP_RE.test(file) }
-    })
-  }
 }
 
 export function createBanner(pkg) {
