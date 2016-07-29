@@ -3,15 +3,14 @@
 import {red} from 'chalk'
 
 import cli from '../cli'
-import {ConfigValidationErrors, UserError} from '../errors'
-import {logConfigValidationErrors} from '../utils'
+import {ConfigValidationError, UserError} from '../errors'
 
 function handleError(error) {
   if (error instanceof UserError) {
     console.error(red(error.message))
   }
-  else if (error instanceof ConfigValidationErrors) {
-    logConfigValidationErrors(error)
+  else if (error instanceof ConfigValidationError) {
+    error.report.log()
   }
   else {
     console.error(red('nwb: error running command'))

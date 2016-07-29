@@ -8,9 +8,8 @@ export class UserError {
   }
 }
 
-export class ConfigValidationErrors {
-  constructor(errors, configPath) {
-    this.errors = errors
-    this.configPath = configPath
+export class ConfigValidationError {
+  constructor(report) {
+    this.report = report
   }
 }

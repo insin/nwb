@@ -123,6 +123,16 @@ Project type-specific commands:
   Arguments:
     ${opt('entry')}     entry point ${opt('[default: src/index.js]')}
     ${opt('dist_dir')}  build output directory ${opt('[default: dist/]')}
+
+Helper commands:
+  ${cmd('nwb check-config')} ${opt('[config]')} ${opt('[options]')}
+    Check your configuration file for errors, deprecated config and usage hints
+
+    Arguments:
+      ${opt('config')}     path to the file to validate ${opt(`[default: ${CONFIG_FILE_NAME}]`)})
+
+    Options:
+      ${opt('-e, --env')}  NODE_ENV to validate with: dev, test or prod
 `)
     process.exit(args.help || command ? 0 : 1)
   }

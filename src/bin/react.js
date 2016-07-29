@@ -5,8 +5,7 @@ import parseArgs from 'minimist'
 
 import pkg from '../../package.json'
 import {CONFIG_FILE_NAME} from '../constants'
-import {ConfigValidationErrors, UserError} from '../errors'
-import {logConfigValidationErrors} from '../utils'
+import {ConfigValidationError, UserError} from '../errors'
 
 const COMMAND_MODULES = {
   build: 'build-react',
@@ -17,8 +16,8 @@ function handleError(error) {
   if (error instanceof UserError) {
     console.error(red(error.message))
   }
-  else if (error instanceof ConfigValidationErrors) {
-    logConfigValidationErrors(error)
+  else if (error instanceof ConfigValidationError) {
+    error.report.log()
   }
   else {
     console.error(red('react(nwb): error running command'))

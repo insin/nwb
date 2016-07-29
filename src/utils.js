@@ -1,7 +1,6 @@
 import {execSync} from 'child_process'
 import util from 'util'
 
-import {red, yellow} from 'chalk'
 import debug from './debug'
 
 export function clearConsole() {
@@ -61,16 +60,6 @@ export function installReact({dev = false, save = false, cwd = process.cwd(), ve
   let command = `npm install${save ? ` --save${dev ? '-dev' : ''}` : ''} react@${version} react-dom@${version}`
   debug(`${cwd} $ ${command}`)
   execSync(command, {cwd, stdio: [0, 1, 2]})
-}
-
-export function logConfigValidationErrors(error) {
-  console.error(red(`Invalid config in ${error.configPath}:`))
-  console.error()
-  error.errors.forEach(({config, value, message}) => {
-    console.error(`${yellow(config)} is ${util.inspect(value)}`)
-    console.error(`  ${message}`)
-    console.error()
-  })
 }
 
 /**

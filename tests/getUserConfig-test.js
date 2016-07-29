@@ -1,6 +1,7 @@
 import expect from 'expect'
 import webpack from 'webpack'
 
+import {ConfigValidationError} from '../src/errors'
 import getUserConfig, {prepareWebpackLoaderConfig, processUserConfig} from '../src/getUserConfig'
 
 describe('getUserConfig()', () => {
@@ -27,11 +28,12 @@ describe('getUserConfig()', () => {
 
 function check(config, path, message) {
   try {
-    processUserConfig({userConfig: config})
+    process(config)
     expect(config).toNotExist('should have thrown a validation error')
   }
   catch (e) {
-    expect(e.errors[0]).toMatch({config: path, message})
+    expect(e).toBeA(ConfigValidationError)
+    expect(e.report.errors[0]).toMatch({path, message})
   }
 }
 
