@@ -58,7 +58,7 @@ export default function moduleBuild(args, buildConfig = {}, cb) {
   temp.cleanupSync()
 
   if (!userConfig.npm.umd) {
-    return
+    return cb()
   }
 
   let pkg = require(path.resolve('package.json'))
@@ -75,7 +75,6 @@ export default function moduleBuild(args, buildConfig = {}, cb) {
     polyfill: false,
     plugins: {
       banner: createBanner(pkg),
-      status: {mode: 'errors'},
     },
   })
 
