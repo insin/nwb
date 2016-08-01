@@ -9,7 +9,7 @@ import temp from 'temp'
 import cli from '../../src/cli'
 
 describe('command: test', function() {
-  this.timeout(60000)
+  this.timeout(90000)
 
   let originalCwd
   let tmpDir

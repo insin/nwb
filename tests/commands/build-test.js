@@ -11,7 +11,7 @@ import cli from '../../src/cli'
 let stripHashes = (files) => files.map(file => file.replace(/\.\w{8}\./, '.'))
 
 describe('command: build', function() {
-  this.timeout(60000)
+  this.timeout(90000)
 
   let originalCwd
   let originalNodeEnv
