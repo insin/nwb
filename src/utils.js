@@ -6,7 +6,7 @@ import argvSetEnv from 'argv-set-env'
 import debug from './debug'
 
 export function clearConsole() {
-  if (process.env.NWB_DISABLE_CLEAR_CONSOLE) return
+  if (process.env.NWB_TEST) return
   // This will completely wipe scrollback in cmd.exe on Windows - recommend
   // using the `start` command to launch nwb's dev server in a new prompt.
   process.stdout.write('\x1bc')

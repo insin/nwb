@@ -13,9 +13,9 @@
     "build:watch": "rimraf lib && babel src --watch --out-dir lib",
     "lint": "eslint *.js babel-presets src tests",
     "lint:fix": "npm run lint -- --fix",
-    "test": "npm run build && cross-env NODE_ENV=test NWB_DISABLE_CLEAR_CONSOLE=true mocha --compilers js:babel-core/register tests/*-test.js tests/commands/*-test.js",
-    "test:coverage": "npm run build && cross-env NODE_ENV=test NWB_DISABLE_CLEAR_CONSOLE=true nyc mocha tests/*-test.js tests/commands/*-test.js",
-    "test:watch": "cross-env NODE_ENV=test mocha --watch --compilers js:babel-core/register tests/*-test.js"
+    "test": "npm run build && cross-env NODE_ENV=test NWB_TEST=true mocha --compilers js:babel-core/register tests/*-test.js tests/commands/*-test.js",
+    "test:coverage": "npm run build && cross-env NODE_ENV=test NWB_TEST=true nyc mocha tests/*-test.js tests/commands/*-test.js",
+    "test:watch": "cross-env NODE_ENV=test NWB_TEST=true mocha --watch --compilers js:babel-core/register tests/*-test.js"
   },
   "files": [
     "babel-presets",

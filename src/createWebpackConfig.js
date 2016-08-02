@@ -147,7 +147,7 @@ export function createLoaders(server, buildConfig = {}, userConfig = {}, pluginC
     loader('babel', {
       test: /\.js$/,
       loader: require.resolve('babel-loader'),
-      exclude: /node_modules/,
+      exclude: process.env.NWB_TEST ? /(node_modules|nwb[\\/]polyfills\.js$)/ : /node_modules/,
       query: {
         // Don't look for .babelrc files
         babelrc: false,
