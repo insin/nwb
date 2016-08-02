@@ -135,6 +135,13 @@ describe('getKarmaPluginConfig()', function() {
 })
 
 describe('createKarmaConfig()', () => {
+  it('includes polyfill and default test files pattern', () => {
+    let config = createKarmaConfig({}, {})
+    expect(config.files).toEqual([
+      require.resolve('babel-polyfill/dist/polyfill.js'),
+      '+(src|test?(s))/**/*+(-test|.spec|.test).js',
+    ])
+  })
   it('includes default mocha reporter config', () => {
     let config = createKarmaConfig({}, {})
     expect(config.mochaReporter).toEqual({showDiff: true})

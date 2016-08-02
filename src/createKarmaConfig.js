@@ -139,7 +139,6 @@ export default function createKarmaConfig({codeCoverage, singleRun}, userConfig)
     preprocessors[userConfig.testContext] = ['webpack', 'sourcemap']
   }
   else {
-    files = files.concat(testFiles)
     testFiles.forEach(testGlob => {
       files.push(testGlob)
       preprocessors[testGlob] = ['webpack', 'sourcemap']
