@@ -31,7 +31,7 @@ describe('utility functions', () => {
     it('returns an empty object by default', () => {
       expect(createWebpackExternals()).toEqual({})
     })
-    it('uses the webapck externals format', () => {
+    it('uses the webpack externals format', () => {
       expect(createWebpackExternals({react: 'React'})).toEqual({
         react: {
           amd: 'react',
