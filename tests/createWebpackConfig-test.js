@@ -18,7 +18,7 @@ describe('createWebpackConfig()', () => {
   context('with only entry config', () => {
     let config = createWebpackConfig({entry: ['index.js']})
     it('creates a default webpack build config', () => {
-      expect(Object.keys(config)).toEqual(['module', 'plugins', 'resolve', 'postcss', 'entry'])
+      expect(Object.keys(config)).toEqual(['module', 'output', 'plugins', 'resolve', 'postcss', 'entry'])
       expect(config.module.loaders.map(loader => loader.loader).join('\n'))
         .toContain('babel-loader')
         .toContain('extract-text-webpack-plugin')
@@ -133,6 +133,21 @@ describe('createWebpackConfig()', () => {
         }
       })
       expect(config.resolve.alias.src).toEqual('pass')
+    })
+  })
+
+  context('with aliases config', () => {
+    it('overwrites build output.publicPath config', () => {
+      let config = createWebpackConfig({
+        output: {
+          publicPath: 'fail'
+        }
+      }, {}, {
+        webpack: {
+          publicPath: 'pass'
+        }
+      })
+      expect(config.output.publicPath).toEqual('pass')
     })
   })
 

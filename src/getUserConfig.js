@@ -349,12 +349,19 @@ export function processUserConfig({
     userConfig.webpack.postcss = {defaults: userConfig.webpack.postcss}
   }
 
-  if (userConfig.webpack.extra &&
-      userConfig.webpack.extra.resolve &&
-      userConfig.webpack.extra.resolve.alias) {
-    report.hint('webpack.extra.resolve.alias',
-      `you can use the more convenient ${chalk.green('webpack.alises')} instead`
-    )
+  if (userConfig.webpack.extra) {
+    if (userConfig.webpack.extra.output &&
+        userConfig.webpack.extra.output.publicPath) {
+      report.hint('webpack.extra.output.publicPath',
+        `you can use the more convenient ${chalk.green('webpack.publicPath')} instead`
+      )
+    }
+    if (userConfig.webpack.extra.resolve &&
+        userConfig.webpack.extra.resolve.alias) {
+      report.hint('webpack.extra.resolve.alias',
+        `you can use the more convenient ${chalk.green('webpack.aliases')} instead`
+      )
+    }
   }
 
   // TODO Remove in a future version

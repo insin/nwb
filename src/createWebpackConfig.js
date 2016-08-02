@@ -586,6 +586,7 @@ export default function createWebpackConfig(buildConfig, nwbPluginConfig = {}, u
     babel: buildBabelConfig = {},
     entry,
     loaders: buildLoaderConfig = {},
+    output: buildOutputConfig,
     polyfill: buildPolyfill,
     plugins: buildPluginConfig = {},
     resolve: buildResolveConfig = {},
@@ -596,6 +597,10 @@ export default function createWebpackConfig(buildConfig, nwbPluginConfig = {}, u
   } = buildConfig
 
   let userWebpackConfig = userConfig.webpack || {}
+  let userOutputConfig = {}
+  if ('publicPath' in userWebpackConfig) {
+    userOutputConfig.publicPath = userWebpackConfig.publicPath
+  }
   let userResolveConfig = {}
   if (userWebpackConfig.aliases) {
     userResolveConfig.alias = userWebpackConfig.aliases
@@ -607,6 +612,10 @@ export default function createWebpackConfig(buildConfig, nwbPluginConfig = {}, u
   let webpackConfig = {
     module: {
       loaders: createLoaders(server, buildLoaderConfig, userWebpackConfig.loaders, nwbPluginConfig)
+    },
+    output: {
+      ...buildOutputConfig,
+      ...userOutputConfig,
     },
     plugins: createPlugins(server, buildPluginConfig, userWebpackConfig),
     resolve: merge({

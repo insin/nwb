@@ -71,6 +71,7 @@ The configuration object can include the following properties:
   - [`webpack.loaders`](#loaders-object) - tweak the configuration of the default Webpack loaders
     - [Default Loaders](#default-loaders)
   - [`webpack.postcss`](#postcss-arrayplugin--objectstring-arrayplugin) - custom PostCSS plugins
+  - [`webpack.publicPath`](#publicpath-string) - path to static resources
   - [`webpack.uglify`](#uglify-object) - options for Webpack's `UglifyJsPlugin`
   - [`webpack.vendorBundle`](#vendorbundle-boolean) - control creation of a separate vendor bundle
   - [`webpack.extra`](#extra-object) - an escape hatch for extra Webpack config, which will be merged into the generated config
@@ -599,6 +600,42 @@ Plugins for other style pipelines are configured using their prefix as a propert
 Your app is responsible for managing its own PostCSS plugin dependencies - between the size of the PostCSS ecosystem and the number of different configuration options `postcss-loader` supports, PostCSS could do with its own equivalent of nwb to manage dependencies and configuration!
 
 It's recommended to create instances of PostCSS plugins in your config, as opposed to passing a module, in case you ever need to make use of debug output (enabled by setting a `DEBUG` environment variable to `nwb`) to examine generated config.
+
+##### `publicPath`: `String`
+
+This is just Webpack's [`output.publicPath` config](https://webpack.github.io/docs/configuration.html#output-publicpath) pulled up a level to make it more convenient to configure.
+
+`publicPath` defines the URL static resources will be referenced by in build output, such as `<link>` and `<src>` tags in generated HTML, `url()` in stylesheets and paths to any static resources you `require()` into your modules.
+
+The default `publicPath` configured for most app builds is `/`, which assumes you will be serving your app's static resources from the root of whatever URL it's hosted at:
+
+```html
+<script src="/app.12345678.js"></script>
+```
+
+If you're serving static resources from a different path, or from an external URL such as a CDN, set it as the `publicPath`:
+
+```js
+module.exports = {
+  webpack: {
+    publicPath: 'https://cdn.example.com/myapp/'
+  }
+}
+```
+
+The exception is the React component demo app, which doesn't set a `publicPath`, generating a build without any root URL paths to static resources. This allows you to serve it at any path without configuration (e.g. on GitHub Project Pages), or open the generated `index.html` file directly in a browser, which is ideal for distributing app builds which don't require a server to run.
+
+If you want to create a path-independent build, set `publicPath` to blank or `null`:
+
+```js
+module.exports = {
+  webpack: {
+    publicPath: ''
+  }
+}
+```
+
+The trade-off for path-independence is HTML5 history routing won't work, as serving up `index.html` at anything but its real path will mean its static resource URLs won't resolve. You will have to fall back on hash-based routing if you need it.
 
 ##### `uglify`: `Object`
 
