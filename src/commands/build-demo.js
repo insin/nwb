@@ -3,7 +3,7 @@ import path from 'path'
 import ora from 'ora'
 
 import webpackBuild from '../webpackBuild'
-import {logGzippedFileSizes} from '../webpackUtils'
+import {logBuildResults} from '../webpackUtils'
 import cleanDemo from './clean-demo'
 
 /**
@@ -42,9 +42,7 @@ export default function buildDemo(args, cb) {
       spinner.fail()
       return cb(err)
     }
-    spinner.succeed()
-    console.log()
-    logGzippedFileSizes(stats)
+    logBuildResults(stats, spinner)
     cb()
   })
 }

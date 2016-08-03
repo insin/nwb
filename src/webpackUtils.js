@@ -1,6 +1,7 @@
 import path from 'path'
 
 import chalk from 'chalk'
+import figures from 'figures'
 import filesize from 'filesize'
 import {sync as gzipSize} from 'gzip-size'
 
@@ -57,6 +58,26 @@ function getFileDetails(stats) {
         sizeLabel: filesize(size),
       }
     })
+}
+
+export function logBuildResults(stats, spinner) {
+  if (stats.hasErrors()) {
+    spinner.fail()
+    console.log()
+    logErrorsAndWarnings(stats)
+  }
+  else if (stats.hasWarnings()) {
+    spinner.stopAndPersist(chalk.yellow(figures.warning))
+    console.log()
+    logErrorsAndWarnings(stats)
+    console.log()
+    logGzippedFileSizes(stats)
+  }
+  else {
+    spinner.succeed()
+    console.log()
+    logGzippedFileSizes(stats)
+  }
 }
 
 export function logErrorsAndWarnings(stats) {

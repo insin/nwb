@@ -4,7 +4,7 @@ import ora from 'ora'
 
 import {getDefaultHTMLConfig} from '../appConfig'
 import webpackBuild from '../webpackBuild'
-import {logGzippedFileSizes} from '../webpackUtils'
+import {logBuildResults} from '../webpackUtils'
 import cleanApp from './clean-app'
 
 // Using a config function as webpackBuild() sets NODE_ENV to production if it
@@ -50,9 +50,7 @@ export default function buildWebApp(args, cb) {
       spinner.fail()
       return cb(err)
     }
-    spinner.succeed()
-    console.log()
-    logGzippedFileSizes(stats)
+    logBuildResults(stats, spinner)
     cb()
   })
 }

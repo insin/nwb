@@ -4,7 +4,7 @@ import ora from 'ora'
 
 import {UserError} from '../errors'
 import webpackBuild from '../webpackBuild'
-import {logGzippedFileSizes} from '../webpackUtils'
+import {logBuildResults} from '../webpackUtils'
 import cleanApp from './clean-app'
 
 // Using a config function as webpackBuild() sets NODE_ENV to production if it
@@ -76,9 +76,7 @@ export default function buildReact(args, cb) {
       spinner.fail()
       return cb(err)
     }
-    spinner.succeed()
-    console.log()
-    logGzippedFileSizes(stats)
+    logBuildResults(stats, spinner)
     cb()
   })
 }
