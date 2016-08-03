@@ -115,7 +115,7 @@
 
 **Dependencies:**
 
-- autoprefixer: v6.3.6 → [v6.3.7](https://github.com/postcss/autoprefixer/blob/master/CHANGELOG.md#637)
+- autoprefixer: v6.3.6 → [v6.4.0](https://github.com/postcss/autoprefixer/blob/master/CHANGELOG.md#640)
 - babel\* v5 → babel\* v6
 - [babel-plugin-istanbul](https://github.com/istanbuljs/babel-plugin-istanbul/): v1.1.0
 - [babel-plugin-lodash](https://github.com/lodash/babel-plugin-lodash): v3.2.6
@@ -135,7 +135,7 @@
 - karma-phantomjs-launcher: v1.0.0 → [v1.0.1](https://github.com/karma-runner/karma-phantomjs-launcher/blob/master/CHANGELOG.md#101-2016-06-23)
 - mocha: v2.5.3 → [v3.0.0](https://github.com/mochajs/mocha/blob/master/CHANGELOG.md#300--2016-07-31)
 - npm-install-webpack-plugin: v4.0.1 → [v4.0.4](https://github.com/ericclemmons/npm-install-webpack-plugin/blob/master/CHANGELOG.md#404-2016-06-30)
-- phantomjs-prebuilt: v2.1.7 → [v2.1.9](https://github.com/Medium/phantomjs/releases/tag/2.1.9)
+- phantomjs-prebuilt: v2.1.7 → [v2.1.10](https://github.com/Medium/phantomjs/releases/tag/2.1.10)
 - qs: v6.2.0 → [v6.2.1](https://github.com/ljharb/qs/blob/master/CHANGELOG.md#621)
 - rimraf: v2.5.2 → [v2.5.3](https://github.com/isaacs/rimraf/compare/v2.5.2...v2.5.3)
 - [webpack-fail-plugin](https://github.com/TiddoLangerak/webpack-fail-plugin): v1.0.5
