@@ -4,6 +4,7 @@ const DEFAULT_STAGE = 2
 
 export default function createBabelConfig(buildConfig = {}, userConfig = {}) {
   let {
+    env,
     nativeModules,
     plugins: buildPlugins = [],
     presets: buildPresets,
@@ -84,6 +85,11 @@ export default function createBabelConfig(buildConfig = {}, userConfig = {}) {
 
   if (plugins.length > 0) {
     config.plugins = plugins
+  }
+
+  // Pass any given env config through
+  if (env) {
+    config.env = env
   }
 
   return config

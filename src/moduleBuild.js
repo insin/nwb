@@ -44,14 +44,28 @@ export default function moduleBuild(args, buildConfig = {}, cb) {
   let userConfig = getUserConfig(args)
 
   let spinner = ora('Creating ES5 build').start()
-  runBabel(src, path.resolve('lib'), merge(buildConfig.babel, {
-    plugins: [require.resolve('babel-plugin-add-module-exports')],
-  }), userConfig.babel)
+  runBabel(
+    src,
+    path.resolve('lib'),
+    merge(buildConfig.babel, buildConfig.babelDev || {}, {
+      // Don't force ES5 users of the ES5 build to eat a .require
+      plugins: [require.resolve('babel-plugin-add-module-exports')],
+    }),
+    userConfig.babel,
+  )
   spinner.succeed()
 
   if (userConfig.npm.nativeModules) {
     spinner = ora('Creating ES6 modules build').start()
-    runBabel(src, path.resolve('es6'), {...buildConfig.babel, nativeModules: true}, userConfig.babel)
+    runBabel(
+      src,
+      path.resolve('es6'),
+      merge(buildConfig.babel, buildConfig.babelDev || {}, {
+        // Don't transpile modules, for ES6 module bundlers
+        nativeModules: true,
+      }),
+      userConfig.babel,
+    )
     spinner.succeed()
   }
 
@@ -61,9 +75,12 @@ export default function moduleBuild(args, buildConfig = {}, cb) {
     return cb()
   }
 
+  spinner = ora('Creating UMD builds').start()
+
   let pkg = require(path.resolve('package.json'))
   let entry = path.resolve(args._[1] || 'src/index.js')
-  buildConfig = merge(buildConfig, {
+  let webpackBuildConfig = {
+    babel: buildConfig.babel,
     entry: [entry],
     output: {
       filename: `${pkg.name}.js`,
@@ -76,19 +93,19 @@ export default function moduleBuild(args, buildConfig = {}, cb) {
     plugins: {
       banner: createBanner(pkg),
     },
-  })
+  }
 
-  spinner = ora('Creating UMD builds').start()
   process.env.NODE_ENV = 'development'
-  webpackBuild(args, buildConfig, (err, stats1) => {
+  webpackBuild(args, webpackBuildConfig, (err, stats1) => {
     if (err) {
       spinner.fail()
       return cb(err)
     }
     process.env.NODE_ENV = 'production'
-    buildConfig.devtool = 'source-map'
-    buildConfig.output.filename = `${pkg.name}.min.js`
-    webpackBuild(args, buildConfig, (err, stats2) => {
+    webpackBuildConfig.babel = merge(buildConfig.babel, buildConfig.babelProd || {})
+    webpackBuildConfig.devtool = 'source-map'
+    webpackBuildConfig.output.filename = `${pkg.name}.min.js`
+    webpackBuild(args, webpackBuildConfig, (err, stats2) => {
       if (err) {
         spinner.fail()
         return cb(err)

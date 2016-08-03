@@ -1,12 +1,18 @@
-import React from 'react'
+import React, {Component, PropTypes as t} from 'react'
 import {Col, Grid, Row} from 'react-bootstrap'
 
-export default React.createClass({
+class CherryPicker extends Component {
   render() {
     return <Grid>
       <Col>
-        <Row>Go baby, go go!</Row>
+        <Row>Go {this.props.name}, go go!</Row>
       </Col>
     </Grid>
   }
-})
+}
+
+CherryPicker.propTypes = {
+  name: t.string.isRequired,
+}
+
+export default CherryPicker

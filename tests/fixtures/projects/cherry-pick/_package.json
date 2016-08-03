@@ -4,7 +4,7 @@
   "description": "test project",
   "dependencies": {
     "react": "15.x",
-    "react-bootstrap": "0.30.0",
+    "react-bootstrap": "0.30.x",
     "react-dom": "15.x"
   }
 }

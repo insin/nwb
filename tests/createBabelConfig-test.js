@@ -29,6 +29,11 @@ describe('createBabelConfig()', () => {
         nativeModules: true,
         presets: ['react', 'react-hmre'],
         stage: 0,
+        env: {
+          development: {
+            plugins: ['test-env-plugin']
+          }
+        },
       })).toEqual({
         presets: [
           require.resolve('../babel-presets/es2015-native-modules-loose'),
@@ -37,7 +42,12 @@ describe('createBabelConfig()', () => {
           require.resolve('../babel-presets/react'),
           require.resolve('../babel-presets/react-hmre'),
         ],
-        plugins: [DEFAULT_RUNTIME_CONFIG]
+        plugins: [DEFAULT_RUNTIME_CONFIG],
+        env: {
+          development: {
+            plugins: ['test-env-plugin']
+          }
+        },
       })
     })
   })

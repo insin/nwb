@@ -162,7 +162,8 @@ describe('sample projects', function() {
   })
 
   describe('cherry-pick project', () => {
-    let content
+    let es5
+    let es6
     let originalCwd
     let originalNodeEnv
     let tmpDir
@@ -178,7 +179,8 @@ describe('sample projects', function() {
         execSync('npm install', {stdio: 'inherit'})
         cli(['build'], err => {
           expect(err).toNotExist()
-          content = fs.readFileSync(path.join(tmpDir, 'lib/index.js'), 'utf-8')
+          es5 = fs.readFileSync(path.join(tmpDir, 'lib/index.js'), 'utf-8')
+          es6 = fs.readFileSync(path.join(tmpDir, 'es6/index.js'), 'utf-8')
           done()
         })
       })
@@ -192,14 +194,26 @@ describe('sample projects', function() {
       })
     })
 
-    it('the ES5 build transpiles to a cherry-picked version', () => {
-      expect(content)
+    it('ES5 build transpiles to a cherry-picked version', () => {
+      expect(es5)
         .toInclude("require('react-bootstrap/lib/Col')")
         .toInclude("require('react-bootstrap/lib/Grid')")
         .toInclude("require('react-bootstrap/lib/Row')")
     })
-    it('the ES5 build includes a CommonJS interop export', () => {
-      expect(content).toInclude("module.exports = exports['default']")
+    it('ES5 build has propType declarations wrapped in an environment check', () => {
+      expect(es5).toInclude('process.env.NODE_ENV !== "production" ? CherryPicker.propTypes')
+    })
+    it('ES5 build includes a CommonJS interop export', () => {
+      expect(es5).toInclude("module.exports = exports['default']")
+    })
+    it('ES6 modules build transpiles to a cherry-picked version', () => {
+      expect(es6)
+        .toInclude("import _Col from 'react-bootstrap/lib/Col'")
+        .toInclude("import _Grid from 'react-bootstrap/lib/Grid'")
+        .toInclude("import _Row from 'react-bootstrap/lib/Row'")
+    })
+    it('ES6 module build has propType declarations wrapped in an environment check', () => {
+      expect(es6).toInclude('process.env.NODE_ENV !== "production" ? CherryPicker.propTypes')
     })
   })
 })
