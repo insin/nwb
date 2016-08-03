@@ -1,9 +1,6 @@
-import {cyan} from 'chalk'
 import historyAPIFallback from 'connect-history-api-fallback'
 import express from 'express'
 import webpack from 'webpack'
-
-import {clearConsole} from './utils'
 
 /**
  * Start an Express server which uses webpack-dev-middleware to build and serve
@@ -35,9 +32,6 @@ export default function server(webpackConfig, {fallback, host, port, staticPath}
 
   function onServerStart(err) {
     if (err) return cb(err)
-    clearConsole()
-    console.log(cyan('Starting the development server...'))
-    console.log()
   }
 
   // Only provide host config if it was explicitly specified by the user

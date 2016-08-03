@@ -9,21 +9,33 @@ import {logErrorsAndWarnings} from './webpackUtils'
  */
 export default class DevServerStatusPlugin {
   constructor({message = '', middleware = false} = {}) {
+    this.initial = true
     this.message = message
     this.middleware = middleware
 
+    this.watchRun = this.watchRun.bind(this)
     this.done = this.done.bind(this)
-    this.invalid = this.invalid.bind(this)
   }
 
   apply(compiler) {
+    compiler.plugin('watch-run', this.watchRun)
     compiler.plugin('done', this.done)
-    compiler.plugin('invalid', this.invalid)
   }
 
-  /**
-   * Triggered when the current build is finished.
-   */
+  watchRun(watching, cb) {
+    if (!this.middleware) {
+      clearConsole()
+    }
+    if (this.initial) {
+      console.log(chalk.cyan('Starting Webpack compilation...'))
+      this.initial = false
+    }
+    else {
+      console.log('Recompiling...')
+    }
+    cb()
+  }
+
   done(stats) {
     if (!this.middleware) {
       clearConsole()
@@ -44,15 +56,5 @@ export default class DevServerStatusPlugin {
       console.log()
       console.log(this.message)
     }
-  }
-
-  /**
-   * Triggered when a file change was detected in watch mode.
-   */
-  invalid() {
-    if (!this.middleware) {
-      clearConsole()
-    }
-    console.log('Recompiling...')
   }
 }
