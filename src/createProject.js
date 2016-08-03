@@ -27,16 +27,27 @@ function writeConfigFile(dir, config) {
 }
 
 export function getWebModulePrefs(args, done) {
-  let umd = args.umd || ''
-  let nativeModules = args.n === true || args['native-modules'] === true
+  // Pass a UMD global variable name with --umd=MyThing, or pass something like
+  // --no-umd to indicate you don't want a UMD build.
+  let umd = args.umd || false
+  // An ES6 modules build is enabled by default, but can be disabled with
+  // --no-native-modules or --native-modules=false (or a bunch of other stuff)
+  let nativeModules = args['native-modules'] !== false && !/^(0|false|no|off)$/.test(args['native-modules'])
 
   // Don't ask questions if the user doesn't want them, or already told us all
   // the answers.
-  if ((args.f || args.force) || ('umd' in args && ('n' in args || 'native-modules' in args))) {
+  if ((args.f || args.force) || ('umd' in args && 'native-modules' in args)) {
     return done(null, {umd, nativeModules})
   }
 
   inquirer.prompt([
+    {
+      when: () => !('native-modules' in args),
+      type: 'confirm',
+      name: 'nativeModules',
+      message: 'Do you want to create an ES6 modules build?',
+      default: nativeModules,
+    },
     {
       when: () => !('umd' in args),
       type: 'confirm',
@@ -52,14 +63,8 @@ export function getWebModulePrefs(args, done) {
       validate(input) {
         return input.trim() ? true : 'Required to create a UMD build'
       },
+      default: umd,
     },
-    {
-      when: () => !('n' in args || 'native-modules' in args),
-      type: 'confirm',
-      name: 'nativeModules',
-      message: 'Do you want to create an extra build with native ES6 modules?',
-      default: nativeModules,
-    }
   ]).then(answers => done(null, answers), err => done(err))
 }
 
@@ -115,16 +120,17 @@ const PROJECT_CREATORS = {
       )
       copyTemplateDir(templateDir, targetDir, templateVars, (err, createdFiles) => {
         if (err) return cb(err)
-        if (umd || nativeModules) {
-          let config = {type: 'react-component', npm: {}}
-          if (nativeModules) config.npm.nativeModules = nativeModules
-          if (umd) config.npm.umd = {global: umd, externals: {react: 'React'}}
-          try {
-            writeConfigFile(targetDir, config)
-          }
-          catch (e) {
-            return cb(e)
-          }
+        try {
+          writeConfigFile(targetDir, {
+            type: 'react-component',
+            npm: {
+              nativeModules: nativeModules,
+              umd: umd ? {global: umd, externals: {react: 'React'}} : false
+            }
+          })
+        }
+        catch (e) {
+          return cb(e)
         }
         logCreatedFiles(targetDir, createdFiles)
         console.log('Installing dependencies...')
@@ -159,16 +165,17 @@ const PROJECT_CREATORS = {
       )
       copyTemplateDir(templateDir, targetDir, templateVars, (err, createdFiles) => {
         if (err) return cb(err)
-        if (umd || nativeModules) {
-          let config = {type: 'web-module', npm: {}}
-          if (nativeModules) config.npm.nativeModules = nativeModules
-          if (umd) config.npm.umd = umd
-          try {
-            writeConfigFile(targetDir, config)
-          }
-          catch (e) {
-            return cb(e)
-          }
+        try {
+          writeConfigFile(targetDir, {
+            type: 'web-module',
+            npm: {
+              nativeModules: nativeModules,
+              umd: umd ? {global: umd, externals: {}} : false,
+            }
+          })
+        }
+        catch (e) {
+          return cb(e)
         }
         logCreatedFiles(targetDir, createdFiles)
         cb()

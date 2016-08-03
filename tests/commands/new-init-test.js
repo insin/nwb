@@ -145,7 +145,11 @@ function webModuleAssertions(dir, name, err, done) {
   expect(pkg.devDependencies.nwb).toMatch(DEP_VERSION_RE)
   let config = require(path.resolve(dir, 'nwb.config.js'))
   expect(config).toEqual({
-    type: 'web-module'
+    type: 'web-module',
+    npm: {
+      nativeModules: true,
+      umd: false,
+    },
   })
   done()
 }

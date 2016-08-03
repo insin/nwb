@@ -22,6 +22,6 @@ export default function init(args, cb) {
     name = path.basename(process.cwd())
   }
 
-  console.log(`Creating a ${projectType} project...`)
+  console.log(`Initialising a ${projectType} project...`)
   createProject(args, projectType, name, process.cwd(), cb)
 }
