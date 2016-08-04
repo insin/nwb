@@ -21,7 +21,7 @@ export default function createServeReactAppConfig(args, overrides) {
       publicPath: '/',
     },
     plugins: {
-      copy: [{from: path.resolve('public'), to: dist}],
+      copy: [{from: path.resolve('public'), to: dist, ignore: '.gitkeep'}],
       html: getDefaultHTMLConfig(),
     },
   }, overrides)

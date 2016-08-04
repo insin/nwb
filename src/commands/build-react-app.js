@@ -32,7 +32,7 @@ function buildConfig(args) {
       publicPath: '/',
     },
     plugins: {
-      copy: [{from: path.resolve('public'), to: dist}],
+      copy: [{from: path.resolve('public'), to: dist, ignore: '.gitkeep'}],
       html: getDefaultHTMLConfig(),
       vendorChunkName: 'vendor',
     },
