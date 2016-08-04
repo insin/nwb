@@ -368,7 +368,9 @@ export function createPlugins(server, buildConfig = {}, userConfig = {}) {
 
   if (production) {
     plugins.push(
-      new optimize.DedupePlugin(),
+      // Temporariy commented out to prevent an error in __webpack_require__
+      // See https://github.com/webpack/webpack/issues/959#issuecomment-237438754
+      // new optimize.DedupePlugin(),
       new optimize.UglifyJsPlugin(merge({
         compress: {
           screw_ie8: true,
