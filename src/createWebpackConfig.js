@@ -292,6 +292,7 @@ function getCopyPluginArgs(buildConfig, userConfig) {
  *   not handled here, but by the final merge of webpack.extra config).
  */
 export function createPlugins(server, buildConfig = {}, userConfig = {}) {
+  let development = process.env.NODE_ENV === 'development'
   let production = process.env.NODE_ENV === 'production'
 
   let plugins = [
@@ -349,9 +350,11 @@ export function createPlugins(server, buildConfig = {}, userConfig = {}) {
     // configure deterministic hashing for long-term caching.
     if (buildConfig.html) {
       plugins.push(
-        // Generate stable module ids by hashing module paths instead of
-        // assigning integers.
-        new HashedModuleIdsPlugin(),
+        // Generate stable module ids instead of having Webpack assign integers.
+        // HashedModuleIdsPlugin (vendored from Webpack 2) does this without
+        // adding too much to bundle size and NamedModulesPlugin allows for
+        // easier debugging of development builds.
+        development ? new webpack.NamedModulesPlugin() : new HashedModuleIdsPlugin(),
         // The MD5 Hash plugin seems to make [chunkhash] for .js files behave
         // like [contenthash] does for extracted .css files, which is essential
         // for deterministic hashing.
