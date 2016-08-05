@@ -8,10 +8,11 @@ import merge from 'webpack-merge'
 
 import cleanModule from './commands/clean-module'
 import createBabelConfig from './createBabelConfig'
+import debug from './debug'
 import {UserError} from './errors'
 import exec from './exec'
 import getUserConfig from './getUserConfig'
-import {createBanner, createWebpackExternals} from './utils'
+import {createBanner, createWebpackExternals, deepToString} from './utils'
 import webpackBuild from './webpackBuild'
 import {logGzippedFileSizes} from './webpackUtils'
 
@@ -20,6 +21,8 @@ import {logGzippedFileSizes} from './webpackUtils'
  */
 function runBabel(src, outDir, buildBabelConfig, userBabelConfig) {
   let babelConfig = createBabelConfig(buildBabelConfig, userBabelConfig)
+  debug('babel config: %s', deepToString(babelConfig))
+
   fs.writeFileSync('.babelrc', JSON.stringify(babelConfig, null, 2))
   try {
     exec('babel', [src, '--out-dir', outDir, '--quiet'])
