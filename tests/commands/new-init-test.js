@@ -218,7 +218,7 @@ describe('command: nwb new', function() {
   })
 
   it('creates a new React component with a given name', done => {
-    cli(['new', 'react-component', 'test-component', '--umd=MyComponent', '--native-modules'], err => {
+    cli(['new', 'react-component', 'test-component', '--umd=MyComponent', '--es-modules'], err => {
       reactComponentAssertions('test-component', 'test-component', err, done)
     })
   })
@@ -287,7 +287,7 @@ describe('command: nwb init', function() {
   })
 
   it('initialises a React component in the current directory', done => {
-    cli(['init', 'react-component', '--umd=MyComponent', '--native-modules'], err => {
+    cli(['init', 'react-component', '--umd=MyComponent', '--es-modules'], err => {
       reactComponentAssertions('.', defaultName, err, done)
     })
   })
