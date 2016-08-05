@@ -180,7 +180,7 @@ describe('sample projects', function() {
         cli(['build'], err => {
           expect(err).toNotExist()
           es5 = fs.readFileSync(path.join(tmpDir, 'lib/index.js'), 'utf-8')
-          es6 = fs.readFileSync(path.join(tmpDir, 'es6/index.js'), 'utf-8')
+          es6 = fs.readFileSync(path.join(tmpDir, 'es/index.js'), 'utf-8')
           done()
         })
       })

@@ -101,7 +101,7 @@ describe('command: build', function() {
       ])
     })
     it('creates an ES6 modules build', () => {
-      expect(glob.sync('*', {cwd: path.resolve('es6')})).toEqual([
+      expect(glob.sync('*', {cwd: path.resolve('es')})).toEqual([
         'index.js',
       ])
     })
