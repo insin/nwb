@@ -77,7 +77,7 @@ function reactComponentAssertions(dir, name, err, done) {
   let pkg = require(path.resolve(dir, 'package.json'))
   expect(pkg.name).toBe(name)
   expect(pkg['jsnext:main']).toBe('es/index.js')
-  expect(pkg['modules']).toBe('es/index.js')
+  expect(pkg['module']).toBe('es/index.js')
   expect(pkg.devDependencies.nwb).toMatch(DEP_VERSION_RE)
   let config = require(path.resolve(dir, 'nwb.config.js'))
   expect(config).toEqual({

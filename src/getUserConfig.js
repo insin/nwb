@@ -139,8 +139,8 @@ function upgradeBuildConfig(build, userConfigPath, report = {deprecated() {}}) {
     if (npm.esModules) {
       messages.push(
         '',
-        `You have the ES6 modules build enabled, so also add ${chalk.cyan('"modules": "es/index.js"')} to ${chalk.cyan('package.json')}.`,
-        'This is the default property Webpack 2 will use to look for a native ES6 modules build.',
+        `You have the ES6 modules build enabled, so also add ${chalk.cyan('"module": "es/index.js"')} to ${chalk.cyan('package.json')}.`,
+        'This is part of a proposal for future native module support being supported by multiple bundlers.',
       )
     }
     report.deprecated('build', ...messages)

@@ -49,7 +49,7 @@ It's enabled by default, so we can just hit `Enter` to accept the default:
 ? Do you want to create an ES6 modules build? Yes
 ```
 
-> **Note:** nwb will create an ES6 modules build in `es/` when we build the project later.
+> **Note:** nwb will create an ES6 modules build in `es/` when we build the project later. It will also add `"module"` and `"jsnext:main"` configuration to `package.json`, for use by ES6 module bundlers.
 
 ```
 ? Do you want to create a UMD build? (y/N)
