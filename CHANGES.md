@@ -133,7 +133,7 @@
 - karma-coverage: v1.0.0 → [v1.1.1](https://github.com/karma-runner/karma-coverage/blob/master/CHANGELOG.md#111-2016-07-23)
 - karma-mocha-reporter: v2.0.3 → [v2.1.0](https://github.com/litixsoft/karma-mocha-reporter/compare/v2.0.3...v2.1.0)
 - karma-phantomjs-launcher: v1.0.0 → [v1.0.1](https://github.com/karma-runner/karma-phantomjs-launcher/blob/master/CHANGELOG.md#101-2016-06-23)
-- mocha: v2.5.3 → [v3.0.0](https://github.com/mochajs/mocha/blob/master/CHANGELOG.md#300--2016-07-31)
+- mocha: v2.5.3 → [v3.0.1](https://github.com/mochajs/mocha/blob/master/CHANGELOG.md#301--2016-08-03)
 - npm-install-webpack-plugin: v4.0.1 → [v4.0.4](https://github.com/ericclemmons/npm-install-webpack-plugin/blob/master/CHANGELOG.md#404-2016-06-30)
 - phantomjs-prebuilt: v2.1.7 → [v2.1.10](https://github.com/Medium/phantomjs/releases/tag/2.1.10)
 - qs: v6.2.0 → [v6.2.1](https://github.com/ljharb/qs/blob/master/CHANGELOG.md#621)
