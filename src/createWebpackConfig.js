@@ -16,7 +16,7 @@ import HashedModuleIdsPlugin from '../vendor/HashedModuleIdsPlugin'
 import createBabelConfig from './createBabelConfig'
 import debug from './debug'
 import {deepToString, endsWith, typeOf} from './utils'
-import DevServerStatusPlugin from './WebpackDevServerStatusPlugin'
+import StatusPlugin from './WebpackStatusPlugin'
 
 // Top-level property names reserved for webpack config
 // From http://webpack.github.io/docs/configuration.html
@@ -318,9 +318,9 @@ export function createPlugins(server, buildConfig = {}, userConfig = {}) {
         new webpack.HotModuleReplacementPlugin(),
         new webpack.NoErrorsPlugin(),
       )
-      if (buildConfig.status) {
-        plugins.push(new DevServerStatusPlugin(buildConfig.status))
-      }
+    }
+    if (buildConfig.status) {
+      plugins.push(new StatusPlugin(buildConfig.status))
     }
     // Use paths as names when serving
     plugins.push(new webpack.NamedModulesPlugin())

@@ -181,6 +181,11 @@ export default function createKarmaConfig({codeCoverage, singleRun}, userConfig)
       node: {
         fs: 'empty',
       },
+      plugins: {
+        status: {
+          test: true
+        }
+      },
       polyfill: false,
       resolve: {
         alias: {

@@ -4,14 +4,20 @@ import {clearConsole} from './utils'
 import {logErrorsAndWarnings} from './webpackUtils'
 
 /**
- * Display current build status for a Webpack development server.
+ * Display current build status for a Webpack watch build.
  * Based on create-react-app@0.2's start script.
  */
-export default class DevServerStatusPlugin {
-  constructor({message = '', middleware = false} = {}) {
-    this.initial = true
+export default class StatusPlugin {
+  constructor({message = '', middleware = false, test = false} = {}) {
+    // Provides details of the URL the dev server is available at
     this.message = message
+    // Flag: don't clear the console as we're in someone else's server
     this.middleware = middleware
+    // Flag: ONLY log errors and warnings
+    this.test = test
+
+    // We only want to display the "Starting..." message once
+    this.initial = true
 
     this.watchRun = this.watchRun.bind(this)
     this.done = this.done.bind(this)
@@ -22,30 +28,42 @@ export default class DevServerStatusPlugin {
     compiler.plugin('done', this.done)
   }
 
-  watchRun(watching, cb) {
-    if (!this.middleware) {
+  clearConsole() {
+    if (!this.test) {
       clearConsole()
     }
+  }
+
+  log(message) {
+    if (!this.test) {
+      console.log(message)
+    }
+  }
+
+  watchRun(watching, cb) {
+    if (!this.middleware) {
+      this.clearConsole()
+    }
     if (this.initial) {
-      console.log(chalk.cyan('Starting Webpack compilation...'))
+      this.log(chalk.cyan('Starting Webpack compilation...'))
       this.initial = false
     }
     else {
-      console.log('Recompiling...')
+      this.log('Recompiling...')
     }
     cb()
   }
 
   done(stats) {
     if (!this.middleware) {
-      clearConsole()
+      this.clearConsole()
     }
 
     let hasErrors = stats.hasErrors()
     let hasWarnings = stats.hasWarnings()
 
     if (!hasErrors && !hasWarnings) {
-      console.log(chalk.green('Compiled successfully.'))
+      this.log(chalk.green('Compiled successfully.'))
     }
     else {
       logErrorsAndWarnings(stats)
@@ -53,8 +71,8 @@ export default class DevServerStatusPlugin {
     }
 
     if (!this.middleware) {
-      console.log()
-      console.log(this.message)
+      this.log('')
+      this.log(this.message)
     }
   }
 }
