@@ -16,16 +16,32 @@ import {createBanner, createWebpackExternals, deepToString} from './utils'
 import webpackBuild from './webpackBuild'
 import {logGzippedFileSizes} from './webpackUtils'
 
+// These match DEFAULT_TEST_DIRS and DEFAULT_TEST_FILES for co-located tests in
+// ./createKarmaConfig.js; unfortunately Babel doesn't seem to support reusing
+// the same patterns.
+const DEFAULT_BABEL_IGNORE_CONFIG = [
+  '.spec.js',
+  '.test.js',
+  '-test.js',
+  '/__tests__/'
+]
+
 /**
  * Runs Babel with generated config written to a temporary .babelrc.
  */
 function runBabel(src, outDir, buildBabelConfig, userBabelConfig) {
   let babelConfig = createBabelConfig(buildBabelConfig, userBabelConfig)
+
   debug('babel config: %s', deepToString(babelConfig))
 
   fs.writeFileSync('.babelrc', JSON.stringify(babelConfig, null, 2))
   try {
-    exec('babel', [src, '--out-dir', outDir, '--quiet'])
+    exec('babel', [
+      src,
+      '--out-dir', outDir,
+      '--ignore', `"${DEFAULT_BABEL_IGNORE_CONFIG.join(',')}"`,
+      '--quiet',
+    ])
   }
   finally {
     fs.unlinkSync('.babelrc')
