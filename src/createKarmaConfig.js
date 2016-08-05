@@ -134,9 +134,9 @@ export default function createKarmaConfig({codeCoverage, singleRun}, userConfig)
   let files = [require.resolve('babel-polyfill/dist/polyfill.js')]
   let preprocessors = {}
 
-  if (userConfig.testContext) {
-    files.push(userConfig.testContext)
-    preprocessors[userConfig.testContext] = ['webpack', 'sourcemap']
+  if (userKarma.testContext) {
+    files.push(userKarma.testContext)
+    preprocessors[userKarma.testContext] = ['webpack', 'sourcemap']
   }
   else {
     testFiles.forEach(testGlob => {
@@ -149,10 +149,12 @@ export default function createKarmaConfig({codeCoverage, singleRun}, userConfig)
     presets: ['react'] // XXX
   }
   if (codeCoverage) {
+    let exclude = [...testDirs, ...testFiles]
+    if (userKarma.testContext) {
+      exclude.push(userKarma.testContext)
+    }
     babel.plugins = [
-      [require.resolve('babel-plugin-istanbul'), {
-        exclude: [...testDirs, ...testFiles],
-      }]
+      [require.resolve('babel-plugin-istanbul'), {exclude}]
     ]
   }
 
