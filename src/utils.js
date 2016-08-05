@@ -16,7 +16,7 @@ export function clearConsole() {
  * Create a banner comment for a UMD build file from package.json config.
  */
 export function createBanner(pkg) {
-  let banner = `${pkg.name} ${pkg.version}`
+  let banner = `${pkg.name} v${pkg.version}`
   if (pkg.homepage) {
     banner += ` - ${pkg.homepage}`
   }

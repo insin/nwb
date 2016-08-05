@@ -8,14 +8,14 @@ describe('utility functions', () => {
       expect(createBanner({
         name: 'test',
         version: '1.0.0',
-      })).toEqual('test 1.0.0')
+      })).toEqual('test v1.0.0')
     })
     it('uses homepage if available', () => {
       expect(createBanner({
         name: 'test',
         version: '1.0.0',
         homepage: 'foo.com',
-      })).toEqual('test 1.0.0 - foo.com')
+      })).toEqual('test v1.0.0 - foo.com')
     })
     it('uses license if available', () => {
       expect(createBanner({
@@ -23,7 +23,7 @@ describe('utility functions', () => {
         version: '1.0.0',
         homepage: 'foo.com',
         license: 'MIT',
-      })).toEqual('test 1.0.0 - foo.com\nMIT Licensed')
+      })).toEqual('test v1.0.0 - foo.com\nMIT Licensed')
     })
   })
 

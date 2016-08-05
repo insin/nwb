@@ -946,7 +946,7 @@ If all fields are present the banner will be in this format:
 
 ```js
 /*!
- * nwb 0.6.0 - https://github.com/insin/nwb
+ * your-project v1.2.3 - https://github.com/you/your-project
  * MIT Licensed
  */
 ```
