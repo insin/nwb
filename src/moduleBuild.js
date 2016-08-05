@@ -58,7 +58,9 @@ export default function moduleBuild(args, buildConfig = {}, cb) {
   )
   spinner.succeed()
 
-  if (userConfig.npm.esModules) {
+  // The ES6 modules build is enabled by default, and must be explicitly
+  // disabled if you don't want it.
+  if (userConfig.npm.esModules !== false) {
     spinner = ora('Creating ES6 modules build').start()
     runBabel(
       src,
