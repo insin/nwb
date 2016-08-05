@@ -161,7 +161,7 @@ describe('sample projects', function() {
     })
   })
 
-  describe('cherry-pick project', () => {
+  describe.skip('cherry-pick project', () => {
     let es5
     let es6
     let originalCwd
