@@ -71,7 +71,8 @@ export function endsWith(s1, s2) {
  * Install react for the user when it's needed.
  */
 export function installReact({dev = false, save = false, cwd = process.cwd(), version = 'latest'} = {}) {
-  let command = `npm install${save ? ` --save${dev ? '-dev' : ''}` : ''} react@${version} react-dom@${version}`
+  let saveArg = save ? ` --save${dev ? '-dev' : ''}` : ''
+  let command = `npm install${saveArg} react@${version} react-dom@${version}`
   debug(`${cwd} $ ${command}`)
   execSync(command, {cwd, stdio: 'inherit'})
 }
