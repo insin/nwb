@@ -30,19 +30,19 @@ Options:
   ${opt('-v, --version')}  print nwb's version
 
 Project creation commands:
-  ${cmd('nwb new')} ${req('<project_type> <name>')} ${opt('[options]')}
+  ${cmd('nwb new')} ${req('<project_type> <dir_name>')} ${opt('[options]')}
     Create a project in a new directory.
 
     Arguments:
       ${req('project_type')}  project type - see the list below
-      ${req('name')}          project name
+      ${req('dir_name')}      project name / directory to create the project in
 
-  ${cmd('nwb init')} ${req('<project_type>')} ${opt('[name] [options]')}
+  ${cmd('nwb init')} ${req('<project_type>')} ${opt('[dir_name] [options]')}
     Initialise a project in the current directory.
 
     Arguments:
       ${req('project_type')}  project type - see the list below
-      ${opt('name')}          project name ${opt('[default: working directory name]')}
+      ${opt('dir_name')}      project name ${opt('[default: current directory name]')}
 
   Options:
     ${opt('-f, --force')}   force project creation, don't ask questions
@@ -77,7 +77,7 @@ Generic development commands:
       ${opt('--reload')}        auto reload the page if hot reloading fails
 
   ${cmd('nwb test')}
-    Run unit tests.
+    Run tests.
 
     Options:
       ${opt('--coverage')}  create a code coverage report
@@ -87,17 +87,17 @@ Project type-specific commands:
   ${cmd('nwb build-demo')}
     Build a demo app from demo/src/index.js to demo/dist/.
 
-  ${cmd('nwb build-module')}
-    Create an ES5 build for an npm module (ES6 modules build requires config).
-
   ${cmd('nwb build-react-app')} ${opt('[entry] [dist_dir]')}
     Build a React app from ${opt('entry')} to ${opt('dist_dir')}.
 
-  ${cmd('nwb build-umd')} ${opt('[entry]')}
-    Create a UMD build for an npm module from ${opt('entry')} (requires config).
+  ${cmd('nwb build-react-component')} ${opt('[umd_entry]')}
+    Create ES5, ES6 modules and UMD builds for a React component.
 
   ${cmd('nwb build-web-app')} ${opt('[entry] [dist_dir]')}
     Build a web app from ${opt('entry')} to ${opt('dist_dir')}.
+
+  ${cmd('nwb build-web-module')} ${opt('[umd_entry]')}
+    Create ES5, ES6 modules and UMD builds for a web module.
 
   ${cmd('nwb clean-app')} ${opt('[dist_dir]')}
     Delete ${opt('dist_dir')}.
@@ -106,10 +106,7 @@ Project type-specific commands:
     Delete demo/dist/.
 
   ${cmd('nwb clean-module')}
-    Delete coverage/, es6/ and lib/.
-
-  ${cmd('nwb clean-umd')}
-    Delete umd/.
+    Delete coverage/, es/, lib/ and umd/.
 
   ${cmd('nwb serve-react-app')} ${opt('[entry]')}
     Serve a React app from ${opt('entry')}
@@ -121,12 +118,13 @@ Project type-specific commands:
     Serve a web app from ${opt('entry')}.
 
   Arguments:
-    ${opt('entry')}     entry point ${opt('[default: src/index.js]')}
-    ${opt('dist_dir')}  build output directory ${opt('[default: dist/]')}
+    ${opt('entry')}      entry point ${opt('[default: src/index.js]')}
+    ${opt('dist_dir')}   build output directory ${opt('[default: dist/]')}
+    ${opt('umd_entry')}  entry point for UMD builds ${opt('[default: src/index.js]')}
 
 Helper commands:
   ${cmd('nwb check-config')} ${opt('[config]')} ${opt('[options]')}
-    Check your configuration file for errors, deprecated config and usage hints
+    Check your configuration file for errors, deprecated config and usage hints.
 
     Arguments:
       ${opt('config')}     path to the file to validate ${opt(`[default: ${CONFIG_FILE_NAME}]`)})

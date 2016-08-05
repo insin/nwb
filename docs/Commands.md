@@ -96,16 +96,16 @@ The `name` argument must not be an existing directory.
 ###### Project Types
 
 ```
-nwb new react-app <name>
+nwb new react-app <dir-name>
 ```
 
-Creates a skeleton for a React app with the given name.
+Creates a skeleton for a React app in the specified directory.
 
 ```
-nwb new web-app <module-name>
+nwb new web-app <dir-name>
 ```
 
-Creates a skeleton for a JavaScript app with the given name.
+Creates a skeleton for a JavaScript app in the specified directory.
 
 ```
 nwb new react-component <dir-name> [options]
