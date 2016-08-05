@@ -82,8 +82,8 @@ export function logBuildResults(stats, spinner) {
 
 export function logErrorsAndWarnings(stats) {
   let json = stats.toJson()
-  let formattedErrors = formatMessages(json.errors, 'Error')
-  let formattedWarnings = formatMessages(json.warnings, 'Warning')
+  let formattedErrors = formatMessages(json.errors, chalk.bgRed.white('Error'))
+  let formattedWarnings = formatMessages(json.warnings, chalk.bgYellow.black('Warning'))
 
   if (stats.hasErrors()) {
     console.log(chalk.red('Failed to compile.'))
