@@ -44,35 +44,35 @@ function process(config) {
 describe('processUserConfig()', () => {
   describe('validation', () => {
     it('config file has an invalid type', () => {
-      check({type: 'invalid'}, 'type', /must be one of/)
+      check({type: 'invalid'}, 'type', /Must be/)
     })
     it('babel.stage is not a number, or falsy', () => {
-      check({babel: {stage: []}}, 'babel.stage', /must be a number, or falsy/)
+      check({babel: {stage: []}}, 'babel.stage', /Must be/)
     })
     it('babel.stage is out of bounds', () => {
-      check({babel: {stage: -1}}, 'babel.stage', /must be between 0 and 3/)
-      check({babel: {stage: 4}}, 'babel.stage', /must be between 0 and 3/)
+      check({babel: {stage: -1}}, 'babel.stage', /Must be/)
+      check({babel: {stage: 4}}, 'babel.stage', /Must be/)
     })
     it('babel.presets is not an array', () => {
-      check({babel: {presets: 'some-preset'}}, 'babel.presets', /must be an array/)
+      check({babel: {presets: 'some-preset'}}, 'babel.presets', /Must be/)
     })
     it('babel.plugins is not an array', () => {
-      check({babel: {plugins: 'some-plugin'}}, 'babel.plugins', /must be an array/)
+      check({babel: {plugins: 'some-plugin'}}, 'babel.plugins', /Must be/)
     })
     it('babel.runtime is not valid', () => {
-      check({babel: {runtime: 'welp'}}, 'babel.runtime', /must be boolean, 'helpers' or 'polyfill'/)
+      check({babel: {runtime: 'welp'}}, 'babel.runtime', /Must be/)
     })
     it('webpack.copy is an invalid type', () => {
-      check({webpack: {copy: /test/}}, 'webpack.copy', /must be an Array or an Object/)
+      check({webpack: {copy: /test/}}, 'webpack.copy', /Must be/)
     })
     it('webpack.copy is an object missing config', () => {
-      check({webpack: {copy: {}}}, 'webpack.copy', /must include patterns or options/)
+      check({webpack: {copy: {}}}, 'webpack.copy', /Must include/)
     })
     it('webpack.copy.patterns is not an array', () => {
-      check({webpack: {copy: {patterns: {}}}}, 'webpack.copy.patterns', /must be an Array/)
+      check({webpack: {copy: {patterns: {}}}}, 'webpack.copy.patterns', /Must be/)
     })
     it('webpack.copy.options is not an object', () => {
-      check({webpack: {copy: {options: []}}}, 'webpack.copy.options', /must be an Object/)
+      check({webpack: {copy: {options: []}}}, 'webpack.copy.options', /Must be/)
     })
   })
 
@@ -177,7 +177,7 @@ describe('processUserConfig()', () => {
     })
     expect(config.build).toNotExist()
     expect(config.npm).toEqual({
-      nativeModules: true,
+      esModules: true,
       umd: {
         externals: {'react': 'React'},
         global: 'MyComponent',

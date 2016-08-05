@@ -171,7 +171,7 @@ export function processUserConfig({
   let report = new UserConfigReport(userConfigPath)
 
   if ((required || 'type' in userConfig) && PROJECT_TYPES.indexOf(userConfig.type) === -1) {
-    report.error('type', userConfig.type, `must be one of: ${PROJECT_TYPES.join(', ')}`)
+    report.error('type', userConfig.type, `Must be one of: ${PROJECT_TYPES.join(', ')}`)
   }
 
   // TODO Remove in a future version
@@ -189,43 +189,58 @@ export function processUserConfig({
   // Babel config
   if (!!userConfig.babel.stage || userConfig.babel.stage === 0) {
     if (typeOf(userConfig.babel.stage) !== 'number') {
-      report.error('babel.stage', userConfig.babel.stage, 'must be a number, or falsy to disable use of a stage preset')
+      report.error(
+        'babel.stage',
+        userConfig.babel.stage,
+        `Must be a ${chalk.cyan('Number')} between ${chalk.cyan('0')} and ${chalk.cyan('3')}, ` +
+        `or ${chalk.cyan('false')} to disable use of a stage preset.`
+      )
     }
     else if (userConfig.babel.stage < 0 || userConfig.babel.stage > 3) {
-      report.error('babel.stage', userConfig.babel.stage, 'must be between 0 and 3')
+      report.error(
+        'babel.stage',
+        userConfig.babel.stage,
+        `Must be between #{chalk.cyan(0)} and #{chalk.cyan(3)}`
+      )
     }
   }
   if (userConfig.babel.presets && !Array.isArray(userConfig.babel.presets)) {
-    report.error('babel.presets', userConfig.babel.presets, 'must be an array')
+    report.error('babel.presets', userConfig.babel.presets, `Must be an ${chalk.cyan('Array')}`)
   }
   if (userConfig.babel.plugins && !Array.isArray(userConfig.babel.plugins)) {
-    report.error('babel.plugins', userConfig.babel.plugins, 'must be an array')
+    report.error('babel.plugins', userConfig.babel.plugins, `Must be an ${chalk.cyan('Array')}`)
   }
   if ('runtime' in userConfig.babel &&
       typeOf(userConfig.babel.runtime) !== 'boolean' &&
       BABEL_RUNTIME_OPTIONS.indexOf(userConfig.babel.runtime) === -1) {
-    // TODO Remove in a future version
-    if (typeOf(userConfig.babel.runtime) === 'array' &&
-        userConfig.babel.runtime[0] === 'runtime') {
+    report.error(
+      'babel.runtime',
+      userConfig.babel.runtime,
+      `Must be ${chalk.cyan('boolean')}, ${chalk.cyan("'helpers'")} or ${chalk.cyan("'polyfill'")})`
+    )
+  }
+  // TODO Remove in a future version
+  else if (userConfig.babel.optional) {
+    let messages = [
+      `This Babel 5 config is deprecated in favour of ${chalk.green('runtime')} config as of nwb v0.12.`
+    ]
+    if (typeOf(userConfig.babel.optional) === 'array' &&
+        userConfig.babel.optional.length === 1 &&
+        userConfig.babel.optional[0] === 'runtime') {
+      messages.push(`nwb will convert ${chalk.yellow("optional = ['runtime']")} config to ${chalk.cyan('runtime = true')} during a build`)
       userConfig.babel.runtime = true
-      report.deprecated('babel.runtime',
-        `must be ${chalk.cyan('boolean')} ${chalk.cyan("'helpers'")}" or ${chalk.cyan("'polyfill'")}" as of nwb v0.12`,
-        `nwb will convert deprecated ${chalk.yellow("['runtime']")} config to ${chalk.cyan('true')} during a build`,
-      )
     }
-    else {
-      report.error('babel.runtime', userConfig.babel.runtime, "must be boolean, 'helpers' or 'polyfill'")
-    }
+    report.deprecated('babel.optional', ...messages)
   }
   // TODO Remove in a future version - don't convert, just validate
   if ('loose' in userConfig.babel && typeOf(userConfig.babel.loose) !== 'boolean') {
     if (!warnedAboutBabelLoose) {
       let messages = [
-        `must be ${chalk.cyan('boolean')} as of nwb v0.12`,
-        `nwb will convert deprecated non-boolean config to its boolean equivalent during a build`,
+        `Must be ${chalk.cyan('boolean')} as of nwb v0.12.`,
+        `nwb will convert non-boolean config to its boolean equivalent during a build.`,
       ]
       if (userConfig.babel.loose) {
-        messages.push('loose mode is now on by default, so you can remove this config')
+        messages.push('(Loose mode is enabled on by default as of nwb v0.12, so you can remove this config)')
       }
       report.deprecated('babel.loose', ...messages)
       warnedAboutBabelLoose = true
@@ -234,18 +249,18 @@ export function processUserConfig({
   }
   else if (userConfig.babel.loose === true) {
     report.hint('babel.loose',
-      'loose mode is on by default as of nwb v0.12, so you can remove this config'
+      'Loose mode is enabled by default as of nwb v0.12, so you can remove this config.'
     )
   }
 
   // Karma config
   // TODO Remove in a future version
   if (userConfig.karma.tests) {
-    let messages = ['deprecated as of nwb v0.12']
+    let messages = ['Deprecated as of nwb v0.12.']
     if (userConfig.karma.tests.indexOf('*') !== -1) {
       messages.push(
         `${chalk.yellow('karma.tests')} appears to be a ${chalk.cyan('file glob')} so you should rename it to ${chalk.green('karma.testFiles')}`,
-        `nwb will use it as ${chalk.green('karma.testFiles')} config during a build`,
+        `nwb will use it as ${chalk.green('karma.testFiles')} config during a build.`,
       )
       userConfig.karma.testFiles = userConfig.karma.tests
     }
@@ -253,15 +268,15 @@ export function processUserConfig({
              fs.readFileSync(userConfig.karma.tests, 'utf8').indexOf('require.context') !== -1) {
       messages.push(
         `${chalk.yellow('karma.tests')} appears to be a ${chalk.cyan('Webpack context module')} , so you should rename it to ${chalk.green('karma.testContext')}`,
-        `nwb will use it as ${chalk.green('karma.testContext')} config during a build`,
+        `nwb will use it as ${chalk.green('karma.testContext')} config during a build.`,
       )
       userConfig.karma.testContext = userConfig.karma.tests
     }
     else {
       messages.push(
-        `if ${chalk.yellow('karma.tests')} points at a ${chalk.cyan('Webpack context module')}, use ${chalk.green('karma.testContext')} instead`,
-        `if ${chalk.yellow('karma.tests')} is a ${chalk.cyan('file glob')}, use ${chalk.green('karma.testFiles')} instead`,
-        `nwb can't tell, so will fall back to its new default config during a build`,
+        `If ${chalk.yellow('karma.tests')} points at a ${chalk.cyan('Webpack context module')}, use ${chalk.green('karma.testContext')} instead.`,
+        `If ${chalk.yellow('karma.tests')} is a ${chalk.cyan('file glob')}, use ${chalk.green('karma.testFiles')} instead.`,
+        `nwb can't tell, so will fall back to default config during a build.`,
       )
     }
     if (!warnedAboutKarmaTests) {
@@ -291,7 +306,7 @@ export function processUserConfig({
         report.error(
           'webpack.copy',
           userConfig.webpack.copy,
-          'must include patterns or options when given as an Object'
+          `Must include ${chalk.cyan('patterns')} or ${chalk.cyan('options')} when given as an ${chalk.cyan('Object')}`
         )
       }
       if (userConfig.webpack.copy.patterns &&
@@ -299,7 +314,7 @@ export function processUserConfig({
         report.error(
           'webpack.copy.patterns',
           userConfig.webpack.copy.patterns,
-          'must be an Array when provided'
+          `Must be an ${chalk.cyan('Array')} when provided`
         )
       }
       if (userConfig.webpack.copy.options &&
@@ -307,7 +322,7 @@ export function processUserConfig({
         report.error(
           'webpack.copy.options',
           userConfig.webpack.copy.options,
-          'must be an Object when provided'
+          `Must be an ${chalk.cyan('Object')} when provided.`
         )
       }
     }
@@ -315,7 +330,7 @@ export function processUserConfig({
       report.error(
         'webpack.copy',
         userConfig.webpack.copy,
-        'must be an Array or an Object'
+        `Must be an ${chalk.cyan('Array')} or an ${chalk.cyan('Object')}.`
       )
     }
   }
@@ -327,8 +342,8 @@ export function processUserConfig({
       report.error(
         'userConfig.webpack.compat',
         compatProps,
-        `unknown propert${unknownCompatProps.length === 1 ? 'y' : 'ies'} in webpack.compat.config, ` +
-        `valid properties are: ${Object.keys(COMPAT_CONFIGS).join(', ')}`)
+        `Unknown propert${unknownCompatProps.length === 1 ? 'y' : 'ies'} present.` +
+        `Valid properties are: ${Object.keys(COMPAT_CONFIGS).join(', ')}.`)
     }
 
     if (userConfig.webpack.compat.moment &&
@@ -336,7 +351,7 @@ export function processUserConfig({
       report.error(
         'webpack.compat.moment.locales',
         webpack.compat.moment.locales,
-        'must be an Array'
+        'Must be an Array.'
       )
     }
   }
@@ -353,13 +368,13 @@ export function processUserConfig({
     if (userConfig.webpack.extra.output &&
         userConfig.webpack.extra.output.publicPath) {
       report.hint('webpack.extra.output.publicPath',
-        `you can use the more convenient ${chalk.green('webpack.publicPath')} instead`
+        `You can use the more convenient ${chalk.green('webpack.publicPath')} instead.`
       )
     }
     if (userConfig.webpack.extra.resolve &&
         userConfig.webpack.extra.resolve.alias) {
       report.hint('webpack.extra.resolve.alias',
-        `you can use the more convenient ${chalk.green('webpack.aliases')} instead`
+        `You can use the more convenient ${chalk.green('webpack.aliases')} instead.`
       )
     }
   }
@@ -368,9 +383,9 @@ export function processUserConfig({
   if (userConfig.webpack.plugins) {
     if (!warnedAboutWebpackPlugins) {
       report.deprecated('webpack.plugins',
-        'deprecated as of nwb v0.11',
-        `put this config directly under ${chalk.cyan('webpack')} instead`,
-        `nwb will use this config as if it was under ${chalk.cyan('webpack')} during a build`
+        'Deprecated as of nwb v0.11.',
+        `Put this config directly under ${chalk.cyan('webpack')} instead.`,
+        `nwb will use this config as if it was under ${chalk.cyan('webpack')} during a build.`
       )
       warnedAboutWebpackPlugins = true
     }
@@ -422,7 +437,7 @@ export default function getUserConfig(args = {}, options = {}) {
       delete require.cache[userConfigPath]
     }
     catch (e) {
-      throw new UserError(`Couldn't import the config file at ${userConfigPath}: ${e}`)
+      throw new UserError(`Couldn't import the config file at ${userConfigPath}: ${e.message}\n${e.stack}`)
     }
   }
 
