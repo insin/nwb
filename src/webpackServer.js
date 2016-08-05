@@ -24,13 +24,13 @@ function getServerOptions(args, cb) {
     if (args.force) return cb(null, {fallback, host, port: suggestedPort})
 
     clearConsole()
-    console.log(yellow(`Something is already running at port ${intendedPort}.`))
+    console.log(yellow(`Something is already running on port ${intendedPort}.`))
     console.log()
     inquirer.prompt([
       {
         type: 'confirm',
         name: 'run',
-        message: 'Would you like to run the app at another port instead?',
+        message: 'Would you like to run the app on another port instead?',
         default: true,
       },
     ]).then(
