@@ -883,15 +883,23 @@ module.exports = {
 
 ### npm Build Configuration
 
+By default, nwb creates ES5 and ES6 modules builds of your React component or vanilla JS module's code for publishing to npm.
+
 #### `npm`: `Object`
 
-By default, `nwb build` creates an ES5 build of your React component or vanilla JS module's code for publishing to npm. Additional npm build configuration is defined in a `npm` object, using the following fields:
+npm build configuration is defined in a `npm` object, using the following fields:
 
 ##### `esModules`: `Boolean`
 
 > Defaults to `true` if not provided.
 
 Determines whether or not nwb will create an ES6 modules build for use by ES6 module bundlers when you run `nwb build` for a React component or web module.
+
+When providing an ES6 modules build, you should also provide the following in `package.json` so compatible module bundlers can find it:
+
+```
+"modules": "es/index.js"
+```
 
 ##### `umd`: `String | Object`
 
