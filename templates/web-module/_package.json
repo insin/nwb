@@ -12,6 +12,7 @@
     "build": "nwb build-web-module",
     "clean": "nwb clean-module",
     "test": "nwb test",
+    "test:coverage": "nwb test --coverage",
     "test:watch": "nwb test --server"
   },
   "dependencies": {
