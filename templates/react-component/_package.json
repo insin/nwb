@@ -2,10 +2,10 @@
   "name": "{{name}}",
   "version": "1.0.0",
   "description": "{{name}} React component",
-  "main": "lib/index.js",{{nativeModulesMain}}
+  "main": "lib/index.js",{{esModulesPackageConfig}}
   "files": [
     "css",
-    "es6",
+    "es",
     "lib",
     "umd"
   ],

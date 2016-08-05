@@ -45,10 +45,10 @@ Project creation commands:
       ${opt('name')}          project name ${opt('[default: working directory name]')}
 
   Options:
-    ${opt('-f, --force')}           force project creation, don't ask questions
-    ${opt('-n, --native-modules')}  enable an extra build with native ES6 modules
-    ${opt('--react')}               version of React to install for React apps & components
-    ${opt('--umd=<var>')}           enable a UMD build which exports the given global variable
+    ${opt('-f, --force')}   force project creation, don't ask questions
+    ${opt('--es-modules')}  enable or disable (${opt('--no-es-modules')}) an ES6 modules build
+    ${opt('--react')}       version of React to install for React apps & components
+    ${opt('--umd=<var>')}   enable or disable (${opt('--no-umd')}) a UMD build
 
   Project types:
     ${req('react-app')}        a React app

@@ -1,19 +1,19 @@
 import expect from 'expect'
 import parseArgs from 'minimist'
 
-let {getWebModulePrefs} = require('../src/createProject')
+let {getNpmModulePrefs} = require('../src/createProject')
 
 let moduleArgs = (args, cb) => {
   args.push('-f')
-  getWebModulePrefs(parseArgs(args), cb)
+  getNpmModulePrefs(parseArgs(args), cb)
 }
 
-describe('getWebModulePrefs()', () => {
+describe('getNpmModulePrefs()', () => {
   it('defaults settings', done => {
     moduleArgs([], (err, settings) => {
       expect(err).toNotExist()
       expect(settings).toEqual({
-        nativeModules: true,
+        esModules: true,
         umd: false,
       })
       done()

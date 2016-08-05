@@ -10,7 +10,7 @@ import {
 } from './constants'
 import {UserError} from './errors'
 import pkg from '../package.json'
-import {installReact} from './utils'
+import {installReact, typeOf} from './utils'
 
 let nwbVersion = pkg.version.split('.').slice(0, 2).concat('x').join('.')
 
@@ -26,44 +26,45 @@ function writeConfigFile(dir, config) {
   )
 }
 
-export function getWebModulePrefs(args, done) {
-  // Pass a UMD global variable name with --umd=MyThing, or pass something like
-  // --no-umd to indicate you don't want a UMD build.
-  let umd = args.umd || false
+export function getNpmModulePrefs(args, done) {
   // An ES6 modules build is enabled by default, but can be disabled with
-  // --no-native-modules or --native-modules=false (or a bunch of other stuff)
-  let nativeModules = args['native-modules'] !== false && !/^(0|false|no|off)$/.test(args['native-modules'])
+  // --no-es-modules or --es-modules=false (or a bunch of other undocumented
+  // stuff)
+  let esModules = args['es-modules'] !== false && !/^(0|false|no|nope|off)$/.test(args['es-modules'])
+  // Pass a UMD global variable name with --umd=MyThing, or pass --no-umd to
+  // indicate you don't want a UMD build.
+  let umd = typeOf(args.umd) === 'string' ? args.umd : false
 
   // Don't ask questions if the user doesn't want them, or already told us all
   // the answers.
-  if ((args.f || args.force) || ('umd' in args && 'native-modules' in args)) {
-    return done(null, {umd, nativeModules})
+  if ((args.f || args.force) || ('umd' in args && 'es-modules' in args)) {
+    return done(null, {umd, esModules})
   }
 
   inquirer.prompt([
     {
-      when: () => !('native-modules' in args),
+      when: () => !('es-modules' in args),
       type: 'confirm',
-      name: 'nativeModules',
-      message: 'Do you want to create an ES6 modules build?',
-      default: nativeModules,
+      name: 'esModules',
+      message: 'Do you want to create an ES6 modules build for use by ES6 bundlers?',
+      default: esModules,
     },
     {
       when: () => !('umd' in args),
       type: 'confirm',
       name: 'createUMD',
-      message: 'Do you want to create a UMD build?',
-      default: false,
+      message: 'Do you want to create a UMD build for global usage via <script> tag?',
+      default: umd,
     },
     {
       when: ({createUMD}) => createUMD,
       type: 'input',
       name: 'umd',
-      message: 'Which global variable name should the UMD build export?',
+      message: 'Which global variable should the UMD build set?',
       validate(input) {
         return input.trim() ? true : 'Required to create a UMD build'
       },
-      default: umd,
+      default: umd || '',
     },
   ]).then(answers => done(null, answers), err => done(err))
 }
@@ -76,8 +77,8 @@ function logCreatedFiles(targetDir, createdFiles) {
 }
 
 export function npmModuleVars(vars) {
-  vars.nativeModulesMain =
-    vars.nativeModules ? '\n  "jsnext:main": "es6/index.js",\n  "modules": "es6/index.js",' : ''
+  vars.esModulesPackageConfig =
+    vars.esModules ? '\n  "jsnext:main": "es/index.js",\n  "modules": "es/index.js",' : ''
   return vars
 }
 
@@ -110,13 +111,13 @@ const PROJECT_CREATORS = {
   },
 
   [REACT_COMPONENT](args, name, targetDir, cb) {
-    getWebModulePrefs(args, (err, prefs) => {
+    getNpmModulePrefs(args, (err, prefs) => {
       if (err) return cb(err)
-      let {umd, nativeModules} = prefs
+      let {umd, esModules} = prefs
       let templateDir = path.join(__dirname, `../templates/${REACT_COMPONENT}`)
       let reactVersion = args.react || REACT_VERSION
       let templateVars = npmModuleVars(
-        {name, nativeModules, nwbVersion, reactVersion}
+        {name, esModules, nwbVersion, reactVersion}
       )
       copyTemplateDir(templateDir, targetDir, templateVars, (err, createdFiles) => {
         if (err) return cb(err)
@@ -124,7 +125,7 @@ const PROJECT_CREATORS = {
           writeConfigFile(targetDir, {
             type: 'react-component',
             npm: {
-              nativeModules: nativeModules,
+              esModules,
               umd: umd ? {global: umd, externals: {react: 'React'}} : false
             }
           })
@@ -156,12 +157,12 @@ const PROJECT_CREATORS = {
   },
 
   [WEB_MODULE](args, name, targetDir, cb) {
-    getWebModulePrefs(args, (err, prefs) => {
+    getNpmModulePrefs(args, (err, prefs) => {
       if (err) return cb(err)
-      let {umd, nativeModules} = prefs
+      let {umd, esModules} = prefs
       let templateDir = path.join(__dirname, `../templates/${WEB_MODULE}`)
       let templateVars = npmModuleVars(
-        {name, nativeModules, nwbVersion}
+        {name, esModules, nwbVersion}
       )
       copyTemplateDir(templateDir, targetDir, templateVars, (err, createdFiles) => {
         if (err) return cb(err)
@@ -169,7 +170,7 @@ const PROJECT_CREATORS = {
           writeConfigFile(targetDir, {
             type: 'web-module',
             npm: {
-              nativeModules: nativeModules,
+              esModules,
               umd: umd ? {global: umd, externals: {}} : false,
             }
           })

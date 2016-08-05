@@ -5,7 +5,7 @@ import ora from 'ora'
 export default function cleanModule(args) {
   let spinner = ora('Cleaning module').start()
   try {
-    exec('rimraf', ['coverage', 'es6', 'lib', 'umd'])
+    exec('rimraf', ['coverage', 'es', 'lib', 'umd'])
     spinner.succeed()
   }
   catch (err) {

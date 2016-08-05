@@ -108,22 +108,24 @@ nwb new web-app <module-name>
 Creates a skeleton for a JavaScript app with the given name.
 
 ```
-nwb new react-component <component-name> [options]
-? Do you want to create a UMD build? y/N
-? Which global variable should the UMD build export?
-? Do you want to create an extra ES6 modules build? y/N
+nwb new react-component <dir-name> [options]
+? Do you want to create an ES6 modules build for use by ES6 bundlers? Y/n
+? Do you want to create a UMD build for global usage via <script> tag? y/N
+? Which global variable should the UMD build set?
 ```
 
-Creates a skeleton for a React component with the given name, with an optional UMD build exporting a specified global variable and an optional ES6 modules build for tree-shaking bundlers.
+Creates a skeleton project for a React component in the specified directory, with an optional ES6 modules build for ES6 bundlers and an optional UMD build for `<script>` tag usage.
+
+If you specify that a UMD build should be created, it will be configured to treat React as an external module rather than bundling it.
 
 ```
-nwb new web-module <module-name> [options]
-? Do you want to create a UMD build? y/N
-? Which global variable should the UMD build export?
-? Do you want to create an extra ES6 modules build? y/N
+nwb new web-module <dir-name> [options]
+? Do you want to create an ES6 modules build for use by ES6 bundlers? Y/n
+? Do you want to create a UMD build for global usage via <script> tag? y/N
+? Which global variable should the UMD build set?
 ```
 
-Creates a skeleton for a web module with the given name, with an optional UMD build exporting a specified global variable and an optional ES6 modules build for tree-shaking bundlers.
+Creates a skeleton for a web module in the specified directory, with an optional ES6 modules build for ES6 bundlers and an optional UMD build for `<script>` tag usage.
 
 **Options:**
 
@@ -131,7 +133,9 @@ Creates a skeleton for a web module with the given name, with an optional UMD bu
 
 **React component and web module options:**
 
-- `--n, --native-modules` - enable an ES6 modules build
+> Passing all available options will automatically skip asking of setup questions.
+
+- `--es-modules` - explicitly enable or disable (with `--no-es-modules`) an ES6 modules build
 - `--umd=<var>` - enable a UMD build by providing a global variable name to be exported
 
 **React app/component options:**
@@ -237,7 +241,7 @@ Passing an argument for `entry` allows you to customise the entry point for the 
 
 - An ES5 build will be created in `lib/`
 - If enabled, UMD builds will be created in `umd/`
-- If enabled, ES6 modules builds will be created in `es6/`
+- If enabled, ES6 modules builds will be created in `es/`
 
 If the module has a `demo/` directory, running `build` will also create a static build of its demo app in `demo/dist/`.
 
@@ -292,7 +296,7 @@ These are used in the `npm scripts` section of `package.json` in project skeleto
 
 - `clean-demo` - delete `demo/dist/`
 
-- `clean-module` -  delete `coverage/`, `es6/` and `lib/`
+- `clean-module` -  delete `coverage/`, `es/` and `lib/`
 
 - `serve-react-app [entry]` - serve a React app from `entry` *[default: `src/index.js`]*
 

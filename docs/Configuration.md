@@ -87,7 +87,7 @@ The configuration object can include the following properties:
   - [`karma.extra`](#extra-object-1) - an escape hatch for extra Karma config, which will be merged into the generated config
 - [npm Build Configuration](#npm-build-configuration)
   - [`npm`](#npm-object)
-  - [`npm.jsNext`](#jsnext-boolean)
+  - [`npm.esModules`](#esmodules-boolean)
   - UMD build
     - [`npm.umd`](#umd-string--object) - enable a UMD build which exports a global variable
       - [`umd.global`](#global-string-required-for-umd-build)
@@ -887,17 +887,11 @@ module.exports = {
 
 By default, `nwb build` creates an ES5 build of your React component or vanilla JS module's code for publishing to npm. Additional npm build configuration is defined in a `npm` object, using the following fields:
 
-##### `jsNext`: `Boolean`
+##### `esModules`: `Boolean`
 
-Determines whether or not nwb will create an ES6 modules build for tree-shaking module bundlers when you run `nwb build` for a React component or web module.
+> Defaults to `true` if not provided.
 
-```js
-module.exports = {
-  npm: {
-    jsNext: true
-  }
-}
-```
+Determines whether or not nwb will create an ES6 modules build for use by ES6 module bundlers when you run `nwb build` for a React component or web module.
 
 ##### `umd`: `String | Object`
 
@@ -923,16 +917,17 @@ The name of the global variable the UMD build will export.
 
 A mapping from `peerDependency` module names to the global variables they're expected to be available as for use by the UMD build.
 
-e.g. if you're creating a React component which also depends on [React Router](https://github.com/rackt/react-router), this configuration would ensure they're not included in the UMD build:
+e.g. if you're creating a React component which also depends on [React Router](https://github.com/reactjs/react-router), this configuration would ensure they're not included in the UMD build:
 
 ```js
 module.exports = {
-  build: {
-    umd: true,
-    global: 'MyComponent',
-    externals: {
-      'react': 'React',
-      'react-router': 'ReactRouter'
+  npm: {
+    umd: {
+      global: 'MyComponent',
+      externals: {
+        'react': 'React',
+        'react-router': 'ReactRouter'
+      }
     }
   }
 }

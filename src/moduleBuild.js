@@ -55,11 +55,11 @@ export default function moduleBuild(args, buildConfig = {}, cb) {
   )
   spinner.succeed()
 
-  if (userConfig.npm.nativeModules) {
+  if (userConfig.npm.esModules) {
     spinner = ora('Creating ES6 modules build').start()
     runBabel(
       src,
-      path.resolve('es6'),
+      path.resolve('es'),
       merge(buildConfig.babel, buildConfig.babelDev || {}, {
         // Don't transpile modules, for ES6 module bundlers
         nativeModules: true,

@@ -2,9 +2,9 @@
   "name": "{{name}}",
   "version": "1.0.0",
   "description": "Describe {{name}} here",
-  "main": "lib/index.js",{{nativeModulesMain}}
+  "main": "lib/index.js",{{esModulesPackageConfig}}
   "files": [
-    "es6",
+    "es",
     "lib",
     "umd"
   ],
