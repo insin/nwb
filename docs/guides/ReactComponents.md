@@ -263,7 +263,7 @@ Runing coverage also produces a report in `coverage/html/` showing coverage stat
 `npm run build` will prepare the component for publishing, creating:
 
 - An ES5 build in `lib/`
-- An ES6 modules build in `es6/` (by default)
+- An ES6 modules build in `es/` (enabled by default / without configuration)
 - UMD development and production builds in `umd/` (if configuration is provided)
 
 It will also create a production build of the demo React app in `demo/dist/`, ready for deployment to wherever you want to host the demo (e.g. GitHub Pages, Surge)
