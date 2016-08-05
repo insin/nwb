@@ -83,7 +83,7 @@ function reactComponentAssertions(dir, name, err, done) {
   expect(config).toEqual({
     type: 'react-component',
     npm: {
-      nativeModules: true,
+      esModules: true,
       umd: {
         global: 'MyComponent',
         externals: {react: 'React'},
@@ -147,7 +147,7 @@ function webModuleAssertions(dir, name, err, done) {
   expect(config).toEqual({
     type: 'web-module',
     npm: {
-      nativeModules: true,
+      esModules: true,
       umd: false,
     },
   })
