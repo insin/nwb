@@ -13,7 +13,7 @@ export default function checkConfig(args) {
   try {
     getUserConfig(
       {_: [args.command || 'check-config'], config: args._[1]},
-      {check: true, required: !!args._[1]}
+      {check: true, required: true}
     )
   }
   catch (report) {
