@@ -3,7 +3,7 @@
 import {red} from 'chalk'
 
 import cli from '../cli'
-import {ConfigValidationError, UserError} from '../errors'
+import {ConfigValidationError, KarmaExitCodeError, UserError} from '../errors'
 
 function handleError(error) {
   if (error instanceof UserError) {
@@ -11,6 +11,9 @@ function handleError(error) {
   }
   else if (error instanceof ConfigValidationError) {
     error.report.log()
+  }
+  else if (error instanceof KarmaExitCodeError) {
+    console.error(red(`Karma exit code was ${error.exitCode}`))
   }
   else {
     console.error(red(`Error running command: ${error.message}`))

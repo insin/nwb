@@ -2,6 +2,7 @@ import argvSetEnv from 'argv-set-env'
 import {Server} from 'karma'
 
 import createKarmaConfig from './createKarmaConfig'
+import {KarmaExitCodeError} from './errors'
 import getUserConfig from './getUserConfig'
 
 export default function karmaServer(args, cb) {
@@ -18,5 +19,8 @@ export default function karmaServer(args, cb) {
     singleRun: isCi || !args.server,
   }, userConfig)
 
-  new Server(karmaConfig, cb).start()
+  new Server(karmaConfig, (exitCode) => {
+    if (exitCode !== 0) return cb(new KarmaExitCodeError(exitCode))
+    cb()
+  }).start()
 }

@@ -8,6 +8,12 @@ export class UserError {
   }
 }
 
+export class KarmaExitCodeError {
+  constructor(exitCode) {
+    this.exitCode = exitCode
+  }
+}
+
 export class ConfigValidationError {
   constructor(report) {
     this.report = report
