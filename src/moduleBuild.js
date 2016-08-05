@@ -64,8 +64,8 @@ export default function moduleBuild(args, buildConfig = {}, cb) {
       src,
       path.resolve('es'),
       merge(buildConfig.babel, buildConfig.babelDev || {}, {
-        // Don't transpile modules, for ES6 module bundlers
-        nativeModules: true,
+        // Don't transpile modules, for use by ES6 module bundlers
+        modules: false,
       }),
       userConfig.babel,
     )

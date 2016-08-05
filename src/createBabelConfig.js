@@ -5,7 +5,7 @@ const DEFAULT_STAGE = 2
 export default function createBabelConfig(buildConfig = {}, userConfig = {}) {
   let {
     env,
-    nativeModules,
+    modules = 'commonjs',
     plugins: buildPlugins = [],
     presets: buildPresets,
     stage: buildStage = DEFAULT_STAGE,
@@ -21,6 +21,7 @@ export default function createBabelConfig(buildConfig = {}, userConfig = {}) {
   } = userConfig
 
   let presets = []
+  let plugins = []
 
   // Default to loose mode unless explicitly configured
   if (typeOf(loose) === 'undefined') {
@@ -29,24 +30,36 @@ export default function createBabelConfig(buildConfig = {}, userConfig = {}) {
 
   // ES2015 and ES2016 presets
   presets.push(
-    require.resolve(
-      `../babel-presets/es2015${nativeModules ? '-native-modules' : ''}${loose ? '-loose' : ''}`,
-    ),
+    [require.resolve('babel-preset-es2015'), {loose, modules}],
     require.resolve('babel-preset-es2016'),
   )
 
   // Stage preset
   let stage = userStage != null ? userStage : buildStage
   if (typeof stage == 'number') {
-    presets.push(
-      require.resolve(`../babel-presets/stage-${stage}`)
-    )
+    presets.push(require.resolve(`babel-preset-stage-${stage}`))
+    // Decorators are stage 2 but not supported by Babel yet - add the legacy
+    // transform for support in the meantime.
+    if (stage <= 2) {
+      plugins.push(require.resolve('babel-plugin-transform-decorators-legacy'))
+    }
   }
 
   // Additional build presets
   if (Array.isArray(buildPresets)) {
     buildPresets.forEach(preset => {
-      presets.push(require.resolve(`../babel-presets/${preset}`))
+      if (preset === 'react') {
+        presets.push(require.resolve('babel-preset-react'))
+      }
+      else if (preset === 'react-hmre') {
+        presets.push(require.resolve('../babel-presets/react-hmre'))
+      }
+      else if (preset === 'react-prod') {
+        presets.push(require.resolve('../babel-presets/react-prod'))
+      }
+      else {
+        throw new Error(`Unknown build preset: ${preset}`)
+      }
     })
   }
 
@@ -56,7 +69,7 @@ export default function createBabelConfig(buildConfig = {}, userConfig = {}) {
 
   let config = {presets}
 
-  let plugins = [...buildPlugins, ...userPlugins]
+  plugins = plugins.concat(buildPlugins, userPlugins)
 
   // The Runtime transform imports various things into a module based on usage.
   // Turn regenerator on by default to enable use of async/await and generators

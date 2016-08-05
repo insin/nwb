@@ -51,26 +51,24 @@
     "whatwg-fetch": "1.0.0",
 
     "babel-cli": "6.11.4",
-    "babel-core": "6.11.4",
+    "babel-core": "6.13.2",
     "babel-plugin-add-module-exports": "0.2.1",
     "babel-plugin-istanbul": "1.1.0",
     "babel-plugin-lodash": "3.2.6",
     "babel-plugin-react-transform": "2.0.2",
     "babel-plugin-transform-decorators-legacy": "1.3.4",
-    "babel-plugin-transform-do-expressions": "6.8.0",
-    "babel-plugin-transform-function-bind": "6.8.0",
     "babel-plugin-transform-react-constant-elements": "6.9.1",
     "babel-plugin-transform-react-remove-prop-types": "0.2.9",
     "babel-plugin-transform-runtime": "6.12.0",
-    "babel-polyfill": "6.9.1",
-    "babel-preset-es2015": "6.9.0",
+    "babel-polyfill": "6.13.0",
+    "babel-preset-es2015": "6.13.2",
     "babel-preset-es2016": "6.11.3",
     "babel-preset-react": "6.11.1",
-    "babel-preset-stage-1": "6.5.0",
-    "babel-preset-stage-2": "6.11.0",
+    "babel-preset-stage-0": "6.5.0",
+    "babel-preset-stage-1": "6.13.0",
+    "babel-preset-stage-2": "6.13.0",
     "babel-preset-stage-3": "6.11.0",
     "babel-runtime": "6.11.6",
-    "modify-babel-preset": "2.1.0",
     "react-transform-catch-errors": "1.0.2",
     "react-transform-hmr": "1.0.4",
     "redbox-noreact": "1.1.0",
@@ -133,16 +131,16 @@
   ],
   "babel": {
     "presets": [
-      "./babel-presets/es2015-loose",
-      "./babel-presets/stage-2"
+      ["es2015", {"loose": true}],
+      "stage-2"
     ],
     "plugins": [
-      "babel-plugin-add-module-exports"
+      "add-module-exports"
     ],
     "env": {
       "test": {
         "plugins": [
-          ["babel-plugin-istanbul", {
+          ["istanbul", {
             "include": "src"
           }]
         ]

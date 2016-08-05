@@ -127,9 +127,10 @@ function upgradeBuildConfig(build, userConfigPath, report = {deprecated() {}}) {
   }
   if (!warnedAboutBuildChange) {
     let messages = [
-      `Deprecated in favour of ${chalk.green('npm')} config as of nwb v0.12`,
-      `nwb will upgrade ${chalk.yellow('build')} config to ${chalk.green('npm')} format during a build`,
-      `Equivalent ${chalk.green('npm')} config to your current ${chalk.yellow('build')} config:\n`,
+      `Deprecated in favour of ${chalk.green('npm')} config as of nwb v0.12.`,
+      `nwb will upgrade ${chalk.yellow('build')} config to ${chalk.green('npm')} format during a build.`,
+      `Equivalent ${chalk.green('npm')} config to your current ${chalk.yellow('build')} config is:`,
+      '',
     ].concat(
       JSON.stringify({npm}, null, 2)
         .split('\n')
