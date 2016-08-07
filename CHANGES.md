@@ -121,6 +121,7 @@
 - [babel-plugin-lodash](https://github.com/lodash/babel-plugin-lodash): v3.2.6
 - [babel-plugin-transform-react-remove-prop-types](https://github.com/oliviertassinari/babel-plugin-transform-react-remove-prop-types): v0.2.9
 - [case-sensitive-paths-webpack-plugin](https://github.com/Urthen/case-sensitive-paths-webpack-plugin): v1.1.2
+- connect-history-api-fallback: v1.2.0 → [v1.3.0](https://github.com/bripkens/connect-history-api-fallback/blob/master/CHANGELOG.md#v130) - allow disabling of the dot rule
 - expect: v1.20.1 → [v1.20.2](https://github.com/mjackson/expect/compare/v1.20.1...v1.20.2)
 - express: v4.13.4 → [v4.14.0](https://github.com/expressjs/express/blob/master/History.md#4140--2016-06-16)
 - [figures](https://github.com/sindresorhus/figures): v1.7.0
@@ -133,6 +134,7 @@
 - karma-coverage: v1.0.0 → [v1.1.1](https://github.com/karma-runner/karma-coverage/blob/master/CHANGELOG.md#111-2016-07-23)
 - karma-mocha-reporter: v2.0.3 → [v2.1.0](https://github.com/litixsoft/karma-mocha-reporter/compare/v2.0.3...v2.1.0)
 - karma-phantomjs-launcher: v1.0.0 → [v1.0.1](https://github.com/karma-runner/karma-phantomjs-launcher/blob/master/CHANGELOG.md#101-2016-06-23)
+- karma-webpack: v1.7.0 → [v1.8.0](https://github.com/webpack/karma-webpack/blob/master/CHANGELOG.md#180-2016-08-07) - remove dist from scm
 - mocha: v2.5.3 → [v3.0.1](https://github.com/mochajs/mocha/blob/master/CHANGELOG.md#301--2016-08-03)
 - npm-install-webpack-plugin: v4.0.1 → [v4.0.4](https://github.com/ericclemmons/npm-install-webpack-plugin/blob/master/CHANGELOG.md#404-2016-06-30)
 - phantomjs-prebuilt: v2.1.7 → [v2.1.10](https://github.com/Medium/phantomjs/releases/tag/2.1.10)
