@@ -8,6 +8,7 @@
     "clean": "nwb clean-app",
     "start": "nwb serve-react-app",
     "test": "nwb test",
+    "test:coverage": "nwb test --coverage",
     "test:watch": "nwb test --server"
   },
   "dependencies": {
