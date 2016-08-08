@@ -81,7 +81,9 @@ export function logBuildResults(stats, spinner) {
 }
 
 export function logErrorsAndWarnings(stats) {
-  let json = stats.toJson()
+  // Show fewer error details
+  let json = stats.toJson({}, true)
+
   let formattedErrors = formatMessages(json.errors, chalk.bgRed.white('Error'))
   let formattedWarnings = formatMessages(json.warnings, chalk.bgYellow.black('Warning'))
 
