@@ -43,7 +43,7 @@ function buildConfig(args) {
       alias: {
         'react': 'preact-compat',
         'react-dom': 'preact-compat',
-      },
+      }
     }
   }
 
@@ -62,7 +62,7 @@ export default function buildReactApp(args, cb) {
 
   cleanApp({_: ['clean-app', dist]})
 
-  let spinner = ora('Building React app').start()
+  let spinner = ora(`Building ${args.preact ? 'Pr' : 'R'}eact app`).start()
   webpackBuild(args, buildConfig, (err, stats) => {
     if (err) {
       spinner.fail()
