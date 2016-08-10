@@ -11,7 +11,7 @@ export default function karmaServer(args, cb) {
   // Force the environment to test
   process.env.NODE_ENV = 'test'
 
-  let isCi = process.env.CONTINUOUS_INTEGRATION === 'true'
+  let isCi = process.env.CI || process.env.CONTINUOUS_INTEGRATION
 
   let userConfig = getUserConfig(args)
   let karmaConfig = createKarmaConfig({
