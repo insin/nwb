@@ -8,27 +8,38 @@ import buildDemo from './build-demo'
  * demo app if it has one.
  */
 export default function buildModule(args, cb) {
-  moduleBuild(args, {
+  let config = {
     babel: {
       presets: ['react'],
-    },
+    }
+  }
+
+  // Disable propTypes wrapping with --no-proptypes or --no-wrap-proptypes
+  if (args.proptypes !== false && args['wrap-proptypes'] !== false) {
     // Wrap propTypes with an environment check
-    babelDev: {
+    config.babelDev = {
       plugins: [
         [require.resolve('babel-plugin-transform-react-remove-prop-types'), {
           mode: 'wrap',
         }]
       ]
-    },
+    }
     // Strip propTypes from UMD production build
-    babelProd: {
+    config.babelProd = {
       plugins: [
         require.resolve('babel-plugin-transform-react-remove-prop-types'),
       ]
-    },
-  }, (err) => {
+    }
+  }
+
+  moduleBuild(args, config, (err) => {
     if (err) return cb(err)
-    if (glob.sync('demo/').length === 0) return cb(null)
+    // Disable demo build with --no-demo or --no-demo-build
+    if (args.demo === false ||
+        args['demo-build'] === false ||
+        glob.sync('demo/').length === 0) {
+      return cb(null)
+    }
     buildDemo(args, cb)
   })
 }
