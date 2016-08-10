@@ -188,7 +188,6 @@ export default function createKarmaConfig({codeCoverage, singleRun}, userConfig)
           test: true
         }
       },
-      polyfill: false,
       resolve: {
         alias: {
           src: path.resolve('src'),
