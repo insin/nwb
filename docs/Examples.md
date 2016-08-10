@@ -1,6 +1,7 @@
 ## Examples
 
 - [Example Projects](#example-projects)
+  - [React Tutorial]
   - [Bootstrap 4 with Sass](#bootstrap-4-with-sass)
   - [Yelp Clone](#yelp-clone)
   - [Github Issues](#github-issues)
@@ -10,6 +11,12 @@
   - [Creating and customising a new React app](#creating-and-customising-a-new-react-app)
 
 ### Example Projects
+
+#### React Tutorial
+
+[nwb-react-tutorial](https://github.com/insin/nwb-react-tutorial) implements the chat app from [the React Tutorial](https://facebook.github.io/react/docs/tutorial.html) using [nwb's Express middleware](/docs/Middleware.md#express-4x-middleware) to develop using nwb 0.12's default configuration on the tutorial's own server.
+
+The same server is used to serve up a Webpack development build or a production build if one exists.
 
 #### Bootstrap 4 with Sass
 

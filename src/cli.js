@@ -73,11 +73,11 @@ Generic development commands:
     Serve an app, or a component's demo app, with hot reloading.
 
     Options:
-      ${opt('--auto-install')}  auto install missing npm dependencies
-      ${opt('--fallback')}      serve the index page from any path
-      ${opt('--host')}          hostname to bind the dev server to
-      ${opt('--port')}          port to run the dev server on ${opt('[default: 3000]')}
-      ${opt('--reload')}        auto reload the page if hot reloading fails
+      ${opt('--install')}   automatically install missing npm dependencies
+      ${opt('--fallback')}  serve the index page from any path
+      ${opt('--host')}      hostname to bind the dev server to
+      ${opt('--port')}      port to run the dev server on ${opt('[default: 3000]')}
+      ${opt('--reload')}    auto reload the page if hot reloading fails
 
   ${cmd('nwb test')}
     Run tests.
@@ -95,6 +95,10 @@ Project type-specific commands:
 
   ${cmd('nwb build-react-component')} ${opt('[umd_entry]')}
     Create ES5, ES6 modules and UMD builds for a React component.
+
+    Options:
+      ${opt('--no-demo')}       don't build the demo app, if present
+      ${opt('--no-proptypes')}  don't wrap propTypes with an environment check
 
   ${cmd('nwb build-web-app')} ${opt('[entry] [dist_dir]')}
     Build a web app from ${opt('entry')} to ${opt('dist_dir')}.

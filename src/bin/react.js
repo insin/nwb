@@ -60,13 +60,13 @@ Commands:
       ${req('entry')}           entry point for the app
 
     Options:
-      ${opt('--auto-install')}  auto install missing npm dependencies
-      ${opt('--fallback')}      serve the index page from any path
-      ${opt('--host')}          hostname to bind the dev server to ${opt('[default: localhost]')}
-      ${opt('--mount-id')}      id for the <div> the app will render into ${opt('[default: app]')}
-      ${opt('--port')}          port to run the dev server on ${opt('[default: 3000]')}
-      ${opt('--reload')}        auto reload the page if hot reloading fails
-      ${opt('--title')}         contents for <title> ${opt('[default: React App]')}
+      ${opt('--install')}   automatically install missing npm dependencies
+      ${opt('--fallback')}  serve the index page from any path
+      ${opt('--host')}      hostname to bind the dev server to ${opt('[default: localhost]')}
+      ${opt('--mount-id')}  id for the <div> the app will render into ${opt('[default: app]')}
+      ${opt('--port')}      port to run the dev server on ${opt('[default: 3000]')}
+      ${opt('--reload')}    auto reload the page if hot reloading fails
+      ${opt('--title')}     contents for <title> ${opt('[default: React App]')}
 
   ${cmd('react build')} ${req('<entry>')} ${opt('[dist_dir] [options]')}
     Create a static build for a React app.

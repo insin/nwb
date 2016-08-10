@@ -296,7 +296,9 @@ This HTML report is handy for finding out what your tests *aren't* covering, and
 
 ### Continous Integration (CI) Testing
 
-If you use [GitHub](https://github.com/) for your project's source code hosting, it's preconfigured for running tests on [Travis CI](https://travis-ci.org/) and posting code coverage results to [coveralls]() and [codecov.io]() after successful test runs.
+If you use [GitHub](https://github.com/) for your project's source code hosting, it's preconfigured for running tests on [Travis CI](https://travis-ci.org/) and posting code coverage results to [coveralls](https://coveralls.io/) and [codecov.io](https://codecov.io/) after successful test runs.
+
+If you log in to Travis CI and enable it for your GitHub project, your tests will be run on every subsequent commit and automatically run against Pull Requests.
 
 ## Building and Publishing
 

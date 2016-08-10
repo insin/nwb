@@ -41,7 +41,7 @@ react run <entry> [options]
 
 **Options:**
 
-- `--auto-install` - auto install missing npm dependencies
+- `--install` - auto install missing npm dependencies
 - `--fallback` - serve the index page from any path
 - `--host` - hostname to bind the dev server to *[default: not specifying a host when starting the dev server]*
 - `--mount-id` - `id` for the `<div>` the app will render into *[ app]*
@@ -174,7 +174,7 @@ Passing an argument for `entry` allows you to customise the entry point for your
 
 **Options:**
 
-- `--auto-install` - automatically install missing npm dependencies and save them to your app's `package.json`
+- `--install` - automatically install missing npm dependencies and save them to your app's `package.json`
 - `--fallback` - fall back to serving the index page from any path, for developing apps which use the History API
 - `--host` - change the hostname the dev server binds to *[default: not specifying a host when starting the dev server]*
 - `--port` - change the port the dev server runs on *[default: 3000]*
@@ -213,7 +213,7 @@ Passing arguments for `entry` and `dist_dir` allows you to customise the entry p
 Default behaviour:
 
 - A static build will be created in `dist/`, with app `.js` and `.css` files plus any other resources used.
-- Separate vendor `.js` and `.css` files will be built for any dependencies imported from `node_modules/`.
+- Separate vendor `.js` and `.css` files will be built for any dependencies imported from `node_modules/`. You can disable this by passing a `--no-vendor` flag.
 - Static builds are created in production mode. Code will be minified and have dead code elimination performed on it (for example to remove unreachable, or development-mode only, code).
 - To support long-term caching, generated `.js` and `.css` filenames will contain a deterministic hash, which will only change when the contents of the files change.
 
@@ -240,10 +240,12 @@ Builds the component in preparation for publishing to npm.
 Passing an argument for `entry` allows you to customise the entry point for the UMD build of your app.
 
 - An ES5 build will be created in `lib/`
+- By default, and ES6 modules build will be created in `es/`
 - If enabled, UMD builds will be created in `umd/`
-- If enabled, ES6 modules builds will be created in `es/`
 
-If the module has a `demo/` directory, running `build` will also create a static build of its demo app in `demo/dist/`.
+If the module has a `demo/` directory, running `build` will also create a static build of its demo app in `demo/dist/`. You can disable this by passing a `--no-demo` flag.
+
+React components created as ES6 classes or functional components will have any `propTypes` they declare wrapped an `process.env.NODE_ENV !== 'production'` check, so they will be removed by dead-code elimination in the production build of any apps they're used in. You can disable this by passing a `--no-proptypes` flag.
 
 ##### `clean`
 
@@ -286,7 +288,7 @@ These are used in the `npm scripts` section of `package.json` in project skeleto
 
 - `build-react-app [entry] [dist_dir]` - build a react app from `entry` *[default: `src/index.js`]* to `dist_dir` *[default: `dist/`]*
 
-- `build-react-component [umd_entry]` - create an ES5 build - and if configured, an ES6 modules build and a UMD build - for a React component, starting from `umd_entry` *[default: `src/index.js`]* for the UMD build.
+- `build-react-component [umd_entry]` - create an ES5 build, an ES6 modules build and, if configured, a UMD build - for a React component, starting from `umd_entry` *[default: `src/index.js`]* for the UMD build.
 
 - `build-web-app [entry] [dist_dir]` - build a web app from `entry` *[default: `src/index.js`]* to `dist_dir` *[default: `dist/`]*
 
@@ -319,4 +321,4 @@ nwb check-config [config] [options]
 **Options:**
 
 - `--command` - command name to use when loading your config. Use this to test variations if you [export a config function](/docs/Configuration.md#configuration-file) and use the `command` option it provides when creating your config.
-- `--e, --env` - `NODE_ENV` to use when checking your config: `dev`, `test` or `prod`. Use this to test variations if you use `process.env.NODE_ENV` when creating your config.
+- `--e, --env` - `NODE_ENV` to use when checking your config: `dev`/`development`, `test` or `prod`/`production`. Use this to test variations if you use `process.env.NODE_ENV` when creating your config.
