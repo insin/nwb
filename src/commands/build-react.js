@@ -38,7 +38,7 @@ function buildConfig(args) {
         title: args.title || 'React App',
       },
       // A vendor bundle must be explicitly enabled with a --vendor flag
-      vendorChunkName: args.vendor ? 'vendor' : null,
+      vendor: args.vendor,
     },
   }
 

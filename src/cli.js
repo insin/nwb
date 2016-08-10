@@ -63,6 +63,9 @@ Generic development commands:
   ${cmd('nwb build')}
     Clean and build the project.
 
+    Options:
+      ${opt('--no-vendor')}  disable creation of 'vendor' bundle for node_modules/ modules
+
   ${cmd('nwb clean')}
     Delete built resources.
 

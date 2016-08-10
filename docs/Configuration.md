@@ -73,7 +73,6 @@ The configuration object can include the following properties:
   - [`webpack.postcss`](#postcss-arrayplugin--objectstring-arrayplugin) - custom PostCSS plugins
   - [`webpack.publicPath`](#publicpath-string) - path to static resources
   - [`webpack.uglify`](#uglify-object) - options for Webpack's `UglifyJsPlugin`
-  - [`webpack.vendorBundle`](#vendorbundle-boolean) - control creation of a separate vendor bundle
   - [`webpack.extra`](#extra-object) - an escape hatch for extra Webpack config, which will be merged into the generated config
 - [Karma Configuration](#karma-configuration)
   - [`karma`](#karma-object)

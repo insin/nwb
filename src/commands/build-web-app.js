@@ -31,7 +31,7 @@ function buildConfig(args) {
     plugins: {
       copy: [{from: path.resolve('public'), to: dist, ignore: '.gitkeep'}],
       html: getDefaultHTMLConfig(),
-      vendorChunkName: 'vendor',
+      vendor: args.vendor !== false,
     },
   }
 }

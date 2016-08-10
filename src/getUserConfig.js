@@ -357,6 +357,14 @@ export function processUserConfig({
     }
   }
 
+  if (userConfig.webpack.vendorBundle === false) {
+    report.error(
+      'webpack.vendorBundle',
+      webpack.vendorBundle,
+      'No longer supported - add a --no-vendor flag to your build command instead.'
+    )
+  }
+
   if (userConfig.webpack.loaders) {
     prepareWebpackLoaderConfig(userConfig.webpack.loaders)
   }
