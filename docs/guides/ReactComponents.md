@@ -1,6 +1,6 @@
-# Creating and Publishing React Components and Libraries with nwb
+# Developing React Components and Libraries with nwb
 
-nwb supports development of React components and libraries which will be published to npm.
+nwb supports development of React component/library modules which will be published to npm.
 
 > **Prerequisite:** nwb must be installed globally (we're using version 0.12 in this guide):
 >
@@ -15,6 +15,7 @@ nwb supports development of React components and libraries which will be publish
 - [Project Layout](#project-layout)
 - [`npm run` Scripts](#npm-run-scripts)
 - [Running the Demo App](#running-the-demo-app)
+- [Implementation](#implementation)
 - [Testing](#testing)
   - [Code Coverage Reporting](#code-coverage-reporting)
   - [Continous Integration (CI) Testing](#continous-integration-ci-testing)
@@ -37,7 +38,7 @@ To walk you though the process, we're going to implement a simple `LoadingButton
 
 ## Creating a New Project
 
-Use the `nwb new` command to create a new React component/library project:
+Use the `nwb new` command to create a new React component project:
 
 ```
 nwb new react-component react-loading-button
@@ -82,7 +83,7 @@ It's enabled by default, so we can just hit `Enter` to accept the default:
 ? Do you want to create a UMD build? (y/N)
 ```
 
-A [UMD](https://github.com/umdjs/umd#umd-universal-module-definition) build will let people use your component via a global variable by dropping it into a `<script>` tag - this makes it easier to try without any build tooling in an HTML file, and in tools like [JS Bin](http://jsbin.com/) and [CodePen](https://codepen.io/).
+A [UMD](https://github.com/umdjs/umd#umd-universal-module-definition) build will let people use your module via a global variable by dropping it into a `<script>` tag - this makes it easier to try without any build tooling in an HTML file, and in tools like [JS Bin](http://jsbin.com/) and [CodePen](https://codepen.io/).
 
 Since nwb will handle the details of creating this for us and [npmcdn](https://npmcdn.com) will allow people to grab the UMD build once published to npm, let's type `y` and hit `Enter`:
 
@@ -93,7 +94,7 @@ Since nwb will handle the details of creating this for us and [npmcdn](https://n
 
 We also need to provide the global variable name for the UMD build to set.
 
-The convention in the React community seems to be a TitleCase version of your component or library's name, so let's go with `ReactLoadingButton`.
+The convention in the React community seems to be a TitleCase version of your module's name, so let's go with `ReactLoadingButton`.
 
 ```
 ? Which global variable name should the UMD build set? ReactLoadingButton
@@ -123,6 +124,18 @@ react-loading-button/
     .eslintrc
     index-test.js
 ```
+
+**demo/**: Contains a React application you can develop your module against using nwb's development server.
+
+**node_modules/**: Contains modules installed with npm. npm is the standard way to manage front-end, back-end and development dependencies for React projects. `react` and `react-dom` dependencies will be installed from npm into `node_modules/` as part of project creation.
+
+**nwb.config.js**: This file can be used to tweak or extend the default configuration nwb provides.
+
+**src/**: Contains your React module's source.
+
+**tests/**: nwb will find and run tests in a separate `tests/` directory or colocated with your source code under `src/`, as long as their filenames end with `.test.js`, `-test.js` or `.spec.js` - an example of a basic React component test is provided.
+
+---
 
  `cd` into the project directory and we can get started on our example component:
 
@@ -210,6 +223,8 @@ render(<Demo/>, document.querySelector('#demo'))
 
 Once your component is developed, the demo app falls back to its primary purpose of creating a demo you can deploy when publishing your code *without* having to build and publish separately, as component builds and demo bundles are built from the same source at the same time.
 
+## Implementation
+
 Here's an example implementation of the `LoadingButton` component:
 
 ```js
@@ -246,7 +261,7 @@ export default LoadingButton
 
 nwb provides a default testing setup which uses Karma to run tests written with Mocha and Expect in the headless PhantomJS browser.
 
-> The [Testing documentation](/docs/Testing.md) provides a more in-depth overview of what the nwb's default testing setup allows you to do (and how to configure things to your liking if you want to), but we'll stick to editing the initial test provided in the React component project skeleton, in `tests/index-test.js`.
+> The [Testing documentation](/docs/Testing.md) provides an in-depth overview of what nwb's default testing setup provides (and how to configure things to your liking if you want to), but we'll stick to editing the initial test provided in the React component project skeleton, in `tests/index-test.js`.
 
 `npm run test:watch` automatically re-runs tests on every change to provide a quick feedback loop while developing, whether you're writing tests up-front, in parallel with implementation or after the fact.
 
@@ -381,7 +396,7 @@ Pass flags when running the build to toggle certain features off.
 
 Disables building the demo app.
 
-Use this if you want to develop against the demo app using nwb's development server, but have your own setup for demonstrating your component or library.
+Use this if you want to develop against the demo app using nwb's development server, but have your own setup for demonstrating your module.
 
 > If you don't need the demo app at all, you can delete `demo/`.
 
@@ -389,7 +404,7 @@ Use this if you want to develop against the demo app using nwb's development ser
 
 Disables `propTypes` wrapping/stripping.
 
-Use this if your component or library needs to use `propTypes` at runtime (e.g. for prop masking), or you think its users might need them.
+Use this if your module needs to use `propTypes` at runtime (e.g. for masking `props`), or you think its users might need them.
 
 > You can also pass flags to the `npm run build` command if you just want to try them out.
 >
