@@ -22,7 +22,12 @@ nwb supports development of React components and libraries which will be publish
   - [Preparing for Publishing](#building)
   - [Publishing to npm](#publishing-to-npm)
 - [Libraries](#libraries)
-- [Appendix: Configuration](#appendix-configuration)
+- [Build Configuration](#build-configuration)
+  - [Config File](#config-file)
+    - [UMD Externals](#umd-externals)
+  - [Feature Toggles](#feature-toggles)
+    - [`--no-demo`](#-no-demo)
+    - [`--no-proptypes`](#-no-proptypes)
 
 To walk you though the process, we're going to implement a simple `LoadingButton` component, which renders a `<button>` and implements the following requirements:
 
@@ -310,7 +315,11 @@ nwb provides a default setup which keeps your source code repository free from d
 - An ES6 modules build in `es/` (enabled by default / without configuration)
 - UMD development and production builds in `umd/` (if configuration is provided)
 
-It will also create a production build of the demo React app in `demo/dist/`, ready for deployment to wherever you want to host the demo (e.g. [Surge](http://surge.sh/) for simple deployment, [GitHub Pages](https://pages.github.com/) for more involved deployment tied in with source control). The demo is configured so it can be served from any directory, so you shouldn't need to configure anything no matter where you're hosting it.
+The ES5 build preserves CommonJS interop using the [`add-module-exports`](https://github.com/59naga/babel-plugin-add-module-exports) plugin, to avoid people using your npm packages via CommonJS `require()` having to tag a `.default` onto every `require()` call.
+
+Any `propTypes` declared by ES6 class components or stateless function components will be wrapped with an `if (process.env.NODE_ENV !== 'production')` environment check by default, so they'll be automatically stripped from the production build of apps which use them.
+
+By default nwb will also create a production build of the demo React app in `demo/dist/`, ready for deployment to wherever you want to host the demo (e.g. [Surge](http://surge.sh/) for simple deployment, [GitHub Pages](https://pages.github.com/) for more involved deployment tied in with source control). The demo is configured so it can be served from any directory, so you shouldn't need to configure anything no matter where you're hosting it.
 
 ![](resources/react-component-build.png)
 
@@ -334,8 +343,58 @@ We've demonstrated using nwb to develop and publish a single reusable React comp
 
 The main difference with libraries is that the entry point (`src/index.js` by default when using nwb) usually imports and re-exports everything the library provides, for users performing top-level imports or using the UMD build.
 
-## Appendix: Configuration
+## Build Configuration
 
-You can use [npm build configuration](/docs/Configuration.md#npm-build-configuration) in `nwb.config.js` to tweak your project's setup.
+### Config File
 
-For example, the React component template uses [`npm.umd.externals` config](/docs/Configuration.md#externals-object) to make UMD builds use React via a global `React` variable rather than bundling it. If you have other dependencies users will need to make available globally to use your UMD build, you will need to add suitable configuration for them.
+You can use [npm build configuration](/docs/Configuration.md#npm-build-configuration) in `nwb.config.js` to tweak your project's build.
+
+#### UMD Externals
+
+The React component template uses [`npm.umd.externals` config](/docs/Configuration.md#externals-object) to make UMD builds use React via a global `React` variable rather than bundling it.
+
+If you have other dependencies users will need to make available globally to use your UMD build, you will need to add suitable configuration for them.
+
+e.g. if your component uses React Router, you'll also need to map the 'react-router' import to the global variable exported by React Router's own UMD build:
+
+```js
+module.exports = {
+  npm: {
+    umd: {
+      global: 'ReactSomComponent',
+      externals: {
+        'react': 'React',
+        'react-router': 'ReactRouter'
+      }
+    }
+  }
+}
+```
+
+### Feature Toggles
+
+Pass flags when running the build to toggle certain features off.
+
+> Add feature toggle flags to the `"build"` script in `package.json` if you always want to use them.
+
+#### `--no-demo`
+
+Disables building the demo app.
+
+Use this if you want to develop against the demo app using nwb's development server, but have your own setup for demonstrating your component or library.
+
+> If you don't need the demo app at all, you can delete `demo/`.
+
+#### `--no-proptypes`
+
+Disables `propTypes` wrapping/stripping.
+
+Use this if your component or library needs to use `propTypes` at runtime (e.g. for prop masking), or you think its users might need them.
+
+> You can also pass flags to the `npm run build` command if you just want to try them out.
+>
+> You need to pass a `--` argument to indicate all additional arguments should be passed to the command itself, for example:
+>
+> ```
+> npm run build -- --no-demo --no-proptypes
+> ```
