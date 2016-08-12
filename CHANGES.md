@@ -130,7 +130,7 @@
 - glob: v7.0.3 → [v7.0.5](https://github.com/isaacs/node-glob/https://github.com/Medium/phantomjs/)
 - html-webpack-plugin: v2.19.0 → [v2.22.0](https://github.com/ampedandwired/html-webpack-plugin/blob/master/CHANGELOG.md#v2220)
 - inquirer: v1.0.3 → [v1.1.2](https://github.com/SBoudrias/Inquirer.js/compare/v1.0.3...v1.1.2)
-- karma: v0.13.22 → [v1.1.2](https://github.com/karma-runner/karma/blob/master/CHANGELOG.md#112-2016-07-26)
+- karma: v0.13.22 → [v1.2.0](https://github.com/karma-runner/karma/blob/master/CHANGELOG.md#120-2016-08-11)
 - karma-chrome-launcher v1.0.1
 - karma-coverage: v1.0.0 → [v1.1.1](https://github.com/karma-runner/karma-coverage/blob/master/CHANGELOG.md#111-2016-07-23)
 - karma-mocha-reporter: v2.0.3 → [v2.1.0](https://github.com/litixsoft/karma-mocha-reporter/compare/v2.0.3...v2.1.0)
@@ -138,7 +138,7 @@
 - karma-webpack: v1.7.0 → [v1.8.0](https://github.com/webpack/karma-webpack/blob/master/CHANGELOG.md#180-2016-08-07) - remove dist from scm
 - mocha: v2.5.3 → [v3.0.2](https://github.com/mochajs/mocha/blob/master/CHANGELOG.md#302--2016-08-08)
 - npm-install-webpack-plugin: v4.0.1 → [v4.0.4](https://github.com/ericclemmons/npm-install-webpack-plugin/blob/master/CHANGELOG.md#404-2016-06-30)
-- phantomjs-prebuilt: v2.1.7 → v2.1.11 - npm packaging fun
+- phantomjs-prebuilt: v2.1.7 → v2.1.12 - npm packaging fun
 - qs: v6.2.0 → [v6.2.1](https://github.com/ljharb/qs/blob/master/CHANGELOG.md#621)
 - rimraf: v2.5.2 → [v2.5.3](https://github.com/isaacs/rimraf/compare/v2.5.2...v2.5.3)
 - [webpack-fail-plugin](https://github.com/TiddoLangerak/webpack-fail-plugin): v1.0.5
