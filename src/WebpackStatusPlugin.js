@@ -63,7 +63,8 @@ export default class StatusPlugin {
     let hasWarnings = stats.hasWarnings()
 
     if (!hasErrors && !hasWarnings) {
-      this.log(chalk.green('Compiled successfully.'))
+      let time = stats.endTime - stats.startTime
+      this.log(chalk.green(`Compiled successfully in ${time} ms.`))
     }
     else {
       logErrorsAndWarnings(stats)
