@@ -299,6 +299,8 @@ render(
 )
 ```
 
+You can [view the live version of the app here](http://insin.github.io/nwb-thinking-in-react/).
+
 ## Testing
 
 nwb provides a default testing setup which uses Karma to run tests written with Mocha and Expect in the headless PhantomJS browser.
