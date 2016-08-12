@@ -163,9 +163,9 @@ We'll start by splitting each of the main components from [the final Thinking in
 
 > A single module is perfectly fine for small apps, demos and examples!
 
-- [`FilterableProductTable.js`]() holds filter state and composes the other components.
-- [`SearchBar.js`]() renders a `<form>` with the current filter state and passes changes back up to `FilterableProductTable`.
-- [`ProductTable.js`]() renders a `<table>` of products filtered according to the current filter state. This module also includes subcomponents used to implement the `ProductTable` component.
+- [`FilterableProductTable.js`](https://github.com/insin/nwb-thinking-in-react/blob/master/src/FilterableProductTable.js) holds filter state and composes the other components.
+- [`SearchBar.js`](https://github.com/insin/nwb-thinking-in-react/blob/master/src/SearchBar.js) renders a `<form>` with the current filter state and passes changes back up to `FilterableProductTable`.
+- [`ProductTable.js`](https://github.com/insin/nwb-thinking-in-react/blob/master/src/ProductTable.js) renders a `<table>` of products filtered according to the current filter state. This module also includes subcomponents used to implement the `ProductTable` component.
 
 ### Palatable ES6 Class Components
 
