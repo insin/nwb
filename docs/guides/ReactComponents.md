@@ -8,7 +8,7 @@ nwb supports development of React components and libraries which will be publish
 > npm install -g nwb
 > ```
 
-- [Getting Started](#getting-started)
+- [Creating a New Project](#creating-a-new-project)
   - [Build Configuration Questions](#build-configuration-questions)
     - [ECMAScript 6 (ES6) Modules Build](#ecmascript-6-es6-modules-build)
     - [Universal Module Definition (UMD) Build](#universal-module-definition-umd-build)
@@ -19,15 +19,15 @@ nwb supports development of React components and libraries which will be publish
   - [Code Coverage Reporting](#code-coverage-reporting)
   - [Continous Integration (CI) Testing](#continous-integration-ci-testing)
 - [Building and Publishing](#building-and-publishing)
-  - [Preparing for Publishing](#building)
+  - [Preparing for Publishing](#preparing-for-publishing)
   - [Publishing to npm](#publishing-to-npm)
 - [Libraries](#libraries)
 - [Build Configuration](#build-configuration)
   - [Config File](#config-file)
     - [UMD Externals](#umd-externals)
   - [Feature Toggles](#feature-toggles)
-    - [`--no-demo`](#-no-demo)
-    - [`--no-proptypes`](#-no-proptypes)
+    - [`--no-demo`](#--no-demo)
+    - [`--no-proptypes`](#--no-proptypes)
 
 To walk you though the process, we're going to implement a simple `LoadingButton` component, which renders a `<button>` and implements the following requirements:
 
@@ -35,9 +35,9 @@ To walk you though the process, we're going to implement a simple `LoadingButton
 2. The button should be `disabled` when loading, to avoid the double-submission problem.
 3. The button should default to `type="button"` instead of `<button>`'s usual `type="submit"`, which can be a surprising default.
 
-## Creating a New React Component
+## Creating a New Project
 
-Use the `nwb new` command to create a new React component project:
+Use the `nwb new` command to create a new React component/library project:
 
 ```
 nwb new react-component react-loading-button
@@ -361,7 +361,7 @@ e.g. if your component uses React Router, you'll also need to map the 'react-rou
 module.exports = {
   npm: {
     umd: {
-      global: 'ReactSomComponent',
+      global: 'ReactSomeComponent',
       externals: {
         'react': 'React',
         'react-router': 'ReactRouter'
