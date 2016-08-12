@@ -41,6 +41,7 @@
     "gzip-size": "3.0.0",
     "inquirer": "1.1.2",
     "minimist": "1.2.0",
+    "object-assign": "4.1.0",
     "ora": "0.3.0",
     "promise": "7.1.1",
     "qs": "6.2.1",
