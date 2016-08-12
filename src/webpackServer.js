@@ -13,7 +13,8 @@ import {clearConsole, deepToString} from './utils'
  * is available first and prompting the user if not.
  */
 function getServerOptions(args, cb) {
-  let fallback = !!args.fallback
+  // Fallback index serving is enabled by default and must be explicitly enabled
+  let fallback = args.fallback !== false
   // The dev server handles defaulting the host by not providing it at all
   let host = args.host
   let intendedPort = args.port || DEFAULT_PORT

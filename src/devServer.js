@@ -13,11 +13,8 @@ export default function server(webpackConfig, {fallback, host, port, staticPath}
   let app = express()
   let compiler = webpack(webpackConfig)
 
-  if (fallback) {
-    app.use(historyAPIFallback({
-      // Allow paths with dots in them to be loaded
-      disableDotRule: true,
-    }))
+  if (fallback !== false) {
+    app.use(historyAPIFallback())
   }
 
   app.use(require('webpack-dev-middleware')(compiler, {

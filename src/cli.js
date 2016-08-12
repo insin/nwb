@@ -73,11 +73,11 @@ Generic development commands:
     Serve an app, or a component's demo app, with hot reloading.
 
     Options:
-      ${opt('--install')}   automatically install missing npm dependencies
-      ${opt('--fallback')}  serve the index page from any path
-      ${opt('--host')}      hostname to bind the dev server to
-      ${opt('--port')}      port to run the dev server on ${opt('[default: 3000]')}
-      ${opt('--reload')}    auto reload the page if hot reloading fails
+      ${opt('--install')}      automatically install missing npm dependencies
+      ${opt('--host')}         hostname to bind the dev server to
+      ${opt('--no-fallback')}  disable serving the index page from any path
+      ${opt('--port')}         port to run the dev server on ${opt('[default: 3000]')}
+      ${opt('--reload')}       auto reload the page if hot reloading fails
 
   ${cmd('nwb test')}
     Run tests.
