@@ -7,6 +7,8 @@ import {sync as gzipSize} from 'gzip-size'
 
 const FRIENDLY_SYNTAX_ERROR_LABEL = 'Syntax error:'
 
+let s = n => n === 1 ? '' : 's'
+
 function filterMessage(message) {
   // Useless extra error message related to css-loader
   if (message.indexOf('css-loader') !== -1 &&
@@ -84,11 +86,12 @@ export function logErrorsAndWarnings(stats) {
   // Show fewer error details
   let json = stats.toJson({}, true)
 
-  let formattedErrors = formatMessages(json.errors, chalk.bgRed.white('Error'))
-  let formattedWarnings = formatMessages(json.warnings, chalk.bgYellow.black('Warning'))
+  let formattedErrors = formatMessages(json.errors, chalk.bgRed.white(' ERROR '))
+  let formattedWarnings = formatMessages(json.warnings, chalk.bgYellow.black(' WARNING '))
 
   if (stats.hasErrors()) {
-    console.log(chalk.red('Failed to compile.'))
+    let errors = formattedErrors.length
+    console.log(chalk.red(`Failed to compile with ${errors} error${s(errors)}.`))
     if (formattedErrors.some(isLikelyASyntaxError)) {
       // If there are any syntax errors, show just them.
       // This prevents a confusing ESLint parsing error preceding a much more
@@ -103,7 +106,8 @@ export function logErrorsAndWarnings(stats) {
   }
 
   if (stats.hasWarnings()) {
-    console.log(chalk.yellow('Compiled with warnings.'))
+    let warnings = formattedWarnings.length
+    console.log(chalk.yellow(`Compiled with ${warnings} warning${s(warnings)}.`))
     formattedWarnings.forEach(message => {
       console.log()
       console.log(message)
@@ -129,7 +133,7 @@ export function logGzippedFileSizes(...stats) {
   }, 0)
   let pad = (dir, name) => Array(longest - (dir + name).length + 1).join(' ')
 
-  console.log(`File size${files.length === 1 ? '' : 's'} after gzip:`)
+  console.log(`File size${s(files.length)} after gzip:`)
   console.log()
 
   files
