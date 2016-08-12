@@ -30,7 +30,7 @@ To walk you though the process, we're going to implement a simple `LoadingButton
 2. The button should be `disabled` when loading, to avoid the double-submission problem.
 3. The button should default to `type="button"` instead of `<button>`'s usual `type="submit"`, which can be a surprising default.
 
-## Getting Started
+## Creating a New React Component
 
 Use the `nwb new` command to create a new React component project:
 
@@ -98,7 +98,7 @@ The convention in the React community seems to be a TitleCase version of your co
 
 ## Project Layout
 
-The following directory layout will now be created, with `react` and `react-dom` dependencies installed from npm into `node_modules/`:
+The following directory structure will be created, with `react` and `react-dom` dependencies installed from npm into `node_modules/`:
 
 ```
 react-loading-button/
@@ -148,11 +148,9 @@ The project skeleton includes a demo app in `demo/src/index.js`.
 
 > **Note:** If you don't need the demo app, you can safely delete the `demo/` directory.
 
-Running `npm start` will start a development server for the demo app.
+Running `npm start` will start a development server for the demo app. Every time you make a change to the demo app or the component, it will refresh the current compilation status.
 
-Every time you make a change to the demo app or the component, it will refresh the current compilation status.
-
-![](resources/react-component-serve.png)
+![](resources/react-serve.png)
 
 If there are any errors, they will be displayed in both the console and the browser, so you're unlikely to miss them while developing.
 
