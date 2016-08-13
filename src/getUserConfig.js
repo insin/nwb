@@ -56,7 +56,8 @@ export class UserConfigReport {
     }
 
     if (this.errors.length) {
-      console.log(chalk.red.underline(`${this.errors.length} Error${s(this.errors.length)}`))
+      let count = this.errors.length > 1 ? `${this.errors.length} ` : ''
+      console.log(chalk.red.underline(`${count}Error${s(this.errors.length)}`))
       console.log()
     }
     this.errors.forEach(({path, value, message}) => {
@@ -65,7 +66,8 @@ export class UserConfigReport {
       console.log()
     })
     if (this.deprecations.length) {
-      console.log(chalk.yellow.underline(`${this.deprecations.length} Deprecation Warning${s(this.deprecations.length)}`))
+      let count = this.deprecations.length > 1 ? `${this.deprecations.length} ` : ''
+      console.log(chalk.yellow.underline(`${count}Deprecation Warning${s(this.deprecations.length)}`))
       console.log()
     }
     this.deprecations.forEach(({path, messages}) => {
@@ -76,7 +78,8 @@ export class UserConfigReport {
       console.log()
     })
     if (this.hints.length) {
-      console.log(chalk.cyan.underline(`${this.hints.length} Hint${s(this.hints.length)}`))
+      let count = this.hints.length > 1 ? `${this.hints.length} ` : ''
+      console.log(chalk.cyan.underline(`${count}Hint${s(this.hints.length)}`))
       console.log()
     }
     this.hints.forEach(({path, messages}) => {
