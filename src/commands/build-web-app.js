@@ -18,6 +18,9 @@ function buildConfig(args) {
   let filenamePattern = production ? '[name].[chunkhash:8].js' : '[name].js'
 
   return {
+    babel: {
+      commonJSInterop: true,
+    },
     devtool: 'source-map',
     entry: {
       app: [path.resolve(entry)],

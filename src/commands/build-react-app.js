@@ -19,6 +19,7 @@ function buildConfig(args) {
 
   let config = {
     babel: {
+      commonJSInterop: true,
       presets: ['react'],
     },
     devtool: 'source-map',

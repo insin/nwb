@@ -13,6 +13,7 @@ import merge from 'webpack-merge'
 export default function createServeReactAppBuildConfig(config) {
   return merge(config, {
     babel: {
+      commonJSInterop: true,
       presets: ['react', 'react-hmre'],
     }
   })

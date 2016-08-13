@@ -20,6 +20,7 @@ export default function buildDemo(args, cb) {
   let spinner = ora('Building demo').start()
   webpackBuild(args, {
     babel: {
+      commonJSInterop: true,
       presets: ['react'],
     },
     devtool: 'source-map',

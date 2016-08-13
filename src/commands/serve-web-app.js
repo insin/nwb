@@ -8,6 +8,9 @@ export default function serveWebApp(args, cb) {
   let dist = path.resolve(args._[2] || 'dist')
 
   webpackServer(args, {
+    babel: {
+      commonJSInterop: true,
+    },
     entry: [entry],
     output: {
       path: dist,

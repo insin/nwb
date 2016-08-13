@@ -4,6 +4,7 @@ const DEFAULT_STAGE = 2
 
 export default function createBabelConfig(buildConfig = {}, userConfig = {}) {
   let {
+    commonJSInterop,
     env,
     modules = 'commonjs',
     plugins: buildPlugins = [],
@@ -91,7 +92,13 @@ export default function createBabelConfig(buildConfig = {}, userConfig = {}) {
     plugins.push([require.resolve('babel-plugin-transform-runtime'), runtimeTransformOptions])
   }
 
-  // The lodash plugin support generic cherry-picking for named modules
+  // Provide CommonJS interop so require() in code-splitting require.ensure()
+  // blocks doesn't need a .default tacked on the end.
+  if (commonJSInterop) {
+    plugins.push(require.resolve('babel-plugin-add-module-exports'))
+  }
+
+  // The lodash plugin supports generic cherry-picking for named modules
   if (cherryPick) {
     plugins.push([require.resolve('babel-plugin-lodash'), {id: cherryPick}])
   }
