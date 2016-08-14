@@ -168,7 +168,7 @@ export function createLoaders(server, buildConfig = {}, userConfig = {}, pluginC
       include: /node_modules/,
     }),
     loader('graphics', {
-      test: /\.(gif|png|svg)(\?.*)?$/,
+      test: /\.(gif|png|svg|webp)(\?.*)?$/,
       loader: require.resolve('url-loader'),
       query: {...urlLoaderOptions},
     }),

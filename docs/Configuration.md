@@ -538,7 +538,7 @@ Default loaders configured by nwb and the ids it gives them are:
 
   > Default config: `{include: /node_modules/}`
 
-- `graphics` - handles `.gif`, `.png` and `.svg` files using using [url-loader][url-loader]
+- `graphics` - handles `.gif`, `.png`, `.svg` and `.webp` files using using [url-loader][url-loader]
 
 - `jpeg` - handles `.jpeg` files using [url-loader][url-loader]
 

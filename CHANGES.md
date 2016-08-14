@@ -171,7 +171,6 @@
 
   `Promise`, `fetch`, `Object.assign` polyfills and the regenerator runtime are now provided by default.
 
-
 - You can now **transform destructured imports to cherry-picked imports for specified modules** using new [`babel.cherryPick` config](https://github.com/insin/nwb/blob/0.12/docs/Configuration.md#cherrypick-string--arraystring) [[#141](https://github.com/insin/nwb/issues/141)]
 
 - Case-sensitivity of `require`/`import` paths is now enforced by [`CaseSensitivePathsPlugin`](https://github.com/Urthen/case-sensitive-paths-webpack-plugin), avoiding an easy-to-overlook cause of CI build failure if you don't develop on Linux.
@@ -237,6 +236,7 @@
 - Moved handling of `.svg` files from the `fonts` loader to the `graphics` loader.
 - Moved handling of `.eot` files to the `fonts` loader and removed the `eot` loader.
 - Added a `video` loader for `.mp4'`, `.ogg` and `.webm`.
+- Added `.webp` to the `graphics` loader.
 
 *Default Plugin Config*
 
