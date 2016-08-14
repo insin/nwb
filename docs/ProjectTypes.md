@@ -1,10 +1,10 @@
-## Projects
+## Project Types
 
 nwb supports creation and development of the following project types:
 
 **React apps** - React web applications.
 
-**React component modules** - reusable React components which will be published to npm.
+**React component modules** - reusable React components or React libraries which will be published to npm.
 
 The React component template includes a React demo app in `demo/src/`.
 
@@ -18,6 +18,6 @@ All project templates are pre-configured to:
 - run their tests on [Travis CI](https://travis-ci.org/), with code coverage results posted to [codecov.io](https://codecov.io/) and [coveralls](https://coveralls.io)
 - publish to npm appropriately:
   - apps have `private: true` set by default so they can't be published to npm by accident
-  - components and web modules will only publish source and ES5/UMD builds to npm
+  - components and web modules will only publish source and ES5/ES6/UMD builds to npm
 
 Each template also comes with a working, minimal unit test to get you started.

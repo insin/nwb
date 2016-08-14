@@ -1,5 +1,6 @@
 ## Table of Contents
 
+- [Features](/docs/Features.md#features)
 - [Commands](/docs/Commands.md#commands)
   - [`react`](/docs/Commands.md#react)
   - [`nwb`](/docs/Commands.md#nwb)
@@ -13,5 +14,9 @@
 - [Testing](/docs/Testing.md#testing)
 - [Plugins](/docs/Plugins.md#plugins)
 - [Middleware](/docs/Middleware.md#middleware)
-- [Projects](/docs/Projects.md#projects)
+- [Project Types](/docs/ProjectTypes.md#project-types)
 - [Examples](/docs/Examples.md#examples)
+
+--
+
+- [Versioning](/docs/Versioning.md#versioning)

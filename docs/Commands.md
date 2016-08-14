@@ -2,10 +2,10 @@
 
 Installing nwb provides the following commands.
 
-- [`react`](#react)
-  - [`run`](#run) - serve a React app for quick development
+- [`react`](#react) - quick React development
+  - [`run`](#run) - serve a React app
   - [`build`](#build) - create a static build for a React app
-- [`nwb`](#nwb)
+- [`nwb`](#nwb) - project tooling
   - [Project Creation](#project-creation)
     - [`new`](#new) - create a project skeleton in a new directory
       - [Project Types](#project-types)
@@ -42,9 +42,9 @@ react run <entry> [options]
 **Options:**
 
 - `--install` - auto install missing npm dependencies
-- `--fallback` - serve the index page from any path
 - `--host` - hostname to bind the dev server to *[default: not specifying a host when starting the dev server]*
 - `--mount-id` - `id` for the `<div>` the app will render into *[ app]*
+- `--no-fallback` - disable serving of the index page from any path
 - `--port` - port to run the dev server on *[default: 3000]*
 - `--reload` - auto reload the page if hot reloading fails
 - `--title` - contents for `<title>` *[default: React App]*
@@ -71,7 +71,7 @@ react build <entry> [dist_dir] [options]
 
 ### `nwb`
 
-The `nwb` command handles development of projects with an established directory layout and tests.
+The `nwb` command handles development of projects.
 
 **Options:**
 
@@ -99,33 +99,25 @@ The `name` argument must not be an existing directory.
 nwb new react-app <dir-name>
 ```
 
-Creates a skeleton for a React app in the specified directory.
+Creates a skeleton project for a React app in the specified directory.
+
+```
+nwb new react-component <dir-name> [options]
+```
+
+Creates a skeleton project for a React component or library, which will be published to npm.
 
 ```
 nwb new web-app <dir-name>
 ```
 
-Creates a skeleton for a JavaScript app in the specified directory.
-
-```
-nwb new react-component <dir-name> [options]
-? Do you want to create an ES6 modules build for use by ES6 bundlers? Y/n
-? Do you want to create a UMD build for global usage via <script> tag? y/N
-? Which global variable should the UMD build set?
-```
-
-Creates a skeleton project for a React component in the specified directory, with an optional ES6 modules build for ES6 bundlers and an optional UMD build for `<script>` tag usage.
-
-If you specify that a UMD build should be created, it will be configured to treat React as an external module rather than bundling it.
+Creates a skeleton project for a plain JavaScript app in the specified directory.
 
 ```
 nwb new web-module <dir-name> [options]
-? Do you want to create an ES6 modules build for use by ES6 bundlers? Y/n
-? Do you want to create a UMD build for global usage via <script> tag? y/N
-? Which global variable should the UMD build set?
 ```
 
-Creates a skeleton for a web module in the specified directory, with an optional ES6 modules build for ES6 bundlers and an optional UMD build for `<script>` tag usage.
+Creates a skeleton project for an npm web module.
 
 **Options:**
 
@@ -153,6 +145,10 @@ nwb init <project_type> [name]
 This is the same as `new`, except the `name` argument is optional and the new project is initialised in the current directory.
 
 If  `name` is not provided, the name of the current directory will be used.
+
+#### npm scripts
+
+nwb project skeletons include npm scripts which run the other nwb commands needed while developing a project for you, so you shouldn't have to manually use any of the other commands documented below.
 
 #### Generic Commands
 
