@@ -20,7 +20,7 @@ function handleError(error) {
     error.report.log()
   }
   else {
-    console.error(red('react(nwb): error running command'))
+    console.error(red(`Error running command: ${error.message}`))
     if (error.stack) {
       console.error(error.stack)
     }
@@ -63,7 +63,7 @@ Commands:
       ${opt('--install')}      automatically install missing npm dependencies
       ${opt('--host')}         hostname to bind the dev server to ${opt('[default: localhost]')}
       ${opt('--mount-id')}     id for the <div> the app will render into ${opt('[default: app]')}
-      ${opt('--no-fallback')}  disable serving the index page from any path
+      ${opt('--no-fallback')}  disable serving of the index page from any path
       ${opt('--port')}         port to run the dev server on ${opt('[default: 3000]')}
       ${opt('--reload')}       auto reload the page if hot reloading fails
       ${opt('--title')}        contents for <title> ${opt('[default: React App]')}

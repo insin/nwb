@@ -148,7 +148,7 @@ nwb: dev server listening at http://localhost:3000
 
 ## [Documentation](/docs/#table-of-contents)
 
-## Usage
+## CLI Usage
 
 ### Quick React Development
 
@@ -167,17 +167,16 @@ Commands:
     Serve a React app for development.
 
     Arguments:
-      entry           entry point for the app
+      entry          entry point for the app
 
     Options:
-      --auto-install  auto install missing npm dependencies
-      --fallback      serve the index page from any path
-      --host          hostname to bind the dev server to [default: localhost]
-      --info          show webpack module info
-      --mount-id      id for the <div> the app will render into [default: app]
-      --port          port to run the dev server on [default: 3000]
-      --reload        auto reload the page if hot reloading fails
-      --title         contents for <title> [default: React App]
+      --install      automatically install missing npm dependencies
+      --host         hostname to bind the dev server to [default: localhost]
+      --mount-id     id for the <div> the app will render into [default: app]
+      --no-fallback  disable serving of the index page from any path
+      --port         port to run the dev server on [default: 3000]
+      --reload       auto reload the page if hot reloading fails
+      --title        contents for <title> [default: React App]
 
   react build <entry> [dist_dir] [options]
     Create a static build for a React app.
@@ -189,15 +188,16 @@ Commands:
     Options:
       --mount-id  id for the <div> the app will render into [default: app]
       --title     contents for <title> [default: React App]
-      --vendor    create a separate vendor bundle
+      --preact    create a Preact build (preact and preact-compat must be installed)
+      --vendor    create a 'vendor' bundle for node_modules/ modules
 ```
 
-### Projects
+### Project Tooling
 
 The `nwb` command handles development tasks for different types of projects.
 
 ```
-Usage: nwb <command>
+Usage: nwb <command> [options]
 
 Options:
   -c, --config   config file to use [default: nwb.config.js]
@@ -205,31 +205,31 @@ Options:
   -v, --version  print nwb's version
 
 Project creation commands:
-  nwb new <project_type> <name> [options]
+  nwb new <project_type> <dir_name> [options]
     Create a project in a new directory.
 
     Arguments:
       project_type  project type - see the list below
-      name          project name
+      dir_name      project name / directory to create the project in
 
-  Options:
-    -f, --force  force project creation, don't ask questions
-    --jsnext     enable an ES6 modules build
-    --react      version of React to install for React apps & components
-    --umd=<var>  enable a UMD build which exports the given global variable
-
-  nwb init <project_type> [name] [options]
+  nwb init <project_type> [dir_name] [options]
     Initialise a project in the current directory.
 
     Arguments:
       project_type  project type - see the list below
-      name          project name [default: working directory name]
+      dir_name      project name [default: current directory name]
+
+  Options:
+    -f, --force   force project creation, don't ask questions
+    --es-modules  enable or disable (--no-es-modules) an ES6 modules build
+    --react       version of React to install for React apps & components
+    --umd=<var>   enable or disable (--no-umd) a UMD build
 
   Project types:
     react-app        a React app
-    react-component  a React component module with a demo app
+    react-component  a React component or library npm module
     web-app          a plain JavaScript app
-    web-module       a plain JavaScript module
+    web-module       a plain JavaScript npm module
 
 Generic development commands:
   Arguments for these commands depend on the type of project they're being run
@@ -238,6 +238,9 @@ Generic development commands:
   nwb build
     Clean and build the project.
 
+    Options:
+      --no-vendor  disable creation of 'vendor' bundle for node_modules/ modules
+
   nwb clean
     Delete built resources.
 
@@ -245,15 +248,14 @@ Generic development commands:
     Serve an app, or a component's demo app, with hot reloading.
 
     Options:
-      --auto-install  auto install missing npm dependencies
-      --fallback      serve the index page from any path
-      --host          hostname to bind the dev server to [default: localhost]
-      --info          show webpack module info
-      --port          port to run the dev server on [default: 3000]
-      --reload        auto reload the page if hot reloading fails
+      --install      automatically install missing npm dependencies
+      --host         hostname to bind the dev server to
+      --no-fallback  disable serving of the index page from any path
+      --port         port to run the dev server on [default: 3000]
+      --reload       auto reload the page if hot reloading fails
 
   nwb test
-    Run unit tests.
+    Run tests.
 
     Options:
       --coverage  create a code coverage report
@@ -263,17 +265,21 @@ Project type-specific commands:
   nwb build-demo
     Build a demo app from demo/src/index.js to demo/dist/.
 
-  nwb build-module
-    Create an ES5 build for an npm module (ES6 modules build requires config).
-
   nwb build-react-app [entry] [dist_dir]
     Build a React app from entry to dist_dir.
 
-  nwb build-umd [entry]
-    Create a UMD build for an npm module from entry (requires config).
+  nwb build-react-component [umd_entry]
+    Create ES5, ES6 modules and UMD builds for a React component.
+
+    Options:
+      --no-demo       don't build the demo app, if present
+      --no-proptypes  don't wrap propTypes with an environment check
 
   nwb build-web-app [entry] [dist_dir]
     Build a web app from entry to dist_dir.
+
+  nwb build-web-module [umd_entry]
+    Create ES5, ES6 modules and UMD builds for a web module.
 
   nwb clean-app [dist_dir]
     Delete dist_dir.
@@ -282,10 +288,7 @@ Project type-specific commands:
     Delete demo/dist/.
 
   nwb clean-module
-    Delete coverage/, es6/ and lib/.
-
-  nwb clean-umd
-    Delete umd/.
+    Delete coverage/, es/, lib/ and umd/.
 
   nwb serve-react-app [entry]
     Serve a React app from entry
@@ -297,8 +300,20 @@ Project type-specific commands:
     Serve a web app from entry.
 
   Arguments:
-    entry     entry point [default: src/index.js]
-    dist_dir  build output directory [default: dist/]
+    entry      entry point [default: src/index.js]
+    dist_dir   build output directory [default: dist/]
+    umd_entry  entry point for UMD builds [default: src/index.js]
+
+Helper commands:
+  nwb check-config [config] [options]
+    Check your configuration file for errors, deprecated config and usage hints.
+
+    Arguments:
+      config     path to the file to validate [default: nwb.config.js]
+
+    Options:
+      --command  nwb command name to use when checking your config
+      -e, --env  NODE_ENV to use when checking your config: dev, test or prod
 ```
 
 ## Versioning
@@ -313,7 +328,7 @@ This is what versions mean during nwb's initial development:
 
 - `0.y` versions are majorish, anything may change - **always read the [CHANGES](/CHANGES.md) file or [GitHub release notes](https://github.com/insin/nwb/releases) to review what's changed before upgrading**.
 
-  *Where possible*, any changes required to the nwb config file format will be backwards-compatible in the `0.y` version they're introduced in, with a deprecation warning when the old format is used. Support for the old format will then be dropped in the next `0.y` release.
+  *Where possible*, any changes required to the nwb config file format will be backwards-compatible in the `0.y` version they're introduced in, with a deprecation warning when the old format is used. Support for the old format will usually be dropped in the next `0.y` release or two.
 
 - `0.y.z` versions are minorish, and may contain bug fixes, non-breaking changes, minor new features and non-breaking dependency changes.
 

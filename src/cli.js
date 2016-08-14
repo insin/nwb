@@ -52,9 +52,9 @@ Project creation commands:
 
   Project types:
     ${req('react-app')}        a React app
-    ${req('react-component')}  a React component module with a demo app
+    ${req('react-component')}  a React component or library npm module
     ${req('web-app')}          a plain JavaScript app
-    ${req('web-module')}       a plain JavaScript module
+    ${req('web-module')}       a plain JavaScript npm module
 
 Generic development commands:
   Arguments for these commands depend on the type of project they're being run
@@ -75,7 +75,7 @@ Generic development commands:
     Options:
       ${opt('--install')}      automatically install missing npm dependencies
       ${opt('--host')}         hostname to bind the dev server to
-      ${opt('--no-fallback')}  disable serving the index page from any path
+      ${opt('--no-fallback')}  disable serving of the index page from any path
       ${opt('--port')}         port to run the dev server on ${opt('[default: 3000]')}
       ${opt('--reload')}       auto reload the page if hot reloading fails
 
@@ -134,7 +134,7 @@ Helper commands:
     Check your configuration file for errors, deprecated config and usage hints.
 
     Arguments:
-      ${opt('config')}     path to the file to validate ${opt(`[default: ${CONFIG_FILE_NAME}]`)})
+      ${opt('config')}     path to the file to validate ${opt(`[default: ${CONFIG_FILE_NAME}]`)}
 
     Options:
       ${opt('--command')}  nwb command name to use when checking your config
