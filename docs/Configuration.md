@@ -89,8 +89,8 @@ The configuration object can include the following properties:
   - [`npm.esModules`](#esmodules-boolean)
   - UMD build
     - [`npm.umd`](#umd-string--object) - enable a UMD build which exports a global variable
-      - [`umd.global`](#global-string-required-for-umd-build)
-      - [`umd.externals`](#externals-object)
+      - [`umd.global`](#global-string) - global variable name exported by UMD build
+      - [`umd.externals`](#externals-object) - dependencies to use via global variables in UMD build
     - [`package.json` fields](#packagejson-umd-banner-configuration)
 
 #### `type`: `String` (required for generic build commands)
@@ -106,15 +106,13 @@ It must be one of:
 
 #### `polyfill`: `Boolean`
 
-For apps, nwb will provide polyfills for `Promise` and `fetch` by default so you can make use of `async`/`await` and generators without any configuration.
+For apps, nwb will provide polyfills for `Promise`, `fetch` and `Object.assign` by default.
 
 To disable this, set `polyfill` to `false`:
 
 ```js
 module.exports = {
-  babel: {
-    polyfill: false
-  }
+  polyfill: false
 }
 ```
 
@@ -124,7 +122,7 @@ module.exports = {
 
 [Babel](https://babeljs.io/) configuration can be provided in a `babel` object, using the following properties.
 
-For Webpack builds, any Babel config provided will be used to configure `babel-loader` - you can also provide additional configuration in [`webpack.loaders`](#loaders-object) if necessary.
+> For Webpack builds, any Babel config provided will be used to configure `babel-loader` - you can also provide additional configuration in [`webpack.loaders`](#loaders-object) if necessary.
 
 ##### `cherryPick`: `String | Array<String>`
 
@@ -138,7 +136,7 @@ If you import a module with destructuring, the entire module will normally be in
 import {Col, Grid, Row} from 'react-bootstrap'
 ```
 
-The usual workaround for this is individually import submodules, which is tedious and bloats import sections in your code:
+The usual workaround for this is to individually import submodules, which is tedious and bloats import sections in your code:
 
 ```js
 import Col from 'react-bootstrap/lib/Col'
@@ -225,18 +223,18 @@ To disable use of the runtime transform, set `runtime` to `false`.
 
 ##### `stage`: `Number | false`
 
-*(A Babel 6 equivalent of Babel 5's `stage` config)*
+> nwb implements its own equivalent of Babel 5's `stage` config for Babel 6
 
 Controls which Babel preset will be used to enable use of experimental, proposed and upcoming JavaScript features in your code, grouped by the stage they're at in the TC39 process for proposing new JavaScript features:
 
 | Stage | TC39 Category | Features |
 | ----- | ------------- | -------- |
 | [0](https://babeljs.io/docs/plugins/preset-stage-0) | Strawman, just an idea |`do {...}` expressions, `::` function bind operator |
-| [1](https://babeljs.io/docs/plugins/preset-stage-1) | Proposal: this is worth working on | class properties, export extensions, `@decorator` syntax ( using the [Babel Legacy Decorator plugin](https://github.com/loganfsmyth/babel-plugin-transform-decorators-legacy)) |
-| [2](https://babeljs.io/docs/plugins/preset-stage-2) | Draft: initial spec | object rest/spread syntax - **enabled by default** |
+| [1](https://babeljs.io/docs/plugins/preset-stage-1) | Proposal: this is worth working on | export extensions |
+| [2](https://babeljs.io/docs/plugins/preset-stage-2) | Draft: initial spec | class properties, object rest/spread syntax, `@decorator` syntax ( using the [Babel Legacy Decorator plugin](https://github.com/loganfsmyth/babel-plugin-transform-decorators-legacy)) - **enabled by default** |
 | [3](https://babeljs.io/docs/plugins/preset-stage-3) | Candidate: complete spec and initial browser implementations | trailing function commas, `async`/`await`, `**` exponentiation operator |
 
-e.g. if you want to use decorators in your app, you should set `stage` to `1`:
+e.g. if you want to use export extensions in your app, you should set `stage` to `1`:
 
 ```js
 module.exports = {
@@ -266,8 +264,6 @@ module.exports = {
 
 Configures [Webpack aliases](https://webpack.github.io/docs/resolving.html#aliasing), which allow you to control module resolution. Typically aliases are used to make it easier to import certain modules from within any depth of nested directories in an app.
 
-e.g.:
-
 ```js
 module.exports = {
   webpack: {
@@ -285,15 +281,13 @@ module.exports = {
 }
 ```
 
-You should be careful to avoid creating aliases which conflict with the names of Node.js builtins or npm packages, as you will then be unable to import them.
+You should be careful to avoid creating aliases which conflict with the names of Node.js builtins or npm packages, as you will be unable to import them.
 
 ##### `autoprefixer`: `String | Object`
 
 Configures [Autoprefixer options](https://github.com/postcss/autoprefixer#options) for nwb's default PostCSS configuration.
 
-If you just need to configure the range of browsers prefix addition/removal is based on (Autoprefixer's own default is `'> 1%, last 2 versions, Firefox ESR'`), you can use a String.
-
-e.g. if you want to make sure Autoprefixer also adds or keeps prefixes required for iOS 8 devices:
+If you just need to configure the range of browsers prefix addition/removal is based on (nwb's default is `>1%, last 4 versions, Firefox ESR, not ie < 9`), you can use a String:
 
 ```js
 module.exports = {
@@ -311,7 +305,6 @@ e.g. if you also want to disable removal of prefixes which aren't required for t
 module.exports = {
   webpack: {
     autoprefixer: {
-      browsers: '> 1%, last 2 versions, Firefox ESR, ios >= 8',
       remove: false,
     }
   }
@@ -322,7 +315,9 @@ You can check which browsers your Autoprefixer configuration will target using t
 
 ##### `compat`: `Object`
 
-Certain libraries require specific configuration to play nicely with Webpack - nwb can take care of the details for you if you use a `compat` object to tell it when you're using them. The following libraries are supported:
+Certain libraries require specific configuration to play nicely with Webpack - nwb can take care of the details for you if you use a `compat` object to tell it when you're using them.
+
+The following libraries are supported:
 
 ###### `enzyme`: `Boolean`
 
@@ -454,11 +449,11 @@ module.exports = {
 
 ##### `install`: `Object`
 
-Configures [options for `NpmInstallPlugin`](https://github.com/ericclemmons/npm-install-webpack-plugin#usage), which will be used if you pass `--auto-install` flag to `nwb serve`.
+Configures [options for `NpmInstallPlugin`](https://github.com/ericclemmons/npm-install-webpack-plugin#usage), which will be used if you pass an `--install` flag to `nwb serve`.
 
 ##### `loaders`: `Object`
 
-Each [Webpack loader](https://webpack.github.io/docs/loaders.html) configured by default has a unique id you can use to customise it.
+Each [Webpack loader](https://webpack.github.io/docs/loaders.html) used in nwb's default Webpack configuration has a unique id you can use to customise it.
 
 To customise a loader, add a prop to the `loaders` object matching its id with a configuration object.
 
@@ -515,7 +510,7 @@ var nib = require('nib')
 }
 ```
 
-Alternatively, you can also add new properties directly to the top-level Webpack config using [`extra`](#extra-object)
+Alternatively, you can also add new properties directly to the top-level Webpack config using [`extra` config](#extra-object).
 
 ###### Default Loaders
 
@@ -525,7 +520,7 @@ Default loaders configured by nwb and the ids it gives them are:
 
   > Default config: `{exclude: /node_modules/, query: {babelrc: false, cacheDirectory: true}}`
 
-- `css-pipeline` - handles your app's own`.css` files by chaining together a number of loaders:
+- `css-pipeline` - handles your app's own `.css` files by chaining together a number of loaders:
 
   > Default config: `{exclude: /node_modules/}`
 
@@ -537,7 +532,7 @@ Default loaders configured by nwb and the ids it gives them are:
 
     > Default config: `{query: {autoprefixer: false, importLoaders: 1}}`
 
-  - `postcss` - processes CSS with PostCSS plugins using [postcss-loader][postcss-loader]; by default, this is configured to automatically add vendor prefixes to CSS using [Autoprefixer][autoprefixer]
+  - `postcss` - processes CSS with PostCSS plugins using [postcss-loader][postcss-loader]; by default, this is configured to manage vendor prefixes in CSS using [Autoprefixer][autoprefixer]
 
 - `vendor-css-pipeline` - handles `.css` files required from `node_modules/`, with the same set of chained loaders as `css-pipeline` but with a `vendor-` prefix in their id.
 
@@ -551,13 +546,15 @@ Default loaders configured by nwb and the ids it gives them are:
 
 - `video` - handles `.mp4`, `.ogg` and `.webm` files using [url-loader][url-loader]
 
-> Default config for all url-loaders in production builds is `{query: {limit: 1, name: '[name].[hash:8].[ext]'}}`, otherwise `{query: {limit: 1, name: '[name].[ext]'}}`. The `limit` config prevents any files being inlined by default, while allowing you to configure `url-loader` to enable inlining if you need it.
+> Default config for all url-loaders in production builds is `{query: {limit: 1, name: '[name].[hash:8].[ext]'}}`, otherwise `{query: {limit: 1, name: '[name].[ext]'}}`.
+
+> Default `limit` config prevents any files being inlined by default, while allowing you to configure `url-loader` to enable inlining if you need it.
 
 - `json` - handles `.json` files using [json-loader][json-loader]
 
 ##### `postcss`: `Array<Plugin> | Object<String, Array<Plugin>>`
 
-By default, nwb configures the `postcss-loader` in each style pipeline to automatically add vendor prefixes to CSS rules.
+By default, nwb configures the `postcss-loader` in each style pipeline to automatically manage vendor prefixes for CSS rules.
 
 Use `postcss` configuration to provide your own list of PostCSS plugins to be used for each pipeline, which will completely overwrite nwb's default configuration.
 
@@ -602,7 +599,7 @@ It's recommended to create instances of PostCSS plugins in your config, as oppos
 
 ##### `publicPath`: `String`
 
-This is just Webpack's [`output.publicPath` config](https://webpack.github.io/docs/configuration.html#output-publicpath) pulled up a level to make it more convenient to configure.
+> This is just Webpack's [`output.publicPath` config](https://webpack.github.io/docs/configuration.html#output-publicpath) pulled up a level to make it more convenient to configure.
 
 `publicPath` defines the URL static resources will be referenced by in build output, such as `<link>` and `<src>` tags in generated HTML, `url()` in stylesheets and paths to any static resources you `require()` into your modules.
 
@@ -657,10 +654,6 @@ module.exports = {
   },
 }
 ```
-
-##### `vendorBundle`: `Boolean`
-
-Setting this to `false` disables extraction of anything imported from `node_modules/` into a `vendor` bundle.
 
 ##### `extra`: `Object`
 
@@ -882,7 +875,7 @@ module.exports = {
 
 ### npm Build Configuration
 
-By default, nwb creates ES5 and ES6 modules builds of your React component or vanilla JS module's code for publishing to npm.
+By default, nwb creates ES5 and ES6 modules builds for publishing to npm.
 
 #### `npm`: `Object`
 
@@ -892,17 +885,20 @@ npm build configuration is defined in a `npm` object, using the following fields
 
 > Defaults to `true` if not provided.
 
-Determines whether or not nwb will create an ES6 modules build for use by ES6 module bundlers when you run `nwb build` for a React component or web module.
+Determines whether or not nwb will create an ES6 modules build for use by ES6 module bundlers when you run `nwb build` for a React component/libary or web module project.
 
 When providing an ES6 modules build, you should also provide the following in `package.json` so compatible module bundlers can find it:
 
 ```
-"modules": "es/index.js"
+"jsnext:main": "es/index.js",
+"module": "es/index.js",
 ```
+
+These are included automatically if you create a project with an ES6 modules build enabled.
 
 ##### `umd`: `String | Object`
 
-Configures creation of a UMD build when you run `nwb build` for a React component or web module.
+Configures creation of a UMD build when you run `nwb build` for a React component/library or web module.
 
 If you just need to configure the global variable the UMD build will export, you can use a String:
 
@@ -916,7 +912,7 @@ module.exports = {
 
 If you also have some external dependencies to configure, you must use an Object containing the following properties:
 
-###### `global`: `String` (*required* for UMD build)
+###### `global`: `String`
 
 The name of the global variable the UMD build will export.
 
