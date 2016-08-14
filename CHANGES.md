@@ -303,7 +303,7 @@
 
 - autoprefixer: v6.3.6 → [v6.4.0](https://github.com/postcss/autoprefixer/blob/master/CHANGELOG.md#640)
 - babel\* v5 → babel\* v6
-- [babel-plugin-istanbul](https://github.com/istanbuljs/babel-plugin-istanbul/): v1.1.0
+- [babel-plugin-istanbul](https://github.com/istanbuljs/babel-plugin-istanbul/): v2.0.0
 - [babel-plugin-lodash](https://github.com/lodash/babel-plugin-lodash): v3.2.6
 - [babel-plugin-transform-react-remove-prop-types](https://github.com/oliviertassinari/babel-plugin-transform-react-remove-prop-types): v0.2.9
 - [case-sensitive-paths-webpack-plugin](https://github.com/Urthen/case-sensitive-paths-webpack-plugin): v1.1.3
@@ -325,6 +325,7 @@
 - mocha: v2.5.3 → [v3.0.2](https://github.com/mochajs/mocha/blob/master/CHANGELOG.md#302--2016-08-08)
 - npm-install-webpack-plugin: v4.0.1 → [v4.0.4](https://github.com/ericclemmons/npm-install-webpack-plugin/blob/master/CHANGELOG.md#404-2016-06-30)
 - phantomjs-prebuilt: v2.1.7 → v2.1.12 - npm packaging fun
+- postcss-loader: : v0.9.1 → [v0.10.0](https://github.com/postcss/postcss-loader/blob/master/CHANGELOG.md#0100)
 - qs: v6.2.0 → [v6.2.1](https://github.com/ljharb/qs/blob/master/CHANGELOG.md#621)
 - rimraf: v2.5.2 → [v2.5.3](https://github.com/isaacs/rimraf/compare/v2.5.2...v2.5.3)
 - [webpack-fail-plugin](https://github.com/TiddoLangerak/webpack-fail-plugin): v1.0.5
@@ -430,6 +431,7 @@
 - inquirer: v1.0.2 → [v1.0.3](https://github.com/SBoudrias/Inquirer.js/compare/v1.0.2...v1.0.3)
 - mocha: v2.4.5 → [v2.5.3](https://github.com/mochajs/mocha/blob/master/CHANGELOG.md#253--2016-05-25)
 - npm-install-webpack-plugin: v3.1.2 → [v4.0.1](https://github.com/ericclemmons/npm-install-webpack-plugin/blob/master/CHANGELOG.md#401-2016-06-06) - saving is on by default and [a new `dev` option controls](https://github.com/ericclemmons/npm-install-webpack-plugin#usage) where installed dependencies get saved to
+- [postcss-loader](https://github.com/postcss/postcss-loader): v0.9.1
 - redbox-noreact: v1.0.0 → [v1.1.0](https://github.com/insin/redbox-noreact/blob/master/CHANGES.md#110--2016-05-29)
 - webpack: v1.13.0 → [v1.13.1](https://github.com/webpack/webpack/compare/v1.13.0...v1.13.1)
 - webpack-merge: v0.12.0 → [v0.14.0](https://github.com/survivejs/webpack-merge/blob/master/CHANGELOG.md#0140--2016-06-05)

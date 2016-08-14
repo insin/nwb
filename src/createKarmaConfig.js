@@ -13,7 +13,7 @@ import {deepToString, typeOf} from './utils'
 // Exclude top-level test dirs and __tests__ dirs under src/ from code coverage.
 const DEFAULT_TEST_DIRS = ['test/', 'tests/', 'src/**/__tests__/']
 // Not every file in a test directory is a test and tests may also be co-located
-// with the code they test, so determine tests by suffix.
+// with the code they test, so determine test files by suffix.
 const DEFAULT_TEST_FILES = ['+(src|test?(s))/**/*+(-test|.spec|.test).js']
 
 /**
@@ -149,7 +149,7 @@ export default function createKarmaConfig({codeCoverage, singleRun}, userConfig)
     presets: ['react'] // XXX
   }
   if (codeCoverage) {
-    let exclude = [...testDirs, ...testFiles]
+    let exclude = ['node_modules/', ...testDirs, ...testFiles]
     if (userKarma.testContext) {
       exclude.push(userKarma.testContext)
     }

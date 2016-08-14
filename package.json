@@ -1,7 +1,7 @@
 {
   "name": "nwb",
   "description": "CLI tool for React apps and components & plain JS apps and npm modules",
-  "version": "0.11.1",
+  "version": "0.12.0-alpha.0",
   "license": "MIT",
   "author": "Jonny Buchanan <jonathan.buchanan@gmail.com>",
   "bin": {
@@ -54,7 +54,7 @@
     "babel-cli": "6.11.4",
     "babel-core": "6.13.2",
     "babel-plugin-add-module-exports": "0.2.1",
-    "babel-plugin-istanbul": "1.1.0",
+    "babel-plugin-istanbul": "2.0.0",
     "babel-plugin-lodash": "3.2.6",
     "babel-plugin-react-transform": "2.0.2",
     "babel-plugin-transform-decorators-legacy": "1.3.4",
@@ -102,7 +102,7 @@
     "html-webpack-plugin": "2.22.0",
     "json-loader": "0.5.4",
     "npm-install-webpack-plugin": "4.0.4",
-    "postcss-loader": "0.9.1",
+    "postcss-loader": "0.10.0",
     "style-loader": "0.13.1",
     "url-loader": "0.5.7",
     "webpack-dev-middleware": "1.6.1",
@@ -116,7 +116,7 @@
     "cross-spawn": "4.0.0",
     "eslint-config-jonnybuchanan": "4.2.1",
     "eventsource": "0.2.1",
-    "nyc": "7.1.0",
+    "nyc": "8.1.0",
     "shelljs": "0.7.3",
     "tree-kill": "1.1.0"
   },
