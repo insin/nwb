@@ -340,7 +340,7 @@ By default nwb will also create a production build of the demo React app in `dem
 
 `.gitignore` is configured to ignore these build directories to avoid/prevent checking built resources into source control, since npm acts as the canonical source for published, versioned builds and [npmcdn](https://npmcdn.com) makes it easy to provide access to the UMD build.
 
-For example, if you were to publish this example project to npm as `react-loading-button`,the latest version of its UMD build would be available from `https://npmcdn.com/react-loading-button/umd/react-loading-button.js` without having to configure anything.
+For example, if you were to publish this example project to npm as `react-loading-button`, the latest version of its UMD build would be available from `https://npmcdn.com/react-loading-button/umd/react-loading-button.js` without having to configure anything.
 
 ### Publishing to npm
 
@@ -350,7 +350,7 @@ Once you've built your project, it's ready for publishing to npm using whatever 
 npm publish
 ```
 
-`package.json` is preconfigured with a [`"files"` whitelist](https://docs.npmjs.com/files/package.json#files) which will only include `lib/`, `es/` and `umd/` directories in the npm package, in addition to the usual npm metadata like `package.json` and `README.md`
+`package.json` is preconfigured with a [`"files"` whitelist](https://docs.npmjs.com/files/package.json#files) which will only include `lib/`, `es/` and `umd/` directories in the npm package, in addition to the usual npm metadata like `package.json` and `README.md`.
 
 ## Libraries
 
