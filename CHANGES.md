@@ -4,7 +4,7 @@
 
   Based on the `engines` config of nwb's dependencies, Node.js v4.2.0 is now the minimum required version.
 
-- **Upgraded from Babel 5 to Babel 6** [[#12](https://github.com/insin/nwb/issues/12)]
+- **Upgraded from Babel 5 to Babel 6** [[#12](https://github.com/insin/nwb/issues/12)] [[#31](https://github.com/insin/nwb/issues/31)] [[@geowarin](https://github.com/geowarin/)]
 
   Babel 6 introduced [a number of breaking changes](https://github.com/babel/babel/blob/master/CHANGELOG.md#600) which you may need to account for in your codebase if you're using nwb or were otherwise using Babel 5.
 
