@@ -8,7 +8,7 @@
   ],
   "dependencies": {
     "stylus": "^0.54.5",
-    "stylus-loader": "^2.1.2"
+    "stylus-loader": "^2.2.0"
   },
   "author": "Jonny Buchanan <jonathan.buchanan@gmail.com>",
   "license": "MIT",
