@@ -244,7 +244,7 @@ export function processUserConfig({
         `nwb will convert non-boolean config to its boolean equivalent during a build.`,
       ]
       if (userConfig.babel.loose) {
-        messages.push('(Loose mode is enabled on by default as of nwb v0.12, so you can remove this config)')
+        messages.push('(Loose mode is enabled by default as of nwb v0.12, so you can remove this config)')
       }
       report.deprecated('babel.loose', ...messages)
       warnedAboutBabelLoose = true
