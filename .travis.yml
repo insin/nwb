@@ -5,6 +5,10 @@ node_js:
   - 4
   - 6
 
+cache:
+  directories:
+    - $HOME/.npm
+
 before_install:
   - npm install codecov.io coveralls
 
