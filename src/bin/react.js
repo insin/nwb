@@ -85,7 +85,7 @@ Commands:
 }
 
 if (!COMMAND_MODULES.hasOwnProperty(command)) {
-  console.error(`${red('react(nwb): unknown command:')} ${req(command)}`)
+  console.error(`${red('Unknown command:')} ${req(command)}`)
   process.exit(1)
 }
 
