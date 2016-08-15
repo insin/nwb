@@ -41,7 +41,7 @@ Open [http://localhost:3000](http://localhost:3000), start editing the code and 
 
 `npm test` will run the app's tests and `npm run build` will create a production build.
 
-**See [Developing React Apps with nwb](/docs/guides/ReactApps.md) for a more detailed guide.**
+**See [Developing React Apps with nwb](/docs/guides/ReactApps.md#developing-react-apps-with-nwb) for a more detailed guide.**
 
 ### Quick Prototyping
 
@@ -83,7 +83,7 @@ cd my-component/
 
 `npm test` will run the project's tests and `npm run build` will create ES5, ES6 modules and UMD builds for publishing to npm.
 
-**See [Developing React Components and Libraries with nwb](/docs/guides/ReactComponents.md) for a more detailed guide.**
+**See [Developing React Components and Libraries with nwb](/docs/guides/ReactComponents.md#developing-react-components-and-libraries-with-nwb) for a more detailed guide.**
 
 ## npm Modules for the Web
 
