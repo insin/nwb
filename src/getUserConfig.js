@@ -144,6 +144,7 @@ function upgradeBuildConfig(build, userConfigPath, report = {deprecated() {}}) {
         '',
         `You have the ES6 modules build enabled, so also add ${chalk.cyan('"module": "es/index.js"')} to ${chalk.cyan('package.json')}.`,
         'This is part of a proposal for future native module support being supported by multiple bundlers.',
+        `(You should also change ${chalk.cyan('"jsnext:main"')} to point at ${chalk.cyan('"es/index.js"')})`,
       )
     }
     report.deprecated('build', ...messages)
