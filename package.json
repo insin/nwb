@@ -22,7 +22,8 @@
     "docs",
     "lib",
     "templates",
-    "express.js"
+    "express.js",
+    "polyfills.js"
   ],
   "engines": {
     "node": ">=4.2.0"
