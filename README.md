@@ -121,13 +121,13 @@ cd my-module/
 
 ## Why use nwb?
 
-**Gets started quickly**. Start developing a React app from a single `.js` file or [generate a starter project](/docs/Commands.md#new).
+**Get started quickly**. Start developing a React app from a single `.js` file or [generate a starter project](/docs/Commands.md#new).
 
 **Covers the whole development cycle**. Development tools, testing and production builds for projects work out of the box, no configuration required.
 
-**Manages key development dependencies and configuration for you**. Check out an [example of the effect using nwb had](https://github.com/insin/react-yelp-clone/compare/master...nwb) on the amount of `devDependencies` and configuration to be managed in a real project it was dropped into.
-
 **Flexible**. While everything works out of the box, you can also use an optional [configuration file](/docs/Configuration.md#configuration-file) to tweak things to your liking.
+
+**Manages key development dependencies and configuration for you**. Check out an [example of the effect using nwb had](https://github.com/insin/react-yelp-clone/compare/master...nwb) on the amount of `devDependencies` and configuration to be managed in a real project it was dropped into.
 
 ## MIT Licensed
 
