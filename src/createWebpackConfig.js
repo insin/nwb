@@ -139,8 +139,8 @@ export function createLoaders(server, buildConfig = {}, userConfig = {}, pluginC
   let urlLoaderOptions = {
     // Don't inline anything by default
     limit: 1,
-    // Use a hash in production for long-term caching
-    name: process.env.NODE_ENV === 'production' ? '[name].[hash:8].[ext]' : '[name].[ext]',
+    // Always use a hash to prevent files with the same name causing issues
+    name: '[name].[hash:8].[ext]',
   }
 
   let loaders = [
