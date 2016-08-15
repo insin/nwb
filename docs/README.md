@@ -14,9 +14,5 @@
 - [Testing](/docs/Testing.md#testing)
 - [Plugins](/docs/Plugins.md#plugins)
 - [Middleware](/docs/Middleware.md#middleware)
-- [Project Types](/docs/ProjectTypes.md#project-types)
 - [Examples](/docs/Examples.md#examples)
-
---
-
 - [Versioning](/docs/Versioning.md#versioning)
