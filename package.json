@@ -116,7 +116,7 @@
     "bundle-deps": "1.0.0",
     "cross-env": "2.0.0",
     "cross-spawn": "4.0.0",
-    "eslint-config-jonnybuchanan": "4.3.0",
+    "eslint-config-jonnybuchanan": "4.3.1",
     "eventsource": "0.2.1",
     "nyc": "8.1.0",
     "shelljs": "0.7.3",
