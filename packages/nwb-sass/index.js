@@ -1,7 +1,7 @@
 module.exports = {
   cssPreprocessors: {
     sass: {
-      test: /\.scss$|\.sass$/,
+      test: /\.s[ac]ss$/,
       loader: require.resolve('sass-loader'),
       defaultConfig: 'sassLoader'
     }
