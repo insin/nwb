@@ -2,7 +2,7 @@
 
 [![npm package][npm-badge]][npm]
 
-Plugin enabling a [Sass](http://sass-lang.com/) loading pipeline for `.scss` files in [nwb](https://github.com/insin/nwb) using [sass-loader](https://github.com/jtangelder/sass-loader).
+Plugin enabling a [Sass](http://sass-lang.com/) loading pipeline for `.scss` and `.sass` files in [nwb](https://github.com/insin/nwb) using [sass-loader](https://github.com/jtangelder/sass-loader).
 
 ## Usage
 
