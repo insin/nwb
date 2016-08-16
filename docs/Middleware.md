@@ -18,9 +18,9 @@ Your app's version of the Express module must be passed as the first argument.
 
 ###### `options`
 
-- `autoInstall` - automatically install missing npm dependencies *[default: `false`]*
 - `config` - path to a config file *[default: nwb.config.js]*
 - `entry` - entry point for the app *[default: src/index.js]*
+- `install` - automatically install missing npm dependencies *[default: `false`]*
 
 #### Example
 
@@ -31,13 +31,11 @@ var express = require('express')
 
 var app = express()
 
-app.use(require('nwb/express')(express, {
-  info: true
-}))
+app.use(require('nwb/express')(express))
 
 app.use(express.static('public'))
 
-app.listen(3000, 'localhost', function(err) {
+app.listen(3000, function(err) {
   if (err) {
     console.error('error starting server:')
     console.error(err.stack)

@@ -23,8 +23,8 @@ module.exports = function(express, options) {
   // Use options to create an object equivalent to CLI args parsed by minimist
   var args = {
     _: ['serve-react-app', options.entry],
-    'auto-install': !!options.autoInstall || !!options.install,
-    config: options.config
+    config: options.config,
+    install: !!options.install || !!options.autoInstall
   }
 
   var webpackConfig = createServerWebpackConfig(
