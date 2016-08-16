@@ -69,7 +69,7 @@ Use `react run` to start a hot-reloading development server at [http://localhost
 react run app.js
 ```
 
-`react build` will create a production build.
+`react build app.js` will create a production build.
 
 ## React Components and Libraries
 
@@ -98,7 +98,7 @@ cd my-module/
 ## [Guides](/docs/guides/#table-of-contents)
 
 - [Developing React Apps with nwb](/docs/guides/ReactApps.md)
-- [Quick React Development with nwb](/docs/guides/QuickReactDevelopment.md)
+- [Developing React Components and Libraries with nwb](/docs/guides/ReactComponents.md#developing-react-components-and-libraries-with-nwb)
 
 ## [Documentation](/docs/#table-of-contents)
 
