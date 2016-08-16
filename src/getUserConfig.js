@@ -272,7 +272,7 @@ export function processUserConfig({
     else if (glob.sync(userConfig.karma.tests, {nodir: true}).length === 1 &&
              fs.readFileSync(userConfig.karma.tests, 'utf8').indexOf('require.context') !== -1) {
       messages.push(
-        `${chalk.yellow('karma.tests')} appears to be a ${chalk.cyan('Webpack context module')} , so you should rename it to ${chalk.green('karma.testContext')}`,
+        `${chalk.yellow('karma.tests')} appears to be a ${chalk.cyan('Webpack context module')}, so you should rename it to ${chalk.green('karma.testContext')}`,
         `nwb will use it as ${chalk.green('karma.testContext')} config during a build.`,
       )
       userConfig.karma.testContext = userConfig.karma.tests
