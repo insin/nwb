@@ -1,7 +1,8 @@
 ## Examples
 
 - [Example Projects](#example-projects)
-  - [React Tutorial]
+  - [Thinking in React](#thinking-in-react)
+  - [React Tutorial](#react-tutorial)
   - [Bootstrap 4 with Sass](#bootstrap-4-with-sass)
   - [Yelp Clone](#yelp-clone)
   - [Github Issues](#github-issues)
@@ -11,6 +12,10 @@
   - [Creating and customising a new React app](#creating-and-customising-a-new-react-app)
 
 ### Example Projects
+
+#### Thinking in React
+
+[nwb-thinking-in-react](https://github.com/insin/nwb-thinking-in-react) implements the example from [the Thinking in React tutorial](https://facebook.github.io/react/docs/tutorial.html) using nwb for development and testing.
 
 #### React Tutorial
 
