@@ -5,7 +5,6 @@ branches:
 
 environment:
   matrix:
-  - nodejs_version: "4"
   - nodejs_version: "6"
 
 install:
