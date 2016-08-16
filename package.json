@@ -1,7 +1,7 @@
 {
   "name": "nwb",
-  "description": "CLI tool for React apps and components & plain JS apps and npm modules",
-  "version": "0.12.0-alpha.0",
+  "description": "Create React apps, components, libraries and npm modules with no configuration (until you need it)",
+  "version": "0.12.0",
   "license": "MIT",
   "author": "Jonny Buchanan <jonathan.buchanan@gmail.com>",
   "bin": {
