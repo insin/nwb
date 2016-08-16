@@ -7,7 +7,7 @@
     "index.js"
   ],
   "dependencies": {
-    "sass-loader": "^3.2.3",
+    "sass-loader": "^4.0.0",
     "node-sass": "^3.8.0"
   },
   "author": "Jonny Buchanan <jonathan.buchanan@gmail.com>",
