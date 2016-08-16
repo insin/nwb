@@ -197,8 +197,7 @@ describe('sample projects', function() {
       })
     })
 
-    // XXX This pulls in /es/ instead on Windows in babel-plugin-lodash@3.2.7
-    it.skip('ES5 build transpiles to a cherry-picked version', () => {
+    it('ES5 build transpiles to a cherry-picked version', () => {
       expect(es5)
         .toInclude("require('react-bootstrap/lib/Col')")
         .toInclude("require('react-bootstrap/lib/Grid')")
@@ -215,8 +214,7 @@ describe('sample projects', function() {
         'index.js',
       ])
     })
-    // XXX This pulls in /es/ instead on Windows in babel-plugin-lodash@3.2.7
-    it.skip('ES6 modules build transpiles to a cherry-picked version', () => {
+    it('ES6 modules build transpiles to a cherry-picked version', () => {
       expect(es6)
         .toInclude("import _Col from 'react-bootstrap/lib/Col'")
         .toInclude("import _Grid from 'react-bootstrap/lib/Grid'")
