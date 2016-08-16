@@ -8,6 +8,8 @@ This gives you the same setup as if you'd run the `nwb serve` command, using you
 
 Middleware for Express 4.x can be imported from `'nwb/express'`.
 
+See the [nwb-react-tutorial](https://github.com/insin/nwb-react-tutorial) project for an example of using it.
+
 #### API
 
 ##### `middleware(express, options: Object)`
