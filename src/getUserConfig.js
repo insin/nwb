@@ -111,7 +111,6 @@ export function prepareWebpackLoaderConfig(loaders) {
 let warnedAboutBabelLoose = false
 let warnedAboutBuildChange = false
 let warnedAboutKarmaTests = false
-let warnedAboutWebpackPlugins = false
 
 // TODO Remove in a future version
 function upgradeBuildConfig(build, userConfigPath, report = {deprecated() {}}) {
@@ -390,20 +389,6 @@ export function processUserConfig({
         `You can use the more convenient ${chalk.green('webpack.aliases')} instead.`
       )
     }
-  }
-
-  // TODO Remove in a future version
-  if (userConfig.webpack.plugins) {
-    if (!warnedAboutWebpackPlugins) {
-      report.deprecated('webpack.plugins',
-        'Deprecated as of nwb v0.11.',
-        `Put this config directly under ${chalk.cyan('webpack')} instead.`,
-        `nwb will use this config as if it was under ${chalk.cyan('webpack')} during a build.`
-      )
-      warnedAboutWebpackPlugins = true
-    }
-    userConfig.webpack = {...userConfig.webpack, ...userConfig.webpack.plugins}
-    delete userConfig.webpack.plugins
   }
 
   if (report.hasErrors()) {

@@ -125,32 +125,6 @@ describe('processUserConfig()', () => {
   })
 
   // TODO Remove in a future release
-  it('moves plugins to webpack for 0.11 back-compat', () => {
-    let config = processUserConfig({
-      userConfig: {
-        webpack: {
-          plugins: {
-            define: {
-              __TEST__: 42,
-            },
-            html: {
-              template: 'test.html',
-            },
-          }
-        }
-      }
-    })
-    expect(config.webpack).toEqual({
-      define: {
-        __TEST__: 42,
-      },
-      html: {
-        template: 'test.html',
-      },
-    })
-  })
-
-  // TODO Remove in a future release
   it('converts babel.loose to boolean for 0.12 back-compat', () => {
     let config = processUserConfig({
       userConfig: {
