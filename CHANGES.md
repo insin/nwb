@@ -39,7 +39,7 @@
   - Also add `"module": "es/index.js"`, as this is part of [a proposal for native module support](https://github.com/dherman/defense-of-dot-js/blob/master/proposal.md) which is being supported by multiple bundlers.
   - Replace `"es6"` with `"es"` in `package.json` `files` config
 
-- ** Dropped `webpack.vendorBundle` config in favour of a `--no-vendor` flag**
+- **Dropped `webpack.vendorBundle` config in favour of a `--no-vendor` flag**
 
   Making this feature toggle a command line argument makes it easier to try, and to combine with other feature toggles like `--preact`.
 
