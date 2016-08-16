@@ -13,6 +13,8 @@ import kill from 'tree-kill'
 
 import cli from '../../src/cli'
 
+let stripHashes = (files) => files.map(file => file.replace(/\.\w{8}\./, '.'))
+
 const States = {
   INIT: 'INIT',
   INIT_OK: 'INIT_OK',
@@ -195,7 +197,7 @@ describe('sample projects', function() {
       })
     })
 
-    // XXX This has started pulling in /es/ instead
+    // XXX This pulls in /es/ instead on Windows in babel-plugin-lodash@3.2.7
     it.skip('ES5 build transpiles to a cherry-picked version', () => {
       expect(es5)
         .toInclude("require('react-bootstrap/lib/Col')")
@@ -213,7 +215,7 @@ describe('sample projects', function() {
         'index.js',
       ])
     })
-    // XXX This has started pulling in /es/ instead
+    // XXX This pulls in /es/ instead on Windows in babel-plugin-lodash@3.2.7
     it.skip('ES6 modules build transpiles to a cherry-picked version', () => {
       expect(es6)
         .toInclude("import _Col from 'react-bootstrap/lib/Col'")
@@ -226,6 +228,66 @@ describe('sample projects', function() {
     it('ES6 module build ignores co-located test files and directories', () => {
       expect(glob.sync('*', {cwd: path.resolve('es')})).toEqual([
         'index.js',
+      ])
+    })
+  })
+
+  describe('router-app project', function() {
+    this.timeout(120000)
+
+    let originalCwd
+    let originalNodeEnv
+    let tmpDir
+
+    before(done => {
+      originalCwd = process.cwd()
+      originalNodeEnv = process.env.NODE_ENV
+      console.log(originalNodeEnv)
+      delete process.env.NODE_ENV
+      tmpDir = temp.mkdirSync('router-app')
+      copyTemplateDir(path.join(__dirname, '../fixtures/projects/router-app'), tmpDir, {}, err => {
+        if (err) return done(err)
+        process.chdir(tmpDir)
+        execSync('npm install', {stdio: 'inherit'})
+        cli(['build'], err => {
+          expect(err).toNotExist()
+          done()
+        })
+      })
+    })
+
+    after(done => {
+      process.chdir(originalCwd)
+      process.env.NODE_ENV = originalNodeEnv
+      rimraf(tmpDir, err => {
+        done(err)
+      })
+    })
+
+    it('creates split bundles, vendor bundles, copies public subdirs and includes font resources', () => {
+      let files = stripHashes((glob.sync('**/*', {cwd: path.resolve('dist')}))).sort()
+      expect(files).toEqual([
+        '1.js',
+        '1.js.map',
+        '2.js',
+        '2.js.map',
+        'app.css',
+        'app.css.map',
+        'app.js',
+        'app.js.map',
+        'favicon.ico',
+        'glyphicons-halflings-regular.eot',
+        'glyphicons-halflings-regular.svg',
+        'glyphicons-halflings-regular.ttf',
+        'glyphicons-halflings-regular.woff',
+        'glyphicons-halflings-regular.woff2',
+        'index.html',
+        'subdir',
+        'subdir/shyamalan.jpg',
+        'vendor.css',
+        'vendor.css.map',
+        'vendor.js',
+        'vendor.js.map',
       ])
     })
   })

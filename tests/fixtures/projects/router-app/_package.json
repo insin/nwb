@@ -1,0 +1,11 @@
+{
+  "name": "router-app",
+  "version": "1.0.0",
+  "description": "test project",
+  "dependencies": {
+    "bootstrap": "3.x",
+    "react": "15.x",
+    "react-dom": "15.x",
+    "react-router": "2.x"
+  }
+}
