@@ -448,7 +448,7 @@ module.exports = {
 If you prefer to write stylesheets using a preprocessor, or you want to [use a CSS framework from source](https://medium.com/@jbscript/using-bootstrap-4-from-source-with-react-and-nwb-f26caf395952), installing one the following npm packages and including it in your project's `devDepenencies` will enable support for the corresponding preprocessor:
 
 - `nwb-less` for [Less](http://lesscss.org/) (in `.less` files)
-- `nwb-sass` for [Sass](http://sass-lang.com/) (in `.scss` files)
+- `nwb-sass` for [Sass](http://sass-lang.com/) (in `.scss` and `.sass` files)
 - `nwb-stylus` for [Stylus](http://stylus-lang.com/) (in `.styl` files)
 
 e.g., to enable Sass support:

@@ -7,7 +7,7 @@ Plugin modules provide additional functionality - if you have one installed in y
 CSS preprocessors convert styles in alternative style languages to CSS, with the resulting CSS being passed through the standard nwb CSS pipeline.
 
 - [nwb-less](https://github.com/insin/nwb-less) - adds processing of `.less` files which use [Less syntax](http://lesscss.org/)
-- [nwb-sass](https://github.com/insin/nwb-sass) - adds processing of `.scss` files which use [Sass syntax](http://sass-lang.com/)
+- [nwb-sass](https://github.com/insin/nwb-sass) - adds processing of `.scss` and `.sass` files which use [Sass syntax](http://sass-lang.com/)
 - [nwb-stylus](https://github.com/insin/nwb-stylus) - adds processing of `.styl` files which use [Stylus syntax](http://stylus-lang.com/)
 
 e.g. if you want to use Sass in your project, install nwb-sass...
@@ -16,7 +16,7 @@ e.g. if you want to use Sass in your project, install nwb-sass...
 npm install --save-dev nwb-sass
 ```
 
-...and you can now import `.scss` files:
+...and you can now import `.scss` or `.sass` files:
 
 ```js
 require('./styles.scss')
@@ -59,7 +59,7 @@ As a concrete example, this is a complete, working implementation of a Sass prep
 module.exports = {
   cssPreprocessors: {
     sass: {
-      test: /\.scss$/,
+      test: /\.s[ac]ss$/,
       loader: require.resolve('sass-loader'),
       defaultConfig: 'sassLoader'
     }
@@ -70,14 +70,14 @@ module.exports = {
 
 Given the above, nwb will create these additional Webpack loaders:
 
-1. A `sass-pipeline` loader which handles the app's own `.scss` and chains the following loaders:
+1. A `sass-pipeline` loader which handles the app's own `.scss` and `.sass` files and chains the following loaders:
 
   - sass (id: `sass`)
     - postcss (id: `sass-postcss`)
       - css (`sass-css`)
         - style `sass-style` (only when serving)
 
-1. A `vendor-sass-pipeline` loader which handles `.scss` required from node_modules, using the same chain of loaders with different ids:
+1. A `vendor-sass-pipeline` loader which handles `.scss` and `.sass` required from node_modules, using the same chain of loaders with different ids:
 
   - sass (id: `vendor-sass`)
     - postcss (id: `vendor-sass-postcss`)
