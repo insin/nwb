@@ -147,7 +147,7 @@
 
 **Developer Experience Improvements:**
 
-- **Added a `config-check` command which checks your nwb configuration file** for errors and deprecated usage, and provides some usage hints (e.g. where more convenient config is available).
+- **Added a `check-config` command which checks your nwb configuration file** for errors and deprecated usage, and provides some usage hints (e.g. where more convenient config is available).
 
   Run this after upgrading your nwb version and it will tell you what needs to be changed.
 - **New user-friendly output for Webpack builds based on [create-react-app](https://github.com/facebookincubator/create-react-app)'s**.

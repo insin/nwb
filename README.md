@@ -119,8 +119,6 @@ cd my-module/
 - [Examples](/docs/Examples.md#examples)
 - [Frequently Asked Questions](/docs/FAQ.md#frequently-asked-questions)
 
----
-
 - [Versioning](/docs/Versioning.md#versioning)
 
 ## Why use nwb?
