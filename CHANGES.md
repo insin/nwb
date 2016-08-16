@@ -3,13 +3,11 @@
 - **Dropped Node.js v0.12 support**
 
   Based on the `engines` config of nwb's dependencies, Node.js v4.2.0 is now the minimum required version.
-
 - **Upgraded from Babel 5 to Babel 6** [[#12](https://github.com/insin/nwb/issues/12)] [[#31](https://github.com/insin/nwb/issues/31)] [[@geowarin](https://github.com/geowarin/)]
 
   Babel 6 introduced [a number of breaking changes](https://github.com/babel/babel/blob/master/CHANGELOG.md#600) which you may need to account for in your codebase if you're using nwb or were otherwise using Babel 5.
 
   [`babel` config](https://github.com/insin/nwb/blob/0.12/docs/Configuration.md#babel-configuration) in `nwb.config.js` is **no longer directly equivalent to what you would put in a [`.babelrc` file](https://babeljs.io/docs/usage/babelrc/)**.
-
 - **Added support for long-term caching** [[#73](https://github.com/insin/nwb/issues/73)]
 
   A deterministic hash is now included in the filenames of generated `.js` and `.css` files.
@@ -17,13 +15,11 @@
   The Webpack manifest (required for module loading) is now extracted and automatically injected prior to the `</body>` tag, so **your HTML template *must* have a `</body>` tag**.
 
   **If you do any post-build processing on generated files it might need to be updated**, as production app builds will now generate files as `[name].[hash].[ext]` instead of `[name].[ext]`.
-
 - **Dropped support for the `.jsx` extension**
 
   [It's dead, Jim](https://github.com/facebookincubator/create-react-app/issues/87#issuecomment-234627904).
 
   > You can use [`webpack.loaders` config](https://github.com/insin/nwb/blob/0.12/docs/Configuration.md#loaders-object) to set `/\.jsx?$/` as `babel-loader`'s `test` config and [`webpack.extra config`](https://github.com/insin/nwb/blob/0.12/docs/Configuration.md#extra-object) to add `.jsx` back to the `resolve.extensions` list if you're using `.jsx` files and can't reasonably migrate away.
-
 - **Dropped `build-module` and `build-umd/clean-umd`commands**
 
   These were a confusing middle layer which split the implementation of building a React component or browser-focused npm module in two. They both required a config file to provide a project `type` for nwb to figure out what to do.
@@ -33,12 +29,11 @@
   As a result **having a config file is now optional for all project types**. If you don't need configuration, you can delete the `nwb.config.js` file created as a convenience by project templates.
 
   A config file is now only required if you want to use the generic `build`, `clean` and `serve` commands.
-
 - **Changed ES6 module build directory from `es6/` to `es/`**
 
   Upgrade steps:
 
-  - Replace `"es6/index.js"` with `"es/index.js"` in `package.json` `jsnext:main` config
+  - Replace `"es6/index.js"` with `"es/index.js"` in `package.json` `"jsnext:main"` config
   - Also add `"module": "es/index.js"`, as this is part of [a proposal for native module support](https://github.com/dherman/defense-of-dot-js/blob/master/proposal.md) which is being supported by multiple bundlers.
   - Replace `"es6"` with `"es"` in `package.json` `files` config
 
@@ -153,7 +148,6 @@
 - **Added a `config-check` command which checks your nwb configuration file** for errors and deprecated usage, and provides some usage hints (e.g. where more convenient config is available).
 
   Run this after upgrading your nwb version and it will tell you what needs to be changed.
-
 - **New user-friendly output for Webpack builds based on [create-react-app](https://github.com/facebookincubator/create-react-app)'s**.
 
   This provides friendlier error and warning reporting, reports the gzipped size of generated files and uses a persistent console for development server logging.
@@ -166,15 +160,11 @@
   start npm start
   start react run app.js
   ```
-
 - **Apps can now use `fetch`, `async`/`await` and generators out of the box without any configuration.**
 
   `Promise`, `fetch`, `Object.assign` polyfills and the regenerator runtime are now provided by default.
-
 - You can now **transform destructured imports to cherry-picked imports for specified modules** using new [`babel.cherryPick` config](https://github.com/insin/nwb/blob/0.12/docs/Configuration.md#cherrypick-string--arraystring) [[#141](https://github.com/insin/nwb/issues/141)]
-
 - Case-sensitivity of `require`/`import` paths is now enforced by [`CaseSensitivePathsPlugin`](https://github.com/Urthen/case-sensitive-paths-webpack-plugin), avoiding an easy-to-overlook cause of CI build failure if you don't develop on Linux.
-
 - If the intended dev server port is not available, you will now be prompted to continue with a different, free port.
 
 **React App Optimisations:**
@@ -190,39 +180,29 @@
 - **nwb implements its own support for a Babel 6 equivalent of Babel 5's `stage` configuration** to [choose which experimental features are enabled](https://github.com/insin/nwb/blob/0.12/docs/Configuration.md#stage-number--false), including defaulting to [Stage 2](https://babeljs.io/docs/plugins/preset-stage-2/).
 
   For stage 2 and below, **decorators can be use by default**, as nwb will include the [Babel Legacy Decorator transform plugin](https://github.com/loganfsmyth/babel-plugin-transform-decorators-legacy). See [the plugin's Best Effort documentation](https://github.com/loganfsmyth/babel-plugin-transform-decorators-legacy#best-effort) for differences you will need to take into account if you were using Babel 5 decorators.
-
 - **nwb preserves CommonJS interop for apps and component ES5 builds** using the [`add-module-exports`](https://github.com/59naga/babel-plugin-add-module-exports) plugin.
 
   This means a `.default`doesn't need to be tagged on when you're using `require()` with Webpack's code-splitting, or when people import your npm modules using `require()` directly.
 
   Babel 6 removed interop with CommonJS exports, as it allowed you to write broken ES6 code. Kent C. Dodds has [a post about this which is well worth reading](https://medium.com/@kentcdodds/misunderstanding-es6-modules-upgrading-babel-tears-and-a-solution-ad2d5ab93ce0) to understand what *not* to do.
-
 - **[Loose mode](http://www.2ality.com/2015/12/babel6-loose-mode.html) is now enabled by default.**
-
 - **Changed [`babel.loose` config](https://github.com/insin/nwb/blob/0.12/docs/Configuration.md#loose-boolean) to Boolean**.
 
   This is now only needed if you want to disable loose mode (e.g. in non-production environments to check for ES6 compliance errors in normal mode).
-
 - **Added [`babel.runtime` config](https://github.com/insin/nwb/blob/0.12/docs/Configuration.md#runtime-string--boolean)** to configure the Babel runtime transform, replacing Babel 5's `optional` config.
 
   This is turned on by default, configured to import the regenerator runtime when `async`/`await` or generators are used.
-
 - **Removed the inline element transform optimisation for React app production builds**, as the Babel 6 version of it currently depends on polyfilling `Symbol`.
 
 **Karma:**
 
 - **Changed default testing configuration** to support co-location of tests and a wider range of test file names and locations. This should be backwards-compatible with the previous defaults.
-
   - Test files included by default are now `-test.js`, `.test.js` or `.spec.js` files anywhere underneath a `src/`, `test/` or `tests/` directory.
-
-  - Code coverage now ignores all code underneath `test/`, `tests/` or any `__tests__/` directory inside `src/` by default.
-
+  - Code coverage also ignores all code underneath `test/`, `tests/` or any `__tests__/` directory inside `src/` by default, as well as test files.
 - **Added [`karma.browsers` config](https://github.com/insin/nwb/blob/0.12/docs/Configuration.md#browsers-string--arrayplugin)** to customise which browsers tests are run in.
 
   The plugin to support use of `'Chrome'` in this config is also available by default.
-
 - **Added [`karma.testDirs` config](https://github.com/insin/nwb/blob/0.12/docs/Configuration.md#testdirs-string--arraystring)** to control which directories are excluded from code coverage reporting.
-
 - **[`babel-plugin-istanbul`](https://github.com/istanbuljs/babel-plugin-istanbul) is now used to instrument code for test coverage** instead of `isparta-loader`.
 
 **Webpack:**
@@ -230,9 +210,8 @@
 *Default Loader Config*
 
 - **Disabled `css-loader`'s use of Autoprefixer** - nwb's PostCSS configuration is now the only source of prefix addition and removal [[#132](https://github.com/insin/nwb/issues/132)]
-- All static file loaders now use `url-loader` (which falls back to `file-loader`) to allow you to configure inlining if needed.
+- All static file loaders now use `url-loader` (which falls back to `file-loader`) to allow you to configure inlining for any group of static files if needed.
 - **Changed default `limit` config for all static file loaders to `1`**, effectively disabling inlining by default - if you want resources smaller than a given size to be inlined, configure `limit` using [`webpack.loaders` config](https://github.com/insin/nwb/blob/0.12/docs/Configuration.md#loaders-object).
-- `url-loader` output filenames now only include a hash in production builds.
 - Moved handling of `.svg` files from the `fonts` loader to the `graphics` loader.
 - Moved handling of `.eot` files to the `fonts` loader and removed the `eot` loader.
 - Added a `video` loader for `.mp4'`, `.ogg` and `.webm`.
@@ -256,47 +235,32 @@
 - When creating a project with an ES6 modules build enabled, a `"module"` property will be added to the project's `package.json` as well as `"jsnext:main"` [[#137](https://github.com/insin/nwb/issues/137)]
 
   This is the default property Webpack 2 uses to look for an ES6 modules build.
-
 - `build` config is deprecated in favour of new [`npm` config](https://github.com/insin/nwb/blob/0.12/docs/Configuration.md#npm-object).
-
 - **React component builds now wrap `propTypes` for ES6 class and stateless functional components with an environment check** -  `if (process.env.NODE_ENV !== 'production')` - so they'll automatically be stripped from the production build in apps which use them. [[#145](https://github.com/insin/nwb/issues/145)]
 
   `propTypes` will be stripped from the minified UMD build.
 
   This can be disabled by passing a `--no-proptypes` flag.
-
 - Building a React demo app during a React component build can now be skipped by passing a `--no-demo` flag [[#155](https://github.com/insin/nwb/issues/155)]
 
 **Other Configuration:**
 
-- **Fallback index serving for HTML5 History apps is now enabled by default** in the development server.
-
-  This can be disabled by passing a `--no-fallback` flag.
-
+- **Fallback index serving for HTML5 History apps is now enabled by default** in the development server. This can be disabled by passing a `--no-fallback` flag.
 - **Added [`polyfill` config](https://github.com/insin/nwb/blob/0.12/docs/Configuration.md#polyfill-boolean)** to disable default polyfilling of `Promise` and `fetch` for apps if you don't need it and want to shave a few KB off your build.
-
-- **The dev server port can now be specified via a `PORT` environment variable**
-
-  The CLI `--port` takes precedence if both are provided.
+- **The dev server port can now be specified via a `PORT` environment variable**. The CLI `--port` takes precedence if both are provided.
 
 **CLI:**
 
 - Added a `nwb check-config` command.
-
-- Now uses spinners for build commands, with gzipped filesize logging.
-
+- CLI now uses spinners for build commands, with gzipped filesize logging.
 - **Reworked build commands for React components and npm modules** to remove a needless middle layer and add specific build commands for these project types.
-
 - **Removed the `-g, --global` argument for enabling a UMD build** when creating a React component or web module project, in favour of passing a name to the `--umd` argument instead.
-
 - **Removed the `--info` flag for showing webpack output**, as this is now handled in a more developer-friendly manner.
 
 **Starter Projects:**
 
 - The react-app template project now includes examples of importing CSS and images.
-
 - Required `<meta>` tags in HTML templates are now all first thing in `<head>`.
-
 - Added `shrink-to-fit=no` to the `viewport` `<meta>` tag in HTML templates for Safari.
 
 **Dependencies:**
@@ -866,7 +830,7 @@
 - Added `files` config to React component/web module `package.json` templates.
   - The `files` config for the React component template assumes that components published to npm with `require()` calls for CSS which ships with it will use a `css/` dir.
 - Added a default ES6 build with untranspiled ES6 module usage [[#15](https://github.com/insin/nwb/issues/15)]
-  - This is pointed to by `jsnext:main` in project template `package.json` for use by tree-shaking ES6 bundlers.
+  - This is pointed to by `"jsnext:main"` in project template `package.json` for use by tree-shaking ES6 bundlers.
 
 **Fixed:**
 
