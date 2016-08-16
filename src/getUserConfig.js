@@ -205,7 +205,7 @@ export function processUserConfig({
       report.error(
         'babel.stage',
         userConfig.babel.stage,
-        `Must be between #{chalk.cyan(0)} and #{chalk.cyan(3)}`
+        `Must be between ${chalk.cyan(0)} and ${chalk.cyan(3)}`
       )
     }
   }
