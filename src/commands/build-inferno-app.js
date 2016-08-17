@@ -19,7 +19,6 @@ function buildConfig(args) {
 
   let config = {
     babel: {
-      commonJSInterop: true,
       presets: ['inferno'],
     },
     devtool: 'source-map',

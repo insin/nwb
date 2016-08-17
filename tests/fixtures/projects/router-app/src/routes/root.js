@@ -7,7 +7,7 @@ let routes = <Route path="/" component={require('./App')}>
     getComponent={
       (nextState, cb) => {
         require.ensure([], (require) => {
-          cb(null, require('./child1/Child1'))
+          cb(null, require('./child1/Child1').default)
         })
       }
     }
@@ -17,7 +17,7 @@ let routes = <Route path="/" component={require('./App')}>
     getComponent={
       (nextState, cb) => {
         require.ensure([], (require) => {
-          cb(null, require('./child2/Child2'))
+          cb(null, require('./child2/Child2').default)
         })
       }
     }

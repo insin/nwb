@@ -10,7 +10,6 @@ export default function serveReactDemo(args, cb) {
 
   webpackServer(args, {
     babel: {
-      commonJSInterop: true,
       presets: ['react', 'react-hmre'],
     },
     entry: [path.resolve('demo/src/index.js')],

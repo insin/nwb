@@ -15,7 +15,6 @@ function buildConfig(args) {
 
   let config = {
     babel: {
-      commonJSInterop: true,
       presets: ['inferno'],
       stage: 0,
     },

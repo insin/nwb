@@ -8,6 +8,9 @@ let root = parent.firstChild // If #app already contains elements, hydrate from 
 let vnode = null
 
 function renderEntry(exported) {
+  if (exported.default) {
+    exported = exported.default
+  }
   // Assumptions: the entry module either renders the app itself or exports a
   // Preact component (which is either a function or class) or VNode (which has
   // a children property).

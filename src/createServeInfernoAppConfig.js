@@ -11,7 +11,6 @@ export default function createServeInfernoAppConfig(args, overrides) {
 
   let config = {
     babel: {
-      commonJSInterop: true,
       presets: ['inferno'],
     },
     entry: [path.resolve(entry)],

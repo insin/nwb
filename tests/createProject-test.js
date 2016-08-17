@@ -1,7 +1,7 @@
 import expect from 'expect'
 import parseArgs from 'minimist'
 
-let {getNpmModulePrefs} = require('../src/createProject')
+import {getNpmModulePrefs} from '../src/createProject'
 
 let moduleArgs = (args, cb) => {
   args.push('-f')

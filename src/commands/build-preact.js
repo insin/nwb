@@ -21,7 +21,6 @@ function buildConfig(args) {
 
   let config = {
     babel: {
-      commonJSInterop: true,
       presets: ['preact'],
       stage: 0,
     },

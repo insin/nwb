@@ -19,7 +19,6 @@ function buildConfig(args) {
 
   let config = {
     babel: {
-      commonJSInterop: true,
       presets: ['preact'],
     },
     devtool: 'source-map',
