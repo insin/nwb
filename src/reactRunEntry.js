@@ -4,6 +4,9 @@ import {createElement} from 'react'
 import {render} from 'react-dom'
 
 function renderEntry(exported) {
+  if (exported.default) {
+    exported = exported.default
+  }
   // Assumptions: the entry module either renders the app itself or exports a
   // React component (which is either a function or class) or element (which has
   // type and props properties).

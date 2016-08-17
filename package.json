@@ -24,12 +24,11 @@
     "docs",
     "lib",
     "templates",
-    "vendor",
     "express.js",
     "polyfills.js"
   ],
   "engines": {
-    "node": ">=4.2.0"
+    "node": ">=4.3.0"
   },
   "dependencies": {
     "chalk": "1.1.3",
@@ -45,7 +44,6 @@
     "inquirer": "2.0.0",
     "minimist": "1.2.0",
     "ora": "1.0.0",
-    "qs": "6.3.0",
     "resolve": "1.2.0",
     "rimraf": "2.5.4",
     "run-series": "1.1.4",
@@ -55,6 +53,7 @@
     "babel-cli": "6.18.0",
     "babel-core": "6.21.0",
     "babel-plugin-add-module-exports": "0.2.1",
+    "babel-plugin-syntax-dynamic-import": "6.18.0",
     "babel-plugin-inferno": "1.6.0",
     "babel-plugin-istanbul": "3.1.2",
     "babel-plugin-lodash": "3.2.11",
@@ -99,23 +98,21 @@
     "promise": "7.1.1",
     "whatwg-fetch": "2.0.2",
 
-    "webpack": "1.14.0",
+    "webpack": "2.2.0",
     "autoprefixer": "6.6.1",
     "babel-loader": "6.2.10",
     "case-sensitive-paths-webpack-plugin": "1.1.4",
     "copy-webpack-plugin": "4.0.1",
     "css-loader": "0.26.1",
     "eventsource-polyfill": "0.9.6",
-    "extract-text-webpack-plugin": "1.0.1",
+    "@insin/extract-text-webpack-plugin": "2.0.0-beta.5.1b711fa5",
     "file-loader": "0.9.0",
     "html-webpack-plugin": "2.24.1",
-    "json-loader": "0.5.4",
     "npm-install-webpack-plugin": "4.0.4",
     "postcss-loader": "1.2.2",
     "style-loader": "0.13.1",
     "url-loader": "0.5.7",
     "webpack-dev-middleware": "1.9.0",
-    "webpack-fail-plugin": "1.0.5",
     "webpack-hot-middleware": "2.15.0",
     "webpack-md5-hash": "0.0.5"
   },

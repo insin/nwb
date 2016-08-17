@@ -3,56 +3,46 @@ import path from 'path'
 import autoprefixer from 'autoprefixer'
 import CaseSensitivePathsPlugin from 'case-sensitive-paths-webpack-plugin'
 import CopyPlugin from 'copy-webpack-plugin'
-import ExtractTextPlugin from 'extract-text-webpack-plugin'
+import ExtractTextPlugin from '@insin/extract-text-webpack-plugin'
 import HtmlPlugin from 'html-webpack-plugin'
 import NpmInstallPlugin from 'npm-install-webpack-plugin'
-import qs from 'qs'
 import webpack, {optimize} from 'webpack'
-import failPlugin from 'webpack-fail-plugin'
 import Md5HashPlugin from 'webpack-md5-hash'
 import merge from 'webpack-merge'
 
-import HashedModuleIdsPlugin from '../vendor/HashedModuleIdsPlugin'
 import createBabelConfig from './createBabelConfig'
 import debug from './debug'
 import {deepToString, typeOf} from './utils'
 import StatusPlugin from './WebpackStatusPlugin'
 
-// Top-level property names reserved for webpack config
-// From http://webpack.github.io/docs/configuration.html
-const WEBPACK_RESERVED = 'context entry output module resolve resolveLoader externals target bail profile cache watch watchOptions debug devtool devServer node amd loader recordsPath recordsInputPath recordsOutputPath plugins'.split(' ')
+// Custom merge which replaces arrays instead of merging them. The only arrays
+// used in default options are for PostCSS plugins, which we want the user to be
+// able to completely override.
+let replaceArrayMerge = merge({customizeArray(a, b, key) { return b }})
 
 /**
- * Create a loader string from a list of {loader, query} objects.
+ * Merge webpack rule config ({test, loader|use, options, include, exclude}) objects.
  */
-export let combineLoaders = loaders =>
-  loaders.map(loader => {
-    let query = qs.stringify(loader.query, {arrayFormat: 'brackets'})
-    return `${loader.loader}${query && `?${query}`}`
-  }).join('!')
-
-/**
- * Merge webpack loader config ({test, loader, query, include, exclude}) objects.
- */
-export function mergeLoaderConfig(defaultConfig = {}, buildConfig = {}, userConfig = {}) {
-  // Don't include a 'config' object if the user provided one - this will be
-  // configured at the top level instead.
-  let {config, ...userLoaderConfig} = userConfig // eslint-disable-line no-unused-vars
-  let loader = merge(defaultConfig, buildConfig, userLoaderConfig)
-  if (loader.query && Object.keys(loader.query).length === 0) {
-    delete loader.query
+export function mergeRuleConfig(defaultConfig = {}, buildConfig = {}, userConfig = {}) {
+  let rule = replaceArrayMerge(defaultConfig, buildConfig, userConfig)
+  if (rule.options && Object.keys(rule.options).length === 0) {
+    delete rule.options
   }
-  return loader
+  return rule
 }
 
 /**
- * Create a function which configures a loader identified by a unique id, with
+ * Create a function which configures a rule identified by a unique id, with
  * the option to override defaults with build-specific and user config.
  */
-export let loaderConfigFactory = (buildConfig, userConfig) =>
-  (id, defaultConfig) => {
+export let ruleConfigFactory = (buildConfig, userConfig = {}) =>
+  (id, defaultConfig, {ident = false} = {}) => {
     if (id) {
-      return {id, ...mergeLoaderConfig(defaultConfig, buildConfig[id], userConfig[id])}
+      let rule = mergeRuleConfig(defaultConfig, buildConfig[id], userConfig[id])
+      if (ident && rule.options) {
+        rule.options.ident = id
+      }
+      return rule
     }
     return defaultConfig
   }
@@ -61,13 +51,13 @@ export let loaderConfigFactory = (buildConfig, userConfig) =>
  * Create a function which applies a prefix to a given name when a prefix is
  * given, unless the prefix ends with a name, in which case the prefix itself is
  * returned.
- * The latter rule is to allow loaders created for CSS preprocessor plugins to
+ * The latter rule is to allow rules created for CSS preprocessor plugins to
  * be given unique ids for user configuration without duplicating the name of
- * the loader.
- * e.g.: styleLoaderName('sass')('css') => 'sass-css'
- *       styleLoaderName('sass')('sass') => 'sass' (as opposed to 'sass-sass')
+ * the rule.
+ * e.g.: styleRuleName('sass')('css') => 'sass-css'
+ *       styleRuleName('sass')('sass') => 'sass' (as opposed to 'sass-sass')
  */
-export let styleLoaderName = (prefix) =>
+export let styleRuleName = (prefix) =>
   (name) => {
     if (prefix && prefix.endsWith(name)) {
       return prefix
@@ -79,61 +69,60 @@ export let styleLoaderName = (prefix) =>
  * Create a default style-handling pipeline for either a static build (default)
  * or a server build.
  */
-export function createStyleLoader(loader, server, {
+export function createStyleLoaders(loader, server, userWebpackConfig, {
   preprocessor = null,
   prefix = null,
 } = {}) {
-  let name = styleLoaderName(prefix)
+  let name = styleRuleName(prefix)
+  let styleLoader = loader(name('style'), {
+    loader: require.resolve('style-loader'),
+  })
   let loaders = [
     loader(name('css'), {
       loader: require.resolve('css-loader'),
-      query: {
+      options: {
         // Apply postcss-loader to @imports
         importLoaders: 1,
       },
     }),
     loader(name('postcss'), {
       loader: require.resolve('postcss-loader'),
-      query: {
-        pack: prefix,
-      },
-    })
+      options: {
+        plugins: createDefaultPostCSSPlugins(userWebpackConfig),
+      }
+    }, {ident: true})
   ]
 
   if (preprocessor) {
-    loaders.push(loader(name(preprocessor.id), preprocessor.config))
+    loaders.push(loader(name(preprocessor.id), preprocessor.config, {ident: true}))
   }
 
   if (server) {
-    loaders.unshift(
-      loader(name('style'), {
-        loader: require.resolve('style-loader'),
-      })
-    )
-    return combineLoaders(loaders)
+    loaders.unshift(styleLoader)
+    return loaders
   }
   else {
-    return ExtractTextPlugin.extract(
-      require.resolve('style-loader'),
-      combineLoaders(loaders)
-    )
+    return ExtractTextPlugin.extract({
+      fallbackLoader: styleLoader,
+      loader: loaders,
+    })
   }
 }
 
 /**
- * Final webpack loader config consists of:
- * - the default set of loaders created in this function, with build and user
- *   config tweaks based on loader id.
- * - extra loaders defined in build config, with user config tweaks based
- *   on loader id.
- * - extra loaders created for CSS preprocessor plugins, with user config
+ * Final webpack rules config consists of:
+ * - the default set of rules created in this function, with build and user
+ *   config tweaks based on rule id.
+ * - extra rules defined in build config, with user config tweaks based
+ *   on rule id.
+ * - extra rules created for CSS preprocessor plugins, with user config
  *   tweaks based on loader id.
- * - extra loaders defined in user config.
+ * - extra rules defined in user config.
  */
-export function createLoaders(server, buildConfig = {}, userConfig = {}, pluginConfig = {}) {
-  let loader = loaderConfigFactory(buildConfig, userConfig)
+export function createRules(server, buildConfig = {}, userWebpackConfig = {}, pluginConfig = {}) {
+  let rule = ruleConfigFactory(buildConfig, userWebpackConfig.rules)
 
-  // Default query options for url-loader
+  // Default options for url-loader
   let urlLoaderOptions = {
     // Don't inline anything by default
     limit: 1,
@@ -141,88 +130,84 @@ export function createLoaders(server, buildConfig = {}, userConfig = {}, pluginC
     name: '[name].[hash:8].[ext]',
   }
 
-  let loaders = [
-    loader('babel', {
+  let rules = [
+    rule('babel', {
       test: /\.js$/,
       loader: require.resolve('babel-loader'),
       exclude: process.env.NWB_TEST ? /(node_modules|nwb[\\/]polyfills\.js$)/ : /node_modules/,
-      query: {
+      options: {
         // Don't look for .babelrc files
         babelrc: false,
-        // Cache transformations to the filesystem (in default OS temp dir)
+        // Cache transformations to the filesystem (in default temp dir)
         cacheDirectory: true,
       }
     }),
-    loader('css-pipeline', {
+    rule('css-pipeline', {
       test: /\.css$/,
-      loader: createStyleLoader(loader, server),
+      use: createStyleLoaders(rule, server, userWebpackConfig),
       exclude: /node_modules/,
     }),
-    loader('vendor-css-pipeline', {
+    rule('vendor-css-pipeline', {
       test: /\.css$/,
-      loader: createStyleLoader(loader, server, {
+      use: createStyleLoaders(rule, server, userWebpackConfig, {
         prefix: 'vendor',
       }),
       include: /node_modules/,
     }),
-    loader('graphics', {
-      test: /\.(gif|png|webp)(\?.*)?$/,
+    rule('graphics', {
+      test: /\.(gif|png|webp)$/,
       loader: require.resolve('url-loader'),
-      query: {...urlLoaderOptions},
+      options: {...urlLoaderOptions},
     }),
-    loader('svg', {
-      test: /\.svg(\?.*)?$/,
+    rule('svg', {
+      test: /\.svg$/,
       loader: require.resolve('url-loader'),
-      query: {...urlLoaderOptions},
+      options: {...urlLoaderOptions},
     }),
-    loader('jpeg', {
-      test: /\.jpe?g(\?.*)?$/,
+    rule('jpeg', {
+      test: /\.jpe?g$/,
       loader: require.resolve('url-loader'),
-      query: {...urlLoaderOptions},
+      options: {...urlLoaderOptions},
     }),
-    loader('fonts', {
-      test: /\.(eot|otf|ttf|woff|woff2)(\?.*)?$/,
+    rule('fonts', {
+      test: /\.(eot|otf|ttf|woff|woff2)$/,
       loader: require.resolve('url-loader'),
-      query: {...urlLoaderOptions},
+      options: {...urlLoaderOptions},
     }),
-    loader('video', {
-      test: /\.(mp4|ogg|webm)(\?.*)?$/,
+    rule('video', {
+      test: /\.(mp4|ogg|webm)$/,
       loader: require.resolve('url-loader'),
-      query: {...urlLoaderOptions},
+      options: {...urlLoaderOptions},
     }),
-    loader('audio', {
+    rule('audio', {
       test: /\.(wav|mp3|m4a|aac|oga)(\?.*)?$/,
       loader: require.resolve('url-loader'),
-      query: {...urlLoaderOptions},
+      options: {...urlLoaderOptions},
     }),
-    loader('json', {
-      test: /\.json$/,
-      loader: require.resolve('json-loader'),
-    }),
-    // Extra loaders from build config, still configurable via user config when
-    // the loaders specify an id.
-    ...createExtraLoaders(buildConfig.extra, userConfig),
+    // Extra rules from build config, still configurable via user config when
+    // the rules specify an id.
+    ...createExtraRules(buildConfig.extra, userWebpackConfig.rules),
   ]
 
   if (pluginConfig.cssPreprocessors) {
     Object.keys(pluginConfig.cssPreprocessors).forEach(id => {
-      let {test, ...config} = pluginConfig.cssPreprocessors[id]
-      loaders.push(
-        loader(`${id}-pipeline`, {
+      let {test, loader: preprocessorLoader} = pluginConfig.cssPreprocessors[id]
+      rules.push(
+        rule(`${id}-pipeline`, {
           test,
-          loader: createStyleLoader(loader, server, {
+          use: createStyleLoaders(rule, server, userWebpackConfig, {
             prefix: id,
-            preprocessor: {id, config},
+            preprocessor: {id, config: {loader: preprocessorLoader}},
           }),
           exclude: /node_modules/
         })
       )
-      loaders.push(
-        loader(`vendor-${id}-pipeline`, {
+      rules.push(
+        rule(`vendor-${id}-pipeline`, {
           test,
-          loader: createStyleLoader(loader, server, {
+          use: createStyleLoaders(rule, server, userWebpackConfig, {
             prefix: `vendor-${id}`,
-            preprocessor: {id, config},
+            preprocessor: {id, config: {loader: preprocessorLoader}},
           }),
           include: /node_modules/
         })
@@ -230,18 +215,18 @@ export function createLoaders(server, buildConfig = {}, userConfig = {}, pluginC
     })
   }
 
-  return loaders
+  return rules
 }
 
 /**
- * Create loaders from loader definitions which may include an id attribute for
+ * Create rules from rule definitions which may include an id attribute for
  * user customisation. It's assumed these are being created from build config.
  */
-export function createExtraLoaders(extraLoaders = [], userConfig = {}) {
-  let loader = loaderConfigFactory({}, userConfig)
-  return extraLoaders.map(extraLoader => {
-    let {id, ...loaderConfig} = extraLoader
-    return loader(id, loaderConfig)
+export function createExtraRules(extraRules = [], userConfig = {}) {
+  let rule = ruleConfigFactory({}, userConfig)
+  return extraRules.map(extraRule => {
+    let {id, ...ruleConfig} = extraRules
+    return rule(id, ruleConfig)
   })
 }
 
@@ -312,17 +297,12 @@ export function createPlugins(server, buildConfig = {}, userConfig = {}) {
     }),
   ]
 
-  // Fail the build if there are compilation errors when running on CI
-  if (process.env.CI || process.env.CONTINUOUS_INTEGRATION) {
-    plugins.push(failPlugin)
-  }
-
   if (server) {
     // HMR is enabled by default but can be explicitly disabled
     if (server.hot !== false) {
       plugins.push(
         new webpack.HotModuleReplacementPlugin(),
-        new webpack.NoErrorsPlugin(),
+        new webpack.NoEmitOnErrorsPlugin(),
       )
     }
     if (buildConfig.status) {
@@ -335,7 +315,8 @@ export function createPlugins(server, buildConfig = {}, userConfig = {}) {
   else {
     // Extract CSS required as modules out into files
     let cssFilename = production ? `[name].[contenthash:8].css` : '[name].css'
-    plugins.push(new ExtractTextPlugin(cssFilename, {
+    plugins.push(new ExtractTextPlugin({
+      filename: cssFilename,
       ...userConfig.extractText,
     }))
 
@@ -360,7 +341,7 @@ export function createPlugins(server, buildConfig = {}, userConfig = {}) {
         // HashedModuleIdsPlugin (vendored from Webpack 2) does this without
         // adding too much to bundle size and NamedModulesPlugin allows for
         // easier debugging of development builds.
-        development ? new webpack.NamedModulesPlugin() : new HashedModuleIdsPlugin(),
+        development ? new webpack.NamedModulesPlugin() : new webpack.HashedModuleIdsPlugin(),
         // The MD5 Hash plugin seems to make [chunkhash] for .js files behave
         // like [contenthash] does for extracted .css files, which is essential
         // for deterministic hashing.
@@ -376,40 +357,38 @@ export function createPlugins(server, buildConfig = {}, userConfig = {}) {
   }
 
   if (production) {
-    // Temporarily commented out to prevent an error in __webpack_require__
-    // See https://github.com/webpack/webpack/issues/959#issuecomment-237438754
-    // plugins.push(new optimize.DedupePlugin())
+    plugins.push(new webpack.LoaderOptionsPlugin({
+      debug: false,
+      minimize: true,
+    }))
     if (userConfig.uglify !== false) {
-      plugins.push(
-        new optimize.UglifyJsPlugin(merge({
-          compress: {
-            warnings: false,
-          },
-          output: {
-            comments: false,
-          },
-        }, userConfig.uglify))
-      )
+      plugins.push(new optimize.UglifyJsPlugin(merge({
+        compress: {
+          warnings: false,
+        },
+        output: {
+          comments: false,
+        },
+        sourceMap: true,
+      }, userConfig.uglify)))
     }
   }
 
   // Generate an HTML file for web apps which pulls in generated resources
   if (buildConfig.html) {
-    plugins.push(
-      new HtmlPlugin({
-        chunksSortMode: 'dependency',
-        template: path.join(__dirname, '../templates/webpack-template.html'),
-        ...buildConfig.html,
-        ...userConfig.html,
-      }),
-    )
+    plugins.push(new HtmlPlugin({
+      chunksSortMode: 'dependency',
+      template: path.join(__dirname, '../templates/webpack-template.html'),
+      ...buildConfig.html,
+      ...userConfig.html,
+    }))
   }
 
   // Copy static resources
   if (buildConfig.copy) {
-    plugins.push(
-      new CopyPlugin(...getCopyPluginArgs(buildConfig.copy, userConfig.copy))
-    )
+    plugins.push(new CopyPlugin(
+      ...getCopyPluginArgs(buildConfig.copy, userConfig.copy)
+    ))
   }
 
   // Automatically install missing npm dependencies and add them to package.json
@@ -423,7 +402,7 @@ export function createPlugins(server, buildConfig = {}, userConfig = {}) {
 
   // Insert a banner comment at the top of generated files - used for UMD builds
   if (buildConfig.banner) {
-    plugins.push(new webpack.BannerPlugin(buildConfig.banner))
+    plugins.push(new webpack.BannerPlugin({banner: buildConfig.banner}))
   }
 
   // Escape hatch for any extra plugins a particular build ever needs to add
@@ -432,79 +411,6 @@ export function createPlugins(server, buildConfig = {}, userConfig = {}) {
   }
 
   return plugins
-}
-
-/**
- * Extract top-level loader configuration provided by the user.
- */
-export function getTopLevelLoaderConfig(userLoaderConfig, cssPreprocessors = {}) {
-  if (!userLoaderConfig || Object.keys(userLoaderConfig).length === 0) {
-    return {}
-  }
-
-  let topLevelLoaderConfig = {}
-  Object.keys(userLoaderConfig).forEach(loaderId => {
-    let loaderConfig = userLoaderConfig[loaderId]
-    if (!('config' in loaderConfig)) return
-
-    // Determine the proeprty to set top level loader config under
-    let configPropertyName
-
-    // Trust the user to specify their own config key for loaders with support
-    if (loaderConfig.query && 'config' in loaderConfig.query) {
-      configPropertyName = loaderConfig.query.config
-    }
-    else {
-      // Otherwise, determine the correct config key
-      let id = loaderId.replace(/^vendor-/, '')
-      if (id in cssPreprocessors) {
-        if (!cssPreprocessors[id].defaultConfig) {
-          throw new Error(`The ${id} CSS preprocessor loader doesn't support a default top-level config object.`)
-        }
-        configPropertyName = cssPreprocessors[id].defaultConfig
-      }
-      else if (id === 'babel') {
-        configPropertyName = 'babel'
-      }
-      else {
-        throw new Error(`The ${id} loader doesn't appear to support a default top-level config object.`)
-      }
-    }
-
-    if (WEBPACK_RESERVED.indexOf(configPropertyName) !== -1) {
-      throw new Error(
-        `User config for the ${loaderId} loader cannot be set in ${configPropertyName} - this is reserved for use by Webpack.`
-      )
-    }
-    else if (configPropertyName in topLevelLoaderConfig) {
-      throw new Error(
-        `User config for the ${loaderId} loader cannot be set in ${configPropertyName} - this has already been used.`
-      )
-    }
-
-    topLevelLoaderConfig[configPropertyName] = loaderConfig.config
-  })
-
-  return topLevelLoaderConfig
-}
-
-/**
- * Create top-level PostCSS plugin config for each style pipeline.
- */
-export function createPostCSSConfig(userWebpackConfig, cssPreprocessors = {}) {
-  // postcss-loader throws an error if a pack name is provided but isn't
-  // configured, so we need to set the default PostCSS plugins for every single
-  // style pipeline.
-  let postcss = {
-    defaults: createDefaultPostCSSPlugins(userWebpackConfig),
-    vendor: createDefaultPostCSSPlugins(userWebpackConfig),
-  }
-  Object.keys(cssPreprocessors).forEach(id => {
-    postcss[id] = createDefaultPostCSSPlugins(userWebpackConfig)
-    postcss[`vendor-${id}`] = createDefaultPostCSSPlugins(userWebpackConfig)
-  })
-  // Any PostCSS plugins provided by the user will completely overwrite defaults
-  return {...postcss, ...userWebpackConfig.postcss}
 }
 
 function createDefaultPostCSSPlugins(userWebpackConfig) {
@@ -587,7 +493,7 @@ function addPolyfillsToEntry(entry) {
 }
 
 /**
- * Create a webpack config with a curated set of default loaders suitable for
+ * Create a webpack config with a curated set of default rules suitable for
  * creating a static build (default) or serving an app with hot reloading.
  */
 export default function createWebpackConfig(buildConfig, nwbPluginConfig = {}, userConfig = {}) {
@@ -601,11 +507,11 @@ export default function createWebpackConfig(buildConfig, nwbPluginConfig = {}, u
     // rather than being included as-is.
     babel: buildBabelConfig = {},
     entry,
-    loaders: buildLoaderConfig = {},
     output: buildOutputConfig,
     polyfill: buildPolyfill,
     plugins: buildPluginConfig = {},
     resolve: buildResolveConfig = {},
+    rules: buildRulesConfig = {},
     server = false,
     // Any other build config provided is merged directly into the final webpack
     // config to provide the rest of the default config.
@@ -623,11 +529,11 @@ export default function createWebpackConfig(buildConfig, nwbPluginConfig = {}, u
   }
 
   // Generate config for babel-loader and set it as loader config for the build
-  buildLoaderConfig.babel = {query: createBabelConfig(buildBabelConfig, userConfig.babel)}
+  buildRulesConfig.babel = {options: createBabelConfig(buildBabelConfig, userConfig.babel)}
 
   let webpackConfig = {
     module: {
-      loaders: createLoaders(server, buildLoaderConfig, userWebpackConfig.loaders, nwbPluginConfig)
+      rules: createRules(server, buildRulesConfig, userWebpackConfig, nwbPluginConfig)
     },
     output: {
       ...buildOutputConfig,
@@ -635,20 +541,18 @@ export default function createWebpackConfig(buildConfig, nwbPluginConfig = {}, u
     },
     plugins: createPlugins(server, buildPluginConfig, userWebpackConfig),
     resolve: merge({
-      extensions: ['', '.js', '.json'],
+      extensions: ['.js', '.json'],
     }, buildResolveConfig, userResolveConfig),
-    // XXX As of v2.25.0, html-webpack-plugin no longer outputs an absolute path
-    //     to its loader, so we must fall back to nwb's node_modules/ for global
-    //     usage.
     // resolveLoader: {
-    //   fallback: path.join(__dirname, '../node_modules'),
+    //   modules: [
+    //     'node_modules',
+    //     // As of v2.25.0, html-webpack-plugin no longer outputs an absolute path
+    //     // to its loader, so we must fall back to nwb's node_modules/ for global
+    //     // usage.
+    //     path.join(__dirname, '../node_modules'),
+    //   ],
     // },
-    postcss: createPostCSSConfig(userWebpackConfig, nwbPluginConfig.cssPreprocessors),
     ...otherBuildConfig,
-    // Top level loader config can be supplied via user "loaders" config, so we
-    // detect, extract and where possible validate it before merging it into the
-    // final webpack config object.
-    ...getTopLevelLoaderConfig(userWebpackConfig.loaders, nwbPluginConfig.cssPreprocessors),
   }
 
   if (entry) {

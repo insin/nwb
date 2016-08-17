@@ -22,7 +22,6 @@ function buildConfig(args) {
 
   let config = {
     babel: {
-      commonJSInterop: true,
       presets: ['react'],
       stage: 0,
     },

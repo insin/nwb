@@ -6,6 +6,9 @@ let parent = document.getElementById(NWB_INFERNO_RUN_MOUNT_ID)
 let vnode = null
 
 function renderEntry(exported) {
+  if (exported.default) {
+    exported = exported.default
+  }
   // Assumptions: the entry module either renders the app itself or exports an
   // Inferno component (which is either a function or class) or VNode (which has
   // a flags property).

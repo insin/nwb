@@ -1,35 +1,49 @@
 import expect from 'expect'
 
 import createWebpackConfig, {
-  combineLoaders,
   COMPAT_CONFIGS,
-  createPostCSSConfig,
   getCompatConfig,
-  getTopLevelLoaderConfig,
-  mergeLoaderConfig,
-  styleLoaderName,
+  mergeRuleConfig,
+  styleRuleName,
 } from '../src/createWebpackConfig'
 
-let findLoaderById = (loaders, id) => {
-  return loaders.filter(loader => loader.id === id)[0]
+function findSassPipelineRule(rules) {
+  return rules.filter(rule =>
+    rule.test.test('.scss') && rule.exclude
+  )[0]
+}
+
+function findVendorSassPipelineRule(rules) {
+  return rules.filter(rule =>
+    rule.test.test('.scss') && rule.include
+  )[0]
+}
+
+function getLoaders(rules) {
+  return rules.map(rule => {
+    // Style chains
+    if (rule.use) {
+      return rule.use.map(loader => loader.loader).join('\n')
+    }
+    return rule.loader
+  }).join('\n')
 }
 
 describe('createWebpackConfig()', () => {
   context('with only entry config', () => {
     let config = createWebpackConfig({entry: ['index.js']})
     it('creates a default webpack build config', () => {
-      expect(Object.keys(config)).toEqual(['module', 'output', 'plugins', 'resolve', 'postcss', 'entry'])
-      expect(config.module.loaders.map(loader => loader.loader).join('\n'))
+      expect(Object.keys(config)).toEqual(['module', 'output', 'plugins', 'resolve', 'entry'])
+      expect(getLoaders(config.module.rules))
         .toContain('babel-loader')
         .toContain('extract-text-webpack-plugin')
         .toContain('css-loader')
         .toContain('postcss-loader')
         .toContain('url-loader')
-        .toContain('json-loader')
-      expect(config.resolve.extensions).toEqual(['', '.js', '.json'])
+      expect(config.resolve.extensions).toEqual(['.js', '.json'])
     })
     it('excludes node_modules from babel-loader', () => {
-      expect(config.module.loaders[0].exclude.test('node_modules')).toBe(true)
+      expect(config.module.rules[0].exclude.test('node_modules')).toBe(true)
     })
     it('adds default polyfills to the entry chunk', () => {
       expect(config.entry).toEqual([require.resolve('../polyfills'), 'index.js'])
@@ -39,14 +53,13 @@ describe('createWebpackConfig()', () => {
   context('with server config', () => {
     let config = createWebpackConfig({entry: ['index.js'], server: {}})
     it('creates a server webpack config', () => {
-      expect(config.module.loaders.map(loader => loader.loader).join('\n'))
+      expect(getLoaders(config.module.rules))
         .toContain('babel-loader')
         .toContain('style-loader')
         .toContain('css-loader')
         .toContain('postcss-loader')
         .toContain('url-loader')
-        .toContain('json-loader')
-      expect(config.resolve.extensions).toEqual(['', '.js', '.json'])
+      expect(config.resolve.extensions).toEqual(['.js', '.json'])
     })
   })
 
@@ -69,25 +82,35 @@ describe('createWebpackConfig()', () => {
   context('with plugin config for a CSS preprocessor', () => {
     let config = createWebpackConfig({server: true}, cssPreprocessorPluginConfig)
     it('creates a style loading pipeline', () => {
-      let loader = findLoaderById(config.module.loaders, 'sass-pipeline')
-      expect(loader).toExist()
-      expect(loader.loader).toMatch(/.*?style-loader.*?css-loader.*?postcss-loader.*?!path\/to\/sass-loader\.js$/)
-      expect(loader.exclude.test('node_modules')).toBe(true, 'app loader should exclude node_modules')
+      let rule = findSassPipelineRule(config.module.rules)
+      expect(rule).toExist()
+      expect(rule.use).toMatch([
+        {loader: /style-loader/},
+        {loader: /css-loader/},
+        {loader: /postcss-loader/},
+        {loader: /path\/to\/sass-loader\.js$/},
+      ])
+      expect(rule.exclude.test('node_modules')).toBe(true, 'app rule should exclude node_modules')
     })
     it('creates a vendor style loading pipeline', () => {
-      let loader = findLoaderById(config.module.loaders, 'vendor-sass-pipeline')
-      expect(loader).toExist()
-      expect(loader.loader).toMatch(/.*?style-loader.*?css-loader.*?postcss-loader.*?!path\/to\/sass-loader\.js$/)
-      expect(loader.include.test('node_modules')).toBe(true, 'vendor loader should include node_modules')
+      let rule = findVendorSassPipelineRule(config.module.rules, 'vendor-sass-pipeline')
+      expect(rule).toExist()
+      expect(rule.use).toMatch([
+        {loader: /style-loader/},
+        {loader: /css-loader/},
+        {loader: /postcss-loader/},
+        {loader: /path\/to\/sass-loader\.js$/},
+      ])
+      expect(rule.include.test('node_modules')).toBe(true, 'vendor rule should include node_modules')
     })
   })
 
-  context('with plugin config for a CSS preprocessor and user config for its loader', () => {
+  context('with plugin config for a CSS preprocessor and user config for its rule', () => {
     let config = createWebpackConfig({server: true}, cssPreprocessorPluginConfig, {
       webpack: {
-        loaders: {
+        rules: {
           sass: {
-            query: {
+            options: {
               a: 1,
               b: 2,
             }
@@ -95,15 +118,28 @@ describe('createWebpackConfig()', () => {
         }
       }
     })
-    it('applies user config to the preprocessor loader', () => {
-      let loader = findLoaderById(config.module.loaders, 'sass-pipeline')
-      expect(loader).toExist()
-      expect(loader.loader).toMatch(/.*?style-loader.*?css-loader.*?postcss-loader.*?!path\/to\/sass-loader\.js\?a=1&b=2$/)
+    it('applies user config to the preprocessor rule', () => {
+      let rule = findSassPipelineRule(config.module.rules, 'sass-pipeline')
+      expect(rule).toExist()
+      expect(rule.use).toMatch([
+        {loader: /style-loader/},
+        {loader: /css-loader/},
+        {loader: /postcss-loader/},
+        {
+          loader: /path\/to\/sass-loader\.js$/,
+          options: {a: 1, b: 2},
+        },
+      ])
     })
-    it('only applies user config to the appropriate loader', () => {
-      let loader = findLoaderById(config.module.loaders, 'vendor-sass-pipeline')
-      expect(loader).toExist()
-      expect(loader.loader).toMatch(/.*?style-loader.*?css-loader.*?postcss-loader.*?!path\/to\/sass-loader\.js$/)
+    it('only applies user config to the appropriate rule', () => {
+      let rule = findVendorSassPipelineRule(config.module.rules, 'vendor-sass-pipeline')
+      expect(rule).toExist()
+      expect(rule.use).toMatch([
+        {loader: /style-loader/},
+        {loader: /css-loader/},
+        {loader: /postcss-loader/},
+        {loader: /path\/to\/sass-loader\.js$/},
+      ])
     })
   })
 
@@ -184,171 +220,87 @@ describe('createWebpackConfig()', () => {
   })
 })
 
-describe('styleLoaderName()', () => {
+describe('styleRuleName()', () => {
   it('returns the given value if a falsy prefix was given', () => {
-    let name = styleLoaderName(null)
+    let name = styleRuleName(null)
     expect(name('css')).toEqual('css')
     expect(name('style')).toEqual('style')
   })
   it('prefixes the value if a prefix was given', () => {
-    let name = styleLoaderName('vendor')
+    let name = styleRuleName('vendor')
     expect(name('css')).toEqual('vendor-css')
     expect(name('style')).toEqual('vendor-style')
   })
   it('returns the prefix if it ends with the given value', () => {
-    let name = styleLoaderName('sass')
+    let name = styleRuleName('sass')
     expect(name('css')).toEqual('sass-css')
     expect(name('sass')).toEqual('sass')
-    name = styleLoaderName('vendor-sass')
+    name = styleRuleName('vendor-sass')
     expect(name('css')).toEqual('vendor-sass-css')
     expect(name('sass')).toEqual('vendor-sass')
   })
 })
 
-describe('mergeLoaderConfig()', () => {
+describe('mergeRuleConfig()', () => {
   const TEST_RE = /\.test$/
   const EXCLUDE_RE = /node_modules/
-  let loader = {test: TEST_RE, loader: 'one', exclude: EXCLUDE_RE}
-  it('merges default, build and user config for a loader', () => {
-    expect(mergeLoaderConfig(
-      {...loader, query: {a: 1}},
-      {query: {b: 2}},
-      {query: {c: 3}},
+  let rule = {test: TEST_RE, loader: 'one', exclude: EXCLUDE_RE}
+  it('merges default, build and user config for a rule', () => {
+    expect(mergeRuleConfig(
+      {...rule, options: {a: 1}},
+      {options: {b: 2}},
+      {options: {c: 3}},
     )).toEqual({
       test: TEST_RE,
       loader: 'one',
       exclude: EXCLUDE_RE,
-      query: {a: 1, b: 2, c: 3},
+      options: {a: 1, b: 2, c: 3},
     })
   })
-  it('only adds a query prop if the merged query has props', () => {
-    expect(mergeLoaderConfig(loader, {}, {})).toEqual({
+  it('only adds an options prop if the merged options have props', () => {
+    expect(mergeRuleConfig(rule, {}, {})).toEqual({
       test: TEST_RE,
       loader: 'one',
       exclude: EXCLUDE_RE,
     })
   })
-  it('removes the merged query when it has no properties', () => {
-    expect(mergeLoaderConfig(loader, {}, {query: {}})).toEqual({
+  it('removes the merged options when it has no properties', () => {
+    expect(mergeRuleConfig(rule, {}, {options: {}})).toEqual({
       test: TEST_RE,
       loader: 'one',
       exclude: EXCLUDE_RE,
     })
   })
-  it('appends lists when merging queries', () => {
-    expect(mergeLoaderConfig(
-      loader,
-      {query: {optional: ['two']}},
-      {query: {optional: ['three']}}
+  it('replaces lists when merging options instead of concatenating them', () => {
+    expect(mergeRuleConfig(
+      rule,
+      {options: {optional: ['two']}},
+      {options: {optional: ['three']}}
     )).toEqual({
       test: TEST_RE,
       loader: 'one',
       exclude: EXCLUDE_RE,
-      query: {
-        optional: ['two', 'three'],
+      options: {
+        optional: ['three'],
       },
     })
   })
-  it('deep merges queries', () => {
-    expect(mergeLoaderConfig(
-      loader,
-      {query: {nested: {a: true}}},
-      {query: {nested: {b: true}}},
+  it('deep merges options', () => {
+    expect(mergeRuleConfig(
+      rule,
+      {options: {nested: {a: true}}},
+      {options: {nested: {b: true}}},
     )).toEqual({
       test: TEST_RE,
       loader: 'one',
       exclude: EXCLUDE_RE,
-      query: {
+      options: {
         nested: {
           a: true,
           b: true,
         }
       }
     })
-  })
-})
-
-describe('combineLoaders()', () => {
-  it('stringifies query strings, appends them and joins loaders', () => {
-    expect(combineLoaders([
-      {loader: 'one', query: {a: 1, b: 2}},
-      {loader: 'two', query: {c: 3, d: 4}},
-    ])).toEqual('one?a=1&b=2!two?c=3&d=4')
-  })
-  it('only appends a ? if query is non-empty', () => {
-    expect(combineLoaders([
-      {loader: 'one', query: {a: 1, b: 2}},
-      {loader: 'two', query: {}},
-      {loader: 'three'},
-    ])).toEqual('one?a=1&b=2!two!three')
-  })
-})
-
-describe('getTopLevelLoaderConfig()', () => {
-  describe('without any top level config specified', () => {
-    it('returns an empty object', () => {
-      expect(getTopLevelLoaderConfig(null)).toEqual({})
-      expect(getTopLevelLoaderConfig({})).toEqual({})
-    })
-  })
-  it('trusts the user if they specify their own config prop for a loader', () => {
-    expect(getTopLevelLoaderConfig({test: {config: {a: 1}, query: {config: 'testLoader'}}}))
-      .toEqual({testLoader: {a: 1}})
-  })
-  it('throws if a top-level webpack config prop is used', () => {
-    expect(() => getTopLevelLoaderConfig({test: {config: {a: 1}, query: {config: 'entry'}}}))
-      .toThrow(/this is reserved for use by Webpack/)
-  })
-  it('uses "babel" as the default config prop for babel-loader', () => {
-    expect(getTopLevelLoaderConfig({babel: {config: {stage: 0}}}))
-      .toEqual({babel: {stage: 0}})
-  })
-  it('throws if other top-level config is given', () => {
-    expect(() => getTopLevelLoaderConfig({test: {config: {a: 1}}}))
-      .toThrow(/The test loader doesn't appear to support a default top-level config object/)
-  })
-
-  describe('with CSS preprocessors available', () => {
-    let cssPreprocessors = {
-      sass: {
-        test: /\.scss$/,
-        loader: 'path/to/sass-loader.js',
-        defaultConfig: 'sassLoader',
-      },
-      less: {
-        test: /\.less$/,
-        loader: 'path/to/less-loader.js',
-      }
-    }
-
-    it('uses the default config prop for a CSS preprocessor', () => {
-      expect(getTopLevelLoaderConfig({sass: {config: {a: 1}}}, cssPreprocessors))
-        .toEqual({sassLoader: {a: 1}})
-    })
-    it('throws if the same config prop is configured twice', () => {
-      expect(() => getTopLevelLoaderConfig({
-        sass: {config: {a: 1}},
-        'vendor-sass': {config: {b: 1}},
-      }, cssPreprocessors))
-        .toThrow(/this has already been used/)
-    })
-    it('throws if a default config prop is not available', () => {
-      expect(() => getTopLevelLoaderConfig({less: {config: {a: 1}}}, cssPreprocessors))
-        .toThrow(/The less CSS preprocessor loader doesn't support a default top-level config object/)
-    })
-  })
-})
-
-describe('createPostCSSConfig()', () => {
-  it('creates default plugin config', () => {
-    expect(createPostCSSConfig({})).toIncludeKeys(['defaults', 'vendor'])
-  })
-  it('creates default plugin config for CSS preprocessors', () => {
-    expect(createPostCSSConfig({}, {less: {}, sass: {}}))
-      .toIncludeKeys(['defaults', 'vendor', 'less', 'vendor-less', 'sass', 'vendor-sass'])
-  })
-  it('overwrites plugin config with user config', () => {
-    expect(createPostCSSConfig({postcss: {defaults: [1, 2, 3]}}).defaults).toEqual([1, 2, 3])
   })
 })
 

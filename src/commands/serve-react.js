@@ -15,7 +15,6 @@ function buildConfig(args) {
 
   let config = {
     babel: {
-      commonJSInterop: true,
       presets: ['react', 'react-hmre'],
       stage: 0,
     },

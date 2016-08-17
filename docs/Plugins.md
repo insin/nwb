@@ -34,22 +34,19 @@ nwb will scan the current project's `package.json` for these modules, then impor
 
 CSS preprocessor plugins must export a configuration object in the following format:
 
-   ```js
-   {
-      cssPreprocessors: {
-        'unique preprocessor id': {
-          test: /\.fileextension$/,
-          loader: 'absolute path to a webpack loader module.js',
-          defaultConfig: 'default top-level webpack config prop for loader',
-          ...{other: 'webpack loader config, e.g. default query config'}
-        }
+ ```js
+ {
+    cssPreprocessors: {
+      'preprocessor-id': {
+        test: /\.fileextension$/,
+        loader: 'absolute path to a webpack loader module.js',
+        // Other rule config, e.g. default options
       }
-   }
+    }
+ }
    ```
 
-The preprocessor id is critical - this will be used to generate names for the style loaders created for the preprocessor, and this will be what users will use in their `nwb.config.js` to apply configuration to the preprocessor's webpack loader.
-
-If the preprocessor's webpack loader supports reading configuration from a top-level webpack configuration property, its name should be configured as `defaultConfig`.
+The preprocessor id is critical - this will be used to generate names for the Webpack rules and loaders created for the preprocessor, which users can use in their `nwb.config.js` to apply configuration.
 
 ----
 
@@ -60,26 +57,8 @@ module.exports = {
   cssPreprocessors: {
     sass: {
       test: /\.s[ac]ss$/,
-      loader: require.resolve('sass-loader'),
-      defaultConfig: 'sassLoader'
+      loader: require.resolve('sass-loader')
     }
   }
 }
-
 ```
-
-Given the above, nwb will create these additional Webpack loaders:
-
-1. A `sass-pipeline` loader which handles the app's own `.scss` and `.sass` files and chains the following loaders:
-
-  - sass (id: `sass`)
-    - postcss (id: `sass-postcss`)
-      - css (`sass-css`)
-        - style `sass-style` (only when serving)
-
-1. A `vendor-sass-pipeline` loader which handles `.scss` and `.sass` required from node_modules, using the same chain of loaders with different ids:
-
-  - sass (id: `vendor-sass`)
-    - postcss (id: `vendor-sass-postcss`)
-      - css (`vendor-sass-css`)
-        - style `vendor-sass-style` (only when serving)

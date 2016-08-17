@@ -11,7 +11,6 @@ export default function createServeReactAppConfig(args, overrides) {
 
   let config = {
     babel: {
-      commonJSInterop: true,
       presets: ['react', 'react-hmre'],
     },
     entry: [path.resolve(entry)],

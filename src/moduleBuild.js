@@ -127,11 +127,15 @@ export default function moduleBuild(args, buildConfig = {}, cb) {
       {copyFiles, outDir: path.resolve('lib'), src},
       merge(buildConfig.babel, buildConfig.babelDev || {}, {
         // Don't force ES5 users of the ES5 build to eat a .require
-        plugins: [require.resolve('babel-plugin-add-module-exports')],
+        commonJSInterop: true,
+        // Transpile modules to CommonJS for ES5 users
+        modules: 'commonjs',
         // Don't set the path to nwb's babel-runtime, as it will need to be a
         // peerDependency of your module if you use transform-runtime's helpers
         // option.
         setRuntimePath: false,
+        // Don't enable webpack-specific plugins
+        webpack: false,
       }),
       userConfig.babel,
       cb
@@ -145,12 +149,12 @@ export default function moduleBuild(args, buildConfig = {}, cb) {
       'ES6 modules',
       {copyFiles, outDir: path.resolve('es'), src},
       merge(buildConfig.babel, buildConfig.babelDev || {}, {
-        // Don't transpile modules, for use by ES6 module bundlers
-        modules: false,
         // Don't set the path to nwb's babel-runtime, as it will need to be a
         // peerDependency of your module if you use transform-runtime's helpers
         // option.
         setRuntimePath: false,
+        // Don't enable webpack-specific plugins
+        webpack: false,
       }),
       userConfig.babel,
       cb

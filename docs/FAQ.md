@@ -10,12 +10,12 @@ It uses **N**ode.js, **W**ebpack and **B**abel to **b**uild apps for the **w**eb
 
 ### How do I enable CSS Modules?
 
-Use `nwb.config.js` to configure the [default `css` loader for your app's own styles](/docs/Configuration.md#default-loaders) with the necessary [css-loader `query` parameters](https://github.com/webpack/css-loader#local-scope):
+Use `nwb.config.js` to configure the [default `css` rule for your app's own styles](/docs/Configuration.md#default-rules) with the necessary [css-loader `option` parameters](https://github.com/webpack/css-loader#local-scope):
 
 ```js
 module.exports = {
   webpack: {
-    loaders: {
+    rules: {
       css: {
         modules: true,
         localIdentName: (

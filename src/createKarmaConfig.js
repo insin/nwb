@@ -196,10 +196,9 @@ export default function createKarmaConfig(args, buildConfig, userConfig) {
       },
       resolve: {
         alias: {
+          expect: path.dirname(require.resolve('expect/package')),
           src: path.resolve('src'),
         },
-        // Fall back to resolving runtime dependencies from nwb's dependencies
-        fallback: path.join(__dirname, '../node_modules'),
       },
       server: {
         hot: false,

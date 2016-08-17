@@ -11,7 +11,6 @@ export default function createServePreactAppConfig(args, overrides) {
 
   let config = {
     babel: {
-      commonJSInterop: true,
       presets: ['preact'],
     },
     entry: [path.resolve(entry)],

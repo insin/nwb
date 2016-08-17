@@ -10,9 +10,6 @@ export default function createServeWebAppConfig(args, overrides) {
   let dist = path.resolve(args._[2] || 'dist')
 
   let config = {
-    babel: {
-      commonJSInterop: true,
-    },
     entry: [path.resolve(entry)],
     output: {
       path: path.resolve(dist),

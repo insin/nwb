@@ -2,7 +2,7 @@ import expect from 'expect'
 import webpack from 'webpack'
 
 import {ConfigValidationError} from '../src/errors'
-import getUserConfig, {prepareWebpackLoaderConfig, processUserConfig} from '../src/getUserConfig'
+import getUserConfig, {prepareWebpackRuleConfig, processUserConfig} from '../src/getUserConfig'
 
 describe('getUserConfig()', () => {
   it("throws an error when a required config file can't be found", () => {
@@ -74,6 +74,9 @@ describe('processUserConfig()', () => {
     it('webpack.copy.options is not an object', () => {
       check({webpack: {copy: {options: []}}}, 'webpack.copy.options', /Must be/)
     })
+    it('webpack.rules is not an object', () => {
+      check({webpack: {rules: []}}, 'webpack.rules', /Must be/)
+    })
   })
 
   describe('convenience shorthand', () => {
@@ -84,10 +87,6 @@ describe('processUserConfig()', () => {
     it('allows webpack.autoprefixer to be a browser string', () => {
       let config = process({webpack: {autoprefixer: 'test'}})
       expect(config.webpack.autoprefixer).toEqual({browsers: 'test'})
-    })
-    it('allows webpack.postcss to be an array', () => {
-      let config = process({webpack: {postcss: ['test']}})
-      expect(config.webpack.postcss).toEqual({defaults: ['test']})
     })
     it('allows webpack.copy to be an array', () => {
       let config = process({webpack: {copy: ['test']}})
@@ -138,52 +137,86 @@ describe('processUserConfig()', () => {
     })
     expect(config.karma).toEqual({excludeFromCoverage: 'test'})
   })
+  it('converts webpack.loaders to webpack.rules for v0.15 back-compat', () => {
+    let config = processUserConfig({
+      userConfig: {
+        webpack: {
+          loaders: {
+            css: {}
+          }
+        }
+      }
+    })
+    expect(config.webpack).toEqual({rules: {css: {}}})
+  })
+  it('converts a loader query object to an options object for v0.15 back-compat', () => {
+    let config = processUserConfig({
+      userConfig: {
+        webpack: {
+          rules: {
+            css: {
+              query: {a: 1}
+            }
+          }
+        }
+      }
+    })
+    expect(config.webpack.rules).toEqual({css: {options: {a: 1}}})
+  })
+  it('converts PostCSS defaults config to loader option config for v0.15 back-compat', () => {
+    let config = processUserConfig({
+      userConfig: {
+        webpack: {
+          postcss: {
+            defaults: [43]
+          }
+        }
+      }
+    })
+    expect(config.webpack.rules).toEqual({postcss: {options: {plugins: [43]}}})
+  })
 })
 
-describe('prepareWebpackLoaderConfig()', () => {
-  it('does nothing if a query object is already present', () => {
+describe('prepareWebpackRuleConfig()', () => {
+  it('does nothing if an options object is already present', () => {
     let config = {
       css: {
         test: /test/,
         include: /include/,
         exclude: /exclude/,
-        config: {a: 42},
-        query: {
+        options: {
           a: 42,
         },
         other: true,
       },
     }
-    prepareWebpackLoaderConfig(config)
+    prepareWebpackRuleConfig(config)
     expect(config.css).toEqual({
       test: /test/,
       include: /include/,
       exclude: /exclude/,
-      config: {a: 42},
-      query: {
+      options: {
         a: 42,
       },
       other: true,
     })
   })
-  it('moves non-loader props into a query object', () => {
+  it('moves non-loader props into an options object', () => {
     let config = {
       css: {
         test: /test/,
         include: /include/,
         exclude: /exclude/,
-        config: {a: 42},
         modules: true,
         localIdentName: 'asdf',
       },
     }
-    prepareWebpackLoaderConfig(config)
+    prepareWebpackRuleConfig(config)
     expect(config.css).toEqual({
       test: /test/,
       include: /include/,
       exclude: /exclude/,
-      config: {a: 42},
-      query: {
+      options: {
         modules: true,
         localIdentName: 'asdf',
       },
