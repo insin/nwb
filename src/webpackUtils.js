@@ -9,15 +9,6 @@ const FRIENDLY_SYNTAX_ERROR_LABEL = 'Syntax error:'
 
 let s = n => n === 1 ? '' : 's'
 
-function filterMessage(message) {
-  // Useless extra error message related to css-loader
-  if (message.indexOf('css-loader') !== -1 &&
-      message.indexOf("Module build failed: TypeError: Cannot read property 'toString' of undefined") !== -1) {
-    return false
-  }
-  return true
-}
-
 function formatMessage(message) {
   return message
     // Make some common errors shorter:
@@ -31,8 +22,6 @@ function formatMessage(message) {
       /Module not found: Error: Cannot resolve 'file' or 'directory'/,
       'Module not found:'
     )
-    // Internal stacks are generally useless so we strip them
-    .replace(/^\s*at\s.*:\d+:\d+[\s\)]*\n/gm, '') // at ... ...:x:y
     // Webpack loader names obscure CSS filenames
     .replace(/^.*css-loader.*!/gm, '')
 }
@@ -42,7 +31,7 @@ function isLikelyASyntaxError(message) {
 }
 
 function formatMessages(messages, type) {
-  return messages.filter(filterMessage).map(
+  return messages.map(
     message => `${type} in ${formatMessage(message)}`
   )
 }

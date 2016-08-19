@@ -1,3 +1,14 @@
+**Removed:**
+
+- Removed support for deprecated `webpack.plugins` config.
+
+**Dependencies:**
+
+- babel-loader: v6.2.4 → [v6.2.5](https://github.com/babel/babel-loader/blob/master/CHANGELOG.md) - better syntax error messages
+- karma-chrome-launcher: v1.0.1 → [v2.0.0](https://github.com/karma-runner/karma-chrome-launcher/blob/master/CHANGELOG.md#200-2016-08-18) - chromium support
+- postcss-loader: v0.10.0 → [v0.10.1](https://github.com/postcss/postcss-loader/blob/master/CHANGELOG.md#0101) - better syntax error messages
+- webpack: v1.13.1 → [v1.13.2](https://github.com/webpack/webpack/compare/v1.13.1...v1.13.2) - updated node-libs-browser
+
 # 0.12.2 / 2016-09-29
 
 **Removed:**
