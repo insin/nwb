@@ -370,24 +370,26 @@ export function createPlugins(server, buildConfig = {}, userConfig = {}) {
   }
 
   if (production) {
-    plugins.push(
-      // Temporariy commented out to prevent an error in __webpack_require__
-      // See https://github.com/webpack/webpack/issues/959#issuecomment-237438754
-      // new optimize.DedupePlugin(),
-      new optimize.UglifyJsPlugin(merge({
-        compress: {
-          screw_ie8: true,
-          warnings: false,
-        },
-        mangle: {
-          screw_ie8: true,
-        },
-        output: {
-          comments: false,
-          screw_ie8: true,
-        },
-      }, userConfig.uglify)),
-    )
+    // Temporarily commented out to prevent an error in __webpack_require__
+    // See https://github.com/webpack/webpack/issues/959#issuecomment-237438754
+    // plugins.push(new optimize.DedupePlugin())
+    if (userConfig.uglify !== false) {
+      plugins.push(
+        new optimize.UglifyJsPlugin(merge({
+          compress: {
+            screw_ie8: true,
+            warnings: false,
+          },
+          mangle: {
+            screw_ie8: true,
+          },
+          output: {
+            comments: false,
+            screw_ie8: true,
+          },
+        }, userConfig.uglify))
+      )
+    }
   }
 
   // Generate an HTML file for web apps which pulls in generated resources

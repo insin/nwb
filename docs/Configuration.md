@@ -72,7 +72,7 @@ The configuration object can include the following properties:
     - [Default Loaders](#default-loaders)
   - [`webpack.postcss`](#postcss-arrayplugin--objectstring-arrayplugin) - custom PostCSS plugins
   - [`webpack.publicPath`](#publicpath-string) - path to static resources
-  - [`webpack.uglify`](#uglify-object) - options for Webpack's `UglifyJsPlugin`
+  - [`webpack.uglify`](#uglify-object--false) - configure use of Webpack's `UglifyJsPlugin`
   - [`webpack.extra`](#extra-object) - an escape hatch for extra Webpack config, which will be merged into the generated config
 - [Karma Configuration](#karma-configuration)
   - [`karma`](#karma-object)
@@ -633,7 +633,7 @@ module.exports = {
 
 The trade-off for path-independence is HTML5 history routing won't work, as serving up `index.html` at anything but its real path will mean its static resource URLs won't resolve. You will have to fall back on hash-based routing if you need it.
 
-##### `uglify`: `Object`
+##### `uglify`: `Object | false`
 
 Configures [options for Webpack's `UglifyJsPlugin`](https://webpack.github.io/docs/list-of-plugins.html#uglifyjsplugin), which will be used when creating production builds.
 
@@ -643,15 +643,38 @@ Any additional options provided will be merged into nwb's defaults, which are:
 module.exports = {
   compress: {
     screw_ie8: true,
-    warnings: false,
+    warnings: false
   },
   mangle: {
-    screw_ie8: true,
+    screw_ie8: true
   },
   output: {
     comments: false,
-    screw_ie8: true,
-  },
+    screw_ie8: true
+  }
+}
+```
+
+For example, if you want to strip development-only code but keep the output readable for debugging:
+
+```js
+module.exports = {
+  webpack: {
+    uglify: {
+      mangle: false,
+      beautify: true
+    }
+  }
+}
+```
+
+To completely disable use of UglifyJS, set `uglify` to false:
+
+```js
+module.exports = {
+  webpack: {
+    uglify: false
+  }
 }
 ```
 
