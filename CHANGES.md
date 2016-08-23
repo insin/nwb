@@ -2,6 +2,10 @@
 
 - Removed support for deprecated `webpack.plugins` config.
 
+**Changed:**
+
+- [`webpack.uglify` config](https://github.com/insin/nwb/blob/next/docs/Configuration.md#uglify-object--false) can now be set to `false` to disable use of `UglifyJSPlugin` in production builds. [[#160](https://github.com/insin/nwb/issues/160)]
+
 **Dependencies:**
 
 - babel-loader: v6.2.4 → [v6.2.5](https://github.com/babel/babel-loader/blob/master/CHANGELOG.md) - better syntax error messages
