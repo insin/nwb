@@ -23,6 +23,7 @@ Your app's version of the Express module must be passed as the first argument.
 - `config` - path to a config file *[default: nwb.config.js]*
 - `entry` - entry point for the app *[default: src/index.js]*
 - `install` - automatically install missing npm dependencies *[default: `false`]*
+- `reload` - reload the page if Hot Module Reloading is unsuccessful *[default: `false`]*
 
 #### Example
 

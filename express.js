@@ -24,7 +24,8 @@ module.exports = function(express, options) {
   var args = {
     _: ['serve-react-app', options.entry],
     config: options.config,
-    install: !!options.install || !!options.autoInstall
+    install: !!options.install || !!options.autoInstall,
+    reload: !!options.reload
   }
 
   var webpackConfig = createServerWebpackConfig(
