@@ -85,7 +85,7 @@ It's enabled by default, so we can just hit `Enter` to accept the default:
 
 A [UMD](https://github.com/umdjs/umd#umd-universal-module-definition) build will let people use your module via a global variable by dropping it into a `<script>` tag - this makes it easier to try without any build tooling in an HTML file, and in tools like [JS Bin](http://jsbin.com/) and [CodePen](https://codepen.io/).
 
-Since nwb will handle the details of creating this for us and [npmcdn](https://npmcdn.com) will allow people to grab the UMD build once published to npm, let's type `y` and hit `Enter`:
+Since nwb will handle the details of creating this for us and [unpkg](https://unpkg.com) will allow people to grab the UMD build once published to npm, let's type `y` and hit `Enter`:
 
 ```
 ? Do you want to create a UMD build? Yes
@@ -338,9 +338,9 @@ By default nwb will also create a production build of the demo React app in `dem
 
 ![](resources/react-component-build.png)
 
-`.gitignore` is configured to ignore these build directories to avoid/prevent checking built resources into source control, since npm acts as the canonical source for published, versioned builds and [npmcdn](https://npmcdn.com) makes it easy to provide access to the UMD build.
+`.gitignore` is configured to ignore these build directories to avoid/prevent checking built resources into source control, since npm acts as the canonical source for published, versioned builds and [unpkg](https://unpkg.com) makes it easy to provide access to the UMD build.
 
-For example, if you were to publish this example project to npm as `react-loading-button`, the latest version of its UMD build would be available from `https://npmcdn.com/react-loading-button/umd/react-loading-button.js` without having to configure anything.
+For example, if you were to publish this example project to npm as `react-loading-button`, the latest version of its UMD build would be available from `https://unpkg.com/react-loading-button/umd/react-loading-button.js` without having to configure anything.
 
 ### Publishing to npm
 
