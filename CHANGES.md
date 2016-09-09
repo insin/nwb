@@ -4,13 +4,26 @@
 
 **Changed:**
 
-- [`webpack.uglify` config](https://github.com/insin/nwb/blob/next/docs/Configuration.md#uglify-object--false) can now be set to `false` to disable use of `UglifyJSPlugin` in production builds. [[#160](https://github.com/insin/nwb/issues/160)]
+- Changed `babel-plugin-transform-runtime` configuration to make use of new `moduleName` config; Webpack module resolution no longer uses a blanket fallback to nwb's `node_modules/` for serving and builds.
+- [`webpack.uglify` config](https://github.com/insin/nwb/blob/next/docs/Configuration.md#uglify-object--false) can now be set to `false` to disable use of `UglifyJSPlugin` in production builds [[#160](https://github.com/insin/nwb/issues/160)]
 
 **Dependencies:**
 
+- autoprefixer: v6.4.0 → [v6.4.1](https://github.com/postcss/autoprefixer/blob/master/CHANGELOG.md#641)
+- babel-cli: v6.11.4 → [v6.14.0](https://github.com/babel/babel/blob/master/CHANGELOG.md#v6140-2016-08-23-take-me-to-flavor-town)
+- babel-core: v6.13.2 → [v6.14.0](https://github.com/babel/babel/blob/master/CHANGELOG.md#v6140-2016-08-23-take-me-to-flavor-town)
 - babel-loader: v6.2.4 → [v6.2.5](https://github.com/babel/babel-loader/blob/master/CHANGELOG.md) - better syntax error messages
+- babel-plugin-istanbul: v2.0.0 → [v2.0.2](https://github.com/istanbuljs/babel-plugin-istanbul/blob/master/CHANGELOG.md#202-2016-09-08) - perf boost and symlink fix
+- babel-plugin-transform-runtime: v6.12.0 → [v6.15.0](https://github.com/babel/babel/blob/master/CHANGELOG.md#v6150-2016-08-31) - add `moduleName` config to specify runtime path
+- babel-preset-es2015: v6.13.2 → [v6.14.0](https://github.com/babel/babel/blob/master/CHANGELOG.md#v6140-2016-08-23-take-me-to-flavor-town)
+- case-sensitive-paths-webpack-plugin: v1.1.3 → v1.1.4 - handle cwd being incorrect case
+- css-loader: v0.23.1 → [v0.25.0](https://github.com/webpack/css-loader/compare/v0.23.0...v0.25.0)
+- diff: v2.2.3 → [v3.0.0](https://github.com/kpdecker/jsdiff/blob/master/release-notes.md#v300---august-23rd-2016)
+- inquirer: v1.1.2 → [v1.1.3](https://github.com/SBoudrias/Inquirer.js/compare/v1.1.2...v1.1.3)
+- glob: v7.0.5 → [v7.0.6](https://github.com/isaacs/node-glob/compare/v7.0.5...v7.0.6)
 - karma-chrome-launcher: v1.0.1 → [v2.0.0](https://github.com/karma-runner/karma-chrome-launcher/blob/master/CHANGELOG.md#200-2016-08-18) - chromium support
-- postcss-loader: v0.10.0 → [v0.10.1](https://github.com/postcss/postcss-loader/blob/master/CHANGELOG.md#0101) - better syntax error messages
+- karma-phantomjs-launcher: v1.0.1 → [v1.0.2](https://github.com/karma-runner/karma-phantomjs-launcher/blob/master/CHANGELOG.md#102-2016-08-31) - fix phantomjs path calculation
+- postcss-loader: v0.10.0 → [v0.13.0](https://github.com/postcss/postcss-loader/blob/master/CHANGELOG.md#013) - better syntax error messages
 - webpack: v1.13.1 → [v1.13.2](https://github.com/webpack/webpack/compare/v1.13.1...v1.13.2) - updated node-libs-browser
 
 # 0.12.2 / 2016-09-29
@@ -310,7 +323,7 @@
 - express: v4.13.4 → [v4.14.0](https://github.com/expressjs/express/blob/master/History.md#4140--2016-06-16)
 - [figures](https://github.com/sindresorhus/figures): v1.7.0
 - file-loader: v0.8.5 → [v0.9.0](https://github.com/webpack/file-loader/compare/v0.8.5...v0.9.0)
-- glob: v7.0.3 → [v7.0.5](https://github.com/isaacs/node-glob/https://github.com/Medium/phantomjs/)
+- glob: v7.0.3 → [v7.0.5](https://github.com/isaacs/node-glob/compare/v7.0.3...v7.0.5)
 - html-webpack-plugin: v2.19.0 → [v2.22.0](https://github.com/ampedandwired/html-webpack-plugin/blob/master/CHANGELOG.md#v2220)
 - inquirer: v1.0.3 → [v1.1.2](https://github.com/SBoudrias/Inquirer.js/compare/v1.0.3...v1.1.2)
 - karma: v0.13.22 → [v1.2.0](https://github.com/karma-runner/karma/blob/master/CHANGELOG.md#120-2016-08-11)

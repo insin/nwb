@@ -1,3 +1,5 @@
+import path from 'path'
+
 import {typeOf} from './utils'
 
 const DEFAULT_STAGE = 2
@@ -79,11 +81,14 @@ export default function createBabelConfig(buildConfig = {}, userConfig = {}) {
     helpers: false,
     polyfill: false,
     regenerator: true,
+    moduleName: path.dirname(require.resolve('babel-runtime/package')),
   }
   if (userRuntime !== false) {
     if (userRuntime === true) {
       // Enable all features
-      runtimeTransformOptions = {}
+      runtimeTransformOptions = {
+        moduleName: path.dirname(require.resolve('babel-runtime/package')),
+      }
     }
     else if (typeOf(userRuntime) === 'string') {
       // Enable the named feature

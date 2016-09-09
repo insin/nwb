@@ -1,12 +1,17 @@
+import path from 'path'
+
 import expect from 'expect'
 
 import createBabelConfig from '../src/createBabelConfig'
+
+let babelRuntimePath = path.dirname(require.resolve('babel-runtime/package'))
 
 let DEFAULT_RUNTIME_CONFIG =
   [require.resolve('babel-plugin-transform-runtime'), {
     helpers: false,
     polyfill: false,
     regenerator: true,
+    moduleName: babelRuntimePath,
   }]
 
 describe('createBabelConfig()', () => {
@@ -76,7 +81,9 @@ describe('createBabelConfig()', () => {
         plugins: [
           require.resolve('babel-plugin-transform-decorators-legacy'),
           'test-plugin',
-          [require.resolve('babel-plugin-transform-runtime'), {}],
+          [require.resolve('babel-plugin-transform-runtime'), {
+            moduleName: babelRuntimePath,
+          }],
         ],
       })
     })
@@ -96,6 +103,7 @@ describe('createBabelConfig()', () => {
               helpers: false,
               polyfill: false,
               regenerator: true,
+              moduleName: babelRuntimePath,
               [runtime]: true,
             }],
           ]

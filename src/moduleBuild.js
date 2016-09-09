@@ -31,6 +31,7 @@ const DEFAULT_BABEL_IGNORE_CONFIG = [
  */
 function runBabel(src, outDir, buildBabelConfig, userBabelConfig) {
   let babelConfig = createBabelConfig(buildBabelConfig, userBabelConfig)
+  babelConfig.ignore = DEFAULT_BABEL_IGNORE_CONFIG
 
   debug('babel config: %s', deepToString(babelConfig))
 
@@ -39,7 +40,6 @@ function runBabel(src, outDir, buildBabelConfig, userBabelConfig) {
     exec('babel', [
       src,
       '--out-dir', outDir,
-      '--ignore', `"${DEFAULT_BABEL_IGNORE_CONFIG.join(',')}"`,
       '--quiet',
     ])
   }
