@@ -205,7 +205,7 @@ Babel's [runtime transform](https://babeljs.io/docs/plugins/transform-runtime/) 
 2. Imports a local **polyfill** for new ES6 builtins (`Promise`) and static methods (e.g. `Object.assign`) when they're used in your code.
 3. Imports the **regenerator** runtime required to use `async`/`await` when needed.
 
-nwb's default config turns the regenerator runtime import on so you can use `async`/`await` and generators by default.
+nwb's default config turns the regenerator runtime import on so you can use `async`/`await` and generators.
 
 To enable an additional feature, you can name it (either `'helpers'` or `'polyfill'`):
 
