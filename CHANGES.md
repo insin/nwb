@@ -1,3 +1,5 @@
+# 0.12.1 / 2016-09-15
+
 **Experimental:**
 
 - `react run` can now run modules which export a React component or element.
