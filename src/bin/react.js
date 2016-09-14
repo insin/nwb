@@ -54,14 +54,14 @@ Options:
 
 Commands:
   ${cmd('react run')} ${req('<entry>')} ${opt('[options]')}
-    Serve a React app for development.
+    Serve a React app or component module.
 
     Arguments:
-      ${req('entry')}           entry point for the app
+      ${req('entry')}          entry point for the app, or a component module
 
     Options:
       ${opt('--install')}      automatically install missing npm dependencies
-      ${opt('--host')}         hostname to bind the dev server to ${opt('[default: localhost]')}
+      ${opt('--host')}         hostname to bind the dev server to
       ${opt('--mount-id')}     id for the <div> the app will render into ${opt('[default: app]')}
       ${opt('--no-fallback')}  disable serving of the index page from any path
       ${opt('--port')}         port to run the dev server on ${opt('[default: 3000]')}

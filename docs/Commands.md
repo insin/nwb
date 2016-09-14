@@ -3,7 +3,7 @@
 Installing nwb provides the following commands.
 
 - [`react`](#react) - quick React development
-  - [`run`](#run) - serve a React app
+  - [`run`](#run) - serve a React app or component module
   - [`build`](#build) - create a static build for a React app
 - [`nwb`](#nwb) - project tooling
   - [Project Creation](#project-creation)
@@ -31,13 +31,15 @@ The following sub-commands are available:
 
 Serve a React app for quick development.
 
+Also supports serving modules which export a React component or element.
+
 ```
 react run <entry> [options]
 ```
 
 **Arguments:**
 
-- `entry` - entry point for the app
+- `entry` - entry point for the app, or a module which exports a React component or element.
 
 **Options:**
 

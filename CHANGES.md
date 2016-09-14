@@ -1,3 +1,7 @@
+**Experimental:**
+
+- `react run` can now run modules which export a React component or element.
+
 **Added:**
 
 - Added a `reload` option to [Express middleware](https://github.com/insin/nwb/blob/next/docs/Middleware.md#middlewareexpress-options-object) to enable reloading the page if Hot Module Reloading is unsuccessful [[#168](https://github.com/insin/nwb/issues/168)]
