@@ -6,7 +6,7 @@
 
 **Added:**
 
-- Added a `reload` option to [Express middleware](https://github.com/insin/nwb/blob/next/docs/Middleware.md#middlewareexpress-options-object) to enable reloading the page if Hot Module Reloading is unsuccessful [[#168](https://github.com/insin/nwb/issues/168)]
+- Added a `reload` option to [Express middleware](https://github.com/insin/nwb/blob/master/docs/Middleware.md#middlewareexpress-options-object) to enable reloading the page if Hot Module Reloading is unsuccessful [[#168](https://github.com/insin/nwb/issues/168)]
 
 # 0.12.0 / 2016-08-16
 
