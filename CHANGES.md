@@ -1,3 +1,7 @@
+**Added:**
+
+- Added an `audio` loader.
+
 **Removed:**
 
 - Removed support for deprecated `webpack.plugins` config.

@@ -187,6 +187,11 @@ export function createLoaders(server, buildConfig = {}, userConfig = {}, pluginC
       loader: require.resolve('url-loader'),
       query: {...urlLoaderOptions},
     }),
+    loader('audio', {
+      test: /\.(wav|mp3|m4a|aac|oga)(\?.*)?$/,
+      loader: require.resolve('url-loader'),
+      query: {...urlLoaderOptions},
+    }),
     loader('json', {
       test: /\.json$/,
       loader: require.resolve('json-loader'),
