@@ -540,7 +540,7 @@ Default loaders configured by nwb and the ids it gives them are:
 
 - `graphics` - handles `.gif`, `.png`, `.svg` and `.webp` files using using [url-loader][url-loader]
 
-- `jpeg` - handles `.jpeg` files using [url-loader][url-loader]
+- `jpeg` - handles `.jpg` and `.jpeg` files using [url-loader][url-loader]
 
 - `fonts` - handles `.eot`, `.otf`, `.ttf`, `.woff` and `.woff2` files using [url-loader][url-loader]
 
