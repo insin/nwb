@@ -1,3 +1,4 @@
+import {execSync} from 'child_process'
 import fs from 'fs'
 import path from 'path'
 
@@ -76,6 +77,24 @@ function logCreatedFiles(targetDir, createdFiles) {
   })
 }
 
+function initGit(args, cwd) {
+  // Allow git init to be disabled with a --no-git flag
+  if (args.git === false) {
+    return
+  }
+
+  try {
+    execSync('git --version', {cwd, stdio: 'ignore'})
+    execSync('git init', {cwd})
+    execSync('git add .', {cwd})
+    execSync(`git commit -m "Initial commit from nwb v${pkg.version}"'`, {cwd})
+    console.log(chalk.green('Successfully initialized git.'))
+  }
+  catch (e) {
+    // Pass
+  }
+}
+
 export function npmModuleVars(vars) {
   vars.esModulesPackageConfig =
     vars.esModules ? '\n  "jsnext:main": "es/index.js",\n  "module": "es/index.js",' : ''
@@ -99,6 +118,7 @@ const PROJECT_CREATORS = {
     copyTemplateDir(templateDir, targetDir, templateVars, (err, createdFiles) => {
       if (err) return cb(err)
       logCreatedFiles(targetDir, createdFiles)
+      initGit(args, targetDir)
       console.log('Installing dependencies...')
       try {
         installReact({cwd: targetDir, version: reactVersion, save: true})
@@ -134,6 +154,7 @@ const PROJECT_CREATORS = {
           return cb(e)
         }
         logCreatedFiles(targetDir, createdFiles)
+        initGit(args, targetDir)
         console.log('Installing dependencies...')
         try {
           installReact({cwd: targetDir, version: reactVersion, dev: true, save: true})
@@ -152,6 +173,7 @@ const PROJECT_CREATORS = {
     copyTemplateDir(templateDir, targetDir, templateVars, (err, createdFiles) => {
       if (err) return cb(err)
       logCreatedFiles(targetDir, createdFiles)
+      initGit(args, targetDir)
       cb()
     })
   },
@@ -179,6 +201,7 @@ const PROJECT_CREATORS = {
           return cb(e)
         }
         logCreatedFiles(targetDir, createdFiles)
+        initGit(args, targetDir)
         cb()
       })
     })

@@ -47,6 +47,7 @@ Project creation commands:
   Options:
     ${opt('-f, --force')}   force project creation, don't ask questions
     ${opt('--es-modules')}  enable or disable (${opt('--no-es-modules')}) an ES6 modules build
+    ${opt('--no-git')}      disable creation of a Git repo with an initial commit
     ${opt('--react')}       version of React to install for React apps & components
     ${opt('--umd=<var>')}   enable or disable (${opt('--no-umd')}) a UMD build
 

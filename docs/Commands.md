@@ -130,6 +130,7 @@ Creates a skeleton project for an npm web module.
 > Passing all available options will automatically skip asking of setup questions.
 
 - `--es-modules` - explicitly enable or disable (with `--no-es-modules`) an ES6 modules build
+- `--no-git` - disable creation of a Git repo with an initial commit
 - `--umd=<var>` - enable a UMD build by providing a global variable name to be exported
 
 **React app/component options:**
