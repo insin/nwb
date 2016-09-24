@@ -53,6 +53,12 @@ export default function createBabelConfig(buildConfig = {}, userConfig = {}) {
     buildPresets.forEach(preset => {
       if (preset === 'react') {
         presets.push(require.resolve('babel-preset-react'))
+        if (process.env.NODE_ENV === 'development') {
+          plugins.push(
+            require.resolve('babel-plugin-transform-react-jsx-source'),
+            require.resolve('babel-plugin-transform-react-jsx-self')
+          )
+        }
       }
       else if (preset === 'react-hmre') {
         presets.push(require.resolve('../babel-presets/react-hmre'))
