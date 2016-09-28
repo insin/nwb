@@ -212,25 +212,25 @@ describe('command: nwb new', function() {
   })
 
   it('creates a new web module with a given name', done => {
-    cli(['new', 'web-module', 'test-module', '-f'], err => {
+    cli(['new', 'web-module', 'test-module', '-f', '--no-git'], err => {
       webModuleAssertions('test-module', 'test-module', err, done)
     })
   })
 
   it('creates a new React component with a given name', done => {
-    cli(['new', 'react-component', 'test-component', '--umd=MyComponent', '--es-modules'], err => {
+    cli(['new', 'react-component', 'test-component', '--umd=MyComponent', '--es-modules', '--no-git'], err => {
       reactComponentAssertions('test-component', 'test-component', err, done)
     })
   })
 
   it('creates a new React app with a given name', done => {
-    cli(['new', 'react-app', 'test-react-app'], err => {
+    cli(['new', 'react-app', 'test-react-app', '--no-git'], err => {
       reactAppAssertions('test-react-app', 'test-react-app', err, done)
     })
   })
 
   it('creates a new web app with a given name', done => {
-    cli(['new', 'web-app', 'test-web-app'], err => {
+    cli(['new', 'web-app', 'test-web-app', '--no-git'], err => {
       webAppAssertions('test-web-app', 'test-web-app', err, done)
     })
   })
@@ -281,25 +281,25 @@ describe('command: nwb init', function() {
   })
 
   it('initialises a web module in the current directory', done => {
-    cli(['init', 'web-module', '-f'], err => {
+    cli(['init', 'web-module', '-f', '--no-git'], err => {
       webModuleAssertions('.', defaultName, err, done)
     })
   })
 
   it('initialises a React component in the current directory', done => {
-    cli(['init', 'react-component', '--umd=MyComponent', '--es-modules'], err => {
+    cli(['init', 'react-component', '--umd=MyComponent', '--es-modules', '--no-git'], err => {
       reactComponentAssertions('.', defaultName, err, done)
     })
   })
 
   it('initialises a React app in the current directory', done => {
-    cli(['init', 'react-app'], err => {
+    cli(['init', 'react-app', '--no-git'], err => {
       reactAppAssertions('.', defaultName, err, done)
     })
   })
 
   it('initialises a web app in the current directory', done => {
-    cli(['init', 'web-app'], err => {
+    cli(['init', 'web-app', '--no-git'], err => {
       webAppAssertions('.', defaultName, err, done)
     })
   })
