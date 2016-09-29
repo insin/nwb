@@ -227,7 +227,7 @@ NODE_ENV=development nwb build
 
 **In React apps only:**
 
-In production mode builds, Babel [react-constant-elements](http://babeljs.io/docs/plugins/transform-react-constant-elements/) and [react-remove-prop-types](https://github.com/oliviertassinari/babel-plugin-transform-react-remove-prop-types) transforms will be used.
+In production mode builds, the Babel [react-remove-prop-types](https://github.com/oliviertassinari/babel-plugin-transform-react-remove-prop-types) transform will be used.
 
 When building React apps, you can also pass a `--preact` flag to configure Webpack to use [Preact](https://github.com/developit/preact) via the [`preact-compat`](https://github.com/developit/preact-compat) module (both of which must be installed separately). If your app and its dependencies are  compatible with Preact, this can be a quick and easy way to reduce the size of your app.
 

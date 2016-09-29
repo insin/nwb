@@ -1,3 +1,7 @@
+**Removed:**
+
+- Dropped the production `react-constant-elements` transform for now due to bugs.
+
 # 0.12.1 / 2016-09-15
 
 **Experimental:**

@@ -391,7 +391,6 @@ Generated bundles have a deterministic hash in their filename to support long-te
 
 The following React-specific optimisations are also performed as part of the build:
 
-- The Babel [`react-constant-elements`](http://babeljs.io/docs/plugins/transform-react-constant-elements/) transform is used to ensure completely static portions of what your components render can be skipped when checking what's changed during a re-render.
 - If you're using ES6 class components or stateless function components for any of your app's own components, any `propTypes` they define will be stripped from the build, as React doesn't use PropTypes in production.
 
 ## Using nwb in Your Own Express Server via Middleware
