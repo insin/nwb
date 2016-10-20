@@ -311,7 +311,7 @@ module.exports = {
 }
 ```
 
-You can check which browsers your Autoprefixer configuration will target using the [browserl.ist](browserl.ist) service.
+You can check which browsers your Autoprefixer configuration will target using the [browserl.ist](http://browserl.ist) service.
 
 ##### `compat`: `Object`
 
