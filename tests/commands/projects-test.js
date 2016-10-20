@@ -135,6 +135,9 @@ describe('sample projects', function() {
                 done()
               }
             }
+            else if (data.action === 'sync') {
+              // pass
+            }
             else {
               done(new Error(`HMR client received unexpected message: ${e.data}`))
             }
