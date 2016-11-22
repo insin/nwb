@@ -530,7 +530,7 @@ Default loaders configured by nwb and the ids it gives them are:
 
   - `css` - handles URLs, minification and CSS Modules using [css-loader][css-loader]
 
-    > Default config: `{query: {autoprefixer: false, importLoaders: 1}}`
+    > Default config: `{query: {importLoaders: 1}}`
 
   - `postcss` - processes CSS with PostCSS plugins using [postcss-loader][postcss-loader]; by default, this is configured to manage vendor prefixes in CSS using [Autoprefixer][autoprefixer]
 
@@ -644,15 +644,10 @@ Any additional options provided will be merged into nwb's defaults, which are:
 ```js
 module.exports = {
   compress: {
-    screw_ie8: true,
     warnings: false
   },
-  mangle: {
-    screw_ie8: true
-  },
   output: {
-    comments: false,
-    screw_ie8: true
+    comments: false
   }
 }
 ```

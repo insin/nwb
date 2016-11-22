@@ -88,8 +88,6 @@ export function createStyleLoader(loader, server, {
     loader(name('css'), {
       loader: require.resolve('css-loader'),
       query: {
-        // Prevent cssnano from using Autoprefixer to remove prefixes
-        autoprefixer: false,
         // Apply postcss-loader to @imports
         importLoaders: 1,
       },
@@ -382,15 +380,10 @@ export function createPlugins(server, buildConfig = {}, userConfig = {}) {
       plugins.push(
         new optimize.UglifyJsPlugin(merge({
           compress: {
-            screw_ie8: true,
             warnings: false,
-          },
-          mangle: {
-            screw_ie8: true,
           },
           output: {
             comments: false,
-            screw_ie8: true,
           },
         }, userConfig.uglify))
       )

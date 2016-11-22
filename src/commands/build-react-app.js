@@ -1,5 +1,6 @@
 import path from 'path'
 
+import glob from 'glob'
 import ora from 'ora'
 
 import {getDefaultHTMLConfig} from '../appConfig'
@@ -33,10 +34,13 @@ function buildConfig(args) {
       publicPath: '/',
     },
     plugins: {
-      copy: [{from: path.resolve('public'), to: dist, ignore: '.gitkeep'}],
       html: getDefaultHTMLConfig(),
       vendor: args.vendor !== false,
     },
+  }
+
+  if (glob.sync('public/').length !== 0) {
+    config.plugins.copy = [{from: path.resolve('public'), to: dist, ignore: '.gitkeep'}]
   }
 
   if (args.preact) {

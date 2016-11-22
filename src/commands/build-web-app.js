@@ -1,5 +1,6 @@
 import path from 'path'
 
+import glob from 'glob'
 import ora from 'ora'
 
 import {getDefaultHTMLConfig} from '../appConfig'
@@ -17,7 +18,7 @@ function buildConfig(args) {
   let production = process.env.NODE_ENV === 'production'
   let filenamePattern = production ? '[name].[chunkhash:8].js' : '[name].js'
 
-  return {
+  let config = {
     babel: {
       commonJSInterop: true,
     },
@@ -32,11 +33,16 @@ function buildConfig(args) {
       publicPath: '/',
     },
     plugins: {
-      copy: [{from: path.resolve('public'), to: dist, ignore: '.gitkeep'}],
       html: getDefaultHTMLConfig(),
       vendor: args.vendor !== false,
     },
   }
+
+  if (glob.sync('public/').length !== 0) {
+    config.plugins.copy = [{from: path.resolve('public'), to: dist, ignore: '.gitkeep'}]
+  }
+
+  return config
 }
 
 /**

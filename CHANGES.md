@@ -15,42 +15,46 @@
 
 **Dependencies:**
 
-- autoprefixer: v6.4.0 → [v6.5.1](https://github.com/postcss/autoprefixer/blob/master/CHANGELOG.md#651)
-- babel-cli: v6.11.4 → v6.16.0
-- babel-core: v6.13.2 → v6.17.0
-- babel-loader: v6.2.4 → [v6.2.5](https://github.com/babel/babel-loader/blob/master/CHANGELOG.md) - better syntax error messages
-- babel-plugin-istanbul: v2.0.0 → [v2.0.3](https://github.com/istanbuljs/babel-plugin-istanbul/blob/master/CHANGELOG.md#203-2016-10-17)
-- babel-plugin-lodash: v3.2.8 → [v3.2.9](https://github.com/lodash/babel-plugin-lodash/compare/3.2.8...3.2.9)
-- babel-plugin-transform-react-remove-prop-types: v0.2.9 → [v0.2.10](https://github.com/oliviertassinari/babel-plugin-transform-react-remove-prop-types/compare/v0.2.9...v0.2.10)
+- autoprefixer: v6.4.0 → [v6.5.3](https://github.com/postcss/autoprefixer/blob/master/CHANGELOG.md#653)
+- babel-cli: v6.11.4 → v6.18.0
+- babel-core: v6.13.2 → v6.18.2
+- babel-loader: v6.2.4 → [v6.2.8](https://github.com/babel/babel-loader/blob/master/CHANGELOG.md) - better syntax error messages
+- babel-plugin-istanbul: v2.0.0 → [v3.0.0](https://github.com/istanbuljs/babel-plugin-istanbul/blob/master/CHANGELOG.md#300-2016-11-14)
+- babel-plugin-lodash: v3.2.8 → [v3.2.10](https://github.com/lodash/babel-plugin-lodash/compare/3.2.8...3.2.10)
+- babel-plugin-transform-react-remove-prop-types: v0.2.9 → [v0.2.11](https://github.com/oliviertassinari/babel-plugin-transform-react-remove-prop-types/compare/v0.2.9...v0.2.11)
 - babel-plugin-transform-runtime: v6.12.0 → [v6.15.0](https://github.com/babel/babel/blob/master/CHANGELOG.md#v6150-2016-08-31) - add `moduleName` config to specify runtime path
 - babel-polyfill: v6.13.0 → v6.16.0
-- babel-preset-es2015: v6.14.0 → v6.16.0
+- babel-preset-es2015: v6.14.0 → v6.18.0
 - babel-preset-es2016: v6.11.3 → v6.16.0
 - babel-preset-react: v6.11.1 → v6.16.0
 - babel-preset-stage-0: v6.5.0 → v6.16.0
 - babel-preset-stage-1: v6.13.0 → v6.16.0
-- babel-preset-stage-2: v6.13.0 → v6.16.0
+- babel-preset-stage-2: v6.13.0 → v6.18.0
 - babel-preset-stage-3: v6.11.0 → v6.17.0
+- babel-runtime: v6.11.6 → v6.18.0
 - case-sensitive-paths-webpack-plugin: v1.1.3 → v1.1.4 - handle cwd being incorrect case
-- css-loader: v0.23.1 → [v0.25.0](https://github.com/webpack/css-loader/compare/v0.23.0...v0.25.0)
+- copy-webpack-plugin: v3.0.1 → [v4.0.1](https://github.com/kevlened/copy-webpack-plugin/releases)
+- css-loader: v0.23.1 → [v0.26.0](https://github.com/webpack/css-loader/compare/v0.23.0...v0.26.0) - cssnano's use of autoprefixer is now disabled by default
 - detect-port: v1.0.0 → v1.0.1
 - diff: v2.2.3 → [v3.0.1](https://github.com/kpdecker/jsdiff/blob/master/release-notes.md#v301---october-9th-2016)
 - figures: v1.7.0 → v2.0.0
-- inquirer: v1.1.2 → [v1.2.2](https://github.com/SBoudrias/Inquirer.js/compare/v1.1.2...v1.2.2)
+- html-webpack-plugin: v2.22.0 → [v2.24.1](https://github.com/ampedandwired/html-webpack-plugin/blob/master/CHANGELOG.md#v2241)
+- inquirer: v1.1.2 → [v1.2.3](https://github.com/SBoudrias/Inquirer.js/compare/v1.1.2...v1.2.3)
 - glob: v7.0.5 → [v7.1.1](https://github.com/isaacs/node-glob/compare/v7.0.5...v7.1.1)
 - karma: v1.2.0 → [v1.3.0](https://github.com/karma-runner/karma/blob/master/CHANGELOG.md#130-2016-09-09)
 - karma-chrome-launcher: v1.0.1 → [v2.0.0](https://github.com/karma-runner/karma-chrome-launcher/blob/master/CHANGELOG.md#200-2016-08-18) - chromium support
-- karma-mocha: v1.1.1 → [v1.2.0](https://github.com/karma-runner/karma-mocha/compare/v1.1.1...v1.2.0)
-- karma-mocha-reporter: v2.1.0 → [v2.2.0](https://github.com/litixsoft/karma-mocha-reporter/blob/master/CHANGELOG.md#220-2016-09-19)
+- karma-mocha: v1.1.1 → [v1.3.0](https://github.com/karma-runner/karma-mocha/compare/v1.1.1...v1.23.0)
+- karma-mocha-reporter: v2.1.0 → [v2.2.1](https://github.com/litixsoft/karma-mocha-reporter/blob/master/CHANGELOG.md#221-2016-11-18)
 - karma-phantomjs-launcher: v1.0.1 → [v1.0.2](https://github.com/karma-runner/karma-phantomjs-launcher/blob/master/CHANGELOG.md#102-2016-08-31) - fix phantomjs path calculation
 - mocha: v3.0.2 → [v3.1.2](https://github.com/mochajs/mocha/blob/master/CHANGELOG.md#312--2016-10-10)
 - phantomjs-prebuilt: v2.1.12 → [v2.1.13](https://github.com/Medium/phantomjs/releases/tag/2.1.13)
-- postcss-loader: v0.10.0 → [v1.0.0](https://github.com/postcss/postcss-loader/blob/master/CHANGELOG.md#10)
+- postcss-loader: v0.10.0 → [v1.1.1](https://github.com/postcss/postcss-loader/blob/master/CHANGELOG.md#111)
 - qs: v6.2.1 → [v6.3.0](https://github.com/ljharb/qs/blob/master/CHANGELOG.md#630)
-- webpack: v1.13.1 → [v1.13.2](https://github.com/webpack/webpack/compare/v1.13.1...v1.13.2) - updated node-libs-browser
+- webpack: v1.13.1 → [v1.13.3](https://github.com/webpack/webpack/compare/v1.13.1...v1.13.3) - updated node-libs-browser and uglifyjs versions - `screw_ie8` is now enabled by default
 - webpack-merge: v0.14.1 → [v0.15.0](https://github.com/survivejs/webpack-merge/blob/master/CHANGELOG.md#0150--2016-10-18)
 - webpack-dev-middleware: v1.6.1 → [v1.8.4](https://github.com/webpack/webpack-dev-middleware/blob/master/CHANGELOG.md#184-2016-10-08)
-- webpack-hot-middleware: v2.12.2 → [v2.13.0](https://github.com/glenjamin/webpack-hot-middleware/compare/v2.12.2...v2.13.0)
+- webpack-hot-middleware: v2.12.2 → [v2.13.2](https://github.com/glenjamin/webpack-hot-middleware/compare/v2.12.2...v2.13.2)
+- whatwg-fetch: v1.0.0 → [v2.0.1](https://github.com/github/fetch/releases) - changes behaviour of `Headers` to be spec-compliant
 
 # 0.12.2 / 2016-09-29
 
