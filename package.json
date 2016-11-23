@@ -113,7 +113,6 @@
     "webpack-md5-hash": "0.0.5"
   },
   "devDependencies": {
-    "bundle-deps": "1.0.0",
     "cross-env": "3.1.3",
     "cross-spawn": "5.0.1",
     "eslint-config-jonnybuchanan": "4.6.0",

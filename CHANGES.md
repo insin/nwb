@@ -6,6 +6,7 @@
 
 **Removed:**
 
+- Dependencies are no longer bundled. As a result, Babel 6 dependencies will no longer be deduplicated for npm2 users, so an nwb install will be slower and larger - consider upgrading to npm3 if you can.
 - Removed support for deprecated `webpack.plugins` config in `nwb.config.js`.
 
 **Changed:**
