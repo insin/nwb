@@ -36,8 +36,8 @@
 - case-sensitive-paths-webpack-plugin: v1.1.3 → v1.1.4 - handle cwd being incorrect case
 - copy-webpack-plugin: v3.0.1 → [v4.0.1](https://github.com/kevlened/copy-webpack-plugin/releases)
 - css-loader: v0.23.1 → [v0.26.0](https://github.com/webpack/css-loader/compare/v0.23.0...v0.26.0) - cssnano's use of autoprefixer is now disabled by default
-- detect-port: v1.0.0 → v1.0.1
-- diff: v2.2.3 → [v3.0.1](https://github.com/kpdecker/jsdiff/blob/master/release-notes.md#v301---october-9th-2016)
+- detect-port: v1.0.0 → v1.0.6
+- diff: v2.2.3 → [v3.1.0](https://github.com/kpdecker/jsdiff/blob/master/release-notes.md#v310---november-27th-2016)
 - figures: v1.7.0 → v2.0.0
 - html-webpack-plugin: v2.22.0 → [v2.24.1](https://github.com/ampedandwired/html-webpack-plugin/blob/master/CHANGELOG.md#v2241)
 - inquirer: v1.1.2 → [v1.2.3](https://github.com/SBoudrias/Inquirer.js/compare/v1.1.2...v1.2.3)
@@ -47,12 +47,12 @@
 - karma-mocha: v1.1.1 → [v1.3.0](https://github.com/karma-runner/karma-mocha/compare/v1.1.1...v1.23.0)
 - karma-mocha-reporter: v2.1.0 → [v2.2.1](https://github.com/litixsoft/karma-mocha-reporter/blob/master/CHANGELOG.md#221-2016-11-18)
 - karma-phantomjs-launcher: v1.0.1 → [v1.0.2](https://github.com/karma-runner/karma-phantomjs-launcher/blob/master/CHANGELOG.md#102-2016-08-31) - fix phantomjs path calculation
-- mocha: v3.0.2 → [v3.1.2](https://github.com/mochajs/mocha/blob/master/CHANGELOG.md#312--2016-10-10)
+- mocha: v3.0.2 → [v3.2.0](https://github.com/mochajs/mocha/blob/master/CHANGELOG.md#320--2016-11-24)
 - phantomjs-prebuilt: v2.1.12 → [v2.1.13](https://github.com/Medium/phantomjs/releases/tag/2.1.13)
 - postcss-loader: v0.10.0 → [v1.1.1](https://github.com/postcss/postcss-loader/blob/master/CHANGELOG.md#111)
 - qs: v6.2.1 → [v6.3.0](https://github.com/ljharb/qs/blob/master/CHANGELOG.md#630)
 - webpack: v1.13.1 → [v1.13.3](https://github.com/webpack/webpack/compare/v1.13.1...v1.13.3) - updated node-libs-browser and uglifyjs versions - `screw_ie8` is now enabled by default
-- webpack-merge: v0.14.1 → [v0.15.0](https://github.com/survivejs/webpack-merge/blob/master/CHANGELOG.md#0150--2016-10-18)
+- webpack-merge: v0.14.1 → [v1.0.2](https://github.com/survivejs/webpack-merge/blob/master/CHANGELOG.md#102--2016-11-29)
 - webpack-dev-middleware: v1.6.1 → [v1.8.4](https://github.com/webpack/webpack-dev-middleware/blob/master/CHANGELOG.md#184-2016-10-08)
 - webpack-hot-middleware: v2.12.2 → [v2.13.2](https://github.com/glenjamin/webpack-hot-middleware/compare/v2.12.2...v2.13.2)
 - whatwg-fetch: v1.0.0 → [v2.0.1](https://github.com/github/fetch/releases) - changes behaviour of `Headers` to be spec-compliant
