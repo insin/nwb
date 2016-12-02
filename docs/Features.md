@@ -32,6 +32,7 @@
 - Production optimisations for React apps, including stripping of `propTypes`.
 - Automatic creation of a separate vendor bundle.
 - A flag to try a build which replaces React with [Preact](https://github.com/developit/preact) for a much smaller payload.
+- A flag to try a build which replaces React with [Inferno](https://github.com/trueadm/inferno) for a much smaller payload.
 
 **Publishing:**
 

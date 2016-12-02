@@ -1,5 +1,6 @@
 **Added:**
 
+- Added an [`--inferno` flag](https://github.com/insin/nwb/blob/next/docs/Commands.md#build-1)** to React app builds to create an [inferno-compat](https://github.com/trueadm/inferno/tree/master/packages/inferno-compat) build [[#194](https://github.com/insin/nwb/issues/194)]
 - [`react-jsx-source`](https://babeljs.io/docs/plugins/transform-react-jsx-source/) and [`react-jsx-self`](https://babeljs.io/docs/plugins/transform-react-jsx-self/) Babel transforms are now enabled in development mode for improved debugging.
 - A Git repo with an initial commit is now created by default when creating a new project. Pass a `--no-git` flag to disable this.
 - Added an `audio` loader.

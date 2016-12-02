@@ -66,6 +66,7 @@ react build <entry> [dist_dir] [options]
 
 **Options:**
 
+- `--inferno` - create a [inferno-compat](https://github.com/trueadm/inferno/tree/master/packages/inferno-compat)-compatible build
 - `--mount-id` - `id` for the `<div>` the app will render into *[default: app]*
 - `--title` - contents for `<title>` *[default: React App]*
 - `--preact` - create a [preact-compat](https://github.com/developit/preact-compat#usage-with-webpack)-compatible build

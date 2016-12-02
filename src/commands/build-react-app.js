@@ -43,7 +43,15 @@ function buildConfig(args) {
     config.plugins.copy = [{from: path.resolve('public'), to: dist, ignore: '.gitkeep'}]
   }
 
-  if (args.preact) {
+  if (args.inferno) {
+    config.resolve = {
+      alias: {
+        'react': 'inferno-compat',
+        'react-dom': 'inferno-compat',
+      }
+    }
+  }
+  else if (args.preact) {
     config.resolve = {
       alias: {
         'react': 'preact-compat',
@@ -67,7 +75,11 @@ export default function buildReactApp(args, cb) {
 
   cleanApp({_: ['clean-app', dist]})
 
-  let spinner = ora(`Building ${args.preact ? 'Pr' : 'R'}eact app`).start()
+  let library = 'React'
+  if (args.inferno) library = 'Inferno'
+  else if (args.preact) library = 'Preact'
+
+  let spinner = ora(`Building ${library} app`).start()
   webpackBuild(args, buildConfig, (err, stats) => {
     if (err) {
       spinner.fail()
