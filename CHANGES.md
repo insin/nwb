@@ -36,7 +36,7 @@
 - babel-runtime: v6.11.6 → v6.18.0
 - case-sensitive-paths-webpack-plugin: v1.1.3 → v1.1.4 - handle cwd being incorrect case
 - copy-webpack-plugin: v3.0.1 → [v4.0.1](https://github.com/kevlened/copy-webpack-plugin/releases)
-- css-loader: v0.23.1 → [v0.26.0](https://github.com/webpack/css-loader/compare/v0.23.0...v0.26.0) - cssnano's use of autoprefixer is now disabled by default
+- css-loader: v0.23.1 → [v0.26.1](https://github.com/webpack/css-loader/compare/v0.23.0...v0.26.1) - cssnano's use of autoprefixer is now disabled by default
 - detect-port: v1.0.0 → v1.0.6
 - diff: v2.2.3 → [v3.1.0](https://github.com/kpdecker/jsdiff/blob/master/release-notes.md#v310---november-27th-2016)
 - figures: v1.7.0 → v2.0.0
