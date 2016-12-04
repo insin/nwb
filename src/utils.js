@@ -68,7 +68,27 @@ export function endsWith(s1, s2) {
 }
 
 /**
- * Install react for the user when it's needed.
+ * Install Inferno for the user when it's needed.
+ */
+export function installInferno({dev = false, save = false, cwd = process.cwd(), version = 'latest'} = {}) {
+  let saveArg = save ? ` --save${dev ? '-dev' : ''}` : ''
+  let command = `npm install${saveArg} inferno@${version}`
+  debug(`${cwd} $ ${command}`)
+  execSync(command, {cwd, stdio: 'inherit'})
+}
+
+/**
+ * Install Preact for the user when it's needed.
+ */
+export function installPreact({dev = false, save = false, cwd = process.cwd(), version = 'latest'} = {}) {
+  let saveArg = save ? ` --save${dev ? '-dev' : ''}` : ''
+  let command = `npm install${saveArg} preact@${version}`
+  debug(`${cwd} $ ${command}`)
+  execSync(command, {cwd, stdio: 'inherit'})
+}
+
+/**
+ * Install React for the user when it's needed.
  */
 export function installReact({dev = false, save = false, cwd = process.cwd(), version = 'latest'} = {}) {
   let saveArg = save ? ` --save${dev ? '-dev' : ''}` : ''

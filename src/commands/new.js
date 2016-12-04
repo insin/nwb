@@ -28,6 +28,7 @@ export default function new_(args, cb) {
   }
 
   let targetDir = path.resolve(name)
-  console.log(`Creating a ${projectType} project...`)
+  let initialVowel = /^[aeiou]/.test(projectType)
+  console.log(`Creating ${initialVowel ? 'an' : 'a'} ${projectType} project...`)
   createProject(args, projectType, name, targetDir, cb)
 }

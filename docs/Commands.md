@@ -111,6 +111,18 @@ nwb new react-component <dir-name> [options]
 Creates a skeleton project for a React component or library, which will be published to npm.
 
 ```
+nwb new preact-app <dir-name>
+```
+
+Creates a skeleton project for a Preact app in the specified directory.
+
+```
+nwb new inferno-app <dir-name>
+```
+
+Creates a skeleton project for an Inferno app in the specified directory.
+
+```
 nwb new web-app <dir-name>
 ```
 
@@ -136,7 +148,15 @@ Creates a skeleton project for an npm web module.
 
 **React app/component options:**
 
-- `--react` - set the version of react which will be installed (and set as a `peerDependency` for components). Defaults to whatever the stable version of React was when the version of `nwb` you're using was released.
+- `--react` - set the version of React which will be installed (and set as a `peerDependency` for components). Defaults to whatever the stable version of React was when the version of `nwb` you're using was released.
+
+**Preact app options:**
+
+- `--preact` - set the version of Preact which will be installed. Defaults to whatever the stable version of Preact was when the version of `nwb` you're using was released.
+
+**Inferno app options:**
+
+- `--inferno` - set the version of Inferno which will be installed. Defaults to whatever the stable version of Inferno was when the version of `nwb` you're using was released.
 
 ##### `init`
 

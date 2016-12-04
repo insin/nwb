@@ -22,6 +22,7 @@ export default function init(args, cb) {
     name = path.basename(process.cwd())
   }
 
-  console.log(`Initialising a ${projectType} project...`)
+  let initialVowel = /^[aeiou]/.test(projectType)
+  console.log(`Initialising ${initialVowel ? 'an' : 'a'} ${projectType} project...`)
   createProject(args, projectType, name, process.cwd(), cb)
 }

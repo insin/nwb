@@ -80,8 +80,8 @@ export default function buildReact(args, cb) {
   cleanApp({_: ['clean-app', dist]})
 
   let library = 'React'
-  if (args.inferno) library = 'Inferno'
-  else if (args.preact) library = 'Preact'
+  if (args.inferno) library = 'Inferno (React compat)'
+  else if (args.preact) library = 'Preact (React compat)'
 
   let spinner = ora(`Building ${library} app`).start()
   webpackBuild(args, buildConfig, (err, stats) => {

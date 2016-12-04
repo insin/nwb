@@ -1,7 +1,7 @@
 ## Features
 
 - **A tool, not a boilerplate.** Start out with a single `devDependency`, without any configuration.
-- Provides specific tooling for React apps and components, but also supports development of vanilla JS web apps and npm modules.
+- Provides specific tooling for React apps and components, but also supports development of Preact apps, Inferno apps, and vanilla JS web apps and npm modules.
 - ES6 and JSX support.
 - Use future JavaScript features like object speading now; TC39 Stage 2 and above features are enabled by default.
 - Default polyfills and configuration allow use of `Promise` (with rejection tracking enabled), `fetch`, `async`/`await`, generators and `Object.assign` in any browser.
@@ -31,13 +31,12 @@
 - Optimised Webpack build prepares JS, CSS and images for production, with deterministic filename hashes for long-term caching, and sourcemaps.
 - Production optimisations for React apps, including stripping of `propTypes`.
 - Automatic creation of a separate vendor bundle.
-- A flag to try a build which replaces React with [Preact](https://github.com/developit/preact) for a much smaller payload.
-- A flag to try a build which replaces React with [Inferno](https://github.com/trueadm/inferno) for a much smaller payload.
+- Flag to try a build which replaces React with [Preact](https://github.com/developit/preact) or [Inferno](https://github.com/trueadm/inferno) for a much smaller payload.
 
 **Publishing:**
 
 - Builds components and modules for publishing to npm with ES5 (including CommonJS exports interop), ES6 modules and UMD builds.
-- Project templates include package.json `files` config to avoid bloating your packages.
+- Project templates include a package.json config `files` whitelist to avoid bloating your packages.
 - React component template includes a demo app ready to develop and build using the same React app development setup.
 - React component `propTypes` are automatically wrapped with an environment check, for eliminaion from production builds.
 

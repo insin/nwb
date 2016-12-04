@@ -1,11 +1,15 @@
-import {REACT_APP, REACT_COMPONENT, WEB_APP, WEB_MODULE} from '../constants'
+import {INFERNO_APP, PREACT_APP, REACT_APP, REACT_COMPONENT, WEB_APP, WEB_MODULE} from '../constants'
 import getUserConfig from '../getUserConfig'
+import buildInfernoApp from './build-inferno-app'
+import buildPreactApp from './build-preact-app'
 import buildReactApp from './build-react-app'
 import buildReactComponent from './build-react-component'
 import buildWebApp from './build-web-app'
 import buildWebModule from './build-web-module'
 
 const BUILD_COMMANDS = {
+  [INFERNO_APP]: buildInfernoApp,
+  [PREACT_APP]: buildPreactApp,
   [REACT_APP]: buildReactApp,
   [REACT_COMPONENT]: buildReactComponent,
   [WEB_APP]: buildWebApp,

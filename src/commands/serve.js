@@ -1,11 +1,15 @@
-import {REACT_APP, REACT_COMPONENT, WEB_APP} from '../constants'
+import {INFERNO_APP, PREACT_APP, REACT_APP, REACT_COMPONENT, WEB_APP} from '../constants'
 import {UserError} from '../errors'
 import getUserConfig from '../getUserConfig'
+import serveInfernoApp from './serve-inferno-app'
+import servePreactApp from './serve-preact-app'
 import serveReactApp from './serve-react-app'
 import serveReactDemo from './serve-react-demo'
 import serveWebApp from './serve-web-app'
 
 const SERVE_COMMANDS = {
+  [INFERNO_APP]: serveInfernoApp,
+  [PREACT_APP]: servePreactApp,
   [REACT_APP]: serveReactApp,
   [REACT_COMPONENT]: serveReactDemo,
   [WEB_APP]: serveWebApp,

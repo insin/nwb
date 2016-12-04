@@ -21,7 +21,7 @@ function buildConfig(args) {
   let config = {
     babel: {
       commonJSInterop: true,
-      presets: ['react'],
+      presets: ['preact'],
     },
     devtool: 'source-map',
     entry: {
@@ -43,43 +43,18 @@ function buildConfig(args) {
     config.plugins.copy = [{from: path.resolve('public'), to: dist, ignore: '.gitkeep'}]
   }
 
-  if (args.inferno) {
-    config.resolve = {
-      alias: {
-        'react': 'inferno-compat',
-        'react-dom': 'inferno-compat',
-      }
-    }
-  }
-  else if (args.preact) {
-    config.resolve = {
-      alias: {
-        'react': 'preact-compat',
-        'react-dom': 'preact-compat',
-      }
-    }
-  }
-
-  if (production) {
-    config.babel.presets.push('react-prod')
-  }
-
   return config
 }
 
 /**
- * Build a React app.
+ * Build a Preact app.
  */
-export default function buildReactApp(args, cb) {
+export default function buildPreactApp(args, cb) {
   let dist = args._[2] || 'dist'
 
   cleanApp({_: ['clean-app', dist]})
 
-  let library = 'React'
-  if (args.inferno) library = 'Inferno (React compat)'
-  else if (args.preact) library = 'Preact (React compat)'
-
-  let spinner = ora(`Building ${library} app`).start()
+  let spinner = ora(`Building Preact app`).start()
   webpackBuild(args, buildConfig, (err, stats) => {
     if (err) {
       spinner.fail()

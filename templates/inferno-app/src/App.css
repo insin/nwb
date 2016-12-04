@@ -1,0 +1,47 @@
+.App {
+  height: 100%;
+  min-height: 400px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: stretch;
+}
+
+.App-flex {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.App-heading {
+  background-color: #fff;
+  color: #444;
+  font-size: 6vh;
+  z-index: 2;
+}
+
+.App-inferno {
+  text-decoration: underline overline;
+}
+
+.App-logo {
+  max-height: 30vh;
+  max-width: 30vh;
+  margin-right: 1em;
+}
+
+.App-instructions {
+  background-color: #fafafa;
+  color: #545454;
+  font-size: 3vh;
+  line-height: 1.5;
+  padding: 0 1em;
+}
+
+.App-instructions code {
+  background-color: #f40026;
+  color: #fff;
+  padding: .2em .3em;
+  border-radius: 1em;
+}

@@ -51,7 +51,13 @@ export default function createBabelConfig(buildConfig = {}, userConfig = {}) {
   // Additional build presets
   if (Array.isArray(buildPresets)) {
     buildPresets.forEach(preset => {
-      if (preset === 'react') {
+      if (preset === 'inferno') {
+        presets.push(require.resolve('../babel-presets/inferno'))
+      }
+      else if (preset === 'preact') {
+        presets.push(require.resolve('../babel-presets/preact'))
+      }
+      else if (preset === 'react') {
         presets.push(require.resolve('babel-preset-react'))
         if (process.env.NODE_ENV === 'development') {
           plugins.push(

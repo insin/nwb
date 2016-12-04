@@ -54,6 +54,8 @@ Project creation commands:
   Project types:
     ${req('react-app')}        a React app
     ${req('react-component')}  a React component or library npm module
+    ${req('preact-app')}       a Preact app
+    ${req('inferno-app')}      an Inferno app
     ${req('web-app')}          a plain JavaScript app
     ${req('web-module')}       a plain JavaScript npm module
 

@@ -7,11 +7,13 @@ import copyTemplateDir from 'copy-template-dir'
 import inquirer from 'inquirer'
 
 import {
-  CONFIG_FILE_NAME, PROJECT_TYPES, REACT_APP, REACT_COMPONENT, REACT_VERSION, WEB_APP, WEB_MODULE
+  CONFIG_FILE_NAME,
+  INFERNO_VERSION, PREACT_VERSION, REACT_VERSION,
+  INFERNO_APP, PREACT_APP, PROJECT_TYPES, REACT_APP, REACT_COMPONENT, WEB_APP, WEB_MODULE,
 } from './constants'
 import {UserError} from './errors'
 import pkg from '../package.json'
-import {installReact, typeOf} from './utils'
+import {installInferno, installPreact, installReact, typeOf} from './utils'
 
 let nwbVersion = pkg.version.split('.').slice(0, 2).concat('x').join('.')
 
@@ -111,6 +113,44 @@ export function validateProjectType(projectType) {
 }
 
 const PROJECT_CREATORS = {
+  [INFERNO_APP](args, name, targetDir, cb) {
+    let templateDir = path.join(__dirname, `../templates/${INFERNO_APP}`)
+    let version = args.inferno || INFERNO_VERSION
+    let templateVars = {name, nwbVersion, version}
+    copyTemplateDir(templateDir, targetDir, templateVars, (err, createdFiles) => {
+      if (err) return cb(err)
+      logCreatedFiles(targetDir, createdFiles)
+      initGit(args, targetDir)
+      console.log('Installing dependencies...')
+      try {
+        installInferno({cwd: targetDir, version, save: true})
+      }
+      catch (e) {
+        return cb(e)
+      }
+      cb()
+    })
+  },
+
+  [PREACT_APP](args, name, targetDir, cb) {
+    let templateDir = path.join(__dirname, `../templates/${PREACT_APP}`)
+    let version = args.preact || PREACT_VERSION
+    let templateVars = {name, nwbVersion, version}
+    copyTemplateDir(templateDir, targetDir, templateVars, (err, createdFiles) => {
+      if (err) return cb(err)
+      logCreatedFiles(targetDir, createdFiles)
+      initGit(args, targetDir)
+      console.log('Installing dependencies...')
+      try {
+        installPreact({cwd: targetDir, version, save: true})
+      }
+      catch (e) {
+        return cb(e)
+      }
+      cb()
+    })
+  },
+
   [REACT_APP](args, name, targetDir, cb) {
     let templateDir = path.join(__dirname, `../templates/${REACT_APP}`)
     let reactVersion = args.react || REACT_VERSION
