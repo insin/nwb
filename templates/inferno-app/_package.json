@@ -7,9 +7,9 @@
     "build": "nwb build-react-app",
     "clean": "nwb clean-app",
     "start": "nwb serve-react-app",
-    "test": "nwb test",
-    "test:coverage": "nwb test --coverage",
-    "test:watch": "nwb test --server"
+    "test": "nwb test-inferno",
+    "test:coverage": "nwb test-inferno --coverage",
+    "test:watch": "nwb test-inferno --server"
   },
   "dependencies": {
   },

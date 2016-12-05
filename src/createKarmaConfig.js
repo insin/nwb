@@ -120,7 +120,7 @@ export function getKarmaPluginConfig({codeCoverage = false} = {}, userConfig = {
   return {browsers, frameworks, plugins, reporters}
 }
 
-export default function createKarmaConfig({codeCoverage, singleRun}, userConfig) {
+export default function createKarmaConfig(buildConfig, {codeCoverage, singleRun}, userConfig) {
   let userKarma = userConfig.karma || {}
 
   let {browsers, frameworks, plugins, reporters} = getKarmaPluginConfig({codeCoverage}, userConfig)
@@ -145,15 +145,17 @@ export default function createKarmaConfig({codeCoverage, singleRun}, userConfig)
     })
   }
 
-  let babel = {
-    presets: ['react'] // XXX
+  // Tweak Babel config for code coverage when necessary
+  buildConfig = {...buildConfig}
+  if (!buildConfig.babel) {
+    buildConfig.babel = {}
   }
   if (codeCoverage) {
     let exclude = ['node_modules/', ...testDirs, ...testFiles]
     if (userKarma.testContext) {
       exclude.push(userKarma.testContext)
     }
-    babel.plugins = [
+    buildConfig.babel.plugins = [
       [require.resolve('babel-plugin-istanbul'), {exclude}]
     ]
   }
@@ -177,8 +179,7 @@ export default function createKarmaConfig({codeCoverage, singleRun}, userConfig)
     preprocessors,
     reporters,
     singleRun,
-    webpack: createWebpackConfig({
-      babel,
+    webpack: createWebpackConfig(merge(buildConfig, {
       devtool: 'cheap-module-inline-source-map',
       node: {
         fs: 'empty',
@@ -198,7 +199,7 @@ export default function createKarmaConfig({codeCoverage, singleRun}, userConfig)
       server: {
         hot: false,
       },
-    }, getPluginConfig(), userConfig),
+    }), getPluginConfig(), userConfig),
     webpackMiddleware: {
       noInfo: true,
       quiet: true,

@@ -103,6 +103,12 @@ Project type-specific commands:
       ${opt('--no-demo')}       don't build the demo app, if present
       ${opt('--no-proptypes')}  don't wrap propTypes with an environment check
 
+  ${cmd('nwb build-preact-app')} ${opt('[entry] [dist_dir]')}
+    Build a Preact app from ${opt('entry')} to ${opt('dist_dir')}.
+
+  ${cmd('nwb build-inferno-app')} ${opt('[entry] [dist_dir]')}
+    Build an Inferno app from ${opt('entry')} to ${opt('dist_dir')}.
+
   ${cmd('nwb build-web-app')} ${opt('[entry] [dist_dir]')}
     Build a web app from ${opt('entry')} to ${opt('dist_dir')}.
 
@@ -124,8 +130,23 @@ Project type-specific commands:
   ${cmd('nwb serve-react-demo')}
     Serve a React demo app from demo/src/index.js.
 
+  ${cmd('nwb serve-preact-app')} ${opt('[entry]')}
+    Serve a Preact app from ${opt('entry')}
+
+  ${cmd('nwb serve-inferno-app')} ${opt('[entry]')}
+    Serve an Inferno app from ${opt('entry')}
+
   ${cmd('nwb serve-web-app')} ${opt('[entry]')}
     Serve a web app from ${opt('entry')}.
+
+  ${cmd('nwb test-react')}
+    Tests a React project.
+
+  ${cmd('nwb test-preact')}
+    Tests a Preact project.
+
+  ${cmd('nwb test-inferno')}
+    Tests an Inferno project.
 
   Arguments:
     ${opt('entry')}      entry point ${opt('[default: src/index.js]')}

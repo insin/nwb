@@ -7,9 +7,9 @@
     "build": "nwb build-preact-app",
     "clean": "nwb clean-app",
     "start": "nwb serve-preact-app",
-    "test": "nwb test",
-    "test:coverage": "nwb test --coverage",
-    "test:watch": "nwb test --server"
+    "test": "nwb test-preact",
+    "test:coverage": "nwb test-preact --coverage",
+    "test:watch": "nwb test-preact --server"
   },
   "dependencies": {
   },

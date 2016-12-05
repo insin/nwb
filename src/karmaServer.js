@@ -5,7 +5,7 @@ import createKarmaConfig from './createKarmaConfig'
 import {KarmaExitCodeError} from './errors'
 import getUserConfig from './getUserConfig'
 
-export default function karmaServer(args, cb) {
+export default function karmaServer(buildConfig, args, cb) {
   argvSetEnv()
 
   // Force the environment to test
@@ -14,7 +14,7 @@ export default function karmaServer(args, cb) {
   let isCi = process.env.CI || process.env.CONTINUOUS_INTEGRATION
 
   let userConfig = getUserConfig(args)
-  let karmaConfig = createKarmaConfig({
+  let karmaConfig = createKarmaConfig(buildConfig, {
     codeCoverage: isCi || !!args.coverage,
     singleRun: isCi || !args.server,
   }, userConfig)

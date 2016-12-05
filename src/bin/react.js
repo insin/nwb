@@ -76,11 +76,13 @@ Commands:
       ${opt('dist_dir')}    build output directory ${opt('[default: dist/]')}
 
     Options:
-      ${opt('--inferno')}   create an Inferno build (inferno and inferno-compat must be installed)
       ${opt('--mount-id')}  id for the <div> the app will render into ${opt('[default: app]')}
       ${opt('--title')}     contents for <title> ${opt('[default: React App]')}
-      ${opt('--preact')}    create a Preact build (preact and preact-compat must be installed)
       ${opt('--vendor')}    create a 'vendor' bundle for node_modules/ modules
+
+    React-compatible builds using other libraries:
+      ${opt('--inferno')}   create an Inferno build (inferno and inferno-compat must be installed)
+      ${opt('--preact')}    create a Preact build (preact and preact-compat must be installed)
 `)
   process.exit(args.help || command ? 0 : 1)
 }
