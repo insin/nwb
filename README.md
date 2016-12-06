@@ -8,6 +8,8 @@
 nwb provides tooling in a single `devDependency` for developing, testing and building:
 
 - [React Apps](#react-apps)
+- [Preact Apps](#preact-apps)
+- [Inferno Apps](#inferno-apps)
 - [React Components and Libraries](#react-components-and-libraries)
 - [npm Modules for the Web](#npm-modules-for-the-web)
 
@@ -70,6 +72,22 @@ react run app.js
 ```
 
 `react build app.js` will create a production build.
+
+## Preact Apps
+
+Run `nwb new preact-app` to create a [Preact](https://preactjs.com/) app:
+
+```sh
+nwb new preact-app my-app
+```
+
+## Inferno Apps
+
+Run `nwb new inferno-app` to create an [Inferno](https://github.com/trueadm/inferno#readme) app:
+
+```sh
+nwb new inferno-app my-app
+```
 
 ## React Components and Libraries
 
