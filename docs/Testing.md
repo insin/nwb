@@ -150,7 +150,7 @@ module.exports = {
   karma: {
     testContext: 'tests.webpack.js'
     plugins: [
-      require('karma-chai')
+      'karma-chai'
     ],
     frameworks: ['mocha', 'chai']
   }
