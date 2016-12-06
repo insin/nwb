@@ -1,6 +1,6 @@
 **Added:**
 
-- Added new project types: `inferno-app` and `preact-app` - use these with `nwb new` or `nwb init` to develop [Inferno](https://github.com/trueadm/inferno#readme) and [Preact](https://preactjs.com/) apps [#194](https://github.com/insin/nwb/issues/194)]
+- Added new project types: `inferno-app` and `preact-app` - use these with `nwb new` or `nwb init` to develop [Inferno](https://github.com/trueadm/inferno#readme) and [Preact](https://preactjs.com/) apps [[#194](https://github.com/insin/nwb/issues/194)]
 - Added project-specific variants of `nwb test`: `nwb test-react`, `nwb-test-inferno` and `nwb-test-preact`.
 - Added an [`--inferno` flag](https://github.com/insin/nwb/blob/next/docs/Commands.md#build-1) to React app builds to create an [inferno-compat](https://github.com/trueadm/inferno/tree/master/packages/inferno-compat) build [[#194](https://github.com/insin/nwb/issues/194)]
 - [`react-jsx-source`](https://babeljs.io/docs/plugins/transform-react-jsx-source/) and [`react-jsx-self`](https://babeljs.io/docs/plugins/transform-react-jsx-self/) Babel transforms are now enabled for React apps in development mode for improved debugging.
@@ -9,7 +9,7 @@
 
 **Removed:**
 
-- Removed hardcoded React preset from default Babel config when running tests tests - instead, `nwb test` will run the new `nwb test-react` command if you have a `react-app` or `react-component` project type in `nwb.config.js`.
+- Removed hardcoded React preset from default Babel config when running tests - instead, `nwb test` will run the new `nwb test-react` command if you have a `react-app` or `react-component` project type in `nwb.config.js`.
 - Dependencies are no longer bundled. As a result, Babel 6 dependencies will no longer be deduplicated for npm2 users, so an nwb install will be slower and larger - consider upgrading to npm3 or yarn if you can.
 - Removed support for deprecated `webpack.plugins` config in `nwb.config.js` - this config must now be moved up into `webpack` instead.
 
