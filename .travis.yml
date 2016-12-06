@@ -10,12 +10,11 @@ cache:
     - $HOME/.npm
 
 before_install:
-  - npm install codecov.io coveralls
+  - npm install coveralls
 
 script: "npm run test:coverage"
 
 after_success:
-  - cat ./coverage/lcov.info | ./node_modules/codecov.io/bin/codecov.io.js
   - cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js
 
 branches:
