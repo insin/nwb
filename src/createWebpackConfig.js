@@ -265,7 +265,7 @@ function injectManifestPlugin() {
         // Prevent manifest .js and .js.map files being emitted
         delete compilation.assets[key]
       })
-      cb()
+      cb(null, data)
     })
   })
 }
