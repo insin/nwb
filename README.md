@@ -75,7 +75,7 @@ react run app.js
 
 ## Preact Apps
 
-Run `nwb new preact-app` to create a [Preact](https://preactjs.com/) app:
+Use `nwb new preact-app` to create a [Preact](https://preactjs.com/) app:
 
 ```sh
 nwb new preact-app my-app
@@ -83,7 +83,7 @@ nwb new preact-app my-app
 
 ## Inferno Apps
 
-Run `nwb new inferno-app` to create an [Inferno](https://github.com/trueadm/inferno#readme) app:
+Use `nwb new inferno-app` to create an [Inferno](https://github.com/trueadm/inferno#readme) app:
 
 ```sh
 nwb new inferno-app my-app
