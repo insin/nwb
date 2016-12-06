@@ -44,7 +44,7 @@
 - diff: v2.2.3 → [v3.1.0](https://github.com/kpdecker/jsdiff/blob/master/release-notes.md#v310---november-27th-2016)
 - figures: v1.7.0 → v2.0.0
 - html-webpack-plugin: v2.22.0 → [v2.24.1](https://github.com/ampedandwired/html-webpack-plugin/blob/master/CHANGELOG.md#v2241)
-- inquirer: v1.1.2 → [v1.2.3](https://github.com/SBoudrias/Inquirer.js/compare/v1.1.2...v1.2.3)
+- inquirer: v1.1.2 → [2.0.0](https://github.com/SBoudrias/Inquirer.js/releases)
 - glob: v7.0.5 → [v7.1.1](https://github.com/isaacs/node-glob/compare/v7.0.5...v7.1.1)
 - karma: v1.2.0 → [v1.3.0](https://github.com/karma-runner/karma/blob/master/CHANGELOG.md#130-2016-09-09)
 - karma-chrome-launcher: v1.0.1 → [v2.0.0](https://github.com/karma-runner/karma-chrome-launcher/blob/master/CHANGELOG.md#200-2016-08-18) - chromium support
@@ -53,7 +53,7 @@
 - karma-phantomjs-launcher: v1.0.1 → [v1.0.2](https://github.com/karma-runner/karma-phantomjs-launcher/blob/master/CHANGELOG.md#102-2016-08-31) - fix phantomjs path calculation
 - mocha: v3.0.2 → [v3.2.0](https://github.com/mochajs/mocha/blob/master/CHANGELOG.md#320--2016-11-24)
 - phantomjs-prebuilt: v2.1.12 → [v2.1.13](https://github.com/Medium/phantomjs/releases/tag/2.1.13)
-- postcss-loader: v0.10.0 → [v1.1.1](https://github.com/postcss/postcss-loader/blob/master/CHANGELOG.md#111)
+- postcss-loader: v0.10.0 → [v1.2.0](https://github.com/postcss/postcss-loader/blob/master/CHANGELOG.md#12)
 - qs: v6.2.1 → [v6.3.0](https://github.com/ljharb/qs/blob/master/CHANGELOG.md#630)
 - webpack: v1.13.1 → [v1.13.3](https://github.com/webpack/webpack/compare/v1.13.1...v1.13.3) - updated node-libs-browser and uglifyjs versions - `screw_ie8` is now enabled by default
 - webpack-merge: v0.14.1 → [v1.0.2](https://github.com/survivejs/webpack-merge/blob/master/CHANGELOG.md#102--2016-11-29)
