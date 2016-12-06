@@ -72,7 +72,7 @@ export function endsWith(s1, s2) {
  */
 export function installInferno({dev = false, save = false, cwd = process.cwd(), version = 'latest'} = {}) {
   let saveArg = save ? ` --save${dev ? '-dev' : ''}` : ''
-  let command = `npm install${saveArg} inferno@${version}`
+  let command = `npm install${saveArg} inferno@${version} inferno-component@${version}`
   debug(`${cwd} $ ${command}`)
   execSync(command, {cwd, stdio: 'inherit'})
 }
