@@ -24,7 +24,7 @@
 - autoprefixer: v6.4.0 → [v6.5.3](https://github.com/postcss/autoprefixer/blob/master/CHANGELOG.md#653)
 - babel-cli: v6.11.4 → v6.18.0
 - babel-core: v6.13.2 → v6.18.2
-- babel-loader: v6.2.4 → [v6.2.8](https://github.com/babel/babel-loader/blob/master/CHANGELOG.md) - better syntax error messages
+- babel-loader: v6.2.4 → [v6.2.9](https://github.com/babel/babel-loader/blob/master/CHANGELOG.md) - better syntax error messages
 - babel-plugin-istanbul: v2.0.0 → [v3.0.0](https://github.com/istanbuljs/babel-plugin-istanbul/blob/master/CHANGELOG.md#300-2016-11-14)
 - babel-plugin-lodash: v3.2.8 → [v3.2.10](https://github.com/lodash/babel-plugin-lodash/compare/3.2.8...3.2.10)
 - babel-plugin-transform-react-remove-prop-types: v0.2.9 → [v0.2.11](https://github.com/oliviertassinari/babel-plugin-transform-react-remove-prop-types/compare/v0.2.9...v0.2.11)
