@@ -15,8 +15,9 @@
 
 **Changed:**
 
+- `.svg` files have been removed from the `graphics` loader - they're now handled in a new `svg` loader so inlining can be configured separately. This matters if you're using a [sprite system](http://una.im/svg-icons/), as base64 inlining svgs breaks [fragment identifiers](https://css-tricks.com/svg-fragment-identifiers-work/).
 - Changed `babel-plugin-transform-runtime` configuration to make use of new `moduleName` config; Webpack module resolution no longer uses a blanket fallback to nwb's `node_modules/` for serving and builds.
-- [`webpack.uglify` config](https://github.com/insin/nwb/blob/next/docs/Configuration.md#uglify-object--false) can now be set to `false` to disable use of `UglifyJSPlugin` in production builds [[#160](https://github.com/insin/nwb/issues/160)]
+- [`webpack.uglify` config](https://github.com/insin/nwb/blob/next/docs/Configuration.md#uglify-object--false) can now be set to `false` to disable use of `UglifyJSPlugin` in production builds for debugging [[#160](https://github.com/insin/nwb/issues/160)]
 
 **Dependencies:**
 

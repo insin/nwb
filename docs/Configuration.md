@@ -457,7 +457,7 @@ Each [Webpack loader](https://webpack.github.io/docs/loaders.html) used in nwb's
 
 To customise a loader, add a prop to the `loaders` object matching its id with a configuration object.
 
-Refer to each loader's documentation (linked to for each [default loader](#default-loaders) documented below) for configuration options which can be set.
+Refer to each Webpack loader's documentation (linked to for each [default loader](#default-loaders) documented below) for configuration options which can be set.
 
 Generic loader options such as `include` and `exclude` can be configured alongside loader-specific query options - you can also use an explicit `query` object if necessary to separate this configuration.
 
@@ -538,7 +538,9 @@ Default loaders configured by nwb and the ids it gives them are:
 
   > Default config: `{include: /node_modules/}`
 
-- `graphics` - handles `.gif`, `.png`, `.svg` and `.webp` files using using [url-loader][url-loader]
+- `graphics` - handles `.gif`, `.png` and `.webp` files using using [url-loader][url-loader]
+
+- `svg` - handles `.svg` files using using [url-loader][url-loader]
 
 - `jpeg` - handles `.jpg` and `.jpeg` files using [url-loader][url-loader]
 
