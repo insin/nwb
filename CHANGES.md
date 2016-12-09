@@ -1,21 +1,21 @@
 **Added:**
 
 - Added new project types: `inferno-app` and `preact-app` - use these with `nwb new` or `nwb init` to develop [Inferno](https://github.com/trueadm/inferno#readme) and [Preact](https://preactjs.com/) apps [[#194](https://github.com/insin/nwb/issues/194)]
-- Added project-specific variants of `nwb test`: `nwb test-react`, `nwb-test-inferno` and `nwb-test-preact`.
 - Added an [`--inferno` flag](https://github.com/insin/nwb/blob/next/docs/Commands.md#build-1) to React app builds to create an [inferno-compat](https://github.com/trueadm/inferno/tree/master/packages/inferno-compat) build [[#194](https://github.com/insin/nwb/issues/194)]
 - [`react-jsx-source`](https://babeljs.io/docs/plugins/transform-react-jsx-source/) and [`react-jsx-self`](https://babeljs.io/docs/plugins/transform-react-jsx-self/) Babel transforms are now enabled for React apps in development mode for improved debugging.
 - A Git repo with an initial commit is now created by default when creating a new project. Pass a `--no-git` flag to disable this.
-- Added an `audio` loader.
+- Added project-specific variants of `nwb test`: `nwb test-react`, `nwb-test-inferno` and `nwb-test-preact`.
+- Added an `audio` loader and an `svg` loader.
 
 **Removed:**
 
 - Removed hardcoded React preset from default Babel config when running tests - instead, `nwb test` will run the new `nwb test-react` command if you have a `react-app` or `react-component` project type in `nwb.config.js`.
-- Dependencies are no longer bundled. As a result, Babel 6 dependencies will no longer be deduplicated for npm2 users, so an nwb install will be slower and larger - consider upgrading to npm3 or yarn if you can.
+- Dependencies are no longer bundled. As a result, Babel 6 dependencies will no longer be deduplicated for npm2 users, so an nwb install will be slower and larger - consider upgrading to npm3 or [yarn](https://yarnpkg.com/) if you can.
 - Removed support for deprecated `webpack.plugins` config in `nwb.config.js` - this config must now be moved up into `webpack` instead.
 
 **Changed:**
 
-- `.svg` files have been removed from the `graphics` loader - they're now handled in a new `svg` loader so inlining can be configured separately. This matters if you're using a [sprite system](http://una.im/svg-icons/), as base64 inlining svgs breaks [fragment identifiers](https://css-tricks.com/svg-fragment-identifiers-work/).
+- Handling of`.svg` files has been moved from the `graphics` loader to the new `svg` loader so inlining can be configured separately. This matters if you're using a [sprite system](http://una.im/svg-icons/), as base64 inlining SVGs breaks [fragment identifiers](https://css-tricks.com/svg-fragment-identifiers-work/).
 - Changed `babel-plugin-transform-runtime` configuration to make use of new `moduleName` config; Webpack module resolution no longer uses a blanket fallback to nwb's `node_modules/` for serving and builds.
 - [`webpack.uglify` config](https://github.com/insin/nwb/blob/next/docs/Configuration.md#uglify-object--false) can now be set to `false` to disable use of `UglifyJSPlugin` in production builds for debugging [[#160](https://github.com/insin/nwb/issues/160)]
 
