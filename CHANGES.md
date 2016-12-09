@@ -1,3 +1,5 @@
+# 0.13.0 / 2016-12-09
+
 **Added:**
 
 - Added new project types: `inferno-app` and `preact-app` - use these with `nwb new` or `nwb init` to develop [Inferno](https://github.com/trueadm/inferno#readme) and [Preact](https://preactjs.com/) apps [[#194](https://github.com/insin/nwb/issues/194)]
