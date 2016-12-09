@@ -23,13 +23,13 @@
 
 - autoprefixer: v6.4.0 → [v6.5.3](https://github.com/postcss/autoprefixer/blob/master/CHANGELOG.md#653)
 - babel-cli: v6.11.4 → v6.18.0
-- babel-core: v6.13.2 → v6.18.2
+- babel-core: v6.13.2 → v6.20.0
 - babel-loader: v6.2.4 → [v6.2.9](https://github.com/babel/babel-loader/blob/master/CHANGELOG.md) - better syntax error messages
 - babel-plugin-istanbul: v2.0.0 → [v3.0.0](https://github.com/istanbuljs/babel-plugin-istanbul/blob/master/CHANGELOG.md#300-2016-11-14)
 - babel-plugin-lodash: v3.2.8 → [v3.2.10](https://github.com/lodash/babel-plugin-lodash/compare/3.2.8...3.2.10)
 - babel-plugin-transform-react-remove-prop-types: v0.2.9 → [v0.2.11](https://github.com/oliviertassinari/babel-plugin-transform-react-remove-prop-types/compare/v0.2.9...v0.2.11)
 - babel-plugin-transform-runtime: v6.12.0 → [v6.15.0](https://github.com/babel/babel/blob/master/CHANGELOG.md#v6150-2016-08-31) - add `moduleName` config to specify runtime path
-- babel-polyfill: v6.13.0 → v6.16.0
+- babel-polyfill: v6.13.0 → v6.20.0
 - babel-preset-es2015: v6.14.0 → v6.18.0
 - babel-preset-es2016: v6.11.3 → v6.16.0
 - babel-preset-react: v6.11.1 → v6.16.0
@@ -37,7 +37,7 @@
 - babel-preset-stage-1: v6.13.0 → v6.16.0
 - babel-preset-stage-2: v6.13.0 → v6.18.0
 - babel-preset-stage-3: v6.11.0 → v6.17.0
-- babel-runtime: v6.11.6 → v6.18.0
+- babel-runtime: v6.11.6 → v6.20.0
 - case-sensitive-paths-webpack-plugin: v1.1.3 → v1.1.4 - handle cwd being incorrect case
 - copy-webpack-plugin: v3.0.1 → [v4.0.1](https://github.com/kevlened/copy-webpack-plugin/releases)
 - css-loader: v0.23.1 → [v0.26.1](https://github.com/webpack/css-loader/compare/v0.23.0...v0.26.1) - cssnano's use of autoprefixer is now disabled by default
