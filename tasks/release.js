@@ -1,4 +1,4 @@
-/* global echo, exec, exit, rm */
+/* global echo, exec, exit */
 require('shelljs/global')
 
 if (!/^3/.test(exec('npm -v', {silent: true}).stdout)) {
