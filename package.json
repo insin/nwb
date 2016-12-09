@@ -124,9 +124,6 @@
     "shelljs": "0.7.5",
     "tree-kill": "1.1.0"
   },
-  "optionalDependencies": {
-    "fsevents": "1.0.14"
-  },
   "repository": {
     "type": "git",
     "url": "https://github.com/insin/nwb.git"
