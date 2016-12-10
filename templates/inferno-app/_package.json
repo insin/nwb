@@ -4,9 +4,9 @@
   "description": "Describe {{name}} here",
   "private": true,
   "scripts": {
-    "build": "nwb build-react-app",
+    "build": "nwb build-inferno-app",
     "clean": "nwb clean-app",
-    "start": "nwb serve-react-app",
+    "start": "nwb serve-inferno-app",
     "test": "nwb test-inferno",
     "test:coverage": "nwb test-inferno --coverage",
     "test:watch": "nwb test-inferno --server"

@@ -1,3 +1,7 @@
+**Fixed:**
+
+* Fix npm scripts in the `inferno-app` template.
+
 # 0.13.2 / 2016-12-10
 
 **Fixed:**
