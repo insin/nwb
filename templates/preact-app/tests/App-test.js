@@ -16,6 +16,6 @@ describe('App component', () => {
 
   it('displays a welcome message', () => {
     render(<App/>, node)
-    expect(node.textContent).toContain('Welcome to Preact')
+    expect(node.textContent).toContain('Welcome to')
   })
 })
