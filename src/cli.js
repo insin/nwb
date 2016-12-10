@@ -100,6 +100,7 @@ Project type-specific commands:
     Create ES5, ES6 modules and UMD builds for a React component.
 
     Options:
+      ${opt('--copy-files')}    copy files which won't be transpiled by Babel (e.g. CSS)
       ${opt('--no-demo')}       don't build the demo app, if present
       ${opt('--no-proptypes')}  don't wrap propTypes with an environment check
 

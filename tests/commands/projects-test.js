@@ -292,4 +292,42 @@ describe('sample projects', function() {
       ])
     })
   })
+
+  describe('react-component-with-css project using --copy-files', () => {
+    let originalCwd
+    let originalNodeEnv
+    let tmpDir
+
+    before(done => {
+      originalCwd = process.cwd()
+      originalNodeEnv = process.env.NODE_ENV
+      delete process.env.NODE_ENV
+      tmpDir = temp.mkdirSync('react-component-with-css')
+      copyTemplateDir(path.join(__dirname, '../fixtures/projects/react-component-with-css'), tmpDir, {}, err => {
+        if (err) return done(err)
+        process.chdir(tmpDir)
+        execSync('npm install', {stdio: 'inherit'})
+        cli(['build', '--copy-files'], err => {
+          expect(err).toNotExist()
+          done()
+        })
+      })
+    })
+
+    after(done => {
+      process.chdir(originalCwd)
+      process.env.NODE_ENV = originalNodeEnv
+      rimraf(tmpDir, done)
+    })
+
+    it('copies non-JS files', () => {
+      let files = glob.sync('**/*', {cwd: path.resolve('lib')})
+      expect(files).toEqual([
+        'components',
+        'components/Thing.css',
+        'components/Thing.js',
+        'index.js',
+      ])
+    })
+  })
 })

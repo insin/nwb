@@ -1,3 +1,7 @@
+**Added:**
+
+* Added a `--copy-files` flag for React component builds to copy files which will not be transpiled over to the build directories [[#58](https://github.com/insin/nwb/issues/58)]
+
 # 0.13.0 / 2016-12-09
 
 **Added:**

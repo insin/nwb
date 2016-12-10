@@ -29,19 +29,20 @@ const DEFAULT_BABEL_IGNORE_CONFIG = [
 /**
  * Runs Babel with generated config written to a temporary .babelrc.
  */
-function runBabel(src, outDir, buildBabelConfig, userBabelConfig) {
+function runBabel({copyFiles, outDir, src}, buildBabelConfig, userBabelConfig) {
   let babelConfig = createBabelConfig(buildBabelConfig, userBabelConfig)
   babelConfig.ignore = DEFAULT_BABEL_IGNORE_CONFIG
+
+  let babelArgs = [src, '--out-dir', outDir, '--quiet']
+  if (copyFiles) {
+    babelArgs.push('--copy-files')
+  }
 
   debug('babel config: %s', deepToString(babelConfig))
 
   fs.writeFileSync('.babelrc', JSON.stringify(babelConfig, null, 2))
   try {
-    exec('babel', [
-      src,
-      '--out-dir', outDir,
-      '--quiet',
-    ])
+    exec('babel', babelArgs)
   }
   finally {
     fs.unlinkSync('.babelrc')
@@ -61,11 +62,11 @@ export default function moduleBuild(args, buildConfig = {}, cb) {
 
   let src = path.resolve('src')
   let userConfig = getUserConfig(args)
+  let copyFiles = !!args['copy-files']
 
   let spinner = ora('Creating ES5 build').start()
   runBabel(
-    src,
-    path.resolve('lib'),
+    {copyFiles, outDir: path.resolve('lib'), src},
     merge(buildConfig.babel, buildConfig.babelDev || {}, {
       // Don't force ES5 users of the ES5 build to eat a .require
       plugins: [require.resolve('babel-plugin-add-module-exports')],
@@ -79,8 +80,7 @@ export default function moduleBuild(args, buildConfig = {}, cb) {
   if (userConfig.npm.esModules !== false) {
     spinner = ora('Creating ES6 modules build').start()
     runBabel(
-      src,
-      path.resolve('es'),
+      {copyFiles, outDir: path.resolve('es'), src},
       merge(buildConfig.babel, buildConfig.babelDev || {}, {
         // Don't transpile modules, for use by ES6 module bundlers
         modules: false,

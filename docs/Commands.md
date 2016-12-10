@@ -267,6 +267,8 @@ If the module has a `demo/` directory, running `build` will also create a static
 
 React components created as ES6 classes or functional components will have any `propTypes` they declare wrapped an `process.env.NODE_ENV !== 'production'` check, so they will be removed by dead-code elimination in the production build of any apps they're used in. You can disable this by passing a `--no-proptypes` flag.
 
+If you have non-JavaScript files in `src/` which you want to be copied over when building, such as CSS files, pass a `--copy-files` flag.
+
 ##### `clean`
 
 Delete built resource directories.

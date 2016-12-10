@@ -1,0 +1,8 @@
+{
+  "name": "react-component-with-css",
+  "version": "1.0.0",
+  "description": "test project",
+  "dependencies": {
+    "react": "15.x"
+  }
+}
