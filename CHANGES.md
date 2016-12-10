@@ -1,3 +1,9 @@
+# 0.13.4 / 2016-12-11
+
+**Fixed:**
+
+* Fix default test in the `preact-app` template [[#206](https://github.com/insin/nwb/pull/206) by [ntwcklng][ntwcklng]]
+
 # 0.13.3 / 2016-12-10
 
 **Fixed:**
@@ -983,3 +989,4 @@
 First 0.x release.
 
 [jihchi]: https://github.com/jihchi
+[ntwcklng]: https://github.com/ntwcklng
