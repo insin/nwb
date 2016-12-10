@@ -1,3 +1,7 @@
+**Fixed:**
+
+* Initialise a Git repo for a new project *after* installing dependencies, so package.json includes dependencies saved by npm in the initial commit.
+
 # 0.13.1 / 2016-12-10
 
 **Added:**

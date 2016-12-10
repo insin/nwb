@@ -120,7 +120,6 @@ const PROJECT_CREATORS = {
     copyTemplateDir(templateDir, targetDir, templateVars, (err, createdFiles) => {
       if (err) return cb(err)
       logCreatedFiles(targetDir, createdFiles)
-      initGit(args, targetDir)
       console.log('Installing dependencies...')
       try {
         installInferno({cwd: targetDir, version, save: true})
@@ -128,6 +127,7 @@ const PROJECT_CREATORS = {
       catch (e) {
         return cb(e)
       }
+      initGit(args, targetDir)
       cb()
     })
   },
@@ -139,7 +139,6 @@ const PROJECT_CREATORS = {
     copyTemplateDir(templateDir, targetDir, templateVars, (err, createdFiles) => {
       if (err) return cb(err)
       logCreatedFiles(targetDir, createdFiles)
-      initGit(args, targetDir)
       console.log('Installing dependencies...')
       try {
         installPreact({cwd: targetDir, version, save: true})
@@ -147,6 +146,7 @@ const PROJECT_CREATORS = {
       catch (e) {
         return cb(e)
       }
+      initGit(args, targetDir)
       cb()
     })
   },
@@ -158,7 +158,6 @@ const PROJECT_CREATORS = {
     copyTemplateDir(templateDir, targetDir, templateVars, (err, createdFiles) => {
       if (err) return cb(err)
       logCreatedFiles(targetDir, createdFiles)
-      initGit(args, targetDir)
       console.log('Installing dependencies...')
       try {
         installReact({cwd: targetDir, version: reactVersion, save: true})
@@ -166,6 +165,7 @@ const PROJECT_CREATORS = {
       catch (e) {
         return cb(e)
       }
+      initGit(args, targetDir)
       cb()
     })
   },
@@ -194,7 +194,6 @@ const PROJECT_CREATORS = {
           return cb(e)
         }
         logCreatedFiles(targetDir, createdFiles)
-        initGit(args, targetDir)
         console.log('Installing dependencies...')
         try {
           installReact({cwd: targetDir, version: reactVersion, dev: true, save: true})
@@ -202,6 +201,7 @@ const PROJECT_CREATORS = {
         catch (e) {
           return cb(e)
         }
+        initGit(args, targetDir)
         cb()
       })
     })
