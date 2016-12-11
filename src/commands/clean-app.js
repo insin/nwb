@@ -1,17 +1,6 @@
-import exec from '../exec'
+import {clean} from '../utils'
 
-import ora from 'ora'
-
-export default function cleanApp(args) {
+export default function cleanApp(args, cb) {
   let dist = args._[1] || 'dist'
-
-  let spinner = ora('Cleaning app').start()
-  try {
-    exec('rimraf', ['coverage', dist])
-    spinner.succeed()
-  }
-  catch (err) {
-    spinner.fail()
-    throw err
-  }
+  clean('app', ['coverage', dist], cb)
 }

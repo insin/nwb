@@ -1,4 +1,5 @@
 import glob from 'glob'
+import runSeries from 'run-series'
 
 import moduleBuild from '../moduleBuild'
 import buildDemo from './build-demo'
@@ -32,14 +33,12 @@ export default function buildModule(args, cb) {
     }
   }
 
-  moduleBuild(args, config, (err) => {
-    if (err) return cb(err)
-    // Disable demo build with --no-demo or --no-demo-build
-    if (args.demo === false ||
-        args['demo-build'] === false ||
-        glob.sync('demo/').length === 0) {
-      return cb(null)
-    }
-    buildDemo(args, cb)
-  })
+  let tasks = [(cb) => moduleBuild(args, config, cb)]
+  // Disable demo build with --no-demo or --no-demo-build
+  if (args.demo !== false &&
+      args['demo-build'] !== false &&
+      glob.sync('demo/').length !== 0) {
+    tasks.push((cb) => buildDemo(args, cb))
+  }
+  runSeries(tasks, cb)
 }

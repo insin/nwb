@@ -1,10 +1,9 @@
 import path from 'path'
 
 import glob from 'glob'
-import ora from 'ora'
+import runSeries from 'run-series'
 
 import webpackBuild from '../webpackBuild'
-import {logBuildResults} from '../webpackUtils'
 import cleanDemo from './clean-demo'
 
 /**
@@ -43,15 +42,8 @@ export default function buildDemo(args, cb) {
     config.plugins.copy = [{from: path.resolve('demo/public/'), to: dist}]
   }
 
-  cleanDemo(args)
-
-  let spinner = ora('Building demo').start()
-  webpackBuild(args, config, (err, stats) => {
-    if (err) {
-      spinner.fail()
-      return cb(err)
-    }
-    logBuildResults(stats, spinner)
-    cb()
-  })
+  runSeries([
+    (cb) => cleanDemo(args, cb),
+    (cb) => webpackBuild('demo', args, config, cb),
+  ], cb)
 }

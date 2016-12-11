@@ -128,4 +128,20 @@ describe('command: build', function() {
         .toInclude('displayName:"Demo"')
     })
   })
+
+  describe('building and cleaning a Web app with spaces in the path', () => {
+    before((done) => {
+      setUp()
+      cli(['new', 'web-app', 'test web app'], (err) => {
+        expect(err).toNotExist('No errors creating a new web app')
+        process.chdir(path.join(tmpDir, 'test web app'))
+        cli(['clean'], (err) => {
+          expect(err).toNotExist('No errors cleaning with spaces in the path')
+          done(err)
+        })
+      })
+    })
+    after(tearDown)
+    it('had no errors', () => {})
+  })
 })

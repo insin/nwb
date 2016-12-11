@@ -53,20 +53,26 @@ function getFileDetails(stats) {
 
 export function logBuildResults(stats, spinner) {
   if (stats.hasErrors()) {
-    spinner.fail()
-    console.log()
+    if (spinner) {
+      spinner.fail()
+      console.log()
+    }
     logErrorsAndWarnings(stats)
   }
   else if (stats.hasWarnings()) {
-    spinner.stopAndPersist(chalk.yellow(figures.warning))
-    console.log()
+    if (spinner) {
+      spinner.stopAndPersist(chalk.yellow(figures.warning))
+      console.log()
+    }
     logErrorsAndWarnings(stats)
     console.log()
     logGzippedFileSizes(stats)
   }
   else {
-    spinner.succeed()
-    console.log()
+    if (spinner) {
+      spinner.succeed()
+      console.log()
+    }
     logGzippedFileSizes(stats)
   }
 }
