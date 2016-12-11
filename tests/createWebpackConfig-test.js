@@ -372,4 +372,8 @@ describe('getCompatConfig()', () => {
   it('supports sinon', () => {
     expect(getCompatConfig({sinon: true})).toEqual(COMPAT_CONFIGS.sinon)
   })
+  it('merges multiple compat configs ', () => {
+    expect(getCompatConfig({enzyme: true, sinon: true}))
+      .toEqual({...COMPAT_CONFIGS.enzyme, ...COMPAT_CONFIGS.sinon})
+  })
 })
