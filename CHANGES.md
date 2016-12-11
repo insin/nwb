@@ -8,8 +8,11 @@
 
 **Dependencies:**
 
+- autoprefixer: v6.5.3 → [v6.5.4](https://github.com/postcss/autoprefixer/blob/master/CHANGELOG.md#654)
+- detect-port: v1.0.6 → [v1.0.7](https://github.com/node-modules/detect-port/releases/tag/1.0.7)
 - phantomjs-prebuilt: v2.1.14 → [v2.1.14](https://github.com/Medium/phantomjs/releases/tag/2.1.14)
-- webpack-merge: v1.0.2 → [v1.1.0](https://github.com/survivejs/webpack-merge/blob/master/CHANGELOG.md#110--2016-12-09)
+- postcss-loader: v1.2.0] → [v1.2.1](https://github.com/postcss/postcss-loader/blob/master/CHANGELOG.md#121)
+- webpack-merge: v1.0.2 → [v1.1.1](https://github.com/survivejs/webpack-merge/blob/master/CHANGELOG.md#111--2016-12-11)
 
 # 0.13.8 / 2016-12-31
 
