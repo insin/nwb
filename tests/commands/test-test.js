@@ -69,6 +69,17 @@ describe('command: test', function() {
     })
   })
 
+  it('successfully tests a new Inferno app', function(done) {
+    cli(['new', 'inferno-app', 'test-app'], err => {
+      expect(err).toNotExist('No errors creating new Inferno app')
+      process.chdir(path.join(tmpDir, 'test-app'))
+      cli(['test'], err => {
+        expect(err).toNotExist('No errors testing new Inferno app')
+        done()
+      })
+    })
+  })
+
   it('successfully tests a new web app', function(done) {
     cli(['new', 'web-app', 'test-app'], err => {
       expect(err).toNotExist('No errors creating new web app')
