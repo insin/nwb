@@ -2,6 +2,11 @@
 
 * The default build for a React component demo app now supports use of a `demo/public/` directory for static content.
 
+**Dependencies:**
+
+- phantomjs-prebuilt: v2.1.14 → [v2.1.14](https://github.com/Medium/phantomjs/releases/tag/2.1.14)
+- webpack-merge: v1.0.2 → [v1.1.0](https://github.com/survivejs/webpack-merge/blob/master/CHANGELOG.md#110--2016-12-09)
+
 # 0.13.6 / 2016-12-13
 
 **Fixed:**

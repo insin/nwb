@@ -575,7 +575,9 @@ export function getCompatConfig(userCompatConfig = {}) {
     }
     configs.push(compatConfig)
   })
-  return configs.length > 0 ? merge(...configs) : null
+  if (configs.length === 0) return null
+  if (configs.length === 1) return {...configs[0]}
+  return merge(...configs)
 }
 
 /**

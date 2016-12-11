@@ -50,7 +50,7 @@
     "resolve": "1.1.7",
     "rimraf": "2.5.4",
     "temp": "0.8.3",
-    "webpack-merge": "1.0.2",
+    "webpack-merge": "1.1.0",
     "whatwg-fetch": "2.0.1",
 
     "babel-cli": "6.18.0",
@@ -91,7 +91,7 @@
     "karma-phantomjs-launcher": "1.0.2",
     "karma-sourcemap-loader": "0.3.7",
     "karma-webpack": "1.8.0",
-    "phantomjs-prebuilt": "2.1.13",
+    "phantomjs-prebuilt": "2.1.14",
 
     "mocha": "3.2.0",
     "expect": "1.20.2",
