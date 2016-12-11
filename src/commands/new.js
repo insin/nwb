@@ -36,5 +36,5 @@ export default function new_(args, cb) {
 
     console.log(`Creating ${initialVowel ? 'an' : 'a'} ${projectType} project...`)
     createProject(args, projectType, projectName, targetDir, cb)
-  }).catch(e => console.error(e))
+  }).catch(e => new UserError(e))
 }
