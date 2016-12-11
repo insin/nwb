@@ -1,5 +1,6 @@
 import path from 'path'
 
+import glob from 'glob'
 import ora from 'ora'
 
 import webpackBuild from '../webpackBuild'
@@ -12,13 +13,11 @@ import cleanDemo from './clean-demo'
 export default function buildDemo(args, cb) {
   let pkg = require(path.resolve('package.json'))
 
+  let dist = path.resolve('demo/dist')
   let production = process.env.NODE_ENV === 'production'
   let filenamePattern = production ? '[name].[chunkhash:8].js' : '[name].js'
 
-  cleanDemo(args)
-
-  let spinner = ora('Building demo').start()
-  webpackBuild(args, {
+  let config = {
     babel: {
       commonJSInterop: true,
       presets: ['react'],
@@ -30,7 +29,7 @@ export default function buildDemo(args, cb) {
     output: {
       filename: filenamePattern,
       chunkFilename: filenamePattern,
-      path: path.resolve('demo/dist'),
+      path: dist,
     },
     plugins: {
       html: {
@@ -38,7 +37,16 @@ export default function buildDemo(args, cb) {
         title: `${pkg.name} ${pkg.version} Demo`,
       },
     },
-  }, (err, stats) => {
+  }
+
+  if (glob.sync('demo/public/').length !== 0) {
+    config.plugins.copy = [{from: path.resolve('demo/public/'), to: dist}]
+  }
+
+  cleanDemo(args)
+
+  let spinner = ora('Building demo').start()
+  webpackBuild(args, config, (err, stats) => {
     if (err) {
       spinner.fail()
       return cb(err)
