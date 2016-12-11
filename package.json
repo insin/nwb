@@ -121,6 +121,7 @@
     "eslint-config-jonnybuchanan": "4.7.0",
     "eventsource": "0.2.1",
     "nyc": "10.0.0",
+    "run-series": "1.1.4",
     "shelljs": "0.7.5",
     "tree-kill": "1.1.0"
   },

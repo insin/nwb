@@ -1,3 +1,7 @@
+**Fixed:**
+
+* Fix `clean` commands in paths with spaces [[#181](https://github.com/insin/nwb/issues/181)]
+
 **Changed:**
 
 * The default build for a React component demo app now supports use of a `demo/public/` directory for static content.

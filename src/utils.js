@@ -2,8 +2,26 @@ import {execSync} from 'child_process'
 import util from 'util'
 
 import argvSetEnv from 'argv-set-env'
+import ora from 'ora'
+import rimraf from 'rimraf'
+import runSeries from 'run-series'
 
 import debug from './debug'
+
+export function clean(name, dirs, cb) {
+  let spinner = ora(`Cleaning ${name}`).start()
+  runSeries(
+    dirs.map(dir => cb => rimraf(dir, cb)),
+    (err) => {
+      if (err) {
+        spinner.fail()
+        return cb(err)
+      }
+      spinner.succeed()
+      cb()
+    }
+  )
+}
 
 export function clearConsole() {
   if (process.env.NWB_TEST) return

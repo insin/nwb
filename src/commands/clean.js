@@ -13,7 +13,7 @@ const CLEAN_COMMANDS = {
 /**
  * Generic clean command, invokes the appropriate project type-specific command.
  */
-export default function clean(args) {
+export default function clean(args, cb) {
   let userConfig = getUserConfig(args, {required: true})
-  CLEAN_COMMANDS[userConfig.type](args)
+  CLEAN_COMMANDS[userConfig.type](args, cb)
 }

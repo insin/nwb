@@ -1,11 +1,10 @@
 import path from 'path'
 
 import glob from 'glob'
-import ora from 'ora'
+import runSeries from 'run-series'
 
 import {getDefaultHTMLConfig} from '../appConfig'
 import webpackBuild from '../webpackBuild'
-import {logBuildResults} from '../webpackUtils'
 import cleanApp from './clean-app'
 
 // Using a config function as webpackBuild() sets NODE_ENV to production if it
@@ -73,19 +72,12 @@ function buildConfig(args) {
 export default function buildReactApp(args, cb) {
   let dist = args._[2] || 'dist'
 
-  cleanApp({_: ['clean-app', dist]})
-
   let library = 'React'
   if (args.inferno) library = 'Inferno (React compat)'
   else if (args.preact) library = 'Preact (React compat)'
 
-  let spinner = ora(`Building ${library} app`).start()
-  webpackBuild(args, buildConfig, (err, stats) => {
-    if (err) {
-      spinner.fail()
-      return cb(err)
-    }
-    logBuildResults(stats, spinner)
-    cb()
-  })
+  runSeries([
+    (cb) => cleanApp({_: ['clean-app', dist]}, cb),
+    (cb) => webpackBuild(`${library} app`, args, buildConfig, cb),
+  ], cb)
 }

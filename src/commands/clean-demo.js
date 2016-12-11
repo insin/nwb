@@ -1,15 +1,5 @@
-import exec from '../exec'
+import {clean} from '../utils'
 
-import ora from 'ora'
-
-export default function cleanModule(args) {
-  let spinner = ora('Cleaning demo').start()
-  try {
-    exec('rimraf', ['demo/dist'])
-    spinner.succeed()
-  }
-  catch (err) {
-    spinner.fail()
-    throw err
-  }
+export default function cleanDemo(args, cb) {
+  clean('demo', ['demo/dist'], cb)
 }
