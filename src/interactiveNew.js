@@ -19,6 +19,7 @@ export default function interactiveNew_(args) {
       type: 'input',
       name: 'projectName',
       message: 'Enter a Project Name',
+      filter: input => input.split(' ').join('-')
     }
   ]
   return inquirer
