@@ -2,33 +2,39 @@ import path from 'path'
 
 import glob from 'glob'
 
-import {PROJECT_TYPES} from '../constants'
 import createProject, {validateProjectType} from '../createProject'
 import {UserError} from '../errors'
+import interactiveNew from '../interactiveNew'
 
 export default function new_(args, cb) {
-  if (args._.length === 1) {
-    return cb(new UserError(`usage: nwb new [${PROJECT_TYPES.join('|')}] <name>`))
-  }
+  Promise.resolve()
+  .then(() => {
+    if (args._.length > 1) {
+      return Object.assign({}, args._, {
+        projectType: args._[1],
+        projectName: args._[2]
+      })
+    }
+    return interactiveNew(args)
+  }).then(options => {
+    const { projectName, projectType } = options
+    try {
+      validateProjectType(projectType)
+    }
+    catch (e) {
+      return cb(e)
+    }
+    if (!projectName) {
+      return cb(new UserError('A project name must be provided'))
+    }
+    if (glob.sync(`${projectName}/`).length !== 0) {
+      return cb(new UserError(`A ${projectName}/ directory already exists`))
+    }
 
-  let projectType = args._[1]
-  try {
-    validateProjectType(projectType)
-  }
-  catch (e) {
-    return cb(e)
-  }
+    let targetDir = path.resolve(projectName)
+    let initialVowel = /^[aeiou]/.test(projectType)
 
-  let name = args._[2]
-  if (!name) {
-    return cb(new UserError('A project name must be provided'))
-  }
-  if (glob.sync(`${name}/`).length !== 0) {
-    return cb(new UserError(`A ${name}/ directory already exists`))
-  }
-
-  let targetDir = path.resolve(name)
-  let initialVowel = /^[aeiou]/.test(projectType)
-  console.log(`Creating ${initialVowel ? 'an' : 'a'} ${projectType} project...`)
-  createProject(args, projectType, name, targetDir, cb)
+    console.log(`Creating ${initialVowel ? 'an' : 'a'} ${projectType} project...`)
+    createProject(args, projectType, projectName, targetDir, cb)
+  }).catch(e => console.error(e))
 }
