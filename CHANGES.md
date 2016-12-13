@@ -1,3 +1,9 @@
+**Fixed:**
+
+* Don't configure the [babel runtime transform](https://babeljs.io/docs/plugins/transform-runtime/)'s `moduleName` path when transpiling code for npm [[#205](https://github.com/insin/nwb/issues/205)]
+
+  If you depend on `babel-runtime` in a React component or Web module (by using `async`/`await` or [enabling any of the runtime transform's other features](https://github.com/insin/nwb/blob/master/docs/Configuration.md#runtime-string--boolean)) it needs to be resolvable from the end-user's dependencies, so should be added to your project's `peerDependencies`.
+
 # 0.13.5 / 2016-12-13
 
 **Fixed:**

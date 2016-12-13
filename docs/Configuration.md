@@ -221,6 +221,8 @@ To enable all features, set `runtime` to `true`.
 
 To disable use of the runtime transform, set `runtime` to `false`.
 
+> Note: if you use `async`/`await` or enable the runtime transform's other features in a React Component or Web Module project, you will need to add `babel-runtime` to your package.json `peerDependencies` to ensure it can be resolved when somebody else uses your module from npm.
+
 ##### `stage`: `Number | false`
 
 > nwb implements its own equivalent of Babel 5's `stage` config for Babel 6

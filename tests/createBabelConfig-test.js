@@ -61,6 +61,25 @@ describe('createBabelConfig()', () => {
         },
       })
     })
+    it('prevents moduleName being configured for transform-runtime', () => {
+      expect(createBabelConfig({
+        setRuntimePath: false,
+      })).toEqual({
+        presets: [
+          [require.resolve('babel-preset-es2015'), {loose: true, modules: 'commonjs'}],
+          require.resolve('babel-preset-es2016'),
+          require.resolve('babel-preset-stage-2'),
+        ],
+        plugins: [
+          require.resolve('babel-plugin-transform-decorators-legacy'),
+          [require.resolve('babel-plugin-transform-runtime'), {
+            helpers: false,
+            polyfill: false,
+            regenerator: true,
+          }]
+        ]
+      })
+    })
   })
 
   context('with user config', () => {
