@@ -3,6 +3,7 @@ import path from 'path'
 import {typeOf} from './utils'
 
 const DEFAULT_STAGE = 2
+const RUNTIME_PATH = path.dirname(require.resolve('babel-runtime/package'))
 
 export default function createBabelConfig(buildConfig = {}, userConfig = {}) {
   let {
@@ -11,6 +12,7 @@ export default function createBabelConfig(buildConfig = {}, userConfig = {}) {
     modules = 'commonjs',
     plugins: buildPlugins = [],
     presets: buildPresets,
+    setRuntimePath,
     stage: buildStage = DEFAULT_STAGE,
   } = buildConfig
 
@@ -93,13 +95,16 @@ export default function createBabelConfig(buildConfig = {}, userConfig = {}) {
     helpers: false,
     polyfill: false,
     regenerator: true,
-    moduleName: path.dirname(require.resolve('babel-runtime/package')),
+  }
+  if (setRuntimePath !== false) {
+    runtimeTransformOptions.moduleName = RUNTIME_PATH
   }
   if (userRuntime !== false) {
     if (userRuntime === true) {
       // Enable all features
-      runtimeTransformOptions = {
-        moduleName: path.dirname(require.resolve('babel-runtime/package')),
+      runtimeTransformOptions = {}
+      if (setRuntimePath !== false) {
+        runtimeTransformOptions.moduleName = RUNTIME_PATH
       }
     }
     else if (typeOf(userRuntime) === 'string') {

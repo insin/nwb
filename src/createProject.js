@@ -89,7 +89,7 @@ function initGit(args, cwd) {
     execSync('git --version', {cwd, stdio: 'ignore'})
     execSync('git init', {cwd})
     execSync('git add .', {cwd})
-    execSync(`git commit -m "Initial commit from nwb v${pkg.version}"'`, {cwd})
+    execSync(`git commit -m "Initial commit from nwb v${pkg.version}"`, {cwd})
     console.log(chalk.green('Successfully initialized git.'))
   }
   catch (e) {
