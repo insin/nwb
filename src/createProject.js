@@ -4,6 +4,7 @@ import path from 'path'
 
 import chalk from 'chalk'
 import copyTemplateDir from 'copy-template-dir'
+import glob from 'glob'
 import inquirer from 'inquirer'
 
 import {
@@ -82,6 +83,10 @@ function logCreatedFiles(targetDir, createdFiles) {
 function initGit(args, cwd) {
   // Allow git init to be disabled with a --no-git flag
   if (args.git === false) {
+    return
+  }
+  // Bail if a git repo already exists (e.g. nwb init in an existing repo)
+  if (glob.sync('.git/', {cwd}).length > 0) {
     return
   }
 

@@ -4,6 +4,7 @@
 
 **Changed:**
 
+* Skip initialising a Git repo if a `.git/` directory already exists, e.g. you may want to use `nwb init` in an existing repo.
 * The default build for a React component demo app now supports use of a `demo/public/` directory for static content.
 
 **Dependencies:**
