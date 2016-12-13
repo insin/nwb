@@ -1,7 +1,7 @@
 {
   "name": "nwb",
   "description": "Create React apps, components, libraries and npm modules with no configuration (until you need it)",
-  "version": "0.13.5",
+  "version": "0.13.6",
   "license": "MIT",
   "author": "Jonny Buchanan <jonathan.buchanan@gmail.com>",
   "bin": {

@@ -1,3 +1,5 @@
+# 0.13.6 / 2016-12-13
+
 **Fixed:**
 
 * Don't configure the [babel runtime transform](https://babeljs.io/docs/plugins/transform-runtime/)'s `moduleName` path when transpiling code for npm [[#205](https://github.com/insin/nwb/issues/205)]
