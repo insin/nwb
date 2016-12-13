@@ -121,7 +121,6 @@ const PROJECT_CREATORS = {
       if (err) return cb(err)
       logCreatedFiles(targetDir, createdFiles)
       try {
-        // installInferno({cwd: targetDir, version, save: true})
         installAppDependencies({
           cwd: targetDir,
           version,
@@ -148,7 +147,6 @@ const PROJECT_CREATORS = {
       if (err) return cb(err)
       logCreatedFiles(targetDir, createdFiles)
       try {
-        // installPreact({cwd: targetDir, version, save: true})
         installAppDependencies({
           cwd: targetDir,
           version,
@@ -174,7 +172,6 @@ const PROJECT_CREATORS = {
       if (err) return cb(err)
       logCreatedFiles(targetDir, createdFiles)
       try {
-        // installReact({cwd: targetDir, version: reactVersion, save: true})
         installAppDependencies({
           cwd: targetDir,
           version: reactVersion,
@@ -218,7 +215,6 @@ const PROJECT_CREATORS = {
         }
         logCreatedFiles(targetDir, createdFiles)
         try {
-          // installReact({cwd: targetDir, version: reactVersion, dev: true, save: true})
           installAppDependencies({
             cwd: targetDir,
             dev: true,
