@@ -1,3 +1,9 @@
+# 0.13.5 / 2016-12-13
+
+**Fixed:**
+
+* Fix bad char in initial Git commit [[#182](https://github.com/insin/nwb/issues/182) by [ntwcklng][ntwcklng]]
+
 # 0.13.4 / 2016-12-11
 
 **Fixed:**
