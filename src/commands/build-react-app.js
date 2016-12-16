@@ -1,4 +1,5 @@
 import path from 'path'
+import {execSync} from 'child_process'
 
 import glob from 'glob'
 import ora from 'ora'
@@ -7,6 +8,7 @@ import {getDefaultHTMLConfig} from '../appConfig'
 import webpackBuild from '../webpackBuild'
 import {logBuildResults} from '../webpackUtils'
 import cleanApp from './clean-app'
+import debug from '../debug'
 
 // Using a config function as webpackBuild() sets NODE_ENV to production if it
 // hasn't been set by the user and we don't want production optimisations in
@@ -76,8 +78,27 @@ export default function buildReactApp(args, cb) {
   cleanApp({_: ['clean-app', dist]})
 
   let library = 'React'
-  if (args.inferno) library = 'Inferno (React compat)'
-  else if (args.preact) library = 'Preact (React compat)'
+
+  if (args.preact || args.inferno) {
+    const cwd = path.resolve('./')
+    const pkg = require(path.resolve('./package.json'))
+
+    const compat = args.preact ? 'preact-compat preact' : 'inferno-compat'
+    const command = `npm install --save ${compat}`
+
+    library = args.preact ? 'Preact (React compat)' : 'Inferno (React compat)'
+
+    if (args.preact && (!pkg.dependencies['preact-compat'] || !pkg.dependencies['preact'])) {
+      console.log('Install missing Preact dependencies')
+      debug(`${cwd} $ ${command}`)
+      execSync(command, {cwd, stdio: 'inherit'})
+    }
+    if (args.inferno && !pkg.dependencies['inferno-compat']) {
+      console.log('Install missing Inferno dependencies')
+      debug(`${cwd} $ ${command}`)
+      execSync(command, {cwd, stdio: 'inherit'})
+    }
+  }
 
   let spinner = ora(`Building ${library} app`).start()
   webpackBuild(args, buildConfig, (err, stats) => {
