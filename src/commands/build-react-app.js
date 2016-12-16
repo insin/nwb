@@ -88,16 +88,30 @@ export default function buildReactApp(args, cb) {
 
     library = args.preact ? 'Preact (React compat)' : 'Inferno (React compat)'
 
+    const installSpinner = ora(`Install missing ${library} dependencies`)
     if (args.preact && (!pkg.dependencies['preact-compat'] || !pkg.dependencies['preact'])) {
-      console.log('Install missing Preact dependencies')
       debug(`${cwd} $ ${command}`)
-      execSync(command, {cwd, stdio: 'inherit'})
+      try {
+        installSpinner.start()
+        execSync(command, {cwd, stdio: 'ignore'})
+      }
+      catch (e) {
+        installSpinner.fail()
+        console.error(e)
+      }
     }
     if (args.inferno && !pkg.dependencies['inferno-compat']) {
-      console.log('Install missing Inferno dependencies')
       debug(`${cwd} $ ${command}`)
-      execSync(command, {cwd, stdio: 'inherit'})
+      try {
+        installSpinner.start()
+        execSync(command, {cwd, stdio: 'ignore'})
+      }
+      catch (e) {
+        installSpinner.fail()
+        console.error(e)
+      }
     }
+    installSpinner.succeed()
   }
 
   let spinner = ora(`Building ${library} app`).start()
