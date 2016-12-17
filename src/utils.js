@@ -92,7 +92,6 @@ export function installAppDependencies({dev = false, save = false, cwd = process
   if (isYarnAvailable) {
     command = `yarn add ${dependencies.join(' ')} ${dev ? '--dev' : ''}`
   }
-  
   console.log()
   const spinner = ora(`Installing dependencies using ${isYarnAvailable ? 'yarn' : 'npm'}`).start()
 
@@ -102,7 +101,8 @@ export function installAppDependencies({dev = false, save = false, cwd = process
       if (err) {
         spinner.fail()
         reject(err)
-      } else {
+      }
+      else {
         spinner.succeed()
         resolve()
       }

@@ -128,7 +128,7 @@ const PROJECT_CREATORS = {
           `inferno@${version}`,
           `inferno-component@${version}`
         ]
-      }).then(err => {
+      }).then(() => {
         initGit(args, targetDir)
         cb()
       }).catch(err => cb(err))
@@ -149,7 +149,7 @@ const PROJECT_CREATORS = {
         dependencies: [
           `preact@${version}`
         ]
-      }).then((err) => {
+      }).then(() => {
         initGit(args, targetDir)
         cb()
       }).catch(err => cb(err))
@@ -171,7 +171,7 @@ const PROJECT_CREATORS = {
           `react@${reactVersion}`,
           `react-dom@${reactVersion}`
         ]
-      }).then((err) => {
+      }).then(() => {
         initGit(args, targetDir)
         cb()
       }).catch(err => cb(err))
@@ -211,7 +211,7 @@ const PROJECT_CREATORS = {
             `react@${reactVersion}`,
             `react-dom@${reactVersion}`
           ]
-        }).then((err) => {
+        }).then(() => {
           initGit(args, targetDir)
           cb()
         }).catch(err => cb(err))
