@@ -1,7 +1,8 @@
-import {execSync} from 'child_process'
+import {exec, execSync} from 'child_process'
 import util from 'util'
 
 import argvSetEnv from 'argv-set-env'
+import ora from 'ora'
 
 import debug from './debug'
 
@@ -86,16 +87,27 @@ export function isYarnAvailable() {
  */
 export function installAppDependencies({dev = false, save = false, cwd = process.cwd(), version = 'latest', dependencies = []} = {}) {
   const saveArg = save ? ` --save${dev ? '-dev' : ''}` : ''
-  let command
+  let command = `npm install${saveArg} ${dependencies.join(' ')}`
+
   if (isYarnAvailable) {
     command = `yarn add ${dependencies.join(' ')} ${dev ? '--dev' : ''}`
   }
-  else {
-    command = `npm install${saveArg} ${dependencies.join(' ')}`
-  }
-  console.log(`Installing dependencies using ${isYarnAvailable ? 'yarn' : 'npm'}`)
-  debug(`${cwd} $ ${command}`)
-  execSync(command, {cwd, stdio: 'inherit'})
+  
+  console.log()
+  const spinner = ora(`Installing dependencies using ${isYarnAvailable ? 'yarn' : 'npm'}`).start()
+
+  return new Promise((resolve, reject) => {
+    debug(`${cwd} $ ${command}`)
+    exec(command, {cwd, stdio: 'ignore'}, (err) => {
+      if (err) {
+        spinner.fail()
+        reject(err)
+      } else {
+        spinner.succeed()
+        resolve()
+      }
+    })
+  })
 }
 
 /**
