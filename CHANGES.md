@@ -17,7 +17,7 @@
 - babel-plugin-lodash: v3.2.10 → [v3.2.11](https://github.com/lodash/babel-plugin-lodash/compare/3.2.10...3.2.11)
 - detect-port: v1.0.6 → [v1.0.7](https://github.com/node-modules/detect-port/releases/tag/1.0.7)
 - ora: v0.3.0 → v0.4.0
-- phantomjs-prebuilt: v2.1.14 → [v2.1.14](https://github.com/Medium/phantomjs/releases/tag/2.1.14)
+- phantomjs-prebuilt: v2.1.13 → [v2.1.14](https://github.com/Medium/phantomjs/releases/tag/2.1.14)
 - postcss-loader: v1.2.0] → [v1.2.1](https://github.com/postcss/postcss-loader/blob/master/CHANGELOG.md#121)
 - resolve: v1.1.7 → [v1.2.0](https://github.com/substack/node-resolve/compare/1.1.y...1.2.0)
 - webpack-dev-middleware: v1.8.4 → [v1.9.0](https://github.com/webpack/webpack-dev-middleware/releases/tag/v1.9.0) - Webpack 2 RC support
