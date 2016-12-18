@@ -1,5 +1,5 @@
 import path from 'path'
-import {execSync} from 'child_process'
+import {exec} from 'child_process'
 
 import glob from 'glob'
 import ora from 'ora'
@@ -79,48 +79,54 @@ export default function buildReactApp(args, cb) {
 
   let library = 'React'
 
-  if (args.preact || args.inferno) {
-    const cwd = path.resolve('./')
-    const pkg = require(path.resolve('./package.json'))
+  return new Promise((resolve, reject) => {
+    if (args.preact || args.inferno) {
+      const cwd = path.resolve('./')
+      const pkg = require(path.resolve('./package.json'))
 
-    const compat = args.preact ? 'preact-compat preact' : 'inferno-compat'
-    const command = `npm install --save ${compat}`
+      const compat = args.preact ? 'preact-compat preact' : 'inferno-compat'
+      const command = `npm install --save ${compat}`
 
-    library = args.preact ? 'Preact (React compat)' : 'Inferno (React compat)'
+      library = args.preact ? 'Preact (React compat)' : 'Inferno (React compat)'
 
-    const installSpinner = ora(`Install missing ${library} dependencies`)
-    if (args.preact && (!pkg.dependencies['preact-compat'] || !pkg.dependencies['preact'])) {
-      debug(`${cwd} $ ${command}`)
-      try {
+      const installSpinner = ora(`Install missing ${library} dependencies`)
+      if (args.preact && (!pkg.dependencies['preact-compat'] || !pkg.dependencies['preact'])) {
+        debug(`${cwd} $ ${command}`)
         installSpinner.start()
-        execSync(command, {cwd, stdio: 'ignore'})
+        exec(command, {cwd, stdio: 'ignore'}, err => {
+          if (err) {
+            installSpinner.fail()
+            return reject(cb(err))
+          }
+          installSpinner.succeed()
+          resolve()
+        })
       }
-      catch (e) {
-        installSpinner.fail()
-        console.error(e)
-      }
-    }
-    if (args.inferno && !pkg.dependencies['inferno-compat']) {
-      debug(`${cwd} $ ${command}`)
-      try {
+      else if (args.inferno && !pkg.dependencies['inferno-compat']) {
+        debug(`${cwd} $ ${command}`)
         installSpinner.start()
-        execSync(command, {cwd, stdio: 'ignore'})
-      }
-      catch (e) {
-        installSpinner.fail()
-        console.error(e)
+        exec(command, {cwd, stdio: 'ignore'}, err => {
+          if (err) {
+            installSpinner.fail()
+            return reject(cb(err))
+          }
+          installSpinner.succeed()
+          resolve()
+        })
       }
     }
-    installSpinner.succeed()
-  }
-
-  let spinner = ora(`Building ${library} app`).start()
-  webpackBuild(args, buildConfig, (err, stats) => {
-    if (err) {
-      spinner.fail()
-      return cb(err)
+    else {
+      resolve()
     }
-    logBuildResults(stats, spinner)
-    cb()
-  })
+  }).then(() => {
+    let spinner = ora(`Building ${library} app`).start()
+    webpackBuild(args, buildConfig, (err, stats) => {
+      if (err) {
+        spinner.fail()
+        return cb(err)
+      }
+      logBuildResults(stats, spinner)
+      cb()
+    })
+  }).catch(err => cb(err))
 }
