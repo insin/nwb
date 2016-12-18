@@ -31,6 +31,33 @@ describe('command: build', function() {
     rimraf(tmpDir, done)
   }
 
+  describe('building a React app with Preact/Inferno-Compat', () => {
+    before(done => {
+      setUp()
+      cli(['new', 'react-app', 'test-app-compat'], err => {
+        expect(err).toNotExist('No errors creating a new React app')
+        process.chdir(path.join(tmpDir, 'test-app-compat'))
+        done(err)
+      })
+    })
+
+    after(tearDown)
+
+    it('builds a React app with Preact-Compat', done => {
+      cli(['build-react-app', '--preact'], (err) => {
+        expect(err).toNotExist('No errors building a React app with Preact-Compat')
+        done()
+      })
+    })
+
+    it('builds a React app with Inferno-Compat', done => {
+      cli(['build-react-app', '--inferno'], (err) => {
+        expect(err).toNotExist('No errors building a React app with Inferno-Compat')
+        done()
+      })
+    })
+  })
+  
   describe('building a React app', () => {
     let builtAppSource
     let builtHTML
