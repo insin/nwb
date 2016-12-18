@@ -6,6 +6,7 @@ import runSeries from 'run-series'
 import {getDefaultHTMLConfig} from '../appConfig'
 import webpackBuild from '../webpackBuild'
 import cleanApp from './clean-app'
+import {installCompatDependencies} from '../install-compat-dependencies'
 
 // Using a config function as webpackBuild() sets NODE_ENV to production if it
 // hasn't been set by the user and we don't want production optimisations in
@@ -78,6 +79,7 @@ export default function buildReactApp(args, cb) {
 
   runSeries([
     (cb) => cleanApp({_: ['clean-app', dist]}, cb),
+    (cb) => installCompatDependencies(args, cb, library),
     (cb) => webpackBuild(`${library} app`, args, buildConfig, cb),
   ], cb)
 }

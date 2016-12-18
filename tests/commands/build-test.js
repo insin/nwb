@@ -57,7 +57,7 @@ describe('command: build', function() {
       })
     })
   })
-  
+
   describe('building a React app', () => {
     let builtAppSource
     let builtHTML
