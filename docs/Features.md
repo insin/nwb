@@ -6,7 +6,7 @@
 - Use future JavaScript features like object speading now; TC39 Stage 2 and above features are enabled by default.
 - Default polyfills and configuration allow use of `Promise` (with rejection tracking enabled), `fetch`, `async`/`await`, generators and `Object.assign` in any browser.
 - Import CSS (and font resources), images and JSON into your JavaScript.
-- Autoprefixed CSS, so you don't need to write browser prefixes.
+- Autoprefixed CSS, so you don't need to write browser prefixes; you can also configure your own PostCSS plugins.
 - Plugin modules which add [Sass](https://github.com/insin/nwb-sass), [Less](https://github.com/insin/nwb-less) and [Stylus](https://github.com/insin/nwb-stylus) support without needing configuration.
 
 **Development / DX:**
