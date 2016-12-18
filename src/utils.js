@@ -89,11 +89,11 @@ export function installAppDependencies({dev = false, save = false, cwd = process
   const saveArg = save ? ` --save${dev ? '-dev' : ''}` : ''
   let command = `npm install${saveArg} ${dependencies.join(' ')}`
 
-  if (isYarnAvailable) {
+  if (isYarnAvailable()) {
     command = `yarn add ${dependencies.join(' ')} ${dev ? '--dev' : ''}`
   }
   console.log()
-  const spinner = ora(`Installing dependencies using ${isYarnAvailable ? 'yarn' : 'npm'}`).start()
+  const spinner = ora(`Installing dependencies using ${isYarnAvailable() ? 'yarn' : 'npm'}`).start()
 
   return new Promise((resolve, reject) => {
     debug(`${cwd} $ ${command}`)
