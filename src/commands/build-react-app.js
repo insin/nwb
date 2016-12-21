@@ -6,7 +6,7 @@ import runSeries from 'run-series'
 import {getDefaultHTMLConfig} from '../appConfig'
 import webpackBuild from '../webpackBuild'
 import cleanApp from './clean-app'
-import {installCompatDependencies} from '../install-compat-dependencies'
+import installCompatDependencies from '../installCompatDependencies'
 
 // Using a config function as webpackBuild() sets NODE_ENV to production if it
 // hasn't been set by the user and we don't want production optimisations in

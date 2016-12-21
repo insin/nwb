@@ -4,7 +4,7 @@ import {exec} from 'child_process'
 
 import debug from './debug'
 
-export function installCompatDependencies(args, cb, library) {
+export default function installCompatDependencies(args, cb, library) {
   const cwd = path.resolve('./')
   const pkg = require(path.resolve('./package.json'))
   const shouldInstallPreactCompat = (args.preact && (!pkg.dependencies['preact-compat'] || !pkg.dependencies['preact']))
