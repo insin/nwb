@@ -211,15 +211,6 @@ const PROJECT_CREATORS = {
           initGit(args, targetDir)
           cb()
         })
-        // console.log('Installing dependencies...')
-        // try {
-        //   installReact({cwd: targetDir, version: reactVersion, dev: true, save: true})
-        // }
-        // catch (e) {
-        //   return cb(e)
-        // }
-        // initGit(args, targetDir)
-        // cb()
       })
     })
   },
