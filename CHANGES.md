@@ -1,3 +1,7 @@
+**Fixed:**
+
+- Updated Inferno versions to fix whitespace trimming issue.
+
 # 0.13.6 / 2016-12-13
 
 **Fixed:**

@@ -2,7 +2,7 @@ export const CONFIG_FILE_NAME = 'nwb.config.js'
 
 export const DEFAULT_PORT = process.env.PORT || 3000
 
-export const INFERNO_VERSION = 'beta32'
+export const INFERNO_VERSION = 'beta42'
 export const PREACT_VERSION = '7.x'
 export const REACT_VERSION = '15.x'
 
