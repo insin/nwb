@@ -2,7 +2,15 @@
 
 **Fixed:**
 
-- Updated Inferno versions to fix whitespace trimming issue.
+- Updated Inferno Babel plugin to fix whitespace trimming issue.
+
+**Changed:**
+
+- Updated default Inferno version for new apps to 1.0.0-beta42.
+
+**Dependencies:**
+
+- babel-plugin-inferno: v1.2.0-beta13 → v1.3.0-beta17 - fixes whitespace trimming around newlines
 
 # 0.13.6 / 2016-12-13
 
