@@ -167,6 +167,7 @@ export function processUserConfig({
   // command or the webpack dependency nwb manages for them.
   if (typeOf(userConfig) === 'function') {
     userConfig = userConfig({
+      args,
       command: args._[0],
       webpack,
     })
