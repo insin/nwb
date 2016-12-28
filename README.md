@@ -1,9 +1,9 @@
 # nwb
 
-![Linux](resources/linux.png) [![Travis][travis-badge]][travis]
-![Windows](resources/windows.png) [![Appveyor][appveyor-badge]][appveyor]
-[![npm package][npm-badge]][npm]
-[![Coveralls][coveralls-badge]][coveralls]
+<img src="https://upload.wikimedia.org/wikipedia/commons/3/35/Tux.svg" width="18"> [![Travis](https://img.shields.io/travis/insin/nwb.svg?style=flat-square)](https://travis-ci.org/insin/nwb)
+<img src="https://upload.wikimedia.org/wikipedia/commons/d/da/Windows_logo_-_2002%E2%80%932012_%28Multicolored%29.svg" width="22"> [![AppVeyor](https://img.shields.io/appveyor/ci/insin/nwb.svg?style=flat-square)](https://ci.appveyor.com/project/insin/nwb)
+[![npm](https://img.shields.io/npm/v/nwb.svg?style=flat-square)](https://www.npmjs.org/package/nwb)
+[![Coveralls](https://img.shields.io/coveralls/insin/nwb.svg?style=flat-square)](https://coveralls.io/github/insin/nwb)
 
 nwb provides tooling in a single `devDependency` for developing, testing and building:
 
