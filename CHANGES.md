@@ -1,3 +1,11 @@
+**Changed:**
+
+- Inferno apps now use Inferno 1.x by default.
+
+**Dependencies:**
+
+- babel-plugin-inferno: v1.3.0-beta17 → v1.4.0
+
 # 0.13.7 / 2016-12-25
 
 **Fixed:**
