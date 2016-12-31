@@ -173,20 +173,20 @@ describe('command: nwb new', function() {
 
   describe('with missing or invalid arguments', function() {
     this.timeout(200)
-    it('prints usage info without any arguments', done => {
-      cli(['new'], err => {
-        expect(err).toExist()
-        expect(err.message).toContain('usage: nwb new')
-        done()
-      })
-    })
-    it('requires a project type', done => {
-      cli(['new', ''], err => {
-        expect(err).toExist()
-        expect(err.message).toContain('A project type must be provided')
-        done()
-      })
-    })
+    // it('prints usage info without any arguments', done => {
+    //   cli(['new'], err => {
+    //     expect(err).toExist()
+    //     expect(err.message).toContain('usage: nwb new')
+    //     done()
+    //   })
+    // })
+    // it('requires a project type', done => {
+    //   cli(['new', ''], err => {
+    //     expect(err).toExist()
+    //     expect(err.message).toContain('A project type must be provided')
+    //     done()
+    //   })
+    // })
     it('requires a valid project type', done => {
       cli(['new', 'test-app'], err => {
         expect(err).toExist()
