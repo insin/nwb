@@ -1,4 +1,5 @@
 import path from 'path'
+import {exec} from 'child_process'
 
 import glob from 'glob'
 import ora from 'ora'
@@ -7,6 +8,7 @@ import {getDefaultHTMLConfig} from '../appConfig'
 import webpackBuild from '../webpackBuild'
 import {logBuildResults} from '../webpackUtils'
 import cleanApp from './clean-app'
+import debug from '../debug'
 
 // Using a config function as webpackBuild() sets NODE_ENV to production if it
 // hasn't been set by the user and we don't want production optimisations in
@@ -76,16 +78,55 @@ export default function buildReactApp(args, cb) {
   cleanApp({_: ['clean-app', dist]})
 
   let library = 'React'
-  if (args.inferno) library = 'Inferno (React compat)'
-  else if (args.preact) library = 'Preact (React compat)'
 
-  let spinner = ora(`Building ${library} app`).start()
-  webpackBuild(args, buildConfig, (err, stats) => {
-    if (err) {
-      spinner.fail()
-      return cb(err)
+  return new Promise((resolve, reject) => {
+    if (args.preact || args.inferno) {
+      const cwd = path.resolve('./')
+      const pkg = require(path.resolve('./package.json'))
+
+      const compat = args.preact ? 'preact-compat preact' : 'inferno-compat'
+      const command = `npm install --save ${compat}`
+
+      library = args.preact ? 'Preact (React compat)' : 'Inferno (React compat)'
+
+      const installSpinner = ora(`Install missing ${library} dependencies`)
+      if (args.preact && (!pkg.dependencies['preact-compat'] || !pkg.dependencies['preact'])) {
+        debug(`${cwd} $ ${command}`)
+        installSpinner.start()
+        exec(command, {cwd, stdio: 'ignore'}, err => {
+          if (err) {
+            installSpinner.fail()
+            return reject(cb(err))
+          }
+          installSpinner.succeed()
+          resolve()
+        })
+      }
+      else if (args.inferno && !pkg.dependencies['inferno-compat']) {
+        debug(`${cwd} $ ${command}`)
+        installSpinner.start()
+        exec(command, {cwd, stdio: 'ignore'}, err => {
+          if (err) {
+            installSpinner.fail()
+            return reject(cb(err))
+          }
+          installSpinner.succeed()
+          resolve()
+        })
+      }
     }
-    logBuildResults(stats, spinner)
-    cb()
-  })
+    else {
+      resolve()
+    }
+  }).then(() => {
+    let spinner = ora(`Building ${library} app`).start()
+    webpackBuild(args, buildConfig, (err, stats) => {
+      if (err) {
+        spinner.fail()
+        return cb(err)
+      }
+      logBuildResults(stats, spinner)
+      cb()
+    })
+  }).catch(err => cb(err))
 }
