@@ -1,7 +1,8 @@
-import {execSync} from 'child_process'
+import {exec, execSync} from 'child_process'
 import util from 'util'
 
 import argvSetEnv from 'argv-set-env'
+import ora from 'ora'
 
 import debug from './debug'
 
@@ -68,33 +69,45 @@ export function endsWith(s1, s2) {
 }
 
 /**
- * Install Inferno for the user when it's needed.
+ * Checks if the package manager `yarn` is available
+ * @return {Boolean}
  */
-export function installInferno({dev = false, save = false, cwd = process.cwd(), version = 'latest'} = {}) {
-  let saveArg = save ? ` --save${dev ? '-dev' : ''}` : ''
-  let command = `npm install${saveArg} inferno@${version} inferno-component@${version}`
-  debug(`${cwd} $ ${command}`)
-  execSync(command, {cwd, stdio: 'inherit'})
+export function isYarnAvailable() {
+  try {
+    execSync('yarn --version', {stdio: 'ignore'})
+    return true
+  }
+  catch (e) {
+    return false
+  }
 }
 
 /**
- * Install Preact for the user when it's needed.
+ * Install all App dependencies
  */
-export function installPreact({dev = false, save = false, cwd = process.cwd(), version = 'latest'} = {}) {
-  let saveArg = save ? ` --save${dev ? '-dev' : ''}` : ''
-  let command = `npm install${saveArg} preact@${version}`
-  debug(`${cwd} $ ${command}`)
-  execSync(command, {cwd, stdio: 'inherit'})
-}
+export function installAppDependencies({dev = false, save = false, cwd = process.cwd(), version = 'latest', dependencies = []} = {}) {
+  const saveArg = save ? ` --save${dev ? '-dev' : ''}` : ''
+  let command = `npm install${saveArg} ${dependencies.join(' ')}`
 
-/**
- * Install React for the user when it's needed.
- */
-export function installReact({dev = false, save = false, cwd = process.cwd(), version = 'latest'} = {}) {
-  let saveArg = save ? ` --save${dev ? '-dev' : ''}` : ''
-  let command = `npm install${saveArg} react@${version} react-dom@${version}`
-  debug(`${cwd} $ ${command}`)
-  execSync(command, {cwd, stdio: 'inherit'})
+  if (isYarnAvailable()) {
+    command = `yarn add ${dependencies.join(' ')} ${dev ? '--dev' : ''}`
+  }
+  console.log()
+  const spinner = ora(`Installing dependencies using ${isYarnAvailable() ? 'yarn' : 'npm'}`).start()
+
+  return new Promise((resolve, reject) => {
+    debug(`${cwd} $ ${command}`)
+    exec(command, {cwd, stdio: 'ignore'}, (err) => {
+      if (err) {
+        spinner.fail()
+        reject(err)
+      }
+      else {
+        spinner.succeed()
+        resolve()
+      }
+    })
+  })
 }
 
 /**

@@ -13,7 +13,7 @@ import {
 } from './constants'
 import {UserError} from './errors'
 import pkg from '../package.json'
-import {installInferno, installPreact, installReact, typeOf} from './utils'
+import {installAppDependencies, typeOf} from './utils'
 
 let nwbVersion = pkg.version.split('.').slice(0, 2).concat('x').join('.')
 
@@ -120,15 +120,18 @@ const PROJECT_CREATORS = {
     copyTemplateDir(templateDir, targetDir, templateVars, (err, createdFiles) => {
       if (err) return cb(err)
       logCreatedFiles(targetDir, createdFiles)
-      console.log('Installing dependencies...')
-      try {
-        installInferno({cwd: targetDir, version, save: true})
-      }
-      catch (e) {
-        return cb(e)
-      }
-      initGit(args, targetDir)
-      cb()
+      installAppDependencies({
+        cwd: targetDir,
+        version,
+        save: true,
+        dependencies: [
+          `inferno@${version}`,
+          `inferno-component@${version}`
+        ]
+      }).then(() => {
+        initGit(args, targetDir)
+        cb()
+      }).catch(err => cb(err))
     })
   },
 
@@ -139,15 +142,17 @@ const PROJECT_CREATORS = {
     copyTemplateDir(templateDir, targetDir, templateVars, (err, createdFiles) => {
       if (err) return cb(err)
       logCreatedFiles(targetDir, createdFiles)
-      console.log('Installing dependencies...')
-      try {
-        installPreact({cwd: targetDir, version, save: true})
-      }
-      catch (e) {
-        return cb(e)
-      }
-      initGit(args, targetDir)
-      cb()
+      installAppDependencies({
+        cwd: targetDir,
+        version,
+        save: true,
+        dependencies: [
+          `preact@${version}`
+        ]
+      }).then(() => {
+        initGit(args, targetDir)
+        cb()
+      }).catch(err => cb(err))
     })
   },
 
@@ -158,15 +163,18 @@ const PROJECT_CREATORS = {
     copyTemplateDir(templateDir, targetDir, templateVars, (err, createdFiles) => {
       if (err) return cb(err)
       logCreatedFiles(targetDir, createdFiles)
-      console.log('Installing dependencies...')
-      try {
-        installReact({cwd: targetDir, version: reactVersion, save: true})
-      }
-      catch (e) {
-        return cb(e)
-      }
-      initGit(args, targetDir)
-      cb()
+      installAppDependencies({
+        cwd: targetDir,
+        version: reactVersion,
+        save: true,
+        dependencies: [
+          `react@${reactVersion}`,
+          `react-dom@${reactVersion}`
+        ]
+      }).then(() => {
+        initGit(args, targetDir)
+        cb()
+      }).catch(err => cb(err))
     })
   },
 
@@ -194,15 +202,19 @@ const PROJECT_CREATORS = {
           return cb(e)
         }
         logCreatedFiles(targetDir, createdFiles)
-        console.log('Installing dependencies...')
-        try {
-          installReact({cwd: targetDir, version: reactVersion, dev: true, save: true})
-        }
-        catch (e) {
-          return cb(e)
-        }
-        initGit(args, targetDir)
-        cb()
+        installAppDependencies({
+          cwd: targetDir,
+          dev: true,
+          version: reactVersion,
+          save: true,
+          dependencies: [
+            `react@${reactVersion}`,
+            `react-dom@${reactVersion}`
+          ]
+        }).then(() => {
+          initGit(args, targetDir)
+          cb()
+        }).catch(err => cb(err))
       })
     })
   },
