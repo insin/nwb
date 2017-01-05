@@ -4,26 +4,26 @@
 
 **Changed:**
 
-- Update default Inferno version to 1.0.0-beta36
 - Skip initialising a Git repo if a `.git/` directory already exists, e.g. you may want to use `nwb init` in an existing repo.
 - The default build for a React component demo app now supports use of a `demo/public/` directory for static content.
 - An `args` property is now included in the object passed to user configs which export a function - this contains parsed arguments, e.g. `args.preact` will be `true` if you passed `--preact` when calling nwb.
 
 **Dependencies:**
 
-- autoprefixer: v6.5.3 → [v6.6.0](https://github.com/postcss/autoprefixer/blob/master/CHANGELOG.md#660)
+- autoprefixer: v6.5.3 → [v6.6.1](https://github.com/postcss/autoprefixer/blob/master/CHANGELOG.md#661)
 - babel-core: v6.20.1 → v6.21.0
 - babel-loader: v6.2.9 → [v6.2.10](https://github.com/babel/babel-loader/blob/master/CHANGELOG.md#v6210) - Webpack 2 RC support
-- babel-plugin-inferno: v1.2.0-beta13 → v1.3.0-beta15 - fixes whitespace trimming around newlines
+- babel-plugin-istanbul: v3.0.0 → [v3.1.2](https://github.com/istanbuljs/babel-plugin-istanbul/blob/master/CHANGELOG.md#312-2017-01-04)
 - babel-plugin-lodash: v3.2.10 → [v3.2.11](https://github.com/lodash/babel-plugin-lodash/compare/3.2.10...3.2.11)
 - detect-port: v1.0.6 → [v1.0.7](https://github.com/node-modules/detect-port/releases/tag/1.0.7)
+- diff: v3.1.0 → [v3.2.0](https://github.com/kpdecker/jsdiff/blob/master/release-notes.md#v320---december-26th-2016)
 - karma-webpack: v1.8.0 → v1.8.1 - Webpack 2 RC support
 - ora: v0.3.0 → v0.4.0
 - phantomjs-prebuilt: v2.1.13 → [v2.1.14](https://github.com/Medium/phantomjs/releases/tag/2.1.14)
 - postcss-loader: v1.2.0 → [v1.2.1](https://github.com/postcss/postcss-loader/blob/master/CHANGELOG.md#121)
 - resolve: v1.1.7 → [v1.2.0](https://github.com/substack/node-resolve/compare/1.1.y...1.2.0)
 - webpack-dev-middleware: v1.8.4 → [v1.9.0](https://github.com/webpack/webpack-dev-middleware/releases/tag/v1.9.0) - Webpack 2 RC support
-- webpack-hot-middleware: v2.13.2 → [v2.14.0](https://github.com/glenjamin/webpack-hot-middleware/compare/v2.13.2...v2.14.0) - add cache for warnings
+- webpack-hot-middleware: v2.13.2 → [v2.15.0](https://github.com/glenjamin/webpack-hot-middleware/compare/v2.13.2...v2.15.0) - add cache for warnings
 - webpack-merge: v1.0.2 → [v2.0.0](https://github.com/survivejs/webpack-merge/blob/master/CHANGELOG.md#200--2016-12-22) - providing an empty array/object no longer overrides when merging
 
 # 0.13.8 / 2016-12-31
