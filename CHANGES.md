@@ -8,6 +8,10 @@
 - The default build for a React component demo app now supports use of a `demo/public/` directory for static content.
 - An `args` property is now included in the object passed to user configs which export a function - this contains parsed arguments, e.g. `args.preact` will be `true` if you passed `--preact` when calling nwb.
 
+**Removed:**
+
+- `jsnext:main` is no longer included `package.json` for new `react-component` and `web-module` projects - only the "more standard" `module` property is used to point to an ES2015 modules build [[#215](https://github.com/insin/nwb/issues/215)]
+
 **Dependencies:**
 
 - autoprefixer: v6.5.3 → [v6.6.1](https://github.com/postcss/autoprefixer/blob/master/CHANGELOG.md#661)
