@@ -1,5 +1,7 @@
 **Fixed:**
 
+- To prevent version compatibility issues using project commands from a globally-installed `nwb`, it will now exit with a warning if the project specifies a different version of nwb in `package.json` [[#167](https://github.com/insin/nwb/issues/167)]
+  - The ability to run project commands like `build`, `serve` etc. from a global `nwb` install is provided so you don't have to reinstall the entirety of nwb when creating new projects, but it's *recommended* that you switch to a locally-installed version later, as relying on globally-installed tool versions is brittle.
 - Fix `clean` commands in paths with spaces [[#181](https://github.com/insin/nwb/issues/181)]
 
 **Changed:**
