@@ -104,7 +104,7 @@ function initGit(args, cwd) {
 
 export function npmModuleVars(vars) {
   vars.esModulesPackageConfig =
-    vars.esModules ? '\n  "jsnext:main": "es/index.js",\n  "module": "es/index.js",' : ''
+    vars.esModules ? '\n  "module": "es/index.js",' : ''
   return vars
 }
 

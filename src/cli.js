@@ -1,8 +1,13 @@
+import path from 'path'
+
 import {cyan as opt, green as cmd, red, yellow as req} from 'chalk'
 import parseArgs from 'minimist'
+import resolve from 'resolve'
+import semver from 'semver'
 
 import pkg from '../package.json'
 import {CONFIG_FILE_NAME} from './constants'
+import {UserError} from './errors'
 
 export default function cli(argv, cb) {
   let args = parseArgs(argv, {
@@ -185,6 +190,43 @@ Helper commands:
   }
   catch (e) {
     unknownCommand()
+  }
+
+  // Check if the user is running a version of nwb from outside their project
+  // which doesn't satisfy what's specified in package.json (when available).
+  if (/^(build|check|clean|serve|test)/.test(command)) {
+    let localNwbPath = null
+    try {
+      localNwbPath = path.dirname(resolve.sync('nwb/package', {basedir: process.cwd()}))
+    }
+    catch (e) {
+      // nwb isn't installed locally to where the command is being run
+    }
+
+    let runningNwbPath = path.dirname(require.resolve('../package'))
+
+    if (localNwbPath !== runningNwbPath) {
+      let pkg = null
+      try {
+        pkg = require(path.resolve('package.json'))
+      }
+      catch (e) {
+        // pass
+      }
+      let requiredNwbVersion = pkg && (
+        pkg.devDependencies && pkg.devDependencies.nwb ||
+        pkg.dependencies && pkg.dependencies.nwb
+      )
+      if (requiredNwbVersion) {
+        let runningNwbVersion = require('../package').version
+        if (!semver.satisfies(runningNwbVersion, requiredNwbVersion)) {
+          return cb(new UserError(
+            `The version of nwb you're running (v${runningNwbVersion}, from ${runningNwbPath}) ` +
+            `doesn't satisfy the version specified in ${path.resolve('package.json')} (${requiredNwbVersion}).`
+          ))
+        }
+      }
+    }
   }
 
   let commandModule = require(commandModulePath)

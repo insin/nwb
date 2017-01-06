@@ -96,15 +96,18 @@ describe('processUserConfig()', () => {
   })
 
   it('passes command and webpack arguments when a config function is provided', () => {
+    let args = {_: ['abc123']}
     let config = processUserConfig({
-      args: {_: ['abc123']},
+      args,
       userConfig(args) {
         return {
+          args: args.args,
           command: args.command,
           webpack: args.webpack,
         }
       }
     })
+    expect(config.args).toEqual(args)
     expect(config.command).toEqual('abc123')
     expect(config.webpack).toEqual(webpack)
   })

@@ -36,6 +36,7 @@ module.exports = function(args) {
 
 If a function is exported, it will be passed an object with the following properties:
 
+- `args`: a parsed version of arguments passed to the `nwb` command
 - `command`: the name of the command currently being executed, e.g. `'build'` or `'test'`
 - `webpack`: nwb's version of the `webpack` module, giving you access to the other plugins webpack provides
 
