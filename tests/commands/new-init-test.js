@@ -15,7 +15,7 @@ function reactAppAssertions(dir, name, err, done) {
   expect(glob.sync('**', {
     dot: true,
     cwd: path.resolve(dir),
-    ignore: 'node_modules/**'
+    ignore: ['node_modules/**', 'yarn.lock']
   })).toEqual([
     '.gitignore',
     '.travis.yml',
@@ -53,7 +53,7 @@ function reactComponentAssertions(dir, name, err, done) {
   expect(glob.sync('**', {
     cwd: path.resolve(dir),
     dot: true,
-    ignore: 'node_modules/**'
+    ignore: ['node_modules/**', 'yarn.lock']
   })).toEqual([
     '.gitignore',
     '.travis.yml',

@@ -1,4 +1,4 @@
-import {execSync} from 'child_process'
+import {execSync, exec} from 'child_process'
 import util from 'util'
 
 import argvSetEnv from 'argv-set-env'
@@ -85,34 +85,37 @@ export function endsWith(s1, s2) {
   return s1.lastIndexOf(s2) === s1.length - s2.length
 }
 
-/**
- * Install Inferno for the user when it's needed.
- */
-export function installInferno({dev = false, save = false, cwd = process.cwd(), version = 'latest'} = {}) {
-  let saveArg = save ? ` --save${dev ? '-dev' : ''}` : ''
-  let command = `npm install${saveArg} inferno@${version} inferno-component@${version}`
-  debug(`${cwd} $ ${command}`)
-  execSync(command, {cwd, stdio: 'inherit'})
+export function useYarn() {
+  try {
+    execSync('yarn --version', {stdio: 'ignore'})
+    return true
+  }
+  catch (e) {
+    return false
+  }
 }
 
 /**
- * Install Preact for the user when it's needed.
+ * Install all app dependencies when creating a new project
  */
-export function installPreact({dev = false, save = false, cwd = process.cwd(), version = 'latest'} = {}) {
-  let saveArg = save ? ` --save${dev ? '-dev' : ''}` : ''
-  let command = `npm install${saveArg} preact@${version}`
-  debug(`${cwd} $ ${command}`)
-  execSync(command, {cwd, stdio: 'inherit'})
-}
+export function installAppDependencies({dev = false, save = false, cwd = process.cwd(), version = 'latest', dependencies = []} = {}, cb) {
+  const saveArg = save ? ` --save${dev ? '-dev' : ''}` : ''
+  let command = `npm install${saveArg} ${dependencies.join(' ')}`
 
-/**
- * Install React for the user when it's needed.
- */
-export function installReact({dev = false, save = false, cwd = process.cwd(), version = 'latest'} = {}) {
-  let saveArg = save ? ` --save${dev ? '-dev' : ''}` : ''
-  let command = `npm install${saveArg} react@${version} react-dom@${version}`
+  if (useYarn()) {
+    command = `yarn add ${dependencies.join(' ')} ${dev ? '--dev' : ''}`
+  }
+  const spinner = ora(`Installing dependencies using ${useYarn() ? 'yarn' : 'npm'}`).start()
   debug(`${cwd} $ ${command}`)
-  execSync(command, {cwd, stdio: 'inherit'})
+  exec(command, {cwd, stdio: 'ignore'}, err => {
+    if (err) {
+      spinner.fail()
+      return cb(err)
+    }
+    spinner.text = `Installed dependencies using ${useYarn() ? 'yarn' : 'npm'}`
+    spinner.succeed()
+    cb()
+  })
 }
 
 /**

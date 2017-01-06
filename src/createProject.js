@@ -14,7 +14,7 @@ import {
 } from './constants'
 import {UserError} from './errors'
 import pkg from '../package.json'
-import {installInferno, installPreact, installReact, typeOf} from './utils'
+import {installAppDependencies, typeOf} from './utils'
 
 let nwbVersion = pkg.version.split('.').slice(0, 2).concat('x').join('.')
 
@@ -124,16 +124,16 @@ const PROJECT_CREATORS = {
     let templateVars = {name, nwbVersion, version}
     copyTemplateDir(templateDir, targetDir, templateVars, (err, createdFiles) => {
       if (err) return cb(err)
-      logCreatedFiles(targetDir, createdFiles)
-      console.log('Installing dependencies...')
-      try {
-        installInferno({cwd: targetDir, version, save: true})
-      }
-      catch (e) {
-        return cb(e)
-      }
-      initGit(args, targetDir)
-      cb()
+      installAppDependencies({
+        cwd: targetDir,
+        version,
+        save: true,
+        dependencies: [`inferno@${version}`, `inferno-component@${version}`]
+      }, (err) => {
+        if (err) return cb(err)
+        initGit(args, targetDir)
+        cb()
+      })
     })
   },
 
@@ -144,34 +144,36 @@ const PROJECT_CREATORS = {
     copyTemplateDir(templateDir, targetDir, templateVars, (err, createdFiles) => {
       if (err) return cb(err)
       logCreatedFiles(targetDir, createdFiles)
-      console.log('Installing dependencies...')
-      try {
-        installPreact({cwd: targetDir, version, save: true})
-      }
-      catch (e) {
-        return cb(e)
-      }
-      initGit(args, targetDir)
-      cb()
+      installAppDependencies({
+        cwd: targetDir,
+        version,
+        save: true,
+        dependencies: [`preact@${version}`]
+      }, (err) => {
+        if (err) return cb(err)
+        initGit(args, targetDir)
+        cb()
+      })
     })
   },
 
   [REACT_APP](args, name, targetDir, cb) {
     let templateDir = path.join(__dirname, `../templates/${REACT_APP}`)
-    let reactVersion = args.react || REACT_VERSION
-    let templateVars = {name, nwbVersion, reactVersion}
+    let version = args.react || REACT_VERSION
+    let templateVars = {name, nwbVersion, version}
     copyTemplateDir(templateDir, targetDir, templateVars, (err, createdFiles) => {
       if (err) return cb(err)
       logCreatedFiles(targetDir, createdFiles)
-      console.log('Installing dependencies...')
-      try {
-        installReact({cwd: targetDir, version: reactVersion, save: true})
-      }
-      catch (e) {
-        return cb(e)
-      }
-      initGit(args, targetDir)
-      cb()
+      installAppDependencies({
+        cwd: targetDir,
+        version,
+        save: true,
+        dependencies: [`react@${version}`, `react-dom@${version}`]
+      }, (err) => {
+        if (err) return cb(err)
+        initGit(args, targetDir)
+        cb()
+      })
     })
   },
 
@@ -180,9 +182,9 @@ const PROJECT_CREATORS = {
       if (err) return cb(err)
       let {umd, esModules} = prefs
       let templateDir = path.join(__dirname, `../templates/${REACT_COMPONENT}`)
-      let reactVersion = args.react || REACT_VERSION
+      let version = args.react || REACT_VERSION
       let templateVars = npmModuleVars(
-        {name, esModules, nwbVersion, reactVersion}
+        {name, esModules, nwbVersion, version}
       )
       copyTemplateDir(templateDir, targetDir, templateVars, (err, createdFiles) => {
         if (err) return cb(err)
@@ -199,15 +201,16 @@ const PROJECT_CREATORS = {
           return cb(e)
         }
         logCreatedFiles(targetDir, createdFiles)
-        console.log('Installing dependencies...')
-        try {
-          installReact({cwd: targetDir, version: reactVersion, dev: true, save: true})
-        }
-        catch (e) {
-          return cb(e)
-        }
-        initGit(args, targetDir)
-        cb()
+        installAppDependencies({
+          cwd: targetDir,
+          version,
+          save: true,
+          dependencies: [`react@${version}`, `react-dom@${version}`]
+        }, (err) => {
+          if (err) return cb(err)
+          initGit(args, targetDir)
+          cb()
+        })
       })
     })
   },
