@@ -5,6 +5,7 @@
   "license": "MIT",
   "author": "Jonny Buchanan <jonathan.buchanan@gmail.com>",
   "bin": {
+    "inferno": "./lib/bin/inferno.js",
     "nwb": "./lib/bin/nwb.js",
     "react": "./lib/bin/react.js"
   },
@@ -33,6 +34,7 @@
     "argv-set-env": "1.0.1",
     "chalk": "1.1.3",
     "copy-template-dir": "1.3.0",
+    "cross-spawn": "5.0.1",
     "debug": "2.6.0",
     "detect-port": "1.0.7",
     "eventsource-polyfill": "0.9.6",
@@ -119,7 +121,6 @@
   },
   "devDependencies": {
     "cross-env": "3.1.4",
-    "cross-spawn": "5.0.1",
     "eslint-config-jonnybuchanan": "4.8.0",
     "eventsource": "0.2.1",
     "nyc": "10.0.0",

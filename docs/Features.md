@@ -1,7 +1,7 @@
 ## Features
 
 - **A tool, not a boilerplate.** Start out with a single `devDependency`, without any configuration.
-- Provides specific tooling for React apps and components, but also supports development of Preact apps, Inferno apps, and vanilla JS web apps and npm modules.
+- Provides specific tooling for React apps and components, Preact apps, Inferno apps, and vanilla JS web apps and npm modules.
 - ES6 and JSX support.
 - Use future JavaScript features like object speading now; TC39 Stage 2 and above features are enabled by default.
 - Default polyfills and configuration allow use of `Promise` (with rejection tracking enabled), `fetch`, `async`/`await`, generators and `Object.assign` in any browser.

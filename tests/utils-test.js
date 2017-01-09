@@ -1,6 +1,6 @@
 import expect from 'expect'
 
-import {createBanner, createWebpackExternals} from '../src/utils'
+import {createBanner, createWebpackExternals, joinAnd} from '../src/utils'
 
 describe('utility functions', () => {
   describe('createBanner()', () => {
@@ -40,6 +40,18 @@ describe('utility functions', () => {
           root: 'React',
         }
       })
+    })
+  })
+
+  describe('joinAnd()', () => {
+    it('returns the first item for single-item lists', () => {
+      expect(joinAnd(['one'])).toEqual('one')
+    })
+    it('joins two items with "and"', () => {
+      expect(joinAnd(['one', 'two'])).toEqual('one and two')
+    })
+    it('joins multiple items with a penultipate "and"', () => {
+      expect(joinAnd(['one', 'two', 'three'])).toEqual('one, two and three')
     })
   })
 })

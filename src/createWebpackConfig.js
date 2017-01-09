@@ -416,9 +416,9 @@ export function createPlugins(server, buildConfig = {}, userConfig = {}) {
 
   // Automatically install missing npm dependencies and add them to package.json
   // Must be enabled with an --install or --auto-install flag
-  if (buildConfig.install) {
+  if (buildConfig.autoInstall) {
     plugins.push(new NpmInstallPlugin({
-      ...buildConfig.install,
+      quiet: true,
       ...userConfig.install,
     }))
   }

@@ -4,6 +4,11 @@
   - The ability to run project commands like `build`, `serve` etc. from a global `nwb` install is provided so you don't have to reinstall the entirety of nwb when creating new projects, but it's *recommended* that you switch to a locally-installed version later, as relying on globally-installed tool versions is brittle.
 - Fix `clean` commands in paths with spaces [[#181](https://github.com/insin/nwb/issues/181)]
 
+**Added:**
+
+- Added an `inferno` command for quick Inferno prototyping and building. Use `inferno run <entry.js>` to serve a module and `inferno build <entry.js> [dist/]` to build it.
+  - This commands also supports running and building modules which export an Inferno component or VNode (`export default <div>...</div>`).
+
 **Changed:**
 
 - Skip initialising a Git repo if a `.git/` directory already exists, e.g. you may want to use `nwb init` in an existing repo.

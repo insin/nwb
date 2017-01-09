@@ -51,6 +51,10 @@ export default function webpackServer(args, buildConfig, cb) {
     process.env.NODE_ENV = 'development'
   }
 
+  if (typeof buildConfig == 'function') {
+    buildConfig = buildConfig(args)
+  }
+
   // Other config can be provided by the user via the CLI
   getServerOptions(args, (err, options) => {
     if (err) return cb(err)

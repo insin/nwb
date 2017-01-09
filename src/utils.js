@@ -2,7 +2,9 @@ import {execSync} from 'child_process'
 import util from 'util'
 
 import argvSetEnv from 'argv-set-env'
+import spawn from 'cross-spawn'
 import ora from 'ora'
+import resolve from 'resolve'
 import rimraf from 'rimraf'
 import runSeries from 'run-series'
 
@@ -86,6 +88,68 @@ export function endsWith(s1, s2) {
 }
 
 /**
+ * Install packages from npm.
+ * @param {Array.<string>} packages npm package names, which may be in
+ *   package@version format.
+ * @param {Object=} options
+ * @param {boolean=} options.check check if packages are resolvable from
+ *   the cwd and skip installation if already installed.
+ * @param {string=} options.cwd working directory to install in.
+ * @param {boolean=} options.dev save dependencies to devDependencies.
+ * @param {boolean=} options.save save dependencies to package.json.
+ * @param {function(?Error)} cb completion callback.
+ */
+export function install(packages, options, cb) {
+  if (typeOf(options) === 'function') {
+    cb = options
+    options = {}
+  }
+  let {
+    check = false,
+    cwd = process.cwd(),
+    dev = false,
+    save = false,
+  } = options
+
+  if (check) {
+    packages = packages.filter(pkg => {
+      // Assumption: we're not dealing with scoped packages, which start with @
+      let name = pkg.split('@')[0]
+      try {
+        resolve.sync(name, {basedir: cwd})
+        return false
+      }
+      catch (e) {
+        return true
+      }
+    })
+    if (packages.length === 0) {
+      return cb()
+    }
+  }
+
+  let args = ['install', '--silent', '--no-progress']
+
+  if (save) {
+    args.push(`--save${dev ? '-dev' : ''}`)
+  }
+
+  args = args.concat(packages)
+
+  debug(`${cwd} $ npm ${args.join(' ')}`)
+  let spinner = ora(`Installing ${joinAnd(packages)}`).start()
+  let npm = spawn('npm', args, {cwd, stdio: ['ignore', 'pipe', 'inherit']})
+  npm.on('close', (code) => {
+    if (code !== 0) {
+      spinner.fail()
+      return cb(new Error('npm install failed'))
+    }
+    spinner.succeed()
+    cb()
+  })
+}
+
+/**
  * Install Inferno for the user when it's needed.
  */
 export function installInferno({dev = false, save = false, cwd = process.cwd(), version = 'latest'} = {}) {
@@ -113,6 +177,15 @@ export function installReact({dev = false, save = false, cwd = process.cwd(), ve
   let command = `npm install${saveArg} react@${version} react-dom@${version}`
   debug(`${cwd} $ ${command}`)
   execSync(command, {cwd, stdio: 'inherit'})
+}
+
+/**
+ * Join multiple items with a penultimate "and".
+ * @param {Array.<*>} arr
+ */
+export function joinAnd(array) {
+  if (array.length === 1) return String(array[0])
+  return `${array.slice(0, -1).join(', ')} and ${array[array.length - 1]}`
 }
 
 /**

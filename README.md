@@ -8,12 +8,14 @@
 nwb provides tooling in a single `devDependency` for developing, testing and building:
 
 - [React Apps](#react-apps)
+  - [Quick React Prototyping](#quick-react-prototyping)
 - [Preact Apps](#preact-apps)
 - [Inferno Apps](#inferno-apps)
+  - [Quick Inferno Prototyping](#quick-inferno-prototyping)
 - [React Components and Libraries](#react-components-and-libraries)
 - [npm Modules for the Web](#npm-modules-for-the-web)
 
-A zero-config development setup is provided for these projects, but nwb also supports configuration and plugin modules which add extra functionality (e.g. [Sass](http://sass-lang.com/) support), should you need them
+A zero-config development setup is provided for these project types, but nwb also supports configuration and plugin modules which add extra functionality (e.g. [Sass](http://sass-lang.com/) support), should you need them
 
 ## Install
 
@@ -45,7 +47,7 @@ Open [http://localhost:3000](http://localhost:3000), start editing the code and 
 
 **See [Developing React Apps with nwb](/docs/guides/ReactApps.md#developing-react-apps-with-nwb) for a more detailed guide.**
 
-### Quick Prototyping
+### Quick React Prototyping
 
 If you want to do some React prototyping without setting anything up, use the `react` command.
 
@@ -88,6 +90,34 @@ Use `nwb new inferno-app` to create an [Inferno](https://github.com/trueadm/infe
 ```sh
 nwb new inferno-app my-app
 ```
+
+### Quick Inferno Prototyping
+
+If you want to do some Inferno prototyping without setting anything up, use the `inferno` command.
+
+Create a module which renders an Inferno app into `<div id="app">`:
+
+`app.js:`
+```js
+import Inferno from 'inferno'
+import Component from 'inferno-component'
+
+class App extends Component {
+  render() {
+    return <h1>Hello worlds!</h1>
+  }
+}
+
+Inferno.render(<App/>, document.getElementById('app'))
+```
+
+Use `inferno run` to start a hot-reloading development server at [http://localhost:3000](http://localhost:3000).
+
+```sh
+inferno run app.js
+```
+
+`inferno build app.js` will create a production build.
 
 ## React Components and Libraries
 

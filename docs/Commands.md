@@ -5,6 +5,9 @@ Installing nwb provides the following commands.
 - [`react`](#react) - quick React development
   - [`run`](#run) - serve a React app or component module
   - [`build`](#build) - create a static build for a React app
+- [`inferno`](#inferno) - quick Inferno development
+  - [`run`](#run) - serve an Inferno app or component module
+  - [`build`](#build) - create a static build for an Inferno app
 - [`nwb`](#nwb) - project tooling
   - [Project Creation](#project-creation)
     - [`new`](#new) - create a project skeleton in a new directory
@@ -70,7 +73,62 @@ react build <entry> [dist_dir] [options]
 - `--mount-id` - `id` for the `<div>` the app will render into *[default: app]*
 - `--title` - contents for `<title>` *[default: React App]*
 - `--preact` - create a [preact-compat](https://github.com/developit/preact-compat#usage-with-webpack)-compatible build
-- `--vendor` - create a separate vendor bundle
+- `--vendor` - create a separate vendor bundle for modules required from `node_modules/`
+
+### `inferno`
+
+The `inferno` command provides quick Inferno development, starting from a single `.js` file and working up.
+
+**Options:**
+
+- `-c, --config` - path to a config file; a config file is only required if you specify one, but an `nwb.config.js` file in the current directory will be used if present *[default: nwb.config.js]*
+
+The following sub-commands are available:
+
+#### `run`
+
+Serve an Inferno app for quick development.
+
+Also supports serving modules which export an Inferno component or VNode.
+
+```
+inferno run <entry> [options]
+```
+
+**Arguments:**
+
+- `entry` - entry point for the app, or a module which exports an Inferno component or VNode.
+
+**Options:**
+
+- `--install` - auto install missing npm dependencies
+- `--host` - hostname to bind the dev server to *[default: not specifying a host when starting the dev server]*
+- `--mount-id` - `id` for the `<div>` the app will render into *[ app]*
+- `--no-fallback` - disable serving of the index page from any path
+- `--no-polyfill` - disable inclusion of default polyfills
+- `--port` - port to run the dev server on *[default: 3000]*
+- `--reload` - auto reload the page if hot reloading fails
+- `--title` - contents for `<title>` *[default: React App]*
+
+#### `build`
+
+Create a production build for an Inferno app.
+
+```
+inferno build <entry> [dist_dir] [options]
+```
+
+**Arguments:**
+
+- `entry` - entry point for the app
+- `dist_dir` - build output directory *[default: dist/]*
+
+**Options:**
+
+- `--mount-id` - `id` for the `<div>` the app will render into *[default: app]*
+- `--no-polyfill` - disable bundling of default polyfills
+- `--title` - contents for `<title>` *[default: React App]*
+- `--vendor` - create a separate vendor bundle for modules required from `node_modules/`
 
 ### `nwb`
 
