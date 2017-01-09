@@ -18,7 +18,7 @@ describe('createWebpackConfig()', () => {
   context('with only entry config', () => {
     let config = createWebpackConfig({entry: ['index.js']})
     it('creates a default webpack build config', () => {
-      expect(Object.keys(config)).toEqual(['module', 'output', 'plugins', 'resolve', 'postcss', 'entry'])
+      expect(Object.keys(config)).toEqual(['module', 'output', 'plugins', 'resolve', 'resolveLoader', 'postcss', 'entry'])
       expect(config.module.loaders.map(loader => loader.loader).join('\n'))
         .toContain('babel-loader')
         .toContain('extract-text-webpack-plugin')

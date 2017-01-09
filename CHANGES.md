@@ -39,18 +39,20 @@
 - autoprefixer: v6.5.3 → [v6.6.1](https://github.com/postcss/autoprefixer/blob/master/CHANGELOG.md#661)
 - babel-core: v6.20.1 → v6.21.0
 - babel-loader: v6.2.9 → [v6.2.10](https://github.com/babel/babel-loader/blob/master/CHANGELOG.md#v6210) - Webpack 2 RC support
+- babel-plugin-inferno: v1.4.0 → v1.5.0 - use import instead of global Inferno reference
 - babel-plugin-istanbul: v3.0.0 → [v3.1.2](https://github.com/istanbuljs/babel-plugin-istanbul/blob/master/CHANGELOG.md#312-2017-01-04)
 - babel-plugin-lodash: v3.2.10 → [v3.2.11](https://github.com/lodash/babel-plugin-lodash/compare/3.2.10...3.2.11)
 - detect-port: v1.0.6 → [v1.0.7](https://github.com/node-modules/detect-port/releases/tag/1.0.7)
 - diff: v3.1.0 → [v3.2.0](https://github.com/kpdecker/jsdiff/blob/master/release-notes.md#v320---december-26th-2016)
+- html-webpack-plugin: v2.24.1 → [v2.26.0](https://github.com/ampedandwired/html-webpack-plugin/blob/master/CHANGELOG.md#v2260) - Webpack 2 RC support
 - karma-webpack: v1.8.0 → v1.8.1 - Webpack 2 RC support
-- ora: v0.3.0 → v0.4.0
+- ora: v0.3.0 → v0.4.1
 - phantomjs-prebuilt: v2.1.13 → [v2.1.14](https://github.com/Medium/phantomjs/releases/tag/2.1.14)
 - postcss-loader: v1.2.0 → [v1.2.1](https://github.com/postcss/postcss-loader/blob/master/CHANGELOG.md#121)
 - resolve: v1.1.7 → [v1.2.0](https://github.com/substack/node-resolve/compare/1.1.y...1.2.0)
 - webpack-dev-middleware: v1.8.4 → [v1.9.0](https://github.com/webpack/webpack-dev-middleware/releases/tag/v1.9.0) - Webpack 2 RC support
 - webpack-hot-middleware: v2.13.2 → [v2.15.0](https://github.com/glenjamin/webpack-hot-middleware/compare/v2.13.2...v2.15.0) - add cache for warnings
-- webpack-merge: v1.0.2 → [v2.0.0](https://github.com/survivejs/webpack-merge/blob/master/CHANGELOG.md#200--2016-12-22) - providing an empty array/object no longer overrides when merging
+- webpack-merge: v1.0.2 → [v2.3.1](https://github.com/survivejs/webpack-merge/blob/master/CHANGELOG.md#231--2017-01-06) - providing an empty array/object no longer overrides when merging
 
 # 0.13.8 / 2016-12-31
 
