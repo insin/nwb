@@ -206,15 +206,15 @@ Creates a skeleton project for an npm web module.
 
 **React app/component options:**
 
-- `--react` - set the version of React which will be installed (and set as a `peerDependency` for components). Defaults to whatever the stable version of React was when the version of `nwb` you're using was released.
+- `--react` - set the version of React which will be installed. For apps, defaults to the latest version. For components, this is also used as a `peerDependencies` version, defaulting to whatever the major version of React was when the version of `nwb` you're using was released.
 
 **Preact app options:**
 
-- `--preact` - set the version of Preact which will be installed. Defaults to whatever the stable version of Preact was when the version of `nwb` you're using was released.
+- `--preact` - set the version of Preact which will be installed. Defaults to the latest version.
 
 **Inferno app options:**
 
-- `--inferno` - set the version of Inferno which will be installed. Defaults to whatever the stable version of Inferno was when the version of `nwb` you're using was released.
+- `--inferno` - set the version of Inferno which will be installed. Defaults to the latest version.
 
 ##### `init`
 

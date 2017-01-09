@@ -17,6 +17,7 @@
 
 **Changed:**
 
+- When creating new projects, the latest version of dependencies will now be installed from npm, rather than a version range hardcoded in nwb.
 - Skip initialising a Git repo if a `.git/` directory already exists, e.g. you may want to use `nwb init` in an existing repo.
 - The default build for a React component demo app now supports use of a `demo/public/` directory for static content.
 - An `args` property is now included in the object passed to user configs which export a function - this contains parsed arguments, e.g. `args.preact` will be `true` if you passed `--preact` when calling nwb.

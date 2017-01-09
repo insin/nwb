@@ -1,4 +1,4 @@
-import {execSync} from 'child_process'
+import {exec} from 'child_process'
 import fs from 'fs'
 import path from 'path'
 
@@ -6,31 +6,40 @@ import chalk from 'chalk'
 import copyTemplateDir from 'copy-template-dir'
 import glob from 'glob'
 import inquirer from 'inquirer'
+import ora from 'ora'
+import runSeries from 'run-series'
 
 import {
-  CONFIG_FILE_NAME,
-  INFERNO_VERSION, PREACT_VERSION, REACT_VERSION,
-  INFERNO_APP, PREACT_APP, PROJECT_TYPES, REACT_APP, REACT_COMPONENT, WEB_APP, WEB_MODULE,
+  CONFIG_FILE_NAME, INFERNO_APP, PREACT_APP, PROJECT_TYPES, REACT_APP,
+  REACT_COMPONENT, WEB_APP, WEB_MODULE,
 } from './constants'
 import {UserError} from './errors'
 import pkg from '../package.json'
-import {installInferno, installPreact, installReact, typeOf} from './utils'
+import {install, toSource, typeOf} from './utils'
 
-let nwbVersion = pkg.version.split('.').slice(0, 2).concat('x').join('.')
+// TODO Change if >= 1.0.0 ever happens
+const NWB_VERSION = pkg.version.split('.').slice(0, 2).concat('x').join('.')
 
-// Hack to generate simple config file contents without JSON formatting
-let toSource = (obj) => JSON.stringify(obj, null, 2)
-                            .replace(/"([^"]+)":/g, '$1:')
-                            .replace(/"/g, "'")
-
-function writeConfigFile(dir, config) {
-  fs.writeFileSync(
-    path.join(dir, CONFIG_FILE_NAME),
-    `module.exports = ${toSource(config)}\n`
-  )
+/**
+ * Copy a project template and log created files if successful.
+ */
+function copyTemplate(templateDir, targetDir, templateVars, cb) {
+  copyTemplateDir(templateDir, targetDir, templateVars, (err, createdFiles) => {
+    if (err) return cb(err)
+    createdFiles.sort().forEach(createdFile => {
+      let relativePath = path.relative(targetDir, createdFile)
+      console.log(`  ${chalk.green('create')} ${relativePath}`)
+    })
+    cb()
+  })
 }
 
-export function getNpmModulePrefs(args, done) {
+/**
+ * Prompt the user for preferences related to publishing a module to npm, unless
+ * they've asked us not to or have already provided all the possible options via
+ * arguments.
+ */
+export function getNpmModulePrefs(args, cb) {
   // An ES6 modules build is enabled by default, but can be disabled with
   // --no-es-modules or --es-modules=false (or a bunch of other undocumented
   // stuff)
@@ -42,7 +51,7 @@ export function getNpmModulePrefs(args, done) {
   // Don't ask questions if the user doesn't want them, or already told us all
   // the answers.
   if ((args.f || args.force) || ('umd' in args && 'es-modules' in args)) {
-    return done(null, {umd, esModules})
+    return process.nextTick(cb, null, {umd, esModules})
   }
 
   inquirer.prompt([
@@ -70,44 +79,45 @@ export function getNpmModulePrefs(args, done) {
       },
       default: umd || '',
     },
-  ]).then(answers => done(null, answers), err => done(err))
+  ]).then(answers => cb(null, answers), err => cb(err))
 }
 
-function logCreatedFiles(targetDir, createdFiles) {
-  createdFiles.sort().forEach(createdFile => {
-    let relativePath = path.relative(targetDir, createdFile)
-    console.log(`  ${chalk.green('create')} ${relativePath}`)
-  })
-}
-
-function initGit(args, cwd) {
+/**
+ * Initialise a Git repository if the user has Git, unless there's already one
+ * present or the user has asked us could we not.
+ */
+function initGit(args, cwd, cb) {
   // Allow git init to be disabled with a --no-git flag
   if (args.git === false) {
-    return
+    return process.nextTick(cb)
   }
   // Bail if a git repo already exists (e.g. nwb init in an existing repo)
   if (glob.sync('.git/', {cwd}).length > 0) {
-    return
+    return process.nextTick(cb)
   }
 
-  try {
-    execSync('git --version', {cwd, stdio: 'ignore'})
-    execSync('git init', {cwd})
-    execSync('git add .', {cwd})
-    execSync(`git commit -m "Initial commit from nwb v${pkg.version}"`, {cwd})
-    console.log(chalk.green('Successfully initialized git.'))
-  }
-  catch (e) {
-    // Pass
-  }
+  exec('git --version', {cwd, stdio: 'ignore'}, (err) => {
+    if (err) return cb()
+    let spinner = ora('Initing Git repo').start()
+    runSeries([
+      (cb) => exec('git init', {cwd}, cb),
+      (cb) => exec('git add .', {cwd}, cb),
+      (cb) => exec(`git commit -m "Initial commit from nwb v${pkg.version}"`, {cwd}, cb),
+    ], (err) => {
+      if (err) {
+        spinner.fail()
+        console.log(chalk.red(err.message))
+        cb()
+      }
+      spinner.succeed()
+      cb()
+    })
+  })
 }
 
-export function npmModuleVars(vars) {
-  vars.esModulesPackageConfig =
-    vars.esModules ? '\n  "module": "es/index.js",' : ''
-  return vars
-}
-
+/**
+ * Validate a user-supplied project type.
+ */
 export function validateProjectType(projectType) {
   if (!projectType) {
     throw new UserError(`A project type must be provided, one of: ${PROJECT_TYPES.join(', ')}`)
@@ -117,142 +127,107 @@ export function validateProjectType(projectType) {
   }
 }
 
-const PROJECT_CREATORS = {
-  [INFERNO_APP](args, name, targetDir, cb) {
-    let templateDir = path.join(__dirname, `../templates/${INFERNO_APP}`)
-    let version = args.inferno || INFERNO_VERSION
-    let templateVars = {name, nwbVersion, version}
-    copyTemplateDir(templateDir, targetDir, templateVars, (err, createdFiles) => {
-      if (err) return cb(err)
-      logCreatedFiles(targetDir, createdFiles)
-      console.log('Installing dependencies...')
-      try {
-        installInferno({cwd: targetDir, version, save: true})
-      }
-      catch (e) {
-        return cb(e)
-      }
-      initGit(args, targetDir)
-      cb()
-    })
-  },
+/**
+ * Write an nwb config file.
+ */
+function writeConfigFile(dir, config, cb) {
+  fs.writeFile(
+    path.join(dir, CONFIG_FILE_NAME),
+    `module.exports = ${toSource(config)}\n`,
+    cb
+  )
+}
 
-  [PREACT_APP](args, name, targetDir, cb) {
-    let templateDir = path.join(__dirname, `../templates/${PREACT_APP}`)
-    let version = args.preact || PREACT_VERSION
-    let templateVars = {name, nwbVersion, version}
-    copyTemplateDir(templateDir, targetDir, templateVars, (err, createdFiles) => {
-      if (err) return cb(err)
-      logCreatedFiles(targetDir, createdFiles)
-      console.log('Installing dependencies...')
-      try {
-        installPreact({cwd: targetDir, version, save: true})
-      }
-      catch (e) {
-        return cb(e)
-      }
-      initGit(args, targetDir)
-      cb()
-    })
+const APP_PROJECT_CONFIG = {
+  [INFERNO_APP]: {
+    dependencies: ['inferno', 'inferno-component'],
   },
-
-  [REACT_APP](args, name, targetDir, cb) {
-    let templateDir = path.join(__dirname, `../templates/${REACT_APP}`)
-    let reactVersion = args.react || REACT_VERSION
-    let templateVars = {name, nwbVersion, reactVersion}
-    copyTemplateDir(templateDir, targetDir, templateVars, (err, createdFiles) => {
-      if (err) return cb(err)
-      logCreatedFiles(targetDir, createdFiles)
-      console.log('Installing dependencies...')
-      try {
-        installReact({cwd: targetDir, version: reactVersion, save: true})
-      }
-      catch (e) {
-        return cb(e)
-      }
-      initGit(args, targetDir)
-      cb()
-    })
+  [PREACT_APP]: {
+    dependencies: ['preact'],
   },
-
-  [REACT_COMPONENT](args, name, targetDir, cb) {
-    getNpmModulePrefs(args, (err, prefs) => {
-      if (err) return cb(err)
-      let {umd, esModules} = prefs
-      let templateDir = path.join(__dirname, `../templates/${REACT_COMPONENT}`)
-      let reactVersion = args.react || REACT_VERSION
-      let templateVars = npmModuleVars(
-        {name, esModules, nwbVersion, reactVersion}
-      )
-      copyTemplateDir(templateDir, targetDir, templateVars, (err, createdFiles) => {
-        if (err) return cb(err)
-        try {
-          writeConfigFile(targetDir, {
-            type: 'react-component',
-            npm: {
-              esModules,
-              umd: umd ? {global: umd, externals: {react: 'React'}} : false
-            }
-          })
-        }
-        catch (e) {
-          return cb(e)
-        }
-        logCreatedFiles(targetDir, createdFiles)
-        console.log('Installing dependencies...')
-        try {
-          installReact({cwd: targetDir, version: reactVersion, dev: true, save: true})
-        }
-        catch (e) {
-          return cb(e)
-        }
-        initGit(args, targetDir)
-        cb()
-      })
-    })
+  [REACT_APP]: {
+    dependencies: ['react', 'react-dom'],
   },
+  [WEB_APP]: {},
+}
 
-  [WEB_APP](args, name, targetDir, cb) {
-    let templateDir = path.join(__dirname, `../templates/${WEB_APP}`)
-    let templateVars = {name, nwbVersion}
-    copyTemplateDir(templateDir, targetDir, templateVars, (err, createdFiles) => {
-      if (err) return cb(err)
-      logCreatedFiles(targetDir, createdFiles)
-      initGit(args, targetDir)
-      cb()
-    })
+const MODULE_PROJECT_CONFIG = {
+  [REACT_COMPONENT]: {
+    devDependencies: ['react', 'react-dom'],
+    externals: {react: 'React'},
   },
+  [WEB_MODULE]: {},
+}
 
-  [WEB_MODULE](args, name, targetDir, cb) {
-    getNpmModulePrefs(args, (err, prefs) => {
-      if (err) return cb(err)
-      let {umd, esModules} = prefs
-      let templateDir = path.join(__dirname, `../templates/${WEB_MODULE}`)
-      let templateVars = npmModuleVars(
-        {name, esModules, nwbVersion}
-      )
-      copyTemplateDir(templateDir, targetDir, templateVars, (err, createdFiles) => {
-        if (err) return cb(err)
-        try {
-          writeConfigFile(targetDir, {
-            type: 'web-module',
-            npm: {
-              esModules,
-              umd: umd ? {global: umd, externals: {}} : false,
-            }
-          })
-        }
-        catch (e) {
-          return cb(e)
-        }
-        logCreatedFiles(targetDir, createdFiles)
-        initGit(args, targetDir)
-        cb()
-      })
-    })
+/**
+ * Create an app project skeleton.
+ */
+function createAppProject(args, projectType, name, targetDir, cb) {
+  let {dependencies = []} = APP_PROJECT_CONFIG[projectType]
+  if (dependencies.length !== 0) {
+    let library = projectType.split('-')[0]
+    if (args[library]) {
+      dependencies = dependencies.map(pkg => `${pkg}@${args[library]}`)
+    }
   }
+  let templateDir = path.join(__dirname, `../templates/${projectType}`)
+  let templateVars = {name, nwbVersion: NWB_VERSION}
+  runSeries([
+    (cb) => copyTemplate(templateDir, targetDir, templateVars, cb),
+    (cb) => install(dependencies, {cwd: targetDir, save: true}, cb),
+    (cb) => initGit(args, targetDir, cb),
+  ], cb)
+}
+
+/**
+ * Create an npm module project skeleton.
+ */
+function createModuleProject(args, projectType, name, targetDir, cb) {
+  let {devDependencies = [], externals = {}} = MODULE_PROJECT_CONFIG[projectType]
+  getNpmModulePrefs(args, (err, prefs) => {
+    if (err) return cb(err)
+    let {umd, esModules} = prefs
+    let templateDir = path.join(__dirname, `../templates/${projectType}`)
+    let templateVars = {
+      name,
+      esModules,
+      esModulesPackageConfig: esModules ? '\n  "module": "es/index.js",' : '',
+      nwbVersion: NWB_VERSION,
+    }
+    let nwbConfig = {
+      type: projectType,
+      npm: {
+        esModules,
+        umd: umd ? {global: umd, externals} : false
+      }
+    }
+
+    // CBA making this part generic until it's needed
+    if (projectType === REACT_COMPONENT) {
+      if (args.react) {
+        devDependencies = devDependencies.map(pkg => `${pkg}@${args.react}`)
+        templateVars.reactPeerVersion = `^${args.react}` // YOLO
+      }
+      else {
+        // TODO Get from npm so we don't have to manually update on major releases
+        templateVars.reactPeerVersion = '15.x'
+      }
+    }
+
+    runSeries([
+      (cb) => copyTemplate(templateDir, targetDir, templateVars, cb),
+      (cb) => writeConfigFile(targetDir, nwbConfig, cb),
+      (cb) => install(devDependencies, {cwd: targetDir, save: true, dev: true}, cb),
+      (cb) => initGit(args, targetDir, cb),
+    ], cb)
+  })
 }
 
 export default function createProject(args, type, name, dir, cb) {
-  PROJECT_CREATORS[type](args, name, dir, cb)
+  if (type in APP_PROJECT_CONFIG) {
+    return createAppProject(args, type, name, dir, cb)
+  }
+  else {
+    createModuleProject(args, type, name, dir, cb)
+  }
 }

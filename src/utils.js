@@ -1,4 +1,3 @@
-import {execSync} from 'child_process'
 import util from 'util'
 
 import argvSetEnv from 'argv-set-env'
@@ -123,9 +122,10 @@ export function install(packages, options, cb) {
         return true
       }
     })
-    if (packages.length === 0) {
-      return cb()
-    }
+  }
+
+  if (packages.length === 0) {
+    return process.nextTick(cb)
   }
 
   let args = ['install', '--silent', '--no-progress']
@@ -150,42 +150,23 @@ export function install(packages, options, cb) {
 }
 
 /**
- * Install Inferno for the user when it's needed.
- */
-export function installInferno({dev = false, save = false, cwd = process.cwd(), version = 'latest'} = {}) {
-  let saveArg = save ? ` --save${dev ? '-dev' : ''}` : ''
-  let command = `npm install${saveArg} inferno@${version} inferno-component@${version}`
-  debug(`${cwd} $ ${command}`)
-  execSync(command, {cwd, stdio: 'inherit'})
-}
-
-/**
- * Install Preact for the user when it's needed.
- */
-export function installPreact({dev = false, save = false, cwd = process.cwd(), version = 'latest'} = {}) {
-  let saveArg = save ? ` --save${dev ? '-dev' : ''}` : ''
-  let command = `npm install${saveArg} preact@${version}`
-  debug(`${cwd} $ ${command}`)
-  execSync(command, {cwd, stdio: 'inherit'})
-}
-
-/**
- * Install React for the user when it's needed.
- */
-export function installReact({dev = false, save = false, cwd = process.cwd(), version = 'latest'} = {}) {
-  let saveArg = save ? ` --save${dev ? '-dev' : ''}` : ''
-  let command = `npm install${saveArg} react@${version} react-dom@${version}`
-  debug(`${cwd} $ ${command}`)
-  execSync(command, {cwd, stdio: 'inherit'})
-}
-
-/**
  * Join multiple items with a penultimate "and".
  * @param {Array.<*>} arr
  */
 export function joinAnd(array) {
+  if (array.length === 0) return ''
   if (array.length === 1) return String(array[0])
   return `${array.slice(0, -1).join(', ')} and ${array[array.length - 1]}`
+}
+
+/**
+ * Hack to generate simple config file contents by stringifying to JSON, but
+ * without JSON formatting.
+ */
+export function toSource(obj) {
+  return JSON.stringify(obj, null, 2)
+             .replace(/"([^"]+)":/g, '$1:')
+             .replace(/"/g, "'")
 }
 
 /**
