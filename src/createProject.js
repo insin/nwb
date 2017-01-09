@@ -140,10 +140,10 @@ function writeConfigFile(dir, config, cb) {
 
 const APP_PROJECT_CONFIG = {
   [INFERNO_APP]: {
-    dependencies: ['inferno', 'inferno-component'],
+    dependencies: ['inferno', 'inferno-component', 'inferno-compat'],
   },
   [PREACT_APP]: {
-    dependencies: ['preact'],
+    dependencies: ['preact', 'preact-compat'],
   },
   [REACT_APP]: {
     dependencies: ['react', 'react-dom'],

@@ -4,6 +4,7 @@ import glob from 'glob'
 import runSeries from 'run-series'
 
 import {getDefaultHTMLConfig} from '../appConfig'
+import {install} from '../utils'
 import webpackBuild from '../webpackBuild'
 import cleanApp from './clean-app'
 
@@ -73,10 +74,18 @@ export default function buildReactApp(args, cb) {
   let dist = args._[2] || 'dist'
 
   let library = 'React'
-  if (args.inferno) library = 'Inferno (React compat)'
-  else if (args.preact) library = 'Preact (React compat)'
+  let packages = []
+  if (args.inferno) {
+    library = 'Inferno (React compat)'
+    packages = ['inferno', 'inferno-compat']
+  }
+  else if (args.preact) {
+    library = 'Preact (React compat)'
+    packages = ['preact', 'preact-compat']
+  }
 
   runSeries([
+    (cb) => install(packages, {check: true}, cb),
     (cb) => cleanApp({_: ['clean-app', dist]}, cb),
     (cb) => webpackBuild(`${library} app`, args, buildConfig, cb),
   ], cb)

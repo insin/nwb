@@ -54,12 +54,13 @@ Options:
 
 Commands:
   ${cmd('preact run')} ${req('<entry>')} ${opt('[options]')}
-    Serve an Preact app or component module.
+    Serve a Preact app or component module.
 
     Arguments:
       ${req('entry')}          entry point for the app, or a component module
 
     Options:
+      ${opt('--force')}        don't shim rendering, use the given entry module directly
       ${opt('--install')}      automatically install missing npm dependencies
       ${opt('--host')}         hostname to bind the dev server to
       ${opt('--mount-id')}     id for the <div> the app will render into ${opt('[default: app]')}
@@ -70,13 +71,14 @@ Commands:
       ${opt('--title')}        contents for <title> ${opt('[default: Preact App]')}
 
   ${cmd('preact build')} ${req('<entry>')} ${opt('[dist_dir] [options]')}
-    Create a static build for an Preact app.
+    Create a static build for a Preact app.
 
     Arguments:
       ${req('entry')}       entry point for the app
       ${opt('dist_dir')}    build output directory ${opt('[default: dist/]')}
 
     Options:
+      ${opt('--force')}        don't shim rendering, use the given entry module directly
       ${opt('--mount-id')}     id for the <div> the app will render into ${opt('[default: app]')}
       ${opt('--no-polyfill')}  disable bundling of default polyfills
       ${opt('--title')}        contents for <title> ${opt('[default: Preact App]')}

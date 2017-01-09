@@ -7,8 +7,8 @@ import {UserError} from '../errors'
 import webpackServer from '../webpackServer'
 import {install} from '../utils'
 
-// Using a config function as we need to resolve the path to React and ReactDOM,
-// which we may have to install first.
+// Using a config function as we may need to resolve the path to React and
+// ReactDOM, which we may also have to install first.
 function buildConfig(args) {
   let entry = args._[1]
   let mountId = args['mount-id'] || 'app'
@@ -19,28 +19,31 @@ function buildConfig(args) {
       presets: ['react', 'react-hmre'],
       stage: 0,
     },
-    // Use a dummy entry module to try to render what was exported if nothing
-    // has been rendered after importing the provided entry module.
-    entry: [require.resolve('../reactRunEntry')],
     output: {
       filename: 'app.js',
       path: process.cwd(),
       publicPath: '/',
     },
     plugins: {
-      define: {
-        NWB_REACT_RUN_MOUNT_ID: JSON.stringify(mountId)
-      },
       html: {
         mountId,
         title: args.title || 'React App',
       },
     },
-    resolve: {
+  }
+
+  if (args.force === true) {
+    config.entry = [path.resolve(entry)]
+  }
+  else {
+    // Use a render shim module which supports quick prototyping
+    config.entry = [require.resolve('../reactRunEntry')]
+    config.plugins.define = {NWB_REACT_RUN_MOUNT_ID: JSON.stringify(mountId)}
+    config.resolve = {
       alias: {
-        // Allow the dummy entry module to import the provided entry module
+        // Allow the render shim module to import the provided entry module
         'nwb-react-run-entry': path.resolve(entry),
-        // Allow the dummy entry module to resolve React and ReactDOM from the cwd
+        // Allow the render shim module to resolve React and ReactDOM from the cwd
         'react': path.dirname(resolve.sync('react/package.json', {basedir: process.cwd()})),
         'react-dom': path.dirname(resolve.sync('react-dom/package.json', {basedir: process.cwd()})),
       }

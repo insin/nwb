@@ -1,13 +1,13 @@
 /* global NWB_PREACT_RUN_MOUNT_ID */
 
-// Hook preact's render function to get the VNode passed by the entry if it's
+// Hook Preact's render function to get the VNode passed by the entry if it's
 // rendering itself.
 // h/t @developit
-let preact = require('preact')
-let {h, render} = preact
+let Preact = require('preact')
+let {h, render} = Preact
 let root = null
 let vnode = null
-preact.render = (v) => {
+Preact.render = (v) => {
   vnode = v
 }
 

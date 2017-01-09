@@ -1,26 +1,28 @@
 /* global NWB_REACT_RUN_MOUNT_ID */
-import Component from 'nwb-react-run-entry'
-import React from 'react'
-import ReactDOM from 'react-dom'
 
-function render(Component) {
+import {createElement} from 'react'
+import {render} from 'react-dom'
+
+function renderEntry(exported) {
   // Assumptions: the entry module either renders the app itself or exports a
   // React component (which is either a function or class) or element (which has
   // type and props properties).
-  if (Object.prototype.toString.call(Component) === '[object Function]' ||
-      (Component.type && Component.props)) {
-    if (!(Component.type && Component.props)) {
-      Component = React.createElement(Component)
-    }
-    // Component should now be a React element
-    ReactDOM.render(Component, document.getElementById(NWB_REACT_RUN_MOUNT_ID))
+  let element
+  if (Object.prototype.toString.call(exported) === '[object Function]') {
+    element = createElement(exported)
+  }
+  else if (exported.type && exported.props) {
+    element = exported
+  }
+  if (element) {
+    render(element, document.getElementById(NWB_REACT_RUN_MOUNT_ID))
   }
 }
 
-render(Component)
+renderEntry(require('nwb-react-run-entry'))
 
 if (module.hot) {
   module.hot.accept('nwb-react-run-entry', () => {
-    render(require('nwb-react-run-entry'))
+    renderEntry(require('nwb-react-run-entry'))
   })
 }

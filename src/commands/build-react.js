@@ -27,11 +27,6 @@ function buildConfig(args) {
       stage: 0,
     },
     devtool: 'source-map',
-    entry: {
-      // Use a dummy entry module to support rendering an exported React
-      // Component or Element for quick prototyping.
-      app: [require.resolve('../reactRunEntry')],
-    },
     output: {
       chunkFilename: filenamePattern,
       filename: filenamePattern,
@@ -39,9 +34,6 @@ function buildConfig(args) {
       publicPath: '/',
     },
     plugins: {
-      define: {
-        NWB_REACT_RUN_MOUNT_ID: JSON.stringify(mountId)
-      },
       html: {
         mountId,
         title: args.title || 'React App',
@@ -50,14 +42,22 @@ function buildConfig(args) {
       vendor: args.vendor,
     },
     resolve: {
-      alias: {
-        // Allow the dummy entry module to import the provided entry module
-        'nwb-react-run-entry': path.resolve(entry),
-        // Allow the dummy entry module to resolve React and ReactDOM from the cwd
-        'react': path.dirname(resolve.sync('react/package.json', {basedir})),
-        'react-dom': path.dirname(resolve.sync('react-dom/package.json', {basedir})),
-      }
-    }
+      alias: {}
+    },
+  }
+
+  if (args.force === true) {
+    config.entry = {app: [path.resolve(entry)]}
+  }
+  else {
+    // Use a render shim module which supports quick prototyping
+    config.entry = {app: [require.resolve('../reactRunEntry')]}
+    config.plugins.define = {NWB_REACT_RUN_MOUNT_ID: JSON.stringify(mountId)}
+    // Allow the render shim module to import the provided entry module
+    config.resolve.alias['nwb-react-run-entry'] = path.resolve(entry)
+    // Allow the render shim module to resolve React and ReactDOM from the cwd
+    config.resolve.alias['react'] = path.dirname(resolve.sync('react/package.json', {basedir}))
+    config.resolve.alias['react-dom'] = path.dirname(resolve.sync('react-dom/package.json', {basedir}))
   }
 
   if (args.polyfill === false || args.polyfills === false) {
@@ -65,11 +65,11 @@ function buildConfig(args) {
   }
 
   if (args.inferno) {
-    config.resolve.alias.react = config.resolve.alias['react-dom'] =
+    config.resolve.alias['react'] = config.resolve.alias['react-dom'] =
       path.dirname(resolve.sync('inferno-compat/package.json', {basedir}))
   }
   else if (args.preact) {
-    config.resolve.alias.react = config.resolve.alias['react-dom'] =
+    config.resolve.alias['react'] = config.resolve.alias['react-dom'] =
       path.dirname(resolve.sync('preact-compat/package.json', {basedir}))
   }
 

@@ -36,6 +36,12 @@ function buildConfig(args) {
       html: getDefaultHTMLConfig(),
       vendor: args.vendor !== false,
     },
+    resolve: {
+      alias: {
+        'react': 'preact-compat',
+        'react-dom': 'preact-compat',
+      }
+    },
   }
 
   if (glob.sync('public/').length !== 0) {

@@ -60,6 +60,7 @@ Commands:
       ${req('entry')}          entry point for the app, or a component module
 
     Options:
+      ${opt('--force')}        don't shim rendering, use the given entry module directly
       ${opt('--install')}      automatically install missing npm dependencies
       ${opt('--host')}         hostname to bind the dev server to
       ${opt('--mount-id')}     id for the <div> the app will render into ${opt('[default: app]')}
@@ -77,6 +78,7 @@ Commands:
       ${opt('dist_dir')}    build output directory ${opt('[default: dist/]')}
 
     Options:
+      ${opt('--force')}        don't shim rendering, use the given entry module directly
       ${opt('--mount-id')}     id for the <div> the app will render into ${opt('[default: app]')}
       ${opt('--no-polyfill')}  disable bundling of default polyfills
       ${opt('--title')}        contents for <title> ${opt('[default: React App]')}

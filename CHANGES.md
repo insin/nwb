@@ -11,16 +11,19 @@
 - Added a `preact` command for quick Preact prototyping and building. Use `preact run <entry.js>` to serve a module and `preact build <entry.js> [dist/]` to build it.
   - This command also supports running and building modules which export a Preact component or VNode.
 - Added new features which are available in the `inferno` and `preact` commands to the existing `react` command:
-  - Added a `--no-polyfill` option to commands to disable inclusion of nwb's default polyfills for `Promise`, `fetch` and `Object.assign` if you're not using them or don't need them polyfilled.
+  - Added a `--force` option to force use of the provided entry module directly instead of the render shim module which is used by default to support quick prototyping.
+  - Added a `--no-polyfill` option to disable inclusion of nwb's default polyfills for `Promise`, `fetch` and `Object.assign` if you're not using them or don't need them polyfilled.
   - Inferno compat and Preact compat dependencies are now automatically installed if missing.
-  - `react-build` can now build a module which exports a React component or element, for sharing quick prototypes.
+  - `react-build` can now build a module which exports a React component or element, for quick sharing of prototypes.
+- Inferno and Preact apps are now configured to use their respective React compatibility modules by default if `react` or `react-dom` are imported, allowing use of existing React code out of the box.
 
 **Changed:**
 
+- When building a React app using the `--inferno` or `--preact` flags, the required compatibility build dependencies are now installed automatically if they can't be resolved from your project directory.
 - When creating new projects, the latest version of dependencies will now be installed from npm, rather than a version range hardcoded in nwb.
 - Skip initialising a Git repo if a `.git/` directory already exists, e.g. you may want to use `nwb init` in an existing repo.
 - The default build for a React component demo app now supports use of a `demo/public/` directory for static content.
-- An `args` property is now included in the object passed to user configs which export a function - this contains parsed arguments, e.g. `args.preact` will be `true` if you passed `--preact` when calling nwb.
+- An `args` property is now included in the object passed to user configs which export a function - this contains parsed arguments, e.g. `args.preact` will be `true` if you passed `--preact` when calling `nwb`.
 
 **Removed:**
 

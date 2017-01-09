@@ -26,11 +26,6 @@ function buildConfig(args) {
       stage: 0,
     },
     devtool: 'source-map',
-    entry: {
-      // Use a dummy entry module to support rendering an exported Inferno
-      // Component or VNode for quick prototyping.
-      app: [require.resolve('../infernoRunEntry')],
-    },
     output: {
       chunkFilename: filenamePattern,
       filename: filenamePattern,
@@ -38,9 +33,6 @@ function buildConfig(args) {
       publicPath: '/',
     },
     plugins: {
-      define: {
-        NWB_INFERNO_RUN_MOUNT_ID: JSON.stringify(mountId)
-      },
       html: {
         mountId,
         title: args.title || 'Inferno App',
@@ -48,14 +40,19 @@ function buildConfig(args) {
       // A vendor bundle must be explicitly enabled with a --vendor flag
       vendor: args.vendor,
     },
-    resolve: {
-      alias: {
-        // Allow the dummy entry module to resolve Inferno from the cwd
-        'inferno': path.dirname(resolve.sync('inferno/package.json', {basedir: process.cwd()})),
-        // Allow the dummy entry module to import the provided entry module
-        'nwb-inferno-run-entry': path.resolve(entry),
-      }
-    }
+  }
+
+  if (args.force === true) {
+    config.entry = {app: [path.resolve(entry)]}
+  }
+  else {
+    // Use a render shim module which supports quick prototyping
+    config.entry = {app: [require.resolve('../infernoRunEntry')]}
+    config.plugins.define = {NWB_INFERNO_RUN_MOUNT_ID: JSON.stringify(mountId)}
+    // Allow the render shim module to resolve Inferno from the cwd
+    config.resolve.alias['inferno'] = path.dirname(resolve.sync('inferno/package.json', {basedir: process.cwd()}))
+    // Allow the render shim module to import the provided entry module
+    config.resolve.alias['nwb-inferno-run-entry'] = path.resolve(entry)
   }
 
   if (args.polyfill === false || args.polyfills === false) {
@@ -76,7 +73,7 @@ export default function buildInferno(args, cb) {
   let dist = args._[2] || 'dist'
 
   runSeries([
-    (cb) => install(['inferno', 'inferno-component'], {check: true}, cb),
+    (cb) => install(['inferno', 'inferno-component', 'inferno-compat'], {check: true}, cb),
     (cb) => cleanApp({_: ['clean-app', dist]}, cb),
     (cb) => webpackBuild(`Inferno app`, args, buildConfig, cb),
   ], cb)
