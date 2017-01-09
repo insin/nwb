@@ -283,6 +283,8 @@ describe('sample projects', function() {
         'glyphicons-halflings-regular.woff',
         'glyphicons-halflings-regular.woff2',
         'index.html',
+        'manifest.js',
+        'manifest.js.map',
         'subdir',
         'subdir/shyamalan.jpg',
         'vendor.css',

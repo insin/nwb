@@ -267,8 +267,6 @@ function injectManifestPlugin() {
           data.assets.js.splice(manifestIndex, 1)
           delete data.assets.chunks.manifest
         }
-        // Prevent manifest .js and .js.map files being emitted
-        delete compilation.assets[key]
       })
       cb(null, data)
     })

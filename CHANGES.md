@@ -22,9 +22,10 @@
 
 **Changed:**
 
+- The Webpack manifest module is now generated when building an app (as well as being inlined into the generated `index.html`) - you will need to include this first if manually handling HTML generation after building.
 - Express middleware now supports Inferno, Preact and plain JavaScript projects, not just React.
-- When building a React app using the `--inferno` or `--preact` flags, the required compatibility build dependencies are now installed automatically if they can't be resolved from your project directory.
-- When creating new projects, the latest version of dependencies will now be installed from npm, rather than a version range hardcoded in nwb.
+- When building a React app using the `--inferno` or `--preact` flags, the required compatibility dependencies are now installed automatically if they can't be resolved from your project directory.
+- When creating new projects, the latest version of dependencies will be installed, rather than using a a version range hardcoded in nwb.
 - Skip initialising a Git repo if a `.git/` directory already exists, e.g. you may want to use `nwb init` in an existing repo.
 - The default build for a React component demo app now supports use of a `demo/public/` directory for static content.
 - An `args` property is now included in the object passed to user configs which export a function - this contains parsed arguments, e.g. `args.preact` will be `true` if you passed `--preact` when calling `nwb`.
