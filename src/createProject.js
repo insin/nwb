@@ -107,7 +107,7 @@ function initGit(args, cwd, cb) {
       if (err) {
         spinner.fail()
         console.log(chalk.red(err.message))
-        cb()
+        return cb()
       }
       spinner.succeed()
       cb()
