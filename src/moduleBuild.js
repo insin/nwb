@@ -12,9 +12,9 @@ import createBabelConfig from './createBabelConfig'
 import debug from './debug'
 import {UserError} from './errors'
 import getUserConfig from './getUserConfig'
-import {createBanner, createWebpackExternals, deepToString} from './utils'
+import {deepToString} from './utils'
 import webpackBuild from './webpackBuild'
-import {logGzippedFileSizes} from './webpackUtils'
+import {createBanner, createExternals, logGzippedFileSizes} from './webpackUtils'
 
 // These match DEFAULT_TEST_DIRS and DEFAULT_TEST_FILES for co-located tests in
 // ./createKarmaConfig.js; unfortunately Babel doesn't seem to support reusing
@@ -77,7 +77,7 @@ function buildUMD(args, buildConfig, userConfig, cb) {
       libraryTarget: 'umd',
       path: path.resolve('umd'),
     },
-    externals: createWebpackExternals(userConfig.npm.umd.externals),
+    externals: createExternals(userConfig.npm.umd.externals),
     polyfill: false,
     plugins: {
       banner: createBanner(pkg),

@@ -9,6 +9,36 @@ const FRIENDLY_SYNTAX_ERROR_LABEL = 'Syntax error:'
 
 let s = n => n === 1 ? '' : 's'
 
+/**
+ * Create a banner comment for a UMD build file from package.json config.
+ */
+export function createBanner(pkg) {
+  let banner = `${pkg.name} v${pkg.version}`
+  if (pkg.homepage) {
+    banner += ` - ${pkg.homepage}`
+  }
+  if (pkg.license) {
+    banner += `\n${pkg.license} Licensed`
+  }
+  return banner
+}
+
+/**
+ * Create Webpack externals config from a module → global variable mapping.
+ */
+export function createExternals(externals = {}) {
+  return Object.keys(externals).reduce((webpackExternals, packageName) => {
+    let globalName = externals[packageName]
+    webpackExternals[packageName] = {
+      root: globalName,
+      commonjs2: packageName,
+      commonjs: packageName,
+      amd: packageName,
+    }
+    return webpackExternals
+  }, {})
+}
+
 function formatMessage(message) {
   return message
     // Make some common errors shorter:
@@ -142,4 +172,3 @@ export function logGzippedFileSizes(...stats) {
 
   console.log()
 }
-

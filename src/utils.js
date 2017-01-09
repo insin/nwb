@@ -9,6 +9,12 @@ import runSeries from 'run-series'
 
 import debug from './debug'
 
+/**
+ * Delete a list of directories while displaying a spinner.
+ * @param {string} name type of project the clean is being run in.
+ * @param {Array.<string>} dirs paths to delete.
+ * @param {function(?Error=)} cb
+ */
 export function clean(name, dirs, cb) {
   let spinner = ora(`Cleaning ${name}`).start()
   runSeries(
@@ -24,41 +30,17 @@ export function clean(name, dirs, cb) {
   )
 }
 
+/**
+ * Clear console scrollback.
+ */
 export function clearConsole() {
+  // XXX Hack for testing
+  // TODO Give users a way to disable console clearing
   if (process.env.NWB_TEST) return
-  // This will completely wipe scrollback in cmd.exe on Windows - recommend
-  // using the `start` command to launch nwb's dev server in a new prompt.
-  process.stdout.write('\x1bc')
-}
-
-/**
- * Create a banner comment for a UMD build file from package.json config.
- */
-export function createBanner(pkg) {
-  let banner = `${pkg.name} v${pkg.version}`
-  if (pkg.homepage) {
-    banner += ` - ${pkg.homepage}`
-  }
-  if (pkg.license) {
-    banner += `\n${pkg.license} Licensed`
-  }
-  return banner
-}
-
-/**
- * Create Webpack externals config from a module → global variable mapping.
- */
-export function createWebpackExternals(externals = {}) {
-  return Object.keys(externals).reduce((webpackExternals, packageName) => {
-    let globalName = externals[packageName]
-    webpackExternals[packageName] = {
-      root: globalName,
-      commonjs2: packageName,
-      commonjs: packageName,
-      amd: packageName,
-    }
-    return webpackExternals
-  }, {})
+  // This will completely wipe scrollback in cmd.exe on Windows - use cmd.exe's
+  // `start` command to launch nwb's dev server in a new prompt if you don't
+  // want to lose it.
+  process.stdout.write(process.platform === 'win32' ? '\x1Bc' : '\x1B[2J\x1B[3J\x1B[H')
 }
 
 /**

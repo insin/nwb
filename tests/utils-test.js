@@ -1,8 +1,26 @@
 import expect from 'expect'
 
-import {createBanner, createWebpackExternals, joinAnd} from '../src/utils'
+import {joinAnd} from '../src/utils'
+import {createBanner, createExternals} from '../src/webpackUtils'
 
-describe('utility functions', () => {
+describe('utils', () => {
+  describe('joinAnd()', () => {
+    it('returns an empty string for empty lists', () => {
+      expect(joinAnd([])).toEqual('')
+    })
+    it('returns the first item for single-item lists', () => {
+      expect(joinAnd(['one'])).toEqual('one')
+    })
+    it('joins two items with "and"', () => {
+      expect(joinAnd(['one', 'two'])).toEqual('one and two')
+    })
+    it('joins multiple items with a penultipate "and"', () => {
+      expect(joinAnd(['one', 'two', 'three'])).toEqual('one, two and three')
+    })
+  })
+})
+
+describe('webpackUtils', () => {
   describe('createBanner()', () => {
     it('uses name and version', () => {
       expect(createBanner({
@@ -27,12 +45,12 @@ describe('utility functions', () => {
     })
   })
 
-  describe('createWebpackExternals()', () => {
+  describe('createExternals()', () => {
     it('returns an empty object by default', () => {
-      expect(createWebpackExternals()).toEqual({})
+      expect(createExternals()).toEqual({})
     })
     it('uses the webpack externals format', () => {
-      expect(createWebpackExternals({react: 'React'})).toEqual({
+      expect(createExternals({react: 'React'})).toEqual({
         react: {
           amd: 'react',
           commonjs: 'react',
@@ -40,18 +58,6 @@ describe('utility functions', () => {
           root: 'React',
         }
       })
-    })
-  })
-
-  describe('joinAnd()', () => {
-    it('returns the first item for single-item lists', () => {
-      expect(joinAnd(['one'])).toEqual('one')
-    })
-    it('joins two items with "and"', () => {
-      expect(joinAnd(['one', 'two'])).toEqual('one and two')
-    })
-    it('joins multiple items with a penultipate "and"', () => {
-      expect(joinAnd(['one', 'two', 'three'])).toEqual('one, two and three')
     })
   })
 })
