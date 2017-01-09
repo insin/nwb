@@ -69,7 +69,7 @@ describe('command: test', function() {
     })
   })
 
-  it.skip('successfully tests a new Inferno app', function(done) {
+  it('successfully tests a new Inferno app', function(done) {
     cli(['new', 'inferno-app', 'test-app'], err => {
       expect(err).toNotExist('No errors creating new Inferno app')
       process.chdir(path.join(tmpDir, 'test-app'))
