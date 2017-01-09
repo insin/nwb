@@ -3,7 +3,6 @@ var assert = require('assert')
 var webpack = require('webpack')
 
 var createServeReactAppConfig = require('./lib/createServeReactAppConfig')
-var createServeReactAppBuildConfig = require('./lib/createServeReactAppBuildConfig')
 var createServerWebpackConfig = require('./lib/createServerWebpackConfig')
 var debug = require('./lib/debug')
 var utils = require('./lib/utils')
@@ -30,9 +29,13 @@ module.exports = function(express, options) {
 
   var webpackConfig = createServerWebpackConfig(
     args,
-    createServeReactAppBuildConfig(
-      createServeReactAppConfig(args, {plugins: {status: {middleware: true}}})
-    )
+    createServeReactAppConfig(args, {
+      plugins: {
+        status: {
+          middleware: true
+        }
+      }
+    })
   )
 
   debug('webpack config: %s', utils.deepToString(webpackConfig))

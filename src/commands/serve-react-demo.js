@@ -1,6 +1,6 @@
 import path from 'path'
 
-import serveReact from '../serveReact'
+import webpackServer from '../webpackServer'
 
 /**
  * Serve a React demo app from demo/src/index.js.
@@ -8,7 +8,11 @@ import serveReact from '../serveReact'
 export default function serveReactDemo(args, cb) {
   let pkg = require(path.resolve('package.json'))
 
-  serveReact(args, {
+  webpackServer(args, {
+    babel: {
+      commonJSInterop: true,
+      presets: ['react', 'react-hmre'],
+    },
     entry: [path.resolve('demo/src/index.js')],
     output: {
       filename: 'demo.js',

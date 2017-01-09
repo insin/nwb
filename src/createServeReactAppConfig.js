@@ -1,8 +1,3 @@
-/**
- * This module makes base build config for serving a React app accessible to
- * middleware.
- */
-
 import path from 'path'
 
 import glob from 'glob'
@@ -15,7 +10,11 @@ export default function createServeReactAppConfig(args, overrides) {
   let dist = path.resolve(args._[2] || 'dist')
 
   let config = {
-    entry: path.resolve(entry),
+    babel: {
+      commonJSInterop: true,
+      presets: ['react', 'react-hmre'],
+    },
+    entry: [path.resolve(entry)],
     output: {
       path: path.resolve(dist),
       filename: 'app.js',
