@@ -195,7 +195,6 @@ cd my-module/
 - [Middleware](/docs/Middleware.md#middleware)
 - [Examples](/docs/Examples.md#examples)
 - [Frequently Asked Questions](/docs/FAQ.md#frequently-asked-questions)
-
 - [Versioning](/docs/Versioning.md#versioning)
 
 ## Why use nwb?

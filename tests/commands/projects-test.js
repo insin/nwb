@@ -3,7 +3,7 @@ import fs from 'fs'
 import path from 'path'
 
 import copyTemplateDir from 'copy-template-dir'
-import {spawn} from 'cross-spawn'
+import spawn from 'cross-spawn'
 import EventSource from 'eventsource'
 import expect from 'expect'
 import glob from 'glob'

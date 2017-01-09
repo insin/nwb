@@ -1,12 +1,12 @@
 ## Middleware
 
-nwb provides middleware for serving a hot reloading React app from your own server.
+nwb provides middleware for serving a hot reloading app from your own server.
 
-This gives you the same setup as if you'd run the `nwb serve` command, using your React app's `nwb.config.js` file for configuration as usual.
+This gives you the same setup as if you'd run the `nwb serve` command, using your app's `nwb.config.js` file for configuration as usual.
 
 ### Express 4.x Middleware
 
-Middleware for Express 4.x for developing React apps can be imported from `'nwb/express'`.
+Middleware for Express 4.x for developing apps can be imported from `'nwb/express'`.
 
 See the [nwb-react-tutorial](https://github.com/insin/nwb-react-tutorial) project for an example of using it.
 
@@ -27,7 +27,7 @@ Your app's version of the Express module must be passed as the first argument.
 
 #### Example
 
-Here's a minimal express server which serves up a React app:
+Here's a minimal express server which serves up an app:
 
 ```js
 var express = require('express')

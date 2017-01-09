@@ -19,6 +19,7 @@
 
 **Changed:**
 
+- Express middleware now supports Inferno, Preact and plain JavaScript projects, not just React.
 - When building a React app using the `--inferno` or `--preact` flags, the required compatibility build dependencies are now installed automatically if they can't be resolved from your project directory.
 - When creating new projects, the latest version of dependencies will now be installed from npm, rather than a version range hardcoded in nwb.
 - Skip initialising a Git repo if a `.git/` directory already exists, e.g. you may want to use `nwb init` in an existing repo.
