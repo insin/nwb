@@ -7,8 +7,10 @@
 **Added:**
 
 - Added an `inferno` command for quick Inferno prototyping and building. Use `inferno run <entry.js>` to serve a module and `inferno build <entry.js> [dist/]` to build it.
-  - This commands also supports running and building modules which export an Inferno component or VNode (`export default <div>...</div>`).
-- Added new features which are available in the `inferno` command to the `react` command:
+  - This command also supports running and building modules which export an Inferno component or VNode.
+- Added a `preact` command for quick Preact prototyping and building. Use `preact run <entry.js>` to serve a module and `preact build <entry.js> [dist/]` to build it.
+  - This command also supports running and building modules which export a Preact component or VNode.
+- Added new features which are available in the `inferno` and `preact` commands to the existing `react` command:
   - Added a `--no-polyfill` option to commands to disable inclusion of nwb's default polyfills for `Promise`, `fetch` and `Object.assign` if you're not using them or don't need them polyfilled.
   - Inferno compat and Preact compat dependencies are now automatically installed if missing.
   - `react-build` can now build a module which exports a React component or element, for sharing quick prototypes.

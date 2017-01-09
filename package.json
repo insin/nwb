@@ -7,6 +7,7 @@
   "bin": {
     "inferno": "./lib/bin/inferno.js",
     "nwb": "./lib/bin/nwb.js",
+    "preact": "./lib/bin/preact.js",
     "react": "./lib/bin/react.js"
   },
   "scripts": {

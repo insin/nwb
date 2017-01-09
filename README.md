@@ -10,6 +10,7 @@ nwb provides tooling in a single `devDependency` for developing, testing and bui
 - [React Apps](#react-apps)
   - [Quick React Prototyping](#quick-react-prototyping)
 - [Preact Apps](#preact-apps)
+  - [Quick Preact Prototyping](#quick-preact-prototyping)
 - [Inferno Apps](#inferno-apps)
   - [Quick Inferno Prototyping](#quick-inferno-prototyping)
 - [React Components and Libraries](#react-components-and-libraries)
@@ -82,6 +83,33 @@ Use `nwb new preact-app` to create a [Preact](https://preactjs.com/) app:
 ```sh
 nwb new preact-app my-app
 ```
+
+### Quick Preact Prototyping
+
+If you want to do some Preact prototyping without setting anything up, use the `preact` command.
+
+Create a module which renders a Preact app into `<div id="app">`:
+
+`app.js:`
+```js
+import {Component, h, render} from 'preact'
+
+class App extends Component {
+  render() {
+    return <h1>Hello worlds!</h1>
+  }
+}
+
+render(<App/>, document.getElementById('app'))
+```
+
+Use `preact run` to start a hot-reloading development server at [http://localhost:3000](http://localhost:3000).
+
+```sh
+preact run app.js
+```
+
+`preact build app.js` will create a production build.
 
 ## Inferno Apps
 
