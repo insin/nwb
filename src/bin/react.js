@@ -64,6 +64,7 @@ Commands:
       ${opt('--host')}         hostname to bind the dev server to
       ${opt('--mount-id')}     id for the <div> the app will render into ${opt('[default: app]')}
       ${opt('--no-fallback')}  disable serving of the index page from any path
+      ${opt('--no-polyfill')}  disable inclusion of default polyfills
       ${opt('--port')}         port to run the dev server on ${opt('[default: 3000]')}
       ${opt('--reload')}       auto reload the page if hot reloading fails
       ${opt('--title')}        contents for <title> ${opt('[default: React App]')}
@@ -76,13 +77,14 @@ Commands:
       ${opt('dist_dir')}    build output directory ${opt('[default: dist/]')}
 
     Options:
-      ${opt('--mount-id')}  id for the <div> the app will render into ${opt('[default: app]')}
-      ${opt('--title')}     contents for <title> ${opt('[default: React App]')}
-      ${opt('--vendor')}    create a 'vendor' bundle for node_modules/ modules
+      ${opt('--mount-id')}     id for the <div> the app will render into ${opt('[default: app]')}
+      ${opt('--no-polyfill')}  disable bundling of default polyfills
+      ${opt('--title')}        contents for <title> ${opt('[default: React App]')}
+      ${opt('--vendor')}       create a 'vendor' bundle for node_modules/ modules
 
     React-compatible builds using other libraries:
-      ${opt('--inferno')}   create an Inferno build (inferno and inferno-compat must be installed)
-      ${opt('--preact')}    create a Preact build (preact and preact-compat must be installed)
+      ${opt('--inferno')}   create an Inferno build
+      ${opt('--preact')}    create a Preact build
 `)
   process.exit(args.help || command ? 0 : 1)
 }

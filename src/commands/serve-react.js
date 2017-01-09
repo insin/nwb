@@ -1,33 +1,22 @@
 import path from 'path'
 
 import resolve from 'resolve'
+import runSeries from 'run-series'
 
 import {UserError} from '../errors'
-import serveReact from '../serveReact'
-import {installReact} from '../utils'
+import webpackServer from '../webpackServer'
+import {install} from '../utils'
 
-/**
- * Serve a standalone React entry module.
- */
-export default function serveReact_(args, cb) {
-  if (args._.length === 1) {
-    return cb(new UserError('An entry module must be specified.'))
-  }
-
-  // Install React if it's not available
-  try {
-    resolve.sync('react', {basedir: process.cwd()})
-  }
-  catch (e) {
-    console.log('React is not available locally, installing...')
-    installReact()
-  }
-
+// Using a config function as we need to resolve the path to React and ReactDOM,
+// which we may have to install first.
+function buildConfig(args) {
   let entry = args._[1]
   let mountId = args['mount-id'] || 'app'
 
-  serveReact(args, {
+  let config = {
     babel: {
+      commonJSInterop: true,
+      presets: ['react', 'react-hmre'],
       stage: 0,
     },
     // Use a dummy entry module to try to render what was exported if nothing
@@ -52,9 +41,29 @@ export default function serveReact_(args, cb) {
         // Allow the dummy entry module to import the provided entry module
         'nwb-react-run-entry': path.resolve(entry),
         // Allow the dummy entry module to resolve React and ReactDOM from the cwd
-        'react': path.dirname(resolve.sync('react', {basedir: process.cwd()})),
-        'react-dom': path.dirname(resolve.sync('react-dom', {basedir: process.cwd()})),
+        'react': path.dirname(resolve.sync('react/package.json', {basedir: process.cwd()})),
+        'react-dom': path.dirname(resolve.sync('react-dom/package.json', {basedir: process.cwd()})),
       }
     }
-  }, cb)
+  }
+
+  if (args.polyfill === false || args.polyfills === false) {
+    config.polyfill = false
+  }
+
+  return config
+}
+
+/**
+ * Serve a standalone React entry module, component or element.
+ */
+export default function serveReact(args, cb) {
+  if (args._.length === 1) {
+    return cb(new UserError('An entry module must be specified.'))
+  }
+
+  runSeries([
+    (cb) => install(['react', 'react-dom'], {check: true}, cb),
+    (cb) => webpackServer(args, buildConfig, cb),
+  ], cb)
 }
