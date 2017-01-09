@@ -1,6 +1,7 @@
 import fs from 'fs'
 import path from 'path'
 
+import spawn from 'cross-spawn'
 import glob from 'glob'
 import ora from 'ora'
 import runSeries from 'run-series'
@@ -10,7 +11,6 @@ import cleanModule from './commands/clean-module'
 import createBabelConfig from './createBabelConfig'
 import debug from './debug'
 import {UserError} from './errors'
-import exec from './exec'
 import getUserConfig from './getUserConfig'
 import {createBanner, createWebpackExternals, deepToString} from './utils'
 import webpackBuild from './webpackBuild'
@@ -33,28 +33,31 @@ function runBabel(name, {copyFiles, outDir, src}, buildBabelConfig, userBabelCon
   let babelConfig = createBabelConfig(buildBabelConfig, userBabelConfig)
   babelConfig.ignore = DEFAULT_BABEL_IGNORE_CONFIG
 
-  let babelArgs = [src, '--out-dir', outDir, '--quiet']
-  if (copyFiles) {
-    babelArgs.push('--copy-files')
-  }
-
   debug('babel config: %s', deepToString(babelConfig))
 
-  let spinner = ora(`Creating ${name} build`).start()
-  try {
-    fs.writeFileSync('.babelrc', JSON.stringify(babelConfig, null, 2))
-    exec('babel', babelArgs)
-    spinner.succeed()
-    fs.unlink('.babelrc', () => {
-      cb()
-    })
+  let args = [src, '--out-dir', outDir, '--quiet']
+  if (copyFiles) {
+    args.push('--copy-files')
   }
-  catch (err) {
-    spinner.fail()
-    fs.unlink('.babelrc', () => {
-      cb(err)
+
+  fs.writeFile('.babelrc', JSON.stringify(babelConfig, null, 2), (err) => {
+    if (err) return cb(err)
+    let spinner = ora(`Creating ${name} build`).start()
+    let babel = spawn(require.resolve('.bin/babel'), args, {stdio: 'inherit'})
+    babel.on('exit', (code) => {
+      let babelError
+      if (code !== 0) {
+        spinner.fail()
+        babelError = new Error('Babel transpilation failed')
+      }
+      else {
+        spinner.succeed()
+      }
+      fs.unlink('.babelrc', (unlinkError) => {
+        cb(babelError || unlinkError)
+      })
     })
-  }
+  })
 }
 
 /**
