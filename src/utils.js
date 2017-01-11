@@ -1,6 +1,7 @@
 import util from 'util'
 
 import argvSetEnv from 'argv-set-env'
+import glob from 'glob'
 import spawn from 'cross-spawn'
 import ora from 'ora'
 import resolve from 'resolve'
@@ -10,24 +11,29 @@ import runSeries from 'run-series'
 import debug from './debug'
 
 /**
- * Delete a list of directories while displaying a spinner.
- * @param {string} name type of project the clean is being run in.
+ * Check if any of the given directories exist and delete them while displaying
+ * a spinner if so.
+ * @param {string} desc a description of what's being cleaned, e.g. 'app'
  * @param {Array.<string>} dirs paths to delete.
  * @param {function(?Error=)} cb
  */
-export function clean(name, dirs, cb) {
-  let spinner = ora(`Cleaning ${name}`).start()
-  runSeries(
-    dirs.map(dir => cb => rimraf(dir, cb)),
-    (err) => {
-      if (err) {
-        spinner.fail()
-        return cb(err)
+export function clean(desc, dirs, cb) {
+  glob(`+(${dirs.join('|')})/`, (err, dirs) => {
+    if (err) return cb(err)
+    if (dirs.length === 0) return cb()
+    let spinner = ora(`Cleaning ${desc}`).start()
+    runSeries(
+      dirs.map(dir => cb => rimraf(dir, cb)),
+      (err) => {
+        if (err) {
+          spinner.fail()
+          return cb(err)
+        }
+        spinner.succeed()
+        cb()
       }
-      spinner.succeed()
-      cb()
-    }
-  )
+    )
+  })
 }
 
 /**
