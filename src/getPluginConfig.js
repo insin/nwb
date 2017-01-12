@@ -19,8 +19,7 @@ function getPackagePlugins(cwd) {
  * arguments when supported, import them and merge the plugin config objects
  * they export.
  */
-export default function getPluginConfig(options) {
-  let {args = {}, cwd = process.cwd()} = options
+export default function getPluginConfig({args = {}, cwd = process.cwd()} = {}) {
   let plugins = []
 
   try {
@@ -33,7 +32,7 @@ export default function getPluginConfig(options) {
   }
 
   let argsPlugins = getArgsPlugins(args)
-  if (args.plugins.length !== 0) {
+  if (argsPlugins.length !== 0) {
     debug('%s plugins in arguments', argsPlugins.length)
     plugins = plugins.concat(argsPlugins)
   }
