@@ -67,7 +67,7 @@ export default function serveInferno(args, cb) {
   }
 
   runSeries([
-    (cb) => install(['inferno', 'inferno-component', 'inferno-compat'], {check: true}, cb),
+    (cb) => install(['inferno', 'inferno-component', 'inferno-compat'], {args, check: true}, cb),
     (cb) => webpackServer(args, buildConfig, cb),
   ], cb)
 }

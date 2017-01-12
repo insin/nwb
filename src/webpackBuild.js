@@ -12,13 +12,13 @@ import {logBuildResults} from './webpackUtils'
  * If you pass a non-falsy name, this will handle spinner display and output
  * logging itself, otherwise use the stats provided in the callback.
  */
-export default function webpackBuild(name, args, buildConfig = {}, cb) {
+export default function webpackBuild(name, args, buildConfig, cb) {
   if (!process.env.NODE_ENV) {
     process.env.NODE_ENV = 'production'
   }
 
   let userConfig = getUserConfig(args)
-  let pluginConfig = getPluginConfig()
+  let pluginConfig = getPluginConfig({args})
   if (typeof buildConfig == 'function') {
     buildConfig = buildConfig(args)
   }

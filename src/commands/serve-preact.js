@@ -67,7 +67,7 @@ export default function servePreact(args, cb) {
   }
 
   runSeries([
-    (cb) => install(['preact', 'preact-compat'], {check: true}, cb),
+    (cb) => install(['preact', 'preact-compat'], {args, check: true}, cb),
     (cb) => webpackServer(args, buildConfig, cb),
   ], cb)
 }

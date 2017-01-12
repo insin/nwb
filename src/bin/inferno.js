@@ -32,6 +32,7 @@ let args = parseArgs(process.argv.slice(2), {
   alias: {
     c: 'config',
     h: 'help',
+    p: 'plugins',
     v: 'version',
   },
   boolean: ['help', 'version'],
@@ -50,6 +51,7 @@ if (args.help || !command || /^h(elp)?$/.test(command)) {
 Options:
   ${opt('-c, --config')}   config file to use ${opt(`[default: ${CONFIG_FILE_NAME}]`)}
   ${opt('-h, --help')}     display this help message
+  ${opt('-p, --plugins')}  a comma-separated list of nwb plugins to use
   ${opt('-v, --version')}  print nwb's version
 
 Commands:

@@ -102,7 +102,7 @@ export default function buildReact(args, cb) {
   }
 
   runSeries([
-    (cb) => install(packages, {check: true}, cb),
+    (cb) => install(packages, {args, check: true}, cb),
     (cb) => cleanApp({_: ['clean-app', dist]}, cb),
     (cb) => webpackBuild(`${library} app`, args, buildConfig, cb),
   ], cb)

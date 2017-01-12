@@ -66,7 +66,7 @@ export default function serveReact(args, cb) {
   }
 
   runSeries([
-    (cb) => install(['react', 'react-dom'], {check: true}, cb),
+    (cb) => install(['react', 'react-dom'], {args, check: true}, cb),
     (cb) => webpackServer(args, buildConfig, cb),
   ], cb)
 }

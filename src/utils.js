@@ -13,7 +13,7 @@ import debug from './debug'
  * Check if any of the given directories exist and delete them while displaying
  * a spinner if so.
  * @param {string} desc a description of what's being cleaned, e.g. 'app'
- * @param {Array.<string>} dirs paths to delete.
+ * @param {Array<string>} dirs paths to delete.
  * @param {function(?Error=)} cb
  */
 export function clean(desc, dirs, cb) {
@@ -63,10 +63,24 @@ export function endsWith(s1, s2) {
 }
 
 /**
+ * Get a list of nwb plugin names passed as arguments.
+ * @param {Object} args parsed arguments.
+ * @param {string=} args.plugins comma-separated list of nwb plugin names.
+ * @param {string=} args.plugin typo'd comma-separated list of nwb plugin names.
+ * @return {Array<string>}
+ */
+export function getArgsPlugins(args) {
+  let plugins = args.plugins || args.plugin
+  if (!plugins) return []
+  return plugins.split(',').map(name => name.replace(/^(nwb-)?/, 'nwb-'))
+}
+
+/**
  * Install packages from npm.
- * @param {Array.<string>} packages npm package names, which may be in
+ * @param {Array<string>} packages npm package names, which may be in
  *   package@version format.
  * @param {Object=} options
+   @param {Object=} options.args parsed arguments.
  * @param {boolean=} options.check check if packages are resolvable from
  *   the cwd and skip installation if already installed.
  * @param {string=} options.cwd working directory to install in.
@@ -80,11 +94,18 @@ export function install(packages, options, cb) {
     options = {}
   }
   let {
+    args = null,
     check = false,
     cwd = process.cwd(),
     dev = false,
     save = false,
   } = options
+
+  // If the command being run allows users to specify an nwb plugins option by
+  // providing the args object here, make sure they're installed.
+  if (args) {
+    packages = packages.concat(getArgsPlugins(args))
+  }
 
   if (check) {
     packages = packages.filter(pkg => {
@@ -104,17 +125,17 @@ export function install(packages, options, cb) {
     return process.nextTick(cb)
   }
 
-  let args = ['install', '--silent', '--no-progress']
+  let npmArgs = ['install', '--silent', '--no-progress']
 
   if (save) {
-    args.push(`--save${dev ? '-dev' : ''}`)
+    npmArgs.push(`--save${dev ? '-dev' : ''}`)
   }
 
-  args = args.concat(packages)
+  npmArgs = npmArgs.concat(packages)
 
-  debug(`${cwd} $ npm ${args.join(' ')}`)
+  debug(`${cwd} $ npm ${npmArgs.join(' ')}`)
   let spinner = ora(`Installing ${joinAnd(packages)}`).start()
-  let npm = spawn('npm', args, {cwd, stdio: ['ignore', 'pipe', 'inherit']})
+  let npm = spawn('npm', npmArgs, {cwd, stdio: ['ignore', 'pipe', 'inherit']})
   npm.on('close', (code) => {
     if (code !== 0) {
       spinner.fail()
@@ -127,7 +148,7 @@ export function install(packages, options, cb) {
 
 /**
  * Join multiple items with a penultimate "and".
- * @param {Array.<*>} arr
+ * @param {Array<*>} arr
  */
 export function joinAnd(array) {
   if (array.length === 0) return ''
@@ -151,4 +172,12 @@ export function toSource(obj) {
 export function typeOf(o) {
   if (Number.isNaN(o)) return 'nan'
   return Object.prototype.toString.call(o).slice(8, -1).toLowerCase()
+}
+
+/**
+ * @param {Array<string>} strings
+ */
+export function unique(strings) {
+  // eslint-disable-next-line
+  return Object.keys(strings.reduce((o, s) => (o[s] = true, o), {}))
 }

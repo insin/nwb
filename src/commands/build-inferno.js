@@ -73,7 +73,7 @@ export default function buildInferno(args, cb) {
   let dist = args._[2] || 'dist'
 
   runSeries([
-    (cb) => install(['inferno', 'inferno-component', 'inferno-compat'], {check: true}, cb),
+    (cb) => install(['inferno', 'inferno-component', 'inferno-compat'], {args, check: true}, cb),
     (cb) => cleanApp({_: ['clean-app', dist]}, cb),
     (cb) => webpackBuild(`Inferno app`, args, buildConfig, cb),
   ], cb)

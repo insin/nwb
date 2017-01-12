@@ -4,32 +4,46 @@ import resolve from 'resolve'
 import merge from 'webpack-merge'
 
 import debug from './debug'
-import {deepToString} from './utils'
+import {deepToString, getArgsPlugins, unique} from './utils'
 
-/**
- * Look for nwb-* plugin dependencies in package.json, import them and merge the
- * plugin config objects they export.
- */
-export default function getPluginConfig(cwd = process.cwd()) {
-  let pkg
-  try {
-    pkg = require(path.join(cwd, 'package.json'))
-  }
-  catch (e) {
-    return {}
-  }
-
-  let plugins = [
+function getPackagePlugins(cwd) {
+  let pkg = require(path.join(cwd, 'package.json'))
+  return [
     ...Object.keys(pkg.dependencies || {}),
     ...Object.keys(pkg.devDependencies || {}),
   ].filter(dep => /^nwb-/.test(dep))
+}
 
-  debug('%s nwb-* dependencies in package.json', plugins.length)
-  if (!plugins.length) {
+/**
+ * Look for nwb-* plugin dependencies in package.json and plugins specified as
+ * arguments when supported, import them and merge the plugin config objects
+ * they export.
+ */
+export default function getPluginConfig(options) {
+  let {args = {}, cwd = process.cwd()} = options
+  let plugins = []
+
+  try {
+    let pkgPlugins = plugins.concat(getPackagePlugins(cwd))
+    debug('%s nwb-* dependencies in package.json', pkgPlugins.length)
+    plugins = plugins.concat(pkgPlugins)
+  }
+  catch (e) {
+    // pass
+  }
+
+  let argsPlugins = getArgsPlugins(args)
+  if (args.plugins.length !== 0) {
+    debug('%s plugins in arguments', argsPlugins.length)
+    plugins = plugins.concat(argsPlugins)
+  }
+
+  if (plugins.length === 0) {
     return {}
   }
 
-  debug('nwb-* dependencies: %o', plugins)
+  plugins = unique(plugins)
+  debug('nwb plugins: %o', plugins)
 
   let pluginConfig = {}
   plugins.forEach(plugin => {

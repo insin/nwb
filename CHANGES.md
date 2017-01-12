@@ -14,6 +14,7 @@
   - If you want to take full control of rendering, use the `--force` flag and nwb will skip the render shim and use your entry module directly.
   - The `react` command's render shim doesn't hook `ReactDOM.render()` and only handles rendering exported components or elements for convenient prototyping, as [React Hot Loader](https://github.com/gaearon/react-hot-loader) handles the details of accepting Hot Module Replacement and patching/re-rendering at the component module level.
 - Added new features which are available in the `inferno` and `preact` commands to the existing `react` command:
+  - Added a `--plugins` option to specify nwb plugins which should be installed and used without having to set up a `package.json`.
   - Added a `--force` option to force use of the provided entry module directly instead of the render shim module which is used by default to support quick prototyping.
   - Added a `--no-polyfill` option to disable inclusion of nwb's default polyfills for `Promise`, `fetch` and `Object.assign` if you're not using them or don't need them polyfilled.
   - Inferno compat and Preact compat dependencies are now automatically installed if missing.

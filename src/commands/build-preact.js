@@ -79,7 +79,7 @@ export default function buildPreact(args, cb) {
   let dist = args._[2] || 'dist'
 
   runSeries([
-    (cb) => install(['preact', 'preact-compat'], {check: true}, cb),
+    (cb) => install(['preact', 'preact-compat'], {args, check: true}, cb),
     (cb) => cleanApp({_: ['clean-app', dist]}, cb),
     (cb) => webpackBuild(`Preact app`, args, buildConfig, cb),
   ], cb)
