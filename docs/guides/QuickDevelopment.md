@@ -199,7 +199,7 @@ The default HTML template contains a `<div id="app">` element to render into - y
 
 ## React Alternatives Compatibility
 
-Inferno and Preact both provide compatibility layers which simulate React APIs and generally patch up features which are different are or missing compared to React, to allow them to run existing React code.
+Inferno and Preact both provide compatibility layers which simulate React APIs and patch up features which are different or missing compared to React, to allow them to run existing React code.
 
 ### React Compatible Builds with `--inferno` or `--preact`
 
@@ -267,7 +267,7 @@ The default HTML template provided contains a `<div>` which the app is rendered 
 
 #### `--no-polyfill`
 
-Disable inclusion of nwb's default polyfills for `Promise`, `fetch()`, `Object.assign()` - you can use this to shave a few KB off the final bundle size if you're not using these features or are only supporting browsers which support them natively.
+Disable inclusion of nwb's default polyfills for `Promise`, `fetch()` and `Object.assign()` - you can use this to shave a few KB off the final bundle size if you're not using these features or are only supporting browsers which support them natively.
 
 #### `--title`
 
