@@ -7,8 +7,8 @@
     "index.js"
   ],
   "dependencies": {
-    "stylus": "^0.54.5",
-    "stylus-loader": "^2.2.0"
+    "stylus": "0.54.5",
+    "stylus-loader": "2.4.0"
   },
   "author": "Jonny Buchanan <jonathan.buchanan@gmail.com>",
   "license": "MIT",
