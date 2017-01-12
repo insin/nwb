@@ -14,17 +14,8 @@ Installing nwb provides the following commands:
   - [Project Type-specific Commands](#project-type-specific-commands)
   - [Check Config Command](#check-config-command)
 
-- [`react`](#react) - quick React development
-  - [`react run`](#react-run) - serve a React app or component module
-  - [`react build`](#react-build) - create a static build for a React app
-
-- [`inferno`](#inferno) - quick Inferno development
-  - [`inferno run`](#inferno-run) - serve an Inferno app or component module
-  - [`inferno build`](#inferno-build) - create a static build for an Inferno app
-
-- [`preact`](#preact) - quick Preact development
-  - [`preact run`](#preact-run) - serve a Preact app or component module
-  - [`preact build`](#preact-build) - create a static build for a Preact app
+- [`react`, `inferno` and `preact`](#react-inferno-and-preact) - quick development
+  - See [Quick Development with nwb](/docs/guides/QuickDevelopment.md#quick-development-with-nwb) guide
 
 ### `nwb`
 
@@ -59,12 +50,6 @@ nwb new react-app <dir-name>
 Creates a skeleton project for a React app in the specified directory.
 
 ```
-nwb new react-component <dir-name> [options]
-```
-
-Creates a skeleton project for a React component or library, ready for publishing to npm.
-
-```
 nwb new preact-app <dir-name>
 ```
 
@@ -75,6 +60,12 @@ nwb new inferno-app <dir-name>
 ```
 
 Creates a skeleton project for an Inferno app in the specified directory.
+
+```
+nwb new react-component <dir-name> [options]
+```
+
+Creates a skeleton project for a React component or library, ready for publishing to npm.
 
 ```
 nwb new web-app <dir-name>
@@ -180,7 +171,7 @@ Create a build.
 nwb build [entry] [dist_dir]
 ```
 
-**In React/web apps:**
+**In React/Infero/Preact/plain JS web apps:**
 
 Passing arguments for `entry` and `dist_dir` allows you to customise the entry point for your app and the directory it gets build into.
 
@@ -309,176 +300,8 @@ nwb check-config [config] [options]
 - `--command` - command name to use when loading your config. Use this to test variations if you [export a config function](/docs/Configuration.md#configuration-file) and use the `command` option it provides when creating your config.
 - `--e, --env` - `NODE_ENV` to use when checking your config: `dev`/`development`, `test` or `prod`/`production`. Use this to test variations if you use `process.env.NODE_ENV` when creating your config.
 
-### `react`
+### `react`, `inferno` and `preact`
 
-The `react` command provides quick React development, starting from a single `.js` file and working up.
+These commands provide quick development, starting from a single `.js` file and working up.
 
-**Options:**
-
-- `-c, --config` - path to a config file; a config file is only required if you specify one, but an `nwb.config.js` file in the current directory will be used if present *[default: nwb.config.js]*
-
-The following sub-commands are available:
-
-#### `react run`
-
-Serve a React app for quick development.
-
-Also supports serving modules which export a React component or element.
-
-```
-react run <entry> [options]
-```
-
-**Arguments:**
-
-- `entry` - entry point for the app, or a module which exports a React component or element.
-
-**Options:**
-
-- `--force` - don't shim rendering, use the given entry module directly
-- `--install` - auto install missing npm dependencies
-- `--host` - hostname to bind the dev server to *[default: not specifying a host when starting the dev server]*
-- `--mount-id` - `id` for the `<div>` the app will render into *[ app]*
-- `--no-fallback` - disable serving of the index page from any path
-- `--port` - port to run the dev server on *[default: 3000]*
-- `--reload` - auto reload the page if hot reloading fails
-- `--title` - contents for `<title>` *[default: React App]*
-
-#### `react build`
-
-Create a production build for a React app.
-
-```
-react build <entry> [dist_dir] [options]
-```
-
-**Arguments:**
-
-- `entry` - entry point for the app
-- `dist_dir` - build output directory *[default: dist/]*
-
-**Options:**
-
-- `--force` - don't shim rendering, use the given entry module directly
-- `--mount-id` - `id` for the `<div>` the app will render into *[default: app]*
-- `--title` - contents for `<title>` *[default: React App]*
-- `--vendor` - create a separate vendor bundle for modules required from `node_modules/`
-
-**Options for React-compatible builds:**
-
-- `--inferno` - create an [inferno-compat](https://github.com/trueadm/inferno/tree/master/packages/inferno-compat) build
-- `--preact` - create a [preact-compat](https://github.com/developit/preact-compat) build
-
-### `inferno`
-
-The `inferno` command provides quick Inferno development, starting from a single `.js` file and working up.
-
-**Options:**
-
-- `-c, --config` - path to a config file; a config file is only required if you specify one, but an `nwb.config.js` file in the current directory will be used if present *[default: nwb.config.js]*
-
-The following sub-commands are available:
-
-#### `inferno run`
-
-Serve an Inferno app for quick development.
-
-Also supports serving modules which export an Inferno component or VNode.
-
-```
-inferno run <entry> [options]
-```
-
-**Arguments:**
-
-- `entry` - entry point for the app, or a module which exports an Inferno component or VNode.
-
-**Options:**
-
-- `--force` - don't shim rendering, use the given entry module directly
-- `--install` - auto install missing npm dependencies
-- `--host` - hostname to bind the dev server to *[default: not specifying a host when starting the dev server]*
-- `--mount-id` - `id` for the `<div>` the app will render into *[ app]*
-- `--no-fallback` - disable serving of the index page from any path
-- `--no-polyfill` - disable inclusion of default polyfills
-- `--port` - port to run the dev server on *[default: 3000]*
-- `--reload` - auto reload the page if hot reloading fails
-- `--title` - contents for `<title>` *[default: Inferno App]*
-
-#### `inferno build`
-
-Create a production build for an Inferno app.
-
-```
-inferno build <entry> [dist_dir] [options]
-```
-
-**Arguments:**
-
-- `entry` - entry point for the app
-- `dist_dir` - build output directory *[default: dist/]*
-
-**Options:**
-
-- `--force` - don't shim rendering, use the given entry module directly
-- `--mount-id` - `id` for the `<div>` the app will render into *[default: app]*
-- `--no-polyfill` - disable bundling of default polyfills
-- `--title` - contents for `<title>` *[default: Inferno App]*
-- `--vendor` - create a separate vendor bundle for modules required from `node_modules/`
-
-### `preact`
-
-The `preact` command provides quick Preact development, starting from a single `.js` file and working up.
-
-**Options:**
-
-- `-c, --config` - path to a config file; a config file is only required if you specify one, but an `nwb.config.js` file in the current directory will be used if present *[default: nwb.config.js]*
-
-The following sub-commands are available:
-
-#### `preact run`
-
-Serve a Preact app for quick development.
-
-Also supports serving modules which export a Preact component or VNode.
-
-```
-preact run <entry> [options]
-```
-
-**Arguments:**
-
-- `entry` - entry point for the app, or a module which exports a Preact component or VNode.
-
-**Options:**
-
-- `--force` - don't shim rendering, use the given entry module directly
-- `--install` - auto install missing npm dependencies
-- `--host` - hostname to bind the dev server to *[default: not specifying a host when starting the dev server]*
-- `--mount-id` - `id` for the `<div>` the app will render into *[ app]*
-- `--no-fallback` - disable serving of the index page from any path
-- `--no-polyfill` - disable inclusion of default polyfills
-- `--port` - port to run the dev server on *[default: 3000]*
-- `--reload` - auto reload the page if hot reloading fails
-- `--title` - contents for `<title>` *[default: Preact App]*
-
-#### `preact build`
-
-Create a production build for a Preact app.
-
-```
-inferno build <entry> [dist_dir] [options]
-```
-
-**Arguments:**
-
-- `entry` - entry point for the app
-- `dist_dir` - build output directory *[default: dist/]*
-
-**Options:**
-
-- `--force` - don't shim rendering, use the given entry module directly
-- `--mount-id` - `id` for the `<div>` the app will render into *[default: app]*
-- `--no-polyfill` - disable bundling of default polyfills
-- `--title` - contents for `<title>` *[default: Preact App]*
-- `--vendor` - create a separate vendor bundle for modules required from `node_modules/`
+See [Quick Development with nwb](/docs/guides/QuickDevelopment.md#quick-development-with-nwb) for details.
