@@ -1,9 +1,9 @@
 import karmaServer from '../karmaServer'
 
 export default function testReact(args, cb) {
-  karmaServer({
+  karmaServer(args, {
     babel: {
       presets: ['react']
     }
-  }, args, cb)
+  }, cb)
 }

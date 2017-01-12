@@ -56,9 +56,7 @@ export function findPlugin(plugins, findId) {
 /**
  * Handles creation of Karma config based on Karma plugins.
  */
-export function getKarmaPluginConfig({codeCoverage = false} = {}, userConfig = {}) {
-  let {karma: userKarma = {}} = userConfig
-
+export function getKarmaPluginConfig({codeCoverage = false, userConfig = {}} = {}) {
   let browsers = ['PhantomJS']
   let frameworks = ['mocha']
   let plugins = [
@@ -70,14 +68,14 @@ export function getKarmaPluginConfig({codeCoverage = false} = {}, userConfig = {
 
   // Browsers, frameworks and reporters can be configured as a list containing
   // names of bundled plugins, or plugin objects.
-  if (userKarma.browsers) {
-    let [browserNames, browserPlugins] = processPluginConfig(userKarma.browsers)
+  if (userConfig.browsers) {
+    let [browserNames, browserPlugins] = processPluginConfig(userConfig.browsers)
     browsers = browserNames
     plugins = plugins.concat(browserPlugins)
   }
 
-  if (userKarma.frameworks) {
-    let [frameworkNames, frameworkPlugins] = processPluginConfig(userKarma.frameworks)
+  if (userConfig.frameworks) {
+    let [frameworkNames, frameworkPlugins] = processPluginConfig(userConfig.frameworks)
     frameworks = frameworkNames
     plugins = plugins.concat(frameworkPlugins)
   }
@@ -86,15 +84,15 @@ export function getKarmaPluginConfig({codeCoverage = false} = {}, userConfig = {
     reporters = ['mocha']
   }
 
-  if (userKarma.reporters) {
-    let [reporterNames, reporterPlugins] = processPluginConfig(userKarma.reporters)
+  if (userConfig.reporters) {
+    let [reporterNames, reporterPlugins] = processPluginConfig(userConfig.reporters)
     reporters = reporterNames
     plugins = plugins.concat(reporterPlugins)
   }
 
   // Plugins can be provided as a list of imported plugin objects
-  if (userKarma.plugins) {
-    plugins = plugins.concat(userKarma.plugins)
+  if (userConfig.plugins) {
+    plugins = plugins.concat(userConfig.plugins)
   }
 
   // Ensure nwb's version of plugins get loaded if they're going to be used and =
@@ -120,10 +118,16 @@ export function getKarmaPluginConfig({codeCoverage = false} = {}, userConfig = {
   return {browsers, frameworks, plugins, reporters}
 }
 
-export default function createKarmaConfig(buildConfig, {codeCoverage, singleRun}, userConfig) {
+export default function createKarmaConfig(args, buildConfig, userConfig) {
+  let isCi = process.env.CI || process.env.CONTINUOUS_INTEGRATION
+  let codeCoverage = isCi || !!args.coverage
+
   let userKarma = userConfig.karma || {}
 
-  let {browsers, frameworks, plugins, reporters} = getKarmaPluginConfig({codeCoverage}, userConfig)
+  let {browsers, frameworks, plugins, reporters} = getKarmaPluginConfig({
+    codeCoverage,
+    userConfig: userKarma,
+  })
 
   let testDirs = userKarma.testDir || userKarma.testDirs || DEFAULT_TEST_DIRS
   if (typeOf(testDirs) === 'string') testDirs = [testDirs]
@@ -178,7 +182,7 @@ export default function createKarmaConfig(buildConfig, {codeCoverage, singleRun}
     plugins,
     preprocessors,
     reporters,
-    singleRun,
+    singleRun: isCi || !args.server,
     webpack: createWebpackConfig(merge(buildConfig, {
       devtool: 'cheap-module-inline-source-map',
       node: {

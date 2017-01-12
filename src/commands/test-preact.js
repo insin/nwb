@@ -1,9 +1,9 @@
 import karmaServer from '../karmaServer'
 
 export default function testPreact(args, cb) {
-  karmaServer({
+  karmaServer(args, {
     babel: {
       presets: ['preact']
     }
-  }, args, cb)
+  }, cb)
 }
