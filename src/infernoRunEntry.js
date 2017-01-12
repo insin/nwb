@@ -1,13 +1,9 @@
 /* global NWB_INFERNO_RUN_MOUNT_ID */
 
-// Hook Inferno's render function to get the VNode passed by the entry if it's
-// rendering itself.
 let Inferno = require('inferno')
 let {createVNode, render} = Inferno
+let parent = document.getElementById(NWB_INFERNO_RUN_MOUNT_ID)
 let vnode = null
-Inferno.render = (v) => {
-  vnode = v
-}
 
 function renderEntry(exported) {
   // Assumptions: the entry module either renders the app itself or exports an
@@ -19,13 +15,24 @@ function renderEntry(exported) {
   else if (exported.flags) {
     vnode = exported
   }
-  render(vnode, document.getElementById(NWB_INFERNO_RUN_MOUNT_ID))
+  render(vnode, parent)
 }
 
-renderEntry(require('nwb-inferno-run-entry'))
+function init() {
+  // Hijack any inline render() from the entry module, but only the first one -
+  // others may be from components like portals which need to render() their
+  // contents.
+  Inferno.render = (v) => {
+    vnode = v
+    Inferno.render = render
+  }
+  let entry = require('nwb-inferno-run-entry')
+  Inferno.render = render
+  renderEntry(entry)
+}
 
 if (module.hot) {
-  module.hot.accept('nwb-inferno-run-entry', () => {
-    renderEntry(require('nwb-inferno-run-entry'))
-  })
+  module.hot.accept('nwb-inferno-run-entry', init)
 }
+
+init()

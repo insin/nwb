@@ -1,15 +1,11 @@
 /* global NWB_PREACT_RUN_MOUNT_ID */
 
-// Hook Preact's render function to get the VNode passed by the entry if it's
-// rendering itself.
-// h/t @developit
+// h/t to @developit for this render shim module
 let Preact = require('preact')
 let {h, render} = Preact
-let root = null
+let parent = document.getElementById(NWB_PREACT_RUN_MOUNT_ID)
+let root = parent.firstChild // If #app already contains elements, hydrate from them (for SSR)
 let vnode = null
-Preact.render = (v) => {
-  vnode = v
-}
 
 function renderEntry(exported) {
   // Assumptions: the entry module either renders the app itself or exports a
@@ -21,13 +17,23 @@ function renderEntry(exported) {
   else if (exported.children) {
     vnode = exported
   }
-  root = render(vnode, document.getElementById(NWB_PREACT_RUN_MOUNT_ID), root)
+  root = render(vnode, parent, root)
 }
 
-renderEntry(require('nwb-preact-run-entry'))
+function init() {
+  // Hijack any inline render() from the entry module, but only the first one -
+  // others may be npm.im/preact-portal et al.
+  Preact.render = (v) => {
+    vnode = v
+    Preact.render = render
+  }
+  let entry = require('nwb-preact-run-entry')
+  Preact.render = render
+  renderEntry(entry)
+}
 
 if (module.hot) {
-  module.hot.accept('nwb-preact-run-entry', () => {
-    renderEntry(require('nwb-preact-run-entry'))
-  })
+  module.hot.accept('nwb-preact-run-entry', init)
 }
+
+init()
