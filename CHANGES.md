@@ -7,12 +7,10 @@
 **Added:**
 
 - Added an `inferno` command for quick Inferno prototyping and building. Use `inferno run <entry.js>` to serve a module and `inferno build <entry.js> [dist/]` to build it.
-  - This command also supports running and building modules which export an Inferno component or VNode.
 - Added a `preact` command for quick Preact prototyping and building. Use `preact run <entry.js>` to serve a module and `preact build <entry.js> [dist/]` to build it.
-  - This command also supports running and building modules which export a Preact component or VNode.
-- The `inferno` and `preact` commands use a render shim module by default which hooks `Inferno.render()` and `Preact.render()` to intercept the incoming VNode and re-render it from the top when accepting Hot Module Replacement, so if you're calling `render()` yourself you don't have to specify a DOM node, or a `root` when re-rendering in Preact.
+- The `inferno` and `preact` commands use a render shim module by default which hooks into `Inferno.render()` and `Preact.render()` to intercept the incoming VNode and re-render it from the top when accepting Hot Module Replacement, so if you're calling `render()` yourself you don't have to specify a DOM node, or a `root` when re-rendering in Preact.
   - If you want to take full control of rendering, use the `--force` flag and nwb will skip the render shim and use your entry module directly.
-  - The `react` command's render shim doesn't hook `ReactDOM.render()` and only handles rendering exported components or elements for convenient prototyping, as [React Hot Loader](https://github.com/gaearon/react-hot-loader) handles the details of accepting Hot Module Replacement and patching/re-rendering at the component module level.
+  - The `react` command's render shim doesn't hook into `ReactDOM.render()` and only handles rendering exported components or elements for convenient prototyping, as [react-transform-hmr](https://github.com/gaearon/react-transform-hmr) handles the details of accepting Hot Module Replacement and patching/re-rendering at the component/module level.
 - Added new features which are available in the `inferno` and `preact` commands to the existing `react` command:
   - Added a `--plugins` option to specify nwb plugins which should be installed and used without having to set up a `package.json`.
   - Added a `--force` option to force use of the provided entry module directly instead of the render shim module which is used by default to support quick prototyping.
