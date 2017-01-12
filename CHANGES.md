@@ -1,3 +1,5 @@
+# 0.14.0 / 2017-01-13
+
 **Fixed:**
 
 - To prevent version compatibility issues using project commands from a globally-installed `nwb`, it will now exit with a warning if the project specifies a different version of nwb in `package.json` [[#167](https://github.com/insin/nwb/issues/167)]
