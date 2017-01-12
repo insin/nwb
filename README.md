@@ -64,7 +64,7 @@ File size after gzip:
 
 ## React Apps
 
-Use `nwb new preact-app` to create a [React](https://facebook.github.io/react/) app:
+Use `nwb new react-app` to create a [React](https://facebook.github.io/react/) app:
 
 ```sh
 nwb new react-app my-app
