@@ -22,7 +22,7 @@
 **Changed:**
 
 - The Webpack manifest module is now generated when building an app (as well as being inlined into the generated `index.html`) - you will need to include this first if manually handling HTML generation after building.
-- Express middleware now supports Inferno, Preact and plain JavaScript projects, not just React.
+- Express middleware now supports Inferno, Preact and plain JavaScript apps, not just React.
 - When building a React app using the `--inferno` or `--preact` flags, the required compatibility dependencies are now installed automatically if they can't be resolved from your project directory.
 - When creating new projects, the latest version of dependencies will be installed, rather than using a a version range hardcoded in nwb.
 - Skip initialising a Git repo if a `.git/` directory already exists, e.g. you may want to use `nwb init` in an existing repo.
