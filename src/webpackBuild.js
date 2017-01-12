@@ -5,7 +5,7 @@ import createWebpackConfig from './createWebpackConfig'
 import debug from './debug'
 import getPluginConfig from './getPluginConfig'
 import getUserConfig from './getUserConfig'
-import {deepToString, defaultNodeEnv} from './utils'
+import {deepToString} from './utils'
 import {logBuildResults} from './webpackUtils'
 
 /**
@@ -13,7 +13,9 @@ import {logBuildResults} from './webpackUtils'
  * logging itself, otherwise use the stats provided in the callback.
  */
 export default function webpackBuild(name, args, buildConfig = {}, cb) {
-  defaultNodeEnv('production')
+  if (!process.env.NODE_ENV) {
+    process.env.NODE_ENV = 'production'
+  }
 
   let userConfig = getUserConfig(args)
   let pluginConfig = getPluginConfig()

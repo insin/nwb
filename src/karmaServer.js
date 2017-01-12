@@ -1,4 +1,3 @@
-import argvSetEnv from 'argv-set-env'
 import {Server} from 'karma'
 
 import createKarmaConfig from './createKarmaConfig'
@@ -6,8 +5,6 @@ import {KarmaExitCodeError} from './errors'
 import getUserConfig from './getUserConfig'
 
 export default function karmaServer(buildConfig, args, cb) {
-  argvSetEnv()
-
   // Force the environment to test
   process.env.NODE_ENV = 'test'
 

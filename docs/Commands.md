@@ -191,14 +191,14 @@ Default behaviour:
 - Static builds are created in production mode. Code will be minified and have dead code elimination performed on it (for example to remove unreachable, or development-mode only, code).
 - To support long-term caching, generated `.js` and `.css` filenames will contain a deterministic hash, which will only change when the contents of the files change.
 
-To create a development build, set the `NODE_ENV` environment variable to `'development'` when running the `build` command; nwb supports a cross-platform way of doing this, using [argv-set-env](https://github.com/kentcdodds/argv-set-env):
+To create a development build, set the `NODE_ENV` environment variable to `'development'` when running the `build` command:
 
 ```
-# Will work on Windows
-nwb build --set-env-NODE_ENV=development
-
-# Won't work on Windows
+# *nix
 NODE_ENV=development nwb build
+
+# Windows
+set NODE_ENV=development&& nwb build
 ```
 
 **In React apps only:**

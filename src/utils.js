@@ -1,6 +1,5 @@
 import util from 'util'
 
-import argvSetEnv from 'argv-set-env'
 import glob from 'glob'
 import spawn from 'cross-spawn'
 import ora from 'ora'
@@ -54,17 +53,6 @@ export function clearConsole() {
  */
 export function deepToString(object) {
   return util.inspect(object, {colors: true, depth: null})
-}
-
-export function defaultNodeEnv(nodeEnv) {
-  // Set cross-platform environment variables based on any --set-env-NAME
-  // arguments passed to the command.
-  argvSetEnv()
-  // Don't override environment it's been set
-  if (!process.env.NODE_ENV) {
-    // Default environment for a build
-    process.env.NODE_ENV = nodeEnv
-  }
 }
 
 /**

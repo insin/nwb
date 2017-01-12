@@ -32,6 +32,7 @@
 
 **Removed:**
 
+- Removed support for using `--set-env-VAR_NAME` arguments to set environment variables.
 - `jsnext:main` is no longer included `package.json` for new `react-component` and `web-module` projects - only the "more standard" `module` property is used to point to an ES2015 modules build [[#215](https://github.com/insin/nwb/issues/215)]
 
 **Dependencies:**
