@@ -2,6 +2,10 @@
 
 - Fix running tests with base config only (`web-app` and `web-module` projects).
 
+**Dependencies:**
+
+- Downgrade `html-webpack-plugin` to v2.24.1 while issues later versions cause with `npm-install-webpack-plugin` are unresolved.
+
 # 0.14.0 / 2017-01-13
 
 **Fixed:**

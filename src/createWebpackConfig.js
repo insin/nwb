@@ -642,11 +642,12 @@ export default function createWebpackConfig(buildConfig, nwbPluginConfig = {}, u
     resolve: merge({
       extensions: ['', '.js', '.json'],
     }, buildResolveConfig, userResolveConfig),
-    // As of v2.25.0, html-webpack-plugin no longer outputs an absolute path to
-    // its loader, so we must fall back to nwb's node_modules/ for global usage.
-    resolveLoader: {
-      fallback: path.join(__dirname, '../node_modules'),
-    },
+    // XXX As of v2.25.0, html-webpack-plugin no longer outputs an absolute path
+    //     to its loader, so we must fall back to nwb's node_modules/ for global
+    //     usage.
+    // resolveLoader: {
+    //   fallback: path.join(__dirname, '../node_modules'),
+    // },
     postcss: createPostCSSConfig(userWebpackConfig, nwbPluginConfig.cssPreprocessors),
     ...otherBuildConfig,
     // Top level loader config can be supplied via user "loaders" config, so we
