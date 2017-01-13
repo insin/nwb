@@ -22,6 +22,6 @@ export default function test(args, cb) {
     TEST_COMMANDS[userConfig.type](args, cb)
   }
   else {
-    karmaServer({}, args, cb)
+    karmaServer(args, {}, cb)
   }
 }

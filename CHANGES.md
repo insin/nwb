@@ -1,3 +1,7 @@
+**Fixed:**
+
+- Fix running tests with base config only (`web-app` and `web-module` projects).
+
 # 0.14.0 / 2017-01-13
 
 **Fixed:**
