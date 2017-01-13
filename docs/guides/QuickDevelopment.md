@@ -73,7 +73,7 @@ Compiled successfully in 3717 ms.
 The app is running at http://localhost:3000/
 ```
 
-To create a production-ready build, use `preact run`:
+To create a production-ready build, use `preact build`:
 
 ```sh
 $ preact build Lightbulb.js
