@@ -96,10 +96,12 @@ The configuration object can include the following properties:
 
 #### `type`: `String` (required for generic build commands)
 
-nwb uses this field to determine which type of project it's working with when generic build commands like `build` are used.
+nwb uses this field to determine which type of project it's working with when generic build commands like `build` are used. If you're using commands which have the name of the type of project you're working with in them, you don't need to configure this.
 
-It must be one of:
+If configured, it must be one of the following:
 
+- `'inferno-app'`
+- `'preact-app'`
 - `'react-app'`
 - `'react-component'`
 - `'web-app'`
