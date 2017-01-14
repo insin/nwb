@@ -19,25 +19,25 @@ They all have the same sub-commands:
 > npm install -g nwb
 > ```
 
-- [Example](#example)
-- [Zero Configuration Development Setup](#zero-configuration-development-setup)
-  - [Style Preprocessor Plugins](#style-preprocessor-plugins)
-  - [Automatic Dependency Installation](#automatic-dependency-installation)
-- [Configuration File (if you need it)](#configuration-file-if-you-need-it)
+- [Usage Example](#usage-example)
+- [Style Preprocessing](#style-preprocessing)
+- [Automatic Dependency Installation](#automatic-dependency-installation)
+- [Making use of React Alternatives' Compatibility with React](#making-use-of-react-alternatives-compatibility-with-react)
+  - [React Compatible Builds with `--inferno` or `--preact`](#react-compatible-builds-with---inferno-or---preact)
+  - [Reusing React Modules](#reusing-react-modules)
 - [Entry Modules](#entry-modules)
   - [Export a Component](#export-a-component)
   - [Export an Element or VNode](#export-an-element-or-vnode)
   - [Handle Rendering Yourself](#handle-rendering-yourself)
-- [React Alternatives Compatibility](#react-alternatives-compatibility)
-  - [React Compatible Builds with `--inferno` or `--preact`](#react-compatible-builds-with---inferno-or---preact)
-  - [Reusing React Modules](#reusing-react-modules)
+- [Zero Configuration Setup](#zero-configuration-setup)
+- [Configuration File (if you need it)](#configuration-file-if-you-need-it)
 - [Options for `run` and `build` commands](#options-for-run-and-build-commands)
   - [`run` Options](#run-options)
   - [`build` Options](#build-options)
 - [Rendering Shims and Hot Module Replacement (HMR)](#rendering-shims-and-hot-module-replacement-hmr)
   - [Opting out of Rendering Shims with `--force`](#opting-out-of-rendering-shims-with---force)
 
-## Example
+## Usage Example
 
 Quick development commands are intended to reduce the time between having a flash of inspiration and being able to develop and build it.
 
@@ -84,61 +84,99 @@ File size after gzip:
   dist\app.b12334ec.js  8.63 KB
 ```
 
-## Zero Configuration Development Setup
+## Style Preprocessing
 
-nwb generates a comprehensive default configuration for developing apps using Babel and Webpack.
+nwb has plugin modules which add [Sass](https://github.com/insin/nwb-sass) (`nwb-sass`), [Less](https://github.com/insin/nwb-less) (`nwb-less`) and [Stylus](https://github.com/insin/nwb-stylus) (`nwb-stylus`) support without needing configuration.
 
-Without any configuration, the default features you get are the same as when using the `nwb` command for project development:
+To use them, pass a `--plugins` option with an nwb plugin name (or a comma-separated list of names, if you're so inclined), with or without its `nwb-` prefix.
 
-- Write JavaScript with ES6/ES2015 and JSX transpiled down to ES5.
-- Use new JavaScript features which are at Stage 2 and above in the TC39 process:
-  - `async`/`await` syntax, for writing async code in a synchronous way.
-  - Class properties, for avoiding boilerplate when writing ES6 classes.
-  - Decorators.
-  - Object rest/spread, for shallow cloning, merging and partially destructuring objects as syntax.
-- Polyfills for  `Promise`,  `fetch()` and `Object.assign()`.
-- Import stylesheets (and font resources), images and JSON into JavaScript, to be handled by Webpack.
-- Autoprefixed CSS, so you don't need to write browser prefixes.
-
-For quick development commands, nwb also enables Babel's Stage 0 features by default, allowing you to use the following:
-
-- [`do` expressions](http://babeljs.io/docs/plugins/transform-do-expressions/#detail)
-- [`::` function binding operator](http://babeljs.io/docs/plugins/transform-function-bind/#detail)
-- [export extensions](http://babeljs.io/docs/plugins/transform-export-extensions/#example)
-
-> Note: these features are considered highly experimental, so consider that before writing anything more than a prototype which depends on them!
-
-Fallback serving of `index.html` at any URL is also enabled by default so apps which use the HTML5 History API will work by default.
-
-### Style Preprocessor Plugins
-
-nwb supports plugin modules which add [Sass](https://github.com/insin/nwb-sass), [Less](https://github.com/insin/nwb-less) and [Stylus](https://github.com/insin/nwb-stylus) support without needing configuration.
-
-To use them, pass a `--plugins` option with a plugin name (or a comma-separated list of names, if you're so inclined), with or without its `nwb-` prefix.
-
-e.g. to add support for importing an `.scss` stylesheet into the Lightbulb example above, run it like this:
+e.g. to support importing Sass stylesheets, pass `--plugins sass` and the necessary plugin will automatically be installed and used:
 
 ```sh
-preact run Lightbulb.js --plugins sass
+$ preact run Lightbulb.js --plugins sass
+✔ Installing nwb-sass
+Starting Webpack compilation...
 ```
 
-### Automatic Dependency Installation
+## Automatic Dependency Installation
 
 Having to stop and restart your server to install new dependencies or use a pair of shells in the same directory to do so is a minor annoyance when you're just looking to bang out some initial code.
 
-If you pass an `--install` flag when using the `run` subcommmand, nwb will configure [`NpmInstallPlugin`](https://github.com/ericclemmons/npm-install-webpack-plugin) to automatically install missing dependencies when an attempt is made to import them.
+If you pass an `--install` flag when using the `run` command, nwb will configure [`NpmInstallPlugin`](https://github.com/ericclemmons/npm-install-webpack-plugin) to automatically install missing dependencies when an attempt is made to import them.
 
 > Note: `NpmInstallPlugin` uses a `package.json` file while checking which packages are installed, so it will initialise one the first time you use this command and save any automatically-installed dependencies to it.
 
-## Configuration File (if you need it)
+```sh
+$ preact run Lightbulb.js --install
+Initializing `package.json`...
+...
+Starting Webpack compilation...
+```
 
-nwb supports use of a [configuration file](/docs/Configuration.md#configuration) - it's not required for quick devlopment commands, but if you need some tweaks on top of the default setup (e.g. to [enable CSS modules](/docs/FAQ.md#how-do-i-enable-css-modules)) you can make use of it.
+Now if we add the following to the top of `Lightbulb.js`:
 
-nwb will automatically use an `nwb.config.js` if present the working directory, or you can specify a custom file with the `--config` option.
+```js
+import 'bootstrap/dist/css/bootstrap.css'
+```
+
+[Bootstrap](https://getbootstrap.com/) will automatically be installed and applied to the running app:
+
+```sh
+Recompiling...
+Installing bootstrap...
+```
+
+## Making use of React Alternatives' Compatibility with React
+
+Inferno and Preact both provide compatibility layers which simulate React APIs and patch up features which are different or missing compared to React, to allow them to run existing React code.
+
+### React Compatible Builds with `--inferno` or `--preact`
+
+To try this out with some React code you've written, you can pass an `--inferno` flag for a build which uses [`inferno-compat`](https://infernojs.org/docs/guides/switching-to-inferno) or a `--preact` flag for a build which uses [`preact-compat`](https://preactjs.com/guide/switching-to-preact).
+
+If your code is compatible, these builds offer an easy way to take a large chunk off the size of the final bundle, and may even provide a performance boost.
+
+```sh
+$ react build hello.js
+✔ Building React app
+
+File size after gzip:
+
+  dist\app.e718700a.js  46.5 KB
+```
+```sh
+$ react build hello.js --preact
+✔ Installing preact and preact-compat
+✔ Cleaning app
+✔ Building Preact (React compat) app
+
+File size after gzip:
+
+  dist\app.d786be80.js  12.86 KB
+```
+
+### Reusing React Modules
+
+The `inferno` and `preact` commands are configured to use their compatibility layer for any React code which is imported - you'll only pay the cost of including the compatibility layer in your bundle if you import something which uses React.
+
+e.g. if you want a live "time ago" component for your Inferno app, you can pull `react-timeago` in:
+
+```js
+import Inferno from 'inferno'
+import TimeAgo from 'react-timeago'
+
+let date = new Date()
+
+export default function App() {
+  return <div>
+    This was rendered <TimeAgo date={date}/>
+  </div>
+}
+```
 
 ## Entry Modules
 
-Supported ways of writing your entry module are:
+Supported ways of writing your app's entry module are:
 
 ### Export a Component
 
@@ -193,57 +231,39 @@ let App = React.createClass({
 render(<App/>, document.getElementById('app'))
 ```
 
-The default HTML template contains a `<div id="app">` element to render into - you can change the `id` using the `--mount-id` option.
+The default HTML template contains a `<div id="app">` element to render into - you can change the `id` using a `--mount-id` option.
 
-> Note: if you're manually rendering Inferno or Preact, you don't have to specify a target DOM node. See [Rendering Shims and Hot Module Replacement](#rendering-shims-and-hot-module-replacement) below for details.
+> Note: if you're manually rendering Inferno or Preact app, you don't have to specify a target DOM node. See [Rendering Shims and Hot Module Replacement](#rendering-shims-and-hot-module-replacement) below for details.
 
-## React Alternatives Compatibility
+## Zero Configuration Setup
 
-Inferno and Preact both provide compatibility layers which simulate React APIs and patch up features which are different or missing compared to React, to allow them to run existing React code.
+nwb generates a comprehensive default configuration for developing apps using Babel and Webpack. Without any configuration, the default features you get are the same as when using the `nwb` command for project development:
 
-### React Compatible Builds with `--inferno` or `--preact`
+- Write JavaScript with ES6/ES2015 and JSX, transpiled down to ES5.
+- Use new JavaScript features which are at Stage 2 and above in the TC39 process:
+  - [`async`/`await` syntax](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function), for writing async code in a synchronous way.
+  - Class properties, for avoiding boilerplate when writing ES2015 classes.
+  - Decorators.
+  - [Object rest/spread](https://github.com/sebmarkbage/ecmascript-rest-spread#object-restspread-properties-for-ecmascript), for shallow cloning, merging and partially destructuring objects as syntax.
+- Polyfills for  `Promise`,  `fetch()` and `Object.assign()`, which can be disabled with a `--no-polyfill` flag if you don’t need them or want to provide your own.
+- Import stylesheets (and font resources), images and JSON into JavaScript like any other module, to be handled by Webpack.
+- Autoprefixed CSS, so you don't need to write browser prefixes.
 
-To try these out with some React code you've written, you can pass an `--inferno` flag for a build which uses [`inferno-compat`](https://infernojs.org/docs/guides/switching-to-inferno) or a `--preact` flag for a build which uses [`preact-compat`](https://preactjs.com/guide/switching-to-preact).
+For quick development commands, nwb also enables Babel's Stage 0 features by default, allowing you to use the following:
 
-If your code is compatible, these builds offer a way to take a large chunk off the size of the final bundle, and may even provide a performance boost.
+- [`do` expressions](http://babeljs.io/docs/plugins/transform-do-expressions/#detail)
+- [`::` function binding operator](http://babeljs.io/docs/plugins/transform-function-bind/#detail)
+- [export extensions](http://babeljs.io/docs/plugins/transform-export-extensions/#example)
 
-```sh
-$ react build hello.js
-✔ Building React app
+> Note: Stage 0 features are considered highly experimental, so consider that before writing anything more than a prototype which depends on them!
 
-File size after gzip:
+Fallback serving of `index.html` at any URL is also enabled by default so apps which use the [HTML5 History API](https://developer.mozilla.org/en-US/docs/Web/API/History_API#Adding_and_modifying_history_entries) will work by default.
 
-  dist\app.e718700a.js  46.5 KB
-```
-```sh
-$ react build hello.js --preact
-✔ Installing preact and preact-compat
-✔ Cleaning app
-✔ Building Preact (React compat) app
+## Configuration File (if you need it)
 
-File size after gzip:
+nwb supports use of a [configuration file](/docs/Configuration.md#configuration) - it's not required for quick development commands, but if you need some tweaks on top of the default setup (e.g. to [enable CSS modules](/docs/FAQ.md#how-do-i-enable-css-modules)) you can make use of it.
 
-  dist\app.d786be80.js  12.86 KB
-```
-
-### Reusing React Modules
-
-The `inferno` and `preact` commands are configured to use their compatibility layer for any React code which is imported - you'll only pay the cost of including the compatibility layer in your bundle if you import something which uses React.
-
-e.g. if you want a live "time ago" component for your Inferno app, you can pull `react-timeago` in:
-
-```js
-import Inferno from 'inferno'
-import TimeAgo from 'react-timeago'
-
-let date = new Date()
-
-export default function App() {
-  return <div>
-    This was rendered <TimeAgo date={date}/>
-  </div>
-}
-```
+nwb will automatically use an `nwb.config.js` if present the working directory, or you can specify a custom file with a `--config` option.
 
 ## Options for `run` and `build` commands
 
@@ -255,7 +275,7 @@ Specify a configuration file to use - see [Configuration File](#configuration-fi
 
 #### `-p, --plugins`
 
-Specify nwb plugins to use - see [Style Preprocessor Plugins](#style-preprocessor-plugins).
+Specify nwb plugins to use - see [Style Preprocessing](#style-preprocessing).
 
 #### `--force`
 
@@ -267,7 +287,7 @@ The default HTML template provided contains a `<div>` which the app is rendered 
 
 #### `--no-polyfill`
 
-Disable inclusion of nwb's default polyfills for `Promise`, `fetch()` and `Object.assign()` - you can use this to shave a few KB off the final bundle size if you're not using these features, are only supporting browsers which support them natively, would prefer to provide your own polyfills etc.
+Disable inclusion of nwb's default polyfills for `Promise`, `fetch()` and `Object.assign()` - you can use this to shave a few KB off the final bundle size if you're not using these features, are only supporting browsers which support them natively, would prefer to provide your own polyfills, etc.
 
 #### `--title`
 
@@ -327,7 +347,6 @@ For other HMR scenarios, such as an exported React Element, `react run` will re-
 **Inferno and Preact**
 
 The rendering shim for `inferno run` and `preact run` hooks into the DOM rendering function of these libraries so it can accept HMR requests and re-render to the same root element when you change the code.
-The rendering shim for `inferno run` and `preact run` hooks into the DOM rendering function of these librares so it can accept HMR requests and re-render to the same root element when you change the code.
 
 This means that if you import and call `render()` yourself, the rendering shim is still taking the VNode you pass it and handling rendering for you, so you don't need to provide a DOM node to render into.
 
@@ -335,4 +354,4 @@ This means that if you import and call `render()` yourself, the rendering shim i
 
 If you don't want to use a rendering shim, pass a `--force` flag the module you provide will be used as the entry point ant you'll be responsible for rendering your app to the DOM.
 
-You will also need to manually deal with HMR for Inferno and Preact if you want it , as they don't currently have equivalents of React Hot Loader, which does HMR at the component level.
+You will also need to manually deal with HMR for Inferno and Preact if you want it, as they don't currently have equivalents of React Hot Loader, which does HMR at the component level.
