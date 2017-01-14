@@ -267,7 +267,7 @@ The default HTML template provided contains a `<div>` which the app is rendered 
 
 #### `--no-polyfill`
 
-Disable inclusion of nwb's default polyfills for `Promise`, `fetch()` and `Object.assign()` - you can use this to shave a few KB off the final bundle size if you're not using these features or are only supporting browsers which support them natively.
+Disable inclusion of nwb's default polyfills for `Promise`, `fetch()` and `Object.assign()` - you can use this to shave a few KB off the final bundle size if you're not using these features, are only supporting browsers which support them natively, would prefer to provide your own polyfills etc.
 
 #### `--title`
 
@@ -326,12 +326,13 @@ For other HMR scenarios, such as an exported React Element, `react run` will re-
 
 **Inferno and Preact**
 
+The rendering shim for `inferno run` and `preact run` hooks into the DOM rendering function of these libraries so it can accept HMR requests and re-render to the same root element when you change the code.
 The rendering shim for `inferno run` and `preact run` hooks into the DOM rendering function of these librares so it can accept HMR requests and re-render to the same root element when you change the code.
 
 This means that if you import and call `render()` yourself, the rendering shim is still taking the VNode you pass it and handling rendering for you, so you don't need to provide a DOM node to render into.
 
 #### Opting out of Rendering Shims with `--force`
 
-If you don't want to use a rendering shim, pass a `--force` flag the module you provide will be used as the entry point ant you'll beresponsible for rendering your app to the DOM.
+If you don't want to use a rendering shim, pass a `--force` flag the module you provide will be used as the entry point ant you'll be responsible for rendering your app to the DOM.
 
 You will also need to manually deal with HMR for Inferno and Preact if you want it , as they don't currently have equivalents of React Hot Loader, which does HMR at the component level.
