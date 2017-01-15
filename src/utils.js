@@ -56,13 +56,6 @@ export function deepToString(object) {
 }
 
 /**
- * String.prototype.endsWith() is behind the --harmony flag in Node.js v0.12.
- */
-export function endsWith(s1, s2) {
-  return s1.lastIndexOf(s2) === s1.length - s2.length
-}
-
-/**
  * Get a list of nwb plugin names passed as arguments.
  * @param {Object} args parsed arguments.
  * @param {string=} args.plugins comma-separated list of nwb plugin names.

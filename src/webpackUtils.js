@@ -57,7 +57,7 @@ function formatMessage(message) {
 }
 
 function isLikelyASyntaxError(message) {
-  return message.indexOf(FRIENDLY_SYNTAX_ERROR_LABEL) !== -1
+  return message.includes(FRIENDLY_SYNTAX_ERROR_LABEL)
 }
 
 function formatMessages(messages, type) {

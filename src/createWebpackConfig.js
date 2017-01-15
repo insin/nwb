@@ -15,7 +15,7 @@ import merge from 'webpack-merge'
 import HashedModuleIdsPlugin from '../vendor/HashedModuleIdsPlugin'
 import createBabelConfig from './createBabelConfig'
 import debug from './debug'
-import {deepToString, endsWith, typeOf} from './utils'
+import {deepToString, typeOf} from './utils'
 import StatusPlugin from './WebpackStatusPlugin'
 
 // Top-level property names reserved for webpack config
@@ -69,7 +69,7 @@ export let loaderConfigFactory = (buildConfig, userConfig) =>
  */
 export let styleLoaderName = (prefix) =>
   (name) => {
-    if (prefix && endsWith(prefix, name)) {
+    if (prefix && prefix.endsWith(name)) {
       return prefix
     }
     return prefix ? `${prefix}-${name}` : name
@@ -254,7 +254,7 @@ function injectManifestPlugin() {
   this.plugin('compilation', (compilation) => {
     compilation.plugin('html-webpack-plugin-before-html-processing', (data, cb) => {
       Object.keys(compilation.assets).forEach(key => {
-        if (key.indexOf('manifest.') !== 0) return
+        if (!key.startsWith('manifest.')) return
         let {children} = compilation.assets[key]
         if (children && children[0]) {
           data.html = data.html.replace(
@@ -346,7 +346,7 @@ export function createPlugins(server, buildConfig = {}, userConfig = {}) {
         minChunks(module, count) {
           return (
             module.resource &&
-            module.resource.indexOf('node_modules') !== -1
+            module.resource.includes('node_modules')
           )
         }
       }))

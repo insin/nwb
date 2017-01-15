@@ -5,6 +5,10 @@
 - postcss-loader: v1.2.1 → [v1.2.2](https://github.com/postcss/postcss-loader/blob/master/CHANGELOG.md#122)
 - webpack-merge: v2.3.1 → [v2.4.0](https://github.com/survivejs/webpack-merge/blob/master/CHANGELOG.md#240--2017-01-12)
 
+**Internal:**
+
+- Use ES2015 `String` methods available in Node.js v4 instead of `String.prototype.indexOf` comparisons.
+
 # 0.14.3 / 2017-01-21
 
 **Fixed:**
