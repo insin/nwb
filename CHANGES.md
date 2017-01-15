@@ -1,3 +1,7 @@
+**Removed:**
+
+- Removed support for `json-schema` in `webpack.compat` config, as this library has now been fixed [[#227](https://github.com/insin/nwb/issues/227)]
+
 **Dependencies:**
 
 - karma: v1.3.0 → [v1.4.0](https://github.com/karma-runner/karma/blob/master/CHANGELOG.md#140-2017-01-14)
