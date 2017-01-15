@@ -917,7 +917,6 @@ Determines whether or not nwb will create an ES6 modules build for use by ES6 mo
 When providing an ES6 modules build, you should also provide the following in `package.json` so compatible module bundlers can find it:
 
 ```
-"jsnext:main": "es/index.js",
 "module": "es/index.js",
 ```
 
