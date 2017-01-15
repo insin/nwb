@@ -328,16 +328,6 @@ The following libraries are supported:
 
 Set to `true` for [Enzyme](http://airbnb.io/enzyme/) compatibility - this assumes you're using the latest version of React (v15).
 
-###### `json-schema`: `Boolean`
-
-Set to `true` to prevent a transitive [json-schema](https://github.com/kriszyp/json-schema) dependency from [breaking your Webpack build](https://github.com/kriszyp/json-schema/issues/59). Failure in this case manifests itself something like so:
-
-```
-Error: define cannot be used indirect
-
-webpack:///(webpack)/buildin/amd-define.js
-```
-
 ###### `moment`: `Object`
 
 If you use [Moment.js](http://momentjs.com/) in a Webpack build, all the locales it supports will be imported by default and your build will be about 139KB larger than you were expecting!
@@ -357,7 +347,6 @@ module.exports = {
   webpack: {
     compat: {
       enzyme: true,
-      'json-schema': true,
       moment: {
         locales: ['de', 'en-gb', 'es', 'fr', 'it']
       },

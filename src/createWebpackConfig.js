@@ -529,11 +529,6 @@ export const COMPAT_CONFIGS = {
       'react/lib/ReactContext': true,
     }
   },
-  'json-schema': {
-    module: {
-      noParse: [/node_modules[/\\]json-schema[/\\]lib[/\\]validate\.js/],
-    },
-  },
   moment({locales}) {
     return {
       plugins: [
