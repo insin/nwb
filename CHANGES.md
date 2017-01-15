@@ -1,3 +1,10 @@
+**Dependencies:**
+
+- karma: v1.3.0 → [v1.4.0](https://github.com/karma-runner/karma/blob/master/CHANGELOG.md#140-2017-01-14)
+- karma-webpack: v1.8.0 → v2.0.1 - Webpack 2 RC4 support
+- postcss-loader: v1.2.1 → [v1.2.2](https://github.com/postcss/postcss-loader/blob/master/CHANGELOG.md#122)
+- webpack-merge: v2.3.1 → [v2.4.0](https://github.com/survivejs/webpack-merge/blob/master/CHANGELOG.md#240--2017-01-12)
+
 # 0.14.2 / 2017-01-20
 
 **Fixed:**

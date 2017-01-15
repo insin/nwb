@@ -50,7 +50,7 @@
     "rimraf": "2.5.4",
     "run-series": "1.1.4",
     "semver": "5.3.0",
-    "webpack-merge": "2.3.1",
+    "webpack-merge": "2.4.0",
 
     "babel-cli": "6.18.0",
     "babel-core": "6.21.0",
@@ -81,7 +81,7 @@
     "express": "4.14.0",
     "connect-history-api-fallback": "1.3.0",
 
-    "karma": "1.3.0",
+    "karma": "1.4.0",
     "diff": "3.2.0",
     "karma-chrome-launcher": "2.0.0",
     "karma-coverage": "1.1.1",
@@ -89,7 +89,7 @@
     "karma-mocha-reporter": "2.2.1",
     "karma-phantomjs-launcher": "1.0.2",
     "karma-sourcemap-loader": "0.3.7",
-    "karma-webpack": "1.8.1",
+    "karma-webpack": "2.0.1",
     "phantomjs-prebuilt": "2.1.14",
 
     "mocha": "3.2.0",
@@ -111,7 +111,7 @@
     "html-webpack-plugin": "2.24.1",
     "json-loader": "0.5.4",
     "npm-install-webpack-plugin": "4.0.4",
-    "postcss-loader": "1.2.1",
+    "postcss-loader": "1.2.2",
     "style-loader": "0.13.1",
     "url-loader": "0.5.7",
     "webpack-dev-middleware": "1.9.0",
