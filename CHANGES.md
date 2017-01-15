@@ -7,6 +7,7 @@
 
 **Internal:**
 
+- Use [`babel-preset-env`](https://github.com/babel/babel-preset-env/) when transpiling to `lib/`, targeting Node.js v4.
 - Use ES2015 `String` methods available in Node.js v4 instead of `String.prototype.indexOf` comparisons.
 
 # 0.14.3 / 2017-01-21

@@ -120,6 +120,7 @@
     "webpack-md5-hash": "0.0.5"
   },
   "devDependencies": {
+    "babel-preset-env": "1.1.8",
     "cross-env": "3.1.4",
     "eslint-config-jonnybuchanan": "4.8.0",
     "eventsource": "0.2.1",
@@ -141,8 +142,13 @@
   ],
   "babel": {
     "presets": [
-      ["es2015", {"loose": true}],
-      "stage-2"
+      ["env", {
+        "loose": true,
+        "targets": {
+          "node": 4
+        }
+      }],
+      "stage-3"
     ],
     "plugins": [
       "add-module-exports"
