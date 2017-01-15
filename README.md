@@ -127,7 +127,7 @@ cd my-module/
 - [Quick Development with nwb](/docs/guides/QuickDevelopment.md)
 - [Developing React Apps with nwb](/docs/guides/ReactApps.md)
 - [Developing React Components and Libraries with nwb](/docs/guides/ReactComponents.md#developing-react-components-and-libraries-with-nwb)
-- [Switching to nwb from create-react-app][https://github.com/insin/nwb-from-create-react-app#readme] (as an alternative to ejecting if you need configuration)
+- [Switching to nwb from create-react-app](https://github.com/insin/nwb-from-create-react-app#readme) as an alternative to ejecting if you need configuration
 
 ## [Documentation](/docs/#table-of-contents)
 
