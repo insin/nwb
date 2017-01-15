@@ -11,6 +11,8 @@ cache:
 
 before_install:
   - npm install coveralls
+  - git config --global user.email "jonathan.buchanan@gmail.com"
+  - git config --global user.name "Jonny Buchanan"
 
 script: "npm run test:coverage"
 
