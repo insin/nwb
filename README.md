@@ -14,7 +14,7 @@ nwb provides tooling in a single `devDependency` for:
 - [React Components and Libraries](#react-components-and-libraries)
 - [npm Modules for the Web](#npm-modules-for-the-web)
 
-A zero-config development setup is provided, but nwb also supports [configuration](/docs/Configuration.md#configuration) and [plugin modules]((/docs/Plugins.md#plugins)) which add extra functionality (e.g. [Sass](http://sass-lang.com/) support), should you need them
+A zero-config development setup is provided, but nwb also supports [configuration](/docs/Configuration.md#configuration) and [plugin modules](/docs/Plugins.md#plugins) which add extra functionality (e.g. [Sass](http://sass-lang.com/) support), should you need them
 
 ## Install
 
