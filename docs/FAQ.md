@@ -1,5 +1,13 @@
 ## Frequently Asked Questions
 
+### What does "nwb" stand for?
+
+Shortness and ease of typing.
+
+It uses **N**ode.js, **W**ebpack and **B**abel to **b**uild apps for the **w**eb and modules for **n**pm.
+
+`nwb` sounded like the best combination of those and was easy to type.
+
 ### How do I enable CSS Modules?
 
 Use `nwb.config.js` to configure the [default `css` loader for your app's own styles](/docs/Configuration.md#default-loaders) with the necessary [css-loader `query` parameters](https://github.com/webpack/css-loader#local-scope):
