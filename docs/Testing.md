@@ -56,7 +56,7 @@ However, the default configuration supports having tests in any file which ends 
 
 This supports having your tests in a separate top-level directory or [co-located with the code they're testing](https://medium.com/@kentcdodds/what-code-comments-can-teach-us-about-scaling-a-codebase-90bbfad8d70d), or both (e.g. co-located unit tests, separate integration tests).
 
-> To configure this, provide [`karma.testFiles` config](/docs/Configuration.md#testdirs-string--arraystring)
+> To configure this, provide [`karma.testFiles` config](/docs/Configuration.md#testfiles-string--arraystring)
 
 #### Example Test
 
@@ -106,7 +106,7 @@ src/
     utils.js
 ```
 
-Then all your co-located tests can import shared utilities like so, no matter where they are in the tree, and the utilites will be excluded from code coverage:
+Then all your co-located tests can import shared utilities like so, no matter where they are in the tree, and the utilities will be excluded from code coverage:
 
 ```js
 import utils from src/__tests__/utils
@@ -123,7 +123,7 @@ let context = require.context('./src', true, /\.spec\.js$/)
 context.keys().forEach(context)
 ```
 
-**Note:** if you provide `karma.testContext` and your tests would not have been picked up by the [default test files][#test-files] config, you will also need to provide a suitable [`karma.testFiles` config](/docs/Configuration.md#testcontext-string)  so your tests can be excluded from code coverage.
+**Note:** if you provide `karma.testContext` and your tests would not have been picked up by the [default test files][#test-files] config, you will also need to provide a suitable [`karma.testFiles` config](/docs/Configuration.md#testcontext-string) so your tests can be excluded from code coverage.
 
 #### Automatic Babel Polyfill
 
@@ -211,14 +211,18 @@ Coverage will be measured automatically when your tests are run on Travis CI, or
 
 All project templates come with a `.travis.yml` which will post coverage results to [codecov.io](https://codecov.io/) and [coveralls](https://coveralls.io) after a successful build.
 
-#### Excluding Test Directories from Coverage
+#### Excluding Code from Coverage
 
-Since tests are identified by filename, it's easy to exclude them from code coverage reporting using the [default test files](#test-files) patterns or your [`karma.testFiles` config](/docs/Configuration.md#testfiles-string--arraystring).
+> `node_modules/`, test files and test context modules are automatically excluded from code coverage.
 
-We also want to exclude any other code in test directories, such as test utilities. The default setup will ignore the following directories when running coverage:
+Use [`karma.excludeFromCoverage` config](/docs/Configuration.md#excludefromcoverage-string--arraystring) to specify additional paths which should be excluded from coverage reporting.
 
-- `test/` (top-level)
-- `tests/` (top-level)
-- `__tests__` (at any level under `src/`)
+By default, this is configured to ignore code in a few common directory conventions for test code:
 
-> To configure this, provide [`karma.testDirs` config](/docs/Configuration.md#testdirs-string--arraystring)
+```js
+[
+  'test/',
+  'tests/',
+  'src/**/__tests__/',
+]
+```

@@ -1,4 +1,3 @@
-import fs from 'fs'
 import path from 'path'
 import util from 'util'
 
@@ -108,49 +107,7 @@ export function prepareWebpackLoaderConfig(loaders) {
   })
 }
 
-let warnedAboutBabelLoose = false
-let warnedAboutBuildChange = false
-let warnedAboutKarmaTests = false
-
-// TODO Remove in a future version
-function upgradeBuildConfig(build, userConfigPath, report = {deprecated() {}}) {
-  let npm = {}
-  if (build.jsNext) {
-    npm.esModules = !!build.jsNext
-  }
-  if (build.umd) {
-    let hasExternals = !!build.externals && Object.keys(build.externals).length > 0
-    if (!hasExternals) {
-      npm.umd = build.global
-    }
-    else {
-      npm.umd = {global: build.global, externals: build.externals}
-    }
-  }
-  if (!warnedAboutBuildChange) {
-    let messages = [
-      `Deprecated in favour of ${chalk.green('npm')} config as of nwb v0.12.`,
-      `nwb will upgrade ${chalk.yellow('build')} config to ${chalk.green('npm')} format during a build.`,
-      `Equivalent ${chalk.green('npm')} config to your current ${chalk.yellow('build')} config is:`,
-      '',
-    ].concat(
-      JSON.stringify({npm}, null, 2)
-        .split('\n')
-        .map(line => `  ${chalk.cyan(line)}`)
-    )
-    if (npm.esModules) {
-      messages.push(
-        '',
-        `You have the ES6 modules build enabled, so also add ${chalk.cyan('"module": "es/index.js"')} to ${chalk.cyan('package.json')}.`,
-        'This is part of a proposal for future native module support being supported by multiple bundlers.',
-        `(You should also change ${chalk.cyan('"jsnext:main"')} to point at ${chalk.cyan('"es/index.js"')})`,
-      )
-    }
-    report.deprecated('build', ...messages)
-    warnedAboutBuildChange = true
-  }
-  return npm
-}
+let warnedAboutKarmaTestDirs = false
 
 /**
  * Validate user config and perform any necessary validation and transformation
@@ -177,12 +134,6 @@ export function processUserConfig({
 
   if ((required || 'type' in userConfig) && PROJECT_TYPES.indexOf(userConfig.type) === -1) {
     report.error('type', userConfig.type, `Must be one of: ${PROJECT_TYPES.join(', ')}`)
-  }
-
-  // TODO Remove in a future version
-  if (userConfig.build) {
-    userConfig.npm = upgradeBuildConfig(userConfig.build, userConfigPath, report)
-    delete userConfig.build
   }
 
   // Set defaults for config objects so we don't have to existence-check them
@@ -224,71 +175,36 @@ export function processUserConfig({
       `Must be ${chalk.cyan('boolean')}, ${chalk.cyan("'helpers'")} or ${chalk.cyan("'polyfill'")})`
     )
   }
-  // TODO Remove in a future version
-  else if (userConfig.babel.optional) {
-    let messages = [
-      `This Babel 5 config is deprecated in favour of ${chalk.green('runtime')} config as of nwb v0.12.`
-    ]
-    if (typeOf(userConfig.babel.optional) === 'array' &&
-        userConfig.babel.optional.length === 1 &&
-        userConfig.babel.optional[0] === 'runtime') {
-      messages.push(`nwb will convert ${chalk.yellow("optional = ['runtime']")} config to ${chalk.cyan('runtime = true')} during a build`)
-      userConfig.babel.runtime = true
+
+  if ('loose' in userConfig.babel) {
+    if (typeOf(userConfig.babel.loose) !== 'boolean') {
+      report.error(
+        'babel.loose',
+        userConfig.babel.loose,
+        `Must be ${chalk.cyan('boolean')}`
+      )
     }
-    report.deprecated('babel.optional', ...messages)
-  }
-  // TODO Remove in a future version - don't convert, just validate
-  if ('loose' in userConfig.babel && typeOf(userConfig.babel.loose) !== 'boolean') {
-    if (!warnedAboutBabelLoose) {
-      let messages = [
-        `Must be ${chalk.cyan('boolean')} as of nwb v0.12.`,
-        `nwb will convert non-boolean config to its boolean equivalent during a build.`,
-      ]
-      if (userConfig.babel.loose) {
-        messages.push('(Loose mode is enabled by default as of nwb v0.12, so you can remove this config)')
-      }
-      report.deprecated('babel.loose', ...messages)
-      warnedAboutBabelLoose = true
+    else if (userConfig.babel.loose === true) {
+      report.hint('babel.loose',
+        'Loose mode is enabled by default, so you can remove this config.'
+      )
     }
-    userConfig.babel.loose = !!userConfig.babel.loose
-  }
-  else if (userConfig.babel.loose === true) {
-    report.hint('babel.loose',
-      'Loose mode is enabled by default as of nwb v0.12, so you can remove this config.'
-    )
   }
 
   // Karma config
   // TODO Remove in a future version
-  if (userConfig.karma.tests) {
-    let messages = ['Deprecated as of nwb v0.12.']
-    if (userConfig.karma.tests.indexOf('*') !== -1) {
-      messages.push(
-        `${chalk.yellow('karma.tests')} appears to be a ${chalk.cyan('file glob')} so you should rename it to ${chalk.green('karma.testFiles')}`,
-        `nwb will use it as ${chalk.green('karma.testFiles')} config during a build.`,
+  if (userConfig.karma.testDir || userConfig.karma.testDirs) {
+    // We secretly supported passing testDir too
+    let prop = userConfig.karma.testDir ? 'testDir' : 'testDirs'
+    if (!warnedAboutKarmaTestDirs) {
+      report.deprecated(
+        `karma.${prop}`,
+        `Deprecated as of nwb v0.15 - this has been renamed to ${chalk.cyan('karma.excludeFromCoverage')}.`
       )
-      userConfig.karma.testFiles = userConfig.karma.tests
+      warnedAboutKarmaTestDirs = true
     }
-    else if (glob.sync(userConfig.karma.tests, {nodir: true}).length === 1 &&
-             fs.readFileSync(userConfig.karma.tests, 'utf8').indexOf('require.context') !== -1) {
-      messages.push(
-        `${chalk.yellow('karma.tests')} appears to be a ${chalk.cyan('Webpack context module')}, so you should rename it to ${chalk.green('karma.testContext')}`,
-        `nwb will use it as ${chalk.green('karma.testContext')} config during a build.`,
-      )
-      userConfig.karma.testContext = userConfig.karma.tests
-    }
-    else {
-      messages.push(
-        `If ${chalk.yellow('karma.tests')} points at a ${chalk.cyan('Webpack context module')}, use ${chalk.green('karma.testContext')} instead.`,
-        `If ${chalk.yellow('karma.tests')} is a ${chalk.cyan('file glob')}, use ${chalk.green('karma.testFiles')} instead.`,
-        `nwb can't tell, so will fall back to default config during a build.`,
-      )
-    }
-    if (!warnedAboutKarmaTests) {
-      report.deprecated('karma.tests', ...messages)
-      warnedAboutKarmaTests = true
-    }
-    delete userConfig.karma.tests
+    userConfig.karma.excludeFromCoverage = userConfig.karma[prop]
+    delete userConfig.karma[prop]
   }
 
   // npm build config
