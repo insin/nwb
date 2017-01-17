@@ -10,8 +10,9 @@ import {deepToString, typeOf} from './utils'
 // The following defaults are combined into a single extglob-style pattern to
 // avoid generating "pattern ... does not match any file" warnings.
 
-// Exclude top-level test dirs and __tests__ dirs under src/ from code coverage.
-const DEFAULT_TEST_DIRS = ['test/', 'tests/', 'src/**/__tests__/']
+// Exclude top-level test dirs and __tests__ dirs under src/ from code coverage
+// by default.
+const DEFAULT_EXCLUDE_FROM_COVERAGE = ['test/', 'tests/', 'src/**/__tests__/']
 // Not every file in a test directory is a test and tests may also be co-located
 // with the code they test, so determine test files by suffix.
 const DEFAULT_TEST_FILES = ['+(src|test?(s))/**/*+(-test|.spec|.test).js']
@@ -129,8 +130,8 @@ export default function createKarmaConfig(args, buildConfig, userConfig) {
     userConfig: userKarma,
   })
 
-  let testDirs = userKarma.testDir || userKarma.testDirs || DEFAULT_TEST_DIRS
-  if (typeOf(testDirs) === 'string') testDirs = [testDirs]
+  let {excludeFromCoverage = DEFAULT_EXCLUDE_FROM_COVERAGE} = userKarma
+  if (typeOf(excludeFromCoverage) === 'string') excludeFromCoverage = [excludeFromCoverage]
   let testFiles = userKarma.testFiles || DEFAULT_TEST_FILES
   if (typeOf(testFiles) === 'string') testFiles = [testFiles]
 
@@ -155,7 +156,7 @@ export default function createKarmaConfig(args, buildConfig, userConfig) {
     buildConfig.babel = {}
   }
   if (codeCoverage) {
-    let exclude = ['node_modules/', ...testDirs, ...testFiles]
+    let exclude = ['node_modules/', ...excludeFromCoverage, ...testFiles]
     if (userKarma.testContext) {
       exclude.push(userKarma.testContext)
     }

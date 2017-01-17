@@ -1,5 +1,24 @@
+**`nwb.config.js` Config Format Changes:**
+
+> For deprecations, nwb v0.15 will support the old format, display warning messages about the changes required, and adapt the old format for use in the current build where possible.
+
+- Deprecated `karma.testDirs`, renaming this config to `karma.excludeFromCoverage`, as it can be configured to exclude any paths from code coverage, not just directories [[#236](https://github.com/insin/nwb/issues/236)]
+
+  ```
+  // < v0.15                         // v0.15
+  module.exports = {                 module.exports = {
+    karma: {                           karma: {
+      testDirs: [                =>      excludeFromCoverage: [
+        'test/',                           'test/',
+        'path/to/ignorethis.js'            'path/to/ignorethis.js'
+      ]                                  ]
+    }                                  }
+  }                                  }
+  ```
+
 **Removed:**
 
+- Removed support for configuration which was deprecated in nwb v0.12.
 - Removed support for `json-schema` in `webpack.compat` config, as this library has now been fixed [[#227](https://github.com/insin/nwb/issues/227)]
 
 **Dependencies:**

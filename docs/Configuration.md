@@ -78,11 +78,11 @@ The configuration object can include the following properties:
 - [Karma Configuration](#karma-configuration)
   - [`karma`](#karma-object)
   - [`karma.browsers`](#browsers-arraystring--plugin) - browsers tests are run in
+  - [`karma.excludeFromCoverage`](#excludefromcoverage-string--arraystring) - globs for paths which should be excluded from code coverage reporting
   - [`karma.frameworks`](#frameworks-arraystring--plugin) - testing framework
   - [`karma.plugins`](#plugins-arrayplugin) - additional Karma plugins
   - [`karma.reporters`](#reporters-arraystring--plugin) - test results reporter
   - [`karma.testContext`](#testcontext-string) - point to a Webpack context module for your tests
-  - [`karma.testDirs`](#testdirs-string--arraystring) - directories containing test code which should be ignored in code coverage
   - [`karma.testFiles`](#testfiles-string--arraystring) - patterns for test files
   - [`karma.extra`](#extra-object-1) - an escape hatch for extra Karma config, which will be merged into the generated config
 - [npm Build Configuration](#npm-build-configuration)
@@ -756,6 +756,12 @@ module.exports = {
 }
 ```
 
+##### `excludeFromCoverage`: `String | Array<String>`
+
+> Default: `['test/', 'tests/', 'src/**/__tests__/']`
+
+Globs for paths which should be excluded from code coverage reporting.
+
 ##### `frameworks`: `Array<String | Plugin>`
 
 > Default: `['mocha']`
@@ -814,14 +820,6 @@ Use this configuration to point to a [Webpack context module](/docs/Testing.md#u
 If you provide a context module, it is responsible for including tests via Webpack's  `require.context()` - see the [example in the Testing docs](/docs/Testing.md#using-a-test-context-module).
 
 If the default [`testFiles`](#testfiles-string--arraystring) config wouldn't have picked up your tests, you must also configure it so they can be excluded from code coverage.
-
-##### `testDirs`: `String | Array<String>`
-
-> Default: `['test/', 'tests/', 'src/**/__tests__/']`
-
-Globs for directories containing test code.
-
-These are used to exclude test utility code from code coverage.
 
 ##### `testFiles`: `String | Array<String>`
 

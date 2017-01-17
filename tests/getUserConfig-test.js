@@ -128,38 +128,15 @@ describe('processUserConfig()', () => {
   })
 
   // TODO Remove in a future release
-  it('converts babel.loose to boolean for 0.12 back-compat', () => {
+  it('converts karma.testDirs to karma.excludeFromCoverage for v0.15 back-compat', () => {
     let config = processUserConfig({
       userConfig: {
-        babel: {
-          loose: 'all',
+        karma: {
+          testDirs: 'test',
         }
       }
     })
-    expect(config.babel).toEqual({loose: true})
-  })
-
-  // TODO Remove in a future release
-  it('upgrades build config to npm config for 0.12 back-compat', () => {
-    let config = processUserConfig({
-      userConfig: {
-        build: {
-          externals: {'react': 'React'},
-          global: 'MyComponent',
-          jsNext: true,
-          umd: true,
-        }
-      },
-      userConfigPath: '/test/path/to/nwb.config.js'
-    })
-    expect(config.build).toNotExist()
-    expect(config.npm).toEqual({
-      esModules: true,
-      umd: {
-        externals: {'react': 'React'},
-        global: 'MyComponent',
-      }
-    })
+    expect(config.karma).toEqual({excludeFromCoverage: 'test'})
   })
 })
 
