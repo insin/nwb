@@ -4,8 +4,12 @@
 
 **Dependencies:**
 
+- detect-port: v1.0.7 → [v1.1.0](https://github.com/node-modules/detect-port/compare/1.0.7...1.1.0)
+- fs-extra: v1.0.0 → [v2.0.0](https://github.com/jprichardson/node-fs-extra/blob/master/CHANGELOG.md#200--2017-01-16) - drop Node.js v0.12 support
 - karma: v1.3.0 → [v1.4.0](https://github.com/karma-runner/karma/blob/master/CHANGELOG.md#140-2017-01-14)
-- karma-webpack: v1.8.0 → v2.0.1 - Webpack 2 RC4 support
+- karma-webpack: v1.8.0 → v2.0.1 - Webpack 2 RC support
+- object-assign: v4.1.0 → [v4.1.1](https://github.com/postcss/postcss-loader/blob/master/CHANGELOG.md#122)
+- ora: v0.4.1 → v1.0.0
 - postcss-loader: v1.2.1 → [v1.2.2](https://github.com/postcss/postcss-loader/blob/master/CHANGELOG.md#122)
 - webpack-merge: v2.3.1 → [v2.4.0](https://github.com/survivejs/webpack-merge/blob/master/CHANGELOG.md#240--2017-01-12)
 
