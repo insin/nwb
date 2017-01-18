@@ -7,8 +7,8 @@
     "index.js"
   ],
   "dependencies": {
-    "less": "^2.5.3",
-    "less-loader": "^2.2.2"
+    "less": "2.7.2",
+    "less-loader": "2.2.3"
   },
   "author": "Jonny Buchanan <jonathan.buchanan@gmail.com>",
   "license": "MIT",
