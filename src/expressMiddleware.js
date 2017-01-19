@@ -25,7 +25,9 @@ export default function nwbMiddleware(express, options = {}) {
     'The express module must be passed as the first argument to nwb middleware'
   )
 
-  let userConfig = getUserConfig({config: options.config}, {required: true})
+  // We need to do an intial grab of the user config to determine the project
+  // type.
+  let userConfig = getUserConfig({_: ['serve'], config: options.config}, {required: true})
   if (!SERVE_APP_CONFIG[userConfig.type]) {
     throw new Error(
       `nwb Express middleware is unable to serve anything for a ${userConfig.type} project.`

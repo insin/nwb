@@ -1,3 +1,5 @@
-module.exports = {
-  type: 'react-app'
+module.exports = function() {
+  return {
+    type: 'react-app'
+  }
 }
