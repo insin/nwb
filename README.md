@@ -5,29 +5,38 @@
 [![npm package][npm-badge]][npm]
 [![Coveralls][coveralls-badge]][coveralls]
 
-nwb provides tooling in a single `devDependency` for:
+nwb is a toolkit for:
 
 - [Quick Development with React, Inferno or Preact](#quick-development)
-- [React Apps](#react-apps)
-- [Preact Apps](#preact-apps)
-- [Inferno Apps](#inferno-apps)
-- [React Components and Libraries](#react-components-and-libraries)
-- [npm Modules for the Web](#npm-modules-for-the-web)
+- Developing:
+  - [React Apps](#react-apps)
+  - [Preact Apps](#preact-apps)
+  - [Inferno Apps](#inferno-apps)
+  - [React Components and Libraries](#react-components-and-libraries)
+  - [npm Modules for the Web](#npm-modules-for-the-web)
 
 A zero-config development setup is provided, but nwb also supports [configuration](/docs/Configuration.md#configuration) and [plugin modules](/docs/Plugins.md#plugins) which add extra functionality (e.g. [Sass](http://sass-lang.com/) support), should you need them
 
 ## Install
 
-Installing globally provides an `nwb` command for creating new projects and `react`, `inferno` and `react` commands for quick development:
+Installing globally provides an `nwb` command for working with projects and `react`, `inferno` and `preact` commands for quick development:
 
-```
+```sh
 npm install -g nwb
 ```
 
-To use nwb for build tooling in a project, install it as a `devDependency` and use `nwb` commands in `package.json` `"scripts"`:
+To use nwb's tooling in a project, install it as a `devDependency` and use `nwb` commands in `package.json` `"scripts"`:
 
-```
+```sh
 npm install --save-dev nwb
+```
+```json
+{
+  "scripts": {
+    "start": "nwb serve-react-app",
+    "build": "nwb build-react-app"
+  }
+}
 ```
 
 ## Quick Development
@@ -64,7 +73,7 @@ File size after gzip:
 
 ## React Apps
 
-Use `nwb new react-app` to create a [React](https://facebook.github.io/react/) app:
+Use `nwb new react-app` to create a [React](https://facebook.github.io/react/) app skeleton, preconfigured with npm scripts which use `nwb` for development:
 
 ```sh
 nwb new react-app my-app
@@ -80,23 +89,23 @@ Open [localhost:3000](http://localhost:3000), start editing the code and changes
 
 ## Preact Apps
 
-Use `nwb new preact-app` to create a [Preact](https://preactjs.com/) app:
+Use `nwb new preact-app` to create a [Preact](https://preactjs.com/) app skeleton:
 
 ```sh
 nwb new preact-app my-app
 ```
 
-Development commands are as above for React apps.
+npm scripts are as above for React apps.
 
 ## Inferno Apps
 
-Use `nwb new inferno-app` to create an [Inferno](https://github.com/trueadm/inferno#readme) app:
+Use `nwb new inferno-app` to create an [Inferno](https://github.com/trueadm/inferno#readme) app skeleton:
 
 ```sh
 nwb new inferno-app my-app
 ```
 
-Development commands are as above for React apps.
+npm scripts are as above for React apps.
 
 ## React Components and Libraries
 
@@ -127,7 +136,6 @@ cd my-module/
 - [Quick Development with nwb](/docs/guides/QuickDevelopment.md)
 - [Developing React Apps with nwb](/docs/guides/ReactApps.md)
 - [Developing React Components and Libraries with nwb](/docs/guides/ReactComponents.md#developing-react-components-and-libraries-with-nwb)
-- [Switching to nwb from create-react-app](https://github.com/insin/nwb-from-create-react-app#readme) as an alternative to ejecting if you need configuration
 
 ## [Documentation](/docs/#table-of-contents)
 
@@ -151,7 +159,7 @@ cd my-module/
 
 ## Why use nwb?
 
-**Get started quickly**. Start developing apps from a single `.js` file or [generate a project skeleton](/docs/Commands.md#new).
+**Get started quickly**. Start developing from a single `.js` file or [generate a project skeleton](/docs/Commands.md#new).
 
 **Covers the whole development cycle**. Development tools, testing and production builds for projects work out of the box, no configuration required.
 
