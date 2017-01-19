@@ -1,6 +1,6 @@
 {
   "name": "nwb",
-  "description": "Develop React, Preact & Inferno apps, React libraries and other npm modules for the web, with no configuration (until you need it)",
+  "description": "A toolkit for React, Preact & Inferno apps, React libraries and other npm modules for the web, with no configuration (until you need it)",
   "version": "0.14.2",
   "license": "MIT",
   "author": "Jonny Buchanan <jonathan.buchanan@gmail.com>",
