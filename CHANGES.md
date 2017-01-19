@@ -1,3 +1,5 @@
+# 0.14.2 / 2017-01-20
+
 **Fixed:**
 
 - Fix using Express middleware with a config file which exports a function [[#238](https://github.com/insin/nwb/issues/238)]
