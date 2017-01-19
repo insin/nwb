@@ -38,7 +38,7 @@
     "debug": "2.6.0",
     "detect-port": "1.1.0",
     "figures": "2.0.0",
-    "filesize": "3.3.0",
+    "filesize": "3.4.0",
     "fs-extra": "2.0.0",
     "glob": "7.1.1",
     "gzip-size": "3.0.0",
@@ -55,7 +55,7 @@
     "babel-cli": "6.18.0",
     "babel-core": "6.21.0",
     "babel-plugin-add-module-exports": "0.2.1",
-    "babel-plugin-inferno": "1.5.0",
+    "babel-plugin-inferno": "1.6.0",
     "babel-plugin-istanbul": "3.1.2",
     "babel-plugin-lodash": "3.2.11",
     "babel-plugin-react-transform": "2.0.2",
@@ -97,7 +97,7 @@
 
     "object-assign": "4.1.1",
     "promise": "7.1.1",
-    "whatwg-fetch": "2.0.1",
+    "whatwg-fetch": "2.0.2",
 
     "webpack": "1.14.0",
     "autoprefixer": "6.6.1",
@@ -124,7 +124,7 @@
     "cross-env": "3.1.4",
     "eslint-config-jonnybuchanan": "4.8.0",
     "eventsource": "0.2.1",
-    "nyc": "10.0.0",
+    "nyc": "10.1.2",
     "shelljs": "0.7.6",
     "temp": "0.8.3",
     "tree-kill": "1.1.0"
