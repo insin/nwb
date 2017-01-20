@@ -5,7 +5,7 @@
   - [React Tutorial](#react-tutorial)
   - [Bootstrap 4 with Sass](#bootstrap-4-with-sass)
   - [Yelp Clone](#yelp-clone)
-  - [Github Issues](#github-issues)
+  - [GitHub Issues](#github-issues)
 - [Other Examples](#other-examples)
   - [Kendo UI For React with nwb](#kendo-ui-for-react-with-nwb)
   - [Automatically installing dependencies from npm](#automatically-installing-dependencies-from-npm)

@@ -130,7 +130,7 @@ module.exports = {
 
 ##### `cherryPick`: `String | Array<String>`
 
-> As of nwb v0.15, Webpack 2 can tree shake ES modules (to a degree) to avoid including unused imports in the bundles it creates. If a module you're importing has a `"module"` entry in its `package.json` which points to a build using ES modules, you might not need to use `cherryPick`.
+> As of v0.15 nwb uses Webpack 2, which can tree shake ES modules (to a degree) to avoid including unused imports in the bundles it creates. If a module you're importing has a `"module"` entry in its `package.json` which points to a build using ES modules, you might not need to use `cherryPick`.
 >
 > Running `nwb check-config` will tell you if any modules you've configured `cherryPick` for might be suitable for Webpack 2 to handle instead.
 
@@ -210,7 +210,7 @@ Additional Babel presets to use.
 Babel's [runtime transform](https://babeljs.io/docs/plugins/transform-runtime/) does 3 things by default:
 
 1. Imports helper modules from `babel-runtime` instead of duplicating **helpers** in every module which needs them.
-2. Imports a local **polyfill** for new ES6 builtins (`Promise`) and static methods (e.g. `Object.assign`) when they're used in your code.
+2. Imports a local **polyfill** for new ES6 built-ins (`Promise`) and static methods (e.g. `Object.assign`) when they're used in your code.
 3. Imports the **regenerator** runtime required to use `async`/`await` when needed.
 
 nwb's default config turns the regenerator runtime import on so you can use `async`/`await` and generators.
@@ -241,8 +241,8 @@ Controls which Babel preset will be used to enable use of experimental, proposed
 | ----- | ------------- | -------- |
 | [0](https://babeljs.io/docs/plugins/preset-stage-0) | Strawman, just an idea |`do {...}` expressions, `::` function bind operator |
 | [1](https://babeljs.io/docs/plugins/preset-stage-1) | Proposal: this is worth working on | export extensions |
-| [2](https://babeljs.io/docs/plugins/preset-stage-2) | Draft: initial spec | class properties, object rest/spread syntax, `@decorator` syntax ( using the [Babel Legacy Decorator plugin](https://github.com/loganfsmyth/babel-plugin-transform-decorators-legacy)) - **enabled by default** |
-| [3](https://babeljs.io/docs/plugins/preset-stage-3) | Candidate: complete spec and initial browser implementations | trailing function commas, `async`/`await`, `**` exponentiation operator |
+| [2](https://babeljs.io/docs/plugins/preset-stage-2) | Draft: initial spec | class properties, `@decorator` syntax ( using the [Babel Legacy Decorator plugin](https://github.com/loganfsmyth/babel-plugin-transform-decorators-legacy)) - **enabled by default** |
+| [3](https://babeljs.io/docs/plugins/preset-stage-3) | Candidate: complete spec and initial browser implementations | object rest/spread `...` syntax,  `async`/`await`, `**` exponentiation operator, trailing function commas |
 
 e.g. if you want to use export extensions in your app, you should set `stage` to `1`:
 
@@ -268,11 +268,11 @@ module.exports = {
 
 #### `webpack`: `Object`
 
-[Webpack](https://webpack.github.io/) configuration can be provided in a `webpack` object, using the following properties:
+[Webpack](https://webpack.js.org/) configuration can be provided in a `webpack` object, using the following properties:
 
 ##### `aliases`: `Object`
 
-Configures [Webpack aliases](https://webpack.github.io/docs/resolving.html#aliasing), which allow you to control module resolution. Typically aliases are used to make it easier to import certain modules from within any depth of nested directories in an app.
+Configures [Webpack aliases](https://webpack.js.org/configuration/resolve/#resolve-alias), which allow you to control module resolution. Typically aliases are used to make it easier to import certain modules from within nested directories in an app.
 
 ```js
 module.exports = {
@@ -291,7 +291,7 @@ module.exports = {
 }
 ```
 
-You should be careful to avoid creating aliases which conflict with the names of Node.js builtins or npm packages, as you will be unable to import them.
+You should be careful to avoid creating aliases which conflict with the names of Node.js built-ins or npm packages, as you will then be unable to import them.
 
 ##### `autoprefixer`: `String | Object`
 
@@ -363,7 +363,7 @@ module.exports = {
 
 ##### `define`: `Object`
 
-By default, nwb will use Webpack's [`DefinePlugin`](https://webpack.github.io/docs/list-of-plugins.html#defineplugin) to replace all occurances of `process.env.NODE_ENV` with a string containing `NODE_ENV`'s current value.
+By default, nwb will use Webpack's [`DefinePlugin`](https://webpack.js.org/plugins/define-plugin/) to replace all occurrences of `process.env.NODE_ENV` with a string containing `NODE_ENV`'s current value.
 
 You can configure a `define` object to add your own constant values.
 
@@ -399,7 +399,7 @@ module.exports = {
 
 Configures [options for `HtmlWebpackPlugin`](https://github.com/ampedandwired/html-webpack-plugin#readme).
 
-For apps, nwb will look for a `src/index.html` template to inject `<link>` and `<script>` tags into for each CSS and JavaScript bundle generated by Webpack.
+For apps, nwb will look for a `src/index.html` template to inject `<link>` and `<script>` tags into for CSS and JavaScript bundles generated by Webpack.
 
 Use `template`config if you have an HTML file elsewhere you want to use:
 
@@ -448,11 +448,11 @@ module.exports = {
 
 ##### `install`: `Object`
 
-Configures [options for `NpmInstallPlugin`](https://github.com/ericclemmons/npm-install-webpack-plugin#usage), which will be used if you pass an `--install` flag to `nwb serve`.
+Configures [options for `NpmInstallPlugin`](https://github.com/ericclemmons/npm-install-webpack-plugin#usage), which will be used if you pass an `--install` flag to nwb commands which run a development server.
 
 ##### `rules`: `Object`
 
-Each [Webpack rule](https://webpack.js.org/configuration/module/#module-rules) used in nwb's default Webpack configuration has a unique id you can use to customise it.
+Each [Webpack rule](https://webpack.js.org/configuration/module/#module-rules) used in nwb's Webpack configuration has an associated id you can use to customise it.
 
 To customise a rule, add a prop to the `rules` object matching its id with a configuration object.
 
@@ -558,7 +558,7 @@ module.exports = {
 
 ###### Configuring CSS Preprocessor Plugins
 
-Rule ids for configuring CSS preprocessor plugins follow similar patterns to `css-pipeline` and `vendor-css-pipeline` above, except they make use of the unique id associated with each preprocessor.
+Rule ids for configuring nwb [CSS preprocessor plugins](/docs/Plugins.md#css-preprocessor-plugins) follow a similar pattern to `css-pipeline` and `vendor-css-pipeline` above, except they make use of an id associated with each preprocessor.
 
 Using [nwb-sass](https://github.com/insin/nwb-sass) as example, you can use the following ids in `webpack.rules` config to configure each part of the pipeline for your app's Sass stylesheets:
 
@@ -566,13 +566,13 @@ Using [nwb-sass](https://github.com/insin/nwb-sass) as example, you can use the 
   - `sass-style` (only when serving)
   - `sass-css`
   - `sass-postcss`
-  - `sass` (use to configure [`sass-loader`](https://github.com/jtangelder/sass-loader))
+  - `sass` (use to configure [sass-loader][sass-loader])
 
 There will also be a `vendor-sass-pipeline` for Sass stylesheets with the same setup as `sass-pipeline` but using a `vendor-` prefix.
 
 ##### `publicPath`: `String`
 
-> This is just Webpack's [`output.publicPath` config](https://webpack.github.io/docs/configuration.html#output-publicpath) pulled up a level to make it more convenient to configure.
+> This is just Webpack's [`output.publicPath` config](https://webpack.js.org/configuration/output/#output-publicpath) pulled up a level to make it more convenient to configure.
 
 `publicPath` defines the URL static resources will be referenced by in build output, such as `<link>` and `<src>` tags in generated HTML, `url()` in stylesheets and paths to any static resources you `require()` into your modules.
 
@@ -604,7 +604,7 @@ module.exports = {
 }
 ```
 
-The trade-off for path-independence is HTML5 history routing won't work, as serving up `index.html` at anything but its real path will mean its static resource URLs won't resolve. You will have to fall back on hash-based routing if you need it.
+The trade-off for path-independence is HTML5 History routing won't work, as serving up `index.html` at anything but its real path will mean its static resource URLs won't resolve. You will have to fall back on hash-based routing if you need it.
 
 ##### `uglify`: `Object | false`
 
@@ -613,13 +613,14 @@ Configures [options for Webpack's `UglifyJsPlugin`](https://webpack.github.io/do
 Any additional options provided will be merged into nwb's defaults, which are:
 
 ```js
-module.exports = {
+{
   compress: {
     warnings: false
   },
   output: {
     comments: false
-  }
+  },
+  sourceMap: true
 }
 ```
 
@@ -648,7 +649,7 @@ module.exports = {
 
 ##### `extra`: `Object`
 
-Extra configuration to be merged into the generated Webpack configuration using [webpack-merge](https://github.com/survivejs/webpack-merge#webpack-merge---merge-designed-for-webpack) - see the [Webpack configuration docs](https://webpack.github.io/docs/configuration.html) for the available fields.
+Extra configuration to be merged into the generated Webpack configuration using [webpack-merge](https://github.com/survivejs/webpack-merge#webpack-merge---merge-designed-for-webpack) - see the [Webpack configuration docs](https://webpack.js.org/configuration/) for the available properties.
 
 Note that you *must* use Webpack's own config structure in this object - e.g. to add an extra rule which isn't managed by nwb's own `webpack.rules` config, you would need to provide a list of rules at `webpack.extra.module.rules`.
 
@@ -664,7 +665,7 @@ function(nwb) {
         // assuming you have installed html-loader in your project.
         module: {
           rules: [
-            {test: /\.html$/, loader: 'html'}
+            {test: /\.html$/, loader: 'html-loader'}
           ]
         },
         // Example of adding an extra plugin which isn't managed by nwb
@@ -804,7 +805,7 @@ If the default [`testFiles`](#testfiles-string--arraystring) config wouldn't hav
 
 If [`karma.testContext`](#testcontext-string) is not being used, this controls which files Karma will run tests from.
 
-This is also used to exclude tests from code coverage, so if you're using [`karma.testContext`](#testcontext-string) and the default patterns wouldn't have picked up your tests, configure this as well to exclude then from code coverage.
+This can also be used to exclude tests from code coverage if you're using [`karma.testContext`](#testcontext-string) - if the default `testFiles` patterns wouldn't have picked up your tests, configure this as well to exclude then from code coverage.
 
 ##### `plugins`: `Array<Plugin>`
 
@@ -816,7 +817,7 @@ A list of plugins to be loaded by Karma - this should be used in combination wit
 
 Customising reporters follows the same principle as frameworks, just using the `reporters` prop instead.
 
-For built-in reporters, or nwb's versfon of the Mocha reporter, just pass a name:
+For built-in reporters, or nwb's version of the Mocha reporter, just pass a name:
 
 ```js
 module.exports = {
@@ -874,7 +875,7 @@ npm build configuration is defined in a `npm` object, using the following fields
 
 > Defaults to `true` if not provided.
 
-Determines whether or not nwb will create an ES6 modules build for use by ES6 module bundlers when you run `nwb build` for a React component/libary or web module project.
+Determines whether or not nwb will create an ES6 modules build for use by ES6 module bundlers when you run `nwb build` for a React component/library or web module project.
 
 When providing an ES6 modules build, you should also provide the following in `package.json` so compatible module bundlers can find it:
 
@@ -949,5 +950,6 @@ If all fields are present the banner will be in this format:
 [isparta-loader]: https://github.com/deepsweet/isparta-loader/
 [npm-install-loader]: https://github.com/ericclemmons/npm-install-loader/
 [postcss-loader]: https://github.com/postcss/postcss-loader/
+[sass-loader]: https://github.com/jtangelder/sass-loader
 [style-loader]: https://github.com/webpack/style-loader/
 [url-loader]: https://github.com/webpack/url-loader/

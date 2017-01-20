@@ -15,7 +15,7 @@ Installing nwb provides the following commands:
   - [Check Config Command](#check-config-command)
 
 - [`react`, `inferno` and `preact`](#react-inferno-and-preact) - quick development
-  - See [Quick Development with nwb](/docs/guides/QuickDevelopment.md#quick-development-with-nwb) guide
+  - See the [Quick Development with nwb](/docs/guides/QuickDevelopment.md#quick-development-with-nwb) guide
 
 ### `nwb`
 
@@ -151,7 +151,7 @@ When run in a `react-app` project, `serve` will serve the app with hot module re
 
 **In other web apps:**
 
-When run in a `web-app` project, `serve` will serve the app with hot module reloading (HMR) and display of syntax errors as an overlay, *but* you will have to [manually configure your JavaScript code](https://webpack.github.io/docs/hot-module-replacement.html) if you wish to make use of HMR.
+When run in a `web-app` project, `serve` will serve the app with Hot Module Replacement (HMR) and display of syntax errors as an overlay, *but* you will have to [manually configure your JavaScript code](https://webpack.github.io/docs/hot-module-replacement.html) if you wish to make use of HMR.
 
 If you pass a `--reload` option, the HMR client will refresh the page any time a JavaScript change was made and it was unable to patch the module. This may be a better option if your app isn't suitable for HMR.
 
@@ -275,7 +275,7 @@ These are used in the `npm scripts` section of `package.json` in project skeleto
 
 - `serve-inferno-app [entry]` - serve an Inferno app from `entry` *[default: `src/index.js`]*
 
-- `serve-preact-app [entry]` - serve a Peact app from `entry` *[default: `src/index.js`]*
+- `serve-preact-app [entry]` - serve a Preact app from `entry` *[default: `src/index.js`]*
 
 - `serve-react-app [entry]` - serve a React app from `entry` *[default: `src/index.js`]*
 

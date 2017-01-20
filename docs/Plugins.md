@@ -1,8 +1,8 @@
 ## Plugins
 
-Plugin modules provide additional functionality - if you have one installed in your project, nwb will automatically find it when creating configuration and integrate the functionality it provides .
+Plugin modules provide additional functionality - if you have one installed in your project, nwb will automatically find it when creating configuration and integrate the functionality it provides.
 
-### CSS Preprocessors
+### CSS Preprocessor Plugins
 
 CSS preprocessors convert styles in alternative style languages to CSS, with the resulting CSS being passed through the standard nwb CSS pipeline.
 
@@ -38,7 +38,7 @@ CSS preprocessor plugins must export a configuration object in the following for
  {
     cssPreprocessors: {
       'preprocessor-id': {
-        test: /\.fileextension$/,
+        test: /\.ext$/,
         loader: 'absolute path to a webpack loader module.js',
         // Other rule config, e.g. default options
       }

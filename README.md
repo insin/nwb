@@ -99,7 +99,7 @@ npm scripts are as above for React apps.
 
 ## Inferno Apps
 
-Use `nwb new inferno-app` to create an [Inferno](https://github.com/trueadm/inferno#readme) app skeleton:
+Use `nwb new inferno-app` to create an [Inferno](https://infernojs.org/) app skeleton:
 
 ```sh
 nwb new inferno-app my-app

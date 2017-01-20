@@ -1,6 +1,6 @@
 ## Testing
 
-nwb uses [Karma](http://karma-runner.github.io/) as a test runner, with [Webpack](https://webpack.github.io/) to bundle test code and a [Babel plugin](https://github.com/istanbuljs/babel-plugin-istanbul/) to instrument it for code coverage reporting.
+nwb uses [Karma](http://karma-runner.github.io/) as a test runner, with [Webpack](https://webpack.js.org/) to bundle test code and a [Babel plugin](https://github.com/istanbuljs/babel-plugin-istanbul/) to instrument it for code coverage reporting.
 
 - [Default Testing Setup](#default-testing-setup)
   - [Browsers](#browsers)
@@ -46,7 +46,7 @@ import expect from 'expect'
 
 #### Test Files
 
-In the template projects created by nwb's `new` and `init` commands, the sample unit test is in a `*-test.js` file in the `tests/` directory.
+In the project skeletons created by nwb's `new` and `init` commands, the sample unit test is in a `*-test.js` file in the `tests/` directory.
 
 However, the default configuration supports having tests in any file which ends with one of the following suffixes, anywhere underneath a `src/`, `test/` or `tests/` directory:
 
@@ -116,7 +116,7 @@ import utils from src/__tests__/utils
 
 If you need to run some code before any of your tests run, the recommended approach is to create a context module for Webpack to load and use [`karma.testContext` config](/docs/Configuration.md#testcontext-string) to point to it.
 
-You will need to use [`require.context()`](https://webpack.github.io/docs/context.html#require-context) in this module to specify which test files to run, e.g.:
+You will need to use [`require.context()`](https://webpack.js.org/guides/dependency-management/#require-context) in this module to specify which test files to run, e.g.:
 
 ```js
 let context = require.context('./src', true, /\.spec\.js$/)
@@ -209,7 +209,7 @@ Passing a `--coverage` flag when running tests will generate a code coverage rep
 
 Coverage will be measured automatically when your tests are run on Travis CI, or any other environment where a `CONTINUOUS_INTEGRATION` environment variable is set to `true`.
 
-All project templates come with a `.travis.yml` which will post coverage results to [codecov.io](https://codecov.io/) and [coveralls](https://coveralls.io) after a successful build.
+All project skeletons come with a `.travis.yml` which will post coverage results to [codecov.io](https://codecov.io/) and [coveralls](https://coveralls.io) after a successful build.
 
 #### Excluding Code from Coverage
 

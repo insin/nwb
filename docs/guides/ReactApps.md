@@ -84,7 +84,7 @@ Includes a template for your project's HTML entry point, which will have `<link>
 
 > Gist: any file Webpack is configured to deal with (including stylesheets and images) can be imported as if it were a module; Webpack starts from your app's entry module and walks imports to build up a graph of modules to be built.
 
-**tests/**: nwb will find and run tests in a separate `tests/` directory or colocated with your source code under `src/`, as long as their filenames end with `.test.js`, `-test.js` or `.spec.js` - an example of a basic React component test is provided.
+**tests/**: nwb will find and run tests in a separate `tests/` directory or co-located with your source code under `src/`, as long as their filenames end with `.test.js`, `-test.js` or `.spec.js` - an example of a basic React component test is provided.
 
 ---
 
@@ -107,7 +107,7 @@ Command | Description |
 `npm run build` | create a production build in `dist/`
 `npm run clean` | delete built resources
 
-The initial project is set up so you can sucessfully run each of these commands and get some meaningful output.
+The initial project is set up so you can successfully run each of these commands and get some meaningful output.
 
 ## Running the Development Server
 
@@ -171,7 +171,7 @@ We'll start by splitting each of the main components from [the final Thinking in
 
 Thinking in React uses [`React.createClass()`](https://facebook.github.io/react/docs/top-level-api.html#react.createclass) to define its components.
 
-This is arguably the least confusing way to start learning about React components as it autobinds component methods to the component instance. This means you never have to worry about the value of `this` when using a component method as an event handler or other callback; it just works like you think it should.
+This is arguably the least confusing way to start learning about React components as it auto-binds component methods to the component instance. This means you never have to worry about the value of `this` when using a component method as an event handler or other callback; it just works like you think it should.
 
 For the sake of showing different ways to define components which are enabled by nwb's default configuration, the modules linked to above use [ES6 class components](https://facebook.github.io/react/docs/reusable-components.html#es6-classes) and [stateless function components](https://facebook.github.io/react/docs/reusable-components.html#stateless-functions).
 
@@ -218,7 +218,7 @@ class FilterableProductTable extends Component {
 }
 ```
 
-Using experimental class property syntax avoids this constructor boilerplate - the `=` assignment statements in the class body are actually *moved into a generated constructor*, so the event handler arrow function inherits the constructor's `this`, which is roughly equivalent to what `React.createClass()` autobinding was doing for us:
+Using experimental class property syntax avoids this constructor boilerplate - the `=` assignment statements in the class body are actually *moved into a generated constructor*, so the event handler arrow function inherits the constructor's `this`, which is roughly equivalent to what `React.createClass()` auto-binding was doing for us:
 
 ```js
 class FilterableProductTable extends Component {
@@ -369,9 +369,9 @@ Code coverage percentages on their own are fairly meaningless, but running cover
 
 This HTML report is handy for finding out what your tests *aren't* covering, and deciding which uncovered areas you'd feel more comfortable having some tests for.
 
-### Continous Integration (CI) Testing
+### Continuous Integration (CI) Testing
 
-If you use [GitHub](https://github.com/) for your project's source code hosting, the project is preconfigured for running tests on [Travis CI](https://travis-ci.org/) and posting code coverage results to [coveralls](https://coveralls.io/) and [codecov.io](https://codecov.io/) after successful test runs.
+If you use [GitHub](https://github.com/) for your project's source code hosting, the project is pre-configured for running tests on [Travis CI](https://travis-ci.org/) and posting code coverage results to [coveralls](https://coveralls.io/) and [codecov.io](https://codecov.io/) after successful test runs.
 
 Logging into Travis CI and enabling it for your GitHub project will ensure your tests are run against every subsequent commit and will automatically be run against any Pull Requests your repo receives.
 

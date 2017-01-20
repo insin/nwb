@@ -239,13 +239,13 @@
 
 **Fixed:**
 
-* Fix default test in the `preact-app` template [[#206](https://github.com/insin/nwb/pull/206) by [ntwcklng][ntwcklng]]
+* Fix default test in the `preact-app` skeleton [[#206](https://github.com/insin/nwb/pull/206) by [ntwcklng][ntwcklng]]
 
 # 0.13.3 / 2016-12-10
 
 **Fixed:**
 
-* Fix npm scripts in the `inferno-app` template.
+* Fix npm scripts in the `inferno-app` skeleton.
 
 # 0.13.2 / 2016-12-10
 
@@ -263,7 +263,7 @@
 
 **Added:**
 
-- Added new project types: `inferno-app` and `preact-app` - use these with `nwb new` or `nwb init` to develop [Inferno](https://github.com/trueadm/inferno#readme) and [Preact](https://preactjs.com/) apps [[#194](https://github.com/insin/nwb/issues/194)]
+- Added new project types: `inferno-app` and `preact-app` - use these with `nwb new` or `nwb init` to develop [Inferno](https://infernojs.com/) and [Preact](https://preactjs.com/) apps [[#194](https://github.com/insin/nwb/issues/194)]
 - Added an [`--inferno` flag](https://github.com/insin/nwb/blob/next/docs/Commands.md#build-1) to React app builds to create an [inferno-compat](https://github.com/trueadm/inferno/tree/master/packages/inferno-compat) build [[#194](https://github.com/insin/nwb/issues/194)]
 - [`react-jsx-source`](https://babeljs.io/docs/plugins/transform-react-jsx-source/) and [`react-jsx-self`](https://babeljs.io/docs/plugins/transform-react-jsx-self/) Babel transforms are now enabled for React apps in development mode for improved debugging.
 - A Git repo with an initial commit is now created by default when creating a new project. Pass a `--no-git` flag to disable this.
@@ -369,9 +369,9 @@
 
   These were a confusing middle layer which split the implementation of building a React component or browser-focused npm module in two. They both required a config file to provide a project `type` for nwb to figure out what to do.
 
-  They've been **replaced with `build-react-component` and `build-web-module` commands**, which are now used in `package.json` `scripts` in the corresponding project templates.
+  They've been **replaced with `build-react-component` and `build-web-module` commands**, which are now used in `package.json` `scripts` in the corresponding project skeletons.
 
-  As a result **having a config file is now optional for all project types**. If you don't need configuration, you can delete the `nwb.config.js` file created as a convenience by project templates.
+  As a result **having a config file is now optional for all project types**. If you don't need configuration, you can delete the `nwb.config.js` file created as a convenience by project skeletons.
 
   A config file is now only required if you want to use the generic `build`, `clean` and `serve` commands.
 - **Changed ES6 module build directory from `es6/` to `es/`**
@@ -516,7 +516,7 @@
 
 - **Added a [`--preact` flag](https://github.com/insin/nwb/blob/0.12/docs/Commands.md#build-1)** to React app builds to create a [preact-compat](https://github.com/developit/preact-compat) build.
 
-  This is an easy way to try [Preact](https://github.com/developit/preact) with your React apps, resulting in a much smaller bundle if your app is compatible [[#124](https://github.com/insin/nwb/issues/124)]
+  This is an easy way to try [Preact](https://preactjs.com/) with your React apps, resulting in a much smaller bundle if your app is compatible [[#124](https://github.com/insin/nwb/issues/124)]
 
 **Babel:**
 
@@ -602,7 +602,7 @@
 
 **Starter Projects:**
 
-- The react-app template project now includes examples of importing CSS and images.
+- The react-app project skeleton now includes examples of importing CSS and images.
 - Required `<meta>` tags in HTML templates are now all first thing in `<head>`.
 - Added `shrink-to-fit=no` to the `viewport` `<meta>` tag in HTML templates for Safari.
 
@@ -964,7 +964,7 @@
 - `nwb.config.js` is now only required when running generic build commands: `build`, `clean`, `serve`, `test`
   - `type` config is only required when running a generic build command, but if provided it must be valid.
 - Karma tests now always run just once in a CI environment regardless of the `--server` flag - this allows you to use `--server` in your default `npm test` command if you want to, without needing a separate run script for CI.
-- Development instructions in project templates were moved from `README.md` to a `CONTRIBUTING.md` file, and are now documented using `npm` and `npm run` commands instead of global `nwb` commands.
+- Development instructions in project skeletons were moved from `README.md` to a `CONTRIBUTING.md` file, and are now documented using `npm` and `npm run` commands instead of global `nwb` commands.
 - All commands are now run in the current working directory - you no longer need to `require.resolve()` full paths to extra Babel plugins configured in `nwb.config.js`, just use their names as normal and Babel will now be able to import them.
 - Upgraded to PhantomJS v2 for Karma tests.
   - Babel polyfills are no longer included in Webpack config for Karma, as PhantomJS v2 uses a more recent version of WebKit.
@@ -1103,7 +1103,7 @@
 
 **Fixed:**
 
-- The `es6/` directory wasn't included in the default `.gitignore` for npm module project templates.
+- The `es6/` directory wasn't included in the default `.gitignore` for npm module project skeletons.
 
 # 0.6.0 / 2015-12-23
 
@@ -1158,7 +1158,7 @@
 
 **Fixed:**
 
-- Bad npm package for 0.4.0 - npm was reading the new `files` config from `package.json` in templates for React components/web modules and applying it when packing nwb itself for publishing [[#21](https://github.com/insin/nwb/issues/21)]
+- Bad npm package for 0.4.0 - npm was reading the new `files` config from `package.json` in templates for React component/web module skeletons and applying it when packing nwb itself for publishing [[#21](https://github.com/insin/nwb/issues/21)]
 
 # 0.4.0 / 2015-12-11
 
@@ -1166,19 +1166,19 @@
 
 - Added `--fallback` option to `nwb serve`, for serving the index page from any path when developing React apps which use the HTML5 History API [[#16](https://github.com/insin/nwb/issues/16)]
 - Added `"engines": {"node": ">=4.0.0"}` to `package.json` - nwb accidentally depends on this because it uses [qs](https://github.com/hapijs/qs) v6 [[#19](https://github.com/insin/nwb/issues/19)]
-- Added `files` config to React component/web module `package.json` templates.
-  - The `files` config for the React component template assumes that components published to npm with `require()` calls for CSS which ships with it will use a `css/` dir.
+- Added `files` config to React component/web module skeleton `package.json`.
+  - The `files` config for the React component skeleton assumes that components published to npm with `require()` calls for CSS which ships with it will use a `css/` dir.
 - Added a default ES6 build with untranspiled ES6 module usage [[#15](https://github.com/insin/nwb/issues/15)]
-  - This is pointed to by `"jsnext:main"` in project template `package.json` for use by tree-shaking ES6 bundlers.
+  - This is pointed to by `"jsnext:main"` in project skeleton `package.json` for use by tree-shaking ES6 bundlers.
 
 **Fixed:**
 
-- Added missing `main` config to React component/web module `package.json` templates, pointing at the ES5 build in `lib/`.
+- Added missing `main` config to React component/web module skeleton `package.json`, pointing at the ES5 build in `lib/`.
 - Express middleware wasn't included in npm package.
 
 **Changed:**
 
-- 1.0.0 is now the default version for template projects.
+- 1.0.0 is now the default version for project skeletons.
 
 # 0.3.1 / 2015-12-09
 

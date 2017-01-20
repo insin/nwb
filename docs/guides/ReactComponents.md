@@ -65,7 +65,7 @@ Creating a react-component project...
 
 An ES6 modules build retains use of ES6 `import` and `export` statements in your code but transpiles everything else to ES5.
 
-Module bundlers like [Rollup](http://rollupjs.org/) and [Webpack 2](https://webpack.github.io/) can use this build to determine if code was imported but never used and eliminate it from the final bundle.
+Module bundlers like [Rollup](http://rollupjs.org/) and [Webpack 2](https://webpack.js.org/) can use this build to determine if code was imported but never used and eliminate it from the final bundle.
 
 It's enabled by default, so we can just hit `Enter` to accept the default:
 
@@ -133,7 +133,7 @@ react-loading-button/
 
 **src/**: Contains your React module's source.
 
-**tests/**: nwb will find and run tests in a separate `tests/` directory or colocated with your source code under `src/`, as long as their filenames end with `.test.js`, `-test.js` or `.spec.js` - an example of a basic React component test is provided.
+**tests/**: nwb will find and run tests in a separate `tests/` directory or co-located with your source code under `src/`, as long as their filenames end with `.test.js`, `-test.js` or `.spec.js` - an example of a basic React component test is provided.
 
 ---
 
@@ -158,7 +158,7 @@ Command | Description |
 `npm run build` | prepare for publishing to npm
 `npm run clean` | delete built resources
 
-The initial project is set up so you can sucessfully run each of these commands and get some meaningful output, albeit for a component which does nothing more than render a welcome message.
+The initial project is set up so you can successfully run each of these commands and get some meaningful output, albeit for a component which does nothing more than render a welcome message.
 
 ## Running the Demo App
 
@@ -312,15 +312,15 @@ Code coverage percentages on their own are fairly meaningless, but running cover
 
 This HTML report is handy for finding out what your tests *aren't* covering, and deciding which uncovered areas you'd feel more comfortable having some tests for.
 
-### Continous Integration (CI) Testing
+### Continuous Integration (CI) Testing
 
-If you use [GitHub](https://github.com/) for your project's source code hosting, it's preconfigured for running tests on [Travis CI](https://travis-ci.org/) and posting code coverage results to [coveralls](https://coveralls.io/) and [codecov.io](https://codecov.io/) after successful test runs.
+If you use [GitHub](https://github.com/) for your project's source code hosting, it's pre-configured for running tests on [Travis CI](https://travis-ci.org/) and posting code coverage results to [coveralls](https://coveralls.io/) and [codecov.io](https://codecov.io/) after successful test runs.
 
 If you log in to Travis CI and enable it for your GitHub project, your tests will be run on every subsequent commit and automatically run against Pull Requests.
 
 ## Building and Publishing
 
-nwb provides a default setup which keeps your source code repository free from distracting built resources (which can also be confusing for potential contributors) and makes your code useable as part of a standard Node.js development setup, by module bundlers and directly in the browser via `<script>` tag.
+nwb provides a default setup which keeps your source code repository free from distracting built resources (which can also be confusing for potential contributors) and makes your code usable as part of a standard Node.js development setup, by module bundlers and directly in the browser via `<script>` tag.
 
 ### Preparing for Publishing
 
@@ -350,7 +350,7 @@ Once you've built your project, it's ready for publishing to npm using whatever 
 npm publish
 ```
 
-`package.json` is preconfigured with a [`"files"` whitelist](https://docs.npmjs.com/files/package.json#files) which will only include `lib/`, `es/` and `umd/` directories in the npm package, in addition to the usual npm metadata like `package.json` and `README.md`.
+`package.json` is pre configured with a [`"files"` whitelist](https://docs.npmjs.com/files/package.json#files) which will only include `lib/`, `es/` and `umd/` directories in the npm package, in addition to the usual npm metadata like `package.json` and `README.md`.
 
 ## Libraries
 
@@ -366,7 +366,7 @@ You can use [npm build configuration](/docs/Configuration.md#npm-build-configura
 
 #### UMD Externals
 
-The React component template uses [`npm.umd.externals` config](/docs/Configuration.md#externals-object) to make UMD builds use React via a global `React` variable rather than bundling it.
+The React component build uses [`npm.umd.externals` config](/docs/Configuration.md#externals-object) to make UMD builds use React via a global `React` variable rather than bundling it.
 
 If you have other dependencies users will need to make available globally to use your UMD build, you will need to add suitable configuration for them.
 

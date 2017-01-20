@@ -33,7 +33,7 @@ module.exports = {
 
 Are you running as root on a Mac, or in a Docker container?
 
-npm appers to [set the working directory as the temporary directory](https://github.com/npm/npm/issues/4531) in these scenarios and babel-loader writes to the temporary directory to cache results for performance.
+npm appears to [set the working directory as the temporary directory](https://github.com/npm/npm/issues/4531) in these scenarios and babel-loader writes to the temporary directory to cache results for performance.
 
 ### What can I configure to reduce bundle size?
 
