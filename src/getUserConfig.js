@@ -15,7 +15,7 @@ import {deepToString, joinAnd, typeOf} from './utils'
 
 const DEFAULT_REQUIRED = false
 
-const BABEL_RUNTIME_OPTIONS = ['helpers', 'polyfill']
+const BABEL_RUNTIME_OPTIONS = new Set(['helpers', 'polyfill'])
 
 let s = (n, w = ',s') => w.split(',')[n === 1 ? 0 : 1]
 
@@ -137,8 +137,8 @@ export function processUserConfig({
 
   let report = new UserConfigReport(userConfigPath)
 
-  if ((required || 'type' in userConfig) && PROJECT_TYPES.indexOf(userConfig.type) === -1) {
-    report.error('type', userConfig.type, `Must be one of: ${PROJECT_TYPES.join(', ')}`)
+  if ((required || 'type' in userConfig) && !PROJECT_TYPES.has(userConfig.type)) {
+    report.error('type', userConfig.type, `Must be one of: ${[...PROJECT_TYPES].join(', ')}`)
   }
 
   // Set defaults for config objects so we don't have to existence-check them
@@ -173,7 +173,7 @@ export function processUserConfig({
   }
   if ('runtime' in userConfig.babel &&
       typeOf(userConfig.babel.runtime) !== 'boolean' &&
-      BABEL_RUNTIME_OPTIONS.indexOf(userConfig.babel.runtime) === -1) {
+      !BABEL_RUNTIME_OPTIONS.has(userConfig.babel.runtime)) {
     report.error(
       'babel.runtime',
       userConfig.babel.runtime,

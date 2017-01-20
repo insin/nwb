@@ -120,10 +120,10 @@ function initGit(args, cwd, cb) {
  */
 export function validateProjectType(projectType) {
   if (!projectType) {
-    throw new UserError(`A project type must be provided, one of: ${PROJECT_TYPES.join(', ')}`)
+    throw new UserError(`A project type must be provided, one of: ${[...PROJECT_TYPES].join(', ')}`)
   }
-  if (PROJECT_TYPES.indexOf(projectType) === -1) {
-    throw new UserError(`Project type must be one of: ${PROJECT_TYPES.join(', ')}`)
+  if (!PROJECT_TYPES.has(projectType)) {
+    throw new UserError(`Project type must be one of: ${[...PROJECT_TYPES].join(', ')}`)
   }
 }
 
