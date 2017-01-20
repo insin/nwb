@@ -25,6 +25,8 @@ Installing globally provides an `nwb` command for working with projects and `rea
 npm install -g nwb
 ```
 
+> Using **npm >= 3 is recommended**, as Babel 6 takes significantly more time and disk space to install with npm 2 due to its lack of deduplication.
+
 To use nwb's tooling in a project, install it as a `devDependency` and use `nwb` commands in `package.json` `"scripts"`:
 
 ```sh

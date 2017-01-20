@@ -99,18 +99,36 @@
 
 **Dependencies:**
 
-- babel-plugin-inferno: v1.5.0 → v1.6.0 - make plugin ES5-environment compatible
+- babel-cli: v6.18.0 → [v6.22.2](https://github.com/babel/babel/blob/master/CHANGELOG.md#6222-2017-01-19)
+- babel-core: v6.21.0 → [v6.22.1](https://github.com/babel/babel/blob/master/CHANGELOG.md#6221-2017-01-19)
+- babel-plugin-inferno: v1.5.0 → v1.7.0 - make plugin ES5-environment compatible; add option to import `createVNode`
+- babel-plugin-transform-react-jsx: v6.8.0 → [v6.22.0][babel6220]
+- babel-plugin-transform-react-jsx-self: v6.11.0 → [v6.22.0][babel6220]
+- babel-plugin-transform-react-jsx-source: v6.9.0 → [v6.22.0][babel6220]
+- babel-plugin-transform-runtime: v6.15.0 → [v6.22.0][babel6220]
+- babel-polyfill: v6.20.0 → [v6.22.0][babel6220]
+- babel-preset-es2015: v6.18.0 → [v6.22.0][babel6220]
+- babel-preset-es2016: v6.16.0 → [v6.22.0][babel6220]
+- babel-preset-react : v6.16.0 → [v6.22.0][babel6220]
+- babel-preset-stage-0: v6.16.0 → [v6.22.0][babel6220]
+- babel-preset-stage-1: v6.16.0 → [v6.22.0][babel6220]
+- babel-preset-stage-2: v6.18.0 → [v6.22.0][babel6220]
+- babel-preset-stage-3: v6.17.0 → [v6.22.0][babel6220]
+- babel-runtime: v6.20.0 → [v6.22.0][babel6220]
 - detect-port: v1.0.7 → [v1.1.0](https://github.com/node-modules/detect-port/compare/1.0.7...1.1.0)
-- filesize: v3.3.0 → [v3.4.0](https://github.com/avoidwork/filesize.js/compare/3.3.0...3.4.0)
+- filesize: v3.3.0 → [v3.4.1](https://github.com/avoidwork/filesize.js/compare/3.3.0...3.4.1)
 - fs-extra: v1.0.0 → [v2.0.0](https://github.com/jprichardson/node-fs-extra/blob/master/CHANGELOG.md#200--2017-01-16) - drop Node.js v0.12 support
 - karma: v1.3.0 → [v1.4.0](https://github.com/karma-runner/karma/blob/master/CHANGELOG.md#140-2017-01-14)
+- karma-mocha-reporter: v2.2.1 → [v2.2.2](https://github.com/litixsoft/karma-mocha-reporter/blob/master/CHANGELOG.md#222-2017-01-19)
 - karma-webpack: v1.8.0 → v2.0.1 - Webpack 2 RC support
 - object-assign: v4.1.0 → [v4.1.1](https://github.com/postcss/postcss-loader/blob/master/CHANGELOG.md#122)
-- ora: v0.4.1 → v1.0.0
+- ora: v0.4.1 → v1.1.0 - text can now be changed while stopping and persisting
 - postcss-loader: v1.2.1 → [v1.2.2](https://github.com/postcss/postcss-loader/blob/master/CHANGELOG.md#122)
-- webpack: v1.14.0 → [v2.2.0](https://medium.com/webpack/webpack-2-2-the-final-release-76c3d43bf144#.dvk6bodek)
+- webpack: v1.14.0 → [v2.2.0](https://medium.com/webpack/webpack-2-2-the-final-release-76c3d43bf144) - \o/
 - webpack-merge: v2.3.1 → [v2.4.0](https://github.com/survivejs/webpack-merge/blob/master/CHANGELOG.md#240--2017-01-12)
 - whatwg-fetch: v2.0.1 → [v2.0.2](https://github.com/github/fetch/releases/tag/v2.0.2)
+
+[babel6220]: https://github.com/babel/babel/blob/master/CHANGELOG.md#6220-2017-01-19
 
 **Internal:**
 
