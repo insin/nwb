@@ -1,3 +1,9 @@
+# 0.14.3 / 2017-01-21
+
+**Fixed:**
+
+- Fix `inferno build` command [[#241](https://github.com/insin/nwb/issues/241)] [[balazs4][balazs4]]
+
 # 0.14.2 / 2017-01-20
 
 **Fixed:**
@@ -1100,5 +1106,6 @@
 
 First 0.x release.
 
+[balazs4]: https://github.com/balazs4
 [jihchi]: https://github.com/jihchi
 [ntwcklng]: https://github.com/ntwcklng
