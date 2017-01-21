@@ -40,6 +40,12 @@ function buildConfig(args) {
       // A vendor bundle must be explicitly enabled with a --vendor flag
       vendor: args.vendor,
     },
+    resolve: {
+      alias: {
+        'react': 'inferno-compat',
+        'react-dom': 'inferno-compat'
+      }
+    }
   }
 
   if (args.force === true) {
