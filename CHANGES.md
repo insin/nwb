@@ -1,3 +1,5 @@
+# 0.15.1 / 2017-01-25
+
 **Removed:**
 
 - Remove hints about possibly not needing `babel.cherryPick` due to Webpack 2 tree shaking, as this doesn't currently appear to be true.
