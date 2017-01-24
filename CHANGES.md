@@ -6,7 +6,9 @@
 
   Webpack 2 is strict about what appears in its configuration object. If you're using [`webpack.extra` config](https://github.com/insin/nwb/blob/master/docs/Configuration.md#extra-object), it **must** conform to [Webpack 2's configuration format](https://webpack.js.org/configuration/) or your build will fail with a validation error.
 
-  Webpack 2 no longer allows custom top-level properties in its configuration. Loader configuration which can't be serialised, such as plugin objects, can now be provided directly as loader options instead using [`webpack.rules` config](https://github.com/insin/nwb/blob/master/docs/Configuration.md#rules-object).
+  Webpack 2 no longer allows you to mix CommonJS modules with ECMAScript modules - if a module uses `import` or `export` syntax, `exports` will be `undefined` and `module.exports` will be read-only and `undefined`.
+
+  Webpack 2 no longer allows custom top-level properties in its configuration. However, loader configuration which can't be serialised, such as plugin objects, can now be provided directly as loader options instead using [`webpack.rules` config](https://github.com/insin/nwb/blob/master/docs/Configuration.md#rules-object).
 
   This includes `postcss-loader`, which is now configured via `webpack.rules` instead of having its own special `webpack.postcss` config.
 
