@@ -40,7 +40,7 @@
     "filesize": "3.4.2",
     "glob": "7.1.1",
     "gzip-size": "3.0.0",
-    "inquirer": "3.0.0",
+    "inquirer": "3.0.1",
     "minimist": "1.2.0",
     "ora": "1.1.0",
     "resolve": "1.2.0",
