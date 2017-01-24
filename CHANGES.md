@@ -120,6 +120,7 @@
 - babel-runtime: v6.20.0 → [v6.22.0][babel6220]
 - detect-port: v1.0.7 → [v1.1.0](https://github.com/node-modules/detect-port/compare/1.0.7...1.1.0)
 - filesize: v3.3.0 → [v3.4.2](https://github.com/avoidwork/filesize.js/compare/3.3.0...3.4.2)
+- html-webpack-plugin: v2.24.1 → [v2.26.0](https://github.com/ampedandwired/html-webpack-plugin/blob/master/CHANGELOG.md#v2260) - Webpack 2 RC support
 - inquirer: v2.0.0 → [v3.0.1](https://github.com/SBoudrias/Inquirer.js/releases/) - drop Node.js v0.12 support
 - karma: v1.3.0 → [v1.4.0](https://github.com/karma-runner/karma/blob/master/CHANGELOG.md#140-2017-01-14)
 - karma-mocha-reporter: v2.2.1 → [v2.2.2](https://github.com/litixsoft/karma-mocha-reporter/blob/master/CHANGELOG.md#222-2017-01-19)
@@ -132,6 +133,13 @@
 - whatwg-fetch: v2.0.1 → [v2.0.2](https://github.com/github/fetch/releases/tag/v2.0.2)
 
 [babel6220]: https://github.com/babel/babel/blob/master/CHANGELOG.md#6220-2017-01-19
+
+**Temporarily Scoped Dependencies:**
+
+These are being scoped to both make use of unreleased features and to test them out:
+
+- @insin/extract-text-webpack-plugin - scoped until [this PR](https://github.com/webpack/extract-text-webpack-plugin/pull/343) is merged and released
+- @insin/npm-install-webpack-plugin - scoped until new features are merged and released
 
 **Internal:**
 

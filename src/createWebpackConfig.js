@@ -3,9 +3,9 @@ import path from 'path'
 import autoprefixer from 'autoprefixer'
 import CaseSensitivePathsPlugin from 'case-sensitive-paths-webpack-plugin'
 import CopyPlugin from 'copy-webpack-plugin'
-import ExtractTextPlugin from '@insin/extract-text-webpack-plugin'
+import ExtractTextPlugin from '@insin/extract-text-webpack-plugin' // XXX Temporary
 import HtmlPlugin from 'html-webpack-plugin'
-import NpmInstallPlugin from 'npm-install-webpack-plugin'
+import NpmInstallPlugin from '@insin/npm-install-webpack-plugin' // XXX Temporary
 import webpack, {optimize} from 'webpack'
 import Md5HashPlugin from 'webpack-md5-hash'
 import merge from 'webpack-merge'
@@ -395,6 +395,7 @@ export function createPlugins(server, buildConfig = {}, userConfig = {}) {
   // Must be enabled with an --install or --auto-install flag
   if (buildConfig.autoInstall) {
     plugins.push(new NpmInstallPlugin({
+      peerDependencies: false,
       quiet: true,
       ...userConfig.install,
     }))
@@ -543,15 +544,15 @@ export default function createWebpackConfig(buildConfig, nwbPluginConfig = {}, u
     resolve: merge({
       extensions: ['.js', '.json'],
     }, buildResolveConfig, userResolveConfig),
-    // resolveLoader: {
-    //   modules: [
-    //     'node_modules',
-    //     // As of v2.25.0, html-webpack-plugin no longer outputs an absolute path
-    //     // to its loader, so we must fall back to nwb's node_modules/ for global
-    //     // usage.
-    //     path.join(__dirname, '../node_modules'),
-    //   ],
-    // },
+    resolveLoader: {
+      modules: [
+        'node_modules',
+        // As of v2.25.0, html-webpack-plugin no longer outputs an absolute path
+        // to its loader, so we must fall back to nwb's node_modules/ for global
+        // usage.
+        path.join(__dirname, '../node_modules'),
+      ],
+    },
     ...otherBuildConfig,
   }
 
