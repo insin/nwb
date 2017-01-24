@@ -118,7 +118,6 @@
 - babel-runtime: v6.20.0 → [v6.22.0][babel6220]
 - detect-port: v1.0.7 → [v1.1.0](https://github.com/node-modules/detect-port/compare/1.0.7...1.1.0)
 - filesize: v3.3.0 → [v3.4.2](https://github.com/avoidwork/filesize.js/compare/3.3.0...3.4.2)
-- fs-extra: v1.0.0 → [v2.0.0](https://github.com/jprichardson/node-fs-extra/blob/master/CHANGELOG.md#200--2017-01-16) - drop Node.js v0.12 support
 - inquirer: v2.0.0 → [v3.0.0](https://github.com/SBoudrias/Inquirer.js/releases/tag/v3.0.0) - drop Node.js v0.12 support
 - karma: v1.3.0 → [v1.4.0](https://github.com/karma-runner/karma/blob/master/CHANGELOG.md#140-2017-01-14)
 - karma-mocha-reporter: v2.2.1 → [v2.2.2](https://github.com/litixsoft/karma-mocha-reporter/blob/master/CHANGELOG.md#222-2017-01-19)
@@ -134,6 +133,7 @@
 
 **Internal:**
 
+- Dropped unused `fs-extra` dependency.
 - Use [`babel-preset-env`](https://github.com/babel/babel-preset-env/) when transpiling to `lib/`, targeting Node.js v4 [[#233](https://github.com/insin/nwb/issues/233)]
 - Use ES2015 `String` methods available in Node.js v4 instead of `String.prototype.indexOf` comparisons [[#222](https://github.com/insin/nwb/issues/222)]
 
