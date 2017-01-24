@@ -4,14 +4,13 @@ import util from 'util'
 import chalk from 'chalk'
 import figures from 'figures'
 import glob from 'glob'
-import resolve from 'resolve'
 import webpack from 'webpack'
 
 import {CONFIG_FILE_NAME, PROJECT_TYPES} from './constants'
 import {COMPAT_CONFIGS} from './createWebpackConfig'
 import debug from './debug'
 import {ConfigValidationError} from './errors'
-import {deepToString, joinAnd, typeOf} from './utils'
+import {deepToString, typeOf} from './utils'
 
 const DEFAULT_REQUIRED = false
 
@@ -192,32 +191,6 @@ export function processUserConfig({
     else if (userConfig.babel.loose === true) {
       report.hint('babel.loose',
         'Loose mode is enabled by default, so you can remove this config.'
-      )
-    }
-  }
-
-  if ('cherryPick' in userConfig.babel) {
-    let {cherryPick} = userConfig.babel
-    if (typeOf(cherryPick) === 'string') {
-      cherryPick = [cherryPick]
-    }
-    let esModules = []
-    cherryPick.forEach(mod => {
-      try {
-        let pkg = require(resolve.sync(`${mod}/package.json`, {basedir: process.cwd()}))
-        if (pkg.module) {
-          esModules.push(mod)
-        }
-      }
-      catch (e) {
-        // pass
-      }
-    })
-    if (esModules.length > 0) {
-      let n = esModules.length
-      report.hint('babel.cherryPick',
-        `${joinAnd(esModules)} ${s(n, 'has,have')} a ${chalk.cyan('"module"')} entry in ${s(n, 'its,their')} ${chalk.cyan('package.json')}.`,
-        `If you're using ES modules, You Might Not Need ${chalk.green('babel.cherryPick')} for ${s(n, 'this,these')} module${s(n)}, as Webpack 2 can tree shake ES modules.`,
       )
     }
   }

@@ -130,10 +130,6 @@ module.exports = {
 
 ##### `cherryPick`: `String | Array<String>`
 
-> As of v0.15 nwb uses Webpack 2, which can tree shake ES modules (to a degree) to avoid including unused imports in the bundles it creates. If a module you're importing has a `"module"` entry in its `package.json` which points to a build using ES modules, you might not need to use `cherryPick`.
->
-> Running `nwb check-config` will tell you if any modules you've configured `cherryPick` for might be suitable for Webpack 2 to handle instead.
-
 **Note:** this feature only works if you're using ES6 `import` syntax.
 
 Module names to apply `import` cherry-picking to.
