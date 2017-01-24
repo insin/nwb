@@ -84,7 +84,7 @@
   }
   ```
 
-- Configuring PostCSS plugins with `webpack.postcss` is no longer supported - use [`webpack.rules` config](https://github.com/insin/nwb/master/webpack2/docs/Configuration.md#configuring-postcss) instead:
+- Configuring PostCSS plugins with `webpack.postcss` is no longer supported - use [`webpack.rules` config](https://github.com/insin/nwb/blob/master/docs/Configuration.md#configuring-postcss) instead:
 
   ```js
   // < v0.15                             // v0.15
