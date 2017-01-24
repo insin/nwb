@@ -1,3 +1,5 @@
+# 0.15.0 / 2017-01-25
+
 **Breaking Changes:**
 
 - **Upgraded from Webpack 1 to Webpack 2** [[#110](https://github.com/insin/nwb/issues/110)]
