@@ -119,7 +119,7 @@
 - babel-preset-stage-3: v6.17.0 → [v6.22.0][babel6220]
 - babel-runtime: v6.20.0 → [v6.22.0][babel6220]
 - detect-port: v1.0.7 → [v1.1.0](https://github.com/node-modules/detect-port/compare/1.0.7...1.1.0)
-- filesize: v3.3.0 → [v3.4.2](https://github.com/avoidwork/filesize.js/compare/3.3.0...3.4.2)
+- filesize: v3.3.0 → [v3.4.3](https://github.com/avoidwork/filesize.js/compare/3.3.0...3.4.3)
 - html-webpack-plugin: v2.24.1 → [v2.26.0](https://github.com/ampedandwired/html-webpack-plugin/blob/master/CHANGELOG.md#v2260) - Webpack 2 RC support
 - inquirer: v2.0.0 → [v3.0.1](https://github.com/SBoudrias/Inquirer.js/releases/) - drop Node.js v0.12 support
 - karma: v1.3.0 → [v1.4.0](https://github.com/karma-runner/karma/blob/master/CHANGELOG.md#140-2017-01-14)

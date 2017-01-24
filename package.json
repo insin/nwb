@@ -37,7 +37,7 @@
     "debug": "2.6.0",
     "detect-port": "1.1.0",
     "figures": "2.0.0",
-    "filesize": "3.4.2",
+    "filesize": "3.4.3",
     "glob": "7.1.1",
     "gzip-size": "3.0.0",
     "inquirer": "3.0.1",
