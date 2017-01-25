@@ -1,3 +1,7 @@
+**Changed:**
+
+- Tell the user they're including redundant config if they've manually configured inferno-compat or preact-compat aliases for React modules [[#247](https://github.com/insin/nwb/issues/247)]
+
 # 0.15.3 / 2017-01-25
 
 **Fixed:**

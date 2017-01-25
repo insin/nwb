@@ -6,7 +6,7 @@ import figures from 'figures'
 import glob from 'glob'
 import webpack from 'webpack'
 
-import {CONFIG_FILE_NAME, PROJECT_TYPES} from './constants'
+import {CONFIG_FILE_NAME, INFERNO_APP, PREACT_APP, PROJECT_TYPES} from './constants'
 import {COMPAT_CONFIGS} from './createWebpackConfig'
 import debug from './debug'
 import {ConfigValidationError} from './errors'
@@ -88,6 +88,23 @@ export class UserConfigReport {
       })
       console.log()
     })
+  }
+}
+
+function checkForRedundantCompatAliases(projectType, aliases, configPath, report) {
+  if (!new Set([INFERNO_APP, PREACT_APP]).has(projectType)) return
+  if (!aliases) return
+
+  let compatModule = `${projectType.split('-')[0]}-compat`
+  if (aliases.react && aliases.react.includes(compatModule)) {
+    report.hint(`${configPath}.react`,
+      `nwb aliases ${chalk.yellow('react')} to ${chalk.green(compatModule)} by default, so you can remove this config.`
+    )
+  }
+  if (aliases['react-dom'] && aliases['react-dom'].includes(compatModule)) {
+    report.hint(`${configPath}.react-dom`,
+      `nwb aliases ${chalk.yellow('react-dom')} to ${chalk.green(compatModule)} by default, so you can remove this config.`
+    )
   }
 }
 
@@ -350,6 +367,13 @@ export function processUserConfig({
     }
   }
 
+  checkForRedundantCompatAliases(
+    userConfig.type,
+    userConfig.webpack.aliases,
+    'webpack.aliases',
+    report
+  )
+
   if (userConfig.webpack.extra) {
     if (userConfig.webpack.extra.output &&
         userConfig.webpack.extra.output.publicPath) {
@@ -361,6 +385,12 @@ export function processUserConfig({
         userConfig.webpack.extra.resolve.alias) {
       report.hint('webpack.extra.resolve.alias',
         `You can use the more convenient ${chalk.green('webpack.aliases')} instead.`
+      )
+      checkForRedundantCompatAliases(
+        userConfig.type,
+        userConfig.webpack.extra.resolve.alias,
+        'webpack.extra.resolve.alias',
+        report
       )
     }
   }

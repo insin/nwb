@@ -149,6 +149,10 @@ Passing an argument for `entry` allows you to customise the entry point for your
 
 When run in a `react-app` project, `serve` will serve the app with hot module reloading and display of syntax errors and React component rendering errors as overlays.
 
+**In Inferno and Preact apps:**
+
+These apps are pre-configured to use their React compatibility layer if React is imported, so you can try to re-use existing React components out of the box.
+
 **In other web apps:**
 
 When run in a `web-app` project, `serve` will serve the app with Hot Module Replacement (HMR) and display of syntax errors as an overlay, *but* you will have to [manually configure your JavaScript code](https://webpack.github.io/docs/hot-module-replacement.html) if you wish to make use of HMR.
@@ -199,6 +203,12 @@ In production mode builds, the Babel [react-remove-prop-types](https://github.co
 When building React apps, you can also pass a `--preact` flag to configure Webpack to use [Preact](https://preactjs.com/) via the [`preact-compat`](https://github.com/developit/preact-compat) module, or an `--inferno` flag to configure Webpack to use [Inferno](https://infernojs.org/) via the [`inferno-compat`](https://github.com/infernojs/inferno/tree/master/packages/inferno-compat#readme) module.
 
 If your app and its dependencies are compatible, this can be a quick and easy way to reduce the size of your app.
+
+**In Inferno and Preact apps only:**
+
+These apps are pre-configured to use their React compatibility layer if React is imported, so you can try to re-use existing React components out of the box.
+
+You'll only pay the cost of including the compatibility layer in your bundle if you import something which uses React.
 
 **In React component modules and other web modules:**
 
