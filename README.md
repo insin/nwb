@@ -43,7 +43,7 @@ npm install --save-dev nwb
 
 ## Quick Development
 
-For quick development with React, Inferno or Preact, use the global `react`, `inferno` or `preact` commands.
+For quick development with [React](https://facebook.github.io/react/), [Inferno](https://infernojs.org/) or [Preact](https://preactjs.com/), use the global `react`, `inferno` or `preact` commands.
 
 ```js
 import React, {Component} from 'react'
@@ -135,8 +135,8 @@ cd my-module/
 
 ## [Guides](/docs/guides/#table-of-contents)
 
-- [Quick Development with nwb](/docs/guides/QuickDevelopment.md)
-- [Developing React Apps with nwb](/docs/guides/ReactApps.md)
+- [Quick Development with nwb](/docs/guides/QuickDevelopment.md#quick-development-with-nwb)
+- [Developing React Apps with nwb](/docs/guides/ReactApps.md#developing-react-apps-with-nwb)
 - [Developing React Components and Libraries with nwb](/docs/guides/ReactComponents.md#developing-react-components-and-libraries-with-nwb)
 
 ## [Documentation](/docs/#table-of-contents)
@@ -145,6 +145,7 @@ cd my-module/
 - [Commands](/docs/Commands.md#commands)
   - [`react`](/docs/Commands.md#react)
   - [`nwb`](/docs/Commands.md#nwb)
+  - [`react`, `inferno` and `preact`](docs/guides/QuickDevelopment.md#quick-development-with-nwb)
 - [Configuration](/docs/Configuration.md#configuration)
   - [Configuration File](/docs/Configuration.md#configuration-file)
   - [Configuration Object](/docs/Configuration.md#configuration-object)

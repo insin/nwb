@@ -125,7 +125,7 @@ The following commands require a [configuration file](/docs/Configuration.md) to
 
 ##### `nwb serve`
 
-Starts a development server which serves an app with hot module reloading.
+Starts a development server which serves an app with Hot Module Replacement.
 
 ```
 nwb serve [entry]
@@ -200,7 +200,7 @@ set NODE_ENV=development&& nwb build
 
 In production mode builds, the Babel [react-remove-prop-types](https://github.com/oliviertassinari/babel-plugin-transform-react-remove-prop-types) transform will be used.
 
-When building React apps, you can also pass a `--preact` flag to configure Webpack to use [Preact](https://preactjs.com/) via the [`preact-compat`](https://github.com/developit/preact-compat) module, or an `--inferno` flag to configure Webpack to use [Inferno](https://infernojs.org/) via the [`inferno-compat`](https://github.com/infernojs/inferno/tree/master/packages/inferno-compat#readme) module.
+When building React apps, you can also pass a `--preact` flag to configure Webpack to use [Preact](https://preactjs.com/) via the [`preact-compat`](https://github.com/developit/preact-compat#readme) module, or an `--inferno` flag to configure Webpack to use [Inferno](https://infernojs.org/) via the [`inferno-compat`](https://github.com/infernojs/inferno/tree/master/packages/inferno-compat#readme) module.
 
 If your app and its dependencies are compatible, this can be a quick and easy way to reduce the size of your app.
 

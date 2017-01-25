@@ -129,7 +129,7 @@ If there's an error in the `render()` method of a React component, it will be di
 
 ![](resources/react-serve-app-render-error.png)
 
-React Hot Module Reloading is enabled and will attempt to patch changes into your React components while maintaining their current state:
+A React-specific Hot Module Replacement handler is enabled and will attempt to patch changes into your React components while maintaining their current state:
 
 ![](resources/react-serve-app-hmr-js.gif)
 
@@ -415,7 +415,7 @@ app.listen(3000, function(err) {
 })
 ```
 
-For an complete example, see [nwb-react-tutorial](https://github.com/insin/nwb-react-tutorial/#nwb-react-tutorial), which uses nwb middleware to provide a development build for the comment box from [the React tutorial](https://facebook.github.io/react/docs/tutorial.html) from the same server it uses to implement the API.
+For a complete example, see [nwb-react-tutorial](https://github.com/insin/nwb-react-tutorial/#nwb-react-tutorial), which uses nwb middleware to provide a development build for the comment box from [the React tutorial](https://facebook.github.io/react/docs/tutorial.html) from the same server it uses to implement the API.
 
 > This is the way I use nwb in my Node.js projects at work, conditionally importing and using nwb's middleware based on `process.env.NODE_ENV`.
 
@@ -470,7 +470,7 @@ npm start -- --reload
 
 There are some changes which can't automatically be patched into a running React app by the [experimental implementation nwb is using](https://github.com/gaearon/react-transform-hmr#react-transform-hmr), or which need to be manually hooked up using Webpack's or Module Replacement API if you want to accept them.
 
-Passing a `--reload` flag will auto-reload the page when Webpack Hot Module Reloading gets stuck.
+Passing a `--reload` flag will auto-reload the page when Webpack Hot Module Replacement gets stuck.
 
 #### Automatically Install Missing Dependencies
 
