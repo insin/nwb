@@ -1,3 +1,5 @@
+# 0.15.3 / 2017-01-25
+
 **Fixed:**
 
 - Added a missing `.default` to the Preact project skeleton where CommonJS `require()` was being used to import an ES module [[#245](https://github.com/insin/nwb/issues/245)]
