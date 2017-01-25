@@ -1,3 +1,5 @@
+# 0.15.2 / 2017-01-25
+
 **Fixed:**
 
 - Use the transpiled ES5 version of `preact-compat`, as UglifyJS can't handle the ES `module` build [[#244](https://github.com/insin/nwb/issues/244)]
