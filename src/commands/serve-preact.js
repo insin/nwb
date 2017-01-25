@@ -31,8 +31,8 @@ function buildConfig(args) {
     },
     resolve: {
       alias: {
-        'react': 'preact-compat',
-        'react-dom': 'preact-compat',
+        'react': 'preact-compat/dist/preact-compat',
+        'react-dom': 'preact-compat/dist/preact-compat',
       }
     },
   }

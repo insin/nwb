@@ -53,8 +53,8 @@ function buildConfig(args) {
   else if (args.preact) {
     config.resolve = {
       alias: {
-        'react': 'preact-compat',
-        'react-dom': 'preact-compat',
+        'react': 'preact-compat/dist/preact-compat',
+        'react-dom': 'preact-compat/dist/preact-compat',
       }
     }
   }
