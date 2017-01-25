@@ -1,3 +1,5 @@
+# 0.15.4 / 2017-01-26
+
 **Changed:**
 
 - Support the Array version of deprecated `webpack.postcss` config.
