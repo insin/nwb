@@ -4,7 +4,7 @@ import {h, render} from 'preact'
 
 let root
 function init() {
-  let App = require('./App')
+  let App = require('./App').default
   root = render(<App/>, document.querySelector('#app'), root)
 }
 

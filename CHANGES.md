@@ -1,3 +1,9 @@
+**Fixed:**
+
+- Added a missing `.default` to the Preact project skeleton where CommonJS `require()` was being used to import an ES module [[#245](https://github.com/insin/nwb/issues/245)]
+
+  `.default` must now be used to access the default export from an ES module when importing with CommonJS `require()` as Webpack 2 prevents module format mixing, which was previously used to provide CommonJS interop.
+
 # 0.15.2 / 2017-01-25
 
 **Fixed:**
@@ -16,13 +22,17 @@
 
 - **Upgraded from Webpack 1 to Webpack 2** [[#110](https://github.com/insin/nwb/issues/110)]
 
-  Webpack 2's minimum supported Node.js version is now **4.3**, so nwb's minimum supported version has been bumped up from **4.2** to match it.
+  **Minimum Node.js version increased from 4.2 to 4.3** - this is Webpack 2's minimum supported Node.js version.
 
-  Webpack 2 is strict about what appears in its configuration object. If you're using [`webpack.extra` config](https://github.com/insin/nwb/blob/master/docs/Configuration.md#extra-object), it **must** conform to [Webpack 2's configuration format](https://webpack.js.org/configuration/) or your build will fail with a validation error.
+  **Strict Webpack configuration** - Webpack 2 is strict about what appears in its configuration object. If you're using [`webpack.extra` config](https://github.com/insin/nwb/blob/master/docs/Configuration.md#extra-object), it **must** conform to [Webpack 2's configuration format](https://webpack.js.org/configuration/) or your build will fail with a validation error.
 
-  Webpack 2 no longer allows you to mix CommonJS modules with ECMAScript modules - if a module uses `import` or `export` syntax, `exports` will be `undefined` and `module.exports` will be read-only and `undefined`.
+  **Dropped CommonJS compatibility when importing ES modules** - Webpack 2 no longer allows you to mix CommonJS modules with ECMAScript modules - if a module uses `import` or `export` syntax, `exports` will be `undefined` and `module.exports` will be read-only and `undefined`.
 
-  Webpack 2 no longer allows custom top-level properties in its configuration. However, loader configuration which can't be serialised, such as plugin objects, can now be provided directly as loader options instead using [`webpack.rules` config](https://github.com/insin/nwb/blob/master/docs/Configuration.md#rules-object).
+  As a result, we can no longer provide CommonJS interop by default for ES Modules - you will need to check your code for usage of CommonJS `require()` to import ES modules and tack a `.default` on the end if you need to use the module's `export default`.
+
+  > If you used nwb's Preact project skeleton, the `init()` function in `index.js` needs to have a `.default` tacked on when the `App` component is being imported.
+
+  **Custom top-level properties no longer allowed in Webpack configuration** - Webpack 2 no longer allows custom top-level properties in its configuration. Loader configuration which can't be serialised, such as plugin objects, can now be provided directly as loader options instead using [`webpack.rules` config](https://github.com/insin/nwb/blob/master/docs/Configuration.md#rules-object) instead.
 
   This includes `postcss-loader`, which is now configured via `webpack.rules` instead of having its own special `webpack.postcss` config.
 
