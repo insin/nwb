@@ -163,6 +163,16 @@ describe('processUserConfig()', () => {
     })
     expect(config.webpack.rules).toEqual({css: {options: {a: 1}}})
   })
+  it('converts PostCSS array config to loader option config for v0.15 back-compat', () => {
+    let config = processUserConfig({
+      userConfig: {
+        webpack: {
+          postcss: [43]
+        }
+      }
+    })
+    expect(config.webpack.rules).toEqual({postcss: {options: {plugins: [43]}}})
+  })
   it('converts PostCSS defaults config to loader option config for v0.15 back-compat', () => {
     let config = processUserConfig({
       userConfig: {

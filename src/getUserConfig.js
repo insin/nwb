@@ -321,16 +321,17 @@ export function processUserConfig({
   }
   // TODO Remove in a future version
   if ('postcss' in userConfig.webpack) {
-    let messages = [`Deprecated as of nwb v0.15 - PostCSS plugins can now be configured in ${chalk.green('webpack.rules')} using postcss loader ids.`]
-    if (typeOf(userConfig.webpack.postcss) === 'object' &&
-        typeOf(userConfig.webpack.postcss.defaults) === 'array') {
+    let messages = [`Deprecated as of nwb v0.15 - PostCSS plugins are now configured in ${chalk.green('webpack.rules')} using postcss loader ids.`]
+    let configType = typeOf(userConfig.webpack.postcss)
+    if (configType === 'array' ||
+        (configType === 'object' && typeOf(userConfig.webpack.postcss.defaults) === 'array')) {
       if (!('rules' in userConfig.webpack)) {
         userConfig.webpack.rules = {}
       }
       userConfig.webpack.rules.postcss = {
-        plugins: userConfig.webpack.postcss.defaults
+        plugins: configType === 'array' ? userConfig.webpack.postcss : userConfig.webpack.postcss.defaults
       }
-      messages.push(`nwb will use ${chalk.yellow('webpack.postcss.defaults')} as ${chalk.green('webpack.rules.postcss.plugins')} config during a build.`)
+      messages.push(`nwb will use ${chalk.yellow(`webpack.postcss${configType === 'object' ? '.defaults' : ''}`)} as ${chalk.green('webpack.rules.postcss.plugins')} config during a build.`)
     }
     else {
       messages.push(`nwb will use its default PostCSS config during a build.`)

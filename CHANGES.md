@@ -1,5 +1,6 @@
 **Changed:**
 
+- Support the Array version of deprecated `webpack.postcss` config.
 - Tell the user they're including redundant config if they've manually configured inferno-compat or preact-compat aliases for React modules [[#247](https://github.com/insin/nwb/issues/247)]
 
 # 0.15.3 / 2017-01-25
@@ -106,22 +107,22 @@
   }
   ```
 
-- Configuring PostCSS plugins with `webpack.postcss` is no longer supported - use [`webpack.rules` config](https://github.com/insin/nwb/blob/master/docs/Configuration.md#configuring-postcss) instead:
+- Deprecated configuring PostCSS plugins with special `webpack.postcss` config - postcss-loader can now be configured like any other loader using [`webpack.rules` config](https://github.com/insin/nwb/blob/master/docs/Configuration.md#configuring-postcss):
 
   ```js
-  // < v0.15                             // v0.15
-  module.exports = {                     module.exports = {
-    webpack: {                             webpack: {
-      postcss: {                     =>      rules: {
-        defaults: [                            postcss: {
-          require('precss')(),                   plugins: [
-          require('autoprefixer')()                require('precss')(),
-        ],                                         require('autoprefixer')()
-      }                                          ]
-    }                                          }
-  }                                          }
+  // < v0.15                           // v0.15
+  module.exports = {                   module.exports = {
+    webpack: {                           webpack: {
+      postcss: [                   =>      rules: {
+        require('precss')(),                 postcss: {
+        require('autoprefixer')()              plugins: [
+      ]                                          require('precss')(),
+    }                                            require('autoprefixer')()
+  }                                            ]
+                                             }
                                            }
                                          }
+                                       }
   ```
 
 **Removed:**
