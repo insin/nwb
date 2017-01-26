@@ -1,3 +1,11 @@
+# Unreleased (in `next` branch)
+
+**Dependencies:**
+
+- extract-text-webpack-plugin: [v2.0.0-rc.0](https://github.com/webpack-contrib/extract-text-webpack-plugin/releases/tag/v2.0.0-rc.0) - `extract()` now returns an Array of loader objects
+- filesize: v3.4.3 → [v3.5.4](https://github.com/avoidwork/filesize.js/compare/3.4.3...3.5.4)
+- karma-webpack: v2.0.1 → [v2.0.2](https://github.com/webpack-contrib/karma-webpack/releases/tag/v2.0.2)
+
 # 0.15.6 / 2017-02-11
 
 **Changed:**

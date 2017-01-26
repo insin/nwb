@@ -3,7 +3,7 @@ import path from 'path'
 import autoprefixer from 'autoprefixer'
 import CaseSensitivePathsPlugin from 'case-sensitive-paths-webpack-plugin'
 import CopyPlugin from 'copy-webpack-plugin'
-import ExtractTextPlugin from '@insin/extract-text-webpack-plugin' // XXX Temporary
+import ExtractTextPlugin from 'extract-text-webpack-plugin'
 import HtmlPlugin from 'html-webpack-plugin'
 import NpmInstallPlugin from '@insin/npm-install-webpack-plugin' // XXX Temporary
 import webpack, {optimize} from 'webpack'
