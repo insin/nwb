@@ -69,7 +69,7 @@ function buildConfig(args) {
   }
   else if (args.preact) {
     config.resolve.alias['react'] = config.resolve.alias['react-dom'] =
-      path.dirname(resolve.sync('preact-compat/package.json', {basedir}))
+      path.join(path.dirname(resolve.sync('preact-compat/package.json', {basedir})), 'dist/preact-compat')
   }
 
   if (production) {

@@ -1,6 +1,7 @@
 **Fixed:**
 
 - Fixed blank version being set for the React `peerDependency` in new `react-component` projects.
+- Use the transpiled ES5 version of `preact-compat` for compatibility builds using `react build` with the `--preact` flag, to prevent UglifyJS errors [[#244](https://github.com/insin/nwb/issues/244)]
 
 # 0.15.4 / 2017-01-26
 
