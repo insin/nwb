@@ -36,12 +36,9 @@ export function mergeRuleConfig(defaultConfig = {}, buildConfig = {}, userConfig
  * the option to override defaults with build-specific and user config.
  */
 export let ruleConfigFactory = (buildConfig, userConfig = {}) =>
-  (id, defaultConfig, {ident = false} = {}) => {
+  (id, defaultConfig) => {
     if (id) {
       let rule = mergeRuleConfig(defaultConfig, buildConfig[id], userConfig[id])
-      if (ident && rule.options) {
-        rule.options.ident = id
-      }
       return rule
     }
     return defaultConfig
@@ -90,11 +87,11 @@ export function createStyleLoaders(loader, server, userWebpackConfig, {
       options: {
         plugins: createDefaultPostCSSPlugins(userWebpackConfig),
       }
-    }, {ident: true})
+    })
   ]
 
   if (preprocessor) {
-    loaders.push(loader(name(preprocessor.id), preprocessor.config, {ident: true}))
+    loaders.push(loader(name(preprocessor.id), preprocessor.config))
   }
 
   if (server) {
@@ -544,15 +541,6 @@ export default function createWebpackConfig(buildConfig, nwbPluginConfig = {}, u
     resolve: merge({
       extensions: ['.js', '.json'],
     }, buildResolveConfig, userResolveConfig),
-    resolveLoader: {
-      modules: [
-        'node_modules',
-        // As of v2.25.0, html-webpack-plugin no longer outputs an absolute path
-        // to its loader, so we must fall back to nwb's node_modules/ for global
-        // usage.
-        path.join(__dirname, '../node_modules'),
-      ],
-    },
     ...otherBuildConfig,
   }
 

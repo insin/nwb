@@ -2,9 +2,17 @@
 
 **Dependencies:**
 
-- extract-text-webpack-plugin: [v2.0.0-rc.0](https://github.com/webpack-contrib/extract-text-webpack-plugin/releases/tag/v2.0.0-rc.0) - `extract()` now returns an Array of loader objects
+- autoprefixer: v6.7.0 → [v6.7.2](https://github.com/postcss/autoprefixer/blob/master/CHANGELOG.md#672)
+- express: v4.14.0 → [v4.14.1](https://github.com/expressjs/express/blob/master/History.md#4141--2017-01-28) - dependency updates
+- extract-text-webpack-plugin: [v2.0.0-rc.2](https://github.com/webpack-contrib/extract-text-webpack-plugin/releases) - `extract()` now returns an Array of loader objects, options are now passed to children properly
+- file-loader: v0.9.0→ [v0.10.0](https://github.com/webpack/file-loader/releases/v0.10.0)
 - filesize: v3.4.3 → [v3.5.4](https://github.com/avoidwork/filesize.js/compare/3.4.3...3.5.4)
+- html-webpack-plugin: v2.26.0 → [v2.28.0](https://github.com/ampedandwired/html-webpack-plugin/blob/master/CHANGELOG.md#v2280) - revert relative loader resolving change from v2.25.0 back to a full path
+- karma: v1.4.0 → [v1.4.1](https://github.com/karma-runner/karma/blob/master/CHANGELOG.md#141-2017-01-29)
 - karma-webpack: v2.0.1 → [v2.0.2](https://github.com/webpack-contrib/karma-webpack/releases/tag/v2.0.2)
+- webpack: v2.2.0 → [v2.2.1](https://github.com/webpack/webpack/releases/tag/v2.2.1) - `ident` is no longer needed (previously used to prevent serialisation of loader options, e.g. for style preprocessor loaders)
+- webpack-hot-middleware: v2.15.0 → [v2.16.1](https://github.com/glenjamin/webpack-hot-middleware/compare/v2.15.0...v2.16.1)
+- webpack-merge: v2.4.0 → [v2.6.1](https://github.com/survivejs/webpack-merge/blob/master/CHANGELOG.md#261--2017-01-29)
 
 # 0.15.6 / 2017-02-11
 
