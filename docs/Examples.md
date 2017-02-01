@@ -58,7 +58,7 @@ Good tip from this video: use `--` to pass additional flags to `npm run` command
 
 #### Automatically installing dependencies from npm
 
-nwb v0.7 added an `--auto-install` flag to `nwb serve` which automatically installs and saves missing dependencies from npm using [`NpmInstallPlugin`](https://github.com/ericclemmons/npm-install-webpack-plugin).
+nwb v0.7 added an `--auto-install` flag to `nwb serve` which automatically installs and saves missing dependencies from npm using [`NpmInstallPlugin`](https://github.com/webpack-contrib/npm-install-webpack-plugin).
 
 ![nwb serve --auto-install example](/resources/auto-install.gif)
 

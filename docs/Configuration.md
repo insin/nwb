@@ -444,7 +444,7 @@ module.exports = {
 
 ##### `install`: `Object`
 
-Configures [options for `NpmInstallPlugin`](https://github.com/ericclemmons/npm-install-webpack-plugin#usage), which will be used if you pass an `--install` flag to nwb commands which run a development server.
+Configures [options for `NpmInstallPlugin`](https://github.com/webpack-contrib/npm-install-webpack-plugin#usage), which will be used if you pass an `--install` flag to nwb commands which run a development server.
 
 ##### `rules`: `Object`
 
@@ -939,13 +939,11 @@ If all fields are present the banner will be in this format:
  */
 ```
 
-[autoprefixer]: https://github.com/postcss/autoprefixer/
-[babel-loader]: https://github.com/babel/babel-loader/
-[CSS Modules]: https://github.com/css-modules/css-modules/
-[css-loader]: https://github.com/webpack/css-loader/
-[isparta-loader]: https://github.com/deepsweet/isparta-loader/
-[npm-install-loader]: https://github.com/ericclemmons/npm-install-loader/
-[postcss-loader]: https://github.com/postcss/postcss-loader/
+[autoprefixer]: https://github.com/postcss/autoprefixer
+[babel-loader]: https://github.com/babel/babel-loader
+[CSS Modules]: https://github.com/css-modules/css-modules
+[css-loader]: https://github.com/webpack-contrib/css-loader
+[postcss-loader]: https://github.com/postcss/postcss-loader
 [sass-loader]: https://github.com/jtangelder/sass-loader
-[style-loader]: https://github.com/webpack/style-loader/
-[url-loader]: https://github.com/webpack/url-loader/
+[style-loader]: https://github.com/webpack-contrib/style-loader
+[url-loader]: https://github.com/webpack-contrib/url-loader
