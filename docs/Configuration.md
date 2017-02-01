@@ -525,7 +525,7 @@ Default rules configured by nwb and the ids it gives them are:
 
 - `audio` - handles `.wav`, `.mp3`, `.m4a`, `.aac`, and `.oga` files using [url-loader][url-loader]
 
-> Default config for all url-loaders in production builds is `{options: {limit: 1, name: '[name].[hash:8].[ext]'}}`, otherwise `{options: {limit: 1, name: '[name].[ext]'}}`.
+> Default config for all url-loaders is `{options: {limit: 1, name: '[name].[hash:8].[ext]'}}`.
 
 > Default `limit` config prevents any files being inlined by default, while allowing you to configure `url-loader` to enable inlining if you need it.
 
