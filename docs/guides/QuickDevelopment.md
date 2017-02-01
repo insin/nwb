@@ -102,7 +102,7 @@ Starting Webpack compilation...
 
 Having to stop and restart your server to install new dependencies or use a pair of shells in the same directory to do so is a minor annoyance when you're just looking to bang out some initial code.
 
-If you pass an `--install` flag when using the `run` command, nwb will configure [`NpmInstallPlugin`](https://github.com/ericclemmons/npm-install-webpack-plugin) to automatically install missing dependencies when an attempt is made to import them.
+If you pass an `--install` flag when using the `run` command, nwb will configure [`NpmInstallPlugin`](https://github.com/webpack-contrib/npm-install-webpack-plugin) to automatically install missing dependencies when an attempt is made to import them.
 
 > Note: `NpmInstallPlugin` uses a `package.json` file while checking which packages are installed, so it will initialise one the first time you use this command and save any automatically-installed dependencies to it.
 
@@ -297,7 +297,7 @@ Contents for `<title>` - defaults to the type of app you're serving.
 
 #### `--install`
 
-Use [`NpmInstallPlugin`](https://github.com/ericclemmons/npm-install-webpack-plugin) to automatically install missing dependencies when an attempt is made to import them - see [Automatic Dependency Installation](#automatic-dependency-installation).
+Use [`NpmInstallPlugin`](https://github.com/webpack-contrib/npm-install-webpack-plugin) to automatically install missing dependencies when an attempt is made to import them - see [Automatic Dependency Installation](#automatic-dependency-installation).
 
 #### `--host`
 

@@ -480,6 +480,6 @@ npm start -- --install
 
 Having to stop and restart the development server when you need to install a new dependency can be annoying break of flow during initial development.
 
-Passing an `--install` flag will use [`NpmInstallPlugin`](https://github.com/ericclemmons/npm-install-webpack-plugin#npm-install-webpack-plugin) to detect missing dependencies and install them from npm (and save them to `dependencies` in `package.json`) for you, so you just have to add an `import` statement or `require()` call as if you already had the dependency installed.
+Passing an `--install` flag will use [`NpmInstallPlugin`](https://github.com/webpack-contrib/npm-install-webpack-plugin#npm-install-webpack-plugin) to detect missing dependencies and install them from npm (and save them to `dependencies` in `package.json`) for you, so you just have to add an `import` statement or `require()` call as if you already had the dependency installed.
 
 There may be edge cases or "gotchas" with this feature, but it's provided as an [opt-in](https://github.com/facebookincubator/create-react-app/pull/212#issuecomment-235346389) improvement to your developer experience.
