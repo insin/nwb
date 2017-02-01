@@ -1,5 +1,12 @@
 ## Frequently Asked Questions
 
+- [What does "nwb" stand for?](#what-does-nwb-stand-for)
+- [How can I view the configuration nwb generates?](#how-can-i-view-the-configuration-nwb-generates)
+- [How do I enable CSS Modules?](#how-do-i-enable-css-modules)
+- [What can I configure to reduce bundle size?](#what-can-i-configure-to-reduce-bundle-size)
+
+---
+
 ### What does "nwb" stand for?
 
 Shortness and ease of typing.
@@ -7,6 +14,26 @@ Shortness and ease of typing.
 It uses **N**ode.js, **W**ebpack and **B**abel to **b**uild apps for the **w**eb and modules for **n**pm.
 
 `nwb` sounded like the best combination of those and was easy to type.
+
+### How can I view the configuration nwb generates?
+
+Set the `DEBUG` environment variable to `nwb` before running to check what generated configuration looks like:
+
+```
+# *nix
+export DEBUG=nwb
+# Windows
+set DEBUG=nwb
+```
+
+If you need to prevent server commands from clearing scrollback so you can read any unexpected error logging which is happening, set the `NWB_TEST` environment variable to `true`:
+
+```
+# *nix
+export NWB_TEST=true
+# Windows
+set NWB_TEST=true
+```
 
 ### How do I enable CSS Modules?
 
@@ -28,12 +55,6 @@ module.exports = {
   }
 }
 ```
-
-### Why am I seeing `.json.gzip` files in my project root?
-
-Are you running as root on a Mac, or in a Docker container?
-
-npm appears to [set the working directory as the temporary directory](https://github.com/npm/npm/issues/4531) in these scenarios and babel-loader writes to the temporary directory to cache results for performance.
 
 ### What can I configure to reduce bundle size?
 
