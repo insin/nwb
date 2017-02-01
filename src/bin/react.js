@@ -87,8 +87,8 @@ Commands:
       ${opt('--vendor')}       create a 'vendor' bundle for node_modules/ modules
 
     React-compatible builds using other libraries:
-      ${opt('--inferno')}   create an Inferno build
-      ${opt('--preact')}    create a Preact build
+      ${opt('--inferno[-compat]')}   create an Inferno compatibility build
+      ${opt('--preact[-compat]')}    create a Preact compatibility build
 `)
   process.exit(args.help || command ? 0 : 1)
 }

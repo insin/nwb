@@ -42,7 +42,7 @@ function buildConfig(args) {
     config.plugins.copy = [{from: path.resolve('public'), to: dist, ignore: '.gitkeep'}]
   }
 
-  if (args.inferno) {
+  if (args.inferno || args['inferno-compat']) {
     config.resolve = {
       alias: {
         'react': 'inferno-compat',
@@ -50,7 +50,7 @@ function buildConfig(args) {
       }
     }
   }
-  else if (args.preact) {
+  else if (args.preact || args['preact-compat']) {
     config.resolve = {
       alias: {
         'react': 'preact-compat/dist/preact-compat',
@@ -74,11 +74,11 @@ export default function buildReactApp(args, cb) {
 
   let library = 'React'
   let packages = []
-  if (args.inferno) {
+  if (args.inferno || args['inferno-compat']) {
     library = 'Inferno (React compat)'
     packages = ['inferno', 'inferno-compat']
   }
-  else if (args.preact) {
+  else if (args.preact || args['preact-compat']) {
     library = 'Preact (React compat)'
     packages = ['preact', 'preact-compat']
   }
