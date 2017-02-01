@@ -323,12 +323,12 @@ Automatically refresh the page when an HMR request was not accepted.
 
 Enable extraction of modules imported from `node_modules/` into a separate `vendor` bundle.
 
-#### `--inferno`
-#### `--preact`
+#### `--inferno[-compat]`
+#### `--preact[-compat]`
 
 > These options only apply to React builds
 
-Create a build of some React code which uses Inferno or Preact as the runtime via compatibility layer - see [React Compatible Builds](#react-compatible-builds-with---inferno-or---preact).
+Create a build of some React code which uses Inferno or Preact as the runtime via a compatibility layer - see [React Compatible Builds](#react-compatible-builds-with---inferno-or---preact).
 
 ### Rendering Shims and Hot Module Replacement (HMR)
 

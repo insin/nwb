@@ -63,11 +63,11 @@ function buildConfig(args) {
     config.polyfill = false
   }
 
-  if (args.inferno) {
+  if (args.inferno || args['inferno-compat']) {
     config.resolve.alias['react'] = config.resolve.alias['react-dom'] =
       path.dirname(resolve.sync('inferno-compat/package.json', {basedir}))
   }
-  else if (args.preact) {
+  else if (args.preact || args['preact-compat']) {
     config.resolve.alias['react'] = config.resolve.alias['react-dom'] =
       path.join(path.dirname(resolve.sync('preact-compat/package.json', {basedir})), 'dist/preact-compat')
   }
@@ -91,11 +91,11 @@ export default function buildReact(args, cb) {
 
   let library = 'React'
   let packages = ['react', 'react-dom']
-  if (args.inferno) {
+  if (args.inferno || args['inferno-compat']) {
     library = 'Inferno (React compat)'
     packages.push('inferno', 'inferno-compat')
   }
-  if (args.preact) {
+  else if (args.preact || args['preact-compat']) {
     library = 'Preact (React compat)'
     packages.push('preact', 'preact-compat')
   }
