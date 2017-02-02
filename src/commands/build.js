@@ -20,6 +20,13 @@ const BUILD_COMMANDS = {
  * Generic build command, invokes the appropriate project type-specific command.
  */
 export default function build(args, cb) {
-  let userConfig = getUserConfig(args, {required: true})
+  let userConfig
+  try {
+    userConfig = getUserConfig(args, {required: true})
+  }
+  catch (e) {
+    return cb(e)
+  }
+
   BUILD_COMMANDS[userConfig.type](args, cb)
 }
