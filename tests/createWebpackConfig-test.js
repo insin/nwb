@@ -3,6 +3,7 @@ import expect from 'expect'
 import createWebpackConfig, {
   COMPAT_CONFIGS,
   getCompatConfig,
+  mergeLoaderConfig,
   mergeRuleConfig,
   styleRuleName,
 } from '../src/createWebpackConfig'
@@ -47,6 +48,19 @@ describe('createWebpackConfig()', () => {
     })
     it('adds default polyfills to the entry chunk', () => {
       expect(config.entry).toEqual([require.resolve('../polyfills'), 'index.js'])
+    })
+  })
+
+  context('with a default rule disabled', () => {
+    let config = createWebpackConfig({entry: ['index.js']}, {}, {webpack: {rules: {babel: false}}})
+    it('excludes the rule', () => {
+      expect(getLoaders(config.module.rules))
+        .toNotContain()
+        .toNotContain('babel-loader')
+        .toContain('extract-text-webpack-plugin')
+        .toContain('css-loader')
+        .toContain('postcss-loader')
+        .toContain('url-loader')
     })
   })
 
@@ -300,6 +314,90 @@ describe('mergeRuleConfig()', () => {
           b: true,
         }
       }
+    })
+  })
+  it('omits default options and build config when configuring a custom loader', () => {
+    expect(mergeRuleConfig(
+      {...rule, options: {a: 1}},
+      {options: {b: 2}},
+      {loader: 'custom', options: {c: 3}},
+    )).toEqual({
+      test: TEST_RE,
+      loader: 'custom',
+      exclude: EXCLUDE_RE,
+      options: {c: 3},
+    })
+  })
+  it('omits default options and build config when configuring a custom loader chain', () => {
+    expect(mergeRuleConfig(
+      {...rule, options: {a: 1}},
+      {options: {b: 2}},
+      {use: ['three', 'two', 'one']},
+    )).toEqual({
+      test: TEST_RE,
+      use: ['three', 'two', 'one'],
+      exclude: EXCLUDE_RE,
+    })
+  })
+})
+
+describe('mergeLoaderConfig()', () => {
+  let loader = {loader: 'one'}
+  it('merges default, build and user config for a loader', () => {
+    expect(mergeLoaderConfig(
+      {...loader, options: {a: 1}},
+      {options: {b: 2}},
+      {options: {c: 3}},
+    )).toEqual({
+      loader: 'one',
+      options: {a: 1, b: 2, c: 3},
+    })
+  })
+  it('only adds an options prop if the merged options have props', () => {
+    expect(mergeLoaderConfig(loader, {}, {})).toEqual({
+      loader: 'one',
+    })
+  })
+  it('removes the merged options when it has no properties', () => {
+    expect(mergeLoaderConfig(loader, {}, {options: {}})).toEqual({
+      loader: 'one',
+    })
+  })
+  it('replaces lists when merging options instead of concatenating them', () => {
+    expect(mergeLoaderConfig(
+      {...loader, options: {optional: ['two']}},
+      {},
+      {options: {optional: ['three']}}
+    )).toEqual({
+      loader: 'one',
+      options: {
+        optional: ['three'],
+      },
+    })
+  })
+  it('deep merges options', () => {
+    expect(mergeLoaderConfig(
+      loader,
+      {options: {nested: {a: true}}},
+      {options: {nested: {b: true}}},
+    )).toEqual({
+      loader: 'one',
+      options: {
+        nested: {
+          a: true,
+          b: true,
+        }
+      }
+    })
+  })
+  it('omits default options configuring a custom loader', () => {
+    expect(mergeLoaderConfig(
+      {...loader, options: {a: 1}},
+      {options: {b: 2}},
+      {loader: 'custom', options: {c: 3}},
+    )).toEqual({
+      loader: 'custom',
+      options: {c: 3},
     })
   })
 })
