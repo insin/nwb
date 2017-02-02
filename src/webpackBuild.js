@@ -17,7 +17,14 @@ export default function webpackBuild(name, args, buildConfig, cb) {
     process.env.NODE_ENV = 'production'
   }
 
-  let userConfig = getUserConfig(args)
+  let userConfig
+  try {
+    userConfig = getUserConfig(args)
+  }
+  catch (e) {
+    return cb(e)
+  }
+
   let pluginConfig = getPluginConfig({args})
   if (typeof buildConfig == 'function') {
     buildConfig = buildConfig(args)
