@@ -12,8 +12,8 @@ import cleanApp from './clean-app'
 // hasn't been set by the user and we don't want production optimisations in
 // development builds.
 function buildConfig(args) {
-  let entry = args._[1]
-  let dist = args._[2] || 'dist'
+  let entry = path.resolve(args._[1])
+  let dist = path.resolve(args._[2] || 'dist')
   let mountId = args['mount-id'] || 'app'
 
   let production = process.env.NODE_ENV === 'production'
@@ -48,7 +48,7 @@ function buildConfig(args) {
   }
 
   if (args.force === true) {
-    config.entry = {app: [path.resolve(entry)]}
+    config.entry = {app: [entry]}
   }
   else {
     // Use a render shim module which supports quick prototyping
@@ -57,7 +57,7 @@ function buildConfig(args) {
     // Allow the render shim module to resolve Inferno from the cwd
     config.resolve.alias['inferno'] = path.dirname(resolve.sync('inferno/package.json', {basedir: process.cwd()}))
     // Allow the render shim module to import the provided entry module
-    config.resolve.alias['nwb-inferno-run-entry'] = path.resolve(entry)
+    config.resolve.alias['nwb-inferno-run-entry'] = entry
   }
 
   if (args.polyfill === false || args.polyfills === false) {
