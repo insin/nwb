@@ -115,8 +115,8 @@ function checkForRedundantCompatAliases(projectType, aliases, configPath, report
 export function prepareWebpackRuleConfig(rules) {
   Object.keys(rules).forEach(ruleId => {
     let rule = rules[ruleId]
-    if (rule.options) return
-    let {exclude, include, test, ...options} = rule // eslint-disable-line no-unused-vars
+    if (rule.use || rule.options) return
+    let {exclude, include, test, loader, ...options} = rule // eslint-disable-line no-unused-vars
     if (Object.keys(options).length > 0) {
       rule.options = options
       Object.keys(options).forEach(prop => delete rule[prop])
@@ -353,15 +353,23 @@ export function processUserConfig({
     }
     else {
       Object.keys(userConfig.webpack.rules).forEach(ruleId => {
-        if (userConfig.webpack.rules[ruleId].query) {
+        let rule = userConfig.webpack.rules[ruleId]
+        if (rule.query) {
           if (!warnedAboutWebpackRuleQuery) {
             report.deprecated('query Object in webpack.rules config',
               `Deprecated as of nwb v0.15 - an ${chalk.green('options')} Object should now be used to specify rule options, to match Webpack 2 config.`
             )
             warnedAboutWebpackRuleQuery = true
           }
-          userConfig.webpack.rules[ruleId].options = userConfig.webpack.rules[ruleId].query
-          delete userConfig.webpack.rules[ruleId].query
+          rule.options = rule.query
+          delete rule.query
+        }
+        if (rule.use && typeOf(rule.use) !== 'array') {
+          report.error(
+            `webpack.rules.${ruleId}.use`,
+            `type: ${typeOf(rule.use)}`,
+            'Must be an Array.'
+           )
         }
       })
       prepareWebpackRuleConfig(userConfig.webpack.rules)
@@ -394,6 +402,14 @@ export function processUserConfig({
         report
       )
     }
+  }
+
+  if ('config' in userConfig.webpack && typeOf(userConfig.webpack.config) !== 'function') {
+    report.error(
+      `webpack.config`,
+      `type: ${typeOf(userConfig.webpack.config)}`,
+      'Must be a Function.'
+     )
   }
 
   if (report.hasErrors()) {
@@ -444,5 +460,11 @@ export default function getUserConfig(args = {}, options = {}) {
     }
   }
 
-  return processUserConfig({args, check, required, userConfig, userConfigPath})
+  userConfig = processUserConfig({args, check, required, userConfig, userConfigPath})
+
+  if (configFileExists) {
+    userConfig.path = userConfigPath
+  }
+
+  return userConfig
 }

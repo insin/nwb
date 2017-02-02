@@ -23,7 +23,13 @@ export default function webpackBuild(name, args, buildConfig, cb) {
     buildConfig = buildConfig(args)
   }
 
-  let webpackConfig = createWebpackConfig(buildConfig, pluginConfig, userConfig)
+  let webpackConfig
+  try {
+    webpackConfig = createWebpackConfig(buildConfig, pluginConfig, userConfig)
+  }
+  catch (e) {
+    return cb(e)
+  }
 
   debug('webpack config: %s', deepToString(webpackConfig))
 

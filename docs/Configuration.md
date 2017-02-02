@@ -73,9 +73,12 @@ The configuration object can include the following properties:
     - [Default Rules](#default-rules)
     - [Configuring PostCSS](#configuring-postcss)
     - [Configuring CSS Preprocessor Plugins](#configuring-css-preprocessor-plugins)
+    - [Customising loaders](#customising-loaders)
+    - [Disabling default rules](#disabling-default-rules)
   - [`webpack.publicPath`](#publicpath-string) - path to static resources
   - [`webpack.uglify`](#uglify-object--false) - configure use of Webpack's `UglifyJsPlugin`
   - [`webpack.extra`](#extra-object) - an escape hatch for extra Webpack config, which will be merged into the generated config
+  - [`webpack.config`](#config-function) - an escape hatch for manually editing the generated Webpack config
 - [Karma Configuration](#karma-configuration)
   - [`karma`](#karma-object)
   - [`karma.browsers`](#browsers-arraystring--plugin) - browsers tests are run in
@@ -566,6 +569,44 @@ Using [nwb-sass](https://github.com/insin/nwb-sass) as example, you can use the 
 
 There will also be a `vendor-sass-pipeline` for Sass stylesheets with the same setup as `sass-pipeline` but using a `vendor-` prefix.
 
+###### Customising loaders
+
+Use `loader` config to replace the loader used in a default rules. Any options provided for the default loader will be ignored.
+
+Provide a list of loaders via `use` config to replace a default loader with a chain of loaders, specified as loader names or `loader`/`options` objects.
+
+```js
+module.exports = {
+  webpack: {
+    rules: {
+      svg: {
+        use: [
+          {
+            loader: 'svg-inline-loader',
+            options: {classPrefix: true}
+          },
+          'image-webpack-loader'
+        ]
+      }
+    }
+  }
+}
+```
+
+###### Disabling default rules
+
+To disable inclusion of a default rule, set its id to `false`:
+
+```js
+module.exports = {
+  webpack: {
+    rules: {
+      svg: false
+    }
+  }
+}
+```
+
 ##### `publicPath`: `String`
 
 > This is just Webpack's [`output.publicPath` config](https://webpack.js.org/configuration/output/#output-publicpath) pulled up a level to make it more convenient to configure.
@@ -652,7 +693,7 @@ Note that you *must* use Webpack's own config structure in this object - e.g. to
 ```js
 var path = require('path')
 
-function(nwb) {
+module.exports = function(nwb) {
   return {
     type: 'react-app',
     webpack: {
@@ -671,6 +712,25 @@ function(nwb) {
           })
         ]
       }
+    }
+  }
+}
+```
+
+##### `config`: `Function`
+
+Finally, if you need *complete* control, you can configure a `webpack.config()` function which will be given the generated config.
+
+Note that you *must* return the config object from this function.
+
+```js
+module.exports = {
+  webpack: {
+    config(config) {
+      // Change config as you wish
+
+      // You MUST return the edited config object
+      return config
     }
   }
 }

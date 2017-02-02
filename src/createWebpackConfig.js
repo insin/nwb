@@ -12,6 +12,7 @@ import merge from 'webpack-merge'
 
 import createBabelConfig from './createBabelConfig'
 import debug from './debug'
+import {UserError} from './errors'
 import {deepToString, typeOf} from './utils'
 import StatusPlugin from './WebpackStatusPlugin'
 
@@ -21,14 +22,43 @@ import StatusPlugin from './WebpackStatusPlugin'
 let replaceArrayMerge = merge({customizeArray(a, b, key) { return b }})
 
 /**
- * Merge webpack rule config ({test, loader|use, options, include, exclude}) objects.
+ * Merge webpack rule config ({test, loader+options|use, include, exclude, ...}) objects.
  */
 export function mergeRuleConfig(defaultConfig = {}, buildConfig = {}, userConfig = {}) {
-  let rule = replaceArrayMerge(defaultConfig, buildConfig, userConfig)
+  let rule
+  // Omit the default loader and options if the user is configuring their own
+  if (defaultConfig.loader && (userConfig.loader || userConfig.use)) {
+    let {
+      loader: defaultLoader, options: defaultOptions, // eslint-disable-line no-unused-vars
+      ...defaultRuleConfig
+    } = defaultConfig
+    rule = merge(defaultRuleConfig, userConfig)
+  }
+  else {
+    rule = replaceArrayMerge(defaultConfig, buildConfig, userConfig)
+  }
   if (rule.options && Object.keys(rule.options).length === 0) {
     delete rule.options
   }
   return rule
+}
+
+/**
+ * Merge webpack loader config ({loader, options}) objects.
+ */
+export function mergeLoaderConfig(defaultConfig = {}, buildConfig = {}, userConfig = {}) {
+  let loader
+  // If the loader s being changed, only use the provided config
+  if (userConfig.loader) {
+    loader = {...userConfig}
+  }
+  else {
+    loader = replaceArrayMerge(defaultConfig, buildConfig, userConfig)
+  }
+  if (loader.options && Object.keys(loader.options).length === 0) {
+    delete loader.options
+  }
+  return loader
 }
 
 /**
@@ -38,8 +68,25 @@ export function mergeRuleConfig(defaultConfig = {}, buildConfig = {}, userConfig
 export let ruleConfigFactory = (buildConfig, userConfig = {}) =>
   (id, defaultConfig) => {
     if (id) {
+      // Allow the user to turn off rules by configuring them with false
+      if (userConfig[id] === false) {
+        return null
+      }
       let rule = mergeRuleConfig(defaultConfig, buildConfig[id], userConfig[id])
       return rule
+    }
+    return defaultConfig
+  }
+
+/**
+ * Create a function which configures a loader identified by a unique id, with
+ * the option to override defaults with build-specific and user config.
+ */
+export let loaderConfigFactory = (buildConfig, userConfig = {}) =>
+  (id, defaultConfig) => {
+    if (id) {
+      let loader = mergeLoaderConfig(defaultConfig, buildConfig[id], userConfig[id])
+      return loader
     }
     return defaultConfig
   }
@@ -118,6 +165,7 @@ export function createStyleLoaders(loader, server, userWebpackConfig, {
  */
 export function createRules(server, buildConfig = {}, userWebpackConfig = {}, pluginConfig = {}) {
   let rule = ruleConfigFactory(buildConfig, userWebpackConfig.rules)
+  let loader = loaderConfigFactory(buildConfig, userWebpackConfig.rules)
 
   // Default options for url-loader
   let urlLoaderOptions = {
@@ -141,12 +189,12 @@ export function createRules(server, buildConfig = {}, userWebpackConfig = {}, pl
     }),
     rule('css-pipeline', {
       test: /\.css$/,
-      use: createStyleLoaders(rule, server, userWebpackConfig),
+      use: createStyleLoaders(loader, server, userWebpackConfig),
       exclude: /node_modules/,
     }),
     rule('vendor-css-pipeline', {
       test: /\.css$/,
-      use: createStyleLoaders(rule, server, userWebpackConfig, {
+      use: createStyleLoaders(loader, server, userWebpackConfig, {
         prefix: 'vendor',
       }),
       include: /node_modules/,
@@ -184,7 +232,7 @@ export function createRules(server, buildConfig = {}, userWebpackConfig = {}, pl
     // Extra rules from build config, still configurable via user config when
     // the rules specify an id.
     ...createExtraRules(buildConfig.extra, userWebpackConfig.rules),
-  ]
+  ].filter(rule => rule != null)
 
   if (pluginConfig.cssPreprocessors) {
     Object.keys(pluginConfig.cssPreprocessors).forEach(id => {
@@ -192,7 +240,7 @@ export function createRules(server, buildConfig = {}, userWebpackConfig = {}, pl
       rules.push(
         rule(`${id}-pipeline`, {
           test,
-          use: createStyleLoaders(rule, server, userWebpackConfig, {
+          use: createStyleLoaders(loader, server, userWebpackConfig, {
             prefix: id,
             preprocessor: {id, config: {loader: preprocessorLoader}},
           }),
@@ -202,7 +250,7 @@ export function createRules(server, buildConfig = {}, userWebpackConfig = {}, pl
       rules.push(
         rule(`vendor-${id}-pipeline`, {
           test,
-          use: createStyleLoaders(rule, server, userWebpackConfig, {
+          use: createStyleLoaders(loader, server, userWebpackConfig, {
             prefix: `vendor-${id}`,
             preprocessor: {id, config: {loader: preprocessorLoader}},
           }),
@@ -565,6 +613,15 @@ export default function createWebpackConfig(buildConfig, nwbPluginConfig = {}, u
   // them even more control.
   if (userWebpackConfig.extra) {
     webpackConfig = merge(webpackConfig, userWebpackConfig.extra)
+  }
+
+  // Finally, give them a chance to do whatever they want with the generated
+  // config.
+  if (typeOf(userWebpackConfig.config) === 'function') {
+    webpackConfig = userWebpackConfig.config(webpackConfig)
+    if (!webpackConfig) {
+      throw new UserError(`webpack.config() in ${userConfig.path} didn't return anything - it must return the Webpack config object.`)
+    }
   }
 
   return webpackConfig

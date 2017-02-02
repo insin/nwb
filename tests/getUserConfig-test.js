@@ -62,6 +62,9 @@ describe('processUserConfig()', () => {
     it('babel.runtime is not valid', () => {
       check({babel: {runtime: 'welp'}}, 'babel.runtime', /Must be/)
     })
+    it('webpack.config is not a function', () => {
+      check({webpack: {config: {}}}, 'webpack.config', /Must be/)
+    })
     it('webpack.copy is an invalid type', () => {
       check({webpack: {copy: /test/}}, 'webpack.copy', /Must be/)
     })
@@ -76,6 +79,9 @@ describe('processUserConfig()', () => {
     })
     it('webpack.rules is not an object', () => {
       check({webpack: {rules: []}}, 'webpack.rules', /Must be/)
+    })
+    it('webpack.rules .use config is not an array', () => {
+      check({webpack: {rules: {test: {use: 'thing-loader'}}}}, 'webpack.rules.test.use', /Must be/)
     })
   })
 
@@ -217,6 +223,7 @@ describe('prepareWebpackRuleConfig()', () => {
         test: /test/,
         include: /include/,
         exclude: /exclude/,
+        loader: 'custom-loader',
         modules: true,
         localIdentName: 'asdf',
       },
@@ -226,6 +233,7 @@ describe('prepareWebpackRuleConfig()', () => {
       test: /test/,
       include: /include/,
       exclude: /exclude/,
+      loader: 'custom-loader',
       options: {
         modules: true,
         localIdentName: 'asdf',
