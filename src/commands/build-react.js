@@ -12,8 +12,8 @@ import cleanApp from './clean-app'
 // hasn't been set by the user and we don't want production optimisations in
 // development builds.
 function buildConfig(args) {
-  let entry = args._[1]
-  let dist = args._[2] || 'dist'
+  let entry = path.resolve(args._[1])
+  let dist = path.resolve(args._[2] || 'dist')
   let mountId = args['mount-id'] || 'app'
 
   let basedir = process.cwd()
@@ -29,7 +29,7 @@ function buildConfig(args) {
     output: {
       chunkFilename: filenamePattern,
       filename: filenamePattern,
-      path: path.resolve(dist),
+      path: dist,
       publicPath: '/',
     },
     plugins: {
@@ -46,14 +46,14 @@ function buildConfig(args) {
   }
 
   if (args.force === true) {
-    config.entry = {app: [path.resolve(entry)]}
+    config.entry = {app: [entry]}
   }
   else {
     // Use a render shim module which supports quick prototyping
     config.entry = {app: [require.resolve('../reactRunEntry')]}
     config.plugins.define = {NWB_REACT_RUN_MOUNT_ID: JSON.stringify(mountId)}
     // Allow the render shim module to import the provided entry module
-    config.resolve.alias['nwb-react-run-entry'] = path.resolve(entry)
+    config.resolve.alias['nwb-react-run-entry'] = entry
     // Allow the render shim module to resolve React and ReactDOM from the cwd
     config.resolve.alias['react'] = path.dirname(resolve.sync('react/package.json', {basedir}))
     config.resolve.alias['react-dom'] = path.dirname(resolve.sync('react-dom/package.json', {basedir}))

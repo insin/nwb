@@ -11,8 +11,8 @@ import cleanApp from './clean-app'
 // hasn't been set by the user and we don't want production optimisations in
 // development builds.
 function buildConfig(args) {
-  let entry = args._[1] || 'src/index.js'
-  let dist = args._[2] || 'dist'
+  let entry = path.resolve(args._[1] || 'src/index.js')
+  let dist = path.resolve(args._[2] || 'dist')
 
   let production = process.env.NODE_ENV === 'production'
   let filenamePattern = production ? '[name].[chunkhash:8].js' : '[name].js'
@@ -20,12 +20,12 @@ function buildConfig(args) {
   let config = {
     devtool: 'source-map',
     entry: {
-      app: [path.resolve(entry)],
+      app: [entry],
     },
     output: {
       filename: filenamePattern,
       chunkFilename: filenamePattern,
-      path: path.resolve(dist),
+      path: dist,
       publicPath: '/',
     },
     plugins: {

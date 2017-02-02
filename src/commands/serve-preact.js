@@ -10,7 +10,7 @@ import {install} from '../utils'
 // Using a config function as we may need to resolve the path to Preact, which
 // we may also have to install first.
 function buildConfig(args) {
-  let entry = args._[1]
+  let entry = path.resolve(args._[1])
   let mountId = args['mount-id'] || 'app'
 
   let config = {
@@ -38,14 +38,14 @@ function buildConfig(args) {
   }
 
   if (args.force === true) {
-    config.entry = [path.resolve(entry)]
+    config.entry = [entry]
   }
   else {
     // Use a render shim module which supports quick prototyping
     config.entry = [require.resolve('../preactRunEntry')]
     config.plugins.define = {NWB_PREACT_RUN_MOUNT_ID: JSON.stringify(mountId)}
     // Allow the render shim module to import the provided entry module
-    config.resolve.alias['nwb-preact-run-entry'] = path.resolve(entry)
+    config.resolve.alias['nwb-preact-run-entry'] = entry
     // Allow the render shim module to resolve Preact from the cwd
     config.resolve.alias['preact'] = path.dirname(resolve.sync('preact/package.json', {basedir: process.cwd()}))
   }

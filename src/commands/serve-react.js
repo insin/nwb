@@ -10,7 +10,7 @@ import {install} from '../utils'
 // Using a config function as we may need to resolve the path to React and
 // ReactDOM, which we may also have to install first.
 function buildConfig(args) {
-  let entry = args._[1]
+  let entry = path.resolve(args._[1])
   let mountId = args['mount-id'] || 'app'
 
   let config = {
@@ -32,7 +32,7 @@ function buildConfig(args) {
   }
 
   if (args.force === true) {
-    config.entry = [path.resolve(entry)]
+    config.entry = [entry]
   }
   else {
     // Use a render shim module which supports quick prototyping
@@ -41,7 +41,7 @@ function buildConfig(args) {
     config.resolve = {
       alias: {
         // Allow the render shim module to import the provided entry module
-        'nwb-react-run-entry': path.resolve(entry),
+        'nwb-react-run-entry': entry,
         // Allow the render shim module to resolve React and ReactDOM from the cwd
         'react': path.dirname(resolve.sync('react/package.json', {basedir: process.cwd()})),
         'react-dom': path.dirname(resolve.sync('react-dom/package.json', {basedir: process.cwd()})),
