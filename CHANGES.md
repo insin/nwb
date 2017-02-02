@@ -1,5 +1,9 @@
 # Unreleased (in `next` branch)
 
+**Fixed:**
+
+- An output directory specified with a trailing slash is now cleaned properly when creating a build.
+
 **Dependencies:**
 
 - autoprefixer: v6.7.0 → [v6.7.2](https://github.com/postcss/autoprefixer/blob/master/CHANGELOG.md#672)

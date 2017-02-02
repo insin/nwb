@@ -17,6 +17,8 @@ import debug from './debug'
  * @param {function(?Error=)} cb
  */
 export function clean(desc, dirs, cb) {
+  // Remove any trailing slashes before a glob pattern is created
+  dirs = dirs.map(dir => dir.replace(/[\\/]+$/, ''))
   glob(`+(${dirs.join('|')})/`, (err, dirs) => {
     if (err) return cb(err)
     if (dirs.length === 0) return cb()
