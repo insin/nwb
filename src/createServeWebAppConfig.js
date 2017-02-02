@@ -1,9 +1,9 @@
 import path from 'path'
 
-import glob from 'glob'
 import merge from 'webpack-merge'
 
 import {getDefaultHTMLConfig} from './appConfig'
+import {directoryExists} from './utils'
 
 export default function createServeWebAppConfig(args, overrides) {
   let entry = path.resolve(args._[1] || 'src/index.js')
@@ -21,7 +21,7 @@ export default function createServeWebAppConfig(args, overrides) {
     },
   }
 
-  if (glob.sync('public/').length !== 0) {
+  if (directoryExists('public')) {
     config.plugins.copy = [{from: path.resolve('public'), to: dist, ignore: '.gitkeep'}]
   }
 

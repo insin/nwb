@@ -71,6 +71,10 @@ function buildConfig(args) {
     config.resolve.alias['react'] = config.resolve.alias['react-dom'] =
       path.join(path.dirname(resolve.sync('preact-compat/package.json', {basedir})), 'dist/preact-compat')
   }
+  else if (args['preact-alias'] || args['preact-aliases']) {
+    config.resolve.alias['react'] = config.resolve.alias['react-dom'] =
+      path.dirname(resolve.sync('preact/aliases', {basedir}))
+  }
 
   if (production) {
     config.babel.presets.push('react-prod')
@@ -98,6 +102,10 @@ export default function buildReact(args, cb) {
   else if (args.preact || args['preact-compat']) {
     library = 'Preact (React compat)'
     packages.push('preact', 'preact-compat')
+  }
+  else if (args['preact-alias'] || args['preact-aliases']) {
+    library = 'Preact (React aliases)'
+    packages.push('preact')
   }
 
   runSeries([

@@ -1,30 +1,44 @@
 import util from 'util'
 
-import glob from 'glob'
 import spawn from 'cross-spawn'
+import fs from 'fs-extra'
 import ora from 'ora'
 import resolve from 'resolve'
-import rimraf from 'rimraf'
 import runSeries from 'run-series'
 
 import debug from './debug'
 
 /**
- * Check if any of the given directories exist and delete them while displaying
- * a spinner if so.
+ * Check if the given directories exist and filter out any which don't.
+ * @param {Array<string>} dirs directory paths.
+ * @param {function(?Error=, Array<string>=)} cb
+ */
+function checkDirectories(dirs, cb) {
+  runSeries(
+    dirs.map(dir => cb => fs.stat(dir, (err, stats) => {
+      if (err) return cb(err.code === 'ENOENT' ? null : err)
+      cb(null, stats.isDirectory() ? dir : null)
+    })),
+    (err, dirs) => {
+      if (err) return cb(err)
+      cb(null, dirs.filter(dir => dir != null))
+    }
+  )
+}
+
+/**
+ * If any of the given directories exist, display a spinner and delete them.
  * @param {string} desc a description of what's being cleaned, e.g. 'app'
  * @param {Array<string>} dirs paths to delete.
  * @param {function(?Error=)} cb
  */
 export function clean(desc, dirs, cb) {
-  // Remove any trailing slashes before a glob pattern is created
-  dirs = dirs.map(dir => dir.replace(/[\\/]+$/, ''))
-  glob(`+(${dirs.join('|')})/`, (err, dirs) => {
+  checkDirectories(dirs, (err, dirs) => {
     if (err) return cb(err)
     if (dirs.length === 0) return cb()
     let spinner = ora(`Cleaning ${desc}`).start()
     runSeries(
-      dirs.map(dir => cb => rimraf(dir, cb)),
+      dirs.map(dir => cb => fs.remove(dir, cb)),
       (err) => {
         if (err) {
           spinner.fail()
@@ -55,6 +69,20 @@ export function clearConsole() {
  */
 export function deepToString(object) {
   return util.inspect(object, {colors: true, depth: null})
+}
+
+/**
+ * Check if a directory exists.
+ * @param {string} dir a directory path.
+ * @return {boolean}
+ */
+export function directoryExists(dir) {
+  try {
+    return fs.statSync(dir).isDirectory()
+  }
+  catch (e) {
+    return false
+  }
 }
 
 /**

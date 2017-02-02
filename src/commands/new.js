@@ -1,10 +1,9 @@
 import path from 'path'
 
-import glob from 'glob'
-
 import {PROJECT_TYPES} from '../constants'
 import createProject, {validateProjectType} from '../createProject'
 import {UserError} from '../errors'
+import {directoryExists} from '../utils'
 
 export default function new_(args, cb) {
   if (args._.length === 1) {
@@ -23,7 +22,7 @@ export default function new_(args, cb) {
   if (!name) {
     return cb(new UserError('A project name must be provided'))
   }
-  if (glob.sync(`${name}/`).length !== 0) {
+  if (directoryExists(name)) {
     return cb(new UserError(`A ${name}/ directory already exists`))
   }
 
