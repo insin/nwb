@@ -25,6 +25,7 @@
 - filesize: v3.4.3 → [v3.5.4](https://github.com/avoidwork/filesize.js/compare/3.4.3...3.5.4)
 - karma: v1.4.0 → [v1.4.1](https://github.com/karma-runner/karma/blob/master/CHANGELOG.md#141-2017-01-29)
 - karma-webpack: v2.0.1 → [v2.0.2](https://github.com/webpack-contrib/karma-webpack/releases/tag/v2.0.2)
+- webpack-dev-middleware: v1.9.0 → [v1.10.0](https://github.com/webpack/webpack-dev-middleware/releases/tag/v1.10.0)
 - webpack-hot-middleware: v2.15.0 → [v2.16.1](https://github.com/glenjamin/webpack-hot-middleware/compare/v2.15.0...v2.16.1)
 - webpack-merge: v2.4.0 → [v2.6.1](https://github.com/survivejs/webpack-merge/blob/master/CHANGELOG.md#261--2017-01-29)
 
