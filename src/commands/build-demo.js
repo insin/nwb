@@ -6,10 +6,7 @@ import {directoryExists} from '../utils'
 import webpackBuild from '../webpackBuild'
 import cleanDemo from './clean-demo'
 
-/**
- * Build a module's demo app from demo/src/index.js.
- */
-export default function buildDemo(args, cb) {
+function getCommandConfig(args) {
   let pkg = require(path.resolve('package.json'))
 
   let dist = path.resolve('demo/dist')
@@ -41,8 +38,15 @@ export default function buildDemo(args, cb) {
     config.plugins.copy = [{from: path.resolve('demo/public'), to: dist}]
   }
 
+  return config
+}
+
+/**
+ * Build a module's demo app from demo/src/index.js.
+ */
+export default function buildDemo(args, cb) {
   runSeries([
     (cb) => cleanDemo(args, cb),
-    (cb) => webpackBuild('demo', args, config, cb),
+    (cb) => webpackBuild('demo', args, getCommandConfig, cb),
   ], cb)
 }

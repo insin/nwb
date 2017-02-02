@@ -43,11 +43,11 @@ function buildConfig(args) {
   else {
     // Use a render shim module which supports quick prototyping
     config.entry = [require.resolve('../infernoRunEntry')]
-    config.plugins.define = {NWB_INFERNO_RUN_MOUNT_ID: JSON.stringify(mountId)}
+    config.plugins.define = {NWB_QUICK_MOUNT_ID: JSON.stringify(mountId)}
     // Allow the render shim module to resolve Inferno from the cwd
     config.resolve.alias['inferno'] = path.dirname(resolve.sync('inferno/package.json', {basedir: process.cwd()}))
     // Allow the render shim module to import the provided entry module
-    config.resolve.alias['nwb-inferno-run-entry'] = entry
+    config.resolve.alias['nwb-quick-entry'] = entry
   }
 
   if (args.polyfill === false || args.polyfills === false) {

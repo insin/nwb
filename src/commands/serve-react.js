@@ -37,11 +37,11 @@ function buildConfig(args) {
   else {
     // Use a render shim module which supports quick prototyping
     config.entry = [require.resolve('../reactRunEntry')]
-    config.plugins.define = {NWB_REACT_RUN_MOUNT_ID: JSON.stringify(mountId)}
+    config.plugins.define = {NWB_QUICK_MOUNT_ID: JSON.stringify(mountId)}
     config.resolve = {
       alias: {
         // Allow the render shim module to import the provided entry module
-        'nwb-react-run-entry': entry,
+        'nwb-quick-entry': entry,
         // Allow the render shim module to resolve React and ReactDOM from the cwd
         'react': path.dirname(resolve.sync('react/package.json', {basedir: process.cwd()})),
         'react-dom': path.dirname(resolve.sync('react-dom/package.json', {basedir: process.cwd()})),

@@ -43,9 +43,9 @@ function buildConfig(args) {
   else {
     // Use a render shim module which supports quick prototyping
     config.entry = [require.resolve('../preactRunEntry')]
-    config.plugins.define = {NWB_PREACT_RUN_MOUNT_ID: JSON.stringify(mountId)}
+    config.plugins.define = {NWB_QUICK_MOUNT_ID: JSON.stringify(mountId)}
     // Allow the render shim module to import the provided entry module
-    config.resolve.alias['nwb-preact-run-entry'] = entry
+    config.resolve.alias['nwb-quick-entry'] = entry
     // Allow the render shim module to resolve Preact from the cwd
     config.resolve.alias['preact'] = path.dirname(resolve.sync('preact/package.json', {basedir: process.cwd()}))
   }
