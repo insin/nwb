@@ -3,6 +3,8 @@
 **Fixed:**
 
 - An output directory specified with a trailing slash is now cleaned properly when creating a build.
+- Fixed cleaning nested dirs, including a demo app's `demo/dist` dir.
+- Fixed cleaning output directories specified with a trailing slash.
 
 **Dependencies:**
 
@@ -17,6 +19,10 @@
 - webpack: v2.2.0 → [v2.2.1](https://github.com/webpack/webpack/releases/tag/v2.2.1) - `ident` is no longer needed (previously used to prevent serialisation of loader options, e.g. for style preprocessor loaders)
 - webpack-hot-middleware: v2.15.0 → [v2.16.1](https://github.com/glenjamin/webpack-hot-middleware/compare/v2.15.0...v2.16.1)
 - webpack-merge: v2.4.0 → [v2.6.1](https://github.com/survivejs/webpack-merge/blob/master/CHANGELOG.md#261--2017-01-29)
+
+**Internal:**
+
+- Use `fs` and `fs-extra` instead of `glob` and `rimraf`, which are now only `devDependencies`.
 
 # 0.15.6 / 2017-02-11
 

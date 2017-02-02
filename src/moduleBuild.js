@@ -2,7 +2,6 @@ import fs from 'fs'
 import path from 'path'
 
 import spawn from 'cross-spawn'
-import glob from 'glob'
 import ora from 'ora'
 import runSeries from 'run-series'
 import merge from 'webpack-merge'
@@ -109,7 +108,7 @@ function buildUMD(args, buildConfig, userConfig, cb) {
 
 export default function moduleBuild(args, buildConfig = {}, cb) {
   // XXX Babel doesn't support passing the path to a babelrc file any more
-  if (glob.sync('.babelrc').length > 0) {
+  if (fs.existsSync('.babelrc')) {
     throw new UserError(
       'Unable to build the module as there is a .babelrc in your project',
       'nwb needs to write a temporary .babelrc to configure the build',

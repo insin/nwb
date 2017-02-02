@@ -1,9 +1,9 @@
+import fs from 'fs'
 import path from 'path'
 import util from 'util'
 
 import chalk from 'chalk'
 import figures from 'figures'
-import glob from 'glob'
 import webpack from 'webpack'
 
 import {CONFIG_FILE_NAME, INFERNO_APP, PREACT_APP, PROJECT_TYPES} from './constants'
@@ -424,7 +424,7 @@ export default function getUserConfig(args = {}, options = {}) {
   let userConfigPath = path.resolve(args.config || CONFIG_FILE_NAME)
 
   // Bail early if a config file is required and doesn't exist
-  let configFileExists = glob.sync(userConfigPath).length !== 0
+  let configFileExists = fs.existsSync(userConfigPath)
   if ((args.config || required) && !configFileExists) {
     throw new Error(`Couldn't find a config file at ${userConfigPath}`)
   }

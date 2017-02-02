@@ -1,9 +1,9 @@
 import path from 'path'
 
-import glob from 'glob'
 import runSeries from 'run-series'
 
 import {getDefaultHTMLConfig} from '../appConfig'
+import {directoryExists} from '../utils'
 import webpackBuild from '../webpackBuild'
 import cleanApp from './clean-app'
 
@@ -34,7 +34,7 @@ function buildConfig(args) {
     },
   }
 
-  if (glob.sync('public/').length !== 0) {
+  if (directoryExists('public')) {
     config.plugins.copy = [{from: path.resolve('public'), to: dist, ignore: '.gitkeep'}]
   }
 

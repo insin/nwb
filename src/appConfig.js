@@ -1,12 +1,11 @@
+import fs from 'fs'
 import path from 'path'
-
-import glob from 'glob'
 
 const DEFAULT_HTML_PATH = 'src/index.html'
 
 export function getDefaultHTMLConfig(cwd = process.cwd()) {
   // Use the default HTML template path if it exists
-  if (glob.sync(DEFAULT_HTML_PATH, {cwd}).length > 0) {
+  if (fs.existsSync(path.join(cwd, DEFAULT_HTML_PATH))) {
     return {
       template: DEFAULT_HTML_PATH,
     }
