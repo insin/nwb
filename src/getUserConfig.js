@@ -115,7 +115,8 @@ function checkForRedundantCompatAliases(projectType, aliases, configPath, report
 export function prepareWebpackRuleConfig(rules) {
   Object.keys(rules).forEach(ruleId => {
     let rule = rules[ruleId]
-    if (rule.use || rule.options) return
+    // XXX Special case for stylus-loader, which uses a 'use' option for plugins
+    if ((rule.use && !/stylus$/.test(ruleId)) || rule.options) return
     let {exclude, include, test, loader, ...options} = rule // eslint-disable-line no-unused-vars
     if (Object.keys(options).length > 0) {
       rule.options = options
