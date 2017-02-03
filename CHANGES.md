@@ -2,18 +2,18 @@
 
 **Added:**
 
-- You can now provide a [`webpack.config()` function](https://github.com/insin/nwb/blob/master/docs/Configuration.md#config-function) which will be given the generated Webpack config to do whatever it wants with, then return it.
-- You can now provide [`use` config](https://github.com/insin/nwb/blob/master/docs/Configuration.md#customising-loaders) with a list of loaders in `webpack.rules` to replace a rule's default loader with chained loaders.
-- You can now [disable a default Webpack config rule](https://github.com/insin/nwb/blob/master/docs/Configuration.md#disabling-default-rules) by setting them to `false`.
+- You can now provide a [`webpack.config()` function](https://github.com/insin/nwb/blob/master/docs/Configuration.md#config-function) which will be given the generated Webpack config to do whatever it wants with, then return it [[#256](https://github.com/insin/nwb/issues/256)]
+- You can now provide [`use` config](https://github.com/insin/nwb/blob/master/docs/Configuration.md#customising-loaders) with a list of loaders in `webpack.rules` to replace a rule's default loader with chained loaders [[#256](https://github.com/insin/nwb/issues/256)]
+- You can now [disable a default Webpack config rule](https://github.com/insin/nwb/blob/master/docs/Configuration.md#disabling-default-rules) by setting them to `false` [[#256](https://github.com/insin/nwb/issues/256)]
 
 **Changed:**
 
-- Default options are no longer used if you provide a custom `loader` for a rule in `webpack.rules`.
+- Default options are no longer used if you provide a custom `loader` for a rule in `webpack.rules` [[#256](https://github.com/insin/nwb/issues/256)]
 
 **Fixed:**
 
 - An output directory specified with a trailing slash is now cleaned properly when creating a build.
--A `loader` configured for a Webpack rule is no longer moved into an `options` object when an options object isn't configured.
+- A `loader` configured for a Webpack rule is no longer moved into the `options` object when an options object hasn't been explicitly configured [[#256](https://github.com/insin/nwb/issues/256)]
 - Fixed cleaning nested dirs, including a demo app's `demo/dist` dir.
 - Fixed cleaning output directories specified with a trailing slash.
 
