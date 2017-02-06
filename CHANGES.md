@@ -21,7 +21,7 @@
 
 - autoprefixer: v6.7.0 → [v6.7.2](https://github.com/postcss/autoprefixer/blob/master/CHANGELOG.md#672)
 - babel-plugin-inferno: v1.7.0 → [v1.8.0](https://github.com/infernojs/babel-plugin-inferno/releases/tag/1.8.0) - new optimisations
-- babel-plugin-transform-react-remove-prop-types: v0.2.11 → [v0.2.11](https://github.com/oliviertassinari/babel-plugin-transform-react-remove-prop-types/releases/tag/v0.2.12)
+- babel-plugin-transform-react-remove-prop-types: v0.2.11 → [v0.2.12](https://github.com/oliviertassinari/babel-plugin-transform-react-remove-prop-types/releases/tag/v0.2.12)
 - express: v4.14.0 → [v4.14.1](https://github.com/expressjs/express/blob/master/History.md#4141--2017-01-28) - dependency updates
 - extract-text-webpack-plugin: [v2.0.0-rc.3](https://github.com/webpack-contrib/extract-text-webpack-plugin/releases) - `extract()` now returns an Array of loader objects, options are now passed to children properly
 - file-loader: v0.9.0→ [v0.10.0](https://github.com/webpack/file-loader/releases/v0.10.0)
