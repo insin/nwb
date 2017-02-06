@@ -20,7 +20,7 @@
   "dependencies": {
   },
   "peerDependencies": {
-    "react": "{{reactVersion}}"
+    "react": "{{reactPeerVersion}}"
   },
   "devDependencies": {
     "nwb": "{{nwbVersion}}"
