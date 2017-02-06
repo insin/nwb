@@ -1,3 +1,5 @@
+# 0.15.5 / 2017-02-06
+
 **Fixed:**
 
 - Fixed blank version being set for the React `peerDependency` in new `react-component` projects.
