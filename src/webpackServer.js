@@ -4,6 +4,7 @@ import inquirer from 'inquirer'
 
 import {DEFAULT_PORT} from './constants'
 import createServerWebpackConfig from './createServerWebpackConfig'
+import getUserConfig from './getUserConfig'
 import debug from './debug'
 import devServer from './devServer'
 import {clearConsole, deepToString} from './utils'
@@ -64,6 +65,12 @@ export default function webpackServer(args, buildConfig, cb) {
       buildConfig.plugins.status = {
         message: `The app is running at http://${options.host || 'localhost'}:${options.port}/`,
       }
+    }
+
+    // Add proxy config from userConfig.
+    let userConfig = getUserConfig(args)
+    if (userConfig.proxy) {
+      options = {...options, proxy: userConfig.proxy}
     }
 
     let webpackConfig = createServerWebpackConfig(args, buildConfig)
