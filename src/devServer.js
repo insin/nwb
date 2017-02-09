@@ -13,7 +13,7 @@ export default function server(webpackConfig, {fallback, host, port, staticPath,
   let app = express()
   let compiler = webpack(webpackConfig)
 
-  if (proxy && proxy.enabled) {
+  if (proxy) {
     app.use(proxy.path, require('http-proxy-middleware')(proxy.options))
   }
 

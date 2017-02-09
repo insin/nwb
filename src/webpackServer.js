@@ -67,16 +67,15 @@ export default function webpackServer(args, buildConfig, cb) {
       }
     }
 
-    // Add proxy config from userConfig.
-    let userConfig = getUserConfig(args)
-    if (userConfig.proxy) {
-      options = {...options, proxy: userConfig.proxy}
-    }
-
     let webpackConfig = createServerWebpackConfig(args, buildConfig)
 
     debug('webpack config: %s', deepToString(webpackConfig))
 
-    devServer(webpackConfig, options, cb)
+    const {devServer: devServerOptions} = getUserConfig(args)
+    const devServerConfig = {...options, ...devServerOptions}
+
+    debug('devServer config: %s', deepToString(devServerConfig))
+
+    devServer(webpackConfig, devServerConfig, cb)
   })
 }
