@@ -436,11 +436,31 @@ export const COMPAT_CONFIGS = {
       'react/lib/ReactContext': true,
     }
   },
+  intl({locales}) {
+    return {
+      plugins: [
+        new webpack.ContextReplacementPlugin(
+          /intl[/\\]locale-data[/\\]jsonp$/,
+          new RegExp(`^\\.\\/(${locales.join('|')})$`)
+        )
+      ]
+    }
+  },
   moment({locales}) {
     return {
       plugins: [
         new webpack.ContextReplacementPlugin(
           /moment[/\\]locale$/,
+          new RegExp(`^\\.\\/(${locales.join('|')})$`)
+        )
+      ]
+    }
+  },
+  'react-intl'({locales}) {
+    return {
+      plugins: [
+        new webpack.ContextReplacementPlugin(
+          /react-intl[/\\]locale-data$/,
           new RegExp(`^\\.\\/(${locales.join('|')})$`)
         )
       ]

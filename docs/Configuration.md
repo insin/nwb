@@ -329,9 +329,21 @@ The following libraries are supported:
 
 Set to `true` for [Enzyme](http://airbnb.io/enzyme/) compatibility - this assumes you're using the latest version of React (v15).
 
+###### `intl`: `Object`
+
+If you use [intl](https://www.npmjs.com/package/intl) in a Webpack build, all the locales it supports will be imported by default and your build will be larger than you were expecting!
+
+Provide an object with a `locales` Array specifying language codes for the locales you want to load.
+
 ###### `moment`: `Object`
 
 If you use [Moment.js](http://momentjs.com/) in a Webpack build, all the locales it supports will be imported by default and your build will be about 139KB larger than you were expecting!
+
+Provide an object with a `locales` Array specifying language codes for the locales you want to load.
+
+###### `react-intl`: `Object`
+
+If you use [react-intl](https://github.com/yahoo/react-intl) in a Webpack build, all the locales it supports will be imported by default and your build will be larger than you were expecting!
 
 Provide an object with a `locales` Array specifying language codes for the locales you want to load.
 

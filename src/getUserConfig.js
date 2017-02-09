@@ -288,11 +288,29 @@ export function processUserConfig({
         `Valid properties are: ${Object.keys(COMPAT_CONFIGS).join(', ')}.`)
     }
 
+    if (userConfig.webpack.compat.intl &&
+        typeOf(userConfig.webpack.compat.intl.locales) !== 'array') {
+      report.error(
+        'webpack.compat.intl.locales',
+        webpack.compat.intl.locales,
+        'Must be an Array.'
+      )
+    }
+
     if (userConfig.webpack.compat.moment &&
         typeOf(userConfig.webpack.compat.moment.locales) !== 'array') {
       report.error(
         'webpack.compat.moment.locales',
         webpack.compat.moment.locales,
+        'Must be an Array.'
+      )
+    }
+
+    if (userConfig.webpack.compat['react-intl'] &&
+        typeOf(userConfig.webpack.compat['react-intl'].locales) !== 'array') {
+      report.error(
+        'webpack.compat[\'react-intl\'].locales',
+        webpack.compat['react-intl'].locales,
         'Must be an Array.'
       )
     }

@@ -309,16 +309,30 @@ describe('getCompatConfig()', () => {
     expect(getCompatConfig()).toBe(null)
   })
   it('skips falsy config', () => {
-    expect(getCompatConfig({enzyme: false, moment: false, sinon: false})).toBe(null)
+    expect(getCompatConfig({enzyme: false, intl: false, moment: false, 'react-intl': false, sinon: false})).toBe(null)
   })
   it('supports enzyme', () => {
     expect(getCompatConfig({enzyme: true})).toEqual(COMPAT_CONFIGS.enzyme)
+  })
+  it('supports intl', () => {
+    let config = getCompatConfig({intl: {locales: ['de', 'en-gb']}})
+    expect(config.plugins).toExist()
+    expect(config.plugins.length).toBe(1)
+    expect(config.plugins[0].resourceRegExp).toEqual(/intl[/\\]locale-data[/\\]jsonp$/)
+    expect(config.plugins[0].newContentRegExp).toEqual(/^\.\/(de|en-gb)$/)
   })
   it('supports moment', () => {
     let config = getCompatConfig({moment: {locales: ['de', 'en-gb']}})
     expect(config.plugins).toExist()
     expect(config.plugins.length).toBe(1)
     expect(config.plugins[0].resourceRegExp).toEqual(/moment[/\\]locale$/)
+    expect(config.plugins[0].newContentRegExp).toEqual(/^\.\/(de|en-gb)$/)
+  })
+  it('supports react-intl', () => {
+    let config = getCompatConfig({'react-intl': {locales: ['de', 'en-gb']}})
+    expect(config.plugins).toExist()
+    expect(config.plugins.length).toBe(1)
+    expect(config.plugins[0].resourceRegExp).toEqual(/react-intl[/\\]locale-data$/)
     expect(config.plugins[0].newContentRegExp).toEqual(/^\.\/(de|en-gb)$/)
   })
   it('supports sinon', () => {
