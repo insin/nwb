@@ -6,11 +6,11 @@
 
 `next` is generally used for development of new features for the next major release.
 
-`webpack2` is being used for changes required to switch over to Webpack 2 once it's officially released. This branch gets rebased frequently.
-
 ## Linting
 
 Use `npm run lint` and `npm run lint:fix` - PRs which don't pass linting will fail.
+
+See the [`eslint-config-jonnybuchanan` README](https://github.com/insin/eslint-config-jonnybuchanan#readme) for info on using nwb's lint config in your editor.
 
 ## Running Tests
 
@@ -27,6 +27,26 @@ Use `npm run lint` and `npm run lint:fix` - PRs which don't pass linting will fa
 - `npm run test:watch` will watch files and run a subset of tests on every change, providing a quick check that you haven't broken any of the default config generation if you're working in that area.
 
   Command/project tests are too slow to run on each change.
+  
+## Aliasing
+
+The easiest way to run the development version of nwb is to alias the `bin` scripts in the shell you'll be testing changes in:
+
+```sh
+# Bash etc.
+alias inferno="node ~/repos/nwb/lib/bin/inferno.js"
+alias nwb="node ~/repos/nwb/lib/bin/nwb.js"
+alias preact="node ~/repos/nwb/lib/bin/preact.js"
+alias react="node ~/repos/nwb/lib/bin/react.js"
+
+# Cmder (aliases for Windows cmd.exe - http://cmder.net/)
+alias inferno=node C:\Users\Jonny\repos\nwb\lib\bin\inferno.js $*
+alias nwb=node C:\Users\Jonny\repos\nwb\lib\bin\nwb.js $*
+alias preact=node C:\Users\Jonny\repos\nwb\lib\bin\preact.js $*
+alias react=node C:\Users\Jonny\repos\nwb\lib\bin\react.js $*
+```
+
+This uses the transpiled code, so don't forget to run `npm run build` after every change, or `npm run build:watch`.
 
 ## Implementation Details
 
