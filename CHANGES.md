@@ -1,3 +1,9 @@
+# 0.15.6 / 2017-02-11
+
+**Changed:**
+
+- Explicitly call `process.exit(0)` from the `nwb` command when there are no errors running a command [[#262](https://github.com/insin/nwb/pull/262)]
+
 # 0.15.5 / 2017-02-06
 
 **Fixed:**
