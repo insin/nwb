@@ -147,8 +147,8 @@ export function createStyleLoaders(loader, server, userWebpackConfig, {
   }
   else {
     return ExtractTextPlugin.extract({
-      fallbackLoader: styleLoader,
-      loader: loaders,
+      fallback: styleLoader,
+      use: loaders,
     })
   }
 }
