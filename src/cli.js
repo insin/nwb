@@ -133,8 +133,14 @@ Project type-specific commands:
   ${cmd('nwb serve-react-app')} ${opt('[entry]')}
     Serve a React app from ${opt('entry')}
 
+    Options:
+      ${opt('--no-hmre')}  disable use of React Transform for Hot Module Replacement & Errors
+
   ${cmd('nwb serve-react-demo')}
     Serve a React demo app from demo/src/index.js.
+
+    Options:
+      ${opt('--no-hmre')}  disable use of React Transform for Hot Module Replacement & Errors
 
   ${cmd('nwb serve-preact-app')} ${opt('[entry]')}
     Serve a Preact app from ${opt('entry')}

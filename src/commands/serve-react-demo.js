@@ -8,9 +8,9 @@ import webpackServer from '../webpackServer'
 export default function serveReactDemo(args, cb) {
   let pkg = require(path.resolve('package.json'))
 
-  webpackServer(args, {
+  let config = {
     babel: {
-      presets: ['react', 'react-hmre'],
+      presets: ['react'],
     },
     entry: [path.resolve('demo/src/index.js')],
     output: {
@@ -25,5 +25,11 @@ export default function serveReactDemo(args, cb) {
         title: `${pkg.name} ${pkg.version} Demo`,
       },
     },
-  }, cb)
+  }
+
+  if (args.hmr !== false && args.hmre !== false) {
+    config.babel.presets.push('react-hmre')
+  }
+
+  webpackServer(args, config, cb)
 }
