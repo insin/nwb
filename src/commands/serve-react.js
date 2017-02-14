@@ -15,7 +15,7 @@ function buildConfig(args) {
 
   let config = {
     babel: {
-      presets: ['react', 'react-hmre'],
+      presets: ['react'],
       stage: 0,
     },
     output: {
@@ -47,6 +47,10 @@ function buildConfig(args) {
         'react-dom': path.dirname(resolve.sync('react-dom/package.json', {basedir: process.cwd()})),
       }
     }
+  }
+
+  if (args.hmr !== false && args.hmre !== false) {
+    config.babel.presets.push('react-hmre')
   }
 
   if (args.polyfill === false || args.polyfills === false) {

@@ -11,7 +11,7 @@ export default function createServeReactAppConfig(args, overrides) {
 
   let config = {
     babel: {
-      presets: ['react', 'react-hmre'],
+      presets: ['react'],
     },
     entry: [path.resolve(entry)],
     output: {
@@ -26,6 +26,10 @@ export default function createServeReactAppConfig(args, overrides) {
 
   if (directoryExists('public')) {
     config.plugins.copy = [{from: path.resolve('public'), to: dist, ignore: '.gitkeep'}]
+  }
+
+  if (args.hmr !== false && args.hmre !== false) {
+    config.babel.presets.push('react-hmre')
   }
 
   return merge(config, overrides)

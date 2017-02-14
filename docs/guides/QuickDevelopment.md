@@ -342,6 +342,8 @@ When the rendering shim detects that one of these has been exported from the pro
 
 `react run`'s build configuration uses [react-transform-hmr](https://github.com/gaearon/react-transform-hmr), which automatically handles accepting HMR requests in modules which contain React components, patching them and re-rendering without losing state where possible.
 
+> To disable this, pass a `--no-hmre` flag.
+
 For other HMR scenarios, such as an exported React Element, `react run` will re-render to the same root DOM node.
 
 **Inferno and Preact**

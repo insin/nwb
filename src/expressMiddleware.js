@@ -40,6 +40,7 @@ export default function nwbMiddleware(express, options = {}) {
   let args = {
     _: [`serve-${userConfig.type}`, options.entry],
     config: options.config,
+    hmre: !options.hmr || !options.hmre,
     install: !!options.install || !!options.autoInstall,
     reload: !!options.reload
   }

@@ -133,21 +133,21 @@ nwb serve [entry]
 
 - JavaScript and CSS changes will be applied on the fly without refreshing the page.
 - Syntax errors made while the development server is running will appear as an overlay in your browser.
-- Rendering errors in React components will also appear as an overlay.
+- By default, rendering errors in React components will also appear as an overlay.
 
 Passing an argument for `entry` allows you to customise the entry point for your React or web app.
 
 **Options:**
 
-- `--install` - automatically install missing npm dependencies and save them to your app's `package.json`
+- `--install` - automatically install missing npm dependencies (and save them to `package.json` if present)
 - `--fallback` - fall back to serving the index page from any path, for developing apps which use the History API
 - `--host` - change the hostname the dev server binds to *[default: not specifying a host when starting the dev server]*
 - `--port` - change the port the dev server runs on *[default: 3000]*
 - `--reload` - auto-reload the page when webpack gets stuck
 
-**In React apps:**
+**React app/component options:**
 
-When run in a `react-app` project, `serve` will serve the app with hot module reloading and display of syntax errors and React component rendering errors as overlays.
+- `--no-hmre` - disable use of [React Transform](https://github.com/gaearon/babel-plugin-react-transform) to attempt to automatically handle Hot Module Replacement for React components and display an overlay with `render()` errors - if you want to use HMR, you will have to accept updates manually
 
 **In Inferno and Preact apps:**
 
@@ -161,7 +161,7 @@ If you pass a `--reload` option, the HMR client will refresh the page any time a
 
 **In React component modules:**
 
-When run in a `react-component` project, `serve` will serve the component's demo app with hot module reloading and display of syntax errors and React component rendering errors as overlays.
+When run in a `react-component` project, `serve` will serve the component's demo app.
 
 A demo app is essential to show people what your component can do - as [React Rocks](http://react.rocks/) says: online demo or it didn't happen!
 
