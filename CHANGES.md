@@ -21,16 +21,28 @@
 **Dependencies:**
 
 - autoprefixer: v6.7.0 → [v6.7.2](https://github.com/postcss/autoprefixer/blob/master/CHANGELOG.md#672)
-- babel-plugin-inferno: v1.7.0 → [v1.8.0](https://github.com/infernojs/babel-plugin-inferno/releases/tag/1.8.0) - new optimisations
-- babel-plugin-transform-react-remove-prop-types: v0.2.11 → [v0.2.12](https://github.com/oliviertassinari/babel-plugin-transform-react-remove-prop-types/releases/tag/v0.2.12)
+- babel-cli: v6.22.2 → [v6.23.0][babel6230]
+- babel-core: v6.22.1 → [v6.23.1](https://github.com/babel/babel/blob/master/CHANGELOG.md)
+- babel-loader: v6.2.10 → [v6.3.0](https://github.com/babel/babel-loader/releases/tag/v6.3.0) - slight performance improvement
+- babel-plugin-inferno: v1.7.0 → [v1.9.0](https://github.com/infernojs/babel-plugin-inferno/releases) - new optimisations
+- babel-plugin-istanbul: v3.1.2 → [v4.0.0](https://github.com/istanbuljs/babel-plugin-istanbul/blob/master/CHANGELOG.md#400-2017-02-07) - drop support for Node.js v0.10 and v0.12
+- babel-plugin-transform-react-jsx: v6.22.0 → [v6.23.0][babel6230]
+- babel-plugin-transform-react-remove-prop-types: v0.2.11 → [v0.3.2](https://github.com/oliviertassinari/babel-plugin-transform-react-remove-prop-types/releases)
+- babel-plugin-transform-runtime: v6.22.0 → [v6.23.0][babel6230]
+- babel-polyfill: v6.22.0 → [v6.23.0][babel6230]
+- babel-preset-react : v6.22.0 → [v6.23.0][babel6230]
+- babel-runtime: v6.22.0 → [v6.23.0][babel6230]
 - express: v4.14.0 → [v4.14.1](https://github.com/expressjs/express/blob/master/History.md#4141--2017-01-28) - dependency updates
 - file-loader: v0.9.0 → [v0.10.0](https://github.com/webpack/file-loader/releases/v0.10.0)
 - filesize: v3.4.3 → [v3.5.4](https://github.com/avoidwork/filesize.js/compare/3.4.3...3.5.4)
 - karma: v1.4.0 → [v1.4.1](https://github.com/karma-runner/karma/blob/master/CHANGELOG.md#141-2017-01-29)
 - karma-webpack: v2.0.1 → [v2.0.2](https://github.com/webpack-contrib/karma-webpack/releases/tag/v2.0.2)
+- postcss-loader: v1.2.2 → [v1.3.0](https://github.com/postcss/postcss-loader/blob/master/CHANGELOG.md#130) - allow an object in syntax options
 - webpack-dev-middleware: v1.9.0 → [v1.10.0](https://github.com/webpack/webpack-dev-middleware/releases/tag/v1.10.0)
 - webpack-hot-middleware: v2.15.0 → [v2.16.1](https://github.com/glenjamin/webpack-hot-middleware/compare/v2.15.0...v2.16.1)
 - webpack-merge: v2.4.0 → [v2.6.1](https://github.com/survivejs/webpack-merge/blob/master/CHANGELOG.md#261--2017-01-29)
+
+[babel6230]: https://github.com/babel/babel/blob/master/CHANGELOG.md#6230-2017-02-13
 
 **Internal:**
 
