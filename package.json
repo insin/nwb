@@ -99,8 +99,8 @@
     "whatwg-fetch": "2.0.2",
 
     "webpack": "2.2.1",
-    "autoprefixer": "6.7.2",
-    "babel-loader": "6.3.0",
+    "autoprefixer": "6.7.3",
+    "babel-loader": "6.3.2",
     "case-sensitive-paths-webpack-plugin": "1.1.4",
     "copy-webpack-plugin": "4.0.1",
     "css-loader": "0.26.1",
@@ -113,7 +113,7 @@
     "style-loader": "0.13.1",
     "url-loader": "0.5.7",
     "webpack-dev-middleware": "1.10.0",
-    "webpack-hot-middleware": "2.16.1",
+    "webpack-hot-middleware": "2.17.0",
     "webpack-md5-hash": "0.0.5"
   },
   "devDependencies": {
