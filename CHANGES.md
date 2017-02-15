@@ -2,6 +2,7 @@
 
 **Added:**
 
+- Re-enabled the `react-constant-elements` transform for React production builds.
 - Added a `--no-hmre` flag for use when serving a React app, to disable use of [React Transform](https://github.com/gaearon/babel-plugin-react-transform#readme) to attempt to automatically handle Hot Module Replacement for React components and display an overlay with `render()` errors [[#263](https://github.com/insin/nwb/issues/263)]
 - You can now provide a [`webpack.config()` function](https://github.com/insin/nwb/blob/master/docs/Configuration.md#config-function) which will be given the generated Webpack config to do whatever it wants with, then return it [[#256](https://github.com/insin/nwb/issues/256)]
 - You can now provide [`use` config](https://github.com/insin/nwb/blob/master/docs/Configuration.md#customising-loaders) with a list of loaders in `webpack.rules` to replace a rule's default loader with chained loaders [[#256](https://github.com/insin/nwb/issues/256)]
