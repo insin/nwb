@@ -2,7 +2,19 @@ import expect from 'expect'
 import webpack from 'webpack'
 
 import {ConfigValidationError} from '../src/errors'
-import getUserConfig, {prepareWebpackRuleConfig, processUserConfig} from '../src/getUserConfig'
+import getUserConfig, {getProjectType, prepareWebpackRuleConfig, processUserConfig} from '../src/getUserConfig'
+
+describe('getProjectType()', () => {
+  it("throws an error when a config file can't be found", () => {
+    expect(() => getProjectType({config: 'tests/fixtures/nonexistent.js'}))
+      .toThrow(/Couldn't find a config file/)
+  })
+
+  it('throws an error when the config file is invalid or otherwise causes an error', () => {
+    expect(() => getProjectType({config: 'tests/fixtures/invalid-config.js'}))
+      .toThrow(/Couldn't import the config file/)
+  })
+})
 
 describe('getUserConfig()', () => {
   it("throws an error when a required config file can't be found", () => {

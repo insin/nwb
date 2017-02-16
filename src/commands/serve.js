@@ -1,6 +1,6 @@
 import {INFERNO_APP, PREACT_APP, REACT_APP, REACT_COMPONENT, WEB_APP} from '../constants'
 import {UserError} from '../errors'
-import getUserConfig from '../getUserConfig'
+import {getProjectType} from '../getUserConfig'
 import serveInfernoApp from './serve-inferno-app'
 import servePreactApp from './serve-preact-app'
 import serveReactApp from './serve-react-app'
@@ -19,9 +19,17 @@ const SERVE_COMMANDS = {
  * Generic serve command, invokes the appropriate project type-specific command.
  */
 export default function serve(args, cb) {
-  let userConfig = getUserConfig(args, {required: true})
-  if (!SERVE_COMMANDS[userConfig.type]) {
-    return cb(new UserError(`Unable to serve anything for a ${userConfig.type} project.`))
+  let projectType
+  try {
+    projectType = getProjectType(args)
   }
-  SERVE_COMMANDS[userConfig.type](args, cb)
+  catch (e) {
+    return cb(e)
+  }
+
+  if (!SERVE_COMMANDS[projectType]) {
+    return cb(new UserError(`Unable to serve anything for a ${projectType} project.`))
+  }
+
+  SERVE_COMMANDS[projectType](args, cb)
 }
