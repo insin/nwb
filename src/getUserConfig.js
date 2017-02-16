@@ -109,6 +109,53 @@ function checkForRedundantCompatAliases(projectType, aliases, configPath, report
 }
 
 /**
+ * Load a user config file to get its project type. If we need to check the
+ * project type, a config file must exist.
+ */
+export function getProjectType(args = {}) {
+  // Try to load default user config, or use a config file path we were given
+  let userConfig = {}
+  let userConfigPath = path.resolve(args.config || CONFIG_FILE_NAME)
+
+  // Bail early if a config file doesn't exist
+  let configFileExists = fs.existsSync(userConfigPath)
+  if (!configFileExists) {
+    throw new Error(`Couldn't find a config file at ${userConfigPath} to determine project type.`)
+  }
+
+  try {
+    userConfig = require(userConfigPath)
+    // Delete the file from the require cache as it may be imported multiple
+    // times with a different NODE_ENV in place depending on the command.
+    delete require.cache[userConfigPath]
+  }
+  catch (e) {
+    throw new Error(`Couldn't import the config file at ${userConfigPath}: ${e.message}\n${e.stack}`)
+  }
+
+  // Config modules can export a function if they need to access the current
+  // command or the webpack dependency nwb manages for them.
+  if (typeOf(userConfig) === 'function') {
+    userConfig = userConfig({
+      args,
+      command: args._[0],
+      webpack,
+    })
+  }
+
+  let report = new UserConfigReport(userConfigPath)
+
+  if (!PROJECT_TYPES.has(userConfig.type)) {
+    report.error('type', userConfig.type, `Must be one of: ${[...PROJECT_TYPES].join(', ')}`)
+  }
+  if (report.hasErrors()) {
+    throw new ConfigValidationError(report)
+  }
+
+  return userConfig.type
+}
+
+/**
  * Move loader options into an options object, allowing users to provide flatter
  * config.
  */

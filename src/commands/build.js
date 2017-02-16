@@ -1,5 +1,5 @@
 import {INFERNO_APP, PREACT_APP, REACT_APP, REACT_COMPONENT, WEB_APP, WEB_MODULE} from '../constants'
-import getUserConfig from '../getUserConfig'
+import {getProjectType} from '../getUserConfig'
 import buildInfernoApp from './build-inferno-app'
 import buildPreactApp from './build-preact-app'
 import buildReactApp from './build-react-app'
@@ -20,13 +20,13 @@ const BUILD_COMMANDS = {
  * Generic build command, invokes the appropriate project type-specific command.
  */
 export default function build(args, cb) {
-  let userConfig
+  let projectType
   try {
-    userConfig = getUserConfig(args, {required: true})
+    projectType = getProjectType(args)
   }
   catch (e) {
     return cb(e)
   }
 
-  BUILD_COMMANDS[userConfig.type](args, cb)
+  BUILD_COMMANDS[projectType](args, cb)
 }
