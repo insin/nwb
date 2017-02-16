@@ -8,10 +8,9 @@ function init() {
   root = render(<App/>, document.querySelector('#app'), root)
 }
 
-init()
-
 if (module.hot) {
-  module.hot.accept('./App', () => window.requestAnimationFrame(() => {
-    init()
-  }))
+  // require('preact/devtools') // Uncomment to enable use of React DevTools
+  module.hot.accept('./App', () => requestAnimationFrame(init))
 }
+
+init()
