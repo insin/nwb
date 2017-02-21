@@ -17,6 +17,11 @@ const States = {
   REBUILDING: 'REBUILDING',
 }
 
+// XXX ExtractTextPlugin is triggering a deprecation warning
+const IGNORE_STDERR = [
+  /loaderUtils\.parseQuery\(\) received a non-string value/
+]
+
 describe('command: serve', function() {
   this.timeout(90000)
 
@@ -51,8 +56,11 @@ describe('command: serve', function() {
 
         // Fail if there's any error logging
         server.stderr.on('data', data => {
-          console.log(`server stderr: ${data}`)
-          done(new Error(`stderr output received: ${data}`))
+          let ignoring = IGNORE_STDERR.some(ignored => ignored.test(data))
+          console.log(`server stderr: ${data}${ignoring ? ' (ignoring)' : ''}`)
+          if (!ignoring) {
+            done(new Error(`stderr output received: ${data}`))
+          }
         })
 
         function startHMRClient() {

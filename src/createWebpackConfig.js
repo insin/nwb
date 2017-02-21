@@ -542,7 +542,7 @@ function addPolyfillsToEntry(entry) {
  * Create a webpack config with a curated set of default rules suitable for
  * creating a static build (default) or serving an app with hot reloading.
  */
-export default function createWebpackConfig(buildConfig, nwbPluginConfig = {}, userConfig = {}) {
+export default function createWebpackConfig(buildConfig, pluginConfig = {}, userConfig = {}) {
   debug('createWebpackConfig buildConfig: %s', deepToString(buildConfig))
 
   // Final webpack config is primarily driven by build configuration for the nwb
@@ -579,7 +579,7 @@ export default function createWebpackConfig(buildConfig, nwbPluginConfig = {}, u
 
   let webpackConfig = {
     module: {
-      rules: createRules(server, buildRulesConfig, userWebpackConfig, nwbPluginConfig)
+      rules: createRules(server, buildRulesConfig, userWebpackConfig, pluginConfig)
     },
     output: {
       ...buildOutputConfig,

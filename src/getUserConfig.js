@@ -481,6 +481,7 @@ export function processUserConfig({
 export default function getUserConfig(args = {}, options = {}) {
   let {
     check = false,
+    pluginConfig = {}, // eslint-disable-line no-unused-vars
     required = DEFAULT_REQUIRED,
   } = options
   // Try to load default user config, or use a config file path we were given
