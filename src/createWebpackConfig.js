@@ -589,6 +589,9 @@ export default function createWebpackConfig(buildConfig, nwbPluginConfig = {}, u
     resolve: merge({
       extensions: ['.js', '.json'],
     }, buildResolveConfig, userResolveConfig),
+    resolveLoader: {
+      modules: ['node_modules', path.join(__dirname, '../node_modules')]
+    },
     ...otherBuildConfig,
   }
 
