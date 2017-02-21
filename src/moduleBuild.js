@@ -10,6 +10,7 @@ import cleanModule from './commands/clean-module'
 import createBabelConfig from './createBabelConfig'
 import debug from './debug'
 import {UserError} from './errors'
+import getPluginConfig from './getPluginConfig'
 import getUserConfig from './getUserConfig'
 import {deepToString} from './utils'
 import webpackBuild from './webpackBuild'
@@ -124,7 +125,8 @@ export default function moduleBuild(args, buildConfig = {}, cb) {
   }
 
   let src = path.resolve('src')
-  let userConfig = getUserConfig(args)
+  let pluginConfig = getPluginConfig(args)
+  let userConfig = getUserConfig(args, {pluginConfig})
   let copyFiles = !!args['copy-files']
 
   let tasks = [(cb) => cleanModule(args, cb)]

@@ -4,7 +4,6 @@ import merge from 'webpack-merge'
 
 import createWebpackConfig from './createWebpackConfig'
 import debug from './debug'
-import getPluginConfig from './getPluginConfig'
 import {deepToString, typeOf} from './utils'
 
 // The following defaults are combined into a single extglob-style pattern to
@@ -120,7 +119,7 @@ export function getKarmaPluginConfig({codeCoverage = false, userConfig = {}} = {
   return {browsers, frameworks, plugins, reporters}
 }
 
-export default function createKarmaConfig(args, buildConfig, userConfig) {
+export default function createKarmaConfig(args, buildConfig, pluginConfig, userConfig) {
   let isCi = process.env.CI || process.env.CONTINUOUS_INTEGRATION
   let codeCoverage = isCi || !!args.coverage
 
@@ -204,7 +203,7 @@ export default function createKarmaConfig(args, buildConfig, userConfig) {
       server: {
         hot: false,
       },
-    }), getPluginConfig(), userConfig),
+    }), pluginConfig, userConfig),
     webpackMiddleware: {
       noInfo: true,
       quiet: true,
