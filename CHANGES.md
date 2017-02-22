@@ -14,6 +14,7 @@
 
 **Fixed:**
 
+- Removed `node_modules/` caching from default Travis CI config in project skeletons, as it's been reported to cause build failures [[#271](https://github.com/insin/nwb/issues/271)]
 - An output directory specified with a trailing slash is now cleaned properly when creating a build.
 - A `loader` configured for a Webpack rule is no longer moved into the `options` object when an options object hasn't been explicitly configured [[#256](https://github.com/insin/nwb/issues/256)]
 - Fixed cleaning nested dirs, including a demo app's `demo/dist` dir.
