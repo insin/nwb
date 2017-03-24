@@ -120,9 +120,12 @@ export default function moduleBuild(args, buildConfig = {}, cb) {
   let userConfig = getUserConfig(args)
   let copyFiles = !!args['copy-files']
 
-  let tasks = [
-    (cb) => cleanModule(args, cb),
-    (cb) => runBabel(
+  let tasks = [(cb) => cleanModule(args, cb)]
+
+  // The CommonJS build is enabled by default, and must be explicitly
+  // disabled if you don't want it.
+  if (userConfig.npm.cjs !== false) {
+    tasks.push((cb) => runBabel(
       'ES5',
       {copyFiles, outDir: path.resolve('lib'), src},
       merge(buildConfig.babel, buildConfig.babelDev || {}, {
@@ -139,8 +142,8 @@ export default function moduleBuild(args, buildConfig = {}, cb) {
       }),
       userConfig.babel,
       cb
-    )
-  ]
+    ))
+  }
 
   // The ES6 modules build is enabled by default, and must be explicitly
   // disabled if you don't want it.
