@@ -90,6 +90,14 @@ function buildUMD(args, buildConfig, userConfig, cb) {
       spinner.fail()
       return cb(err)
     }
+
+    if (userConfig.uglify === false) {
+      spinner.succeed()
+      console.log()
+      logGzippedFileSizes(stats1)
+      return cb()
+    }
+
     process.env.NODE_ENV = 'production'
     webpackBuildConfig.babel = merge(buildConfig.babel, buildConfig.babelProd || {})
     webpackBuildConfig.devtool = 'source-map'
