@@ -14,7 +14,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/insin/nwb-less.git"
+    "url": "https://github.com/insin/nwb.git"
   },
   "keywords": [
     "nwb",
