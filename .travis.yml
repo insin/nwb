@@ -6,15 +6,14 @@ node_js:
   - 6
 
 cache:
-  directories:
-    - $HOME/.npm
+  yarn: true
 
 before_install:
-  - npm install coveralls
+  - yarn global add coveralls
   - git config --global user.email "jonathan.buchanan@gmail.com"
   - git config --global user.name "Jonny Buchanan"
 
-script: "npm run test:coverage"
+script: "yarn coverage"
 
 after_success:
   - cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js
