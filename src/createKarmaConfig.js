@@ -107,7 +107,8 @@ export function getKarmaPluginConfig({codeCoverage = false, userConfig = {}} = {
   if (browsers.indexOf('PhantomJS') !== -1 && !findPlugin(plugins, 'launcher:PhantomJS')) {
     plugins.push(require('karma-phantomjs-launcher'))
   }
-  if (browsers.indexOf('Chrome') !== -1 && !findPlugin(plugins, 'launcher:Chrome')) {
+  if (browsers.some(function matchChrom(b) { return /Chrom/.test(b) }) &&
+      !findPlugin(plugins, 'launcher:Chrome')) {
     plugins.push(require('karma-chrome-launcher'))
   }
 
