@@ -65,9 +65,6 @@ describe('command: build', function() {
         'vendor.js.map',
       ])
     })
-    it('generates displayName for React.createClass calls in the build', () => {
-      expect(builtAppSource).toInclude('displayName:"App"')
-    })
     it('injects the Webpack manifest into generated HTML', () => {
       expect(builtHTML).toInclude('window.webpackJsonp')
     })
@@ -124,10 +121,6 @@ describe('command: build', function() {
         /^demo\.\w{8}\.js\.map/,
         'index.html',
       ])
-    })
-    it('generates displayName for React.createClass calls in the demo build', () => {
-      expect(fs.readFileSync(glob.sync('demo/dist/demo*.js')[0], 'utf8'))
-        .toInclude('displayName:"Demo"')
     })
   })
 
