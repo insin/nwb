@@ -32,7 +32,6 @@ describe('command: build', function() {
   }
 
   describe('building a React app', () => {
-    let builtAppSource
     let builtHTML
 
     before(done => {
@@ -42,7 +41,6 @@ describe('command: build', function() {
         process.chdir(path.join(tmpDir, 'test-app'))
         cli(['build'], (err) => {
           expect(err).toNotExist('No errors building a React app')
-          builtAppSource = fs.readFileSync(glob.sync('dist/app*.js')[0], 'utf8')
           builtHTML = fs.readFileSync('dist/index.html', 'utf8')
           done(err)
         })
