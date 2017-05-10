@@ -88,6 +88,7 @@ The configuration object can include the following properties:
   - [`karma.extra`](#extra-object-1) - an escape hatch for extra Karma config, which will be merged into the generated config
 - [npm Build Configuration](#npm-build-configuration)
   - [`npm`](#npm-object)
+  - [`npm.cjs`](#esmodules-boolean)
   - [`npm.esModules`](#esmodules-boolean)
   - UMD build
     - [`npm.umd`](#umd-string--object) - enable a UMD build which exports a global variable
@@ -868,6 +869,22 @@ By default, nwb creates ES5 and ES6 modules builds for publishing to npm.
 #### `npm`: `Object`
 
 npm build configuration is defined in a `npm` object, using the following fields:
+
+##### `cjs`: `Boolean`
+
+> Defaults to `true` if not provided.
+
+Determines whether or not nwb will create a CommonJS build in `lib/` when you run `nwb build` for a React component/library or web module project.
+
+Set to `false` to disable this:
+
+```js
+module.exports = {
+  npm: {
+    cjs: false
+  }
+}
+```
 
 ##### `esModules`: `Boolean`
 

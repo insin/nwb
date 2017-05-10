@@ -1,3 +1,20 @@
+**Added:**
+
+- Added [`npm.cjs` config](https://github.com/insin/nwb/blob/master/docs/Configuration.md#cjs-boolean) to disable creation of a CommonJS build in `lib/` if you don't need it [[#285](https://github.com/insin/nwb/issues/285)] [[treshugart][treshugart]]
+
+**Changed:**
+
+- Disable creation of a minified UMD build when [`webpack.uglify` config](https://github.com/insin/nwb/blob/next/docs/Configuration.md#uglify-object--false) is `false` [[#288](https://github.com/insin/nwb/issues/288)] [[treshugart][treshugart]]
+- Support use of Karma `customLaunchers` which start with "Chrome" [[#296](https://github.com/insin/nwb/pull/296)] [[michaelsbradleyjr][michaelsbradleyjr]]
+
+**Fixed:**
+
+- Fixed typo in `clean` command in `react-component` skeleton [[#283](https://github.com/insin/nwb/pull/283)] [[totaldis][totaldis]]
+
+**Docs:**
+
+- [Document use of Karma's `usePolling` config](https://github.com/insin/nwb/blob/master/docs/Configuration.md#karma-configuration) to reduce CPU usage on macOS [[#297](https://github.com/insin/nwb/issues/297)] [[michaelsbradleyjr][michaelsbradleyjr]]
+
 # 0.15.6 / 2017-02-11
 
 **Changed:**
@@ -1297,4 +1314,7 @@ First 0.x release.
 
 [balazs4]: https://github.com/balazs4
 [jihchi]: https://github.com/jihchi
+[michaelsbradleyjr]: https://github.com/michaelsbradleyjr
 [ntwcklng]: https://github.com/ntwcklng
+[totaldis]: https://github.com/totaldis
+[treshugart]: https://github.com/treshugart
