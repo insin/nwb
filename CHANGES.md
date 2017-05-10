@@ -1,3 +1,5 @@
+# 0.15.7 / 2017-05-11
+
 **Added:**
 
 - Added [`npm.cjs` config](https://github.com/insin/nwb/blob/master/docs/Configuration.md#cjs-boolean) to disable creation of a CommonJS build in `lib/` if you don't need it [[#285](https://github.com/insin/nwb/issues/285)] [[treshugart][treshugart]]
