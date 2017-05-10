@@ -1,3 +1,4 @@
+// @flow
 import path from 'path'
 
 import expect from 'expect'
@@ -38,11 +39,6 @@ describe('createBabelConfig()', () => {
         modules: 'commonjs',
         presets: ['react', 'react-hmre'],
         stage: 0,
-        env: {
-          development: {
-            plugins: ['test-env-plugin']
-          }
-        },
       })).toEqual({
         presets: [
           [require.resolve('babel-preset-es2015'), {loose: true, modules: 'commonjs'}],
@@ -56,11 +52,6 @@ describe('createBabelConfig()', () => {
           DEFAULT_RUNTIME_CONFIG,
           require.resolve('babel-plugin-syntax-dynamic-import'),
         ],
-        env: {
-          development: {
-            plugins: ['test-env-plugin']
-          }
-        },
       })
     })
     it('prevents moduleName being configured for transform-runtime', () => {

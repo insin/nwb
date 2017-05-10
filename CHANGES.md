@@ -1,7 +1,14 @@
 # Unreleased (in `next` branch)
 
+**Breaking Changes:**
+
+- Separate stylesheet loading rules for `node_modules/` are no longer created by default. For backwards compatibility you can set [`webpack.style` config](https://github.com/insin/nwb/blob/master/docs/Configuration.md#styles-object--false--old) to `'old' to use the old default behaviour, but this will be removed in a future release.
+
 **Added:**
 
+- You can now customise creation of Webpack rules for stylesheets and configure their chained loaders using [`webpack.style` config](https://github.com/insin/nwb/blob/master/docs/Configuration.md#styles-object--false--old).
+
+  This allows you to set up multiple rules for your own stylesheets (e.g. using CSS Modules only for stylesheets in a particular directory) and to provide specific rules for dependencies which have very specific Webpack configuration needs for stylesheets.
 - Re-enabled the `react-constant-elements` transform for React production builds.
 - Added a `--no-hmre` flag for use when serving a React app, to disable use of [React Transform](https://github.com/gaearon/babel-plugin-react-transform#readme) to attempt to automatically handle Hot Module Replacement for React components and display an overlay with `render()` errors [[#263](https://github.com/insin/nwb/issues/263)]
 - You can now provide a [`webpack.config()` function](https://github.com/insin/nwb/blob/master/docs/Configuration.md#config-function) which will be given the generated Webpack config to do whatever it wants with, then return it [[#256](https://github.com/insin/nwb/issues/256)]

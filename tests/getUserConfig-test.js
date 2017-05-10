@@ -2,7 +2,7 @@ import expect from 'expect'
 import webpack from 'webpack'
 
 import {ConfigValidationError} from '../src/errors'
-import getUserConfig, {getProjectType, prepareWebpackRuleConfig, processUserConfig} from '../src/getUserConfig'
+import getUserConfig, {getProjectType, prepareWebpackRuleConfig, prepareWebpackStyleConfig, processUserConfig} from '../src/getUserConfig'
 
 describe('getProjectType()', () => {
   it("throws an error when a config file can't be found", () => {
@@ -39,13 +39,17 @@ describe('getUserConfig()', () => {
 })
 
 function check(config, path, message) {
+  let failed = true
   try {
     process(config)
-    expect(config).toNotExist('should have thrown a validation error')
+    failed = false
   }
   catch (e) {
     expect(e).toBeA(ConfigValidationError)
     expect(e.report.errors[0]).toMatch({path, message})
+  }
+  if (!failed) {
+    expect(config).toNotExist('should have thrown a validation error')
   }
 }
 
@@ -94,6 +98,24 @@ describe('processUserConfig()', () => {
     })
     it('webpack.rules .use config is not an array', () => {
       check({webpack: {rules: {test: {use: 'thing-loader'}}}}, 'webpack.rules.test.use', /Must be/)
+    })
+    it('webpack.styles is not a specific string', () => {
+      check({webpack: {styles: 'invalid'}}, 'webpack.styles', /Must be/)
+    })
+    it('webpack.styles is not a specific boolean', () => {
+      check({webpack: {styles: true}}, 'webpack.styles', /Must be/)
+    })
+    it('webpack.styles is not an object', () => {
+      check({webpack: {styles: []}}, 'webpack.styles', /Must be/)
+    })
+    it('webpack.styles style type config is unknown', () => {
+      check({webpack: {styles: {invalid: []}}}, 'webpack.styles', /Unknown style type/)
+    })
+    it('webpack.styles style type config is not an array', () => {
+      check({webpack: {styles: {css: {}}}}, 'webpack.styles.css', /Must be/)
+    })
+    it('webpack.styles style type config object contains an invalid property', () => {
+      check({webpack: {styles: {css: [{invalid: true}]}}}, 'webpack.styles.css[0]', /Must be/)
     })
   })
 
@@ -250,6 +272,42 @@ describe('prepareWebpackRuleConfig()', () => {
         modules: true,
         localIdentName: 'asdf',
       },
+    })
+  })
+})
+
+describe('prepareWebpackStyleConfig()', () => {
+  it('moves loader config into a loaders object and loader options into an options object', () => {
+    let config = {
+      css: [
+        {
+          include: 'src/components',
+          css: {
+            modules: true,
+          }
+        },
+        {
+          exclude: 'src/components',
+        },
+      ]
+    }
+    prepareWebpackStyleConfig(config)
+    expect(config).toEqual({
+      css: [
+        {
+          include: 'src/components',
+          loaders: {
+            css: {
+              options: {
+                modules: true,
+              }
+            }
+          }
+        },
+        {
+          exclude: 'src/components',
+        },
+      ]
     })
   })
 })

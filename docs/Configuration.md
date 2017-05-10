@@ -76,6 +76,7 @@ The configuration object can include the following properties:
     - [Customising loaders](#customising-loaders)
     - [Disabling default rules](#disabling-default-rules)
   - [`webpack.publicPath`](#publicpath-string) - path to static resources
+  - [`webpack.styles`][#styles-object--false--old] - customise creation of Webpack rules for stylesheets
   - [`webpack.uglify`](#uglify-object--false) - configure use of Webpack's `UglifyJsPlugin`
   - [`webpack.extra`](#extra-object) - an escape hatch for extra Webpack config, which will be merged into the generated config
   - [`webpack.config`](#config-function) - an escape hatch for manually editing the generated Webpack config
@@ -91,8 +92,8 @@ The configuration object can include the following properties:
   - [`karma.extra`](#extra-object-1) - an escape hatch for extra Karma config, which will be merged into the generated config
 - [npm Build Configuration](#npm-build-configuration)
   - [`npm`](#npm-object)
-  - [`npm.cjs`](#esmodules-boolean)
-  - [`npm.esModules`](#esmodules-boolean)
+  - [`npm.cjs`](#esmodules-boolean) - toggle creation of a CommonJS build
+  - [`npm.esModules`](#esmodules-boolean) - toggle creation of an ES modules build
   - UMD build
     - [`npm.umd`](#umd-string--object) - enable a UMD build which exports a global variable
       - [`umd.global`](#global-string) - global variable name exported by UMD build
@@ -381,19 +382,7 @@ module.exports = {
 
 ##### `extractText`: `Object`
 
-Configures [options for `ExtractTextWebpackPlugin`](https://github.com/webpack/extract-text-webpack-plugin#readme).
-
-This can be used to control whether or not CSS is extracted from all chunks in an app which uses code splitting, or only the initial chunk:
-
-```js
-module.exports = {
-  webpack: {
-    extractText: {
-      allChunks: true
-    }
-  }
-}
-```
+Configures [options for `ExtractTextWebpackPlugin`](https://github.com/webpack-contrib/extract-text-webpack-plugin#readme).
 
 ##### `html`: `Object`
 
@@ -643,6 +632,77 @@ module.exports = {
 ```
 
 The trade-off for path-independence is HTML5 History routing won't work, as serving up `index.html` at anything but its real path will mean its static resource URLs won't resolve. You will have to fall back on hash-based routing if you need it.
+
+##### `styles`: `Object | false | 'old'`
+
+Configures how nwb creates Webpack config for importing stylesheets.
+
+Set to `false` to completely disable creation of Webpack configuration for stylesheets.
+
+Set to `'old'` to use the same default configuration as nwb < 0.16.
+
+>
+
+###### Default Rules
+
+If you don't provide any `webpack.styles` config, nwb will create the Webpack rules identified by the following ids:
+
+- `css-rule` - handles `.css` files by chaining together a number of loaders.
+
+  When running a server, CSS will be injected with `<script>` tags and hot-reload on change.
+
+  When running a build, CSS will be extracted to a static file.
+
+  Chained loaders are:
+
+  - `style` - (only when serving) applies styles using [style-loader][style-loader]
+
+  - `css` - handles URLs, minification and CSS Modules using [css-loader][css-loader]
+
+    > Default config: `{options: {importLoaders: 1}}`
+
+  - `postcss` - processes CSS with PostCSS plugins using [postcss-loader][postcss-loader]; by default, this is configured to manage vendor prefixes in CSS using [Autoprefixer][autoprefixer]
+
+    > Default config: `{options: {plugins: [Autoprefixer]}}`
+
+**Default Rules for CSS Preprocessor Plugins**
+
+If you don't provide any `webpack.styles` config, nwb will create a default Webpack rule for each [CSS preprocessor plugin](/docs/Plugins.md#css-preprocessor-plugins) listed in your app's `package.json`, allowing you to import preprocessed stylesheets by default.
+
+For example, if you've installed the [nwb-sass](https://github.com/insin/nwb-sass) plugin, nwb will generate an additional Webpack rule by default which will allow you to import `.scss` and `.sass` stylesheets.
+
+The default rule chains together the same loaders as the default `css-rule` (with the same default config) with the preprocessor loader tagged on.
+
+Ids for configuring the default preprocessor rule follow a similar pattern to the default `css-rule` and, except they use the name of the preprocessor plugin as a prefix.
+
+- `sass-rule`
+  - `sass-style` (only when serving)
+  - `sass-css`
+  - `sass-postcss`
+  - `sass` (use to configure [sass-loader][sass-loader])
+
+###### Configuring PostCSS
+
+By default, nwb uses [PostCSS](http://postcss.org/) to manage vendor prefixes in CSS using [Autoprefixer][autoprefixer].
+
+If you want to make more significant use of PostCSS, you can use `webpack.rules` to provide your own list of plugins.
+
+e.g. to provide your own list of plugins for your app's own CSS, configure `webpack.rules.postcss`:
+
+```js
+module.exports = {
+  webpack: {
+    rules: {
+      postcss: {
+        plugins: [
+          require('precss')()
+          require('autoprefixer')()
+        ]
+      }
+    }
+  }
+}
+```
 
 ##### `uglify`: `Object | false`
 

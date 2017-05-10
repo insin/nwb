@@ -10,11 +10,12 @@ import {CONFIG_FILE_NAME, INFERNO_APP, PREACT_APP, PROJECT_TYPES} from './consta
 import {COMPAT_CONFIGS} from './createWebpackConfig'
 import debug from './debug'
 import {ConfigValidationError} from './errors'
-import {deepToString, typeOf} from './utils'
+import {deepToString, joinAnd, typeOf} from './utils'
 
 const DEFAULT_REQUIRED = false
 
 const BABEL_RUNTIME_OPTIONS = new Set(['helpers', 'polyfill'])
+const DEFAULT_STYLE_LOADERS = new Set(['css', 'postcss'])
 
 let s = (n, w = ',s') => w.split(',')[n === 1 ? 0 : 1]
 
@@ -164,7 +165,10 @@ export function prepareWebpackRuleConfig(rules) {
     let rule = rules[ruleId]
     // XXX Special case for stylus-loader, which uses a 'use' option for plugins
     if ((rule.use && !/stylus$/.test(ruleId)) || rule.options) return
-    let {exclude, include, test, loader, ...options} = rule // eslint-disable-line no-unused-vars
+    let {
+      exclude, include, test, loader, // eslint-disable-line no-unused-vars
+      ...options
+    } = rule
     if (Object.keys(options).length > 0) {
       rule.options = options
       Object.keys(options).forEach(prop => delete rule[prop])
@@ -172,8 +176,31 @@ export function prepareWebpackRuleConfig(rules) {
   })
 }
 
+/**
+ * Move loader options into a loaders object, allowing users to provide flatter
+ * config.
+ */
+export function prepareWebpackStyleConfig(styles) {
+  Object.keys(styles).forEach(type => {
+    styles[type].forEach(styleConfig => {
+      let {
+        exclude, include, // eslint-disable-line no-unused-vars
+        ...loaderConfig
+      } = styleConfig
+      if (Object.keys(loaderConfig).length > 0) {
+        styleConfig.loaders = {}
+        Object.keys(loaderConfig).forEach(loader => {
+          styleConfig.loaders[loader] = {options: styleConfig[loader]}
+          delete styleConfig[loader]
+        })
+      }
+    })
+  })
+}
+
 // TODO Remove in a future version
 let warnedAboutKarmaTestDirs = false
+let warnedAboutOldStyleRules = false
 let warnedAboutPostCSSConfig = false
 let warnedAboutWebpackLoaders = false
 let warnedAboutWebpackRuleQuery = false
@@ -185,6 +212,7 @@ let warnedAboutWebpackRuleQuery = false
 export function processUserConfig({
     args,
     check = false,
+    pluginConfig = {},
     required = DEFAULT_REQUIRED,
     userConfig,
     userConfigPath,
@@ -354,9 +382,7 @@ export function processUserConfig({
     )
   }
 
-  // TODO Remove in a future version - just validate type and monkey patch rule
-  //      config for ExtractTextPlugin (which will hopefull get fixed in the
-  //      meantime).
+  // TODO Remove in a future version
   if ('loaders' in userConfig.webpack) {
     if (!warnedAboutWebpackLoaders) {
       report.deprecated('webpack.loaders',
@@ -400,6 +426,7 @@ export function processUserConfig({
       )
     }
     else {
+      let error = false
       Object.keys(userConfig.webpack.rules).forEach(ruleId => {
         let rule = userConfig.webpack.rules[ruleId]
         if (rule.query) {
@@ -417,10 +444,91 @@ export function processUserConfig({
             `webpack.rules.${ruleId}.use`,
             `type: ${typeOf(rule.use)}`,
             'Must be an Array.'
-           )
+          )
+          error = true
         }
       })
-      prepareWebpackRuleConfig(userConfig.webpack.rules)
+      if (!error) {
+        prepareWebpackRuleConfig(userConfig.webpack.rules)
+      }
+    }
+  }
+
+  if ('styles' in userConfig.webpack) {
+    let configType = typeOf(userConfig.webpack.styles)
+    if (configType === 'string' && userConfig.webpack.styles !== 'old') {
+      report.error(
+        'webpack.styles',
+        userConfig.webpack.styles,
+        `Must be ${chalk.green("'old'")} (to use default style rules from nwb <= v0.15), ${chalk.green('false')} or an Object.`
+      )
+      if (!warnedAboutOldStyleRules) {
+        report.deprecated('webpack.styles', 'Support for default style rules from nwb <= v0.15 will be removed in a future release.')
+        warnedAboutOldStyleRules = true
+      }
+    }
+    else if (configType === 'boolean' && userConfig.webpack.styles !== false) {
+      report.error(
+        'webpack.styles',
+        userConfig.webpack.styles,
+        `Must be ${chalk.green("'old'")}, ${chalk.green('false')} (to disable default style rules) or an Object.`
+      )
+    }
+    else if (configType !== 'object') {
+      report.error(
+        'webpack.styles',
+        `type: ${configType}`,
+        `Must be ${chalk.green("'old'")}, ${chalk.green('false')} or an Object (to configure custom style rules).`
+      )
+    }
+    else {
+      let styleTypeIds = ['css']
+      if (pluginConfig.cssPreprocessors) {
+        styleTypeIds = styleTypeIds.concat(Object.keys(pluginConfig.cssPreprocessors))
+      }
+      let error = false
+      Object.keys(userConfig.webpack.styles).forEach(styleType => {
+        if (styleTypeIds.indexOf(styleType) === -1) {
+          report.error(
+            'webpack.styles',
+            `property: ${styleType}`,
+            `Unknown style type - must be ${joinAnd(styleTypeIds.map(chalk.green), 'or')}`
+          )
+          error = true
+        }
+        else if (typeOf(userConfig.webpack.styles[styleType]) !== 'array') {
+          report.error(
+            `webpack.styles.${styleType}`,
+            `type: ${typeOf(userConfig.webpack.styles[styleType])}`,
+            `Must be an Array - if you don't need multiple custom rules, configure the defaults via ${chalk.green('webpack.rules')} instead.`
+          )
+          error = true
+        }
+        else {
+          userConfig.webpack.styles[styleType].forEach((styleConfig, index) => {
+            let {
+              test, include, exclude, // eslint-disable-line no-unused-vars
+              ...loaderConfig
+            } = styleConfig
+            Object.keys(loaderConfig).forEach(loaderId => {
+              if (!DEFAULT_STYLE_LOADERS.has(loaderId) && loaderId !== styleType) {
+                // XXX Assumption: preprocessors provide a single loader which
+                //     is configured with the same id as the style type id.
+                let ids = joinAnd([...new Set([...DEFAULT_STYLE_LOADERS, loaderId])].map(id => chalk.green(id)), 'or')
+                report.error(
+                  `webpack.styles.${styleType}[${index}]`,
+                  `property: ${loaderId}`,
+                  `Must be ${chalk.green('include')}, ${chalk.green('exclude')} and available loader ids: ${ids}`
+                )
+                error = true
+              }
+            })
+          })
+        }
+      })
+      if (!error) {
+        prepareWebpackStyleConfig(userConfig.webpack.styles, pluginConfig)
+      }
     }
   }
 
@@ -509,7 +617,7 @@ export default function getUserConfig(args = {}, options = {}) {
     }
   }
 
-  userConfig = processUserConfig({args, check, required, userConfig, userConfigPath})
+  userConfig = processUserConfig({args, check, pluginConfig, required, userConfig, userConfigPath})
 
   if (configFileExists) {
     userConfig.path = userConfigPath

@@ -1,0 +1,10 @@
+[ignore]
+<PROJECT_ROOT>/lib/.*
+<PROJECT_ROOT>/templates/.*
+<PROJECT_ROOT>/tests/fixtures/.*
+
+[include]
+
+[libs]
+
+[options]

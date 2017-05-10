@@ -11,6 +11,7 @@
     - [Webpack Configuration](/docs/Configuration.md#webpack-configuration)
     - [Karma Configuration](/docs/Configuration.md#karma-configuration)
     - [npm Build Configuration](/docs/Configuration.md#npm-build-configuration)
+- [Styling](/docs/Styling.md#styling)
 - [Testing](/docs/Testing.md#testing)
 - [Plugins](/docs/Plugins.md#plugins)
 - [Middleware](/docs/Middleware.md#middleware)

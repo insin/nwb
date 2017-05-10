@@ -173,10 +173,10 @@ export function install(packages, options, cb) {
  * Join multiple items with a penultimate "and".
  * @param {Array<*>} arr
  */
-export function joinAnd(array) {
+export function joinAnd(array, lastClause = 'and') {
   if (array.length === 0) return ''
   if (array.length === 1) return String(array[0])
-  return `${array.slice(0, -1).join(', ')} and ${array[array.length - 1]}`
+  return `${array.slice(0, -1).join(', ')} ${lastClause} ${array[array.length - 1]}`
 }
 
 /**
