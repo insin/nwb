@@ -1,3 +1,5 @@
+# 0.15.8 / 2017-05-11
+
 **Dependencies:**
 
 - extract-text-webpack-plugin: [v2.1.0](https://github.com/webpack-contrib/extract-text-webpack-plugin/blob/master/CHANGELOG.md#210-2017-03-05) - fix bad scoped version in nwb v0.15.7
