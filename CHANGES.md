@@ -1,3 +1,7 @@
+**Dependencies:**
+
+- extract-text-webpack-plugin: [v2.1.0](https://github.com/webpack-contrib/extract-text-webpack-plugin/blob/master/CHANGELOG.md#210-2017-03-05) - fix bad scoped version in nwb v0.15.7
+
 # 0.15.7 / 2017-05-11
 
 **Added:**
@@ -1079,7 +1083,7 @@ These are being scoped to both make use of unreleased features and to test them 
 - cross-spawn: v2.1.4 → [v2.1.5](https://github.com/IndigoUnited/node-cross-spawn/compare/2.1.4...2.1.5) - update `which` dependency (minor)
 - expect: v1.13.4 → [v1.14.0](https://github.com/mjackson/expect/blob/master/CHANGES.md#v1140) - new features
 - express: v4.13.3 → v4.13.4 - deps
-- extract-text-webpack-plugin: v0.9.1 → [v1.0.1](https://github.com/webpack//extract-text-webpack-plugin/compare/v0.9.1...v1.0.1) - use webpack-sources
+- extract-text-webpack-plugin: v0.9.1 → [v1.0.1](https://github.com/webpack/extract-text-webpack-plugin/compare/v0.9.1...v1.0.1) - use webpack-sources
 - glob: v6.0.3 → v7.0.0 - throw if cwd is not a directory
 - html-webpack-plugin: v1.7.0 → v2.9.0
 - inquirer: v0.11.2 → [v0.12.0](https://github.com/SBoudrias/Inquirer.js/compare/v0.11.2...v0.12.0)
