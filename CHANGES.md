@@ -1,6 +1,8 @@
 **Dependencies:**
 
 - extract-text-webpack-plugin: [v2.1.0](https://github.com/webpack-contrib/extract-text-webpack-plugin/blob/master/CHANGELOG.md#210-2017-03-05) - fix bad scoped version in nwb v0.15.7
+- html-webpack-plugin: v2.26.0 → [v2.28.0](https://github.com/ampedandwired/html-webpack-plugin/blob/master/CHANGELOG.md#v2280) - revert relative loader resolving change from v2.25.0 back to a full path
+- webpack: v2.2.0 → [v2.2.1](https://github.com/webpack/webpack/releases/tag/v2.2.1) - `ident` is now automatic, fixes issue passing options to postcss-loader
 
 # 0.15.7 / 2017-05-11
 

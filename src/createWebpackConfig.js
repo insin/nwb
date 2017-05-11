@@ -545,13 +545,7 @@ export default function createWebpackConfig(buildConfig, nwbPluginConfig = {}, u
       extensions: ['.js', '.json'],
     }, buildResolveConfig, userResolveConfig),
     resolveLoader: {
-      modules: [
-        'node_modules',
-        // As of v2.25.0, html-webpack-plugin no longer outputs an absolute path
-        // to its loader, so we must fall back to nwb's node_modules/ for global
-        // usage.
-        path.join(__dirname, '../node_modules'),
-      ],
+      modules: ['node_modules', path.join(__dirname, '../node_modules')],
     },
     ...otherBuildConfig,
   }
