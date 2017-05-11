@@ -1,3 +1,8 @@
+**Dependencies:**
+
+- filesize: v3.4.3 → [v3.5.4](https://github.com/avoidwork/filesize.js/compare/3.4.3...3.5.4)
+- karma-webpack: v2.0.1 → [v2.0.2](https://github.com/webpack-contrib/karma-webpack/releases/tag/v2.0.2)
+
 # 0.15.8 / 2017-05-11
 
 **Dependencies:**

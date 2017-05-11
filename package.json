@@ -37,7 +37,7 @@
     "debug": "2.6.0",
     "detect-port": "1.1.0",
     "figures": "2.0.0",
-    "filesize": "3.4.3",
+    "filesize": "3.5.4",
     "glob": "7.1.1",
     "gzip-size": "3.0.0",
     "inquirer": "3.0.1",
@@ -87,7 +87,7 @@
     "karma-mocha-reporter": "2.2.2",
     "karma-phantomjs-launcher": "1.0.2",
     "karma-sourcemap-loader": "0.3.7",
-    "karma-webpack": "2.0.1",
+    "karma-webpack": "2.0.2",
     "phantomjs-prebuilt": "2.1.14",
 
     "mocha": "3.2.0",
