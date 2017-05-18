@@ -1,9 +1,13 @@
-import React from 'react'
+import React from 'react';
 
-export default React.createClass({
-  render() {
-    return <div>
-      <h2>Welcome to React components</h2>
-    </div>
-  }
-})
+class Component extends React.Component {
+	render() {
+		return (
+			<div>
+				<h2>Welcome to React components</h2>
+			</div>
+		);
+	}
+}
+
+export default Component;
