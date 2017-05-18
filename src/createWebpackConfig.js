@@ -5,7 +5,7 @@ import CaseSensitivePathsPlugin from 'case-sensitive-paths-webpack-plugin'
 import CopyPlugin from 'copy-webpack-plugin'
 import ExtractTextPlugin from 'extract-text-webpack-plugin'
 import HtmlPlugin from 'html-webpack-plugin'
-import NpmInstallPlugin from '@insin/npm-install-webpack-plugin' // XXX Temporary
+import NpmInstallPlugin from 'npm-install-webpack2-plugin' // XXX Temporary
 import webpack, {optimize} from 'webpack'
 import Md5HashPlugin from 'webpack-md5-hash'
 import merge from 'webpack-merge'
