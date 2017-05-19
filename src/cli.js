@@ -203,7 +203,7 @@ Helper commands:
   if (/^(build|check|clean|serve|test)/.test(command)) {
     let localNwbPath = null
     try {
-      localNwbPath = path.dirname(resolve.sync('nwb/package', {basedir: process.cwd()}))
+      localNwbPath = path.dirname(resolve.sync('nwb/package.json', {basedir: process.cwd()}))
     }
     catch (e) {
       // nwb isn't installed locally to where the command is being run
