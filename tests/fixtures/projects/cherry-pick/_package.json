@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "test project",
   "dependencies": {
+    "prop-types": "15.x",
     "react": "15.x",
     "react-bootstrap": "0.30.x",
     "react-dom": "15.x"

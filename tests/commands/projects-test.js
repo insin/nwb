@@ -215,7 +215,7 @@ describe('sample projects', function() {
         .toInclude("require('react-bootstrap/lib/Row')")
     })
     it('ES5 build has propType declarations wrapped in an environment check', () => {
-      expect(es5).toInclude('process.env.NODE_ENV !== "production" ? CherryPicker.propTypes')
+      expect(es5).toInclude('CherryPicker.propTypes = process.env.NODE_ENV !== "production" ? {')
     })
     it('ES5 build includes a CommonJS interop export', () => {
       expect(es5).toInclude("module.exports = exports['default']")
@@ -232,7 +232,7 @@ describe('sample projects', function() {
         .toInclude("import _Row from 'react-bootstrap/lib/Row'")
     })
     it('ES6 module build has propType declarations wrapped in an environment check', () => {
-      expect(es6).toInclude('process.env.NODE_ENV !== "production" ? CherryPicker.propTypes')
+      expect(es6).toInclude('CherryPicker.propTypes = process.env.NODE_ENV !== "production" ? {')
     })
     it('ES6 module build ignores co-located test files and directories', () => {
       expect(glob.sync('*', {cwd: path.resolve('es')})).toEqual([

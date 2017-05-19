@@ -746,7 +746,8 @@ export default function createWebpackConfig(
 
   let webpackConfig = {
     module: {
-      rules: createRules(server, buildRulesConfig, userWebpackConfig, pluginConfig)
+      rules: createRules(server, buildRulesConfig, userWebpackConfig, pluginConfig),
+      strictExportPresence: true,
     },
     output: {
       ...buildOutputConfig,
