@@ -1,15 +1,15 @@
-import React from 'react'
+import React, {Component} from 'react'
 import {render} from 'react-dom'
 
-import Component from '../../src'
+import Example from '../../src'
 
-let Demo = React.createClass({
+class Demo extends Component {
   render() {
     return <div>
       <h1>{{name}} Demo</h1>
-      <Component/>
+      <Example/>
     </div>
   }
-})
+}
 
 render(<Demo/>, document.querySelector('#demo'))

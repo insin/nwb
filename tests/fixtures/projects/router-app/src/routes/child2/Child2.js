@@ -1,8 +1,8 @@
 require('./Child2.css')
 
-import React from 'react'
+import React, {Component} from 'react'
 
-let Child2 = React.createClass({
+class Child2 extends Component {
   render() {
     let {site} = this.props.routeParams
     return <div className="Child2">
@@ -11,6 +11,6 @@ let Child2 = React.createClass({
       {site && <p>Site param: {site}</p>}
     </div>
   }
-})
+}
 
 export default Child2

@@ -1,14 +1,16 @@
 import './App.css'
 
-import React, {PropTypes as t} from 'react'
+import t from 'prop-types'
+import React, {Component} from 'react'
 import {Link} from 'react-router'
 
 import Thing from 'src/components/Thing'
 
-let App = React.createClass({
-  propTypes: {
+class App extends Component {
+  propTypes = {
     test: t.string
-  },
+  }
+
   render() {
     return <div>
       <h1>Welcome to React</h1>
@@ -22,6 +24,6 @@ let App = React.createClass({
       {this.props.children}
     </div>
   }
-})
+}
 
 export default App

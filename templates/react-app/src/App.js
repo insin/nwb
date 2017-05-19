@@ -1,8 +1,8 @@
 import './App.css'
 
-import React from 'react'
+import React, {Component} from 'react'
 
-let App = React.createClass({
+class App extends Component {
   render() {
     return <div className="App">
       <div className="App-heading App-flex">
@@ -14,6 +14,6 @@ let App = React.createClass({
       </div>
     </div>
   }
-})
+}
 
 export default App

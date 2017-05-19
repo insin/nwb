@@ -25,6 +25,7 @@
 **Changed:**
 
 - Default options are no longer used if you provide a custom `loader` for a rule in `webpack.rules` [[#256](https://github.com/insin/nwb/issues/256)]
+- React project templates now use classes and `React.Component` instead of `React.createClass()`, which is deprecated as of React v15.5 [[#216](https://github.com/insin/nwb/issues/216)]
 
 **Fixed:**
 

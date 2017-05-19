@@ -1,9 +1,9 @@
-import React from 'react'
+import React, {Component} from 'react'
 
-let Child1 = React.createClass({
+class Child1 extends Component {
   render() {
     return <h2>Child 1</h2>
   }
-})
+}
 
 export default Child1
