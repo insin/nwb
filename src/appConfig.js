@@ -52,9 +52,9 @@ export function createServeCommandConfig(args, ...extra) {
   let dist = path.resolve(args._[2] || 'dist')
 
   let config = {
-    entry: [path.resolve(entry)],
+    entry: [entry],
     output: {
-      path: path.resolve(dist),
+      path: dist,
       filename: 'app.js',
       publicPath: '/',
     },
