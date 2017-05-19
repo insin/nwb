@@ -1,5 +1,6 @@
 import path from 'path'
 
+import {directoryExists} from '../utils'
 import webpackServer from '../webpackServer'
 
 /**
@@ -8,6 +9,8 @@ import webpackServer from '../webpackServer'
 export default function serveReactDemo(args, cb) {
   let pkg = require(path.resolve('package.json'))
 
+  let dist = path.resolve('demo/dist')
+
   let config = {
     babel: {
       presets: ['react'],
@@ -15,8 +18,7 @@ export default function serveReactDemo(args, cb) {
     entry: [path.resolve('demo/src/index.js')],
     output: {
       filename: 'demo.js',
-      // This doesn't really matter, as files will be served from memory
-      path: process.cwd(),
+      path: dist,
       publicPath: '/',
     },
     plugins: {
@@ -29,6 +31,10 @@ export default function serveReactDemo(args, cb) {
 
   if (args.hmr !== false && args.hmre !== false) {
     config.babel.presets.push('react-hmre')
+  }
+
+  if (directoryExists('demo/public')) {
+    config.plugins.copy = [{from: path.resolve('demo/public'), to: dist}]
   }
 
   webpackServer(args, config, cb)
