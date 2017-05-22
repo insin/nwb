@@ -28,7 +28,6 @@ import ExtractTextPlugin from 'extract-text-webpack-plugin'
 import HtmlPlugin from 'html-webpack-plugin'
 import NpmInstallPlugin from 'npm-install-webpack2-plugin' // XXX Temporary
 import webpack, {optimize} from 'webpack'
-import Md5HashPlugin from 'webpack-md5-hash'
 import merge from 'webpack-merge'
 
 import createBabelConfig from './createBabelConfig'
@@ -550,10 +549,6 @@ export function createPlugins(
         // adding too much to bundle size and NamedModulesPlugin allows for
         // easier debugging of development builds.
         development ? new webpack.NamedModulesPlugin() : new webpack.HashedModuleIdsPlugin(),
-        // The MD5 Hash plugin seems to make [chunkhash] for .js files behave
-        // like [contenthash] does for extracted .css files, which is essential
-        // for deterministic hashing.
-        new Md5HashPlugin(),
         // The Webpack manifest is normally folded into the last chunk, changing
         // its hash - prevent this by extracting the manifest into its own
         // chunk - also essential for deterministic hashing.

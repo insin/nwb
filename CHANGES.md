@@ -29,6 +29,7 @@
 
 **Fixed:**
 
+- Fixed chunk hash not changing when imports in a split chunk are changed, by dropping use of the `webpack-md5-hash` plugin [[#301](https://github.com/insin/nwb/issues/301)] [[grahamlyus][grahamlyus]]
 - Added missing config for `CopyWebpackPlugin` when serving a `react-component` project's demo app, so any static content in `demo/public/` will be also served by the dev server [[#307](https://github.com/insin/nwb/issues/307)]
 - Removed `node_modules/` caching from default Travis CI config in project skeletons, as it's been reported to cause build failures [[#271](https://github.com/insin/nwb/issues/271)]
 - An output directory specified with a trailing slash is now cleaned properly when creating a build.
@@ -1412,6 +1413,7 @@ These are being scoped to both make use of unreleased features and to test them 
 First 0.x release.
 
 [balazs4]: https://github.com/balazs4
+[grahamlyus]: https://github.com/grahamlyus
 [jihchi]: https://github.com/jihchi
 [michaelsbradleyjr]: https://github.com/michaelsbradleyjr
 [ntwcklng]: https://github.com/ntwcklng
