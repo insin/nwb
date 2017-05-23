@@ -14,7 +14,7 @@ Installing nwb provides the following commands:
   - [Project Type-specific Commands](#project-type-specific-commands)
   - [Check Config Command](#check-config-command)
 
-- [`react`, `inferno` and `preact`](#react-inferno-and-preact) - quick development
+- [`nwb react`, `nwb inferno` and `nwb preact`](#nwb-react-nwb-inferno-and-nwb-preact) - quick development
   - See the [Quick Development with nwb](/docs/guides/QuickDevelopment.md#quick-development-with-nwb) guide
 
 ### `nwb`
@@ -310,7 +310,7 @@ nwb check-config [config] [options]
 - `--command` - command name to use when loading your config. Use this to test variations if you [export a config function](/docs/Configuration.md#configuration-file) and use the `command` option it provides when creating your config.
 - `--e, --env` - `NODE_ENV` to use when checking your config: `dev`/`development`, `test` or `prod`/`production`. Use this to test variations if you use `process.env.NODE_ENV` when creating your config.
 
-### `react`, `inferno` and `preact`
+### `nwb react`, `nwb inferno` and `nwb preact`
 
 These commands provide quick development, starting from a single `.js` file and working up.
 

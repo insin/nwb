@@ -19,7 +19,7 @@ A zero-config development setup is provided, but nwb also supports [configuratio
 
 ## Install
 
-Installing globally provides an `nwb` command for working with projects and `react`, `inferno` and `preact` commands for quick development:
+Installing globally provides an `nwb` command for quick development and working with projects.
 
 ```sh
 npm install -g nwb
@@ -43,7 +43,7 @@ npm install --save-dev nwb
 
 ## Quick Development
 
-For quick development with [React](https://facebook.github.io/react/), [Inferno](https://infernojs.org/) or [Preact](https://preactjs.com/), use the global `react`, `inferno` or `preact` commands.
+For quick development with [React](https://facebook.github.io/react/), [Inferno](https://infernojs.org/) or [Preact](https://preactjs.com/), use the `nwb react`, `nwb inferno` or `nwb preact` commands.
 
 ```js
 import React, {Component} from 'react'
@@ -55,7 +55,7 @@ export default class App extends Component {
 }
 ```
 ```sh
-$ react run app.js
+$ nwb react run app.js
 ✔ Installing react and react-dom
 Starting Webpack compilation...
 Compiled successfully in 5033 ms.
@@ -63,7 +63,7 @@ Compiled successfully in 5033 ms.
 The app is running at http://localhost:3000/
 ```
 ```sh
-$ react build app.js
+$ nwb react build app.js
 ✔ Building React app
 
 File size after gzip:
@@ -143,9 +143,8 @@ cd my-module/
 
 - [Features](/docs/Features.md#features)
 - [Commands](/docs/Commands.md#commands)
-  - [`react`](/docs/Commands.md#react)
   - [`nwb`](/docs/Commands.md#nwb)
-  - [`react`, `inferno` and `preact`](docs/guides/QuickDevelopment.md#quick-development-with-nwb)
+  - [`nwb react`, `nwb inferno` and `nwb preact`](docs/guides/QuickDevelopment.md#quick-development-with-nwb)
 - [Configuration](/docs/Configuration.md#configuration)
   - [Configuration File](/docs/Configuration.md#configuration-file)
   - [Configuration Object](/docs/Configuration.md#configuration-object)

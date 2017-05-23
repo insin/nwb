@@ -2,6 +2,9 @@
 
 **Breaking Changes:**
 
+- Global `react`, `preact`, and `inferno` commands are no longer installed when nwb is installed globally [[#308](https://github.com/insin/nwb/issues/308)]
+
+  These are now subcommands of the global `nwb` command, to avoid conflicting with global commands installed by official tools for these libraries, e.g. [`preact-cli`](https://github.com/developit/preact-cli) is now available, which provides a global `preact` command.
 - Node.js v4.6.0 is now the minimum required version, based on the `engines` config of nwb's dependencies,
 - A separate Webpack rule for stylesheets imported from `node_modules/` is no longer created by default.
 

@@ -5,10 +5,7 @@
   "license": "MIT",
   "author": "Jonny Buchanan <jonathan.buchanan@gmail.com>",
   "bin": {
-    "inferno": "./lib/bin/inferno.js",
-    "nwb": "./lib/bin/nwb.js",
-    "preact": "./lib/bin/preact.js",
-    "react": "./lib/bin/react.js"
+    "nwb": "./lib/bin/nwb.js"
   },
   "scripts": {
     "build": "npm run flow && npm run lint && rimraf lib && babel src --out-dir lib --quiet",

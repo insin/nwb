@@ -4,16 +4,16 @@ Installing nwb globally provides commands for quickly running and building code 
 
 These quick development commands are:
 
-- `react` for [React](https://facebook.github.io/react/)
-- `inferno` for [Inferno](https://infernojs.org/)
-- `preact` for [Preact](https://preactjs.com/)
+- `nwb react` for [React](https://facebook.github.io/react/)
+- `nwb inferno` for [Inferno](https://infernojs.org/)
+- `nwb preact` for [Preact](https://preactjs.com/)
 
 They all have the same sub-commands:
 
 - `run <entry.js>` runs a development server
 - `build <entry.js> [dist/]` creates a build
 
-> **Prerequisite:** nwb must be installed globally (we're using version 0.14 in this guide):
+> **Prerequisite:** nwb must be installed globally (we're using version 0.16 in this guide):
 >
 > ```
 > npm install -g nwb
@@ -62,10 +62,10 @@ export default class Lightbulb extends Component {
 }
 ```
 
-To serve this for development use `preact run`, which will install essential  dependencies, start a Webpack server and automatically re-render when you change `Lightbulb.js`:
+To serve this for development use `nwb preact run`, which will install essential  dependencies, start a Webpack server and automatically re-render when you change `Lightbulb.js`:
 
 ```sh
-$ preact run Lightbulb.js
+$ nwb preact run Lightbulb.js
 ✔ Installing preact and preact-compat
 Starting Webpack compilation...
 Compiled successfully in 3717 ms.
@@ -73,10 +73,10 @@ Compiled successfully in 3717 ms.
 The app is running at http://localhost:3000/
 ```
 
-To create a production-ready build, use `preact build`:
+To create a production-ready build, use `nwb preact build`:
 
 ```sh
-$ preact build Lightbulb.js
+$ nwb preact build Lightbulb.js
 ✔ Building Preact app
 
 File size after gzip:
@@ -93,7 +93,7 @@ To use them, pass a `--plugins` option with an nwb plugin name (or a comma-separ
 e.g. to support importing Sass stylesheets, pass `--plugins sass` and the necessary plugin will automatically be installed and used:
 
 ```sh
-$ preact run Lightbulb.js --plugins sass
+$ nwb preact run Lightbulb.js --plugins sass
 ✔ Installing nwb-sass
 Starting Webpack compilation...
 ```
@@ -107,7 +107,7 @@ If you pass an `--install` flag when using the `run` command, nwb will configure
 > Note: `NpmInstallPlugin` uses a `package.json` file while checking which packages are installed, so it will initialise one the first time you use this command and save any automatically-installed dependencies to it.
 
 ```sh
-$ preact run Lightbulb.js --install
+$ nwb preact run Lightbulb.js --install
 Initializing `package.json`...
 ...
 Starting Webpack compilation...
@@ -137,7 +137,7 @@ To try this out with some React code you've written, you can pass an `--inferno`
 If your code is compatible, these builds offer an easy way to take a large chunk off the size of the final bundle, and may even provide a performance boost.
 
 ```sh
-$ react build hello.js
+$ nwb react build hello.js
 ✔ Building React app
 
 File size after gzip:
@@ -145,7 +145,7 @@ File size after gzip:
   dist\app.e718700a.js  46.5 KB
 ```
 ```sh
-$ react build hello.js --preact
+$ nwb react build hello.js --preact
 ✔ Installing preact and preact-compat
 ✔ Cleaning app
 ✔ Building Preact (React compat) app
@@ -206,7 +206,7 @@ export default <div>
 </div>
 ```
 ```sh
-$ inferno run idea.js
+$ nwb inferno run idea.js
 ✔ Installing inferno, inferno-component and inferno-compat
 Starting Webpack compilation...
 Compiled successfully in 3595 ms.
@@ -340,15 +340,15 @@ When the rendering shim detects that one of these has been exported from the pro
 
 **React**
 
-`react run`'s build configuration uses [react-transform-hmr](https://github.com/gaearon/react-transform-hmr), which automatically handles accepting HMR requests in modules which contain React components, patching them and re-rendering without losing state where possible.
+`nwb react run`'s build configuration uses [react-transform-hmr](https://github.com/gaearon/react-transform-hmr), which automatically handles accepting HMR requests in modules which contain React components, patching them and re-rendering without losing state where possible.
 
 > To disable this, pass a `--no-hmre` flag.
 
-For other HMR scenarios, such as an exported React Element, `react run` will re-render to the same root DOM node.
+For other HMR scenarios, such as an exported React Element, `nwb react run` will re-render to the same root DOM node.
 
 **Inferno and Preact**
 
-The rendering shim for `inferno run` and `preact run` hooks into the DOM rendering function of these libraries so it can accept HMR requests and re-render to the same root element when you change the code.
+The rendering shim for `nwb inferno run` and `nwb preact run` hooks into the DOM rendering function of these libraries so it can accept HMR requests and re-render to the same root element when you change the code.
 
 This means that if you import and call `render()` yourself, the rendering shim is still taking the VNode you pass it and handling rendering for you, so you don't need to provide a DOM node to render into.
 
