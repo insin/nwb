@@ -1,7 +1,7 @@
-import glob from 'glob'
 import runSeries from 'run-series'
 
 import moduleBuild from '../moduleBuild'
+import {directoryExists} from '../utils'
 import buildDemo from './build-demo'
 
 /**
@@ -37,7 +37,7 @@ export default function buildModule(args, cb) {
   // Disable demo build with --no-demo or --no-demo-build
   if (args.demo !== false &&
       args['demo-build'] !== false &&
-      glob.sync('demo/').length !== 0) {
+      directoryExists('demo')) {
     tasks.push((cb) => buildDemo(args, cb))
   }
   runSeries(tasks, cb)

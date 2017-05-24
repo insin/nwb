@@ -66,7 +66,13 @@ export default function webpackServer(args, buildConfig, cb) {
       }
     }
 
-    let webpackConfig = createServerWebpackConfig(args, buildConfig)
+    let webpackConfig
+    try {
+      webpackConfig = createServerWebpackConfig(args, buildConfig)
+    }
+    catch (e) {
+      return cb(e)
+    }
 
     debug('webpack config: %s', deepToString(webpackConfig))
 

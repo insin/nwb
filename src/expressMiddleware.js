@@ -5,7 +5,7 @@ import webpack from 'webpack'
 import {INFERNO_APP, PREACT_APP, REACT_APP, WEB_APP} from './constants'
 import createServerWebpackConfig from './createServerWebpackConfig'
 import debug from './debug'
-import getUserConfig from './getUserConfig'
+import {getProjectType} from './getUserConfig'
 import {deepToString} from './utils'
 
 const SERVE_APP_CONFIG = {
@@ -25,21 +25,20 @@ export default function nwbMiddleware(express, options = {}) {
     'The express module must be passed as the first argument to nwb middleware'
   )
 
-  // We need to do an intial grab of the user config to determine the project
-  // type.
-  let userConfig = getUserConfig({_: ['serve'], config: options.config}, {required: true})
-  if (!SERVE_APP_CONFIG[userConfig.type]) {
+  let projectType = getProjectType({_: ['serve'], config: options.config})
+  if (!SERVE_APP_CONFIG[projectType]) {
     throw new Error(
-      `nwb Express middleware is unable to serve anything for a ${userConfig.type} project.`
+      `nwb Express middleware is unable to serve anything for a ${projectType} project.`
     )
   }
 
-  let createServeAppConfig = require(SERVE_APP_CONFIG[userConfig.type])
+  let createServeAppConfig = require(SERVE_APP_CONFIG[projectType])
 
   // Use options to create an object equivalent to CLI args parsed by minimist
   let args = {
-    _: [`serve-${userConfig.type}`, options.entry],
+    _: [`serve-${projectType}`, options.entry],
     config: options.config,
+    hmre: !options.hmr || !options.hmre,
     install: !!options.install || !!options.autoInstall,
     reload: !!options.reload
   }

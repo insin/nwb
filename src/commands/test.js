@@ -1,5 +1,5 @@
 import {INFERNO_APP, PREACT_APP, REACT_APP, REACT_COMPONENT} from '../constants'
-import getUserConfig from '../getUserConfig'
+import {getProjectType} from '../getUserConfig'
 import karmaServer from '../karmaServer'
 import testInferno from './test-inferno'
 import testPreact from './test-preact'
@@ -17,9 +17,16 @@ const TEST_COMMANDS = {
  * or runs with the default test config.
  */
 export default function test(args, cb) {
-  let userConfig = getUserConfig(args)
-  if (userConfig.type && TEST_COMMANDS[userConfig.type]) {
-    TEST_COMMANDS[userConfig.type](args, cb)
+  let projectType
+  try {
+    projectType = getProjectType(args)
+  }
+  catch (e) {
+    // pass
+  }
+
+  if (projectType && TEST_COMMANDS[projectType]) {
+    TEST_COMMANDS[projectType](args, cb)
   }
   else {
     karmaServer(args, {}, cb)

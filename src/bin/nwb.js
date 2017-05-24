@@ -27,6 +27,7 @@ function handleError(error) {
 try {
   cli(process.argv.slice(2), err => {
     if (err) handleError(err)
+    process.exit(0)
   })
 }
 catch (e) {

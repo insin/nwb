@@ -1,9 +1,6 @@
-#!/usr/bin/env node
-
 import {cyan as opt, green as cmd, red, yellow as req} from 'chalk'
 import parseArgs from 'minimist'
 
-import pkg from '../../package.json'
 import {CONFIG_FILE_NAME} from '../constants'
 import {ConfigValidationError, UserError} from '../errors'
 
@@ -28,34 +25,24 @@ function handleError(error) {
   process.exit(1)
 }
 
-let args = parseArgs(process.argv.slice(2), {
+let args = parseArgs(process.argv.slice(3), {
   alias: {
     c: 'config',
-    h: 'help',
     p: 'plugins',
-    v: 'version',
-  },
-  boolean: ['help', 'version'],
+  }
 })
 
 let command = args._[0]
 
-if (args.version || /^v(ersion)?$/.test(command)) {
-  console.log(`v${pkg.version}`)
-  process.exit(0)
-}
-
-if (args.help || !command || /^h(elp)?$/.test(command)) {
-  console.log(`Usage: ${cmd('inferno')} ${req('(run|build)')} ${opt('[options]')}
+if (!command || /^h(elp)?$/.test(command)) {
+  console.log(`Usage: ${cmd('nwb inferno')} ${req('(run|build)')} ${opt('[options]')}
 
 Options:
   ${opt('-c, --config')}   config file to use ${opt(`[default: ${CONFIG_FILE_NAME}]`)}
-  ${opt('-h, --help')}     display this help message
   ${opt('-p, --plugins')}  a comma-separated list of nwb plugins to use
-  ${opt('-v, --version')}  print nwb's version
 
 Commands:
-  ${cmd('inferno run')} ${req('<entry>')} ${opt('[options]')}
+  ${cmd('nwb inferno run')} ${req('<entry>')} ${opt('[options]')}
     Serve an Inferno app or component module.
 
     Arguments:
@@ -72,7 +59,7 @@ Commands:
       ${opt('--reload')}       auto reload the page if hot reloading fails
       ${opt('--title')}        contents for <title> ${opt('[default: Inferno App]')}
 
-  ${cmd('inferno build')} ${req('<entry>')} ${opt('[dist_dir] [options]')}
+  ${cmd('nwb inferno build')} ${req('<entry>')} ${opt('[dist_dir] [options]')}
     Create a static build for an Inferno app.
 
     Arguments:
@@ -86,15 +73,15 @@ Commands:
       ${opt('--title')}        contents for <title> ${opt('[default: Inferno App]')}
       ${opt('--vendor')}       create a 'vendor' bundle for node_modules/ modules
 `)
-  process.exit(args.help || command ? 0 : 1)
+  process.exit(command ? 0 : 1)
 }
 
 if (!COMMAND_MODULES.hasOwnProperty(command)) {
-  console.error(`${red('Unknown command:')} ${req(command)}`)
+  console.error(`${red('Unknown inferno command:')} ${req(command)}`)
   process.exit(1)
 }
 
-let commandModule = require(`../commands/${COMMAND_MODULES[command]}`)
+let commandModule = require(`./${COMMAND_MODULES[command]}`)
 
 try {
   commandModule(args, err => {

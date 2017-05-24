@@ -1,4 +1,4 @@
-/* global NWB_REACT_RUN_MOUNT_ID */
+/* global NWB_QUICK_MOUNT_ID */
 
 import {createElement} from 'react'
 import {render} from 'react-dom'
@@ -18,14 +18,14 @@ function renderEntry(exported) {
     element = exported
   }
   if (element) {
-    render(element, document.getElementById(NWB_REACT_RUN_MOUNT_ID))
+    render(element, document.getElementById(NWB_QUICK_MOUNT_ID))
   }
 }
 
-renderEntry(require('nwb-react-run-entry'))
+renderEntry(require('nwb-quick-entry'))
 
 if (module.hot) {
-  module.hot.accept('nwb-react-run-entry', () => {
-    renderEntry(require('nwb-react-run-entry'))
+  module.hot.accept('nwb-quick-entry', () => {
+    renderEntry(require('nwb-quick-entry'))
   })
 }

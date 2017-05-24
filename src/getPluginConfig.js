@@ -19,7 +19,7 @@ function getPackagePlugins(cwd) {
  * arguments when supported, import them and merge the plugin config objects
  * they export.
  */
-export default function getPluginConfig({args = {}, cwd = process.cwd()} = {}) {
+export default function getPluginConfig(args = {}, {cwd = process.cwd()} = {}) {
   let plugins = []
 
   try {

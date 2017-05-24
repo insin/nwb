@@ -5,7 +5,6 @@ import parseArgs from 'minimist'
 import resolve from 'resolve'
 import semver from 'semver'
 
-import pkg from '../package.json'
 import {CONFIG_FILE_NAME} from './constants'
 import {UserError} from './errors'
 
@@ -22,6 +21,7 @@ export default function cli(argv, cb) {
   let command = args._[0]
 
   if (args.version || /^v(ersion)?$/.test(command)) {
+    let pkg = require('../package.json')
     console.log(`v${pkg.version}`)
     process.exit(0)
   }
@@ -33,6 +33,13 @@ Options:
   ${opt('-c, --config')}   config file to use ${opt(`[default: ${CONFIG_FILE_NAME}]`)}
   ${opt('-h, --help')}     display this help message
   ${opt('-v, --version')}  print nwb's version
+
+Quick development commands:
+  ${cmd('nwb inferno')} ${req('(run|build) <entry>')}  run or build an Inferno app
+  ${cmd('nwb preact')} ${req('(run|build) <entry>')}   run or build a Preact app
+  ${cmd('nwb react')} ${req('(run|build) <entry>')}    run or build a React app
+
+  Run ${cmd('nwb (inferno|preact|react) help')} for options.
 
 Project creation commands:
   ${cmd('nwb new')} ${req('<project_type> <dir_name>')} ${opt('[options]')}
@@ -64,7 +71,7 @@ Project creation commands:
     ${req('web-app')}          a plain JavaScript app
     ${req('web-module')}       a plain JavaScript npm module
 
-Generic development commands:
+Generic project development commands:
   Arguments for these commands depend on the type of project they're being run
   in. See the applicable project type-specific commands below.
 
@@ -133,8 +140,14 @@ Project type-specific commands:
   ${cmd('nwb serve-react-app')} ${opt('[entry]')}
     Serve a React app from ${opt('entry')}
 
+    Options:
+      ${opt('--no-hmre')}  disable use of React Transform for Hot Module Replacement & Errors
+
   ${cmd('nwb serve-react-demo')}
     Serve a React demo app from demo/src/index.js.
+
+    Options:
+      ${opt('--no-hmre')}  disable use of React Transform for Hot Module Replacement & Errors
 
   ${cmd('nwb serve-preact-app')} ${opt('[entry]')}
     Serve a Preact app from ${opt('entry')}
@@ -197,7 +210,7 @@ Helper commands:
   if (/^(build|check|clean|serve|test)/.test(command)) {
     let localNwbPath = null
     try {
-      localNwbPath = path.dirname(resolve.sync('nwb/package', {basedir: process.cwd()}))
+      localNwbPath = path.dirname(resolve.sync('nwb/package.json', {basedir: process.cwd()}))
     }
     catch (e) {
       // nwb isn't installed locally to where the command is being run
@@ -230,5 +243,8 @@ Helper commands:
   }
 
   let commandModule = require(commandModulePath)
-  commandModule(args, cb)
+  // Quick commands handle running themselves
+  if (typeof commandModule === 'function') {
+    commandModule(args, cb)
+  }
 }

@@ -60,6 +60,4 @@ module.exports = {
 
 If you don't need the `Promise`, `fetch` and `Object.assign` polyfills nwb provides by default, configuring [`polyfill: false`](/docs/Configuration.md#polyfill-boolean) will shave ~4KB off the gzipped vendor bundle.
 
-Configuring [`webpack.extractText.allChunks: true`](/docs/Configuration.md#extracttext-object) will shave ~1.25KB off the gzipped vendor bundle by excluding the runtime for Webpack's style-loader.
-
 If you're using destructuring imports with libraries like React Router and React Bootstrap (e.g. `import {Button} from 'react-bootstrap'`), you're bundling the whole library, instead of just the bits you need. Try configuring [`babel.cherryPick`](/docs/Configuration.md#cherrypick-string--arraystring) for these libraries to only bundle the modules you actually use.

@@ -1,15 +1,12 @@
 import path from 'path'
 
-import glob from 'glob'
 import runSeries from 'run-series'
 
+import {directoryExists} from '../utils'
 import webpackBuild from '../webpackBuild'
 import cleanDemo from './clean-demo'
 
-/**
- * Build a module's demo app from demo/src/index.js.
- */
-export default function buildDemo(args, cb) {
+function getCommandConfig(args) {
   let pkg = require(path.resolve('package.json'))
 
   let dist = path.resolve('demo/dist')
@@ -37,12 +34,19 @@ export default function buildDemo(args, cb) {
     },
   }
 
-  if (glob.sync('demo/public/').length !== 0) {
-    config.plugins.copy = [{from: path.resolve('demo/public/'), to: dist}]
+  if (directoryExists('demo/public')) {
+    config.plugins.copy = [{from: path.resolve('demo/public'), to: dist}]
   }
 
+  return config
+}
+
+/**
+ * Build a module's demo app from demo/src/index.js.
+ */
+export default function buildDemo(args, cb) {
   runSeries([
     (cb) => cleanDemo(args, cb),
-    (cb) => webpackBuild('demo', args, config, cb),
+    (cb) => webpackBuild('demo', args, getCommandConfig, cb),
   ], cb)
 }

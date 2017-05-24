@@ -1,4 +1,5 @@
-import React, {Component, PropTypes as t} from 'react'
+import t from 'prop-types'
+import React, {Component} from 'react'
 import {Col, Grid, Row} from 'react-bootstrap'
 
 class CherryPicker extends Component {

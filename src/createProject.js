@@ -4,7 +4,6 @@ import path from 'path'
 
 import chalk from 'chalk'
 import copyTemplateDir from 'copy-template-dir'
-import glob from 'glob'
 import inquirer from 'inquirer'
 import ora from 'ora'
 import runSeries from 'run-series'
@@ -15,7 +14,7 @@ import {
 } from './constants'
 import {UserError} from './errors'
 import pkg from '../package.json'
-import {install, toSource, typeOf} from './utils'
+import {directoryExists, install, toSource, typeOf} from './utils'
 
 // TODO Change if >= 1.0.0 ever happens
 const NWB_VERSION = pkg.version.split('.').slice(0, 2).concat('x').join('.')
@@ -92,7 +91,7 @@ function initGit(args, cwd, cb) {
     return process.nextTick(cb)
   }
   // Bail if a git repo already exists (e.g. nwb init in an existing repo)
-  if (glob.sync('.git/', {cwd}).length > 0) {
+  if (directoryExists(path.join(cwd, '.git'))) {
     return process.nextTick(cb)
   }
 

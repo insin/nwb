@@ -7,8 +7,8 @@ import getUserConfig from './getUserConfig'
  * using build and user configuration.
  */
 export default function createServerWebpackConfig(args, buildConfig) {
-  let userConfig = getUserConfig(args)
-  let pluginConfig = getPluginConfig({args})
+  let pluginConfig = getPluginConfig(args)
+  let userConfig = getUserConfig(args, {pluginConfig})
   let {entry, output, plugins = {}, ...otherBuildConfig} = buildConfig
   let hotMiddlewareOptions = args.reload ? '?reload=true' : ''
 

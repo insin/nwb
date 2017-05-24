@@ -1,0 +1,11 @@
+[ignore]
+<PROJECT_ROOT>/lib/.*
+<PROJECT_ROOT>/templates/.*
+<PROJECT_ROOT>/tests/fixtures/.*
+
+[include]
+
+[libs]
+
+[options]
+module.ignore_non_literal_requires=true

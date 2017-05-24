@@ -10,7 +10,7 @@ import {install} from '../utils'
 // Using a config function as we may need to resolve the path to Inferno, which
 // we may also have to install first.
 function buildConfig(args) {
-  let entry = args._[1]
+  let entry = path.resolve(args._[1])
   let mountId = args['mount-id'] || 'app'
 
   let config = {
@@ -38,16 +38,16 @@ function buildConfig(args) {
   }
 
   if (args.force === true) {
-    config.entry = [path.resolve(entry)]
+    config.entry = [entry]
   }
   else {
     // Use a render shim module which supports quick prototyping
     config.entry = [require.resolve('../infernoRunEntry')]
-    config.plugins.define = {NWB_INFERNO_RUN_MOUNT_ID: JSON.stringify(mountId)}
+    config.plugins.define = {NWB_QUICK_MOUNT_ID: JSON.stringify(mountId)}
     // Allow the render shim module to resolve Inferno from the cwd
     config.resolve.alias['inferno'] = path.dirname(resolve.sync('inferno/package.json', {basedir: process.cwd()}))
     // Allow the render shim module to import the provided entry module
-    config.resolve.alias['nwb-inferno-run-entry'] = path.resolve(entry)
+    config.resolve.alias['nwb-quick-entry'] = entry
   }
 
   if (args.polyfill === false || args.polyfills === false) {

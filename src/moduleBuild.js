@@ -2,7 +2,6 @@ import fs from 'fs'
 import path from 'path'
 
 import spawn from 'cross-spawn'
-import glob from 'glob'
 import ora from 'ora'
 import runSeries from 'run-series'
 import merge from 'webpack-merge'
@@ -11,6 +10,7 @@ import cleanModule from './commands/clean-module'
 import createBabelConfig from './createBabelConfig'
 import debug from './debug'
 import {UserError} from './errors'
+import getPluginConfig from './getPluginConfig'
 import getUserConfig from './getUserConfig'
 import {deepToString} from './utils'
 import webpackBuild from './webpackBuild'
@@ -90,6 +90,14 @@ function buildUMD(args, buildConfig, userConfig, cb) {
       spinner.fail()
       return cb(err)
     }
+
+    if (userConfig.uglify === false) {
+      spinner.succeed()
+      console.log()
+      logGzippedFileSizes(stats1)
+      return cb()
+    }
+
     process.env.NODE_ENV = 'production'
     webpackBuildConfig.babel = merge(buildConfig.babel, buildConfig.babelProd || {})
     webpackBuildConfig.devtool = 'source-map'
@@ -109,7 +117,7 @@ function buildUMD(args, buildConfig, userConfig, cb) {
 
 export default function moduleBuild(args, buildConfig = {}, cb) {
   // XXX Babel doesn't support passing the path to a babelrc file any more
-  if (glob.sync('.babelrc').length > 0) {
+  if (fs.existsSync('.babelrc')) {
     throw new UserError(
       'Unable to build the module as there is a .babelrc in your project',
       'nwb needs to write a temporary .babelrc to configure the build',
@@ -117,12 +125,16 @@ export default function moduleBuild(args, buildConfig = {}, cb) {
   }
 
   let src = path.resolve('src')
-  let userConfig = getUserConfig(args)
+  let pluginConfig = getPluginConfig(args)
+  let userConfig = getUserConfig(args, {pluginConfig})
   let copyFiles = !!args['copy-files']
 
-  let tasks = [
-    (cb) => cleanModule(args, cb),
-    (cb) => runBabel(
+  let tasks = [(cb) => cleanModule(args, cb)]
+
+  // The CommonJS build is enabled by default, and must be explicitly
+  // disabled if you don't want it.
+  if (userConfig.npm.cjs !== false) {
+    tasks.push((cb) => runBabel(
       'ES5',
       {copyFiles, outDir: path.resolve('lib'), src},
       merge(buildConfig.babel, buildConfig.babelDev || {}, {
@@ -139,8 +151,8 @@ export default function moduleBuild(args, buildConfig = {}, cb) {
       }),
       userConfig.babel,
       cb
-    )
-  ]
+    ))
+  }
 
   // The ES6 modules build is enabled by default, and must be explicitly
   // disabled if you don't want it.

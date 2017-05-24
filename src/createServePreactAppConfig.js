@@ -1,26 +1,9 @@
-import path from 'path'
+import {createServeCommandConfig} from './appConfig'
 
-import glob from 'glob'
-import merge from 'webpack-merge'
-
-import {getDefaultHTMLConfig} from './appConfig'
-
-export default function createServePreactAppConfig(args, overrides) {
-  let entry = path.resolve(args._[1] || 'src/index.js')
-  let dist = path.resolve(args._[2] || 'dist')
-
-  let config = {
+export default function createServePreactAppConfig(args, middlewareConfig) {
+  return createServeCommandConfig(args, {
     babel: {
       presets: ['preact'],
-    },
-    entry: [path.resolve(entry)],
-    output: {
-      path: path.resolve(dist),
-      filename: 'app.js',
-      publicPath: '/',
-    },
-    plugins: {
-      html: getDefaultHTMLConfig(),
     },
     resolve: {
       alias: {
@@ -28,11 +11,5 @@ export default function createServePreactAppConfig(args, overrides) {
         'react-dom': 'preact-compat/dist/preact-compat',
       }
     },
-  }
-
-  if (glob.sync('public/').length !== 0) {
-    config.plugins.copy = [{from: path.resolve('public'), to: dist, ignore: '.gitkeep'}]
-  }
-
-  return merge(config, overrides)
+  }, middlewareConfig)
 }

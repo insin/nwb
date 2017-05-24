@@ -10,12 +10,12 @@ import {install} from '../utils'
 // Using a config function as we may need to resolve the path to React and
 // ReactDOM, which we may also have to install first.
 function buildConfig(args) {
-  let entry = args._[1]
+  let entry = path.resolve(args._[1])
   let mountId = args['mount-id'] || 'app'
 
   let config = {
     babel: {
-      presets: ['react', 'react-hmre'],
+      presets: ['react'],
       stage: 0,
     },
     output: {
@@ -32,21 +32,25 @@ function buildConfig(args) {
   }
 
   if (args.force === true) {
-    config.entry = [path.resolve(entry)]
+    config.entry = [entry]
   }
   else {
     // Use a render shim module which supports quick prototyping
     config.entry = [require.resolve('../reactRunEntry')]
-    config.plugins.define = {NWB_REACT_RUN_MOUNT_ID: JSON.stringify(mountId)}
+    config.plugins.define = {NWB_QUICK_MOUNT_ID: JSON.stringify(mountId)}
     config.resolve = {
       alias: {
         // Allow the render shim module to import the provided entry module
-        'nwb-react-run-entry': path.resolve(entry),
+        'nwb-quick-entry': entry,
         // Allow the render shim module to resolve React and ReactDOM from the cwd
         'react': path.dirname(resolve.sync('react/package.json', {basedir: process.cwd()})),
         'react-dom': path.dirname(resolve.sync('react-dom/package.json', {basedir: process.cwd()})),
       }
     }
+  }
+
+  if (args.hmr !== false && args.hmre !== false) {
+    config.babel.presets.push('react-hmre')
   }
 
   if (args.polyfill === false || args.polyfills === false) {

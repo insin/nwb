@@ -1,9 +1,9 @@
-/* global NWB_PREACT_RUN_MOUNT_ID */
+/* global NWB_QUICK_MOUNT_ID */
 
 // h/t to @developit for this render shim module
 let Preact = require('preact')
 let {h, render} = Preact
-let parent = document.getElementById(NWB_PREACT_RUN_MOUNT_ID)
+let parent = document.getElementById(NWB_QUICK_MOUNT_ID)
 let root = parent.firstChild // If #app already contains elements, hydrate from them (for SSR)
 let vnode = null
 
@@ -30,13 +30,13 @@ function init() {
     vnode = v
     Preact.render = render
   }
-  let entry = require('nwb-preact-run-entry')
+  let entry = require('nwb-quick-entry')
   Preact.render = render
   renderEntry(entry)
 }
 
 if (module.hot) {
-  module.hot.accept('nwb-preact-run-entry', init)
+  module.hot.accept('nwb-quick-entry', init)
 }
 
 init()

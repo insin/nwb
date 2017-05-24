@@ -1,11 +1,11 @@
-import React from 'react'
+import React, {Component} from 'react'
 
-let Thing = React.createClass({
+class Thing extends Component {
   render() {
     return <div className="Thing">
       Thing
     </div>
   }
-})
+}
 
 export default Thing

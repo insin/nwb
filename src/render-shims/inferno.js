@@ -1,8 +1,8 @@
-/* global NWB_INFERNO_RUN_MOUNT_ID */
+/* global NWB_QUICK_MOUNT_ID */
 
 let Inferno = require('inferno')
 let {createVNode, render} = Inferno
-let parent = document.getElementById(NWB_INFERNO_RUN_MOUNT_ID)
+let parent = document.getElementById(NWB_QUICK_MOUNT_ID)
 let vnode = null
 
 function renderEntry(exported) {
@@ -29,13 +29,13 @@ function init() {
     vnode = v
     Inferno.render = render
   }
-  let entry = require('nwb-inferno-run-entry')
+  let entry = require('nwb-quick-entry')
   Inferno.render = render
   renderEntry(entry)
 }
 
 if (module.hot) {
-  module.hot.accept('nwb-inferno-run-entry', init)
+  module.hot.accept('nwb-quick-entry', init)
 }
 
 init()

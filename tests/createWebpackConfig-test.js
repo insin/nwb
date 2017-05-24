@@ -1,23 +1,13 @@
+// @flow
 import expect from 'expect'
 
 import createWebpackConfig, {
   COMPAT_CONFIGS,
   getCompatConfig,
+  mergeLoaderConfig,
   mergeRuleConfig,
-  styleRuleName,
+  loaderConfigName,
 } from '../src/createWebpackConfig'
-
-function findSassPipelineRule(rules) {
-  return rules.filter(rule =>
-    rule.test.test('.scss') && rule.exclude
-  )[0]
-}
-
-function findVendorSassPipelineRule(rules) {
-  return rules.filter(rule =>
-    rule.test.test('.scss') && rule.include
-  )[0]
-}
 
 function getLoaders(rules) {
   return rules.map(rule => {
@@ -50,6 +40,19 @@ describe('createWebpackConfig()', () => {
     })
   })
 
+  context('with a default rule disabled', () => {
+    let config = createWebpackConfig({entry: ['index.js']}, {}, {webpack: {rules: {babel: false}}})
+    it('excludes the rule', () => {
+      expect(getLoaders(config.module.rules))
+        .toNotContain()
+        .toNotContain('babel-loader')
+        .toContain('extract-text-webpack-plugin')
+        .toContain('css-loader')
+        .toContain('postcss-loader')
+        .toContain('url-loader')
+    })
+  })
+
   context('with server config', () => {
     let config = createWebpackConfig({entry: ['index.js'], server: {}})
     it('creates a server webpack config', () => {
@@ -70,76 +73,216 @@ describe('createWebpackConfig()', () => {
     })
   })
 
-  let cssPreprocessorPluginConfig = {
-    cssPreprocessors: {
-      sass: {
-        test: /\.scss$/,
-        loader: 'path/to/sass-loader.js',
+  context('configuring styles', () => {
+    let cssPreprocessorPluginConfig = {
+      cssPreprocessors: {
+        sass: {
+          test: /\.scss$/,
+          loader: 'path/to/sass-loader.js',
+        }
       }
     }
-  }
 
-  context('with plugin config for a CSS preprocessor', () => {
-    let config = createWebpackConfig({server: true}, cssPreprocessorPluginConfig)
-    it('creates a style loading pipeline', () => {
-      let rule = findSassPipelineRule(config.module.rules)
-      expect(rule).toExist()
-      expect(rule.use).toMatch([
-        {loader: /style-loader/},
-        {loader: /css-loader/},
-        {loader: /postcss-loader/},
-        {loader: /path\/to\/sass-loader\.js$/},
-      ])
-      expect(rule.exclude.test('node_modules')).toBe(true, 'app rule should exclude node_modules')
+    context("with user config for the default CSS rule's loaders", () => {
+      let config = createWebpackConfig({server: true}, {}, {
+        webpack: {
+          rules: {
+            css: {
+              options: {
+                a: 1,
+                b: 2,
+              }
+            },
+          }
+        }
+      })
+      it('applies user config to loaders', () => {
+        let rules = config.module.rules.filter(rule => rule.test.test('.css'))
+        expect(rules.length).toBe(1)
+        expect(rules[0].use).toMatch([
+          {loader: /style-loader/},
+          {
+            loader: /css-loader/,
+            options: {a: 1, b: 2}
+          },
+          {loader: /postcss-loader/},
+        ])
+      })
     })
-    it('creates a vendor style loading pipeline', () => {
-      let rule = findVendorSassPipelineRule(config.module.rules, 'vendor-sass-pipeline')
-      expect(rule).toExist()
-      expect(rule.use).toMatch([
-        {loader: /style-loader/},
-        {loader: /css-loader/},
-        {loader: /postcss-loader/},
-        {loader: /path\/to\/sass-loader\.js$/},
-      ])
-      expect(rule.include.test('node_modules')).toBe(true, 'vendor rule should include node_modules')
-    })
-  })
 
-  context('with plugin config for a CSS preprocessor and user config for its rule', () => {
-    let config = createWebpackConfig({server: true}, cssPreprocessorPluginConfig, {
-      webpack: {
-        rules: {
-          sass: {
-            options: {
-              a: 1,
-              b: 2,
+    context('with plugin config for a CSS preprocessor', () => {
+      let config = createWebpackConfig({server: true}, cssPreprocessorPluginConfig)
+
+      it('creates a default style rule', () => {
+        let rules = config.module.rules.filter(rule => rule.test.test('.scss'))
+        expect(rules.length).toBe(1)
+        expect(rules[0].use).toMatch([
+          {loader: /style-loader/},
+          {loader: /css-loader/},
+          {loader: /postcss-loader/},
+          {loader: /path\/to\/sass-loader\.js$/},
+        ])
+      })
+    })
+
+    context('with plugin config for a CSS preprocessor and user config for its loaders', () => {
+      let config = createWebpackConfig({server: true}, cssPreprocessorPluginConfig, {
+        webpack: {
+          rules: {
+            sass: {
+              options: {
+                a: 1,
+                b: 2,
+              }
             }
           }
         }
+      })
+      it('applies user config to the preprocessor rule', () => {
+        let rule = config.module.rules.filter(rule => rule.test.test('.scss'))[0]
+        expect(rule).toExist()
+        expect(rule.use).toMatch([
+          {loader: /style-loader/},
+          {loader: /css-loader/},
+          {loader: /postcss-loader/},
+          {
+            loader: /path\/to\/sass-loader\.js$/,
+            options: {a: 1, b: 2},
+          },
+        ])
+      })
+    })
+
+    context('with custom style rules', () => {
+      let config = createWebpackConfig({server: true}, {}, {
+        webpack: {
+          styles: {
+            css: [
+              {
+                include: 'src/components',
+                loaders: {
+                  css: {
+                    options: {
+                      modules: true,
+                      localIdentName: '[hash:base64:5]',
+                    }
+                  }
+                }
+              },
+              {
+                exclude: 'src/components',
+              }
+            ]
+          }
+        }
+      })
+
+      it('creates a rule for each given configuration object', () => {
+        let rules = config.module.rules.filter(rule => rule.test.test('.css'))
+        expect(rules.length).toBe(2)
+        expect(rules[0].include).toBe('src/components')
+        expect(rules[0].use).toMatch([
+          {loader: /style-loader/},
+          {
+            loader: /css-loader/,
+            options: {
+              modules: true,
+              localIdentName: '[hash:base64:5]',
+            }
+          },
+          {loader: /postcss-loader/},
+        ])
+        expect(rules[1].exclude).toBe('src/components')
+        expect(rules[1].use).toMatch([
+          {loader: /style-loader/},
+          {loader: /css-loader/},
+          {loader: /postcss-loader/},
+        ])
+      })
+    })
+
+    // TODO Remove in a future version
+    context("with styles: 'old' config for backwards-compatibility", () => {
+      function findSassRule(rules) {
+        return rules.filter(rule =>
+          rule.test.test('.scss') && rule.exclude
+        )[0]
       }
-    })
-    it('applies user config to the preprocessor rule', () => {
-      let rule = findSassPipelineRule(config.module.rules, 'sass-pipeline')
-      expect(rule).toExist()
-      expect(rule.use).toMatch([
-        {loader: /style-loader/},
-        {loader: /css-loader/},
-        {loader: /postcss-loader/},
-        {
-          loader: /path\/to\/sass-loader\.js$/,
-          options: {a: 1, b: 2},
-        },
-      ])
-    })
-    it('only applies user config to the appropriate rule', () => {
-      let rule = findVendorSassPipelineRule(config.module.rules, 'vendor-sass-pipeline')
-      expect(rule).toExist()
-      expect(rule.use).toMatch([
-        {loader: /style-loader/},
-        {loader: /css-loader/},
-        {loader: /postcss-loader/},
-        {loader: /path\/to\/sass-loader\.js$/},
-      ])
+
+      function findVendorSassRule(rules) {
+        return rules.filter(rule =>
+          rule.test.test('.scss') && rule.include
+        )[0]
+      }
+
+      context('with plugin config for a CSS preprocessor', () => {
+        let config = createWebpackConfig({server: true}, cssPreprocessorPluginConfig, {
+          webpack: {
+            styles: 'old'
+          }
+        })
+        it('creates a style loading pipeline', () => {
+          let rule = findSassRule(config.module.rules)
+          expect(rule).toExist()
+          expect(rule.use).toMatch([
+            {loader: /style-loader/},
+            {loader: /css-loader/},
+            {loader: /postcss-loader/},
+            {loader: /path\/to\/sass-loader\.js$/},
+          ])
+          expect(rule.exclude.test('node_modules')).toBe(true, 'app rule should exclude node_modules')
+        })
+        it('creates a vendor style loading pipeline', () => {
+          let rule = findVendorSassRule(config.module.rules, 'vendor-sass-pipeline')
+          expect(rule).toExist()
+          expect(rule.use).toMatch([
+            {loader: /style-loader/},
+            {loader: /css-loader/},
+            {loader: /postcss-loader/},
+            {loader: /path\/to\/sass-loader\.js$/},
+          ])
+          expect(rule.include.test('node_modules')).toBe(true, 'vendor rule should include node_modules')
+        })
+      })
+
+      context('with plugin config for a CSS preprocessor and user config for its rule', () => {
+        let config = createWebpackConfig({server: true}, cssPreprocessorPluginConfig, {
+          webpack: {
+            styles: 'old',
+            rules: {
+              sass: {
+                options: {
+                  a: 1,
+                  b: 2,
+                }
+              }
+            }
+          }
+        })
+        it('applies user config to the preprocessor rule', () => {
+          let rule = findSassRule(config.module.rules, 'sass-pipeline')
+          expect(rule).toExist()
+          expect(rule.use).toMatch([
+            {loader: /style-loader/},
+            {loader: /css-loader/},
+            {loader: /postcss-loader/},
+            {
+              loader: /path\/to\/sass-loader\.js$/,
+              options: {a: 1, b: 2},
+            },
+          ])
+        })
+        it('only applies user config to the appropriate rule', () => {
+          let rule = findVendorSassRule(config.module.rules, 'vendor-sass-pipeline')
+          expect(rule).toExist()
+          expect(rule.use).toMatch([
+            {loader: /style-loader/},
+            {loader: /css-loader/},
+            {loader: /postcss-loader/},
+            {loader: /path\/to\/sass-loader\.js$/},
+          ])
+        })
+      })
     })
   })
 
@@ -220,22 +363,22 @@ describe('createWebpackConfig()', () => {
   })
 })
 
-describe('styleRuleName()', () => {
+describe('loaderConfigName()', () => {
   it('returns the given value if a falsy prefix was given', () => {
-    let name = styleRuleName(null)
+    let name = loaderConfigName(null)
     expect(name('css')).toEqual('css')
     expect(name('style')).toEqual('style')
   })
   it('prefixes the value if a prefix was given', () => {
-    let name = styleRuleName('vendor')
+    let name = loaderConfigName('vendor')
     expect(name('css')).toEqual('vendor-css')
     expect(name('style')).toEqual('vendor-style')
   })
   it('returns the prefix if it ends with the given value', () => {
-    let name = styleRuleName('sass')
+    let name = loaderConfigName('sass')
     expect(name('css')).toEqual('sass-css')
     expect(name('sass')).toEqual('sass')
-    name = styleRuleName('vendor-sass')
+    name = loaderConfigName('vendor-sass')
     expect(name('css')).toEqual('vendor-sass-css')
     expect(name('sass')).toEqual('vendor-sass')
   })
@@ -302,6 +445,90 @@ describe('mergeRuleConfig()', () => {
       }
     })
   })
+  it('omits default options and build config when configuring a custom loader', () => {
+    expect(mergeRuleConfig(
+      {...rule, options: {a: 1}},
+      {options: {b: 2}},
+      {loader: 'custom', options: {c: 3}},
+    )).toEqual({
+      test: TEST_RE,
+      loader: 'custom',
+      exclude: EXCLUDE_RE,
+      options: {c: 3},
+    })
+  })
+  it('omits default options and build config when configuring a custom loader chain', () => {
+    expect(mergeRuleConfig(
+      {...rule, options: {a: 1}},
+      {options: {b: 2}},
+      {use: ['three', 'two', 'one']},
+    )).toEqual({
+      test: TEST_RE,
+      use: ['three', 'two', 'one'],
+      exclude: EXCLUDE_RE,
+    })
+  })
+})
+
+describe('mergeLoaderConfig()', () => {
+  let loader = {loader: 'one'}
+  it('merges default, build and user config for a loader', () => {
+    expect(mergeLoaderConfig(
+      {...loader, options: {a: 1}},
+      {options: {b: 2}},
+      {options: {c: 3}},
+    )).toEqual({
+      loader: 'one',
+      options: {a: 1, b: 2, c: 3},
+    })
+  })
+  it('only adds an options prop if the merged options have props', () => {
+    expect(mergeLoaderConfig(loader, {}, {})).toEqual({
+      loader: 'one',
+    })
+  })
+  it('removes the merged options when it has no properties', () => {
+    expect(mergeLoaderConfig(loader, {}, {options: {}})).toEqual({
+      loader: 'one',
+    })
+  })
+  it('replaces lists when merging options instead of concatenating them', () => {
+    expect(mergeLoaderConfig(
+      {...loader, options: {optional: ['two']}},
+      {},
+      {options: {optional: ['three']}}
+    )).toEqual({
+      loader: 'one',
+      options: {
+        optional: ['three'],
+      },
+    })
+  })
+  it('deep merges options', () => {
+    expect(mergeLoaderConfig(
+      loader,
+      {options: {nested: {a: true}}},
+      {options: {nested: {b: true}}},
+    )).toEqual({
+      loader: 'one',
+      options: {
+        nested: {
+          a: true,
+          b: true,
+        }
+      }
+    })
+  })
+  it('omits default options configuring a custom loader', () => {
+    expect(mergeLoaderConfig(
+      {...loader, options: {a: 1}},
+      {options: {b: 2}},
+      {loader: 'custom', options: {c: 3}},
+    )).toEqual({
+      loader: 'custom',
+      options: {c: 3},
+    })
+  })
 })
 
 describe('getCompatConfig()', () => {
@@ -323,6 +550,7 @@ describe('getCompatConfig()', () => {
   })
   it('supports moment', () => {
     let config = getCompatConfig({moment: {locales: ['de', 'en-gb']}})
+    if (config == null) throw new Error('Config is null')
     expect(config.plugins).toExist()
     expect(config.plugins.length).toBe(1)
     expect(config.plugins[0].resourceRegExp).toEqual(/moment[/\\]locale$/)

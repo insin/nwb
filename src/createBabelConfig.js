@@ -1,3 +1,31 @@
+// @flow
+type BabelConfig = {
+  presets: BabelPluginConfig[],
+  plugins?: BabelPluginConfig[],
+}
+
+type BabelPluginConfig = string | [string, Object]
+
+type BuildOptions = {
+  commonJSInterop?: boolean,
+  env?: Object,
+  modules?: false | string,
+  plugins?: BabelPluginConfig[],
+  presets?: string[],
+  setRuntimePath?: false,
+  stage?: number,
+  webpack?: boolean,
+}
+
+type UserOptions = {
+  cherryPick?: string | string[],
+  loose?: boolean,
+  plugins?: BabelPluginConfig[],
+  presets?: BabelPluginConfig[],
+  runtime?: boolean | string,
+  stage?: false | number,
+}
+
 import path from 'path'
 
 import {typeOf} from './utils'
@@ -5,10 +33,12 @@ import {typeOf} from './utils'
 const DEFAULT_STAGE = 2
 const RUNTIME_PATH = path.dirname(require.resolve('babel-runtime/package'))
 
-export default function createBabelConfig(buildConfig = {}, userConfig = {}) {
+export default function createBabelConfig(
+  buildConfig: BuildOptions = {},
+  userConfig: UserOptions = {}
+): BabelConfig {
   let {
     commonJSInterop,
-    env,
     modules = false,
     plugins: buildPlugins = [],
     presets: buildPresets,
@@ -26,8 +56,8 @@ export default function createBabelConfig(buildConfig = {}, userConfig = {}) {
     stage: userStage,
   } = userConfig
 
-  let presets = []
-  let plugins = []
+  let presets: BabelPluginConfig[] = []
+  let plugins: BabelPluginConfig[] = []
 
   // Default to loose mode unless explicitly configured
   if (typeOf(loose) === 'undefined') {
@@ -85,14 +115,14 @@ export default function createBabelConfig(buildConfig = {}, userConfig = {}) {
     presets = [...presets, ...userPresets]
   }
 
-  let config = {presets}
+  let config: BabelConfig = {presets}
 
   plugins = plugins.concat(buildPlugins, userPlugins)
 
   // The Runtime transform imports various things into a module based on usage.
   // Turn regenerator on by default to enable use of async/await and generators
   // without configuration.
-  let runtimeTransformOptions = {
+  let runtimeTransformOptions: Object = {
     helpers: false,
     polyfill: false,
     regenerator: true,
@@ -133,11 +163,6 @@ export default function createBabelConfig(buildConfig = {}, userConfig = {}) {
 
   if (plugins.length > 0) {
     config.plugins = plugins
-  }
-
-  // Pass any given env config through
-  if (env) {
-    config.env = env
   }
 
   return config
