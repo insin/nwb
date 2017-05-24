@@ -62,11 +62,11 @@
 - babel-preset-stage-3: v6.22.0 → [v6.24.1][babel6241]
 - babel-runtime: v6.22.0 → [v6.23.0][babel6230]
 - case-sensitive-paths-webpack-plugin: v1.1.4 → v2.0.0 - use the file system exposed by the compiler
-- css-loader: v0.26.1 → [v0.28.1](https://github.com/webpack-contrib/css-loader/blob/master/CHANGELOG.md#0281-2017-05-02) - added an [`alias` option](https://github.com/webpack-contrib/css-loader#alias)
-- detect-port: v1.1.0 → [v1.1.2](https://github.com/node-modules/detect-port/compare/1.1.0...1.1.2)
+- css-loader: v0.26.1 → [v0.28.2](https://github.com/webpack-contrib/css-loader/blob/master/CHANGELOG.md#0282-2017-05-22) - added an [`alias` option](https://github.com/webpack-contrib/css-loader#alias)
+- detect-port: v1.1.0 → [v1.1.3](https://github.com/node-modules/detect-port/blob/master/HISTORY.md#113--2017-05-24)
 - express: v4.14.0 → [v4.15.3](https://github.com/expressjs/express/blob/master/History.md#4153--2017-05-16)
 - file-loader: v0.9.0 → [v0.11.1](https://github.com/webpack-contrib/file-loader/blob/master/CHANGELOG.md#0111-2017-04-01) - added `useRelativePath` option
-- filesize: v3.4.3 → [v3.5.9](https://github.com/avoidwork/filesize.js/compare/3.4.3...3.5.9)
+- filesize: v3.4.3 → [v3.5.10](https://github.com/avoidwork/filesize.js/compare/3.4.3...3.5.10)
 - inquirer: v3.0.1 → [v3.0.6](https://github.com/SBoudrias/Inquirer.js/releases/)
 - karma: v1.4.0 → [v1.7.0](https://github.com/karma-runner/karma/blob/master/CHANGELOG.md#170-2017-05-06)
 - karma-chrome-launcher: v2.0.0 → [v2.1.1](https://github.com/karma-runner/karma-chrome-launcher/blob/master/CHANGELOG.md#211-2017-05-05) - add support for headless Chrome/ChromeCanary
@@ -77,9 +77,9 @@
 - ora: v1.1.0 → v1.2.0 - added `warn()` and `info()` utilities
 - postcss-loader: v1.2.2 → [v2.0.5](https://github.com/postcss/postcss-loader/blob/master/CHANGELOG.md#205-2017-05-10) - validate options
 - resolve: v1.2.0 → [v1.3.3](https://github.com/substack/node-resolve/compare/v1.2.0...v1.3.3)
-- style-loader: v0.13.1 → [v0.17.0](https://github.com/webpack-contrib/style-loader/blob/master/CHANGELOG.md#0170-2017-05-01)
+- style-loader: v0.13.1 → [v0.18.1](https://github.com/webpack-contrib/style-loader/blob/master/CHANGELOG.md#0181-2017-05-23)
 - url-loader: v0.5.7 → [v0.5.8](https://github.com/webpack-contrib/url-loader/releases/tag/v0.5.8) - fix loader util deprecation warning
-- webpack: v2.2.1 → [v2.5.1](https://github.com/webpack/webpack/releases) - `import()` can now configure a chunk name, `require.ensure()` can now take an error callback, added `module.strictExportPresence`
+- webpack: v2.2.1 → [v2.6.0](https://github.com/webpack/webpack/releases) - `import()` can now configure a chunk name, `require.ensure()` can now take an error callback, added `module.strictExportPresence`
 - webpack-dev-middleware: v1.9.0 → [v1.10.2](https://github.com/webpack/webpack-dev-middleware/releases) - CORS security fix
 - webpack-hot-middleware: v2.15.0 → [v2.18.0](https://github.com/glenjamin/webpack-hot-middleware/compare/v2.15.0...v2.18.0) - client overlay style can now be customised with CSS using `#webpack-hot-middleware-clientOverlay`
 - webpack-merge: v2.4.0 → [v4.1.0](https://github.com/survivejs/webpack-merge/blob/master/CHANGELOG.md#410--2017-03-16)
