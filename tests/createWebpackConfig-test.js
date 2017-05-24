@@ -543,6 +543,7 @@ describe('getCompatConfig()', () => {
   })
   it('supports intl', () => {
     let config = getCompatConfig({intl: {locales: ['de', 'en-gb']}})
+    if (config == null) throw new Error('Config is null')
     expect(config.plugins).toExist()
     expect(config.plugins.length).toBe(1)
     expect(config.plugins[0].resourceRegExp).toEqual(/intl[/\\]locale-data[/\\]jsonp$/)
@@ -558,6 +559,7 @@ describe('getCompatConfig()', () => {
   })
   it('supports react-intl', () => {
     let config = getCompatConfig({'react-intl': {locales: ['de', 'en-gb']}})
+    if (config == null) throw new Error('Config is null')
     expect(config.plugins).toExist()
     expect(config.plugins.length).toBe(1)
     expect(config.plugins[0].resourceRegExp).toEqual(/react-intl[/\\]locale-data$/)
