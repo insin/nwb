@@ -1,3 +1,4 @@
+// @flow
 import util from 'util'
 
 import spawn from 'cross-spawn'
@@ -10,10 +11,11 @@ import debug from './debug'
 
 /**
  * Check if the given directories exist and filter out any which don't.
- * @param {Array<string>} dirs directory paths.
- * @param {function(?Error=, Array<string>=)} cb
  */
-function checkDirectories(dirs, cb) {
+function checkDirectories(
+  dirs: string[],
+  cb: (?Error, existingDirs?: string[]) => void,
+) {
   runSeries(
     dirs.map(dir => cb => fs.stat(dir, (err, stats) => {
       if (err) return cb(err.code === 'ENOENT' ? null : err)
@@ -28,14 +30,17 @@ function checkDirectories(dirs, cb) {
 
 /**
  * If any of the given directories exist, display a spinner and delete them.
- * @param {string} desc a description of what's being cleaned, e.g. 'app'
- * @param {Array<string>} dirs paths to delete.
- * @param {function(?Error=)} cb
  */
-export function clean(desc, dirs, cb) {
+export function clean(
+  // A description of what's being cleaned, e.g. 'app'
+  desc: string,
+  // Paths to delete
+  dirs: string[],
+  cb: (error: ?Error) => void,
+) {
   checkDirectories(dirs, (err, dirs) => {
-    if (err) return cb(err)
-    if (dirs.length === 0) return cb()
+    if (err != null) return cb(err)
+    if (dirs == null || dirs.length === 0) return cb()
     let spinner = ora(`Cleaning ${desc}`).start()
     runSeries(
       dirs.map(dir => cb => fs.remove(dir, cb)),
@@ -67,16 +72,14 @@ export function clearConsole() {
 /**
  * Log objects in their entirety so we can see everything in debug output.
  */
-export function deepToString(object) {
+export function deepToString(object: Object): string {
   return util.inspect(object, {colors: true, depth: null})
 }
 
 /**
  * Check if a directory exists.
- * @param {string} dir a directory path.
- * @return {boolean}
  */
-export function directoryExists(dir) {
+export function directoryExists(dir: string): boolean {
   try {
     return fs.statSync(dir).isDirectory()
   }
@@ -87,12 +90,15 @@ export function directoryExists(dir) {
 
 /**
  * Get a list of nwb plugin names passed as arguments.
- * @param {Object} args parsed arguments.
- * @param {string=} args.plugins comma-separated list of nwb plugin names.
- * @param {string=} args.plugin typo'd comma-separated list of nwb plugin names.
- * @return {Array<string>}
  */
-export function getArgsPlugins(args) {
+export function getArgsPlugins(
+  args: {
+    // comma-separated list of nwb plugin names
+    plugins?: string,
+    // Comma-separated list of nwb plugin names (allowing for typos)
+    plugin?: string,
+  }
+): string[] {
   let plugins = args.plugins || args.plugin
   if (!plugins) return []
   return plugins.split(',').map(name => name.replace(/^(nwb-)?/, 'nwb-'))
@@ -100,22 +106,25 @@ export function getArgsPlugins(args) {
 
 /**
  * Install packages from npm.
- * @param {Array<string>} packages npm package names, which may be in
- *   package@version format.
- * @param {Object=} options
-   @param {Object=} options.args parsed arguments.
- * @param {boolean=} options.check check if packages are resolvable from
- *   the cwd and skip installation if already installed.
- * @param {string=} options.cwd working directory to install in.
- * @param {boolean=} options.dev save dependencies to devDependencies.
- * @param {boolean=} options.save save dependencies to package.json.
- * @param {function(?Error)} cb completion callback.
  */
-export function install(packages, options, cb) {
-  if (typeOf(options) === 'function') {
-    cb = options
-    options = {}
-  }
+export function install(
+  // npm package names, which may be in package@version format
+  packages: string[],
+  options: {
+    // Parsed arguments
+    args?: Object,
+    // Check if packages are resolvable from the cwd and skip installation if
+    // already installed.
+    check?: boolean,
+    // Working directory to install in
+    cwd?: string,
+    // Save dependencies to devDependencies
+    dev?: boolean,
+    // Save dependencies to package.json
+    save?: boolean
+  },
+  cb: (?Error) => void
+) {
   let {
     args = null,
     check = false,
@@ -171,9 +180,8 @@ export function install(packages, options, cb) {
 
 /**
  * Join multiple items with a penultimate "and".
- * @param {Array<*>} arr
  */
-export function joinAnd(array, lastClause = 'and') {
+export function joinAnd(array: any[], lastClause: string = 'and') {
   if (array.length === 0) return ''
   if (array.length === 1) return String(array[0])
   return `${array.slice(0, -1).join(', ')} ${lastClause} ${array[array.length - 1]}`
@@ -183,7 +191,7 @@ export function joinAnd(array, lastClause = 'and') {
  * Hack to generate simple config file contents by stringifying to JSON, but
  * without JSON formatting.
  */
-export function toSource(obj) {
+export function toSource(obj: Object) {
   return JSON.stringify(obj, null, 2)
              .replace(/"([^"]+)":/g, '$1:')
              .replace(/"/g, "'")
@@ -192,7 +200,7 @@ export function toSource(obj) {
 /**
  * Better typeof.
  */
-export function typeOf(o) {
+export function typeOf(o: any) {
   if (Number.isNaN(o)) return 'nan'
   return Object.prototype.toString.call(o).slice(8, -1).toLowerCase()
 }
@@ -200,7 +208,7 @@ export function typeOf(o) {
 /**
  * @param {Array<string>} strings
  */
-export function unique(strings) {
+export function unique(strings: string[]) {
   // eslint-disable-next-line
   return Object.keys(strings.reduce((o, s) => (o[s] = true, o), {}))
 }
