@@ -1,7 +1,9 @@
 import React from 'react'
 import {Route} from 'react-router'
 
-let routes = <Route path="/" component={require('./App')}>
+import App from './App'
+
+let routes = <Route path="/" component={App}>
   <Route
     path="child1"
     getComponent={
