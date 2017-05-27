@@ -233,7 +233,7 @@ describe('createWebpackConfig()', () => {
           expect(rule.exclude.test('node_modules')).toBe(true, 'app rule should exclude node_modules')
         })
         it('creates a vendor style loading pipeline', () => {
-          let rule = findVendorSassRule(config.module.rules, 'vendor-sass-pipeline')
+          let rule = findVendorSassRule(config.module.rules)
           expect(rule).toExist()
           expect(rule.use).toMatch([
             {loader: /style-loader/},
@@ -260,7 +260,7 @@ describe('createWebpackConfig()', () => {
           }
         })
         it('applies user config to the preprocessor rule', () => {
-          let rule = findSassRule(config.module.rules, 'sass-pipeline')
+          let rule = findSassRule(config.module.rules)
           expect(rule).toExist()
           expect(rule.use).toMatch([
             {loader: /style-loader/},
@@ -273,7 +273,7 @@ describe('createWebpackConfig()', () => {
           ])
         })
         it('only applies user config to the appropriate rule', () => {
-          let rule = findVendorSassRule(config.module.rules, 'vendor-sass-pipeline')
+          let rule = findVendorSassRule(config.module.rules)
           expect(rule).toExist()
           expect(rule.use).toMatch([
             {loader: /style-loader/},
