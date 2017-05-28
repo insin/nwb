@@ -14,9 +14,9 @@
 
 **Added:**
 
-- You can how control [how Webpack rules are created for stylesheets](https://github.com/insin/nwb/blob/master/docs/Stylesheets.md#stylesheets) via [`webpack.styles` config](https://github.com/insin/nwb/blob/master/docs/Configuration.md#styles-object--false--old) for customising creation of Webpack rules for stylesheets and configuring their chained loaders.
+- You can now control [how Webpack rules are created for stylesheets](https://github.com/insin/nwb/blob/master/docs/Stylesheets.md#stylesheets) via [`webpack.styles` config](https://github.com/insin/nwb/blob/master/docs/Configuration.md#styles-object--false--old).
 
-  This allows you to set up multiple rules for your own stylesheets (e.g. using CSS Modules only for stylesheets in a particular directory) and to provide rules specifically for dependencies which need special Webpack configuration for stylesheets.
+  This allows you to set up multiple rules for your own stylesheets (e.g. using CSS Modules only for stylesheets in a particular directory) and to provide rules for dependencies which need a specific Webpack rule for their stylesheets.
 
   You can also disable creation of stylesheet rules by setting `webpack.styles` to `false`.
 - Re-enabled the `react-constant-elements` transform for React production builds, due to significant bug fixes.
