@@ -1,4 +1,4 @@
-# Unreleased (in `next` branch)
+# 0.16.0 / 2017-05-29
 
 **Breaking Changes:**
 
