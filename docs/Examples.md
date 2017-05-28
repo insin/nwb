@@ -4,6 +4,7 @@
   - [Thinking in React](#thinking-in-react)
   - [React Tutorial](#react-tutorial)
   - [Bootstrap 4 with Sass](#bootstrap-4-with-sass)
+  - [React Toolbox Configuration](#react-toolbox-configuration)
   - [Yelp Clone](#yelp-clone)
   - [GitHub Issues](#github-issues)
 - [Other Examples](#other-examples)
@@ -27,6 +28,10 @@ The same server is used to serve up a Webpack development build or a production 
 
 - Article: [Using Bootstrap 4 from source with React and nwb](https://medium.com/@jbscript/using-bootstrap-4-from-source-with-react-and-nwb-f26caf395952)
 - Repo: https://github.com/insin/bootstrap-4-nwb
+
+#### React Toolbox Configuration
+
+[nwb-react-toolbox-example](https://github.com/insin/nwb-react-toolbox-example) shows how you can use [`webpack.styles` config](/docs/Configuration.md#styles-object--false--old) to provide a custom [stylesheet handling configuration](/docs/Stylesheets.md#stylesheets) for specific stylesheets in your app, in this case for a dependency's stylesheets.
 
 #### Yelp Clone
 
