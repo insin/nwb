@@ -48,7 +48,7 @@
 - babel-core: v6.22.1 → [v6.24.1][babel6241]
 - babel-loader: v6.2.10 → [v7.0.0](https://github.com/babel/babel-loader/releases/tag/v7.0.0)
 - babel-plugin-inferno: v1.7.0 → [v3.2.0](https://github.com/infernojs/babel-plugin-inferno/releases) - adds support for Inferno 1.5, not backwards-compatible with 1.4
-- babel-plugin-istanbul: v3.1.2 → [v4.1.3](https://github.com/istanbuljs/babel-plugin-istanbul/blob/master/CHANGELOG.md#413-2017-04-29) - drop support for Node.js v0.10 and v0.12
+- babel-plugin-istanbul: v3.1.2 → [v4.1.4](https://github.com/istanbuljs/babel-plugin-istanbul/blob/master/CHANGELOG.md#414-2017-05-27) - drop support for Node.js v0.10 and v0.12
 - babel-plugin-transform-react-jsx: v6.22.0 → [v6.24.1][babel6241]
 - babel-plugin-transform-react-remove-prop-types: v0.2.11 → [v0.4.5](https://github.com/oliviertassinari/babel-plugin-transform-react-remove-prop-types/releases) - dropped support for `React.createClass()` in favour of the new `create-react-class` package
 - babel-plugin-transform-runtime: v6.22.0 → [v6.23.0][babel6230]
