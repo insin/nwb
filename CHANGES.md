@@ -10,19 +10,19 @@
 
   > For backwards compatibility you can set [`webpack.style` config](https://github.com/insin/nwb/blob/master/docs/Configuration.md#styles-object--false--old) to `'old'` to use the old default behaviour - this capability will be removed in a future release.
 - The Babel plugin for Inferno now requires Inferno >= 1.5 and is not backwards-compatible with 1.4.
+- Default Webpack config now sets `module.strictExportPresence = true` so a missing export is now a compile error.
 
 **Added:**
 
-- Added [`webpack.style` config](https://github.com/insin/nwb/blob/master/docs/Configuration.md#styles-object--false--old) for customising creation of Webpack rules for stylesheets and configuring their chained loaders.
+- You can how control [how Webpack rules are created for stylesheets](https://github.com/insin/nwb/blob/master/docs/Stylesheets.md#stylesheets) via [`webpack.styles` config](https://github.com/insin/nwb/blob/master/docs/Configuration.md#styles-object--false--old) for customising creation of Webpack rules for stylesheets and configuring their chained loaders.
 
-  This allows you to set up multiple rules for your own stylesheets (e.g. using CSS Modules only for stylesheets in a particular directory) and to provide specific rules for dependencies which have very specific Webpack configuration needs for stylesheets.
+  This allows you to set up multiple rules for your own stylesheets (e.g. using CSS Modules only for stylesheets in a particular directory) and to provide rules specifically for dependencies which need special Webpack configuration for stylesheets.
 
   You can also disable creation of stylesheet rules by setting `webpack.styles` to `false`.
-- Default Webpack config now sets `module.strictExportPresence = true` so a missing export is now a compile error.
 - Re-enabled the `react-constant-elements` transform for React production builds, due to significant bug fixes.
 - Added a `--no-hmre` flag for use when serving a React app, to disable use of [React Transform](https://github.com/gaearon/babel-plugin-react-transform#readme) to attempt to automatically handle Hot Module Replacement for React components and display an overlay with `render()` errors [[#263](https://github.com/insin/nwb/issues/263)]
 - Added support for [intl](https://github.com/andyearnshaw/Intl.js/) and [react-intl](https://github.com/yahoo/react-intl) in [`webpack.compat` config](https://github.com/insin/nwb/blob/master/docs/Configuration.md#compat-object) [[#260](https://github.com/insin/nwb/pull/260)] [[grahamlyus][grahamlyus]]
-- You can now provide a [`webpack.config()` function](https://github.com/insin/nwb/blob/master/docs/Configuration.md#config-function) which will be given the generated Webpack config to do whatever it wants with, then return it [[#256](https://github.com/insin/nwb/issues/256)]
+- You can now provide a [`webpack.config()` function](https://github.com/insin/nwb/blob/master/docs/Configuration.md#config-function) which will be given the generated Webpack config to do whatever it wants with [[#256](https://github.com/insin/nwb/issues/256)]
 - You can now provide [`use` config](https://github.com/insin/nwb/blob/master/docs/Configuration.md#customising-loaders) with a list of loaders in `webpack.rules` to replace a rule's default loader with chained loaders [[#256](https://github.com/insin/nwb/issues/256)]
 - You can now [disable a default Webpack config rule](https://github.com/insin/nwb/blob/master/docs/Configuration.md#disabling-default-rules) by setting it to `false` [[#256](https://github.com/insin/nwb/issues/256)]
 

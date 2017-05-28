@@ -69,10 +69,8 @@ The configuration object can include the following properties:
   - [`webpack.extractText`](#extracttext-object) - options for `ExtractTextPlugin`
   - [`webpack.html`](#html-object) - options for `HtmlPlugin`
   - [`webpack.install`](#install-object) - options for `NpmInstallPlugin`
-  - [`webpack.rules`](#rules-object) - tweak the configuration of the default Webpack rules
+  - [`webpack.rules`](#rules-object) - tweak the configuration of generated Webpack rules and their loaders
     - [Default Rules](#default-rules)
-    - [Configuring PostCSS](#configuring-postcss)
-    - [Configuring CSS Preprocessor Plugins](#configuring-css-preprocessor-plugins)
     - [Customising loaders](#customising-loaders)
     - [Disabling default rules](#disabling-default-rules)
   - [`webpack.publicPath`](#publicpath-string) - path to static resources
@@ -135,9 +133,9 @@ module.exports = {
 
 ##### `cherryPick`: `String | Array<String>`
 
-**Note:** this feature only works if you're using ES6 `import` syntax.
-
 Module names to apply `import` cherry-picking to.
+
+> This feature only works if you're using `import` syntax.
 
 If you import a module with destructuring, the entire module will normally be included in your build, even though you're only using specific pieces:
 
@@ -169,7 +167,7 @@ This is implemented using [babel-plugin-lodash](https://github.com/lodash/babel-
 
 Some Babel plugins have a [loose mode](http://www.2ality.com/2015/12/babel6-loose-mode.html) in which they output simpler, potentially faster code rather than following the semantics of the ES6 spec closely.
 
-**Loose mode is enabled by default with nwb**.
+**nwb enables loose mode by default**.
 
 If you want to disable loose mode (e.g. to check your code works in the stricter normal mode for forward-compatibility purposes), set it to `false`.
 
@@ -230,7 +228,7 @@ To enable all features, set `runtime` to `true`.
 
 To disable use of the runtime transform, set `runtime` to `false`.
 
-> Note: if you use `async`/`await` or enable the runtime transform's other features in a React Component or Web Module project, you will need to add `babel-runtime` to your package.json `peerDependencies` to ensure it can be resolved when somebody else uses your module from npm.
+> **Note:** if you use `async`/`await` or enable the runtime transform's other features in a React Component or Web Module project, you will need to add `babel-runtime` to your package.json `peerDependencies` to ensure it can be resolved when somebody else uses your module from npm.
 
 ##### `stage`: `Number | false`
 
@@ -242,7 +240,7 @@ Controls which Babel preset will be used to enable use of experimental, proposed
 | ----- | ------------- | -------- |
 | [0](https://babeljs.io/docs/plugins/preset-stage-0) | Strawman, just an idea |`do {...}` expressions, `::` function bind operator |
 | [1](https://babeljs.io/docs/plugins/preset-stage-1) | Proposal: this is worth working on | export extensions |
-| [2](https://babeljs.io/docs/plugins/preset-stage-2) | Draft: initial spec | class properties, `@decorator` syntax ( using the [Babel Legacy Decorator plugin](https://github.com/loganfsmyth/babel-plugin-transform-decorators-legacy)) - **enabled by default** |
+| [2](https://babeljs.io/docs/plugins/preset-stage-2) | Draft: initial spec | class properties, `@decorator` syntax (using the [Babel Legacy Decorator plugin](https://github.com/loganfsmyth/babel-plugin-transform-decorators-legacy)) - **enabled by default** |
 | [3](https://babeljs.io/docs/plugins/preset-stage-3) | Candidate: complete spec and initial browser implementations | object rest/spread `...` syntax,  `async`/`await`, `**` exponentiation operator, trailing function commas |
 
 e.g. if you want to use export extensions in your app, you should set `stage` to `1`:
@@ -358,7 +356,7 @@ Set to `true` for [Sinon.js](http://sinonjs.org/) 1.x compatibility.
 
 ---
 
-Here's an example config showing the use of every `compat` setting:
+Example config showing the use of multiple `compat` settings:
 
 ```js
 module.exports = {
@@ -453,70 +451,34 @@ Configures [options for `NpmInstallPlugin`](https://github.com/webpack-contrib/n
 
 ##### `rules`: `Object`
 
-Each [Webpack rule](https://webpack.js.org/configuration/module/#module-rules) used in nwb's Webpack configuration has an associated id you can use to customise it.
-
-To customise a rule, add a prop to the `rules` object matching its id with a configuration object.
-
-Refer to the documentation of the Webpack loader used in each rule (linked to for each [default rule](#default-rules) documented below) for configuration options which can be set.
-
-Generic rule options such as `include` and `exclude` can be configured alongside loader-specific options - you can also use an explicit `options` object if necessary to separate this configuration.
-
-e.g. to enable [CSS Modules][CSS Modules] for your app's CSS, the following rule configs are equivalent:
+Each [Webpack rule](https://webpack.js.org/configuration/module/#module-rules) generated by nwb has a unique id you can use to customise it:
 
 ```js
 module.exports = {
   webpack: {
     rules: {
-      css: {
-        options: {
-          modules: true,
-          localIdentName: '[hash:base64:5]'
-        }
+      // Inline GIFs and PNGs smaller than 10KB
+      graphics: {
+        limit: 10000
       }
     }
   }
 }
 ```
-```js
-module.exports = {
-  webpack: {
-    rules: {
-      css: {
-        modules: true,
-        localIdentName: '[hash:base64:5]'
-      }
-    }
-  }
-}
-```
+
+Rule configuration objects can contain rule options such as `include` and `exclude` (which control which files the rule applies to) and options for the rule's loader (which control what happens to the resource).
+
+Loader options can be provided directly in the configuration object, as shown above, or you can use a nested `options` object.
+
+Refer to the documentation of the Webpack loader used in each rule (linked to in [default rules](#default-rules) below) for options which can be configured.
 
 ###### Default Rules
 
-Default rules configured by nwb and the ids it gives them are:
+Default rules generated by nwb and their associated ids are:
 
 - `babel` - handles `.js` files with [babel-loader][babel-loader]
 
   > Default config: `{exclude: /node_modules/, options: {babelrc: false, cacheDirectory: true}}`
-
-- `css-pipeline` - handles your app's own `.css` files by chaining together a number of loaders:
-
-  > Default config: `{exclude: /node_modules/}`
-
-  Chained loaders are:
-
-  - `style` - (only when serving) applies styles using [style-loader][style-loader]
-
-  - `css` - handles URLs, minification and CSS Modules using [css-loader][css-loader]
-
-    > Default config: `{options: {importLoaders: 1}}`
-
-  - `postcss` - processes CSS with PostCSS plugins using [postcss-loader][postcss-loader]; by default, this is configured to manage vendor prefixes in CSS using [Autoprefixer][autoprefixer]
-
-    > Default config: `{options: {plugins: [Autoprefixer]}}`
-
-- `vendor-css-pipeline` - handles `.css` files imported from `node_modules/`, with the same set of chained loaders as `css-pipeline` but with a `vendor-` prefix in their id.
-
-  > Default config: `{include: /node_modules/}`
 
 - `graphics` - handles `.gif`, `.png` and `.webp` files using using [url-loader][url-loader]
 
@@ -531,51 +493,29 @@ Default rules configured by nwb and the ids it gives them are:
 - `audio` - handles `.wav`, `.mp3`, `.m4a`, `.aac`, and `.oga` files using [url-loader][url-loader]
 
 > Default config for all url-loaders is `{options: {limit: 1, name: '[name].[hash:8].[ext]'}}`.
-
+>
 > Default `limit` config prevents any files being inlined by default, while allowing you to configure `url-loader` to enable inlining if you need it.
 
-###### Configuring PostCSS
+See the [Stylesheets documentation](/docs/Stylesheets.md#) for default rules generated for stylesheets.
 
-By default, nwb uses [PostCSS](http://postcss.org/) to manage vendor prefixes in CSS using [Autoprefixer][autoprefixer].
+###### Customising loaders
 
-If you want to make more significant use of PostCSS, you can use `webpack.rules` to provide your own list of plugins.
-
-e.g. to provide your own list of plugins for your app's own CSS, configure `webpack.rules.postcss`:
+Provide `loader` config for a rule to replace its loader:
 
 ```js
 module.exports = {
   webpack: {
     rules: {
-      postcss: {
-        plugins: [
-          require('precss')()
-          require('autoprefixer')()
-        ]
+      svg: {
+        loader: 'svg-inline-loader',
+        options: {classPrefix: true}
       }
     }
   }
 }
 ```
 
-###### Configuring CSS Preprocessor Plugins
-
-Rule ids for configuring nwb [CSS preprocessor plugins](/docs/Plugins.md#css-preprocessor-plugins) follow a similar pattern to `css-pipeline` and `vendor-css-pipeline` above, except they make use of an id associated with each preprocessor.
-
-Using [nwb-sass](https://github.com/insin/nwb-sass) as example, you can use the following ids in `webpack.rules` config to configure each part of the pipeline for your app's Sass stylesheets:
-
-- `sass-pipeline`
-  - `sass-style` (only when serving)
-  - `sass-css`
-  - `sass-postcss`
-  - `sass` (use to configure [sass-loader][sass-loader])
-
-There will also be a `vendor-sass-pipeline` for Sass stylesheets with the same setup as `sass-pipeline` but using a `vendor-` prefix.
-
-###### Customising loaders
-
-Use `loader` config to replace the loader used in a default rules. Any options provided for the default loader will be ignored.
-
-Provide a list of loaders via `use` config to replace a default loader with a chain of loaders, specified as loader names or `loader`/`options` objects.
+To chain loaders, provide `use` config:
 
 ```js
 module.exports = {
@@ -597,7 +537,7 @@ module.exports = {
 
 ###### Disabling default rules
 
-To disable inclusion of a default rule, set its id to `false`:
+To disable a default rule, set its id to `false`:
 
 ```js
 module.exports = {
@@ -649,72 +589,7 @@ The trade-off for path-independence is HTML5 History routing won't work, as serv
 
 Configures how nwb creates Webpack config for importing stylesheets.
 
-Set to `false` to completely disable creation of Webpack configuration for stylesheets.
-
-Set to `'old'` to use the same default configuration as nwb < 0.16.
-
->
-
-###### Default Rules
-
-If you don't provide any `webpack.styles` config, nwb will create the Webpack rules identified by the following ids:
-
-- `css-rule` - handles `.css` files by chaining together a number of loaders.
-
-  When running a server, CSS will be injected with `<script>` tags and hot-reload on change.
-
-  When running a build, CSS will be extracted to a static file.
-
-  Chained loaders are:
-
-  - `style` - (only when serving) applies styles using [style-loader][style-loader]
-
-  - `css` - handles URLs, minification and CSS Modules using [css-loader][css-loader]
-
-    > Default config: `{options: {importLoaders: 1}}`
-
-  - `postcss` - processes CSS with PostCSS plugins using [postcss-loader][postcss-loader]; by default, this is configured to manage vendor prefixes in CSS using [Autoprefixer][autoprefixer]
-
-    > Default config: `{options: {plugins: [Autoprefixer]}}`
-
-**Default Rules for CSS Preprocessor Plugins**
-
-If you don't provide any `webpack.styles` config, nwb will create a default Webpack rule for each [CSS preprocessor plugin](/docs/Plugins.md#css-preprocessor-plugins) listed in your app's `package.json`, allowing you to import preprocessed stylesheets by default.
-
-For example, if you've installed the [nwb-sass](https://github.com/insin/nwb-sass) plugin, nwb will generate an additional Webpack rule by default which will allow you to import `.scss` and `.sass` stylesheets.
-
-The default rule chains together the same loaders as the default `css-rule` (with the same default config) with the preprocessor loader tagged on.
-
-Ids for configuring the default preprocessor rule follow a similar pattern to the default `css-rule` and, except they use the name of the preprocessor plugin as a prefix.
-
-- `sass-rule`
-  - `sass-style` (only when serving)
-  - `sass-css`
-  - `sass-postcss`
-  - `sass` (use to configure [sass-loader][sass-loader])
-
-###### Configuring PostCSS
-
-By default, nwb uses [PostCSS](http://postcss.org/) to manage vendor prefixes in CSS using [Autoprefixer][autoprefixer].
-
-If you want to make more significant use of PostCSS, you can use `webpack.rules` to provide your own list of plugins.
-
-e.g. to provide your own list of plugins for your app's own CSS, configure `webpack.rules.postcss`:
-
-```js
-module.exports = {
-  webpack: {
-    rules: {
-      postcss: {
-        plugins: [
-          require('precss')()
-          require('autoprefixer')()
-        ]
-      }
-    }
-  }
-}
-```
+See the [Stylesheets documentation](/docs/Stylesheets.md#stylesheets) for details.
 
 ##### `uglify`: `Object | false`
 
@@ -761,7 +636,9 @@ module.exports = {
 
 Extra configuration to be merged into the generated Webpack configuration using [webpack-merge](https://github.com/survivejs/webpack-merge#webpack-merge---merge-designed-for-webpack) - see the [Webpack configuration docs](https://webpack.js.org/configuration/) for the available properties.
 
-Note that you *must* use Webpack's own config structure in this object - e.g. to add an extra rule which isn't managed by nwb's own `webpack.rules` config, you would need to provide a list of rules at `webpack.extra.module.rules`.
+> **Note:** Webpack 2 validates the structure of the config it's given, so providing invalid or unexpected config will break the build.
+
+e.g. to add an extra rule which isn't managed by nwb's own `webpack.rules` config, you would need to provide a list of rules at `webpack.extra.module.rules`.
 
 ```js
 var path = require('path')
@@ -792,9 +669,9 @@ module.exports = function(nwb) {
 
 ##### `config`: `Function`
 
-Finally, if you need *complete* control, you can configure a `webpack.config()` function which will be given the generated config.
+Finally, if you need *complete* control, provide a `webpack.config()` function which will be given the generated config.
 
-Note that you *must* return the config object from this function.
+> **Note:** you *must* return a config object from this function.
 
 ```js
 module.exports = {
@@ -813,7 +690,7 @@ module.exports = {
 
 nwb's default [Karma](http://karma-runner.github.io/) configuration uses the [Mocha](https://mochajs.org/) framework and reporter plugins for it, but you can configure your own preferences.
 
-**Note:** At runtime, Karma sets a `usePolling` autoWatch option to `true` [if the platform is detected to be macOS or Linux](https://github.com/karma-runner/karma/blob/master/lib/config.js#L318). However, Karma's non-polling file-watching works correctly and consumes dramatically less CPU on macOS. nwb users on macOS will want to set `usePolling: false` within the [`extra:`](#extra-object-1) Object in the `karma:` config section of their `nwb.config.js`.
+> **Note:** At runtime, Karma sets a `usePolling` autoWatch option to `true` [if the platform is detected to be macOS or Linux](https://github.com/karma-runner/karma/blob/master/lib/config.js#L318). However, Karma's non-polling file-watching works correctly and consumes dramatically less CPU on macOS. nwb users on macOS will want to set `usePolling: false` within the [`extra:`](#extra-object-1) Object in the `karma:` config section of their `nwb.config.js`.
 
 #### `karma`: `Object`
 
@@ -918,7 +795,7 @@ module.exports = {
 }
 ```
 
-**Note:** If you're configuring frameworks and you want to use the Mocha framework plugin managed by nwb, just pass its name as in the above example.
+> **Note:** If you're configuring frameworks and you want to use the Mocha framework plugin managed by nwb, just pass its name as in the above example.
 
 ##### `testContext`: `String`
 
@@ -977,7 +854,7 @@ module.exports = {
 
 Extra configuration to be merged into the generated Karma configuration using [webpack-merge](https://github.com/survivejs/webpack-merge#webpack-merge---merge-designed-for-webpack).
 
-Note that you *must* use Karma's own config structure in this object.
+> **Note:** you *must* use Karma's own config structure in this object.
 
 e.g. to tweak the configuration of the default Mocha reporter:
 
@@ -1046,7 +923,7 @@ module.exports = {
 }
 ```
 
-If you also have some external dependencies to configure, you must use an Object containing the following properties:
+If you also have some external dependencies to configure, use an object containing the following properties:
 
 ###### `global`: `String`
 
@@ -1090,11 +967,5 @@ If all fields are present the banner will be in this format:
  */
 ```
 
-[autoprefixer]: https://github.com/postcss/autoprefixer
 [babel-loader]: https://github.com/babel/babel-loader
-[CSS Modules]: https://github.com/css-modules/css-modules
-[css-loader]: https://github.com/webpack-contrib/css-loader
-[postcss-loader]: https://github.com/postcss/postcss-loader
-[sass-loader]: https://github.com/jtangelder/sass-loader
-[style-loader]: https://github.com/webpack-contrib/style-loader
 [url-loader]: https://github.com/webpack-contrib/url-loader
