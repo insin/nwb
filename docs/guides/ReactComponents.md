@@ -18,7 +18,7 @@ nwb supports development of React component/library modules which will be publis
 - [Implementation](#implementation)
 - [Testing](#testing)
   - [Code Coverage Reporting](#code-coverage-reporting)
-  - [Continous Integration (CI) Testing](#continous-integration-ci-testing)
+  - [Continuous Integration (CI) Testing](#continous-integration-ci-testing)
 - [Building and Publishing](#building-and-publishing)
   - [Preparing for Publishing](#preparing-for-publishing)
   - [Publishing to npm](#publishing-to-npm)
