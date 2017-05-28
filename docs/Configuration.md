@@ -74,7 +74,7 @@ The configuration object can include the following properties:
     - [Customising loaders](#customising-loaders)
     - [Disabling default rules](#disabling-default-rules)
   - [`webpack.publicPath`](#publicpath-string) - path to static resources
-  - [`webpack.styles`][#styles-object--false--old] - customise creation of Webpack rules for stylesheets
+  - [`webpack.styles`](#styles-object--false--old) - customise creation of Webpack rules for stylesheets
   - [`webpack.uglify`](#uglify-object--false) - configure use of Webpack's `UglifyJsPlugin`
   - [`webpack.extra`](#extra-object) - an escape hatch for extra Webpack config, which will be merged into the generated config
   - [`webpack.config`](#config-function) - an escape hatch for manually editing the generated Webpack config
