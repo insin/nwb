@@ -1,24 +1,4 @@
 // @flow
-type LoaderConfig = {
-  loader?: string,
-  options?: Object
-}
-
-type LoaderConfigFactory = (id: ?string, defaultConfig: LoaderConfig) => LoaderConfig
-
-type RuleConfig = {
-  test?: RegExp,
-  include?: RegExp,
-  exclude?: RegExp,
-  loader?: string,
-  options?: Object,
-  use?: UseConfig
-}
-
-type RuleConfigFactory = (?string, RuleConfig) => ?RuleConfig
-
-type UseConfig = Array<string | LoaderConfig>
-
 import path from 'path'
 
 import autoprefixer from 'autoprefixer'
@@ -35,6 +15,26 @@ import debug from './debug'
 import {UserError} from './errors'
 import {deepToString, typeOf} from './utils'
 import StatusPlugin from './WebpackStatusPlugin'
+
+type LoaderConfig = {
+  loader?: string,
+  options?: Object
+}
+
+type LoaderConfigFactory = (id: ?string, defaultConfig: LoaderConfig) => LoaderConfig
+
+type UseConfig = Array<string | LoaderConfig>
+
+type RuleConfig = {
+  test?: RegExp,
+  include?: RegExp,
+  exclude?: RegExp,
+  loader?: string,
+  options?: Object,
+  use?: UseConfig
+}
+
+type RuleConfigFactory = (?string, RuleConfig) => ?RuleConfig
 
 // Custom merge which replaces arrays instead of merging them. The only arrays
 // used in default options are for PostCSS plugins, which we want the user to be

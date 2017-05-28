@@ -1,4 +1,4 @@
-require('./Child2.css')
+import './Child2.css'
 
 import React, {Component} from 'react'
 

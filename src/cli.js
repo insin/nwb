@@ -227,8 +227,8 @@ Helper commands:
         // pass
       }
       let requiredNwbVersion = pkg && (
-        pkg.devDependencies && pkg.devDependencies.nwb ||
-        pkg.dependencies && pkg.dependencies.nwb
+        (pkg.devDependencies && pkg.devDependencies.nwb) ||
+        (pkg.dependencies && pkg.dependencies.nwb)
       )
       if (requiredNwbVersion) {
         let runningNwbVersion = require('../package').version

@@ -1,10 +1,14 @@
 // @flow
+import path from 'path'
+
+import {typeOf} from './utils'
+
+type BabelPluginConfig = string | [string, Object]
+
 type BabelConfig = {
   presets: BabelPluginConfig[],
   plugins?: BabelPluginConfig[],
 }
-
-type BabelPluginConfig = string | [string, Object]
 
 type BuildOptions = {
   commonJSInterop?: boolean,
@@ -25,10 +29,6 @@ type UserOptions = {
   runtime?: boolean | string,
   stage?: false | number,
 }
-
-import path from 'path'
-
-import {typeOf} from './utils'
 
 const DEFAULT_STAGE = 2
 const RUNTIME_PATH = path.dirname(require.resolve('babel-runtime/package'))

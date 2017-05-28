@@ -8,7 +8,7 @@ import Thing from 'src/components/Thing'
 
 class App extends Component {
   propTypes = {
-    test: t.string
+    test: t.string // eslint-disable-line react/no-unused-prop-types
   }
 
   render() {
