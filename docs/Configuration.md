@@ -78,6 +78,8 @@ The configuration object can include the following properties:
   - [`webpack.uglify`](#uglify-object--false) - configure use of Webpack's `UglifyJsPlugin`
   - [`webpack.extra`](#extra-object) - an escape hatch for extra Webpack config, which will be merged into the generated config
   - [`webpack.config`](#config-function) - an escape hatch for manually editing the generated Webpack config
+- [Dev Server Configuration](#dev-server-configuration)
+  - [`devServer`](#devserver-object) - configure Webpack Dev Server
 - [Karma Configuration](#karma-configuration)
   - [`karma`](#karma-object)
   - [`karma.browsers`](#browsers-arraystring--plugin) - browsers tests are run in
@@ -682,6 +684,52 @@ module.exports = {
       // You MUST return the edited config object
       return config
     }
+  }
+}
+```
+
+### Dev Server Configuration
+
+nwb uses [Webpack Dev Server](https://github.com/webpack/webpack-dev-server#readme) to serve apps for development - you can tweak the options nwb uses and also enable additional features.
+
+#### `devServer`: `Object`
+
+Configuration for Webpack Dev Server - see Webpack's [`devServer` config documentation](https://webpack.js.org/configuration/dev-server/#devserver) for the available options.
+
+Any `devServer` options provided will be merged on top of the following default options nwb uses:
+
+```js
+{
+  historyApiFallback: true,
+  hot: true,
+  noInfo: true,
+  overlay: true,
+  publicPath: webpackConfig.output.publicPath,
+  quiet: true,
+  watchOptions: {
+    ignored: /node_modules/,
+  },
+}
+```
+
+Notable features you can configure using these options:
+
+- [`devServer.historyApiFallback`](https://webpack.js.org/configuration/dev-server/#devserver-historyapifallback) - configure `disableDotRule` if you need to use dots in your path when using the HTML5 History API.
+
+- [`devServer.https`](https://webpack.js.org/configuration/dev-server/#devserver-https) - enable HTTPS with a default self-signed certificate, or provide your own certificates.
+
+- [`devServer.overlay`](https://webpack.js.org/configuration/dev-server/#devserver-overlay) - disable the compile error overlay, or have it also appear for warnings.
+
+- [`devServer.proxy`](https://webpack.js.org/configuration/dev-server/#devserver-proxy) - proxy certain URLs to a separate API backend development server.
+
+- [`devServer.setup`](https://webpack.js.org/configuration/dev-server/#devserver-setup) - access the Express app to add your own middleware to the dev server.
+
+e.g. to enable HTTPS:
+
+```js
+module.exports = {
+  devServer: {
+    https: true
   }
 }
 ```

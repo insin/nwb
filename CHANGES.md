@@ -1,3 +1,20 @@
+# Unreleased (in `next` branch)
+
+**Breaking Changes:**
+
+- Use Webpack Dev Server instead of running our own Express development server.
+
+**Added:**
+
+- Added [`devServer` config](https://github.com/insin/nwb/blob/master/docs/Configuration.md#devserver-object) to configure Webpack Dev Server
+  - `devServer.historyApiFallback.disableDotRule` can be enabled if you need to use dots in your path when using the HTML5 History API
+  - `devServer.https` can be used to enable HTTPS
+  - `devServer.proxy` can be used to proxy certain URLs to a separate API backend development server
+
+**Dependencies:**
+
+- [webpack-dev-server](https://github.com/webpack/webpack-dev-server/): v2.4.5
+
 # 0.16.3 / 2017-05-31
 
 **Dependencies:**

@@ -22,7 +22,7 @@ const IGNORE_STDERR = [
   /loaderUtils\.parseQuery\(\) received a non-string value/
 ]
 
-describe('command: serve', function() {
+describe.skip('command: serve', function() {
   this.timeout(90000)
 
   describe('serving a new React app with hot reloading', () => {

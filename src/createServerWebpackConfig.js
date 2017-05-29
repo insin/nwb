@@ -6,25 +6,24 @@ import getUserConfig from './getUserConfig'
  * Creates the final Webpack config for serving a web app with hot reloading,
  * using build and user configuration.
  */
-export default function createServerWebpackConfig(args, buildConfig) {
+export default function createServerWebpackConfig(args, buildConfig, serverConfig) {
   let pluginConfig = getPluginConfig(args)
   let userConfig = getUserConfig(args, {pluginConfig})
-  let {entry, output, plugins = {}, ...otherBuildConfig} = buildConfig
-  let hotMiddlewareOptions = args.reload ? '?reload=true' : ''
+  let {entry, plugins = {}, ...otherBuildConfig} = buildConfig
 
   if (args['auto-install'] || args.install) {
     plugins.autoInstall = true
   }
 
+  let hmrURL = '/'
+
   return createWebpackConfig({
     server: true,
     devtool: 'cheap-module-source-map',
     entry: [
-      // Polyfill EventSource for IE, as webpack-hot-middleware/client uses it
-      require.resolve('eventsource-polyfill'),
-      require.resolve('webpack-hot-middleware/client') + hotMiddlewareOptions,
+      require.resolve('webpack-dev-server/client') + `?${hmrURL}`,
+      require.resolve(`webpack/hot/${args.reload ? '' : 'only-'}dev-server`),
     ].concat(entry),
-    output,
     plugins,
     ...otherBuildConfig,
   }, pluginConfig, userConfig)

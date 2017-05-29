@@ -235,7 +235,7 @@ export function processUserConfig({
 
   // Set defaults for config objects so we don't have to existence-check them
   // everywhere.
-  void ['babel', 'karma', 'npm', 'webpack'].forEach(prop => {
+  void ['babel', 'devServer', 'karma', 'npm', 'webpack'].forEach(prop => {
     if (!(prop in userConfig)) userConfig[prop] = {}
   })
 
