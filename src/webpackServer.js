@@ -6,23 +6,22 @@ import {DEFAULT_PORT} from './constants'
 import createServerWebpackConfig from './createServerWebpackConfig'
 import debug from './debug'
 import devServer from './devServer'
+import getUserConfig from './getUserConfig'
 import {clearConsole, deepToString} from './utils'
 
 /**
- * Get the host and port to run the server on, detecting if the intended port
- * is available first and prompting the user if not.
+ * Get the port to run the server on, detecting if the intended port is
+ * available first and prompting the user if not.
  */
-function getServerOptions(args, cb) {
-  // Fallback index serving is enabled by default and must be explicitly enabled
-  let fallback = args.fallback !== false
-  // The dev server handles defaulting the host by not providing it at all
-  let host = args.host
+function getServerPort(args, cb) {
   let intendedPort = args.port || DEFAULT_PORT
 
   detect(intendedPort, (err, suggestedPort) => {
     if (err) return cb(err)
-    if (suggestedPort === intendedPort) return cb(null, {fallback, host, port: intendedPort})
-    if (args.force) return cb(null, {fallback, host, port: suggestedPort})
+    // No need to prompt if the intended port is available
+    if (suggestedPort === intendedPort) return cb(null, suggestedPort)
+    // Support use of --force to avoid interactive prompt
+    if (args.force) return cb(null, suggestedPort)
 
     clearConsole()
     console.log(yellow(`Something is already running on port ${intendedPort}.`))
@@ -35,7 +34,7 @@ function getServerOptions(args, cb) {
         default: true,
       },
     ]).then(
-      ({run}) => cb(null, run ? {fallback, host, port: suggestedPort} : null),
+      ({run}) => cb(null, run ? suggestedPort : null),
       (err) => cb(err)
     )
   })
@@ -56,19 +55,27 @@ export default function webpackServer(args, buildConfig, cb) {
   }
 
   // Other config can be provided by the user via the CLI
-  getServerOptions(args, (err, options) => {
+  getServerPort(args, (err, port) => {
     if (err) return cb(err)
-    if (options === null) return cb()
+    // A null port indicates the user chose not to run the server when prompted
+    if (port === null) return cb()
+
+    let {devServer: serverConfig} = getUserConfig(args)
+    serverConfig.port = port
+    // Fallback index serving can be disabled with --no-fallback
+    if (args.fallback === false) serverConfig.historyApiFallback = false
+    // The host can be overridden with --host
+    if (args.host) serverConfig.host = args.host
 
     if (!('status' in buildConfig.plugins)) {
       buildConfig.plugins.status = {
-        message: `The app is running at http://${options.host || 'localhost'}:${options.port}/`,
+        message: `The app is running at http://${args.host || 'localhost'}:${port}/`,
       }
     }
 
     let webpackConfig
     try {
-      webpackConfig = createServerWebpackConfig(args, buildConfig)
+      webpackConfig = createServerWebpackConfig(args, buildConfig, serverConfig)
     }
     catch (e) {
       return cb(e)
@@ -76,6 +83,6 @@ export default function webpackServer(args, buildConfig, cb) {
 
     debug('webpack config: %s', deepToString(webpackConfig))
 
-    devServer(webpackConfig, options, cb)
+    devServer(webpackConfig, serverConfig, cb)
   })
 }
