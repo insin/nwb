@@ -27,23 +27,17 @@ See the [`eslint-config-jonnybuchanan` README](https://github.com/insin/eslint-c
 - `npm run test:watch` will watch files and run a subset of tests on every change, providing a quick check that you haven't broken any of the default config generation if you're working in that area.
 
   Command/project tests are too slow to run on each change.
-  
+
 ## Aliasing
 
 The easiest way to run the development version of nwb is to alias the `bin` scripts in the shell you'll be testing changes in:
 
 ```sh
 # Bash etc.
-alias inferno="node ~/repos/nwb/lib/bin/inferno.js"
 alias nwb="node ~/repos/nwb/lib/bin/nwb.js"
-alias preact="node ~/repos/nwb/lib/bin/preact.js"
-alias react="node ~/repos/nwb/lib/bin/react.js"
 
 # Cmder (aliases for Windows cmd.exe - http://cmder.net/)
-alias inferno=node C:\Users\Jonny\repos\nwb\lib\bin\inferno.js $*
 alias nwb=node C:\Users\Jonny\repos\nwb\lib\bin\nwb.js $*
-alias preact=node C:\Users\Jonny\repos\nwb\lib\bin\preact.js $*
-alias react=node C:\Users\Jonny\repos\nwb\lib\bin\react.js $*
 ```
 
 This uses the transpiled code, so don't forget to run `npm run build` after every change, or `npm run build:watch`.
