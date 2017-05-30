@@ -16,7 +16,6 @@ function getCommandConfig(args) {
     babel: {
       presets: ['react'],
     },
-    resolve: {},
   }
 
   if (process.env.NODE_ENV === 'production') {
@@ -24,21 +23,28 @@ function getCommandConfig(args) {
   }
 
   if (args.inferno || args['inferno-compat']) {
-    extra.resolve.alias['react'] = extra.resolve.alias['react-dom'] =
-      path.dirname(resolve.sync('inferno-compat/package.json', {basedir}))
+    let infernoCompat = path.dirname(resolve.sync('inferno-compat/package.json', {basedir}))
+    extra.resolve = {
+      alias: {
+        'react': infernoCompat,
+        'react-dom': infernoCompat,
+      }
+    }
   }
   else if (args.preact || args['preact-compat']) {
-    extra.resolve.alias['react'] = extra.resolve.alias['react-dom'] =
-      path.join(path.dirname(resolve.sync('preact-compat/package.json', {basedir})), 'dist/preact-compat')
-  }
-  else if (args['preact-alias'] || args['preact-aliases']) {
-    extra.resolve.alias['react'] = extra.resolve.alias['react-dom'] =
-      path.dirname(resolve.sync('preact/aliases', {basedir}))
+    let preactCompat = path.dirname(resolve.sync('preact-compat/package.json', {basedir}))
+    extra.resolve = {
+      alias: {
+        'react': preactCompat,
+        'react-dom': preactCompat,
+        'create-react-class': 'preact-compat/lib/create-react-class'
+      }
+    }
   }
 
   return getBuildCommandConfig(args, {
     defaultTitle: 'React App',
-    renderShim: '../render-shims/react',
+    renderShim: require.resolve('../render-shims/react'),
     renderShimAliases: {
       'react': path.dirname(resolve.sync('react/package.json', {basedir})),
       'react-dom': path.dirname(resolve.sync('react-dom/package.json', {basedir})),

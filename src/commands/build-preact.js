@@ -12,7 +12,7 @@ import cleanApp from './clean-app'
 function getCommandConfig(args) {
   return getBuildCommandConfig(args, {
     defaultTitle: 'Preact App',
-    renderShim: '../render-shims/preact',
+    renderShim: require.resolve('../render-shims/preact'),
     renderShimAliases: {
       'preact': path.dirname(resolve.sync('preact/package.json', {basedir: process.cwd()})),
     },
@@ -22,8 +22,9 @@ function getCommandConfig(args) {
       },
       resolve: {
         alias: {
-          'react': 'preact-compat/dist/preact-compat',
-          'react-dom': 'preact-compat/dist/preact-compat',
+          'react': 'preact-compat',
+          'react-dom': 'preact-compat',
+          'create-react-class': 'preact-compat/lib/create-react-class',
         }
       }
     },

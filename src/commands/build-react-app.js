@@ -27,8 +27,9 @@ function getCommandConfig(args) {
   else if (args.preact || args['preact-compat']) {
     extra.resolve = {
       alias: {
-        'react': 'preact-compat/dist/preact-compat',
-        'react-dom': 'preact-compat/dist/preact-compat',
+        'react': 'preact-compat',
+        'react-dom': 'preact-compat',
+        'create-react-class': 'preact-compat/lib/create-react-class',
       }
     }
   }

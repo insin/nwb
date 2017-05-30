@@ -12,7 +12,7 @@ import cleanApp from './clean-app'
 function getCommandConfig(args) {
   return getBuildCommandConfig(args, {
     defaultTitle: 'Inferno App',
-    renderShim: '../render-shims/inferno',
+    renderShim: require.resolve('../render-shims/inferno'),
     renderShimAliases: {
       'inferno': path.dirname(resolve.sync('inferno/package.json', {basedir: process.cwd()})),
     },

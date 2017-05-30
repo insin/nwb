@@ -11,8 +11,8 @@ function getCommandConfig(args) {
     },
     resolve: {
       alias: {
-        'react': 'preact-compat/dist/preact-compat',
-        'react-dom': 'preact-compat/dist/preact-compat',
+        'react': 'preact-compat',
+        'react-dom': 'preact-compat',
       }
     },
   })

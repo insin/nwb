@@ -1,3 +1,12 @@
+**Fixed:**
+
+- Fixed bad render shim paths which were breaking the `nwb react`, `nwb preact` and `nwb inferno` quick development commands.
+- Fixed `nwb preact` commands and `nwb react`'s `--preact[-compat]` when used with Preact 8 by removing a workaround for an old preact-compat distribution issue.
+
+**Added:**
+
+- Added support for [create-react-class](https://facebook.github.io/react/docs/react-without-es6.html) when using preact-compat.
+
 # 0.16.0 / 2017-05-29
 
 **Breaking Changes:**
