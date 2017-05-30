@@ -1,3 +1,5 @@
+# 0.16.3 / 2017-05-31
+
 **Dependencies:**
 
 - case-sensitive-paths-webpack-plugin: v2.0.0 → [v2.1.1](https://github.com/Urthen/case-sensitive-paths-webpack-plugin/blob/master/CHANGELOG.md#211) - don't intercept Webpack "File not found" error, resolve issue with not recognising when a new file is added
