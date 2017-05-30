@@ -492,7 +492,7 @@ export function processUserConfig({
         `Must be ${chalk.green("'old'")}, ${chalk.green('false')} (to disable default style rules) or an Object.`
       )
     }
-    else if (configType !== 'object') {
+    else if (configType !== 'object' && configType !== 'boolean') {
       report.error(
         'webpack.styles',
         `type: ${configType}`,
