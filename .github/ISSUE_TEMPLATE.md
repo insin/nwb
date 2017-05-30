@@ -5,9 +5,11 @@ This issue is a: <!-- Insert an X in the appropriate option -->
 - [ ] Question / support request
 - [ ] Other
 
+<!-- REPRO REPOS
+For non-trivial bugs, a link to a Git repo which demonstrates the bug you're reporting will make it easier to reproduce and fix the problem, which makes it more likely to get fixed.
+-->
 
-
-<!--
+<!-- TROUBLESHOOTING
 These checks might help you diagnose whether something is wrong with nwb or your setup:
 
 Is the version of `nwb` you're using installed globally or locally?
