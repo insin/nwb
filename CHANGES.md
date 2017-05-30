@@ -1,3 +1,5 @@
+# 0.16.1 / 2017-05-31
+
 **Fixed:**
 
 - Fixed bad render shim paths which were breaking the `nwb react`, `nwb preact` and `nwb inferno` quick development commands.
