@@ -50,10 +50,13 @@ export default class Lightbulb extends Component {
   state = {
     on: false
   }
+  updateChecked = (e) => {
+    this.setState({on: e.target.checked})
+  }
   render({wattage = 200}, {on}) {
     return <div>
       <label>
-        <input type="checkbox" checked={on} onClick={this.linkState('on')}/>
+        <input type="checkbox" checked={on} onClick={this.updateChecked}/>
         {' '}
         {wattage}W lightbulb is {on ? 'on' : 'off'}
       </label>
@@ -104,12 +107,8 @@ Having to stop and restart your server to install new dependencies or use a pair
 
 If you pass an `--install` flag when using the `run` command, nwb will configure [`NpmInstallPlugin`](https://github.com/webpack-contrib/npm-install-webpack-plugin) to automatically install missing dependencies when an attempt is made to import them.
 
-> Note: `NpmInstallPlugin` uses a `package.json` file while checking which packages are installed, so it will initialise one the first time you use this command and save any automatically-installed dependencies to it.
-
 ```sh
 $ nwb preact run Lightbulb.js --install
-Initializing `package.json`...
-...
 Starting Webpack compilation...
 ```
 
@@ -222,11 +221,11 @@ If you're handling rendering yourself, you shouldn't export anything:
 import React from 'react'
 import {render} from 'react-dom'
 
-let App = React.createClass({
+class App extends React.Component {
   render() {
     return <h1>Hello world!</h1>
   }
-})
+}
 
 render(<App/>, document.getElementById('app'))
 ```
