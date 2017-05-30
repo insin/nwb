@@ -7,6 +7,10 @@
 
 - Added support for [create-react-class](https://facebook.github.io/react/docs/react-without-es6.html) when using preact-compat.
 
+**Dependencies:**
+
+- css-loader: v0.28.3 → [v0.28.4](https://github.com/webpack-contrib/css-loader/blob/master/CHANGELOG.md#0284-2017-05-30) - preserve leading underscore in class names
+
 # 0.16.0 / 2017-05-29
 
 **Breaking Changes:**

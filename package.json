@@ -101,7 +101,7 @@
     "babel-loader": "7.0.0",
     "case-sensitive-paths-webpack-plugin": "2.0.0",
     "copy-webpack-plugin": "4.0.1",
-    "css-loader": "0.28.3",
+    "css-loader": "0.28.4",
     "eventsource-polyfill": "0.9.6",
     "extract-text-webpack-plugin": "2.1.0",
     "file-loader": "0.11.1",
