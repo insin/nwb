@@ -1,8 +1,16 @@
+**Dependencies:**
+
+- case-sensitive-paths-webpack-plugin: v2.0.0 → [v2.1.1](https://github.com/Urthen/case-sensitive-paths-webpack-plugin/blob/master/CHANGELOG.md#211) - don't intercept Webpack "File not found" error, resolve issue with not recognising when a new file is added
+
 # 0.16.2 / 2017-05-31
 
 **Fixed:**
 
 - Fixed validation of `webpack.styles` config to allow it to be set to `false` [[#312](https://github.com/insin/nwb/pull/312)] [[seanofw][seanofw]]
+
+**Dependencies:**
+
+- css-loader: v0.28.3 → [v0.28.4](https://github.com/webpack-contrib/css-loader/blob/master/CHANGELOG.md#0284-2017-05-30) - preserve leading underscore in class names
 
 # 0.16.1 / 2017-05-31
 
@@ -82,7 +90,7 @@
 - babel-preset-stage-2: v6.22.0 → [v6.24.1][babel6241]
 - babel-preset-stage-3: v6.22.0 → [v6.24.1][babel6241]
 - babel-runtime: v6.22.0 → [v6.23.0][babel6230]
-- case-sensitive-paths-webpack-plugin: v1.1.4 → v2.0.0 - use the file system exposed by the compiler
+- case-sensitive-paths-webpack-plugin: v1.1.4 → [v2.0.0](https://github.com/Urthen/case-sensitive-paths-webpack-plugin/blob/master/CHANGELOG.md#2017-3-31) - use the file system exposed by the compiler
 - css-loader: v0.26.1 → [v0.28.3](https://github.com/webpack-contrib/css-loader/blob/master/CHANGELOG.md#0283-2017-05-25) - added an [`alias` option](https://github.com/webpack-contrib/css-loader#alias)
 - detect-port: v1.1.0 → [v1.1.3](https://github.com/node-modules/detect-port/blob/master/HISTORY.md#113--2017-05-24)
 - express: v4.14.0 → [v4.15.3](https://github.com/expressjs/express/blob/master/History.md#4153--2017-05-16)
