@@ -1,3 +1,7 @@
+**Fixed:**
+
+- Fixed validation of `webpack.styles` config to allow it to be set to `false` [[#312](https://github.com/insin/nwb/pull/312)] [[seanofw][seanofw]]
+
 # 0.16.1 / 2017-05-31
 
 **Fixed:**
@@ -1436,5 +1440,6 @@ First 0.x release.
 [jihchi]: https://github.com/jihchi
 [michaelsbradleyjr]: https://github.com/michaelsbradleyjr
 [ntwcklng]: https://github.com/ntwcklng
+[seanofw]: https://github.com/seanofw
 [totaldis]: https://github.com/totaldis
 [treshugart]: https://github.com/treshugart

@@ -119,6 +119,13 @@ describe('processUserConfig()', () => {
     })
   })
 
+  describe('regressions', () => {
+    it('allows webpack.styles = false (#312)', () => {
+      let config = process({webpack: {styles: false}})
+      expect(config.webpack.styles).toBe(false)
+    })
+  })
+
   describe('convenience shorthand', () => {
     it('allows npm.umd to be a string', () => {
       let config = process({npm: {umd: 'test'}})
