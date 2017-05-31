@@ -16,6 +16,7 @@
 **Changed:**
 
 - prop-types imports are now removed from React component UMD production builds.
+- Default Travis CI config for React component and web module projects now uses Node 6 by default.
 
 **Dependencies:**
 
