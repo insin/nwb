@@ -13,6 +13,10 @@
   - `devServer.proxy` can be used to proxy certain URLs to a separate API backend development server
 - Added a `--no-html` flag to disable creation of an `index.html` file if you don't need one (e.g. you're serving your built apps via another means) [[#278](https://github.com/insin/nwb/issues/278)] [[bwendt-mylo][bwendt-mylo]]
 
+**Changed:**
+
+- prop-types imports are now removed from React component UMD production builds.
+
 **Dependencies:**
 
 - [webpack-dev-server](https://github.com/webpack/webpack-dev-server/): v2.4.5

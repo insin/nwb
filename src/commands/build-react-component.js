@@ -25,10 +25,12 @@ export default function buildModule(args, cb) {
         }]
       ]
     }
-    // Strip propTypes from UMD production build
+    // Strip propTypes and prop-type imports from UMD production build
     config.babelProd = {
       plugins: [
-        require.resolve('babel-plugin-transform-react-remove-prop-types'),
+        [require.resolve('babel-plugin-transform-react-remove-prop-types'), {
+          removeImport: true,
+        }]
       ]
     }
   }
