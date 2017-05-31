@@ -4,6 +4,7 @@ import inquirer from 'inquirer'
 
 import {DEFAULT_PORT} from './constants'
 import createServerWebpackConfig from './createServerWebpackConfig'
+import getUserConfig from './getUserConfig'
 import debug from './debug'
 import devServer from './devServer'
 import {clearConsole, deepToString} from './utils'
@@ -76,6 +77,11 @@ export default function webpackServer(args, buildConfig, cb) {
 
     debug('webpack config: %s', deepToString(webpackConfig))
 
-    devServer(webpackConfig, options, cb)
+    const {devServer: devServerOptions} = getUserConfig(args)
+    const devServerConfig = {...options, ...devServerOptions}
+
+    debug('devServer config: %s', deepToString(devServerConfig))
+
+    devServer(webpackConfig, devServerConfig, cb)
   })
 }

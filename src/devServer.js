@@ -9,9 +9,13 @@ import webpack from 'webpack'
  *
  * Static content is handled by CopyPlugin.
  */
-export default function server(webpackConfig, {fallback, host, port, staticPath}, cb) {
+export default function server(webpackConfig, {fallback, host, port, staticPath, proxy}, cb) {
   let app = express()
   let compiler = webpack(webpackConfig)
+
+  if (proxy) {
+    app.use(proxy.path, require('http-proxy-middleware')(proxy.options))
+  }
 
   if (fallback !== false) {
     app.use(historyAPIFallback())
