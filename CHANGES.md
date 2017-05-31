@@ -10,6 +10,7 @@
   - `devServer.historyApiFallback.disableDotRule` can be enabled if you need to use dots in your path when using the HTML5 History API
   - `devServer.https` can be used to enable HTTPS
   - `devServer.proxy` can be used to proxy certain URLs to a separate API backend development server
+- Added a `--no-html` flag to disable creation of an `index.html` file if you don't need one (e.g. you're serving your built apps via another means) [[#278](https://github.com/insin/nwb/issues/278)] [[bwendt-mylo][bwendt-mylo]]
 
 **Dependencies:**
 
@@ -1465,6 +1466,7 @@ These are being scoped to both make use of unreleased features and to test them 
 First 0.x release.
 
 [balazs4]: https://github.com/balazs4
+[bwendt-mylo]: https://github.com/bwendt-mylo
 [grahamlyus]: https://github.com/grahamlyus
 [jihchi]: https://github.com/jihchi
 [michaelsbradleyjr]: https://github.com/michaelsbradleyjr
