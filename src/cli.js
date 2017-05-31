@@ -79,6 +79,7 @@ Generic project development commands:
     Clean and build the project.
 
     Options:
+      ${opt('--no-html')}    disable creation of default '.html' configuration
       ${opt('--no-vendor')}  disable creation of 'vendor' bundle for node_modules/ modules
 
   ${cmd('nwb clean')}

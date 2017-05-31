@@ -31,7 +31,7 @@ export function getBuildCommandConfig(args, extra = {}) {
       publicPath: '/',
     },
     plugins: {
-      html: getDefaultHTMLConfig(),
+      html: args.html !== false && getDefaultHTMLConfig(),
       vendor: args.vendor !== false,
     },
   }

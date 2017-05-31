@@ -182,6 +182,7 @@ Passing arguments for `entry` and `dist_dir` allows you to customise the entry p
 Default behaviour:
 
 - A static build will be created in `dist/`, with app `.js` and `.css` files plus any other resources used.
+- As part of the static build an `.html` page will be included in `dist/`. You can disable this by passing a `--no-html` flag.
 - Separate vendor `.js` and `.css` files will be built for any dependencies imported from `node_modules/`. You can disable this by passing a `--no-vendor` flag.
 - Static builds are created in production mode. Code will be minified and have dead code elimination performed on it (for example to remove unreachable, or development-mode only, code).
 - To support long-term caching, generated `.js` and `.css` filenames will contain a deterministic hash, which will only change when the contents of the files change.
