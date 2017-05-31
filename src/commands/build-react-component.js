@@ -5,8 +5,8 @@ import {directoryExists} from '../utils'
 import buildDemo from './build-demo'
 
 /**
- * Create a React component's ES5 and ES6 modules and UMD builds and build its
- * demo app if it has one.
+ * Create a React component's CommonJS and ES6 modules and UMD builds, and build
+ * its demo app if it has one.
  */
 export default function buildModule(args, cb) {
   let config = {
@@ -15,9 +15,9 @@ export default function buildModule(args, cb) {
     }
   }
 
-  // Disable propTypes wrapping with --no-proptypes or --no-wrap-proptypes
-  if (args.proptypes !== false && args['wrap-proptypes'] !== false) {
-    // Wrap propTypes with an environment check
+  // Disable removal of propTypes in production builds with --[keep-]proptypes
+  if (args.proptypes !== true && args['keep-proptypes'] !== true) {
+    // Wrap propTypes with an environment check in development builds
     config.babelDev = {
       plugins: [
         [require.resolve('babel-plugin-transform-react-remove-prop-types'), {

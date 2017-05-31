@@ -30,8 +30,8 @@
 
 **Production:**
 
-- Optimised Webpack build prepares JS, CSS and images for production, with deterministic filename hashes for long-term caching, and sourcemaps.
-- Production optimisations for React apps, including stripping of `propTypes`.
+- Optimised Webpack build prepares JS, CSS and images for production, with deterministic filename hashes for long-term caching, and sourcemaps for debugging.
+- Production optimisations for React apps.
 - Automatic creation of a separate vendor bundle.
 - Flag to try a build which replaces React with Preact or Inferno via a compatibility layer, for a much smaller payload.
 

@@ -223,7 +223,7 @@ Passing an argument for `entry` allows you to customise the entry point for the 
 
 If the module has a `demo/` directory, running `build` will also create a static build of its demo app in `demo/dist/`. You can disable this by passing a `--no-demo` flag. If you need to use static content in the demo app, the demo build supports use of a `demo/public/` directory.
 
-React components created as ES6 classes or functional components will have any `propTypes` they declare wrapped an `process.env.NODE_ENV !== 'production'` check, so they will be removed by dead-code elimination in the production build of any apps they're used in. You can disable this by passing a `--no-proptypes` flag.
+React components created as ES6 classes or functional components will have any `propTypes` they declare wrapped an `process.env.NODE_ENV !== 'production'` check, so they will be removed by dead-code elimination in the production build of any apps they're used in. You can disable this by passing a `--[keep-]proptypes` flag.
 
 If you have non-JavaScript files in `src/` which you want to be copied over when building, such as CSS files, pass a `--copy-files` flag.
 

@@ -2,7 +2,8 @@
 
 **Breaking Changes:**
 
-- Use Webpack Dev Server instead of running our own Express development server.
+- Now using [Webpack Dev Server](https://github.com/webpack/webpack-dev-server) instead of running our own development server - it's unlikely, but this is potentially breaking as Webpack Dev Server implements its own Hot Module Reloading client and does a lot more than our simple Express server did.
+- `--[keep-]proptypes` replaces `--no[-wrap]-proptypes` to disable wrapping of  `propTypes` in React component project builds so they'll be stripped from a production build.
 
 **Added:**
 

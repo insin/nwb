@@ -2,7 +2,7 @@
 
 nwb supports development of React component/library modules which will be published to npm.
 
-> **Prerequisite:** nwb must be installed globally (we're using version 0.12 in this guide):
+> **Prerequisite:** nwb must be installed globally (we're using version 0.16 in this guide):
 >
 > ```
 > npm install -g nwb
@@ -28,7 +28,7 @@ nwb supports development of React component/library modules which will be publis
     - [UMD Externals](#umd-externals)
   - [Feature Toggles](#feature-toggles)
     - [`--no-demo`](#--no-demo)
-    - [`--no-proptypes`](#--no-proptypes)
+    - [`--[keep-]proptypes`](#--keep-proptypes)
 
 To walk you though the process, we're going to implement a simple `LoadingButton` component, which renders a `<button>` and implements the following requirements:
 
@@ -52,7 +52,7 @@ You'll be asked a few questions about your project's build configuration.
 
 ### Build Configuration Questions
 
-nwb will always create an ES5 build for your project in `lib/`, which is the primary way it will be used when installed via npm, with default `package.json` `main` config pointing to `lib/index.js`.
+By default, nwb will create a CommonJS build for your project in `lib/`, which is the primary way it will be used when installed via npm, with default `package.json` `main` config pointing to `lib/index.js`.
 
 Configuration questions are asked about *additional* builds
 
@@ -137,7 +137,7 @@ react-loading-button/
 
 ---
 
- `cd` into the project directory and we can get started on our example component:
+`cd` into the project directory and we can get started on our example component:
 
 ```sh
 cd react-loading-button/
@@ -228,7 +228,8 @@ Once your component is developed, the demo app falls back to its primary purpose
 Here's an example implementation of the `LoadingButton` component:
 
 ```js
-import React, {Component, PropTypes as t} from 'react'
+import t from 'prop-types'
+import React, {Component} from 'react'
 
 class LoadingButton extends Component {
   static propTypes = {
@@ -326,11 +327,11 @@ nwb provides a default setup which keeps your source code repository free from d
 
 `npm run build` will prepare the component for publishing, creating:
 
-- An ES5 build in `lib/`
+- A CommonJS build in `lib/`
 - An ES6 modules build in `es/` (enabled by default / without configuration)
 - UMD development and production builds in `umd/` (if configuration is provided)
 
-The ES5 build preserves CommonJS interop using the [`add-module-exports`](https://github.com/59naga/babel-plugin-add-module-exports) plugin, to avoid people using your npm packages via CommonJS `require()` having to tag a `.default` onto every `require()` call.
+The CommonJS build preserves CommonJS interop using the [`add-module-exports`](https://github.com/59naga/babel-plugin-add-module-exports) plugin, to avoid people using your npm packages via CommonJS `require()` having to tag a `.default` onto every `require()` call.
 
 Any `propTypes` declared by ES6 class components or stateless function components will be wrapped with an `if (process.env.NODE_ENV !== 'production')` environment check by default, so they'll be automatically stripped from the production build of apps which use them.
 
@@ -400,7 +401,7 @@ Use this if you want to develop against the demo app using nwb's development ser
 
 > If you don't need the demo app at all, you can delete `demo/`.
 
-#### `--no-proptypes`
+#### `--[keep-]proptypes`
 
 Disables `propTypes` wrapping/stripping.
 
@@ -410,6 +411,6 @@ Use this if your module needs to use `propTypes` at runtime (e.g. for masking `p
 >
 > You need to pass a `--` argument to indicate all additional arguments should be passed to the command itself, for example:
 >
-> ```
-> npm run build -- --no-demo --no-proptypes
+> ```sh
+> npm run build -- --no-demo --keep-proptypes
 > ```
