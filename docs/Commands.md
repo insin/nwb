@@ -115,9 +115,15 @@ This is the same as `new`, except the `name` argument is optional and the new pr
 
 If  `name` is not provided, the name of the current directory will be used.
 
-#### npm scripts
+#### npm `scripts`
 
-nwb project skeletons include npm scripts which run the other nwb commands needed while developing a project for you, so you shouldn't have to manually use any of the other commands documented below.
+Project skeletons created by nwb include npm run `scripts` in `package.json` to run the appropriate nwb commands for that type of project, so you shouldn't have to manually use the nwb commands documented below in most cases.
+
+> **Note:** to pass additional arguments to an `npm run` command, you must pass a `--` argument first to indicate the following arguments are for the script, not for npm itself:
+>
+> ```sh
+> npm run build -- --no-demo
+> ```
 
 #### Generic Commands
 
