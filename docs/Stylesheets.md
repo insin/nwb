@@ -60,6 +60,21 @@ Ids for configuring this rule and its loaders using `webpack.rules` follow a sim
 
 The same pattern applies for nwb-stylus and nwb-less.
 
+e.g. to enable CSS Modules in the default `sass-rule`'s `css-loader`:
+
+```js
+module.exports = {
+  webpack: {
+    rules: {
+      'sass-css': {
+        modules: true,
+        localIdentName: '[name]__[local]__[hash:base64:5]'
+      }
+    }
+  }
+}
+```
+
 #### Configuring PostCSS
 
 By default, nwb uses [PostCSS](http://postcss.org/) to manage vendor prefixes in CSS using [Autoprefixer][autoprefixer].
