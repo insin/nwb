@@ -19,19 +19,15 @@ export default function buildModule(args, cb) {
   if (args.proptypes !== true && args['keep-proptypes'] !== true) {
     // Wrap propTypes with an environment check in development builds
     config.babelDev = {
-      plugins: [
-        [require.resolve('babel-plugin-transform-react-remove-prop-types'), {
-          mode: 'wrap',
-        }]
-      ]
+      removePropTypes: {
+        mode: 'wrap',
+      }
     }
     // Strip propTypes and prop-type imports from UMD production build
     config.babelProd = {
-      plugins: [
-        [require.resolve('babel-plugin-transform-react-remove-prop-types'), {
-          removeImport: true,
-        }]
-      ]
+      removePropTypes: {
+        removeImport: true,
+      }
     }
   }
 

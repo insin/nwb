@@ -58,6 +58,8 @@ The configuration object can include the following properties:
   - [`babel.loose`](#loose-boolean) - enable loose mode for Babel plugins which support it
   - [`babel.plugins`](#plugins-arraystring--array) - extra Babel plugins to be used
   - [`babel.presets`](#presets-arraystring) - extra Babel presets to be used
+  - [`babel.removePropTypes`](#removeproptypes-object--false) - disable or configure removal of React component `propTypes` in production builds
+  - [`babel.reactConstantElements`](#reactconstantelements-false) - disable use of React constant element hoisting in production builds
   - [`babel.runtime`](#runtime-string--boolean) - enable the `transform-runtime` plugin with different configurations
   - [`babel.stage`](#stage-number--false) - control which experimental and upcoming JavaScript features can be used
 - [Webpack Configuration](#webpack-configuration)
@@ -205,6 +207,38 @@ module.exports = {
 ##### `presets`: `Array<String>`
 
 Additional Babel presets to use.
+
+##### `removePropTypes`: `Object | false`
+
+Since React `propTypes` are only used in development mode, nwb removes them from React app production builds by default using the [react-remove-prop-types](https://github.com/oliviertassinari/babel-plugin-transform-react-remove-prop-types) transform.
+
+Set to `false` to disable use of this transform:
+
+```js
+module.exports = {
+  babel: {
+    removePropTypes: false,
+  }
+}
+```
+
+Provide an object to configure the [transform's options](https://github.com/oliviertassinari/babel-plugin-transform-react-remove-prop-types#options):
+
+```js
+module.exports = {
+  babel: {
+    removePropTypes: {
+      // Remove imports of the 'prop-types' module as well
+      // Only safe to enable if you're only using this module for propTypes
+      removeImport: true
+    },
+  }
+}
+```
+
+##### `reactConstantElements`: `false`
+
+Set this to `false` to disable use of the [React constant element hoisting transform](https://babeljs.io/docs/plugins/transform-react-constant-elements/) in React app production builds.
 
 ##### `runtime`: `String | Boolean`
 

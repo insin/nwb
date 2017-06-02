@@ -3,12 +3,12 @@ import path from 'path'
 
 import {typeOf} from './utils'
 
-type BabelPluginConfig = string | [string, Object]
+type BabelPluginConfig = string | [string, Object];
 
 type BabelConfig = {
   presets: BabelPluginConfig[],
   plugins?: BabelPluginConfig[],
-}
+};
 
 type BuildOptions = {
   commonJSInterop?: boolean,
@@ -16,19 +16,22 @@ type BuildOptions = {
   modules?: false | string,
   plugins?: BabelPluginConfig[],
   presets?: string[],
+  removePropTypes?: true | Object,
   setRuntimePath?: false,
   stage?: number,
   webpack?: boolean,
-}
+};
 
 type UserOptions = {
   cherryPick?: string | string[],
   loose?: boolean,
   plugins?: BabelPluginConfig[],
   presets?: BabelPluginConfig[],
+  reactConstantElements?: boolean,
+  removePropTypes?: false | Object,
   runtime?: boolean | string,
   stage?: false | number,
-}
+};
 
 const DEFAULT_STAGE = 2
 const RUNTIME_PATH = path.dirname(require.resolve('babel-runtime/package'))
@@ -42,6 +45,7 @@ export default function createBabelConfig(
     modules = false,
     plugins: buildPlugins = [],
     presets: buildPresets,
+    removePropTypes: buildRemovePropTypes = false,
     setRuntimePath,
     stage: buildStage = DEFAULT_STAGE,
     webpack = true,
@@ -52,6 +56,8 @@ export default function createBabelConfig(
     loose,
     plugins: userPlugins = [],
     presets: userPresets,
+    reactConstantElements,
+    removePropTypes: userRemovePropTypes,
     runtime: userRuntime,
     stage: userStage,
   } = userConfig
@@ -103,7 +109,17 @@ export default function createBabelConfig(
         presets.push(require.resolve('../babel-presets/react-hmre'))
       }
       else if (preset === 'react-prod') {
-        presets.push(require.resolve('../babel-presets/react-prod'))
+        // Hoist static element subtrees up so React can skip them when reconciling
+        if (reactConstantElements !== false) {
+          plugins.push(require.resolve('babel-plugin-transform-react-constant-elements'))
+        }
+        // Remove or wrap propTypes and optionally remove prop-types imports
+        if (userRemovePropTypes !== false) {
+          plugins.push([
+            require.resolve('babel-plugin-transform-react-remove-prop-types'),
+            typeof userRemovePropTypes === 'object' ? userRemovePropTypes : {}
+          ])
+        }
       }
       else {
         throw new Error(`Unknown build preset: ${preset}`)
@@ -118,6 +134,20 @@ export default function createBabelConfig(
   let config: BabelConfig = {presets}
 
   plugins = plugins.concat(buildPlugins, userPlugins)
+
+  // App builds use the 'react-prod' preset to remove/wrap propTypes, component
+  // builds use this config instead.
+  if (buildRemovePropTypes) {
+    // User config can disable removal of propTypes
+    if (userRemovePropTypes !== false) {
+      plugins.push(
+        [require.resolve('babel-plugin-transform-react-remove-prop-types'), {
+          ...typeof buildRemovePropTypes === 'object' ? buildRemovePropTypes : {},
+          ...typeof userRemovePropTypes === 'object' ? userRemovePropTypes : {}
+        }]
+      )
+    }
+  }
 
   // The Runtime transform imports various things into a module based on usage.
   // Turn regenerator on by default to enable use of async/await and generators

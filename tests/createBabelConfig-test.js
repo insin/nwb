@@ -54,6 +54,41 @@ describe('createBabelConfig()', () => {
         ],
       })
     })
+    it('adds plugins given the "react-prod" preset', () => {
+      expect(createBabelConfig({
+        presets: ['react-prod'],
+      }, {
+        stage: false,
+      })).toEqual({
+        presets: [
+          [require.resolve('babel-preset-es2015'), {loose: true, modules: false}],
+          require.resolve('babel-preset-es2016'),
+        ],
+        plugins: [
+          require.resolve('babel-plugin-transform-react-constant-elements'),
+          [require.resolve('babel-plugin-transform-react-remove-prop-types'), {}],
+          DEFAULT_RUNTIME_CONFIG,
+          require.resolve('babel-plugin-syntax-dynamic-import'),
+        ],
+      })
+    })
+    it('adds the propType removal plugin given removePropTypes config', () => {
+      expect(createBabelConfig({
+        removePropTypes: true,
+      }, {
+        stage: false,
+      })).toEqual({
+        presets: [
+          [require.resolve('babel-preset-es2015'), {loose: true, modules: false}],
+          require.resolve('babel-preset-es2016'),
+        ],
+        plugins: [
+          [require.resolve('babel-plugin-transform-react-remove-prop-types'), {}],
+          DEFAULT_RUNTIME_CONFIG,
+          require.resolve('babel-plugin-syntax-dynamic-import'),
+        ],
+      })
+    })
     it('prevents moduleName being configured for transform-runtime', () => {
       expect(createBabelConfig({
         setRuntimePath: false,
