@@ -2,7 +2,7 @@
 
 nwb provides middleware for serving a hot reloading app from your own server.
 
-This gives you the same setup as if you'd run the `nwb serve` command, using your app's `nwb.config.js` file for configuration as usual.
+This gives you the same setup as if you'd run the `nwb serve` command, using your app's `nwb.config.js` file for configuration as usual if you have one.
 
 ### Express 4.x Middleware
 
@@ -19,6 +19,12 @@ See the [nwb-react-tutorial](https://github.com/insin/nwb-react-tutorial) projec
 Your app's version of the Express module must be passed as the first argument.
 
 ###### `options`
+
+- `type` - the type of project being built, must be one of `react`, `preact`, `inferno` or `web`.
+
+  If you don't provide a `type`, nwb will try to grab it from your `nwb.config.js` file (or a different file specified using the `config` option) instead.
+
+  If you don't have a config file, you must provide a `type` or the middleware won't know what to do and will throw an error.
 
 - `config` - path to a config file *[default: nwb.config.js]*
 - `entry` - entry point for the app *[default: src/index.js]*

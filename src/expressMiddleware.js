@@ -6,7 +6,7 @@ import {INFERNO_APP, PREACT_APP, REACT_APP, WEB_APP} from './constants'
 import createServerWebpackConfig from './createServerWebpackConfig'
 import debug from './debug'
 import {getProjectType} from './getUserConfig'
-import {deepToString} from './utils'
+import {deepToString, joinAnd} from './utils'
 
 const SERVE_APP_CONFIG = {
   [INFERNO_APP]: './createServeInfernoAppConfig',
@@ -25,10 +25,14 @@ export default function nwbMiddleware(express, options = {}) {
     'The express module must be passed as the first argument to nwb middleware'
   )
 
-  let projectType = getProjectType({_: ['serve'], config: options.config})
+  let projectType = options.type
+  if (projectType == null) {
+    projectType = getProjectType({_: ['serve'], config: options.config})
+  }
   if (!SERVE_APP_CONFIG[projectType]) {
     throw new Error(
-      `nwb Express middleware is unable to serve anything for a ${projectType} project.`
+      `nwb Express middleware is unable to handle '${projectType}' projects, only ` +
+      joinAnd(Object.keys(SERVE_APP_CONFIG).map(s => `'${s}'`), 'or')
     )
   }
 
