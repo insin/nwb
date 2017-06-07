@@ -2,12 +2,17 @@
 
 **Breaking Changes:**
 
-- Now using [Webpack Dev Server](https://github.com/webpack/webpack-dev-server) instead of running our own development server - it's unlikely, but this is potentially breaking as Webpack Dev Server implements its own Hot Module Reloading client and does a lot more than our simple Express server did.
+- Now using [Webpack Dev Server](https://github.com/webpack/webpack-dev-server) (instead of running a basic Express development server).
+
+  Webpack Dev Server has [security features](https://github.com/insin/inputmask-core) which you may need to configure your way around if you're using `--host` or if your development setup involves hitting the dev server from a different host.
+
+  Please [create an issue](https://github.com/insin/nwb/issues/new) if you're affected by this change and there's something nwb can do to mitigate dev server problems without compromising security.
+
 - `--[keep-]proptypes` replaces `--no[-wrap]-proptypes` to disable wrapping of  `propTypes` in React component project builds so they'll be stripped from a production build.
 
 **Added:**
 
-- Added [`devServer` config](https://github.com/insin/nwb/blob/master/docs/Configuration.md#devserver-object) to configure Webpack Dev Server
+- Added [`devServer` config](https://github.com/insin/nwb/blob/master/docs/Configuration.md#devserver-object) to configure Webpack Dev Server.
   - `devServer.historyApiFallback.disableDotRule` can be enabled if you need to use dots in your path when using the HTML5 History API
   - `devServer.https` can be used to enable HTTPS
   - `devServer.proxy` can be used to proxy certain URLs to a separate API backend development server
