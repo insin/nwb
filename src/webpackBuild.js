@@ -9,10 +9,10 @@ import {deepToString} from './utils'
 import {logBuildResults} from './webpackUtils'
 
 /**
- * If you pass a non-falsy name, this will handle spinner display and output
+ * If you pass a non-falsy type, this will handle spinner display and output
  * logging itself, otherwise use the stats provided in the callback.
  */
-export default function webpackBuild(name, args, buildConfig, cb) {
+export default function webpackBuild(type, args, buildConfig, cb) {
   if (!process.env.NODE_ENV) {
     process.env.NODE_ENV = 'production'
   }
@@ -41,8 +41,8 @@ export default function webpackBuild(name, args, buildConfig, cb) {
   debug('webpack config: %s', deepToString(webpackConfig))
 
   let spinner
-  if (name) {
-    spinner = ora(`Building ${name}`).start()
+  if (type) {
+    spinner = ora(`Building ${type}`).start()
   }
   let compiler = webpack(webpackConfig)
   compiler.run((err, stats) => {

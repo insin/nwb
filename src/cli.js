@@ -1,14 +1,17 @@
+// @flow
 import path from 'path'
 
 import {cyan as opt, green as cmd, red, yellow as req} from 'chalk'
 import parseArgs from 'minimist'
-import resolve from 'resolve'
 import semver from 'semver'
 
 import {CONFIG_FILE_NAME} from './constants'
 import {UserError} from './errors'
+import {modulePath} from './utils'
 
-export default function cli(argv, cb) {
+import type {ErrBack} from './types'
+
+export default function cli(argv: string[], cb: ErrBack) {
   let args = parseArgs(argv, {
     alias: {
       c: 'config',
@@ -38,8 +41,9 @@ Quick development commands:
   ${cmd('nwb inferno')} ${req('(run|build) <entry>')}  run or build an Inferno app
   ${cmd('nwb preact')} ${req('(run|build) <entry>')}   run or build a Preact app
   ${cmd('nwb react')} ${req('(run|build) <entry>')}    run or build a React app
+  ${cmd('nwb react')} ${req('(run|build) <entry>')}    run or build a vanilla JavaScript app
 
-  Run ${cmd('nwb (inferno|preact|react) help')} for options.
+  Run ${cmd('nwb (inferno|preact|react|web) help')} for options.
 
 Project creation commands:
   ${cmd('nwb new')} ${req('<project_type> <dir_name>')} ${opt('[options]')}
@@ -195,7 +199,7 @@ Helper commands:
   // Validate the command is in foo-bar-baz format before trying to resolve a
   // module path with it.
   if (!/^[a-z]+(?:-[a-z]+)*$/.test(command)) {
-    unknownCommand()
+    return unknownCommand()
   }
 
   let commandModulePath
@@ -203,7 +207,11 @@ Helper commands:
     commandModulePath = require.resolve(`./commands/${command}`)
   }
   catch (e) {
-    unknownCommand()
+    // XXX Flow complains that commandModulePath might be uninitialised if we
+    //     return from here.
+  }
+  if (commandModulePath == null) {
+    return unknownCommand()
   }
 
   // Check if the user is running a version of nwb from outside their project
@@ -211,7 +219,7 @@ Helper commands:
   if (/^(build|check|clean|serve|test)/.test(command)) {
     let localNwbPath = null
     try {
-      localNwbPath = path.dirname(resolve.sync('nwb/package.json', {basedir: process.cwd()}))
+      localNwbPath = modulePath('nwb')
     }
     catch (e) {
       // nwb isn't installed locally to where the command is being run

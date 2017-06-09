@@ -145,7 +145,7 @@ nwb generates a comprehensive default configuration for creating React apps usin
 
 Without any configuration, the main features you get are:
 
-- Write JavaScript with ES6/ES2015 and JSX transpiled down to ES5.
+- Write JavaScript with ES6/ES2015-ES2017 features and JSX, transpiled down to ES5.
 - Use new JavaScript features which are at Stage 2 and above in the TC39 process:
   - `async`/`await` syntax, for writing async code in a synchronous way.
   - Class properties, for avoiding boilerplate when writing ES6 classes.

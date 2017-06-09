@@ -1,9 +1,9 @@
+// @flow
 import karmaServer from '../karmaServer'
+import preactConfig from '../preact'
 
-export default function testPreact(args, cb) {
-  karmaServer(args, {
-    babel: {
-      presets: ['preact']
-    }
-  }, cb)
+import type {ErrBack} from '../types'
+
+export default function testPreact(args: Object, cb: ErrBack) {
+  karmaServer(args, preactConfig(args).getKarmaTestConfig(), cb)
 }

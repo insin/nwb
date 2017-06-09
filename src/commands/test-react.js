@@ -1,9 +1,9 @@
+// @flow
 import karmaServer from '../karmaServer'
+import reactConfig from '../react'
 
-export default function testReact(args, cb) {
-  karmaServer(args, {
-    babel: {
-      presets: ['react']
-    }
-  }, cb)
+import type {ErrBack} from '../types'
+
+export default function testReact(args: Object, cb: ErrBack) {
+  karmaServer(args, reactConfig(args).getKarmaTestConfig(), cb)
 }

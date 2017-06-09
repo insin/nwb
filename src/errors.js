@@ -1,21 +1,25 @@
+// @flow
 /**
  * An error related to user input or configuration, or anything else the user is
  * responsible for and can fix.
  */
 export class UserError {
-  constructor(...messages) {
+  message: string;
+  constructor(...messages: string[]) {
     this.message = messages.join('\n')
   }
 }
 
 export class KarmaExitCodeError {
-  constructor(exitCode) {
+  exitCode: number;
+  constructor(exitCode: number) {
     this.exitCode = exitCode
   }
 }
 
 export class ConfigValidationError {
-  constructor(report) {
+  report: Object;
+  constructor(report: Object) {
     this.report = report
   }
 }

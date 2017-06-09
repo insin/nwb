@@ -25,7 +25,8 @@ function renderEntry(exported) {
 
 function init() {
   // Hijack any inline render() from the entry module, but only the first one -
-  // others may be npm.im/preact-portal et al.
+  // others may be from components like portals which need to render() their
+  // contents.
   Preact.render = (v) => {
     vnode = v
     Preact.render = render

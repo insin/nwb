@@ -1,62 +1,12 @@
-import runSeries from 'run-series'
+// @flow
+import {build} from '../appCommands'
+import reactConfig from '../react'
 
-import {getBuildCommandConfig} from '../appConfig'
-import {install} from '../utils'
-import webpackBuild from '../webpackBuild'
-import cleanApp from './clean-app'
-
-function getCommandConfig(args) {
-  let extra = {
-    babel: {
-      presets: ['react'],
-    }
-  }
-
-  if (process.env.NODE_ENV === 'production') {
-    extra.babel.presets.push('react-prod')
-  }
-
-  if (args.inferno || args['inferno-compat']) {
-    extra.resolve = {
-      alias: {
-        'react': 'inferno-compat',
-        'react-dom': 'inferno-compat',
-      }
-    }
-  }
-  else if (args.preact || args['preact-compat']) {
-    extra.resolve = {
-      alias: {
-        'react': 'preact-compat',
-        'react-dom': 'preact-compat',
-        'create-react-class': 'preact-compat/lib/create-react-class',
-      }
-    }
-  }
-
-  return getBuildCommandConfig(args, extra)
-}
+import type {ErrBack} from '../types'
 
 /**
  * Build a React app.
  */
-export default function buildReactApp(args, cb) {
-  let dist = args._[2] || 'dist'
-
-  let library = 'React'
-  let packages = []
-  if (args.inferno || args['inferno-compat']) {
-    library = 'Inferno (React compat)'
-    packages = ['inferno', 'inferno-compat']
-  }
-  else if (args.preact || args['preact-compat']) {
-    library = 'Preact (React compat)'
-    packages = ['preact', 'preact-compat']
-  }
-
-  runSeries([
-    (cb) => install(packages, {check: true}, cb),
-    (cb) => cleanApp({_: ['clean-app', dist]}, cb),
-    (cb) => webpackBuild(`${library} app`, args, getCommandConfig, cb),
-  ], cb)
+export default function buildReactApp(args: Object, cb: ErrBack) {
+  build(args, reactConfig(args), cb)
 }

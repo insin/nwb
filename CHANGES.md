@@ -10,12 +10,18 @@
 
 - `--[keep-]proptypes` replaces `--no[-wrap]-proptypes` to disable wrapping of  `propTypes` in React component project builds so they'll be stripped from a production build.
 
+**Fixed:**
+
+- Fixed importing React components when serving a Preact app - this was missed when fixing preact-compat configuration issues from v0.16.0.
+- Fixed transpiling of ES2017 features when use of a stage-X preset is disabled with `babel.stage = false` config.
+
 **Added:**
 
 - Added [`devServer` config](https://github.com/insin/nwb/blob/master/docs/Configuration.md#devserver-object) to configure Webpack Dev Server.
   - `devServer.historyApiFallback.disableDotRule` can be enabled if you need to use dots in your path when using the HTML5 History API
   - `devServer.https` can be used to enable HTTPS
   - `devServer.proxy` can be used to proxy certain URLs to a separate API backend development server
+- Added an `nwb web (run|build)` command for quick development with vanilla JavaScript (i.e. you're in charge of rendering)
 - Added a [`type` option](https://github.com/insin/nwb/blob/master/docs/Middleware.md#option) to nwb's Express middleware to set the project type (one of `react`, `preact`, `inferno` or `web`) manually, enabling use of the middleware without a config file.
 - Added [`babel.removePropTypes` config](https://github.com/insin/nwb/blob/master/docs/Configuration.md#removeproptypes-object--false) to disable or configure [removal of `propTypes`](https://github.com/oliviertassinari/babel-plugin-transform-react-remove-prop-types) in React app production builds.
 - Added [`babel.reactConstantElements` config](https://github.com/insin/nwb/blob/master/docs/Configuration.md#reactconstantelements-false) to disable the use of the [React constant element hoisting transform](https://babeljs.io/docs/plugins/transform-react-constant-elements/) in React app production builds.
@@ -28,6 +34,7 @@
 
 **Dependencies:**
 
+- babel-preset-es2017: v6.24.1
 - [webpack-dev-server](https://github.com/webpack/webpack-dev-server/): v2.4.5
 
 # 0.16.3 / 2017-05-31

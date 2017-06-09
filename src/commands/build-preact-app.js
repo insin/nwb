@@ -1,31 +1,12 @@
-import runSeries from 'run-series'
+// @flow
+import {build} from '../appCommands'
+import preactConfig from '../preact'
 
-import {getBuildCommandConfig} from '../appConfig'
-import webpackBuild from '../webpackBuild'
-import cleanApp from './clean-app'
-
-function getCommandConfig(args) {
-  return getBuildCommandConfig(args, {
-    babel: {
-      presets: ['preact'],
-    },
-    resolve: {
-      alias: {
-        'react': 'preact-compat',
-        'react-dom': 'preact-compat',
-      }
-    },
-  })
-}
+import type {ErrBack} from '../types'
 
 /**
  * Build a Preact app.
  */
-export default function buildPreactApp(args, cb) {
-  let dist = args._[2] || 'dist'
-
-  runSeries([
-    (cb) => cleanApp({_: ['clean-app', dist]}, cb),
-    (cb) => webpackBuild('Preact app', args, getCommandConfig, cb),
-  ], cb)
+export default function buildPreactApp(args: Object, cb: ErrBack) {
+  build(args, preactConfig(args), cb)
 }

@@ -37,15 +37,12 @@ describe('createBabelConfig()', () => {
     it('generates build-configured Babel config', () => {
       expect(createBabelConfig({
         modules: 'commonjs',
-        presets: ['react', 'react-hmre'],
         stage: 0,
       })).toEqual({
         presets: [
           [require.resolve('babel-preset-es2015'), {loose: true, modules: 'commonjs'}],
           require.resolve('babel-preset-es2016'),
           require.resolve('babel-preset-stage-0'),
-          require.resolve('babel-preset-react'),
-          require.resolve('../babel-presets/react-hmre'),
         ],
         plugins: [
           require.resolve('babel-plugin-transform-decorators-legacy'),
@@ -63,6 +60,7 @@ describe('createBabelConfig()', () => {
         presets: [
           [require.resolve('babel-preset-es2015'), {loose: true, modules: false}],
           require.resolve('babel-preset-es2016'),
+          require.resolve('babel-preset-es2017'),
         ],
         plugins: [
           require.resolve('babel-plugin-transform-react-constant-elements'),
@@ -81,6 +79,7 @@ describe('createBabelConfig()', () => {
         presets: [
           [require.resolve('babel-preset-es2015'), {loose: true, modules: false}],
           require.resolve('babel-preset-es2016'),
+          require.resolve('babel-preset-es2017'),
         ],
         plugins: [
           [require.resolve('babel-plugin-transform-react-remove-prop-types'), {}],
@@ -182,6 +181,7 @@ describe('createBabelConfig()', () => {
         presets: [
           [require.resolve('babel-preset-es2015'), {loose: true, modules: false}],
           require.resolve('babel-preset-es2016'),
+          require.resolve('babel-preset-es2017'),
         ],
         plugins: [
           DEFAULT_RUNTIME_CONFIG,

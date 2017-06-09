@@ -15,7 +15,7 @@ function getCommandConfig(args) {
 
   let config = {
     babel: {
-      presets: ['react'],
+      presets: [require.resolve('babel-preset-react')],
     },
     devtool: 'source-map',
     entry: {

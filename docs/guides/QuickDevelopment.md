@@ -1,12 +1,13 @@
 # Quick Development with nwb
 
-Installing nwb globally provides commands for quickly running and building code using React or the React-like alternatives nwb also supports.
+Installing nwb globally provides commands for quickly running and building code using the application types nwb supports.
 
 These quick development commands are:
 
 - `nwb react` for [React](https://facebook.github.io/react/)
 - `nwb inferno` for [Inferno](https://infernojs.org/)
 - `nwb preact` for [Preact](https://preactjs.com/)
+- `nwb web` for vanilla JavaScript apps
 
 They all have the same sub-commands:
 
@@ -238,7 +239,7 @@ The default HTML template contains a `<div id="app">` element to render into - y
 
 nwb generates a comprehensive default configuration for developing apps using Babel and Webpack. Without any configuration, the default features you get are the same as when using the `nwb` command for project development:
 
-- Write JavaScript with ES6/ES2015 and JSX, transpiled down to ES5.
+- Write JavaScript with ES6/ES2015-ES2017 fetures and JSX, transpiled down to ES5.
 - Use new JavaScript features which are at Stage 2 and above in the TC39 process:
   - [`async`/`await` syntax](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function), for writing async code in a synchronous way.
   - Class properties, for avoiding boilerplate when writing ES2015 classes.
@@ -312,7 +313,7 @@ Port to run the dev server on (default: 3000)
 
 #### `--reload`
 
-Automatically refresh the page when an HMR request was not accepted.
+Automatically refresh the page when an HMR request was not accepted. Defaults to `true` for vanilla JavaScript apps.
 
 ---
 
@@ -336,6 +337,8 @@ Create a build of some React code which uses Inferno or Preact as the runtime vi
 To support rendering when an entry module exports a Component, React Element or Inferno/Preact VNode, a rendering shim is used by default.
 
 When the rendering shim detects that one of these has been exported from the provided entry module, it will handle the initial render and, where possible, will also accept HMR requests and handle re-render.
+
+> Note: for vanilla JavaScript apps, quick serving config will reload the page by default on changes. To disable this you can either pass a `--no-reload` argument or [use the HMR API](https://webpack.js.org/api/hot-module-replacement/) in your app code to accept module updates.
 
 **React**
 

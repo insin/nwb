@@ -13,7 +13,7 @@ export default function serveReactDemo(args, cb) {
 
   let config = {
     babel: {
-      presets: ['react'],
+      presets: [require.resolve('babel-preset-react')],
     },
     entry: [path.resolve('demo/src/index.js')],
     output: {
@@ -30,7 +30,7 @@ export default function serveReactDemo(args, cb) {
   }
 
   if (args.hmr !== false && args.hmre !== false) {
-    config.babel.presets.push('react-hmre')
+    config.babel.presets.push(require.resolve('../react/react-hmre-preset'))
   }
 
   if (directoryExists('demo/public')) {

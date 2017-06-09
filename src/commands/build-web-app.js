@@ -1,17 +1,12 @@
-import runSeries from 'run-series'
+// @flow
+import {build} from '../appCommands'
+import webConfig from '../web'
 
-import {getBuildCommandConfig} from '../appConfig'
-import webpackBuild from '../webpackBuild'
-import cleanApp from './clean-app'
+import type {ErrBack} from '../types'
 
 /**
  * Build a plain JS app.
  */
-export default function buildWebApp(args, cb) {
-  let dist = args._[2] || 'dist'
-
-  runSeries([
-    (cb) => cleanApp({_: ['clean-app', dist]}, cb),
-    (cb) => webpackBuild(`app`, args, () => getBuildCommandConfig(args), cb),
-  ], cb)
+export default function buildWebApp(args: Object, cb: ErrBack) {
+  build(args, webConfig(args), cb)
 }

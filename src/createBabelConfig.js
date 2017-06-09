@@ -75,40 +75,18 @@ export default function createBabelConfig(
     [require.resolve('babel-preset-es2015'), {loose, modules}],
     require.resolve('babel-preset-es2016'),
   )
-
-  // Stage preset
-  let stage = userStage != null ? userStage : buildStage
-  if (typeof stage == 'number') {
-    presets.push(require.resolve(`babel-preset-stage-${stage}`))
-    // Decorators are stage 2 but not supported by Babel yet - add the legacy
-    // transform for support in the meantime.
-    if (stage <= 2) {
-      plugins.push(require.resolve('babel-plugin-transform-decorators-legacy'))
-    }
+  // Babel 6's stage-3 preset contains all the es2017 plugins, so only use the
+  // es2017 preset if the user has disabled use of a stage preset.
+  if (userStage === false) {
+    presets.push(require.resolve('babel-preset-es2017'))
   }
 
   // Additional build presets
   if (Array.isArray(buildPresets)) {
     buildPresets.forEach(preset => {
-      if (preset === 'inferno') {
-        presets.push(require.resolve('../babel-presets/inferno'))
-      }
-      else if (preset === 'preact') {
-        presets.push(require.resolve('../babel-presets/preact'))
-      }
-      else if (preset === 'react') {
-        presets.push(require.resolve('babel-preset-react'))
-        if (process.env.NODE_ENV === 'development') {
-          plugins.push(
-            require.resolve('babel-plugin-transform-react-jsx-source'),
-            require.resolve('babel-plugin-transform-react-jsx-self')
-          )
-        }
-      }
-      else if (preset === 'react-hmre') {
-        presets.push(require.resolve('../babel-presets/react-hmre'))
-      }
-      else if (preset === 'react-prod') {
+      // Presets which are configurable via user config are specified by name so
+      // customisation can be handled in this module.
+      if (preset === 'react-prod') {
         // Hoist static element subtrees up so React can skip them when reconciling
         if (reactConstantElements !== false) {
           plugins.push(require.resolve('babel-plugin-transform-react-constant-elements'))
@@ -121,14 +99,26 @@ export default function createBabelConfig(
           ])
         }
       }
+      // All other presets are assumed to be paths to a preset module
       else {
-        throw new Error(`Unknown build preset: ${preset}`)
+        presets.push(preset)
       }
     })
   }
 
+  // Stage preset
+  let stage = userStage != null ? userStage : buildStage
+  if (typeof stage == 'number') {
+    presets.push(require.resolve(`babel-preset-stage-${stage}`))
+    // Decorators are stage 2 but not supported by Babel yet - add the legacy
+    // transform for support in the meantime.
+    if (stage <= 2) {
+      plugins.push(require.resolve('babel-plugin-transform-decorators-legacy'))
+    }
+  }
+
   if (userPresets) {
-    presets = [...presets, ...userPresets]
+    presets = presets.concat(userPresets)
   }
 
   let config: BabelConfig = {presets}

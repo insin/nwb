@@ -1,9 +1,12 @@
-import createServeInfernoAppConfig from '../createServeInfernoAppConfig'
-import webpackServer from '../webpackServer'
+// @flow
+import infernoConfig from '../inferno'
+import {serve} from '../appCommands'
+
+import type {ErrBack} from '../types'
 
 /**
  * Serve an Inferno app.
  */
-export default function serveInfernoApp(args, cb) {
-  webpackServer(args, createServeInfernoAppConfig(args), cb)
+export default function serveInferno(args: Object, cb: ErrBack) {
+  serve(args, infernoConfig(args), cb)
 }

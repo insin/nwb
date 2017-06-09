@@ -7,11 +7,12 @@
 
 nwb is a toolkit for:
 
-- [Quick Development with React, Inferno or Preact](#quick-development)
+- [Quick Development with React, Inferno, Preact or vanilla JavaScript](#quick-development)
 - Developing:
   - [React Apps](#react-apps)
   - [Preact Apps](#preact-apps)
   - [Inferno Apps](#inferno-apps)
+  - [Vanilla JavaScript Apps](#vanilla-javascript-apps)
   - [React Components and Libraries](#react-components-and-libraries)
   - [npm Modules for the Web](#npm-modules-for-the-web)
 
@@ -43,7 +44,7 @@ npm install --save-dev nwb
 
 ## Quick Development
 
-For quick development with [React](https://facebook.github.io/react/), [Inferno](https://infernojs.org/) or [Preact](https://preactjs.com/), use the `nwb react`, `nwb inferno` or `nwb preact` commands.
+For quick development with [React](https://facebook.github.io/react/), [Inferno](https://infernojs.org/), [Preact](https://preactjs.com/) or vanilla JavaScript, use the `nwb react`, `nwb inferno`, `nwb preact` or `nwb web`commands.
 
 ```js
 import React, {Component} from 'react'
@@ -97,8 +98,6 @@ Use `nwb new preact-app` to create a [Preact](https://preactjs.com/) app skeleto
 nwb new preact-app my-app
 ```
 
-npm scripts are as above for React apps.
-
 ## Inferno Apps
 
 Use `nwb new inferno-app` to create an [Inferno](https://infernojs.org/) app skeleton:
@@ -107,7 +106,13 @@ Use `nwb new inferno-app` to create an [Inferno](https://infernojs.org/) app ske
 nwb new inferno-app my-app
 ```
 
-npm scripts are as above for React apps.
+## Vanilla JavaScript Apps
+
+Use `nwb new web-app` to create a vanilla JavaScript app skeleton:
+
+```sh
+nwb new web-app my-app
+```
 
 ## React Components and Libraries
 
@@ -144,7 +149,7 @@ cd my-module/
 - [Features](/docs/Features.md#features)
 - [Commands](/docs/Commands.md#commands)
   - [`nwb`](/docs/Commands.md#nwb)
-  - [`nwb react`, `nwb inferno` and `nwb preact`](docs/guides/QuickDevelopment.md#quick-development-with-nwb)
+  - [`nwb react`, `nwb inferno`, `nwb preact` and `nwb web`](docs/guides/QuickDevelopment.md#quick-development-with-nwb)
 - [Configuration](/docs/Configuration.md#configuration)
   - [Configuration File](/docs/Configuration.md#configuration-file)
   - [Configuration Object](/docs/Configuration.md#configuration-object)

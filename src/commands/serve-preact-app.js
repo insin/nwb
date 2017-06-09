@@ -1,9 +1,12 @@
-import createServePreactAppConfig from '../createServePreactAppConfig'
-import webpackServer from '../webpackServer'
+// @flow
+import preactConfig from '../preact'
+import {serve} from '../appCommands'
+
+import type {ErrBack} from '../types'
 
 /**
  * Serve a Preact app.
  */
-export default function servePreactApp(args, cb) {
-  webpackServer(args, createServePreactAppConfig(args), cb)
+export default function servePreact(args: Object, cb: ErrBack) {
+  serve(args, preactConfig(args), cb)
 }

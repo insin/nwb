@@ -1,9 +1,12 @@
+// @flow
 import {INFERNO_APP, PREACT_APP, REACT_APP, REACT_COMPONENT} from '../constants'
 import {getProjectType} from '../getUserConfig'
 import karmaServer from '../karmaServer'
 import testInferno from './test-inferno'
 import testPreact from './test-preact'
 import testReact from './test-react'
+
+import type {ErrBack} from '../types'
 
 const TEST_COMMANDS = {
   [INFERNO_APP]: testInferno,
@@ -16,7 +19,7 @@ const TEST_COMMANDS = {
  * Generic test command, invokes the appropriate project type-specific command,
  * or runs with the default test config.
  */
-export default function test(args, cb) {
+export default function test(args: Object, cb: ErrBack) {
   let projectType
   try {
     projectType = getProjectType(args)

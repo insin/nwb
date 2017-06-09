@@ -1,4 +1,5 @@
 // @flow
+import path from 'path'
 import util from 'util'
 
 import spawn from 'cross-spawn'
@@ -8,6 +9,8 @@ import resolve from 'resolve'
 import runSeries from 'run-series'
 
 import debug from './debug'
+
+import type {ErrBack} from './types'
 
 /**
  * Check if the given directories exist and filter out any which don't.
@@ -36,7 +39,7 @@ export function clean(
   desc: string,
   // Paths to delete
   dirs: string[],
-  cb: (error: ?Error) => void,
+  cb: ErrBack,
 ) {
   checkDirectories(dirs, (err, dirs) => {
     if (err != null) return cb(err)
@@ -104,26 +107,28 @@ export function getArgsPlugins(
   return plugins.split(',').map(name => name.replace(/^(nwb-)?/, 'nwb-'))
 }
 
+type InstallOptions = {
+  // Parsed arguments
+  args?: Object,
+  // Check if packages are resolvable from the cwd and skip installation if
+  // already installed.
+  check?: boolean,
+  // Working directory to install in
+  cwd?: string,
+  // Save dependencies to devDependencies
+  dev?: boolean,
+  // Save dependencies to package.json
+  save?: boolean,
+};
+
 /**
  * Install packages from npm.
  */
 export function install(
   // npm package names, which may be in package@version format
   packages: string[],
-  options: {
-    // Parsed arguments
-    args?: Object,
-    // Check if packages are resolvable from the cwd and skip installation if
-    // already installed.
-    check?: boolean,
-    // Working directory to install in
-    cwd?: string,
-    // Save dependencies to devDependencies
-    dev?: boolean,
-    // Save dependencies to package.json
-    save?: boolean
-  },
-  cb: (?Error) => void
+  options: InstallOptions,
+  cb: ErrBack,
 ) {
   let {
     args = null,
@@ -185,6 +190,13 @@ export function joinAnd(array: any[], lastClause: string = 'and') {
   if (array.length === 0) return ''
   if (array.length === 1) return String(array[0])
   return `${array.slice(0, -1).join(', ')} ${lastClause} ${array[array.length - 1]}`
+}
+
+/**
+ * Get the path to an npm module.
+ */
+export function modulePath(module: string, basedir: string = process.cwd()): string {
+  return path.dirname(resolve.sync(`${module}/package.json`, {basedir}))
 }
 
 /**

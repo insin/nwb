@@ -1,3 +1,4 @@
+// @flow
 import {cyan as opt, green as cmd, red, yellow as req} from 'chalk'
 import parseArgs from 'minimist'
 
@@ -38,8 +39,8 @@ if (!command || /^h(elp)?$/.test(command)) {
   console.log(`Usage: ${cmd('nwb inferno')} ${req('(run|build)')} ${opt('[options]')}
 
 Options:
-  ${opt('-c, --config')}   config file to use ${opt(`[default: ${CONFIG_FILE_NAME}]`)}
-  ${opt('-p, --plugins')}  a comma-separated list of nwb plugins to use
+  ${opt('-c, --config')}       config file to use ${opt(`[default: ${CONFIG_FILE_NAME}]`)}
+  ${opt('-p, --plugins')}      a comma-separated list of nwb plugins to use
 
 Commands:
   ${cmd('nwb inferno run')} ${req('<entry>')} ${opt('[options]')}
@@ -63,8 +64,8 @@ Commands:
     Create a static build for an Inferno app.
 
     Arguments:
-      ${req('entry')}       entry point for the app
-      ${opt('dist_dir')}    build output directory ${opt('[default: dist/]')}
+      ${req('entry')}          entry point for the app
+      ${opt('dist_dir')}       build output directory ${opt('[default: dist/]')}
 
     Options:
       ${opt('--force')}        don't shim rendering, use the given entry module directly

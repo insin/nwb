@@ -19,11 +19,11 @@ import StatusPlugin from './WebpackStatusPlugin'
 type LoaderConfig = {
   loader?: string,
   options?: Object
-}
+};
 
-type LoaderConfigFactory = (id: ?string, defaultConfig: LoaderConfig) => LoaderConfig
+type LoaderConfigFactory = (id: ?string, defaultConfig: LoaderConfig) => LoaderConfig;
 
-type UseConfig = Array<string | LoaderConfig>
+type UseConfig = Array<string | LoaderConfig>;
 
 type RuleConfig = {
   test?: RegExp,
@@ -32,9 +32,9 @@ type RuleConfig = {
   loader?: string,
   options?: Object,
   use?: UseConfig
-}
+};
 
-type RuleConfigFactory = (?string, RuleConfig) => ?RuleConfig
+type RuleConfigFactory = (?string, RuleConfig) => ?RuleConfig;
 
 // Custom merge which replaces arrays instead of merging them. The only arrays
 // used in default options are for PostCSS plugins, which we want the user to be
@@ -545,9 +545,9 @@ export function createPlugins(
     if (buildConfig.html) {
       plugins.push(
         // Generate stable module ids instead of having Webpack assign integers.
-        // HashedModuleIdsPlugin (vendored from Webpack 2) does this without
-        // adding too much to bundle size and NamedModulesPlugin allows for
-        // easier debugging of development builds.
+        // HashedModuleIdsPlugin does this without adding too much to bundle
+        // size and NamedModulesPlugin allows for easier debugging of
+        // development builds.
         development ? new webpack.NamedModulesPlugin() : new webpack.HashedModuleIdsPlugin(),
         // The Webpack manifest is normally folded into the last chunk, changing
         // its hash - prevent this by extracting the manifest into its own

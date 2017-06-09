@@ -1,9 +1,9 @@
+// @flow
+import infernoConfig from '../inferno'
 import karmaServer from '../karmaServer'
 
-export default function testInferno(args, cb) {
-  karmaServer(args, {
-    babel: {
-      presets: ['inferno']
-    }
-  }, cb)
+import type {ErrBack} from '../types'
+
+export default function testInferno(args: Object, cb: ErrBack) {
+  karmaServer(args, infernoConfig(args).getKarmaTestConfig(), cb)
 }

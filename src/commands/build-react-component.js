@@ -11,7 +11,7 @@ import buildDemo from './build-demo'
 export default function buildModule(args, cb) {
   let config = {
     babel: {
-      presets: ['react'],
+      presets: [require.resolve('babel-preset-react')],
     }
   }
 

@@ -1,75 +1,12 @@
-import path from 'path'
+// @flow
+import {serve} from '../quickCommands'
+import reactConfig from '../react'
 
-import resolve from 'resolve'
-import runSeries from 'run-series'
-
-import {UserError} from '../errors'
-import webpackServer from '../webpackServer'
-import {install} from '../utils'
-
-// Using a config function as we may need to resolve the path to React and
-// ReactDOM, which we may also have to install first.
-function buildConfig(args) {
-  let entry = path.resolve(args._[1])
-  let mountId = args['mount-id'] || 'app'
-
-  let config = {
-    babel: {
-      presets: ['react'],
-      stage: 0,
-    },
-    output: {
-      filename: 'app.js',
-      path: process.cwd(),
-      publicPath: '/',
-    },
-    plugins: {
-      html: {
-        mountId,
-        title: args.title || 'React App',
-      },
-    },
-  }
-
-  if (args.force === true) {
-    config.entry = [entry]
-  }
-  else {
-    // Use a render shim module which supports quick prototyping
-    config.entry = [require.resolve('../render-shims/react')]
-    config.plugins.define = {NWB_QUICK_MOUNT_ID: JSON.stringify(mountId)}
-    config.resolve = {
-      alias: {
-        // Allow the render shim module to import the provided entry module
-        'nwb-quick-entry': entry,
-        // Allow the render shim module to resolve React and ReactDOM from the cwd
-        'react': path.dirname(resolve.sync('react/package.json', {basedir: process.cwd()})),
-        'react-dom': path.dirname(resolve.sync('react-dom/package.json', {basedir: process.cwd()})),
-      }
-    }
-  }
-
-  if (args.hmr !== false && args.hmre !== false) {
-    config.babel.presets.push('react-hmre')
-  }
-
-  if (args.polyfill === false || args.polyfills === false) {
-    config.polyfill = false
-  }
-
-  return config
-}
+import type {ErrBack} from '../types'
 
 /**
- * Serve a standalone React entry module, component or element.
+ * Serve a standalone React app entry module, component or element.
  */
-export default function serveReact(args, cb) {
-  if (args._.length === 1) {
-    return cb(new UserError('An entry module must be specified.'))
-  }
-
-  runSeries([
-    (cb) => install(['react', 'react-dom'], {args, check: true}, cb),
-    (cb) => webpackServer(args, buildConfig, cb),
-  ], cb)
+export default function serveReact(args: Object, cb: ErrBack) {
+  serve(args, reactConfig(args), cb)
 }

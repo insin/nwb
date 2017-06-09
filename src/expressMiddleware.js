@@ -1,25 +1,27 @@
+// @flow
 import assert from 'assert'
 
 import webpack from 'webpack'
 
+import {createServeConfig} from './appCommands'
 import {INFERNO_APP, PREACT_APP, REACT_APP, WEB_APP} from './constants'
 import createServerWebpackConfig from './createServerWebpackConfig'
 import debug from './debug'
 import {getProjectType} from './getUserConfig'
 import {deepToString, joinAnd} from './utils'
 
-const SERVE_APP_CONFIG = {
-  [INFERNO_APP]: './createServeInfernoAppConfig',
-  [PREACT_APP]: './createServePreactAppConfig',
-  [REACT_APP]: './createServeReactAppConfig',
-  [WEB_APP]: './createServeWebAppConfig',
+const APP_TYPE_CONFIG = {
+  [INFERNO_APP]: './inferno',
+  [PREACT_APP]: './preact',
+  [REACT_APP]: './react',
+  [WEB_APP]: './web',
 }
 
 /**
  * Express middleware for serving an app with hot reloading - equivalent to
  * having run `nwb serve`, but from your own server.
  */
-export default function nwbMiddleware(express, options = {}) {
+export default function nwbMiddleware(express: Object, options: Object = {}) {
   assert(
     express && typeof express.Router === 'function',
     'The express module must be passed as the first argument to nwb middleware'
@@ -29,14 +31,12 @@ export default function nwbMiddleware(express, options = {}) {
   if (projectType == null) {
     projectType = getProjectType({_: ['serve'], config: options.config})
   }
-  if (!SERVE_APP_CONFIG[projectType]) {
+  if (!APP_TYPE_CONFIG[projectType]) {
     throw new Error(
       `nwb Express middleware is unable to handle '${projectType}' projects, only ` +
-      joinAnd(Object.keys(SERVE_APP_CONFIG).map(s => `'${s}'`), 'or')
+      joinAnd(Object.keys(APP_TYPE_CONFIG).map(s => `'${s}'`), 'or')
     )
   }
-
-  let createServeAppConfig = require(SERVE_APP_CONFIG[projectType])
 
   // Use options to create an object equivalent to CLI args parsed by minimist
   let args = {
@@ -47,9 +47,11 @@ export default function nwbMiddleware(express, options = {}) {
     reload: !!options.reload
   }
 
+  let appTypeConfig = require(APP_TYPE_CONFIG[projectType])(args)
+
   let webpackConfig = createServerWebpackConfig(
     args,
-    createServeAppConfig(args, {
+    createServeConfig(args, appTypeConfig.getServeConfig(), {
       plugins: {
         status: {
           middleware: true

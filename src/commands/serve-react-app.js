@@ -1,9 +1,12 @@
-import createServeReactAppConfig from '../createServeReactAppConfig'
-import webpackServer from '../webpackServer'
+// @flow
+import {serve} from '../appCommands'
+import reactConfig from '../react'
+
+import type {ErrBack} from '../types'
 
 /**
  * Serve a React app.
  */
-export default function serveReactApp(args, cb) {
-  webpackServer(args, createServeReactAppConfig(args), cb)
+export default function serveReact(args: Object, cb: ErrBack) {
+  serve(args, reactConfig(args), cb)
 }
