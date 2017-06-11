@@ -29,6 +29,7 @@
 
 **Changed:**
 
+- Default Babel config for `react-component` and `web-module` projects now uses [`babel-preset-stage-1`](http://babeljs.io/docs/plugins/preset-stage-1/), so you can use [export extensions](http://babeljs.io/docs/plugins/transform-export-extensions/) by default if you need to re-export a library's modules in `src/index.js` [[#284](https://github.com/insin/nwb/issues/284)]
 - [prop-types](https://github.com/facebook/prop-types#prop-types) imports are now removed from React component UMD production builds.
 - Default Travis CI config for React component and web module projects now only uses Node 6 by default for quicker builds.
 

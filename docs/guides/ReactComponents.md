@@ -359,6 +359,18 @@ We've demonstrated using nwb to develop and publish a single reusable React comp
 
 The main difference with libraries is that the entry point (`src/index.js` by default when using nwb) usually imports and re-exports everything the library provides, for users performing top-level imports or using the UMD build.
 
+To make this easier, nwb uses the Babel `stage-1` preset by default when building `react-component` projects, which allows you to use [export extensions](http://babeljs.io/docs/plugins/transform-export-extensions/) to import and re-export modules using a single `export` statement.
+
+For example, this is a snippet of how [React Bootstrap](https://github.com/react-bootstrap/react-bootstrap) re-exports its components using export extensions:
+
+```js
+export Accordion from './Accordion'
+export Alert from './Alert'
+export Badge from './Badge'
+export Breadcrumb from './Breadcrumb'
+export BreadcrumbItem from './BreadcrumbItem'
+```
+
 ## Build Configuration
 
 ### Config File
