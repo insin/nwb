@@ -36,7 +36,13 @@
 
 **Dependencies:**
 
+- babel-core: v6.24.1 → [v6.25.0](https://github.com/babel/babel/releases/tag/v6.25.0)
 - babel-preset-es2017: v6.24.1
+- detect-port: v1.1.3 → [v1.2.0](https://github.com/node-modules/detect-port/releases/tag/1.2.0)
+- extract-text-webpack-plugin: v2.1.0 → [v2.1.2](https://github.com/webpack-contrib/extract-text-webpack-plugin/blob/master/CHANGELOG.md#212-2017-06-08)
+- file-loader: v0.11.1 → [v0.11.2](https://github.com/webpack-contrib/file-loader/blob/master/CHANGELOG.md#0112-2017-06-05) - `publicPath` option changes
+- inquirer: v3.0.6 → [v3.1.0](https://github.com/SBoudrias/Inquirer.js/releases/tag/v3.1.0)
+- style-loader: v0.18.1 → [v0.18.2](https://github.com/webpack-contrib/style-loader/blob/master/CHANGELOG.md#0182-2017-06-05)
 - [webpack-dev-server](https://github.com/webpack/webpack-dev-server/): v2.4.5
 
 # 0.16.3 / 2017-05-31
