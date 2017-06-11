@@ -12,6 +12,7 @@
 
 **Fixed:**
 
+- The process will now exit with a non-zero code when a Webpack build completes with errors [[#290](https://github.com/insin/nwb/issues/290)]
 - Fixed importing React components when serving a Preact app - this was missed when fixing preact-compat configuration issues from v0.16.0.
 - Fixed transpiling of ES2017 features when use of a stage-X preset is disabled with `babel.stage = false` config.
 

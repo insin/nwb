@@ -85,7 +85,7 @@ describe('command: build', function() {
         expect(err).toNotExist('No errors creating a new React component')
         process.chdir(path.join(tmpDir, 'test-component'))
         cli(['build'], (err) => {
-          expect(err).toNotExist('No errors building a React component')
+          expect(err).toNotExist()
           done(err)
         })
       })

@@ -13,8 +13,9 @@
     "flow": "flow",
     "lint": "eslint *.js src tests",
     "lint:fix": "npm run lint -- --fix",
-    "test": "npm run build && cross-env NODE_ENV=test NWB_TEST=true mocha --compilers js:babel-core/register tests/*-test.js tests/commands/*-test.js",
+    "test": "npm run build && npm run test:all",
     "test:coverage": "npm run build && cross-env NODE_ENV=test NWB_TEST=true nyc mocha tests/*-test.js tests/commands/*-test.js",
+    "test:all": "cross-env NODE_ENV=test NWB_TEST=true mocha --compilers js:babel-core/register tests/*-test.js tests/commands/*-test.js",
     "test:watch": "cross-env NODE_ENV=test NWB_TEST=true mocha --watch --compilers js:babel-core/register tests/*-test.js"
   },
   "files": [

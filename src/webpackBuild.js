@@ -52,8 +52,11 @@ export default function webpackBuild(type, args, buildConfig, cb) {
       }
       return cb(err)
     }
-    if (spinner) {
+    if (spinner || stats.hasErrors()) {
       logBuildResults(stats, spinner)
+    }
+    if (stats.hasErrors()) {
+      return cb(new Error('Build failed with errors.'))
     }
     cb(null, stats)
   })

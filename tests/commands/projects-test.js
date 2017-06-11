@@ -331,4 +331,37 @@ describe('sample projects', function() {
       ])
     })
   })
+
+  describe('failing-build project', () => {
+    let originalCwd
+    let originalNodeEnv
+    let tmpDir
+
+    before(done => {
+      originalCwd = process.cwd()
+      originalNodeEnv = process.env.NODE_ENV
+      delete process.env.NODE_ENV
+      tmpDir = temp.mkdirSync('failing-build')
+      copyTemplateDir(path.join(__dirname, '../fixtures/projects/failing-build'), tmpDir, {}, (err) => {
+        if (err) return done(err)
+        process.chdir(tmpDir)
+        done()
+      })
+    })
+
+    after(done => {
+      process.chdir(originalCwd)
+      process.env.NODE_ENV = originalNodeEnv
+      rimraf(tmpDir, err => {
+        done(err)
+      })
+    })
+
+    it('calls back with an error', done => {
+      cli(['build'], err => {
+        expect(err).toExist()
+        done()
+      })
+    })
+  })
 })
