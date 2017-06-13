@@ -4,6 +4,7 @@
 - [How can I view the configuration nwb generates?](#how-can-i-view-the-configuration-nwb-generates)
 - [How do I enable CSS Modules?](#how-do-i-enable-css-modules)
 - [What can I configure to reduce bundle size?](#what-can-i-configure-to-reduce-bundle-size)
+- [How can I copy non-JavaScript files when building a React component/library?](#how-can-i-copy-non-javascript-files-when-building-a-react-component-library)
 
 ---
 
@@ -37,7 +38,7 @@ set NWB_TEST=true
 
 ### How do I enable CSS Modules?
 
-Use `nwb.config.js` to configure the [default `css` rule for your app's own styles](/docs/Configuration.md#default-rules) with the necessary [css-loader `option` parameters](https://github.com/webpack/css-loader#local-scope):
+Use [`webpack.rules` config](/docs/Configuration.md#rules-object) in `nwb.config.js` to [configure `css-loader` in the default stylesheet rule](/docs/Stylesheets.md#default-stylesheet-rules) with the necessary [`css-loader` options](https://github.com/webpack-contrib/css-loader#options):
 
 ```js
 module.exports = {
@@ -56,8 +57,20 @@ module.exports = {
 }
 ```
 
+If you only need CSS Modules for some of the stylesheets you'll be importing, you can configure [custom stylesheet rules](/docs/Stylesheets.md#custom-stylesheet-rules).
+
 ### What can I configure to reduce bundle size?
 
-If you don't need the `Promise`, `fetch` and `Object.assign` polyfills nwb provides by default, configuring [`polyfill: false`](/docs/Configuration.md#polyfill-boolean) will shave ~4KB off the gzipped vendor bundle.
+#### Disable default polyfills
 
-If you're using destructuring imports with libraries like React Router and React Bootstrap (e.g. `import {Button} from 'react-bootstrap'`), you're bundling the whole library, instead of just the bits you need. Try configuring [`babel.cherryPick`](/docs/Configuration.md#cherrypick-string--arraystring) for these libraries to only bundle the modules you actually use.
+If you don't need the `Promise`, `fetch` and `Object.assign` polyfills nwb provides by default, configuring [`polyfill: false`](/docs/Configuration.md#polyfill-boolean) (or passing a [`--no-polyfill` flag](/docs/guides/QuickDevelopment.md#options-for-run-and-build-commands) when using Quick Development commands) will shave ~4KB off the gzipped vendor bundle.
+
+#### Enable cherry-picking for destructuring imports
+
+If you're using destructuring imports with libraries like React Router and React Bootstrap (e.g. `import {Button} from 'react-bootstrap'`), you're bundling the whole library, instead of just the bits you need.
+
+Try configuring [`babel.cherryPick`](/docs/Configuration.md#cherrypick-string--arraystring) for these libraries to only bundle the modules you actually use.
+
+### How can I copy non-JavaScript files when building a React component/library?
+
+Pass a [`--copy-files` flag](/docs/guides/ReactComponent.md#--copy-files).

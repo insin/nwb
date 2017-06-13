@@ -181,7 +181,7 @@ Create a build.
 nwb build [entry] [dist_dir]
 ```
 
-**In React/Infero/Preact/plain JS web apps:**
+###### React/Inferno/Preact/vanilla JS app builds
 
 Passing arguments for `entry` and `dist_dir` allows you to customise the entry point for your app and the directory it gets build into.
 
@@ -203,7 +203,7 @@ NODE_ENV=development nwb build
 set NODE_ENV=development&& nwb build
 ```
 
-**In React apps only:**
+###### React app builds
 
 In production mode builds, the Babel [react-remove-prop-types](https://github.com/oliviertassinari/babel-plugin-transform-react-remove-prop-types) transform will be used.
 
@@ -211,21 +211,23 @@ When building React apps, you can also pass a `--preact` flag to configure Webpa
 
 If your app and its dependencies are compatible, this can be a quick and easy way to reduce the size of your app.
 
-**In Inferno and Preact apps only:**
+###### Inferno and Preact app builds
 
 These apps are pre-configured to use their React compatibility layer if React is imported, so you can try to re-use existing React components out of the box.
 
 You'll only pay the cost of including the compatibility layer in your bundle if you import something which uses React.
 
-**In React component modules and other web modules:**
+###### React component/library and web module builds
 
-Builds the component in preparation for publishing to npm.
+Builds for publishing to npm.
 
 Passing an argument for `entry` allows you to customise the entry point for the UMD build of your app.
 
 - An ES5 build will be created in `lib/`
-- By default, and ES6 modules build will be created in `es/`
+- By default, an ES6 modules build will be created in `es/`
 - If enabled, UMD builds will be created in `umd/`
+
+**Feature Toggles:**
 
 If the module has a `demo/` directory, running `build` will also create a static build of its demo app in `demo/dist/`. You can disable this by passing a `--no-demo` flag. If you need to use static content in the demo app, the demo build supports use of a `demo/public/` directory.
 

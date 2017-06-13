@@ -27,6 +27,7 @@ nwb supports development of React component/library modules which will be publis
   - [Config File](#config-file)
     - [UMD Externals](#umd-externals)
   - [Feature Toggles](#feature-toggles)
+    - [`--copy-files`](#--copy-files)
     - [`--no-demo`](#--no-demo)
     - [`--[keep-]proptypes`](#--keep-proptypes)
 
@@ -404,6 +405,24 @@ module.exports = {
 Pass flags when running the build to toggle certain features off.
 
 > Add feature toggle flags to the `"build"` script in `package.json` if you always want to use them.
+>
+> You can also pass flags to the `npm run build` command if you just want to try them out.
+>
+> You need to pass a `--` argument to indicate all additional arguments should be passed to the command itself, for example:
+>
+> ```sh
+> npm run build -- --no-demo
+> ```
+
+#### `--copy-files`
+
+Enables copying of any non-JavaScript files present in `src/` when transpiling to `lib/` and `es/` during a build.
+
+This is a quick (and dirty - please [create an issue](https://github.com/insin/nwb/issues/new) if there are better ways nwb could help you distribute CSS) hack if you're publishing components which import CSS co-located in `src/` and expect users to have Webpack configured to handle this.
+
+> **Note:** This feature is [implemented by Babel](https://babeljs.io/docs/usage/cli/#babel-copy-files), If you disable both CommonJS and ES Module builds, Babel won't be called and nothing will be copied.
+
+> **Note:** The default `package.json` [`"files"` config](https://docs.npmjs.com/files/package.json#files) for a `react-component` project will also publish a top-level `css/` directory to npm if present - consider using relative requires to this directory if you want to avoid publishing duplicated CSS in `lib/` and `es/`.
 
 #### `--no-demo`
 
@@ -418,11 +437,3 @@ Use this if you want to develop against the demo app using nwb's development ser
 Disables `propTypes` wrapping/stripping.
 
 Use this if your module needs to use `propTypes` at runtime (e.g. for masking `props`), or you think its users might need them.
-
-> You can also pass flags to the `npm run build` command if you just want to try them out.
->
-> You need to pass a `--` argument to indicate all additional arguments should be passed to the command itself, for example:
->
-> ```sh
-> npm run build -- --no-demo --keep-proptypes
-> ```

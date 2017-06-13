@@ -34,6 +34,10 @@
 - [prop-types](https://github.com/facebook/prop-types#prop-types) imports are now removed from React component UMD production builds.
 - Default Travis CI config for React component and web module projects now only uses Node 6 by default for quicker builds.
 
+**Docs:**
+
+- Document `--copy-files` properly [[#317](https://github.com/insin/nwb/issues/317)]
+
 **Dependencies:**
 
 - babel-core: v6.24.1 → [v6.25.0](https://github.com/babel/babel/releases/tag/v6.25.0)
