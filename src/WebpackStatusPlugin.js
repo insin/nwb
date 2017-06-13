@@ -1,52 +1,63 @@
+// @flow
 import chalk from 'chalk'
 
 import {clearConsole} from './utils'
 import {logErrorsAndWarnings} from './webpackUtils'
 
+import type {ErrBack} from './types'
+
+type StatusPluginOptions = {
+  disableClearConsole?: boolean,
+  quiet?: boolean,
+  successMessage?: ?string,
+};
+
 /**
- * Display current build status for a Webpack watch build.
- * Based on create-react-app@0.2's start script.
+ * Display build status for a Webpack watching build.
  */
 export default class StatusPlugin {
-  constructor({message = '', middleware = false, test = false} = {}) {
-    // Provides details of the URL the dev server is available at
-    this.message = message
-    // Flag: don't clear the console as we're in someone else's server
-    this.middleware = middleware
-    // Flag: ONLY log errors and warnings
-    this.test = test
+  disableClearConsole: boolean;
+  quiet: boolean;
+  successMessage: ?string;
+  isInitialBuild: boolean;
+
+  constructor(options: StatusPluginOptions = {}) {
+    let {
+      disableClearConsole = false,
+      quiet = false,
+      successMessage = '',
+    } = options
+
+    this.disableClearConsole = disableClearConsole
+    this.quiet = quiet
+    this.successMessage = successMessage
 
     // We only want to display the "Starting..." message once
-    this.initial = true
-
-    this.watchRun = this.watchRun.bind(this)
-    this.done = this.done.bind(this)
+    this.isInitialBuild = true
   }
 
-  apply(compiler) {
+  apply(compiler: Object) {
     compiler.plugin('watch-run', this.watchRun)
     compiler.plugin('done', this.done)
   }
 
   clearConsole() {
-    if (!this.test) {
+    if (!this.quiet && !this.disableClearConsole) {
       clearConsole()
     }
   }
 
-  log(message) {
-    if (!this.test) {
+  log(message: any) {
+    if (!this.quiet) {
       console.log(message)
     }
   }
 
-  watchRun(watching, cb) {
-    if (!this.middleware) {
-      this.clearConsole()
-    }
-    if (this.initial) {
+  watchRun = (compiler: Object, cb: ErrBack) => {
+    this.clearConsole()
+    if (this.isInitialBuild) {
       this.log(chalk.cyan('Starting Webpack compilation...'))
-      this.initial = false
+      this.isInitialBuild = false
     }
     else {
       this.log('Recompiling...')
@@ -54,10 +65,8 @@ export default class StatusPlugin {
     cb()
   }
 
-  done(stats) {
-    if (!this.middleware) {
-      this.clearConsole()
-    }
+  done = (stats: Object) => {
+    this.clearConsole()
 
     let hasErrors = stats.hasErrors()
     let hasWarnings = stats.hasWarnings()
@@ -71,9 +80,9 @@ export default class StatusPlugin {
       if (hasErrors) return
     }
 
-    if (!this.middleware) {
+    if (this.successMessage) {
       this.log('')
-      this.log(this.message)
+      this.log(this.successMessage)
     }
   }
 }

@@ -63,8 +63,7 @@ export function clean(
  * Clear console scrollback.
  */
 export function clearConsole() {
-  // XXX Hack for testing
-  // TODO Give users a way to disable console clearing
+  // Hack for testing
   if (process.env.NWB_TEST) return
   // This will completely wipe scrollback in cmd.exe on Windows - use cmd.exe's
   // `start` command to launch nwb's dev server in a new prompt if you don't

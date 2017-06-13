@@ -54,7 +54,8 @@ export default function nwbMiddleware(express: Object, options: Object = {}) {
     createServeConfig(args, appTypeConfig.getServeConfig(), {
       plugins: {
         status: {
-          middleware: true
+          disableClearConsole: true,
+          successMessage: null,
         }
       }
     })

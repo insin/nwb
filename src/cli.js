@@ -95,6 +95,7 @@ Generic project development commands:
     Options:
       ${opt('--install')}      automatically install missing npm dependencies
       ${opt('--host')}         hostname to bind the dev server to
+      ${opt('--no-clear')}     don't clear the console when displaying build status
       ${opt('--no-fallback')}  disable serving of the index page from any path
       ${opt('--port')}         port to run the dev server on ${opt('[default: 3000]')}
       ${opt('--reload')}       auto reload the page if hot reloading fails

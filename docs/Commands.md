@@ -146,8 +146,9 @@ Passing an argument for `entry` allows you to customise the entry point for your
 **Options:**
 
 - `--install` - automatically install missing npm dependencies (and save them to `package.json` if present)
-- `--fallback` - fall back to serving the index page from any path, for developing apps which use the History API
 - `--host` - change the hostname the dev server binds to *[default: not specifying a host when starting the dev server]*
+- `--no-clear` - don't clear the console when displaying build status
+- `--no-fallback` - disable fallback serving of the index page from any path
 - `--port` - change the port the dev server runs on *[default: 3000]*
 - `--reload` - auto-reload the page when webpack gets stuck
 

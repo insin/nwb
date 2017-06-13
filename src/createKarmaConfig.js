@@ -191,7 +191,7 @@ export default function createKarmaConfig(args, buildConfig, pluginConfig, userC
       },
       plugins: {
         status: {
-          test: true
+          quiet: true,
         }
       },
       resolve: {

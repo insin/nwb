@@ -22,10 +22,11 @@
   - `devServer.historyApiFallback.disableDotRule` can be enabled if you need to use dots in your path when using the HTML5 History API
   - `devServer.https` can be used to enable HTTPS
   - `devServer.proxy` can be used to proxy certain URLs to a separate API backend development server
-- Added an `nwb web (run|build)` command for quick development with vanilla JavaScript (i.e. you're in charge of rendering)
+- Added an `nwb web (run|build)` command for quick development with vanilla JavaScript (i.e. you're in charge of rendering).
 - Added a [`type` option](https://github.com/insin/nwb/blob/master/docs/Middleware.md#option) to nwb's Express middleware to set the project type (one of `react`, `preact`, `inferno` or `web`) manually, enabling use of the middleware without a config file.
 - Added [`babel.removePropTypes` config](https://github.com/insin/nwb/blob/master/docs/Configuration.md#removeproptypes-object--false) to disable or configure [removal of `propTypes`](https://github.com/oliviertassinari/babel-plugin-transform-react-remove-prop-types) in React app production builds.
 - Added [`babel.reactConstantElements` config](https://github.com/insin/nwb/blob/master/docs/Configuration.md#reactconstantelements-false) to disable the use of the [React constant element hoisting transform](https://babeljs.io/docs/plugins/transform-react-constant-elements/) in React app production builds.
+- Added a `--no-clear[-console]` flag to disable clearing of the console when running a dev server.
 - Added a `--no-html` flag to disable creation of an `index.html` file if you don't need one (e.g. you're serving your built apps via another means) [[#278](https://github.com/insin/nwb/issues/278)] [[bwendt-mylo][bwendt-mylo]]
 
 **Changed:**
