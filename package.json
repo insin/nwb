@@ -118,7 +118,7 @@
     "cross-env": "5.0.1",
     "eslint-config-jonnybuchanan": "5.0.0",
     "eventsource": "1.0.2",
-    "flow-bin": "0.47.0",
+    "flow-bin": "0.48.0",
     "glob": "7.1.2",
     "nyc": "11.0.2",
     "rimraf": "2.6.1",
