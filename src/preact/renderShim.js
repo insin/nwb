@@ -7,6 +7,11 @@ let parent = document.getElementById(NWB_QUICK_MOUNT_ID)
 let root = parent.firstChild // If #app already contains elements, hydrate from them (for SSR)
 let vnode = null
 
+if (process.env.NODE_ENV === 'development') {
+  // Enable preact devtools
+  require('preact/devtools')
+}
+
 function renderEntry(exported) {
   if (exported.default) {
     exported = exported.default

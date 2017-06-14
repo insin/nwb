@@ -2,6 +2,11 @@ import './index.css'
 
 import {h, render} from 'preact'
 
+if (process.env.NODE_ENV === 'development') {
+  // Enable preact devtools
+  require('preact/devtools')
+}
+
 let root
 function init() {
   let App = require('./App').default
@@ -9,8 +14,7 @@ function init() {
 }
 
 if (module.hot) {
-  // require('preact/devtools') // Uncomment to enable use of React DevTools
-  module.hot.accept('./App', () => requestAnimationFrame(init))
+  module.hot.accept('./App', init)
 }
 
 init()
