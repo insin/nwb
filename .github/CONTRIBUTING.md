@@ -37,7 +37,7 @@ The easiest way to run the development version of nwb is to alias the `bin` scri
 alias nwb="node ~/repos/nwb/lib/bin/nwb.js"
 
 # Cmder (aliases for Windows cmd.exe - http://cmder.net/)
-alias nwb=node C:\Users\Jonny\repos\nwb\lib\bin\nwb.js $*
+alias nwb=node %USERPROFILE%\repos\nwb\lib\bin\nwb.js $*
 ```
 
 This uses the transpiled code, so don't forget to run `npm run build` after every change, or `npm run build:watch`.

@@ -14,6 +14,15 @@ These checks might help you diagnose whether something is wrong with nwb or your
 
 Is the version of `nwb` you're using installed globally or locally?
 
+Which versions of Node.js, npm and nwb are you using (if using it globally)?
+
+```
+node -v
+npm -v
+# If nwb is being used as a global install
+nwb -v
+```
+
 Which modules are installed in your project?
 
 ```
@@ -29,21 +38,6 @@ export DEBUG=nwb
 set DEBUG=nwb
 ```
 
-If you need to prevent server commands from clearing scrollback so you can read any unexpected error logging which is happening, set the `NWB_TEST` environment variable to `true`:
+> If you need to prevent server commands from clearing scrollback so you can read any unexpected error logging which is happening, pass a `--no-clear` flag.
 
-```
-# *nix
-export NWB_TEST=true
-# Windows
-set NWB_TEST=true
-```
-
-Which versions of Node.js, npm and nwb are you using (if using it globally)?
-
-```
-node -v
-npm -v
-# If nwb is being used as a global install
-nwb -v
-```
 -->
