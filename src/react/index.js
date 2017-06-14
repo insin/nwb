@@ -1,4 +1,6 @@
 // @flow
+import path from 'path'
+
 import {modulePath} from '../utils'
 
 function getBaseConfig(): Object {
@@ -32,10 +34,14 @@ function getBuildConfig(args, options: {useModulePath?: boolean} = {}) {
     }
   }
   else if (args.preact || args['preact-compat']) {
+    // Use the path to preact-compat.js, as using the path to the preact-compat
+    // module picks up the "module" build, which prevents hijacking the render()
+    // function in the render shim.
+    let preactCompathPath = path.join(aliasPath('preact-compat'), 'dist/preact-compat')
     config.resolve = {
       alias: {
-        'react': aliasPath('preact-compat'),
-        'react-dom': aliasPath('preact-compat'),
+        'react': preactCompathPath,
+        'react-dom': preactCompathPath,
         'create-react-class': 'preact-compat/lib/create-react-class',
       },
     }
