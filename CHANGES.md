@@ -1,6 +1,6 @@
 # Unreleased (in `next` branch)
 
-**Breaking Changes:**
+## Breaking Changes
 
 - Now using [Webpack Dev Server](https://github.com/webpack/webpack-dev-server) (instead of running a basic Express development server).
 
@@ -8,38 +8,71 @@
 
   Please [create an issue](https://github.com/insin/nwb/issues/new) if you're affected by this change and there's something nwb can do to mitigate dev server problems without compromising security.
 
-- `--[keep-]proptypes` replaces `--no[-wrap]-proptypes` to disable wrapping of  `propTypes` in React component project builds so they'll be stripped from a production build.
+**React components/libraries**
 
-**Fixed:**
+- A [`--[keep-]proptypes` flag](https://github.com/insin/nwb/blob/master/docs/guides/ReactComponents.md#--keep-proptypes) replaces `--no[-wrap]-proptypes` to disable wrapping of  `propTypes` in React component project builds so they'll be stripped from a production build.
+
+## Fixed
 
 - The process will now exit with a non-zero code when a Webpack build completes with errors [[#290](https://github.com/insin/nwb/issues/290)]
-- Fixed importing React components when serving a Preact app - this was missed when fixing preact-compat configuration issues from v0.16.0.
-- Fixed transpiling of ES2017 features when use of a stage-X preset is disabled with `babel.stage = false` config.
+- Fixed transpiling of ES2017 features when use of a stage-X preset is disabled with [`babel.stage = false` config](https://github.com/insin/nwb/blob/master/docs/Configuration.md#stage-number--false).
 
-**Added:**
+**Preact**
 
-- Added [`devServer` config](https://github.com/insin/nwb/blob/master/docs/Configuration.md#devserver-object) to configure Webpack Dev Server.
+- Fixed importing React components when serving a Preact app - this was missed when fixing `preact-compat` configuration issues from v0.16.0.
+
+## Added
+
+**Arguments**
+
+- Added a [`--no-clear[-console]` flag](https://github.com/insin/nwb/blob/master/docs/Commands.md#nwb-serve) to disable clearing of the console when running the dev server.
+- Added a [`--no-html` flag](https://github.com/insin/nwb/blob/master/docs/Commands.md#nwb-build) to disable creation of an `index.html` file if you don't need one (e.g. you're serving your built apps via another means) [[#278](https://github.com/insin/nwb/issues/278)] [[bwendt-mylo][bwendt-mylo]]
+
+**Commands**
+
+- Added an `nwb web (run|build)` command for [quick development](https://github.com/insin/nwb/blob/master/docs/guides/QuickDevelopment.md#quick-development-with-nwb) with vanilla JavaScript (i.e. you're in charge of rendering).
+
+**Configuration**
+
+- Added [`devServer` config](https://github.com/insin/nwb/blob/master/docs/Configuration.md#devserver-object) to configure [Webpack Dev Server options](https://webpack.js.org/configuration/dev-server/#devserver), which include:
   - `devServer.historyApiFallback.disableDotRule` can be enabled if you need to use dots in your path when using the HTML5 History API
   - `devServer.https` can be used to enable HTTPS
   - `devServer.proxy` can be used to proxy certain URLs to a separate API backend development server
-- Added an `nwb web (run|build)` command for quick development with vanilla JavaScript (i.e. you're in charge of rendering).
 - Added a [`type` option](https://github.com/insin/nwb/blob/master/docs/Middleware.md#option) to nwb's Express middleware to set the project type (one of `react`, `preact`, `inferno` or `web`) manually, enabling use of the middleware without a config file.
+
+**React**
+
 - Added [`babel.removePropTypes` config](https://github.com/insin/nwb/blob/master/docs/Configuration.md#removeproptypes-object--false) to disable or configure [removal of `propTypes`](https://github.com/oliviertassinari/babel-plugin-transform-react-remove-prop-types) in React app production builds.
 - Added [`babel.reactConstantElements` config](https://github.com/insin/nwb/blob/master/docs/Configuration.md#reactconstantelements-false) to disable the use of the [React constant element hoisting transform](https://babeljs.io/docs/plugins/transform-react-constant-elements/) in React app production builds.
-- Added a `--no-clear[-console]` flag to disable clearing of the console when running a dev server.
-- Added a `--no-html` flag to disable creation of an `index.html` file if you don't need one (e.g. you're serving your built apps via another means) [[#278](https://github.com/insin/nwb/issues/278)] [[bwendt-mylo][bwendt-mylo]]
 
-**Changed:**
+## Changed
+
+**npm modules**
 
 - Default Babel config for `react-component` and `web-module` projects now uses [`babel-preset-stage-1`](http://babeljs.io/docs/plugins/preset-stage-1/), so you can use [export extensions](http://babeljs.io/docs/plugins/transform-export-extensions/) by default if you need to re-export a library's modules in `src/index.js` [[#284](https://github.com/insin/nwb/issues/284)]
-- [prop-types](https://github.com/facebook/prop-types#prop-types) imports are now removed from React component UMD production builds.
-- Default Travis CI config for React component and web module projects now only uses Node 6 by default for quicker builds.
+- Default Travis CI config for `react-component` and `web-module` projects now only uses Node 6 by default for quicker builds.
 
-**Docs:**
+**Preact**
 
-- Document `--copy-files` properly [[#317](https://github.com/insin/nwb/issues/317)]
+- [`preact/devtools`](https://github.com/developit/preact#developer-tools) is now imported in development mode to enable use of React Developer Tools when using `nwb preact run`. This has also been added to the `preact-app` template.
 
-**Dependencies:**
+  For existing Preact apps, add the following to its entry point to enable this:
+
+  ```
+  if (process.env.NODE_ENV === 'development') {
+    require('preact/devtools')
+  }
+  ```
+
+**React components/libraries**
+
+- [`prop-types`](https://github.com/facebook/prop-types#prop-types) imports are now also removed from React component UMD production builds.
+
+## Documentation
+
+- Document the [`--copy-files` flag](https://github.com/insin/nwb/blob/master/docs/guides/ReactComponents.md#--copy-files) properly [[#317](https://github.com/insin/nwb/issues/317)]
+
+## Dependencies
 
 - babel-core: v6.24.1 → [v6.25.0](https://github.com/babel/babel/releases/tag/v6.25.0)
 - babel-plugin-transform-react-remove-prop-types: v0.4.5 → [v0.4.6](https://github.com/oliviertassinari/babel-plugin-transform-react-remove-prop-types/releases/tag/v0.4.6) - fix use in Node 4
@@ -77,7 +110,7 @@
 
 **Added:**
 
-- Added support for [create-react-class](https://facebook.github.io/react/docs/react-without-es6.html) when using preact-compat.
+- Added support for [create-react-class](https://facebook.github.io/react/docs/react-without-es6.html) when using `preact-compat`.
 
 **Dependencies:**
 
@@ -200,7 +233,7 @@
 
 - Fixed typo in `clean` command in `react-component` skeleton [[#283](https://github.com/insin/nwb/pull/283)] [[totaldis][totaldis]]
 
-**Docs:**
+**Documentation:**
 
 - [Document use of Karma's `usePolling` config](https://github.com/insin/nwb/blob/master/docs/Configuration.md#karma-configuration) to reduce CPU usage on macOS [[#297](https://github.com/insin/nwb/issues/297)] [[michaelsbradleyjr][michaelsbradleyjr]]
 
@@ -222,7 +255,7 @@
 **Changed:**
 
 - Support the Array version of deprecated `webpack.postcss` config.
-- Tell the user they're including redundant config if they've manually configured inferno-compat or preact-compat aliases for React modules [[#247](https://github.com/insin/nwb/issues/247)]
+- Tell the user they're including redundant config if they've manually configured `inferno-compat` or `preact-compat` aliases for React modules [[#247](https://github.com/insin/nwb/issues/247)]
 
 # 0.15.3 / 2017-01-25
 
@@ -546,7 +579,7 @@ These are being scoped to both make use of unreleased features and to test them 
 **Added:**
 
 - Added new project types: `inferno-app` and `preact-app` - use these with `nwb new` or `nwb init` to develop [Inferno](https://infernojs.com/) and [Preact](https://preactjs.com/) apps [[#194](https://github.com/insin/nwb/issues/194)]
-- Added an [`--inferno` flag](https://github.com/insin/nwb/blob/next/docs/Commands.md#build-1) to React app builds to create an [inferno-compat](https://github.com/trueadm/inferno/tree/master/packages/inferno-compat) build [[#194](https://github.com/insin/nwb/issues/194)]
+- Added an [`--inferno` flag](https://github.com/insin/nwb/blob/next/docs/Commands.md#build-1) to React app builds to create an [`inferno-compat`](https://github.com/trueadm/inferno/tree/master/packages/inferno-compat) build [[#194](https://github.com/insin/nwb/issues/194)]
 - [`react-jsx-source`](https://babeljs.io/docs/plugins/transform-react-jsx-source/) and [`react-jsx-self`](https://babeljs.io/docs/plugins/transform-react-jsx-self/) Babel transforms are now enabled for React apps in development mode for improved debugging.
 - A Git repo with an initial commit is now created by default when creating a new project. Pass a `--no-git` flag to disable this.
 - Added project-specific variants of `nwb test`: `nwb test-react`, `nwb-test-inferno` and `nwb-test-preact`.
@@ -796,7 +829,7 @@ These are being scoped to both make use of unreleased features and to test them 
 
 - **Production React builds now remove `propTypes` from ES6 class and stateless functional components** (but not from your dependencies) using [react-remove-prop-types](https://github.com/oliviertassinari/babel-plugin-transform-react-remove-prop-types) [[#97](https://github.com/insin/nwb/issues/97)]
 
-- **Added a [`--preact` flag](https://github.com/insin/nwb/blob/0.12/docs/Commands.md#build-1)** to React app builds to create a [preact-compat](https://github.com/developit/preact-compat) build.
+- **Added a [`--preact` flag](https://github.com/insin/nwb/blob/0.12/docs/Commands.md#build-1)** to React app builds to create a [`preact-compat`](https://github.com/developit/preact-compat) build.
 
   This is an easy way to try [Preact](https://preactjs.com/) with your React apps, resulting in a much smaller bundle if your app is compatible [[#124](https://github.com/insin/nwb/issues/124)]
 
