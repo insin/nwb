@@ -26,8 +26,8 @@ Your app's version of the Express module must be passed as the first argument.
 
   If you don't have a config file, you must provide a `type` or the middleware won't know what to do and will throw an error.
 
-- `config` - path to a config file *[default: nwb.config.js]*
-- `entry` - entry point for the app *[default: src/index.js]*
+- `config` - path to a config file *[default: `'nwb.config.js'`]*
+- `entry` - entry point for the app *[default: `'src/index.js'`]*
 - `hmre` - use [React Transform](https://github.com/gaearon/babel-plugin-react-transform#readme) to attempt to automatically handle Hot Module Replacement for React components and display an overlay with `render()` errors when serving a React app *[default: `true`]*
 - `install` - automatically install missing npm dependencies *[default: `false`]*
 - `reload` - reload the page if Hot Module Replacement is unsuccessful *[default: `false`]*

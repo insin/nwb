@@ -16,6 +16,7 @@
 
 - The process will now exit with a non-zero code when a Webpack build completes with errors [[#290](https://github.com/insin/nwb/issues/290)]
 - Fixed transpiling of ES2017 features when use of a stage-X preset is disabled with [`babel.stage = false` config](https://github.com/insin/nwb/blob/master/docs/Configuration.md#stage-number--false).
+- Fixed `hmre = false` [Express middleware option](https://github.com/insin/nwb/blob/master/docs/Middleware.md#options) for disabling use of [React Transform](https://github.com/gaearon/babel-plugin-react-transform#readme) to attempt to handle Hot Module Reloading for React components and `render()` error display [[#263](https://github.com/insin/nwb/issues/263)]
 
 **Preact**
 
@@ -38,7 +39,7 @@
   - `devServer.historyApiFallback.disableDotRule` can be enabled if you need to use dots in your path when using the HTML5 History API
   - `devServer.https` can be used to enable HTTPS
   - `devServer.proxy` can be used to proxy certain URLs to a separate API backend development server
-- Added a [`type` option](https://github.com/insin/nwb/blob/master/docs/Middleware.md#option) to nwb's Express middleware to set the project type (one of `react`, `preact`, `inferno` or `web`) manually, enabling use of the middleware without a config file.
+- Added a [`type` option](https://github.com/insin/nwb/blob/master/docs/Middleware.md#options) to nwb's Express middleware to set the project type (one of `react`, `preact`, `inferno` or `web`) manually, enabling use of the middleware without a config file.
 
 **React**
 
@@ -544,7 +545,7 @@ These are being scoped to both make use of unreleased features and to test them 
 
 * Don't configure the [babel runtime transform](https://babeljs.io/docs/plugins/transform-runtime/)'s `moduleName` path when transpiling code for npm [[#205](https://github.com/insin/nwb/issues/205)]
 
-  If you depend on `babel-runtime` in a React component or Web module (by using `async`/`await` or [enabling any of the runtime transform's other features](https://github.com/insin/nwb/blob/master/docs/Configuration.md#runtime-string--boolean)) it needs to be resolvable from the end-user's dependencies, so should be added to your project's `peerDependencies`.
+  If you depend on `babel-runtime` in a React component or Web module (by using `async`/`await` or [enabling any of the runtime transform's other features](https://github.com/insin/nwb/blob/master/docs/Configuration.md#runtime-string--boolean) it needs to be resolvable from the end-user's dependencies, so should be added to your project's `peerDependencies`.
 
 # 0.13.5 / 2016-12-13
 
