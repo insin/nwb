@@ -5,6 +5,8 @@
 [![npm package][npm-badge]][npm]
 [![Coveralls][coveralls-badge]][coveralls]
 
+![nwb](http://i.imgur.com/CaBRleb.jpg)
+
 nwb is a toolkit for:
 
 - [Quick Development with React, Inferno, Preact or vanilla JavaScript](#quick-development)
@@ -57,7 +59,7 @@ export default class App extends Component {
 ```
 ```sh
 $ nwb react run app.js
-✔ Installing react and react-dom
+ Installing react and react-dom
 Starting Webpack compilation...
 Compiled successfully in 5033 ms.
 
@@ -65,7 +67,7 @@ The app is running at http://localhost:3000/
 ```
 ```sh
 $ nwb react build app.js
-✔ Building React app
+ Building React app
 
 File size after gzip:
 
