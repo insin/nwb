@@ -5,7 +5,7 @@
 [![npm package][npm-badge]][npm]
 [![Coveralls][coveralls-badge]][coveralls]
 
-![nwb](http://i.imgur.com/CaBRleb.jpg)
+![nwb](resources/cover.jpg)
 
 nwb is a toolkit for:
 
@@ -59,7 +59,7 @@ export default class App extends Component {
 ```
 ```sh
 $ nwb react run app.js
- Installing react and react-dom
+✔ Installing react and react-dom
 Starting Webpack compilation...
 Compiled successfully in 5033 ms.
 
@@ -67,7 +67,7 @@ The app is running at http://localhost:3000/
 ```
 ```sh
 $ nwb react build app.js
- Building React app
+✔ Building React app
 
 File size after gzip:
 
@@ -177,6 +177,8 @@ cd my-module/
 **Manages key development dependencies and configuration for you**. Check out an [example of the effect using nwb had](https://github.com/insin/react-yelp-clone/compare/master...nwb) on the amount of `devDependencies` and configuration to be managed in a real project it was dropped into.
 
 ## MIT Licensed
+
+*Cover image created by [GeorgioWan](https://github.com/GeorgioWan)*
 
 *Operating system icons created with [Icons8](https://icons8.com/)*
 
