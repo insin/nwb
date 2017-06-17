@@ -84,6 +84,7 @@
 - inquirer: v3.0.6 → [v3.1.0](https://github.com/SBoudrias/Inquirer.js/releases/tag/v3.1.0)
 - ora: v1.2.0 → v1.3.0
 - postcss-loader: v2.0.5 → [v2.0.6](https://github.com/postcss/postcss-loader/blob/master/CHANGELOG.md#206-2017-06-14)
+- promise: v7.1.1 → v7.3.0
 - style-loader: v0.18.1 → [v0.18.2](https://github.com/webpack-contrib/style-loader/blob/master/CHANGELOG.md#0182-2017-06-05)
 - url-loader: v0.5.8 → [v0.5.9](https://github.com/webpack-contrib/url-loader/releases/tag/v0.5.9)
 - [webpack-dev-server](https://github.com/webpack/webpack-dev-server/): v2.4.5
