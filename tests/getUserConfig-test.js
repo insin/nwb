@@ -174,66 +174,6 @@ describe('processUserConfig()', () => {
       webpack: {},
     })
   })
-
-  // TODO Remove in a future release
-  it('converts karma.testDirs to karma.excludeFromCoverage for v0.15 back-compat', () => {
-    let config = processUserConfig({
-      userConfig: {
-        karma: {
-          testDirs: 'test',
-        }
-      }
-    })
-    expect(config.karma).toEqual({excludeFromCoverage: 'test'})
-  })
-  it('converts webpack.loaders to webpack.rules for v0.15 back-compat', () => {
-    let config = processUserConfig({
-      userConfig: {
-        webpack: {
-          loaders: {
-            css: {}
-          }
-        }
-      }
-    })
-    expect(config.webpack).toEqual({rules: {css: {}}})
-  })
-  it('converts a loader query object to an options object for v0.15 back-compat', () => {
-    let config = processUserConfig({
-      userConfig: {
-        webpack: {
-          rules: {
-            css: {
-              query: {a: 1}
-            }
-          }
-        }
-      }
-    })
-    expect(config.webpack.rules).toEqual({css: {options: {a: 1}}})
-  })
-  it('converts PostCSS array config to loader option config for v0.15 back-compat', () => {
-    let config = processUserConfig({
-      userConfig: {
-        webpack: {
-          postcss: [43]
-        }
-      }
-    })
-    expect(config.webpack.rules).toEqual({postcss: {options: {plugins: [43]}}})
-  })
-  it('converts PostCSS defaults config to loader option config for v0.15 back-compat', () => {
-    let config = processUserConfig({
-      userConfig: {
-        webpack: {
-          postcss: {
-            defaults: [43]
-          }
-        }
-      }
-    })
-    expect(config.webpack.rules).toEqual({postcss: {options: {plugins: [43]}}})
-  })
 })
 
 describe('prepareWebpackRuleConfig()', () => {

@@ -199,11 +199,7 @@ export function prepareWebpackStyleConfig(styles) {
 }
 
 // TODO Remove in a future version
-let warnedAboutKarmaTestDirs = false
 let warnedAboutOldStyleRules = false
-let warnedAboutPostCSSConfig = false
-let warnedAboutWebpackLoaders = false
-let warnedAboutWebpackRuleQuery = false
 
 /**
  * Validate user config and perform any necessary validation and transformation
@@ -289,20 +285,7 @@ export function processUserConfig({
   }
 
   // Karma config
-  // TODO Remove in a future version
-  if (userConfig.karma.testDir || userConfig.karma.testDirs) {
-    // We secretly supported passing testDir too
-    let prop = userConfig.karma.testDir ? 'testDir' : 'testDirs'
-    if (!warnedAboutKarmaTestDirs) {
-      report.deprecated(
-        `karma.${prop}`,
-        `Deprecated as of nwb v0.15 - this has been renamed to ${chalk.green('karma.excludeFromCoverage')}.`
-      )
-      warnedAboutKarmaTestDirs = true
-    }
-    userConfig.karma.excludeFromCoverage = userConfig.karma[prop]
-    delete userConfig.karma[prop]
-  }
+  // noop
 
   // npm build config
   if (typeOf(userConfig.npm.umd) === 'string') {
@@ -400,41 +383,6 @@ export function processUserConfig({
     )
   }
 
-  // TODO Remove in a future version
-  if ('loaders' in userConfig.webpack) {
-    if (!warnedAboutWebpackLoaders) {
-      report.deprecated('webpack.loaders',
-        `Deprecated as of nwb v0.15 - this has been renamed to ${chalk.green('webpack.rules')} to match Webpack 2 config.`
-      )
-      warnedAboutWebpackLoaders = true
-    }
-    userConfig.webpack.rules = userConfig.webpack.loaders
-    delete userConfig.webpack.loaders
-  }
-  // TODO Remove in a future version
-  if ('postcss' in userConfig.webpack) {
-    let messages = [`Deprecated as of nwb v0.15 - PostCSS plugins are now configured in ${chalk.green('webpack.rules')} using postcss loader ids.`]
-    let configType = typeOf(userConfig.webpack.postcss)
-    if (configType === 'array' ||
-        (configType === 'object' && typeOf(userConfig.webpack.postcss.defaults) === 'array')) {
-      if (!('rules' in userConfig.webpack)) {
-        userConfig.webpack.rules = {}
-      }
-      userConfig.webpack.rules.postcss = {
-        plugins: configType === 'array' ? userConfig.webpack.postcss : userConfig.webpack.postcss.defaults
-      }
-      messages.push(`nwb will use ${chalk.yellow(`webpack.postcss${configType === 'object' ? '.defaults' : ''}`)} as ${chalk.green('webpack.rules.postcss.plugins')} config during a build.`)
-    }
-    else {
-      messages.push(`nwb will use its default PostCSS config during a build.`)
-    }
-    if (!warnedAboutPostCSSConfig) {
-      report.deprecated('webpack.postcss', ...messages)
-      warnedAboutPostCSSConfig = true
-    }
-    delete webpack.postcss
-  }
-
   if ('rules' in userConfig.webpack) {
     if (typeOf(userConfig.webpack.rules) !== 'object') {
       report.error(
@@ -447,16 +395,6 @@ export function processUserConfig({
       let error = false
       Object.keys(userConfig.webpack.rules).forEach(ruleId => {
         let rule = userConfig.webpack.rules[ruleId]
-        if (rule.query) {
-          if (!warnedAboutWebpackRuleQuery) {
-            report.deprecated('query Object in webpack.rules config',
-              `Deprecated as of nwb v0.15 - an ${chalk.green('options')} Object should now be used to specify rule options, to match Webpack 2 config.`
-            )
-            warnedAboutWebpackRuleQuery = true
-          }
-          rule.options = rule.query
-          delete rule.query
-        }
         if (rule.use && typeOf(rule.use) !== 'array') {
           report.error(
             `webpack.rules.${ruleId}.use`,

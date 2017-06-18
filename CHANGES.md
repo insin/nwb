@@ -1,3 +1,9 @@
+# Unreleased (in `next` branch)
+
+## Removed
+
+- Removed support for configuration which was [deprecated in nwb v0.15.0](#0150--2017-01-25).
+
 # 0.17.1 / 2017-06-19
 
 ## Fixed
