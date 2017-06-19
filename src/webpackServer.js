@@ -72,7 +72,8 @@ export default function webpackServer(args, buildConfig, cb) {
     if (!('status' in buildConfig.plugins)) {
       buildConfig.plugins.status = {
         disableClearConsole: args.clear !== false && args.clearConsole !== false,
-        successMessage: `The app is running at http://${args.host || 'localhost'}:${port}/`,
+        successMessage:
+          `The app is running at http${serverConfig.https ? 's' : ''}://${args.host || 'localhost'}:${port}/`,
       }
     }
 
