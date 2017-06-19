@@ -71,10 +71,10 @@ describe('processUserConfig()', () => {
       check({babel: {stage: 4}}, 'babel.stage', /Must be/)
     })
     it('babel.presets is not an array', () => {
-      check({babel: {presets: 'some-preset'}}, 'babel.presets', /Must be/)
+      check({babel: {presets: {}}}, 'babel.presets', /Must be/)
     })
     it('babel.plugins is not an array', () => {
-      check({babel: {plugins: 'some-plugin'}}, 'babel.plugins', /Must be/)
+      check({babel: {plugins: {}}}, 'babel.plugins', /Must be/)
     })
     it('babel.runtime is not valid', () => {
       check({babel: {runtime: 'welp'}}, 'babel.runtime', /Must be/)

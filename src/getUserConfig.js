@@ -206,7 +206,7 @@ let warnedAboutOldStyleRules = false
  * to it.
  */
 export function processUserConfig({
-    args,
+    args = {},
     check = false,
     pluginConfig = {},
     required = DEFAULT_REQUIRED,
