@@ -88,6 +88,7 @@ The configuration object can include the following properties:
   - [`webpack.compat`](#compat-object) - enable Webpack compatibility tweaks for commonly-used modules
   - [`webpack.define`](#define-object) - options for `DefinePlugin`, for replacing certain expressions with values
   - [`webpack.extractText`](#extracttext-object) - options for `ExtractTextPlugin`
+  - [`webpack.hoisting`](#hoisting-boolean) - enable partial scope hoisting with Webpack 3's `ModuleConcatenationPlugin`
   - [`webpack.html`](#html-object) - options for `HtmlPlugin`
   - [`webpack.install`](#install-object) - options for `NpmInstallPlugin`
   - [`webpack.rules`](#rules-object) - tweak the configuration of generated Webpack rules and their loaders
@@ -452,6 +453,18 @@ module.exports = {
 ##### `extractText`: `Object`
 
 Configures [options for `ExtractTextWebpackPlugin`](https://github.com/webpack-contrib/extract-text-webpack-plugin#readme).
+
+##### `hoisting`: `Boolean`
+
+Enables [partial scope hoisting](https://github.com/webpack/webpack/tree/master/examples/scope-hoisting#readme) with Webpack 3's `ModuleConcatenationPlugin`.
+
+```js
+module.exports = {
+  webpack: {
+    hoisting: true
+  }
+}
+```
 
 ##### `html`: `Object`
 
