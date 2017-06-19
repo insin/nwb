@@ -1,5 +1,21 @@
 # Unreleased (in `next` branch)
 
+## Added
+
+- [`babel`, `webpack`, `devServer`, `karma` and `npm` configuration](https://github.com/insin/nwb/blob/master/docs/Configuration.md#configuration-object) can now be provided via [arguments using dotted paths](https://github.com/insin/nwb/blob/master/docs/Configuration.md#configuration-via-arguments).
+
+  ```sh
+  nwb react build app.js \
+    --babel.plugins=react-html-attrs \
+    --babel.stage=2 \
+    --no-webpack.uglify.mangle \
+    --webpack.uglify.beautify
+  ```
+
+  If you have a config file, arguments will override properties in it. This is primarily intended for one-off feature toggles without having to edit your config file, and to provide some level of configuration for [quick development commands](https://github.com/insin/nwb/blob/master/docs/guides/QuickDevelopment.md#quick-development-with-nwb) without needing a config file.
+
+  [`babel.plugins`](https://github.com/insin/nwb/blob/master/docs/Configuration.md#plugins-string--array), [`babel.presets`](https://github.com/insin/nwb/blob/master/docs/Configuration.md#presets-string--array) and locales in [`webpack.compat`](https://github.com/insin/nwb/blob/master/docs/Configuration.md#compat-object) config now also accept single configuration as a String to make them usable via arguments.
+
 ## Removed
 
 - Removed support for configuration which was [deprecated in nwb v0.15.0](#0150--2017-01-25).

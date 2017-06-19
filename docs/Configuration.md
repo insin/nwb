@@ -45,6 +45,25 @@ If a function is exported, it will be passed an object with the following proper
 - [react-hn's `nwb.config.js`](https://github.com/insin/react-hn/blob/concat/nwb.config.js) is a simple configuration file with minor tweaks to Babel and Webpack config.
 - [React Yelp Clone's `nwb.config.js`](https://github.com/insin/react-yelp-clone/blob/nwb/nwb.config.js) configures Babel, Karma and Webpack to allow nwb to be dropped into an existing app to handle its development tooling, [reducing the amount of `devDependencies` and configuration](https://github.com/insin/react-yelp-clone/compare/master...nwb) which need to be managed.
 
+### Configuration Via Arguments
+
+Configuration for the `babel`, `webpack`, `devServer`, `karma` and `npm` properties documented below can also be provided via arguments using dotted paths.
+
+For example, if you want to use [`webpack.uglify` config](#uglify-object--false) to create a production build which strips development-only code but keeps output readable for debugging, you could provide the following arguments instead of tweaking your `nwb.config.js` file for a single run:
+
+```sh
+nwb build-react-app --no-webpack.uglify.mangle --webpack.uglify.beautify
+```
+
+> **Note:** This functionality is intended for one-off toggling and to allow some configuration of [Quick Development commands](/docs/guides/QuickDevelopment.md#quick-development-with-nwb) without having to create a config file. If you *do* have a config file, these arguments will act as overrides.
+>
+> nwb uses [minimist](https://github.com/substack/minimist) for argument parsing, so here's quick cheatsheet if you wish to make use of this functionality:
+>
+> - `--config.example` is `true`
+> - `--no-config.example` is `false`
+> - `--config.example=value` is `'value'`
+> - `--config.example=one --config.example=two` is `['one', 'two']`
+
 ### Configuration Object
 
 The configuration object can include the following properties:
@@ -56,8 +75,8 @@ The configuration object can include the following properties:
   - [`babel`](#babel-object)
   - [`babel.cherryPick`](#cherrypick-string--arraystring) - enable cherry-picking for destructured `import` statements
   - [`babel.loose`](#loose-boolean) - enable loose mode for Babel plugins which support it
-  - [`babel.plugins`](#plugins-arraystring--array) - extra Babel plugins to be used
-  - [`babel.presets`](#presets-arraystring) - extra Babel presets to be used
+  - [`babel.plugins`](#plugins-string--array) - extra Babel plugins to be used
+  - [`babel.presets`](#presets-string--array) - extra Babel presets to be used
   - [`babel.removePropTypes`](#removeproptypes-object--false) - disable or configure removal of React component `propTypes` in production builds
   - [`babel.reactConstantElements`](#reactconstantelements-false) - disable use of React constant element hoisting in production builds
   - [`babel.runtime`](#runtime-string--boolean) - enable the `transform-runtime` plugin with different configurations
@@ -185,9 +204,11 @@ module.exports = {
 }
 ```
 
-##### `plugins`: `Array<String | Array>`
+##### `plugins`: `String` | `Array`
 
 Additional Babel plugins to use.
+
+A single additional plugin which doesn't need a configuration object can be specified as a String, otherwise provide an Array.
 
 nwb commands are run in the current working directory, so if you need to configure additional Babel plugins or presets, you can install them locally, pass their names and let Babel import them for you.
 
@@ -199,14 +220,16 @@ npm install babel-plugin-react-html-attrs
 ```js
 module.exports = {
   babel: {
-    plugins: ['react-html-attrs']
+    plugins: 'react-html-attrs'
   }
 }
 ```
 
-##### `presets`: `Array<String>`
+##### `presets`: `String` | `Array`
 
 Additional Babel presets to use.
+
+A single additional preset which doesn't need a configuration object can be specified as a String, otherwise provide an Array.
 
 ##### `removePropTypes`: `Object | false`
 
@@ -372,19 +395,19 @@ Set to `true` for [Enzyme](http://airbnb.io/enzyme/) compatibility - this assume
 
 If you use [intl](https://www.npmjs.com/package/intl) in a Webpack build, all the locales it supports will be imported by default and your build will be larger than you were expecting!
 
-Provide an object with a `locales` Array specifying language codes for the locales you want to load.
+Provide an object with a `locales` Array specifying language codes for the locales you want to load, or a String if you only need one locale.
 
 ###### `moment`: `Object`
 
-If you use [Moment.js](http://momentjs.com/) in a Webpack build, all the locales it supports will be imported by default and your build will be about 139KB larger than you were expecting!
+If you use [Moment.js](http://momentjs.com/) in a Webpack build, all the locales it supports will be imported by default and your build will be larger than you were expecting!
 
-Provide an object with a `locales` Array specifying language codes for the locales you want to load.
+Provide an object with a `locales` Array specifying language codes for the locales you want to load, or a String if you only need one locale.
 
 ###### `react-intl`: `Object`
 
 If you use [react-intl](https://github.com/yahoo/react-intl) in a Webpack build, all the locales it supports will be imported by default and your build will be larger than you were expecting!
 
-Provide an object with a `locales` Array specifying language codes for the locales you want to load.
+Provide an object with a `locales` Array specifying language codes for the locales you want to load, or a String if you only need one locale.
 
 ###### `sinon`: `Boolean`
 

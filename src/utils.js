@@ -7,6 +7,7 @@ import fs from 'fs-extra'
 import ora from 'ora'
 import resolve from 'resolve'
 import runSeries from 'run-series'
+import merge from 'webpack-merge'
 
 import debug from './debug'
 
@@ -197,6 +198,11 @@ export function joinAnd(array: any[], lastClause: string = 'and') {
 export function modulePath(module: string, basedir: string = process.cwd()): string {
   return path.dirname(resolve.sync(`${module}/package.json`, {basedir}))
 }
+
+/**
+ * Custom merge which replaces arrays instead of concatenating them.
+ */
+export const replaceArrayMerge = merge({customizeArray(a, b, key) { return b }})
 
 /**
  * Hack to generate simple config file contents by stringifying to JSON, but

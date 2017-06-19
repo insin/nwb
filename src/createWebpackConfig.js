@@ -13,7 +13,7 @@ import merge from 'webpack-merge'
 import createBabelConfig from './createBabelConfig'
 import debug from './debug'
 import {UserError} from './errors'
-import {deepToString, typeOf} from './utils'
+import {deepToString, replaceArrayMerge, typeOf} from './utils'
 import StatusPlugin from './WebpackStatusPlugin'
 
 type LoaderConfig = {
@@ -35,11 +35,6 @@ type RuleConfig = {
 };
 
 type RuleConfigFactory = (?string, RuleConfig) => ?RuleConfig;
-
-// Custom merge which replaces arrays instead of merging them. The only arrays
-// used in default options are for PostCSS plugins, which we want the user to be
-// able to completely override.
-let replaceArrayMerge = merge({customizeArray(a, b, key) { return b }})
 
 /**
  * Merge webpack rule config objects.
@@ -81,6 +76,8 @@ export function mergeLoaderConfig(
     loader = {...userConfig}
   }
   else {
+    // The only arrays used in default options are for PostCSS plugins, which we
+    // want the user to be able to completely override.
     loader = replaceArrayMerge(defaultConfig, buildConfig, userConfig)
   }
   if (loader.options && Object.keys(loader.options).length === 0) {

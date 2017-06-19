@@ -10,7 +10,7 @@ import {CONFIG_FILE_NAME, INFERNO_APP, PREACT_APP, PROJECT_TYPES} from './consta
 import {COMPAT_CONFIGS} from './createWebpackConfig'
 import debug from './debug'
 import {ConfigValidationError} from './errors'
-import {deepToString, joinAnd, typeOf} from './utils'
+import {deepToString, joinAnd, replaceArrayMerge, typeOf} from './utils'
 
 const DEFAULT_REQUIRED = false
 
@@ -229,11 +229,23 @@ export function processUserConfig({
     report.error('type', userConfig.type, `Must be one of: ${[...PROJECT_TYPES].join(', ')}`)
   }
 
-  // Set defaults for config objects so we don't have to existence-check them
-  // everywhere.
+  let argumentOverrides = {}
   void ['babel', 'devServer', 'karma', 'npm', 'webpack'].forEach(prop => {
-    if (!(prop in userConfig)) userConfig[prop] = {}
+    // Set defaults for top-level config objects so we don't have to
+    // existence-check them everywhere.
+    if (!(prop in userConfig)) {
+      userConfig[prop] = {}
+    }
+    // Allow config overrides via --path.to.config in args
+    if (typeOf(args[prop]) === 'object') {
+      argumentOverrides[prop] = args[prop]
+    }
   })
+
+  if (Object.keys(argumentOverrides).length > 0) {
+    debug('user config arguments: %s', deepToString(argumentOverrides))
+    userConfig = replaceArrayMerge(userConfig, argumentOverrides)
+  }
 
   // Babel config
   if (!!userConfig.babel.stage || userConfig.babel.stage === 0) {
@@ -253,11 +265,21 @@ export function processUserConfig({
       )
     }
   }
-  if (userConfig.babel.presets && typeOf(userConfig.babel.presets) !== 'array') {
-    report.error('babel.presets', userConfig.babel.presets, `Must be an ${chalk.cyan('Array')}`)
+  if (userConfig.babel.presets) {
+    if (typeOf(userConfig.babel.presets) === 'string') {
+      userConfig.babel.presets = [userConfig.babel.presets]
+    }
+    else if (typeOf(userConfig.babel.presets) !== 'array') {
+      report.error('babel.presets', userConfig.babel.presets, `Must be a string or an ${chalk.cyan('Array')}`)
+    }
   }
-  if (userConfig.babel.plugins && typeOf(userConfig.babel.plugins) !== 'array') {
-    report.error('babel.plugins', userConfig.babel.plugins, `Must be an ${chalk.cyan('Array')}`)
+  if (userConfig.babel.plugins) {
+    if (typeOf(userConfig.babel.plugins) === 'string') {
+      userConfig.babel.plugins = [userConfig.babel.plugins]
+    }
+    else if (typeOf(userConfig.babel.plugins) !== 'array') {
+      report.error('babel.plugins', userConfig.babel.plugins, `Must be a string or an ${chalk.cyan('Array')}`)
+    }
   }
   if ('runtime' in userConfig.babel &&
       typeOf(userConfig.babel.runtime) !== 'boolean' &&
@@ -347,31 +369,44 @@ export function processUserConfig({
         `Valid properties are: ${Object.keys(COMPAT_CONFIGS).join(', ')}.`)
     }
 
-    if (userConfig.webpack.compat.intl &&
-        typeOf(userConfig.webpack.compat.intl.locales) !== 'array') {
-      report.error(
-        'webpack.compat.intl.locales',
-        webpack.compat.intl.locales,
-        'Must be an Array.'
-      )
+    if (userConfig.webpack.compat.intl) {
+      if (typeOf(userConfig.webpack.compat.intl.locales) === 'string') {
+        userConfig.webpack.compat.intl.locales = [userConfig.webpack.compat.intl.locales]
+      }
+      else if (typeOf(userConfig.webpack.compat.intl.locales) !== 'array') {
+        report.error(
+          'webpack.compat.intl.locales',
+          webpack.compat.intl.locales,
+          'Must be a string or an Array.'
+        )
+      }
     }
 
-    if (userConfig.webpack.compat.moment &&
-        typeOf(userConfig.webpack.compat.moment.locales) !== 'array') {
-      report.error(
-        'webpack.compat.moment.locales',
-        webpack.compat.moment.locales,
-        'Must be an Array.'
-      )
+    if (userConfig.webpack.compat.moment) {
+      if (typeOf(userConfig.webpack.compat.moment.locales) === 'string') {
+        userConfig.webpack.compat.moment.locales = [userConfig.webpack.compat.moment.locales]
+      }
+      else if (typeOf(userConfig.webpack.compat.moment.locales) !== 'array') {
+        report.error(
+          'webpack.compat.moment.locales',
+          webpack.compat.moment.locales,
+          'Must be a string or an Array.'
+        )
+      }
     }
 
-    if (userConfig.webpack.compat['react-intl'] &&
-        typeOf(userConfig.webpack.compat['react-intl'].locales) !== 'array') {
-      report.error(
-        'webpack.compat[\'react-intl\'].locales',
-        webpack.compat['react-intl'].locales,
-        'Must be an Array.'
-      )
+    if (userConfig.webpack.compat['react-intl']) {
+      if (typeOf(userConfig.webpack.compat['react-intl'].locales) === 'string') {
+        userConfig.webpack.compat['react-intl'].locales =
+          [userConfig.webpack.compat['react-intl'].locales]
+      }
+      else if (typeOf(userConfig.webpack.compat['react-intl'].locales) !== 'array') {
+        report.error(
+          'webpack.compat[\'react-intl\'].locales',
+          webpack.compat['react-intl'].locales,
+          'Must be a string or an Array.'
+        )
+      }
     }
   }
 
