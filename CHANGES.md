@@ -1,5 +1,9 @@
 # Unreleased (in `next` branch)
 
+## Fixed
+
+- Fixed display of user config errors when running the dev server.
+
 ## Added
 
 - [`babel`, `webpack`, `devServer`, `karma` and `npm` configuration](https://github.com/insin/nwb/blob/master/docs/Configuration.md#configuration-object) can now be provided via [arguments using dotted paths](https://github.com/insin/nwb/blob/master/docs/Configuration.md#configuration-via-arguments).

@@ -56,13 +56,20 @@ export default function webpackServer(args, buildConfig, cb) {
     buildConfig = buildConfig(args)
   }
 
+  let serverConfig
+  try {
+    serverConfig = getUserConfig(args).devServer
+  }
+  catch (e) {
+    return cb(e)
+  }
+
   // Other config can be provided by the user via the CLI
   getServerPort(args, (err, port) => {
     if (err) return cb(err)
     // A null port indicates the user chose not to run the server when prompted
     if (port === null) return cb()
 
-    let {devServer: serverConfig} = getUserConfig(args)
     serverConfig.port = port
     // Fallback index serving can be disabled with --no-fallback
     if (args.fallback === false) serverConfig.historyApiFallback = false
