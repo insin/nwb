@@ -2,6 +2,9 @@ import webpack from 'webpack'
 import WebpackDevServer from 'webpack-dev-server'
 import merge from 'webpack-merge'
 
+import debug from './debug'
+import {deepToString} from './utils'
+
 /**
  * Use Webpack Dev Server to build and serve assets using Webpack's watch mode,
  * hot reload changes in the browser and display compile error overlays.
@@ -13,7 +16,7 @@ export default function devServer(webpackConfig, serverConfig, cb) {
 
   let {host, port, ...otherServerConfig} = serverConfig
 
-  let server = new WebpackDevServer(compiler, merge({
+  let webpackDevServerOptions = merge({
     historyApiFallback: true,
     hot: true,
     noInfo: true,
@@ -23,7 +26,11 @@ export default function devServer(webpackConfig, serverConfig, cb) {
     watchOptions: {
       ignored: /node_modules/,
     },
-  }, otherServerConfig))
+  }, otherServerConfig)
+
+  debug('webpack dev server options: %s', deepToString(webpackDevServerOptions))
+
+  let server = new WebpackDevServer(compiler, webpackDevServerOptions)
 
   function onServerStart(err) {
     if (err) cb(err)

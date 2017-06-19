@@ -25,7 +25,7 @@ function getHMRClientEntries(args: Object, serverConfig: ?ServerConfig): string[
   let hmrURL = '/'
   // Set full HMR URL if the user customised it (#279)
   if (args.host || args.port) {
-    hmrURL = `//${serverConfig.host || 'localhost'}:${serverConfig.port}`
+    hmrURL = `http://${serverConfig.host || 'localhost'}:${serverConfig.port}/`
   }
 
   return [
