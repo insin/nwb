@@ -1,3 +1,5 @@
+# 0.17.1 / 2017-06-17
+
 ## Fixed
 
 - Fixed using a custom port for the dev server - Webpack Dev Server's client didn't like the format we were specifying the URL for the Hot Module Reloading connection in [[#328](https://github.com/insin/nwb/issues/328)]
