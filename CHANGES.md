@@ -36,6 +36,7 @@
 - npm-install-webpack2-plugin: v4.1.1 → [v5.0.0] - add Webpack 3 to peerDeps and drop Webpack 1
 - promise: v7.3.0 → v8.0.0
 - webpack: v2.6.1 → [v3.0.0](https://github.com/webpack/webpack/releases/tag/v3.0.0)
+- webpack-dev-server: v2.4.5 → [v2.5.0](https://github.com/webpack/webpack-dev-server/releases/tag/v2.5.0)
 
 # 0.17.1 / 2017-06-19
 
