@@ -1,3 +1,7 @@
+## Dependencies
+
+- npm-install-webpack2-plugin: v5.0.0 → v5.0.1 - fix Webpack 3 support
+
 # 0.18.0 / 2017-06-20
 
 > This is the `next` release of nwb - you need to specify `nwb@next` or `nwb@0.18.0` when installing it.
