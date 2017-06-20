@@ -96,7 +96,7 @@
 
     "webpack": "3.0.0",
     "autoprefixer": "7.1.1",
-    "babel-loader": "7.0.0",
+    "babel-loader": "7.1.0",
     "case-sensitive-paths-webpack-plugin": "2.1.1",
     "copy-webpack-plugin": "4.0.1",
     "css-loader": "0.28.4",
