@@ -1,4 +1,4 @@
-# 0.18.0 / 2017-06-19
+# 0.18.0 / 2017-06-20
 
 > This is the `next` release of nwb - you need to specify `nwb@next` or `nwb@0.18.0` when installing it.
 
@@ -18,8 +18,8 @@
 
 ## Added
 
-- Added [`webpack.hoisting` config](https://github.com/insin/nwb/blob/master/docs/Configuration.md#hoisting-boolean) to enable use of Webpack 3's new `ModuleConcatenationPlugin` for scope hoisting in production builds.
-- [`babel`, `webpack`, `devServer`, `karma` and `npm` configuration](https://github.com/insin/nwb/blob/master/docs/Configuration.md#configuration-object) can now be provided via [arguments using dotted paths](https://github.com/insin/nwb/blob/master/docs/Configuration.md#configuration-via-arguments).
+- Added [`webpack.hoisting` config](https://github.com/insin/nwb/blob/master/docs/Configuration.md#hoisting-boolean) to enable use of Webpack 3's new `ModuleConcatenationPlugin` for scope hoisting in production builds [[#326](https://github.com/insin/nwb/issues/326)]
+- [`babel`, `webpack`, `devServer`, `karma` and `npm` configuration](https://github.com/insin/nwb/blob/master/docs/Configuration.md#configuration-object) can now be provided via [arguments using dotted paths](https://github.com/insin/nwb/blob/master/docs/Configuration.md#configuration-via-arguments) [[#327](https://github.com/insin/nwb/issues/327)]
 
   ```sh
   nwb react build app.js \
@@ -32,7 +32,7 @@
 
 ## Changed
 
-- [`babel.plugins`](https://github.com/insin/nwb/blob/master/docs/Configuration.md#plugins-string--array), [`babel.presets`](https://github.com/insin/nwb/blob/master/docs/Configuration.md#presets-string--array) and locales in [`webpack.compat`](https://github.com/insin/nwb/blob/master/docs/Configuration.md#compat-object) config now also accept single configuration as a String to make them usable via arguments.
+- [`babel.plugins`](https://github.com/insin/nwb/blob/master/docs/Configuration.md#plugins-string--array), [`babel.presets`](https://github.com/insin/nwb/blob/master/docs/Configuration.md#presets-string--array) and locales in [`webpack.compat`](https://github.com/insin/nwb/blob/master/docs/Configuration.md#compat-object) config now also accept single configuration as a String to make them usable via arguments [[#327](https://github.com/insin/nwb/issues/327)]
 
 ## Dependencies
 
