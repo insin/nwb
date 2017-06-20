@@ -24,9 +24,21 @@ A zero-config development setup is provided, but nwb also supports [configuratio
 
 Installing globally provides an `nwb` command for quick development and working with projects.
 
-```sh
-npm install -g nwb
-```
+- The `next` version of nwb uses Wepack 3 and **requires npm >= 3 or yarn to install** until the Webpack ecosystem catches up with the Webpack 3 release, after which it will become the default version:
+
+  ```sh
+  npm install -g nwb@next
+  ```
+
+  This version is in the `master` branch, so documentation links from this page are current.
+
+- The default version of nwb uses Webpack 2 and is compatible with the default version of npm included with Node.js 4.6 and up:
+
+  ```sh
+  npm install -g nwb
+  ```
+
+  [Docs for this version are available here](https://github.com/insin/nwb/tree/v0.17.1/docs#table-of-contents).
 
 > Using **npm >= 3 is recommended**, as Babel 6 takes significantly more time and disk space to install with npm 2 due to its lack of deduplication.
 

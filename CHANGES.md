@@ -1,10 +1,16 @@
-# Unreleased (in `next` branch)
+# 0.18.0 / 2017-06-19
+
+> This is the `next` release of nwb - you need to specify `nwb@next` or `nwb@0.18.0` when installing it.
+
+> **This release will not work with the default version of npm which comes with Node.js 4** as some of the Webpack npm packages nwb uses don't have Webpack 3 in their `peerDependencies` yet, which npm 2 treats as an error.
 
 ## Breaking Changes
 
 - Updated to Webpack 3 - potentially breaking for some plugins [[#326](https://github.com/insin/nwb/issues/326)]
 
   See the [official release post](https://medium.com/webpack/webpack-3-official-release-15fd2dd8f07b) for changes.
+
+- Removed support for configuration which was [deprecated in nwb v0.15.0](#0150--2017-01-25).
 
 ## Fixed
 
@@ -24,21 +30,21 @@
 
   If you have a config file, arguments will override properties in it. This is primarily intended for one-off feature toggles without having to edit your config file, and to provide some level of configuration for [quick development commands](https://github.com/insin/nwb/blob/master/docs/guides/QuickDevelopment.md#quick-development-with-nwb) without needing a config file.
 
-  [`babel.plugins`](https://github.com/insin/nwb/blob/master/docs/Configuration.md#plugins-string--array), [`babel.presets`](https://github.com/insin/nwb/blob/master/docs/Configuration.md#presets-string--array) and locales in [`webpack.compat`](https://github.com/insin/nwb/blob/master/docs/Configuration.md#compat-object) config now also accept single configuration as a String to make them usable via arguments.
+## Changed
 
-## Removed
-
-- Removed support for configuration which was [deprecated in nwb v0.15.0](#0150--2017-01-25).
+- [`babel.plugins`](https://github.com/insin/nwb/blob/master/docs/Configuration.md#plugins-string--array), [`babel.presets`](https://github.com/insin/nwb/blob/master/docs/Configuration.md#presets-string--array) and locales in [`webpack.compat`](https://github.com/insin/nwb/blob/master/docs/Configuration.md#compat-object) config now also accept single configuration as a String to make them usable via arguments.
 
 ## Dependencies
 
 - inquirer: v3.1.0→ [v3.1.1](https://github.com/SBoudrias/Inquirer.js/releases/tag/v3.1.1)
-- npm-install-webpack2-plugin: v4.1.1 → [v5.0.0] - add Webpack 3 to peerDeps and drop Webpack 1
+- npm-install-webpack2-plugin: v4.1.1 → v5.0.0 - drop Webpack 1 and add Webpack 3 to peerDeps
 - promise: v7.3.0 → v8.0.0
 - webpack: v2.6.1 → [v3.0.0](https://github.com/webpack/webpack/releases/tag/v3.0.0)
 - webpack-dev-server: v2.4.5 → [v2.5.0](https://github.com/webpack/webpack-dev-server/releases/tag/v2.5.0)
 
 # 0.17.1 / 2017-06-19
+
+> This is the `latest` release of nwb - i.e. what you get when you `npm install [-g] nwb`
 
 ## Fixed
 
