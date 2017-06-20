@@ -12,6 +12,8 @@ install:
   - npm install
 
 test_script:
+  - git config --global user.email "jonathan.buchanan@gmail.com"
+  - git config --global user.name "Jonny Buchanan"
   - node --version
   - npm --version
   - npm run test:coverage
