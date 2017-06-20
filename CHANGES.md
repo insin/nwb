@@ -1,19 +1,25 @@
 # Unreleased (in `next` branch)
 
+## Breaking Changes
+
+- Updated to Webpack 3 - potentially breaking for some plugins [[#326](https://github.com/insin/nwb/issues/326)]
+
+  See the [official release post](https://medium.com/webpack/webpack-3-official-release-15fd2dd8f07b) for changes.
+
 ## Fixed
 
 - Fixed display of user config errors when running the dev server.
 
 ## Added
 
+- Added [`webpack.hoisting` config](https://github.com/insin/nwb/blob/master/docs/Configuration.md#hoisting-boolean) to enable use of Webpack 3's new `ModuleConcatenationPlugin` for scope hoisting in production builds.
 - [`babel`, `webpack`, `devServer`, `karma` and `npm` configuration](https://github.com/insin/nwb/blob/master/docs/Configuration.md#configuration-object) can now be provided via [arguments using dotted paths](https://github.com/insin/nwb/blob/master/docs/Configuration.md#configuration-via-arguments).
 
   ```sh
   nwb react build app.js \
     --babel.plugins=react-html-attrs \
     --babel.stage=2 \
-    --no-webpack.uglify.mangle \
-    --webpack.uglify.beautify
+    --webpack.hoisting
   ```
 
   If you have a config file, arguments will override properties in it. This is primarily intended for one-off feature toggles without having to edit your config file, and to provide some level of configuration for [quick development commands](https://github.com/insin/nwb/blob/master/docs/guides/QuickDevelopment.md#quick-development-with-nwb) without needing a config file.
@@ -23,6 +29,13 @@
 ## Removed
 
 - Removed support for configuration which was [deprecated in nwb v0.15.0](#0150--2017-01-25).
+
+## Dependencies
+
+- inquirer: v3.1.0→ [v3.1.1](https://github.com/SBoudrias/Inquirer.js/releases/tag/v3.1.1)
+- npm-install-webpack2-plugin: v4.1.1 → [v5.0.0] - add Webpack 3 to peerDeps and drop Webpack 1
+- promise: v7.3.0 → v8.0.0
+- webpack: v2.6.1 → [v3.0.0](https://github.com/webpack/webpack/releases/tag/v3.0.0)
 
 # 0.17.1 / 2017-06-19
 

@@ -47,15 +47,13 @@ If a function is exported, it will be passed an object with the following proper
 
 ### Configuration Via Arguments
 
-Configuration for the `babel`, `webpack`, `devServer`, `karma` and `npm` properties documented below can also be provided via arguments using dotted paths.
-
-For example, if you want to use [`webpack.uglify` config](#uglify-object--false) to create a production build which strips development-only code but keeps output readable for debugging, you could provide the following arguments instead of tweaking your `nwb.config.js` file for a single run:
+Configuration for the `babel`, `webpack`, `devServer`, `karma` and `npm` properties documented below can also be provided via arguments using dotted paths, instead of tweaking your `nwb.config.js` file for a single run, or instead of needing to add a config file for [Quick Development commands](/docs/guides/QuickDevelopment.md#quick-development-with-nwb):
 
 ```sh
-nwb build-react-app --no-webpack.uglify.mangle --webpack.uglify.beautify
+nwb build-react-app --babel.stage=2 --webpack.hoisting
 ```
 
-> **Note:** This functionality is intended for one-off toggling and to allow some configuration of [Quick Development commands](/docs/guides/QuickDevelopment.md#quick-development-with-nwb) without having to create a config file. If you *do* have a config file, these arguments will act as overrides.
+> **Note:** If you have a config file, these arguments will act as overrides.
 >
 > nwb uses [minimist](https://github.com/substack/minimist) for argument parsing, so here's quick cheatsheet if you wish to make use of this functionality:
 >

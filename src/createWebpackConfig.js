@@ -500,11 +500,6 @@ export function createPlugins(
     }),
   ]
 
-  // Use partial scope hoisting/module concatenation
-  if (userConfig.hoisting) {
-    plugins.push(new optimize.ModuleConcatenationPlugin())
-  }
-
   if (server) {
     // HMR is enabled by default but can be explicitly disabled
     if (server.hot !== false) {
@@ -576,6 +571,10 @@ export function createPlugins(
         },
         sourceMap: true,
       }, userConfig.uglify)))
+    }
+    // Use partial scope hoisting/module concatenation
+    if (userConfig.hoisting) {
+      plugins.push(new optimize.ModuleConcatenationPlugin())
     }
   }
 
