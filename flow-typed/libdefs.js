@@ -1,0 +1,15 @@
+declare module 'autoprefixer' {  declare var exports: any;  }
+declare module 'case-sensitive-paths-webpack-plugin' {  declare var exports: any;  }
+declare module 'chalk' {  declare var exports: any;  }
+declare module 'copy-webpack-plugin' {  declare var exports: any;  }
+declare module 'cross-spawn' {  declare var exports: any;  }
+declare module 'extract-text-webpack-plugin' {  declare var exports: any;  }
+declare module 'fs-extra' {  declare var exports: any;  }
+declare module 'html-webpack-plugin' {  declare var exports: any;  }
+declare module 'npm-install-webpack2-plugin' {  declare var exports: any;  }
+declare module 'ora' {  declare var exports: any;  }
+declare module 'resolve' {  declare var exports: any;  }
+declare module 'webpack-dev-middleware' {  declare var exports: any;  }
+declare module 'webpack-hot-middleware' {  declare var exports: any;  }
+declare module 'webpack-merge' {  declare var exports: any;  }
+declare module 'webpack' {  declare var exports: any;  }

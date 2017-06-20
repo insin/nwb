@@ -1,11 +1,14 @@
 [ignore]
+<PROJECT_ROOT>/flow-typed/libdefs.js
 <PROJECT_ROOT>/lib/.*
+<PROJECT_ROOT>/node_modules/.*
 <PROJECT_ROOT>/templates/.*
 <PROJECT_ROOT>/tests/fixtures/.*
 
 [include]
 
 [libs]
+./flow-typed/libdefs.js
 
 [options]
 module.ignore_non_literal_requires=true
