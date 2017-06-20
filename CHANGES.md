@@ -1,12 +1,14 @@
+# 0.18.1 / 2017-06-20
+
+> This is the `next` release of nwb - you need to specify `nwb@next` or `nwb@0.18.0` when installing it.
+
+> **This release will not work with the default version of npm which comes with Node.js 4** as some of the Webpack npm packages nwb uses don't have Webpack 3 in their `peerDependencies` yet, which npm 2 treats as an error.
+
 ## Dependencies
 
 - npm-install-webpack2-plugin: v5.0.0 → v5.0.1 - fix Webpack 3 support
 
 # 0.18.0 / 2017-06-20
-
-> This is the `next` release of nwb - you need to specify `nwb@next` or `nwb@0.18.0` when installing it.
-
-> **This release will not work with the default version of npm which comes with Node.js 4** as some of the Webpack npm packages nwb uses don't have Webpack 3 in their `peerDependencies` yet, which npm 2 treats as an error.
 
 ## Breaking Changes
 
