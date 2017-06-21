@@ -1,3 +1,7 @@
+## Fixed
+
+- Fixed clearing the console by default when running the development server.
+
 # 0.18.1 / 2017-06-20
 
 > This is the `next` release of nwb - you need to specify `nwb@next` or `nwb@0.18.0` when installing it.
