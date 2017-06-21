@@ -2,6 +2,10 @@
 
 - Fixed clearing the console by default when running the development server.
 
+## Dependencies
+
+- babel-loader: v7.0.0 → [v7.1.0](https://github.com/babel/babel-loader/releases/tag/v7.1.0) - Webpack 3 support
+
 # 0.18.1 / 2017-06-20
 
 > This is the `next` release of nwb - you need to specify `nwb@next` or `nwb@0.18.0` when installing it.
