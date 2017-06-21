@@ -24,7 +24,7 @@ A zero-config development setup is provided, but nwb also supports [configuratio
 
 Installing globally provides an `nwb` command for quick development and working with projects.
 
-- The `next` version of nwb uses Wepack 3 and **requires npm >= 3 or yarn to install** until the Webpack ecosystem catches up with the Webpack 3 release, after which it will become the default version:
+- The `next` version of nwb uses Webpack 3 and **requires npm >= 3 or yarn to install** until the Webpack ecosystem catches up with the Webpack 3 release, after which it will become the default version:
 
   ```sh
   npm install -g nwb@next
