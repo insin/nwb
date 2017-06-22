@@ -1,3 +1,7 @@
+## Fixed
+
+- Quick `build` command config was being created before the default `NODE_ENV = production` was applied, so output filenames didn't include a chunkhash by default.
+
 # 0.18.2 / 2017-06-22
 
 > This is the `next` release of nwb - you need to specify `nwb@next` or `nwb@0.18` when installing it.
