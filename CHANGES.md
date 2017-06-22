@@ -2,6 +2,10 @@
 
 - Quick `build` command config was being created before the default `NODE_ENV = production` was applied, so output filenames didn't include a chunkhash by default.
 
+## Dependencies
+
+- webpack-dev-middleware: v1.10.2 → [v1.11.0](https://github.com/webpack/webpack-dev-middleware/releases/tag/v1.11.0) - Webpack 3 support
+
 # 0.18.2 / 2017-06-22
 
 > This is the `next` release of nwb - you need to specify `nwb@next` or `nwb@0.18` when installing it.
