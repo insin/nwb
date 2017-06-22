@@ -1,3 +1,9 @@
+# 0.18.2 / 2017-06-22
+
+> This is the `next` release of nwb - you need to specify `nwb@next` or `nwb@0.18.0` when installing it.
+
+> **This release will not work with the default version of npm which comes with Node.js 4** as some of the Webpack npm packages nwb uses don't have Webpack 3 in their `peerDependencies` yet, which npm 2 treats as an error.
+
 ## Fixed
 
 - Fixed clearing the console by default when running the development server.
@@ -6,11 +12,11 @@
 
 - babel-loader: v7.0.0 → [v7.1.0](https://github.com/babel/babel-loader/releases/tag/v7.1.0) - Webpack 3 support
 
+## Documentation
+
+- Updated [Quick Development with nwb](https://github.com/insin/nwb/blob/master/docs/guides/QuickDevelopment.md#quick-development-with-nwb) for v0.18.
+
 # 0.18.1 / 2017-06-20
-
-> This is the `next` release of nwb - you need to specify `nwb@next` or `nwb@0.18.0` when installing it.
-
-> **This release will not work with the default version of npm which comes with Node.js 4** as some of the Webpack npm packages nwb uses don't have Webpack 3 in their `peerDependencies` yet, which npm 2 treats as an error.
 
 ## Dependencies
 
