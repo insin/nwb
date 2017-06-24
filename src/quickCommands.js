@@ -90,7 +90,7 @@ export function createBuildConfig(args: Object, options: QuickConfigOptions) {
         mountId,
         title: args.title || defaultTitle,
       },
-      // A vendor bundle must be explicitly enabled with a --vendor flag
+      // A vendor bundle can be explicitly enabled with a --vendor flag
       vendor: args.vendor,
     },
   }

@@ -1,3 +1,9 @@
+## Added
+
+- Added support for the following arguments when building a React component's demo:
+  - `--title` - set the generated demo `index.html`'s `<title>`
+  - `--vendor` - enable creation of a vendor bundle for modules imported from `node_modules/`
+
 # 0.18.3 / 2017-06-22
 
 > This is the `next` release of nwb - you need to specify `nwb@next` or `nwb@0.18` when installing it.
