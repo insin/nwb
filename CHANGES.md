@@ -4,6 +4,11 @@
   - `--title` - set the generated demo `index.html`'s `<title>`
   - `--vendor` - enable creation of a vendor bundle for modules imported from `node_modules/`
 
+## Dependencies
+
+- html-webpack-plugin: v2.28.0 → [v2.29.0](https://github.com/ampedandwired/html-webpack-plugin/blob/master/CHANGELOG.md#v2290) - Webpack 3 support
+- karma-chrome-launcher: v2.1.1 → [v2.2.0](https://github.com/karma-runner/karma-chrome-launcher/blob/master/CHANGELOG.md#220-2017-06-23)
+
 # 0.18.3 / 2017-06-22
 
 > This is the `next` release of nwb - you need to specify `nwb@next` or `nwb@0.18` when installing it.
