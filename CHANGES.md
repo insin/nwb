@@ -6,6 +6,7 @@
 
 ## Dependencies
 
+- babel-loader: v7.1.0 → [v7.1.1](https://github.com/babel/babel-loader/releases/tag/v7.1.1) - don't read `.babelrc` for cache identifier when `babelrc=false` (nwb uses this option)
 - html-webpack-plugin: v2.28.0 → [v2.29.0](https://github.com/ampedandwired/html-webpack-plugin/blob/master/CHANGELOG.md#v2290) - Webpack 3 support
 - karma-chrome-launcher: v2.1.1 → [v2.2.0](https://github.com/karma-runner/karma-chrome-launcher/blob/master/CHANGELOG.md#220-2017-06-23)
 

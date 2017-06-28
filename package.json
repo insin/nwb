@@ -96,7 +96,7 @@
 
     "webpack": "3.0.0",
     "autoprefixer": "7.1.1",
-    "babel-loader": "7.1.0",
+    "babel-loader": "7.1.1",
     "case-sensitive-paths-webpack-plugin": "2.1.1",
     "copy-webpack-plugin": "4.0.1",
     "css-loader": "0.28.4",
@@ -120,7 +120,7 @@
     "eventsource": "1.0.4",
     "flow-bin": "0.48.0",
     "glob": "7.1.2",
-    "nyc": "11.0.2",
+    "nyc": "11.0.3",
     "rimraf": "2.6.1",
     "temp": "0.8.3",
     "tree-kill": "1.1.0"
