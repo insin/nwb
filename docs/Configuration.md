@@ -197,7 +197,7 @@ e.g. to disable loose mode only when running tests:
 
 ```js
 module.exports = {
-  babel {
+  babel: {
     loose: process.env.NODE_ENV === 'test'
   }
 }
@@ -305,7 +305,7 @@ e.g. if you want to use export extensions in your app, you should set `stage` to
 
 ```js
 module.exports = {
-  babel {
+  babel: {
     stage: 1
   }
 }
@@ -315,7 +315,7 @@ Stage 2 is enabled by default - to disable use of a stage preset entirely, set `
 
 ```js
 module.exports = {
-  babel {
+  babel: {
     stage: false
   }
 }
