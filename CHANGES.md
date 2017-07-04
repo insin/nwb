@@ -1,6 +1,7 @@
 ## Fixed
 
 - Fixed config validation error being thrown when using `webpack.styles` config for custom preprocessor plugin rules [[#342](https://github.com/insin/nwb/issues/342)]
+- Fixed display of valid properties when an invalid property is used when configuring a custom `webpack.styles` rule.
 
 ## Added
 

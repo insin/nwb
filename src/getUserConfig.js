@@ -513,11 +513,17 @@ export function processUserConfig({
               if (!DEFAULT_STYLE_LOADERS.has(loaderId) && loaderId !== styleType) {
                 // XXX Assumption: preprocessors provide a single loader which
                 //     is configured with the same id as the style type id.
-                let ids = joinAnd([...new Set([...DEFAULT_STYLE_LOADERS, loaderId])].map(id => chalk.green(id)), 'or')
+                // XXX Using Array.from() manually as babel-preset-env with a
+                //     Node 4 target is tranpiling Array spreads to concat()
+                //     calls without ensuring Sets are converted to Arrays.
+                let loaderIds = Array.from(new Set([
+                  ...Array.from(DEFAULT_STYLE_LOADERS),
+                  styleType
+                ])).map(id => chalk.green(id))
                 report.error(
                   `webpack.styles.${styleType}[${index}]`,
                   `property: ${loaderId}`,
-                  `Must be ${chalk.green('include')}, ${chalk.green('exclude')} and available loader ids: ${ids}`
+                  `Must be ${chalk.green('include')}, ${chalk.green('exclude')} or a loader id: ${joinAnd(loaderIds, 'or')}`
                 )
                 error = true
               }
