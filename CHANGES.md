@@ -1,3 +1,12 @@
+## Fixed
+
+Backported fixes from 0.18:
+
+- Fixed display of user config errors when running the development server.
+- Fixed clearing the console by default when running the development server.
+- Quick build command config was being created before the default `NODE_ENV = production` was applied, so output filenames didn't include a chunkhash by default.
+- Fixed config validation error when running the development server and using `webpack.styles` config for custom preprocessor plugin rules.
+
 # 0.17.1 / 2017-06-19
 
 ## Fixed

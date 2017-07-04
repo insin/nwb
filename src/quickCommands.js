@@ -49,7 +49,7 @@ export function build(args: Object, appConfig: QuickAppConfig, cb: ErrBack) {
     (cb) => webpackBuild(
       `${appConfig.getName()} app`,
       args,
-      createBuildConfig(args, appConfig.getQuickBuildConfig()),
+      () => createBuildConfig(args, appConfig.getQuickBuildConfig()),
       cb
     ),
   ], cb)

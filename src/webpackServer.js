@@ -6,6 +6,7 @@ import {DEFAULT_PORT} from './constants'
 import createServerWebpackConfig from './createServerWebpackConfig'
 import debug from './debug'
 import devServer from './devServer'
+import getPluginConfig from './getPluginConfig'
 import getUserConfig from './getUserConfig'
 import {clearConsole, deepToString} from './utils'
 
@@ -56,13 +57,21 @@ export default function webpackServer(args, buildConfig, cb) {
     buildConfig = buildConfig(args)
   }
 
+  let serverConfig
+  try {
+    let pluginConfig = getPluginConfig()
+    serverConfig = getUserConfig(args, {pluginConfig}).devServer
+  }
+  catch (e) {
+    return cb(e)
+  }
+
   // Other config can be provided by the user via the CLI
   getServerPort(args, (err, port) => {
     if (err) return cb(err)
     // A null port indicates the user chose not to run the server when prompted
     if (port === null) return cb()
 
-    let {devServer: serverConfig} = getUserConfig(args)
     serverConfig.port = port
     // Fallback index serving can be disabled with --no-fallback
     if (args.fallback === false) serverConfig.historyApiFallback = false
@@ -71,7 +80,7 @@ export default function webpackServer(args, buildConfig, cb) {
 
     if (!('status' in buildConfig.plugins)) {
       buildConfig.plugins.status = {
-        disableClearConsole: args.clear !== false && args.clearConsole !== false,
+        disableClearConsole: args.clear === false || args['clear-console'] === false,
         successMessage:
           `The app is running at http${serverConfig.https ? 's' : ''}://${args.host || 'localhost'}:${port}/`,
       }
