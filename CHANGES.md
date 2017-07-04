@@ -1,3 +1,7 @@
+## Fixed
+
+- Fixed config validation error being thrown when using `webpack.styles` config for custom preprocessor plugin rules [[#342](https://github.com/insin/nwb/issues/342)]
+
 ## Added
 
 - Added [`webpack.debug` config](https://github.com/insin/nwb/blob/master/docs/Configuration.md#debug-boolean) to trigger creation of a more debuggable production build [[#336](https://github.com/insin/nwb/issues/336)]

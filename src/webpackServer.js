@@ -6,6 +6,7 @@ import {DEFAULT_PORT} from './constants'
 import createServerWebpackConfig from './createServerWebpackConfig'
 import debug from './debug'
 import devServer from './devServer'
+import getPluginConfig from './getPluginConfig'
 import getUserConfig from './getUserConfig'
 import {clearConsole, deepToString} from './utils'
 
@@ -58,7 +59,8 @@ export default function webpackServer(args, buildConfig, cb) {
 
   let serverConfig
   try {
-    serverConfig = getUserConfig(args).devServer
+    let pluginConfig = getPluginConfig(args)
+    serverConfig = getUserConfig(args, {pluginConfig}).devServer
   }
   catch (e) {
     return cb(e)
