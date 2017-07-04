@@ -97,9 +97,20 @@
 - webpack: v2.6.1 → [v3.0.0](https://github.com/webpack/webpack/releases/tag/v3.0.0)
 - webpack-dev-server: v2.4.5 → [v2.5.0](https://github.com/webpack/webpack-dev-server/releases/tag/v2.5.0)
 
-# 0.17.1 / 2017-06-19
+# 0.17.2 / 2017-07-04
 
 > This is the `latest` release of nwb - i.e. what you get when you `npm install [-g] nwb`
+
+## Fixed
+
+Backported fixes from 0.18:
+
+- Fixed display of user config errors when running the development server.
+- Fixed clearing the console by default when running the development server.
+- Quick build command config was being created before the default `NODE_ENV = production` was applied, so output filenames didn't include a chunkhash by default.
+- Fixed config validation error when running the development server and using `webpack.styles` config for custom preprocessor plugin rules.
+
+# 0.17.1 / 2017-06-19
 
 ## Fixed
 
