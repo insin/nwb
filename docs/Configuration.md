@@ -84,6 +84,7 @@ The configuration object can include the following properties:
   - [`webpack.aliases`](#aliases-object) - rewrite certain import paths
   - [`webpack.autoprefixer`](#autoprefixer-string--object) - options for Autoprefixer
   - [`webpack.compat`](#compat-object) - enable Webpack compatibility tweaks for commonly-used modules
+  - [`webpack.debug`](#debug-boolean) - create a more debuggable production build
   - [`webpack.define`](#define-object) - options for `DefinePlugin`, for replacing certain expressions with values
   - [`webpack.extractText`](#extracttext-object) - options for `ExtractTextPlugin`
   - [`webpack.hoisting`](#hoisting-boolean) - enable partial scope hoisting with Webpack 3's `ModuleConcatenationPlugin`
@@ -429,6 +430,26 @@ module.exports = {
   }
 }
 ```
+
+##### `debug`: `boolean`
+
+Enables a more debuggable production build:
+
+- code which would normally be removed from a production build is removed, but code is not compressed.
+- modules ids will be file system names rather than a generated hash.
+
+It's recommended that you toggle this on via a configuration argument so you don't forget to remove it later:
+
+```sh
+npm run build -- --webpack.debug
+```
+```sh
+nwb preact build app.js --webpack.debug
+```
+
+If you set `debug` in your config file, nwb will always display a hint to remind you to remove it later.
+
+> **Note:** if you've customised `UglifyJsPlugin` settings via [`webpack.uglify` config](#uglify-object--false), only `webpack.uglify.compress` will be used when a debug build is enabled.
 
 ##### `define`: `Object`
 

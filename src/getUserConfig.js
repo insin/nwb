@@ -242,6 +242,14 @@ export function processUserConfig({
     }
   })
 
+  // Make it harder for the user to forget to disable the production debug build
+  // if they've enabled it in the config file.
+  if (userConfig.webpack.debug) {
+    report.hint('webpack.debug',
+      "Don't forget to disable the debug build before building for production"
+    )
+  }
+
   if (Object.keys(argumentOverrides).length > 0) {
     debug('user config arguments: %s', deepToString(argumentOverrides))
     userConfig = replaceArrayMerge(userConfig, argumentOverrides)

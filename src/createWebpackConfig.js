@@ -36,6 +36,33 @@ type RuleConfig = {
 
 type RuleConfigFactory = (?string, RuleConfig) => ?RuleConfig;
 
+const DEFAULT_UGLIFY_CONFIG = {
+  compress: {
+    warnings: false,
+  },
+  output: {
+    comments: false,
+  },
+  sourceMap: true,
+}
+
+function createUglifyConfig(userPluginConfig) {
+  if (userPluginConfig.debug) {
+    return merge(
+      {...DEFAULT_UGLIFY_CONFIG, mangle: false},
+      // Preserve user 'compress' config if present, as it affects what gets
+      // removed from the production build.
+      typeof userPluginConfig.uglify === 'object' && 'compress' in userPluginConfig.uglify
+        ? {compress: userPluginConfig.uglify.compress}
+        : {}
+    )
+  }
+  return merge(
+    DEFAULT_UGLIFY_CONFIG,
+    typeof userPluginConfig.uglify === 'object' ? userPluginConfig.uglify : {}
+  )
+}
+
 /**
  * Merge webpack rule config objects.
  */
@@ -542,10 +569,12 @@ export function createPlugins(
     if (buildConfig.html) {
       plugins.push(
         // Generate stable module ids instead of having Webpack assign integers.
+        // NamedModulesPlugin allows for easier debugging and
         // HashedModuleIdsPlugin does this without adding too much to bundle
-        // size and NamedModulesPlugin allows for easier debugging of
-        // development builds.
-        development ? new webpack.NamedModulesPlugin() : new webpack.HashedModuleIdsPlugin(),
+        // size.
+        (development || userConfig.debug)
+          ? new webpack.NamedModulesPlugin()
+          : new webpack.HashedModuleIdsPlugin(),
         // The Webpack manifest is normally folded into the last chunk, changing
         // its hash - prevent this by extracting the manifest into its own
         // chunk - also essential for deterministic hashing.
@@ -562,15 +591,7 @@ export function createPlugins(
       minimize: true,
     }))
     if (userConfig.uglify !== false) {
-      plugins.push(new optimize.UglifyJsPlugin(merge({
-        compress: {
-          warnings: false,
-        },
-        output: {
-          comments: false,
-        },
-        sourceMap: true,
-      }, userConfig.uglify)))
+      plugins.push(new optimize.UglifyJsPlugin(createUglifyConfig(userConfig)))
     }
     // Use partial scope hoisting/module concatenation
     if (userConfig.hoisting) {

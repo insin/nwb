@@ -1,8 +1,16 @@
 ## Added
 
+- Added [`webpack.debug` config](https://github.com/insin/nwb/blob/master/docs/Configuration.md#debug-boolean) to trigger creation of a more debuggable production build [[#336](https://github.com/insin/nwb/issues/336)]
+
+  The recommended way to use this is via a [config argument](https://github.com/insin/nwb/blob/master/docs/Configuration.md#configuration-via-arguments):
+
+  ```sh
+  npm run build -- --webpack.debug
+  ```
+
 - Added support for the following arguments when building a React component's demo:
   - `--title` - set the generated demo `index.html`'s `<title>`
-  - `--vendor` - enable creation of a vendor bundle for modules imported from `node_modules/`
+  - `--vendor` - enable creation of a vendor bundle for modules imported from `node_modules/` [[#335](https://github.com/insin/nwb/issues/335)]
 
 ## Dependencies
 
