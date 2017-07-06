@@ -202,6 +202,7 @@ export function createStyleLoaders(
     createLoader(name('postcss'), {
       loader: require.resolve('postcss-loader'),
       options: {
+        ident: name('postcss'),
         plugins: createDefaultPostCSSPlugins(userWebpackConfig),
       }
     })
