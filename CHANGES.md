@@ -1,3 +1,9 @@
+# 0.18.4 / 2017-07-07
+
+> This is the `next` release of nwb - you need to specify `nwb@next` or `nwb@0.18` when installing it.
+
+> **This release will not work with the default version of npm which comes with Node.js 4** as some of the Webpack npm packages nwb uses don't have Webpack 3 in their `peerDependencies` yet, which npm 2 treats as an error.
+
 ## Fixed
 
 - Fixed use of `@import` in CSS by adding `ident` back to `postcss-loader` config [[#311](https://github.com/insin/nwb/issues/311)]
@@ -30,10 +36,6 @@
 - webpack-hot-middleware: v2.18.0 → [v2.18.2](https://github.com/glenjamin/webpack-hot-middleware/compare/v2.18.0...v2.18.2)
 
 # 0.18.3 / 2017-06-22
-
-> This is the `next` release of nwb - you need to specify `nwb@next` or `nwb@0.18` when installing it.
-
-> **This release will not work with the default version of npm which comes with Node.js 4** as some of the Webpack npm packages nwb uses don't have Webpack 3 in their `peerDependencies` yet, which npm 2 treats as an error.
 
 ## Fixed
 
