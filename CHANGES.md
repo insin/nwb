@@ -105,9 +105,18 @@
 - webpack: v2.6.1 → [v3.0.0](https://github.com/webpack/webpack/releases/tag/v3.0.0)
 - webpack-dev-server: v2.4.5 → [v2.5.0](https://github.com/webpack/webpack-dev-server/releases/tag/v2.5.0)
 
-# 0.17.2 / 2017-07-04
+# 0.17.3 / 2017-07-07
 
 > This is the `latest` release of nwb - i.e. what you get when you `npm install [-g] nwb`
+
+## Fixed
+
+Backported fixes from 0.18:
+
+- Fixed use of `@import` in CSS by adding `ident` back to `postcss-loader` config [[#311](https://github.com/insin/nwb/issues/311)]
+- Fixed display of valid properties when an invalid property is used when configuring a custom `webpack.styles` rule.
+
+# 0.17.2 / 2017-07-04
 
 ## Fixed
 
