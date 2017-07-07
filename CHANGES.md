@@ -1,5 +1,7 @@
 ## Dependencies
 
+- extract-text-webpack-plugin: v3.0.0-beta.3 → v3.0.0-rc.1
+- karma-webpack: v2.0.3 → [v2.0.4](https://github.com/webpack-contrib/karma-webpack/blob/master/CHANGELOG.md#204-2017-07-07) - Webpack 3 support
 - webpack-dev-server: v2.5.0 → [v2.5.1](https://github.com/webpack/webpack-dev-server/releases/tag/v2.5.1) - Webpack 3 support
 
 # 0.18.4 / 2017-07-07
