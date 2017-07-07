@@ -20,10 +20,14 @@
 
 ## Dependencies
 
+- autoprefixer: v7.1.1 → [v7.1.2](https://github.com/postcss/autoprefixer/blob/master/CHANGELOG.md#711)
 - babel-loader: v7.1.0 → [v7.1.1](https://github.com/babel/babel-loader/releases/tag/v7.1.1) - don't read `.babelrc` for cache identifier when `babelrc=false` (nwb uses this option)
+- chalk: v1.1.3 → [v2.0.1](https://github.com/chalk/chalk/compare/v1.1.3...v2.0.1)
 - extract-text-webpack-plugin: v2.1.2 → [v3.0.0-beta.3](https://github.com/webpack-contrib/extract-text-webpack-plugin/releases) - Webpack 3 support
 - html-webpack-plugin: v2.28.0 → [v2.29.0](https://github.com/ampedandwired/html-webpack-plugin/blob/master/CHANGELOG.md#v2290) - Webpack 3 support
 - karma-chrome-launcher: v2.1.1 → [v2.2.0](https://github.com/karma-runner/karma-chrome-launcher/blob/master/CHANGELOG.md#220-2017-06-23)
+- webpack: v3.0.0 → [v3.1.0](https://github.com/webpack/webpack/releases/tag/v3.1.0) - perf boost; fix ordering in `ExtractTextPlugin`
+- webpack-hot-middleware: v2.18.0 → [v2.18.2](https://github.com/glenjamin/webpack-hot-middleware/compare/v2.18.0...v2.18.2)
 
 # 0.18.3 / 2017-06-22
 
