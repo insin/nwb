@@ -1,3 +1,7 @@
+## Dependencies
+
+- webpack-dev-server: v2.5.0 → [v2.5.1](https://github.com/webpack/webpack-dev-server/releases/tag/v2.5.1) - Webpack 3 support
+
 # 0.18.4 / 2017-07-07
 
 > This is the `next` release of nwb - you need to specify `nwb@next` or `nwb@0.18` when installing it.
