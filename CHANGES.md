@@ -1,3 +1,10 @@
+## Fixed
+
+Backported fixes from 0.18:
+
+- Fixed use of `@import` in CSS by adding `ident` back to `postcss-loader` config [[#311](https://github.com/insin/nwb/issues/311)]
+- Fixed display of valid properties when an invalid property is used when configuring a custom `webpack.styles` rule.
+
 # 0.17.2 / 2017-07-04
 
 ## Fixed
@@ -7,7 +14,7 @@ Backported fixes from 0.18:
 - Fixed display of user config errors when running the development server.
 - Fixed clearing the console by default when running the development server.
 - Quick build command config was being created before the default `NODE_ENV = production` was applied, so output filenames didn't include a chunkhash by default.
-- Fixed config validation error when running the development server and using `webpack.styles` config for custom preprocessor plugin rules.
+- Fixed config validation error when running the development server and using `webpack.styles` config for custom preprocessor plugin rules [[#342](https://github.com/insin/nwb/issues/342)]
 
 # 0.17.1 / 2017-06-19
 
