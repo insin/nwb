@@ -242,7 +242,6 @@ describe('sample projects', function() {
     before(done => {
       originalCwd = process.cwd()
       originalNodeEnv = process.env.NODE_ENV
-      console.log(originalNodeEnv)
       delete process.env.NODE_ENV
       tmpDir = temp.mkdirSync('router-app')
       copyTemplateDir(path.join(__dirname, '../fixtures/projects/router-app'), tmpDir, {}, err => {
