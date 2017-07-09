@@ -3,7 +3,7 @@
 > **Prerequisite:** nwb must be installed globally (we're using version 0.18 in this guide):
 >
 > ```
-> npm install -g nwb@next
+> npm install -g nwb
 > ```
 
 Quick development commands reduce the time between having a flash of inspiration and being able to develop and share it.

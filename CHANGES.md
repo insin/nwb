@@ -1,3 +1,5 @@
+# 0.18.5 / 2017-07-09
+
 ## Dependencies
 
 - extract-text-webpack-plugin: v3.0.0-beta.3 → v3.0.0-rc.1
@@ -5,10 +7,6 @@
 - webpack-dev-server: v2.5.0 → [v2.5.1](https://github.com/webpack/webpack-dev-server/releases/tag/v2.5.1) - Webpack 3 support
 
 # 0.18.4 / 2017-07-07
-
-> This is the `next` release of nwb - you need to specify `nwb@next` or `nwb@0.18` when installing it.
-
-> **This release will not work with the default version of npm which comes with Node.js 4** as some of the Webpack npm packages nwb uses don't have Webpack 3 in their `peerDependencies` yet, which npm 2 treats as an error.
 
 ## Fixed
 
@@ -112,8 +110,6 @@
 - webpack-dev-server: v2.4.5 → [v2.5.0](https://github.com/webpack/webpack-dev-server/releases/tag/v2.5.0)
 
 # 0.17.3 / 2017-07-07
-
-> This is the `latest` release of nwb - i.e. what you get when you `npm install [-g] nwb`
 
 ## Fixed
 
