@@ -1,3 +1,5 @@
+# 0.18.6 / 2017-07-10
+
 ## Dependencies
 
 - extract-text-webpack-plugin: v3.0.0-rc.1 → v3.0.0-rc.2 - fix module sorting type error
