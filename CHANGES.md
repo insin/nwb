@@ -1,3 +1,8 @@
+## Dependencies
+
+- extract-text-webpack-plugin: v3.0.0-rc.1 → v3.0.0-rc.2 - fix module sorting type error
+- inquirer: v3.1.1→ [v3.2.0](https://github.com/SBoudrias/Inquirer.js/releases/tag/v3.2.0)
+
 # 0.18.5 / 2017-07-09
 
 ## Dependencies

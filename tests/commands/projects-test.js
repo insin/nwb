@@ -58,7 +58,7 @@ describe('sample projects', function() {
       })
     })
 
-    it.skip('tests successfully', done => {
+    it('tests successfully', done => {
       cli(['test'], err => {
         expect(err).toNotExist()
         done()
