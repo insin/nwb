@@ -7,6 +7,10 @@
 - extract-text-webpack-plugin: v3.0.0-rc.2 → v3.0.0
 - webpack: v3.1.0 → [v3.2.0](https://github.com/webpack/webpack/releases/tag/v3.2.0) - bug fixes
 
+## Documentation
+
+- Documented default [`webpack.extractText` config](https://github.com/insin/nwb/blob/master/docs/Configuration.md#extracttext-object--boolean).
+
 # 0.18.6 / 2017-07-10
 
 ## Dependencies
@@ -287,6 +291,7 @@ Backported fixes from 0.18:
   > For backwards compatibility you can set [`webpack.style` config](https://github.com/insin/nwb/blob/master/docs/Configuration.md#styles-object--false--old) to `'old'` to use the old default behaviour - this capability will be removed in a future release.
 - The Babel plugin for Inferno now requires Inferno >= 1.5 and is not backwards-compatible with 1.4.
 - Default Webpack config now sets `module.strictExportPresence = true` so a missing export is now a compile error.
+- Default `ExtractTextPlugin` now sets `allChunks = true` to extract stylesheets from all chunks and avoid including the `style-loader` runtime in builds by default.
 
 **Added:**
 

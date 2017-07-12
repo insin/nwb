@@ -471,8 +471,22 @@ module.exports = {
 
 ##### `extractText`: `Object | Boolean`
 
-Configures [options for `ExtractTextWebpackPlugin`](https://github.com/webpack-contrib/extract-text-webpack-plugin#readme).
+Configures [`ExtractWebpackPlugin` options](https://github.com/webpack-contrib/extract-text-webpack-plugin#options).
 
+By default, nwb uses [`ExtractTextWebpackPlugin`](https://github.com/webpack-contrib/extract-text-webpack-plugin#readme) to extract imported stylesheets into `.css` files when creating a build.
+
+Default configuration is to extract stylesheets from all chunks (which also avoids including the `style-loader` runtime in builds) and use a content hash in extracted filenames, equivalent to:
+
+```js
+module.exports = {
+  webpack: {
+    extractText: {
+      allChunks: true,
+      filename: process.env.NODE_ENV === 'production' ? `[name].[contenthash:8].css` : '[name].css'
+    }
+  }
+}
+```
 
 Set to `false` to disable extraction of `.css` files in builds (in which case [`style-loader`](https://github.com/webpack-contrib/style-loader#readme) will handle injecting `<style>` tags at runtime, as it does when running the development server).
 
