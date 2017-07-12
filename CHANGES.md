@@ -1,6 +1,7 @@
 ## Dependencies
 
 - extract-text-webpack-plugin: v3.0.0-rc.2 → v3.0.0
+- webpack: v3.1.0 → [v3.2.0](https://github.com/webpack/webpack/releases/tag/v3.2.0) - bug fixes
 
 # 0.18.6 / 2017-07-10
 
