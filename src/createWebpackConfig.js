@@ -215,7 +215,7 @@ export function createStyleLoaders(
     ))
   }
 
-  if (server) {
+  if (server || userWebpackConfig.extractText === false) {
     loaders.unshift(styleLoader)
     return loaders
   }
@@ -544,13 +544,14 @@ export function createPlugins(
   }
   // If we're not serving, we're creating a static build
   else {
-    // Extract CSS required as modules out into files
-    let cssFilename = production ? `[name].[contenthash:8].css` : '[name].css'
-    plugins.push(new ExtractTextPlugin({
-      allChunks: true,
-      filename: cssFilename,
-      ...userConfig.extractText,
-    }))
+    if (userConfig.extractText !== false) {
+      // Extract imported stylesheets out into .css files
+      plugins.push(new ExtractTextPlugin({
+        allChunks: true,
+        filename: production ? `[name].[contenthash:8].css` : '[name].css',
+        ...userConfig.extractText,
+      }))
+    }
 
     // Move modules imported from node_modules/ into a vendor chunk when enabled
     if (buildConfig.vendor) {

@@ -86,7 +86,7 @@ The configuration object can include the following properties:
   - [`webpack.compat`](#compat-object) - enable Webpack compatibility tweaks for commonly-used modules
   - [`webpack.debug`](#debug-boolean) - create a more debuggable production build
   - [`webpack.define`](#define-object) - options for `DefinePlugin`, for replacing certain expressions with values
-  - [`webpack.extractText`](#extracttext-object) - options for `ExtractTextPlugin`
+  - [`webpack.extractText`](#extracttext-object--boolean) - options for `ExtractTextPlugin`
   - [`webpack.hoisting`](#hoisting-boolean) - enable partial scope hoisting with Webpack 3's `ModuleConcatenationPlugin`
   - [`webpack.html`](#html-object) - options for `HtmlPlugin`
   - [`webpack.install`](#install-object) - options for `NpmInstallPlugin`
@@ -469,9 +469,12 @@ module.exports = {
 }
 ```
 
-##### `extractText`: `Object`
+##### `extractText`: `Object | Boolean`
 
 Configures [options for `ExtractTextWebpackPlugin`](https://github.com/webpack-contrib/extract-text-webpack-plugin#readme).
+
+
+Set to `false` to disable extraction of `.css` files in builds (in which case [`style-loader`](https://github.com/webpack-contrib/style-loader#readme) will handle injecting `<style>` tags at runtime, as it does when running the development server).
 
 ##### `hoisting`: `Boolean`
 

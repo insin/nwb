@@ -1,3 +1,7 @@
+## Changed
+
+- You can now set [`webpack.extractText` config](https://github.com/insin/nwb/blob/master/docs/Configuration.md#extracttext-object--boolean) to `false` to disable extraction of stylesheets in builds [[#343](https://github.com/insin/nwb/issues/343)]
+
 ## Dependencies
 
 - extract-text-webpack-plugin: v3.0.0-rc.2 → v3.0.0
