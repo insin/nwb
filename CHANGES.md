@@ -1,3 +1,8 @@
+## Dependencies
+
+- promise: v8.0.0 → v8.0.1
+- webpack: v3.2.0 → [v3.3.0](https://github.com/webpack/webpack/releases/tag/v3.4.0) - bug fixes; now watches for missing directories being added
+
 # 0.18.7 / 2017-07-12
 
 ## Changed
