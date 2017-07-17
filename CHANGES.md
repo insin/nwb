@@ -1,3 +1,7 @@
+## Changed
+
+- Now using preact/debug instead of preact/devtools in quick Preact commands an the Preact project skeleton
+
 # 0.18.8 / 2017-07-16
 
 ## Dependencies
