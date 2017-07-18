@@ -5,7 +5,7 @@
 - [How do I enable CSS Modules?](#how-do-i-enable-css-modules)
 - [What can I configure to reduce bundle size?](#what-can-i-configure-to-reduce-bundle-size)
 - [How can I copy non-JavaScript files when building a React component/library?](#how-can-i-copy-non-javascript-files-when-building-a-react-component-library)
-
+- [How do i publish my demo page ?](#how-do-i-publish-my-demo-page)
 ---
 
 ### What does "nwb" stand for?
@@ -74,3 +74,16 @@ Try configuring [`babel.cherryPick`](/docs/Configuration.md#cherrypick-string--a
 ### How can I copy non-JavaScript files when building a React component/library?
 
 Pass a [`--copy-files` flag](/docs/guides/ReactComponent.md#--copy-files).
+
+### How do i publish my demo page ?
+
+If you're using github, you can push your demo page to your project `gh-pages` branch.
+
+It will be available at https://username.github.io/project.
+
+The [gh-pages](https://github.com/tschaub/gh-pages) module makes this easy :
+
+ - Install `gh-pages` with `npm i --dev gh-pages`
+ - Add a `gh-pages` script in package.json : `"gh-pages": "gh-pages demo/dist"`
+ 
+Then run `npm run gh-pages` to push your documentation online
