@@ -17,6 +17,9 @@ export default function devServer(webpackConfig, serverConfig, cb) {
   let {host, port, ...otherServerConfig} = serverConfig
 
   let webpackDevServerOptions = merge({
+    headers: {
+      'Access-Control-Allow-Origin': '*'
+    },
     historyApiFallback: true,
     hot: true,
     noInfo: true,
