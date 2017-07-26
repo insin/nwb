@@ -2,6 +2,13 @@
 
 - Now using preact/debug instead of preact/devtools in quick Preact commands an the Preact project skeleton
 
+## Dependencies
+
+- inquirer: v3.2.0 → [v3.2.1](https://github.com/SBoudrias/Inquirer.js/releases/tag/v3.2.1)
+- promise: v8.0.0 → v8.0.1
+- webpack: v3.2.0 → [v3.4.0](https://github.com/webpack/webpack/releases/tag/v3.3.0) - bug fixes; now watches for missing directories being added; perf improvements
+- webpack-dev-server: v2.5.1 → [v2.6.1](https://github.com/webpack/webpack-dev-server/releases)
+
 # 0.18.8 / 2017-07-16
 
 ## Dependencies
