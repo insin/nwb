@@ -1,6 +1,8 @@
+# 0.18.9 / 2017-07-26
+
 ## Changed
 
-- Now using preact/debug instead of preact/devtools in quick Preact commands an the Preact project skeleton
+- Now using preact/debug instead of preact/devtools in quick Preact commands an the Preact project skeleton - requires Preact >= 8.2.0
 
 ## Dependencies
 
