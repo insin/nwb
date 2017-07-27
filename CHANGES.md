@@ -2,6 +2,12 @@
 
 - Fix dev server HMR for people running on different hosts or a different localhost port [[#356](https://github.com/insin/nwb/issues/356)] [[DethArial][DethArial]]
 
+## Dependencies
+
+- babel-runtime: v6.23.0 → v6.25.0
+- resolve: v1.3.3 → [v1.4.0](https://github.com/substack/node-resolve/compare/v1.3.3...v1.4.0)
+- webpack: v3.4.0 → [v3.4.1](https://github.com/webpack/webpack/releases/tag/v3.4.1)
+
 # 0.18.9 / 2017-07-26
 
 ## Changed
