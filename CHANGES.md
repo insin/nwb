@@ -1,3 +1,7 @@
+## Fixed
+
+- Fix dev server HMR for people running on different hosts or a different localhost port [[#356](https://github.com/insin/nwb/issues/356)] [[DethArial][DethArial]]
+
 # 0.18.9 / 2017-07-26
 
 ## Changed
