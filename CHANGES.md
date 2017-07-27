@@ -1,6 +1,6 @@
 ## Fixed
 
-- Fix dev server HMR for people running on different hosts or a different localhost port [[#356](https://github.com/insin/nwb/issues/356)] [[DethArial][DethArial]]
+- Fix dev server HMR for people running on different hosts or a different localhost port [[#356](https://github.com/insin/nwb/issues/356)] [[DethAriel][DethAriel]]
 
 ## Dependencies
 
@@ -1731,6 +1731,7 @@ First 0.x release.
 
 [balazs4]: https://github.com/balazs4
 [bwendt-mylo]: https://github.com/bwendt-mylo
+[DethAriel]: https://github.com/DethAriel
 [grahamlyus]: https://github.com/grahamlyus
 [jihchi]: https://github.com/jihchi
 [michaelsbradleyjr]: https://github.com/michaelsbradleyjr
