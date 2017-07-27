@@ -1,3 +1,5 @@
+# 0.18.10 / 2017-07-27
+
 ## Fixed
 
 - Fix dev server HMR for people running on different hosts or a different localhost port [[#356](https://github.com/insin/nwb/issues/356)] [[DethAriel][DethAriel]]
