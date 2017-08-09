@@ -49,7 +49,7 @@ const DEFAULT_UGLIFY_CONFIG = {
 function createUglifyConfig(userPluginConfig) {
   if (userPluginConfig.debug) {
     return merge(
-      {...DEFAULT_UGLIFY_CONFIG, mangle: false},
+      {...DEFAULT_UGLIFY_CONFIG, beautify: true, mangle: false},
       // Preserve user 'compress' config if present, as it affects what gets
       // removed from the production build.
       typeof userPluginConfig.uglify === 'object' && 'compress' in userPluginConfig.uglify

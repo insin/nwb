@@ -1,3 +1,7 @@
+## Changed
+
+- Use `beautify: true` for `webpack.debug` output so code split bundles are readable.
+
 ## Dependencies
 
 - babel-plugin-transform-react-remove-prop-types: v0.4.6 → [v0.4.8](https://github.com/oliviertassinari/babel-plugin-transform-react-remove-prop-types/releases)
