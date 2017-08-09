@@ -3,8 +3,8 @@ import './index.css'
 import {h, render} from 'preact'
 
 if (process.env.NODE_ENV === 'development') {
-  // Enable use of React Developer Tools
-  require('preact/devtools')
+  // Enable Preact debug output and use of React Developer Tools
+  require('preact/debug')
 }
 
 let root
