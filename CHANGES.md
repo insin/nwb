@@ -1,3 +1,8 @@
+## Fixed
+
+- Reverted use of `preact/debug` in favour of `preact/devtools`, as debug doesn't seem to be ready yet [[#360](https://github.com/insin/nwb/issues/360)]
+  - If you created a Preact app with v0.18.10, replace `preact/debug` with `preact/devtools` in `src/index.js`.
+
 ## Changed
 
 - Use `beautify: true` for `webpack.debug` output so code split bundles are readable.
