@@ -12,7 +12,7 @@
 - babel-plugin-transform-react-remove-prop-types: v0.4.6 → [v0.4.8](https://github.com/oliviertassinari/babel-plugin-transform-react-remove-prop-types/releases)
 - html-webpack-plugin: v2.29.0 → [v2.30.1](https://github.com/jantimon/html-webpack-plugin/blob/master/CHANGELOG.md#v2301)
 - mocha: v3.4.2 → [v3.5.0](https://github.com/mochajs/mocha/blob/master/CHANGELOG.md#350--2017-07-31)
-- webpack: v3.4.1 → [v3.5.1](https://github.com/webpack/webpack/releases)
+- webpack: v3.4.1 → [v3.5.3](https://github.com/webpack/webpack/releases)
 - webpack-dev-middleware: v1.11.0 → [v1.12.0](https://github.com/webpack/webpack-dev-middleware/releases/tag/v1.12.0)
 - webpack-dev-server: v2.6.1 → [v2.7.1](https://github.com/webpack/webpack-dev-server/releases)
 
