@@ -14,12 +14,21 @@
 
 ## Dependencies
 
+- babel-cli: v6.24.1 → [v6.26.0][babel6260]
+- babel-core: v6.24.1 → [v6.26.0][babel6260]
+- babel-loader: v7.1.1 → [v7.1.2](https://github.com/babel/babel-loader/releases/tag/v7.1.2)
+- babel-polyfill: v6.23.0 → [v6.26.0][babel6260]
 - babel-plugin-transform-react-remove-prop-types: v0.4.6 → [v0.4.8](https://github.com/oliviertassinari/babel-plugin-transform-react-remove-prop-types/releases)
+- css-loader: v0.28.4 → [v0.28.5](https://github.com/webpack-contrib/css-loader/blob/master/CHANGELOG.md#0285-2017-08-17)
 - html-webpack-plugin: v2.29.0 → [v2.30.1](https://github.com/jantimon/html-webpack-plugin/blob/master/CHANGELOG.md#v2301)
+- inquirer: v3.2.1 → [v3.2.2](https://github.com/SBoudrias/Inquirer.js/releases/tag/v3.2.2)
 - mocha: v3.4.2 → [v3.5.0](https://github.com/mochajs/mocha/blob/master/CHANGELOG.md#350--2017-07-31)
-- webpack: v3.4.1 → [v3.5.3](https://github.com/webpack/webpack/releases)
+- phantomjs-prebuilt: v2.1.14 → [v2.1.15] - fix security issues with dependencies
+- webpack: v3.4.1 → [v3.5.5](https://github.com/webpack/webpack/releases)
 - webpack-dev-middleware: v1.11.0 → [v1.12.0](https://github.com/webpack/webpack-dev-middleware/releases/tag/v1.12.0)
 - webpack-dev-server: v2.6.1 → [v2.7.1](https://github.com/webpack/webpack-dev-server/releases)
+
+[babel6260]: https://github.com/babel/babel/blob/master/CHANGELOG.md#6260-2017-08-16
 
 # 0.18.10 / 2017-07-27
 
