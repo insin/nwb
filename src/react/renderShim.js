@@ -20,20 +20,15 @@ function renderEntry(exported) {
   else if (exported.type && exported.props) {
     element = exported
   }
+  else {
+    // Assumption: the entry module rendered the app
+    return
+  }
   render(element, parent)
 }
 
 function init() {
-  // Hijack any inline render() from the entry module, but only the first one -
-  // others may be from components like portals which need to render() their
-  // contents.
-  ReactDOM.render = (el) => {
-    element = el
-    ReactDOM.render = render
-  }
-  let entry = require('nwb-quick-entry')
-  ReactDOM.render = render
-  renderEntry(entry)
+  renderEntry(require('nwb-quick-entry'))
 }
 
 if (module.hot) {

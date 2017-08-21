@@ -25,20 +25,15 @@ function renderEntry(exported) {
   else if (exported.children) {
     vnode = exported
   }
+  else {
+    // Assumption: the entry module rendered the app
+    return
+  }
   root = render(vnode, parent, root)
 }
 
 function init() {
-  // Hijack any inline render() from the entry module, but only the first one -
-  // others may be from components like portals which need to render() their
-  // contents.
-  Preact.render = (v) => {
-    vnode = v
-    Preact.render = render
-  }
-  let entry = require('nwb-quick-entry')
-  Preact.render = render
-  renderEntry(entry)
+  renderEntry(require('nwb-quick-entry'))
 }
 
 if (module.hot) {

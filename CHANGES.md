@@ -1,3 +1,8 @@
+## Breaking Changes
+
+- Removed hooking of React, Preact and Inferno `render()` functions in quick commands, as this won't work with ES modules builds (which are used by default in Webpack v3). This affected the current version of Preact at the time of writing.
+  - If you're manually using `render()` with quick commands, you must now handle providing the target DOM node too - `document.getElementById('app')` is available in the default HTML template.
+
 ## Fixed
 
 - Reverted use of `preact/debug` in favour of `preact/devtools`, as debug doesn't seem to be ready yet [[#360](https://github.com/insin/nwb/issues/360)]

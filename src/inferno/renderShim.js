@@ -18,20 +18,15 @@ function renderEntry(exported) {
   else if (exported.flags) {
     vnode = exported
   }
+  else {
+    // Assumption: the entry module rendered the app
+    return
+  }
   render(vnode, parent)
 }
 
 function init() {
-  // Hijack any inline render() from the entry module, but only the first one -
-  // others may be from components like portals which need to render() their
-  // contents.
-  Inferno.render = (v) => {
-    vnode = v
-    Inferno.render = render
-  }
-  let entry = require('nwb-quick-entry')
-  Inferno.render = render
-  renderEntry(entry)
+  renderEntry(require('nwb-quick-entry'))
 }
 
 if (module.hot) {

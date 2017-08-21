@@ -341,7 +341,7 @@ class App extends React.Component {
   }
 }
 
-render(<App/>)
+render(<App/>, document.getElementById('app'))
 ```
 
 ### Rendering Shims and Hot Module Replacement (HMR)
@@ -359,12 +359,6 @@ When the rendering shim detects that one of these has been exported from the pro
 > To disable this, pass a `--no-hmre` flag.
 
 For other HMR scenarios, such as an exported React Element, `nwb react run`'s rendering shim will re-render to the same root DOM node.
-
-#### Inferno and Preact Rendering Shims
-
-The rendering shims for `nwb inferno run` and `nwb preact run` hook into the DOM rendering function of these libraries to accept HMR requests and re-render to the same root element when you change the code.
-
-This means that if you import and call `render()` yourself, the rendering shim is still taking the VNode you pass it and handling rendering for you, so you don't need to provide a DOM node to render into.
 
 #### Opting out of Rendering Shims with `--force`
 
