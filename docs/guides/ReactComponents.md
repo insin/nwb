@@ -31,7 +31,7 @@ nwb supports development of React component/library modules which will be publis
     - [`--no-demo`](#--no-demo)
     - [`--[keep-]proptypes`](#--keep-proptypes)
 
-To walk you though the process, we're going to implement a simple `LoadingButton` component, which renders a `<button>` and implements the following requirements:
+To walk you through the process, we're going to implement a simple `LoadingButton` component, which renders a `<button>` and implements the following requirements:
 
 1. The button should take a `loading` prop, representing whichever action it controls being in progress (e.g. loading some data or submitting a form).
 2. The button should be `disabled` when loading, to avoid the double-submission problem.
