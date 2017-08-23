@@ -41,7 +41,7 @@ Quick development commands:
   ${cmd('nwb inferno')} ${req('(run|build) <entry>')}  run or build an Inferno app
   ${cmd('nwb preact')} ${req('(run|build) <entry>')}   run or build a Preact app
   ${cmd('nwb react')} ${req('(run|build) <entry>')}    run or build a React app
-  ${cmd('nwb react')} ${req('(run|build) <entry>')}    run or build a vanilla JavaScript app
+  ${cmd('nwb web')} ${req('(run|build) <entry>')}    run or build a vanilla JavaScript app
 
   Run ${cmd('nwb (inferno|preact|react|web) help')} for options.
 
