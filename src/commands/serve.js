@@ -1,5 +1,5 @@
 // @flow
-import {INFERNO_APP, PREACT_APP, REACT_APP, REACT_COMPONENT, WEB_APP, WEB_DEMO} from '../constants'
+import {INFERNO_APP, PREACT_APP, REACT_APP, REACT_COMPONENT, WEB_APP, WEB_MODULE} from '../constants'
 import {UserError} from '../errors'
 import {getProjectType} from '../getUserConfig'
 import serveInfernoApp from './serve-inferno-app'
@@ -17,7 +17,7 @@ const SERVE_COMMANDS = {
   [REACT_APP]: serveReactApp,
   [REACT_COMPONENT]: serveReactDemo,
   [WEB_APP]: serveWebApp,
-  [WEB_DEMO]: serveWebDemo,
+  [WEB_MODULE]: serveWebDemo,
 }
 
 /**
