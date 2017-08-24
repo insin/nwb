@@ -18,6 +18,7 @@
 - css-loader: v0.28.4 → [v0.28.5](https://github.com/webpack-contrib/css-loader/blob/master/CHANGELOG.md#0285-2017-08-17)
 - html-webpack-plugin: v2.29.0 → [v2.30.1](https://github.com/jantimon/html-webpack-plugin/blob/master/CHANGELOG.md#v2301)
 - inquirer: v3.2.1 → [v3.2.2](https://github.com/SBoudrias/Inquirer.js/releases/tag/v3.2.2)
+- karma-mocha-reporter: v2.2.3 → [v2.2.4](https://github.com/litixsoft/karma-mocha-reporter/blob/master/CHANGELOG.md#224-2017-08-24)
 - mocha: v3.4.2 → [v3.5.0](https://github.com/mochajs/mocha/blob/master/CHANGELOG.md#350--2017-07-31)
 - phantomjs-prebuilt: v2.1.14 → [v2.1.15] - fix security issues with dependencies
 - webpack: v3.4.1 → [v3.5.5](https://github.com/webpack/webpack/releases)
