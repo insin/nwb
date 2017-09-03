@@ -171,7 +171,7 @@ Create a build of a React project which uses Inferno or Preact as the runtime vi
 
 ### Zero Configuration Setup
 
-- Write JavaScript with ES6/ES2015-ES2017 features and JSX, transpiled down to ES5.
+- Write JavaScript with ES2015-ES2017 features and JSX, transpiled down to ES5.
 - Use new JavaScript features at Stage 2 and above in the TC39 process:
   - [`async`/`await` syntax](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function), for writing async code in a synchronous way.
   - Class properties, for avoiding boilerplate when writing ES2015 classes.

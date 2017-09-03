@@ -3,8 +3,13 @@
 - Removed hooking of React, Preact and Inferno `render()` functions in quick commands, as this won't work with ES modules builds (which are used by default in Webpack v3). This affected the current version of Preact at the time of writing.
   - If you're manually using `render()` with quick commands, you must now handle providing the target DOM node too - `document.getElementById('app')` is available in the default HTML template.
 
+## Added
+
+- Added [`babel.env` config](https://github.com/insin/nwb/blob/master/docs/Configuration.md#env-object) to pass additional [options for `babel-preset-env`](https://github.com/babel/babel-preset-env#options).
+
 ## Changed
 
+- Now using `babel-preset-env` instead of deprecated `babel-preset-es201X` presets [[#375](https://github.com/insin/nwb/issues/375)]
 - Use `beautify: true` for `webpack.debug` output so code split bundles are readable.
 
 ## Dependencies

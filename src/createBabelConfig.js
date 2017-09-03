@@ -24,6 +24,7 @@ type BuildOptions = {
 
 type UserOptions = {
   cherryPick?: string | string[],
+  env?: Object,
   loose?: boolean,
   plugins?: BabelPluginConfig[],
   presets?: BabelPluginConfig[],
@@ -53,6 +54,7 @@ export default function createBabelConfig(
 
   let {
     cherryPick,
+    env = {},
     loose,
     plugins: userPlugins = [],
     presets: userPresets,
@@ -70,16 +72,9 @@ export default function createBabelConfig(
     loose = true
   }
 
-  // ES2015 and ES2016 presets
   presets.push(
-    [require.resolve('babel-preset-es2015'), {loose, modules}],
-    require.resolve('babel-preset-es2016'),
+    [require.resolve('babel-preset-env'), {loose, modules, ...env}]
   )
-  // Babel 6's stage-3 preset contains all the es2017 plugins, so only use the
-  // es2017 preset if the user has disabled use of a stage preset.
-  if (userStage === false) {
-    presets.push(require.resolve('babel-preset-es2017'))
-  }
 
   // Additional build presets
   if (Array.isArray(buildPresets)) {

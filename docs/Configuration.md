@@ -72,6 +72,7 @@ The configuration object can include the following properties:
 - [Babel Configuration](#babel-configuration)
   - [`babel`](#babel-object)
   - [`babel.cherryPick`](#cherrypick-string--arraystring) - enable cherry-picking for destructured `import` statements
+  - [`babel.env`](#env-object) - additional configuration for `babel-preset-env`
   - [`babel.loose`](#loose-boolean) - enable loose mode for Babel plugins which support it
   - [`babel.plugins`](#plugins-string--array) - extra Babel plugins to be used
   - [`babel.presets`](#presets-string--array) - extra Babel presets to be used
@@ -185,6 +186,10 @@ module.exports = {
 ```
 
 This is implemented using [babel-plugin-lodash](https://github.com/lodash/babel-plugin-lodash) - please check its issues for compatibility problems with modules you're using `cherryPick` with and report any new ones you find.
+
+##### `env`: `Object`
+
+Additional [options for `babel-preset-env`](https://github.com/babel/babel-preset-env#options) - nwb uses `babel-preset-env` to transpile ECMAScript features which aren't natively available in browsers yet.
 
 ##### `loose`: `Boolean`
 
