@@ -28,9 +28,10 @@
 - karma-mocha-reporter: v2.2.3 → [v2.2.4](https://github.com/litixsoft/karma-mocha-reporter/blob/master/CHANGELOG.md#224-2017-08-24)
 - mocha: v3.4.2 → [v3.5.0](https://github.com/mochajs/mocha/blob/master/CHANGELOG.md#350--2017-07-31)
 - phantomjs-prebuilt: v2.1.14 → [v2.1.15] - fix security issues with dependencies
-- webpack: v3.4.1 → [v3.5.5](https://github.com/webpack/webpack/releases)
+- webpack: v3.4.1 → [v3.5.6](https://github.com/webpack/webpack/releases)
 - webpack-dev-middleware: v1.11.0 → [v1.12.0](https://github.com/webpack/webpack-dev-middleware/releases/tag/v1.12.0)
 - webpack-dev-server: v2.6.1 → [v2.7.1](https://github.com/webpack/webpack-dev-server/releases)
+- webpack-hot-middleware: v2.18.2 → [v2.19.0](https://github.com/glenjamin/webpack-hot-middleware/compare/v2.18.2...v2.19.0)
 
 [babel6260]: https://github.com/babel/babel/blob/master/CHANGELOG.md#6260-2017-08-16
 
