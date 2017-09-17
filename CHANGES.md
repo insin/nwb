@@ -14,24 +14,27 @@
 
 ## Dependencies
 
-- autoprefixer: v7.1.2 → [v7.1.3](https://github.com/postcss/autoprefixer/blob/master/CHANGELOG.md#713)
+- autoprefixer: v7.1.2 → [v7.1.4](https://github.com/postcss/autoprefixer/blob/master/CHANGELOG.md#714)
 - babel-cli: v6.24.1 → [v6.26.0][babel6260]
 - babel-core: v6.24.1 → [v6.26.0][babel6260]
 - babel-loader: v7.1.1 → [v7.1.2](https://github.com/babel/babel-loader/releases/tag/v7.1.2)
-- babel-polyfill: v6.23.0 → [v6.26.0][babel6260]
+- babel-plugin-istanbul: v4.1.4 → v4.1.5
+- babel-plugin-react-transform: v2.0.2 → [v3.0.0](https://github.com/gaearon/babel-plugin-react-transform/releases) - add `React.PureComponent` to the list of default super classes
 - babel-plugin-transform-react-remove-prop-types: v0.4.6 → [v0.4.8](https://github.com/oliviertassinari/babel-plugin-transform-react-remove-prop-types/releases)
+- babel-polyfill: v6.23.0 → [v6.26.0][babel6260]
 - babel-runtime: v6.25.0 → [v6.26.0][babel6260]
 - css-loader: v0.28.4 → [v0.28.7](https://github.com/webpack-contrib/css-loader/blob/master/CHANGELOG.md#0287-2017-08-30)
+- gzip-size: v3.0.0 → v4.0.0 - async interface now uses Promises
 - html-webpack-plugin: v2.29.0 → [v2.30.1](https://github.com/jantimon/html-webpack-plugin/blob/master/CHANGELOG.md#v2301)
 - inquirer: v3.2.1 → [v3.2.3](https://github.com/SBoudrias/Inquirer.js/releases)
-- karma: v1.7.0 → [v1.7.1](https://github.com/karma-runner/karma/releases/tag/1.7.1)
 - karma-mocha-reporter: v2.2.3 → [v2.2.4](https://github.com/litixsoft/karma-mocha-reporter/blob/master/CHANGELOG.md#224-2017-08-24)
-- mocha: v3.4.2 → [v3.5.0](https://github.com/mochajs/mocha/blob/master/CHANGELOG.md#350--2017-07-31)
+- karma: v1.7.0 → [v1.7.1](https://github.com/karma-runner/karma/releases/tag/1.7.1)
+- mocha: v3.4.2 → [v3.5.3](https://github.com/mochajs/mocha/blob/master/CHANGELOG.md#353--2017-09-11)
 - phantomjs-prebuilt: v2.1.14 → [v2.1.15] - fix security issues with dependencies
-- webpack: v3.4.1 → [v3.5.6](https://github.com/webpack/webpack/releases)
 - webpack-dev-middleware: v1.11.0 → [v1.12.0](https://github.com/webpack/webpack-dev-middleware/releases/tag/v1.12.0)
-- webpack-dev-server: v2.6.1 → [v2.7.1](https://github.com/webpack/webpack-dev-server/releases)
+- webpack-dev-server: v2.6.1 → [v2.8.2](https://github.com/webpack/webpack-dev-server/releases)
 - webpack-hot-middleware: v2.18.2 → [v2.19.0](https://github.com/glenjamin/webpack-hot-middleware/compare/v2.18.2...v2.19.0)
+- webpack: v3.4.1 → [v3.6.0](https://github.com/webpack/webpack/releases)
 
 [babel6260]: https://github.com/babel/babel/blob/master/CHANGELOG.md#6260-2017-08-16
 

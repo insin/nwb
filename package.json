@@ -36,8 +36,8 @@
     "detect-port": "1.2.1",
     "figures": "2.0.0",
     "filesize": "3.5.10",
-    "fs-extra": "4.0.1",
-    "gzip-size": "3.0.0",
+    "fs-extra": "4.0.2",
+    "gzip-size": "4.0.0",
     "inquirer": "3.2.3",
     "minimist": "1.2.0",
     "ora": "1.3.0",
@@ -50,9 +50,9 @@
     "babel-core": "6.26.0",
     "babel-plugin-add-module-exports": "0.2.1",
     "babel-plugin-inferno": "3.2.0",
-    "babel-plugin-istanbul": "4.1.4",
+    "babel-plugin-istanbul": "4.1.5",
     "babel-plugin-lodash": "3.2.11",
-    "babel-plugin-react-transform": "2.0.2",
+    "babel-plugin-react-transform": "3.0.0",
     "babel-plugin-syntax-dynamic-import": "6.18.0",
     "babel-plugin-syntax-jsx": "6.18.0",
     "babel-plugin-transform-decorators-legacy": "1.3.4",
@@ -85,15 +85,15 @@
     "karma-webpack": "2.0.4",
     "phantomjs-prebuilt": "2.1.15",
 
-    "mocha": "3.5.0",
+    "mocha": "3.5.3",
     "expect": "1.20.2",
 
     "object-assign": "4.1.1",
     "promise": "8.0.1",
     "whatwg-fetch": "2.0.3",
 
-    "webpack": "3.5.6",
-    "autoprefixer": "7.1.3",
+    "webpack": "3.6.0",
+    "autoprefixer": "7.1.4",
     "babel-loader": "7.1.2",
     "case-sensitive-paths-webpack-plugin": "2.1.1",
     "copy-webpack-plugin": "4.0.1",
@@ -107,8 +107,8 @@
     "style-loader": "0.18.2",
     "url-loader": "0.5.9",
     "webpack-dev-middleware": "1.12.0",
-    "webpack-dev-server": "2.7.1",
-    "webpack-hot-middleware": "2.19.0"
+    "webpack-dev-server": "2.8.2",
+    "webpack-hot-middleware": "2.19.1"
   },
   "devDependencies": {
     "babel-preset-flow": "6.23.0",
@@ -118,7 +118,7 @@
     "flow-bin": "0.54.1",
     "glob": "7.1.2",
     "nyc": "11.2.1",
-    "rimraf": "2.6.1",
+    "rimraf": "2.6.2",
     "temp": "0.8.3",
     "tree-kill": "1.1.0"
   },
