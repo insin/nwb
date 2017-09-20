@@ -6,6 +6,7 @@
 ## Added
 
 - Added [`babel.env` config](https://github.com/insin/nwb/blob/master/docs/Configuration.md#env-object) to pass additional [options for `babel-preset-env`](https://github.com/babel/babel-preset-env#options).
+- Added additional Enzyme compat config for recent versions of React 15.
 
 ## Changed
 
