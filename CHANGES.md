@@ -6,7 +6,7 @@
 ## Added
 
 - Added [`babel.env` config](https://github.com/insin/nwb/blob/master/docs/Configuration.md#env-object) to pass additional [options for `babel-preset-env`](https://github.com/babel/babel-preset-env#options).
-- Added additional Enzyme compat config for recent versions of React 15.
+- Added additional Enzyme [`webpack.compat`](https://github.com/insin/nwb/blob/master/docs/Configuration.md#compat-object) for recent versions of React 15.
 
 ## Changed
 
@@ -27,7 +27,7 @@
 - css-loader: v0.28.4 → [v0.28.7](https://github.com/webpack-contrib/css-loader/blob/master/CHANGELOG.md#0287-2017-08-30)
 - gzip-size: v3.0.0 → v4.0.0 - async interface now uses Promises
 - html-webpack-plugin: v2.29.0 → [v2.30.1](https://github.com/jantimon/html-webpack-plugin/blob/master/CHANGELOG.md#v2301)
-- inquirer: v3.2.1 → [v3.2.3](https://github.com/SBoudrias/Inquirer.js/releases)
+- inquirer: v3.2.1 → [v3.3.0](https://github.com/SBoudrias/Inquirer.js/releases)
 - karma-mocha-reporter: v2.2.3 → [v2.2.4](https://github.com/litixsoft/karma-mocha-reporter/blob/master/CHANGELOG.md#224-2017-08-24)
 - karma: v1.7.0 → [v1.7.1](https://github.com/karma-runner/karma/releases/tag/1.7.1)
 - mocha: v3.4.2 → [v3.5.3](https://github.com/mochajs/mocha/blob/master/CHANGELOG.md#353--2017-09-11)
