@@ -421,6 +421,11 @@ export function createRules(
       loader: require.resolve('url-loader'),
       options: {...urlLoaderOptions},
     }),
+    createRule('html', {
+      test: /\.html$/,
+      loader: require.resolve('html-loader'),
+      options: {...urlLoaderOptions},
+    }),
     // Extra rules from build config, still configurable via user config when
     // the rules specify an id.
     ...createExtraRules(buildConfig.extra, userWebpackConfig.rules),
