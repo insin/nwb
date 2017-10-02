@@ -100,7 +100,7 @@
     "css-loader": "0.28.7",
     "eventsource-polyfill": "0.9.6",
     "extract-text-webpack-plugin": "3.0.0",
-    "file-loader": "1.1.3",
+    "file-loader": "1.1.4",
     "html-webpack-plugin": "2.30.1",
     "npm-install-webpack2-plugin": "5.0.1",
     "postcss-loader": "2.0.6",
