@@ -1,3 +1,5 @@
+# 0.19.0 / 2017-10-02
+
 ## Breaking Changes
 
 - Removed hooking of React, Preact and Inferno `render()` functions in quick commands, as this won't work with ES modules builds (which are used by default in Webpack v3). This affected the current version of Preact at the time of writing.
