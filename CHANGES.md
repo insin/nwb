@@ -4,6 +4,7 @@
 
 ## Dependencies
 
+- extract-text-webpack-plugin: v3.0.0 → [v3.0.1](https://github.com/webpack-contrib/extract-text-webpack-plugin/blob/master/CHANGELOG.md#301-2017-10-03)
 - style-loader: v0.18.2 → [v0.19.0](https://github.com/webpack-contrib/style-loader/blob/master/CHANGELOG.md#0190-2017-10-03)
 
 # 0.19.0 / 2017-10-02
