@@ -1,3 +1,11 @@
+## Changed
+
+- `style-loader`'s new `hmr` option is set to `false` when creating builds to prevent inclusion of its HMR code.
+
+## Dependencies
+
+- style-loader: v0.18.2 → [v0.19.0](https://github.com/webpack-contrib/style-loader/blob/master/CHANGELOG.md#0190-2017-10-03)
+
 # 0.19.0 / 2017-10-02
 
 ## Breaking Changes
