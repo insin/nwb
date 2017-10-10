@@ -1,5 +1,11 @@
+## `nwb.config.js` Config Changes
+
+- Deprecated the `webpack.compat.enzyme` flag for Enzyme v2 compatibility settings. Upgrade to Enzyme v3 when you can, which supports React all the way back to v0.13.
+  - [An example of configuring Enzyme v3](https://github.com/insin/nwb/blob/master/docs/Testing.md#configuring-testing-libraries) has been added to the [testing docs](https://github.com/insin/nwb/blob/master/docs/Testing.md#testing).
+
 ## Changed
 
+- Reverted the Webpack settings change for `webpack.compat.enzyme` config in v0.19.0, as it only applied while the version numbers of published React packages were out of sync. The compatibility settings assume Enzyme v2 and React >= v15.5.
 - `style-loader`'s new `hmr` option is set to `false` when creating builds to prevent inclusion of its HMR code.
 
 ## Dependencies

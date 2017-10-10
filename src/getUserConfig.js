@@ -199,6 +199,7 @@ export function prepareWebpackStyleConfig(styles) {
 }
 
 // TODO Remove in a future version
+let warnedAboutEnzymeCompat = false
 let warnedAboutOldStyleRules = false
 
 /**
@@ -367,6 +368,16 @@ export function processUserConfig({
   }
 
   if (userConfig.webpack.compat) {
+    if (userConfig.webpack.compat.enzyme) {
+      if (!warnedAboutEnzymeCompat) {
+        report.deprecated(
+          'webpack.compat.enzyme',
+          `The ${chalk.cyan('enzyme')} compat flag applies to Enzyme v2, which has been superseded by Enzyme v3.`,
+          'Consider upgrading to Enzyme v3 if you can, which requires configuring Enzyme rather than Webpack.'
+        )
+        warnedAboutEnzymeCompat = true
+      }
+    }
     let compatProps = Object.keys(userConfig.webpack.compat)
     let unknownCompatProps = compatProps.filter(prop => !(prop in COMPAT_CONFIGS))
     if (unknownCompatProps.length !== 0) {

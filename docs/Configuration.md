@@ -394,7 +394,7 @@ The following libraries are supported:
 
 ###### `enzyme`: `Boolean`
 
-Set to `true` for [Enzyme](http://airbnb.io/enzyme/) compatibility - this assumes you're using the latest version of React (v15).
+Set to `true` for [Enzyme](http://airbnb.io/enzyme/) v2 compatibility - this also assumes you're using React v15.5 or v15.6.
 
 ###### `intl`: `Object`
 

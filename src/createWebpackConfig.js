@@ -666,7 +666,6 @@ export const COMPAT_CONFIGS = {
       'react/addons': true,
       'react/lib/ExecutionEnvironment': true,
       'react/lib/ReactContext': true,
-      'react-addons-test-utils': 'react-dom',
     }
   },
   intl(options: {locales: string[]}) {
