@@ -15,8 +15,10 @@
 - extract-text-webpack-plugin: v3.0.0 → [v3.0.1](https://github.com/webpack-contrib/extract-text-webpack-plugin/blob/master/CHANGELOG.md#301-2017-10-03)
 - file-loader: v1.1.4 → [v1.1.5](https://github.com/webpack-contrib/file-loader/blob/master/CHANGELOG.md#115-2017-10-05)
 - karma-webpack: v2.0.4 → [v2.0.5](https://github.com/webpack-contrib/karma-webpack/blob/master/CHANGELOG.md#205-2017-10-08)
+- postcss-loader: v2.0.6 → [v2.0.7](https://github.com/postcss/postcss-loader/blob/master/CHANGELOG.md#207-2017-10-10)
 - style-loader: v0.18.2 → [v0.19.0](https://github.com/webpack-contrib/style-loader/blob/master/CHANGELOG.md#0190-2017-10-03)
 - url-loader: v0.5.9 → [v0.6.2](https://github.com/webpack-contrib/url-loader/blob/master/CHANGELOG.md#062-2017-10-04)
+- webpack: v3.6.0 → [v3.7.1](https://github.com/webpack/webpack/releases)
 
 # 0.19.0 / 2017-10-02
 
