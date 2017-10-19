@@ -362,7 +362,7 @@ For other HMR scenarios, such as an exported React Element, `nwb react run`'s re
 
 #### Opting out of Rendering Shims with `--force`
 
-If you don't want to use a rendering shim, pass a `--force` flag the module you provide will be used as the entry point ant you'll be responsible for rendering your app to the DOM.
+If you don't want to use a rendering shim, pass a `--force` flag the module you provide will be used as the entry point and you'll be responsible for rendering your app to the DOM.
 
 You will also need to manually deal with HMR for Inferno and Preact if you want it, as they don't currently have equivalents of React Hot Loader, which does HMR at the component level.
 
