@@ -10,15 +10,23 @@
 
 ## Dependencies
 
-- autoprefixer: v7.1.4 → [v7.1.5](https://github.com/postcss/autoprefixer/blob/master/CHANGELOG.md#715)
-- copy-webpack-plugin: v4.1.0 → [v4.1.1](https://github.com/webpack-contrib/copy-webpack-plugin/blob/master/CHANGELOG.md#411-2017-10-05)
-- extract-text-webpack-plugin: v3.0.0 → [v3.0.1](https://github.com/webpack-contrib/extract-text-webpack-plugin/blob/master/CHANGELOG.md#301-2017-10-03)
+- autoprefixer: v7.1.4 → [v7.1.6](https://github.com/postcss/autoprefixer/blob/master/CHANGELOG.md#716)
+- babel-plugin-inferno: v3.2.0 → [v3.3.0](https://github.com/infernojs/babel-plugin-inferno/releases)
+- babel-plugin-transform-react-remove-prop-types: v0.4.8 → [v0.4.10](https://github.com/oliviertassinari/babel-plugin-transform-react-remove-prop-types/releases)
+- babel-preset-env: v1.6.0 → [v1.6.1](https://github.com/babel/babel-preset-env/releases/tag/v1.6.1)
+- copy-webpack-plugin: v4.1.0 → [v4.2.0](https://github.com/webpack-contrib/copy-webpack-plugin/blob/master/CHANGELOG.md#420-2017-10-19)
+- extract-text-webpack-plugin: v3.0.0 → [v3.0.2](https://github.com/webpack-contrib/extract-text-webpack-plugin/blob/master/CHANGELOG.md#302-2017-10-25)
 - file-loader: v1.1.4 → [v1.1.5](https://github.com/webpack-contrib/file-loader/blob/master/CHANGELOG.md#115-2017-10-05)
+- filesize: v3.5.10 → [v3.5.11](https://github.com/avoidwork/filesize.js/compare/3.5.10...3.5.11)
+- karma-mocha-reporter: v2.2.4 → [v2.2.5](https://github.com/litixsoft/karma-mocha-reporter/blob/master/CHANGELOG.md#225-2017-10-17)
 - karma-webpack: v2.0.4 → [v2.0.5](https://github.com/webpack-contrib/karma-webpack/blob/master/CHANGELOG.md#205-2017-10-08)
 - postcss-loader: v2.0.6 → [v2.0.7](https://github.com/postcss/postcss-loader/blob/master/CHANGELOG.md#207-2017-10-10)
+- resolve: v1.4.0 → [v1.5.0](https://github.com/substack/node-resolve/compare/v1.4.0...v1.5.0)
 - style-loader: v0.18.2 → [v0.19.0](https://github.com/webpack-contrib/style-loader/blob/master/CHANGELOG.md#0190-2017-10-03)
 - url-loader: v0.5.9 → [v0.6.2](https://github.com/webpack-contrib/url-loader/blob/master/CHANGELOG.md#062-2017-10-04)
-- webpack: v3.6.0 → [v3.7.1](https://github.com/webpack/webpack/releases)
+- webpack: v3.6.0 → [v3.8.1](https://github.com/webpack/webpack/releases)
+- webpack-dev-server: v2.9.1 → [v2.9.3](https://github.com/webpack/webpack-dev-server/releases)
+- webpack-hot-middleware: v2.19.1 → [v2.20.0](https://github.com/glenjamin/webpack-hot-middleware/compare/v2.19.1...v2.20.0)
 
 # 0.19.0 / 2017-10-02
 
