@@ -190,6 +190,10 @@ export function createStyleLoaders(
   let name = loaderConfigName(prefix)
   let styleLoader = createLoader(name('style'), {
     loader: require.resolve('style-loader'),
+    options: {
+      // Only enable style-loader HMR when we're serving a development build
+      hmr: Boolean(server),
+    }
   })
   let loaders = [
     createLoader(name('css'), {

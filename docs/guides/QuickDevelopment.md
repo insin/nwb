@@ -171,7 +171,7 @@ Create a build of a React project which uses Inferno or Preact as the runtime vi
 
 ### Zero Configuration Setup
 
-- Write JavaScript with ES6/ES2015-ES2017 features and JSX, transpiled down to ES5.
+- Write JavaScript with ES2015-ES2017 features and JSX, transpiled down to ES5.
 - Use new JavaScript features at Stage 2 and above in the TC39 process:
   - [`async`/`await` syntax](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function), for writing async code in a synchronous way.
   - Class properties, for avoiding boilerplate when writing ES2015 classes.
@@ -362,7 +362,7 @@ For other HMR scenarios, such as an exported React Element, `nwb react run`'s re
 
 #### Opting out of Rendering Shims with `--force`
 
-If you don't want to use a rendering shim, pass a `--force` flag the module you provide will be used as the entry point ant you'll be responsible for rendering your app to the DOM.
+If you don't want to use a rendering shim, pass a `--force` flag the module you provide will be used as the entry point and you'll be responsible for rendering your app to the DOM.
 
 You will also need to manually deal with HMR for Inferno and Preact if you want it, as they don't currently have equivalents of React Hot Loader, which does HMR at the component level.
 

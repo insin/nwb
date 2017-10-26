@@ -3,7 +3,7 @@
 - **A toolkit, not a boilerplate.**
 - Uses [Webpack](https://webpack.js.org/), [Babel](https://babeljs.io/) and [Karma](https://karma-runner.github.io/).
 - Provides tooling for [React](https://facebook.github.io/react/) apps and components, [Preact](https://preactjs.com/) apps, [Inferno](https://infernojs.org/) apps, and vanilla JS web apps and npm modules.
-- Use the latest JavaScript features (ES2015, ES2016, ES2017) and JSX.
+- Use the latest JavaScript features from ES2015-ES2017, and JSX.
 - Use future JavaScript features like object spreading now; [TC39](https://exploringjs.com/es2016-es2017/ch_tc39-process.html) Stage 2 and above features are enabled by default.
 - Default polyfills and configuration allow use of [`Promise`](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Promise) (with [rejection tracking](https://www.2ality.com/2016/04/unhandled-rejections.html) enabled), [`fetch()`](https://developer.mozilla.org/en/docs/Web/API/Fetch_API), [`async`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function)/[`await`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/await), [generators](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Statements/function*) and [`Object.assign()`](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Object/assign) in any browser.
 - Import CSS (and font resources) and images to be managed by Webpack.

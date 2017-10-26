@@ -1,33 +1,75 @@
+## `nwb.config.js` Config Changes
+
+- Deprecated the `webpack.compat.enzyme` flag for Enzyme v2 compatibility settings. Upgrade to Enzyme v3 when you can, which supports React all the way back to v0.13.
+  - [An example of configuring Enzyme v3](https://github.com/insin/nwb/blob/master/docs/Testing.md#configuring-testing-libraries) has been added to the [testing docs](https://github.com/insin/nwb/blob/master/docs/Testing.md#testing).
+
+## Changed
+
+- Reverted the Webpack settings change for `webpack.compat.enzyme` config in v0.19.0, as it only applied while the version numbers of published React packages were out of sync. The compatibility settings assume Enzyme v2 and React >= v15.5.
+- `style-loader`'s new `hmr` option is set to `false` when creating builds to prevent inclusion of its HMR code.
+
+## Dependencies
+
+- autoprefixer: v7.1.4 → [v7.1.6](https://github.com/postcss/autoprefixer/blob/master/CHANGELOG.md#716)
+- babel-plugin-inferno: v3.2.0 → [v3.3.0](https://github.com/infernojs/babel-plugin-inferno/releases)
+- babel-plugin-transform-react-remove-prop-types: v0.4.8 → [v0.4.10](https://github.com/oliviertassinari/babel-plugin-transform-react-remove-prop-types/releases)
+- babel-preset-env: v1.6.0 → [v1.6.1](https://github.com/babel/babel-preset-env/releases/tag/v1.6.1)
+- copy-webpack-plugin: v4.1.0 → [v4.2.0](https://github.com/webpack-contrib/copy-webpack-plugin/blob/master/CHANGELOG.md#420-2017-10-19)
+- extract-text-webpack-plugin: v3.0.0 → [v3.0.2](https://github.com/webpack-contrib/extract-text-webpack-plugin/blob/master/CHANGELOG.md#302-2017-10-25)
+- file-loader: v1.1.4 → [v1.1.5](https://github.com/webpack-contrib/file-loader/blob/master/CHANGELOG.md#115-2017-10-05)
+- filesize: v3.5.10 → [v3.5.11](https://github.com/avoidwork/filesize.js/compare/3.5.10...3.5.11)
+- karma-mocha-reporter: v2.2.4 → [v2.2.5](https://github.com/litixsoft/karma-mocha-reporter/blob/master/CHANGELOG.md#225-2017-10-17)
+- karma-webpack: v2.0.4 → [v2.0.5](https://github.com/webpack-contrib/karma-webpack/blob/master/CHANGELOG.md#205-2017-10-08)
+- postcss-loader: v2.0.6 → [v2.0.7](https://github.com/postcss/postcss-loader/blob/master/CHANGELOG.md#207-2017-10-10)
+- resolve: v1.4.0 → [v1.5.0](https://github.com/substack/node-resolve/compare/v1.4.0...v1.5.0)
+- style-loader: v0.18.2 → [v0.19.0](https://github.com/webpack-contrib/style-loader/blob/master/CHANGELOG.md#0190-2017-10-03)
+- url-loader: v0.5.9 → [v0.6.2](https://github.com/webpack-contrib/url-loader/blob/master/CHANGELOG.md#062-2017-10-04)
+- webpack: v3.6.0 → [v3.8.1](https://github.com/webpack/webpack/releases)
+- webpack-dev-server: v2.9.1 → [v2.9.3](https://github.com/webpack/webpack-dev-server/releases)
+- webpack-hot-middleware: v2.19.1 → [v2.20.0](https://github.com/glenjamin/webpack-hot-middleware/compare/v2.19.1...v2.20.0)
+
+# 0.19.0 / 2017-10-02
+
 ## Breaking Changes
 
 - Removed hooking of React, Preact and Inferno `render()` functions in quick commands, as this won't work with ES modules builds (which are used by default in Webpack v3). This affected the current version of Preact at the time of writing.
   - If you're manually using `render()` with quick commands, you must now handle providing the target DOM node too - `document.getElementById('app')` is available in the default HTML template.
 
-## Fixed
+## Added
 
-- Reverted use of `preact/debug` in favour of `preact/devtools`, as debug doesn't seem to be ready yet [[#360](https://github.com/insin/nwb/issues/360)]
-  - If you created a Preact app with v0.18.10, replace `preact/debug` with `preact/devtools` in `src/index.js`.
+- Added [`babel.env` config](https://github.com/insin/nwb/blob/master/docs/Configuration.md#env-object) to pass additional [options for `babel-preset-env`](https://github.com/babel/babel-preset-env#options).
+- Added additional Enzyme [`webpack.compat`](https://github.com/insin/nwb/blob/master/docs/Configuration.md#compat-object) for recent versions of React 15.
 
 ## Changed
 
+- Now using `babel-preset-env` instead of deprecated `babel-preset-es201X` presets [[#375](https://github.com/insin/nwb/issues/375)]
 - Use `beautify: true` for `webpack.debug` output so code split bundles are readable.
 
 ## Dependencies
 
+- autoprefixer: v7.1.2 → [v7.1.4](https://github.com/postcss/autoprefixer/blob/master/CHANGELOG.md#714)
 - babel-cli: v6.24.1 → [v6.26.0][babel6260]
 - babel-core: v6.24.1 → [v6.26.0][babel6260]
 - babel-loader: v7.1.1 → [v7.1.2](https://github.com/babel/babel-loader/releases/tag/v7.1.2)
-- babel-polyfill: v6.23.0 → [v6.26.0][babel6260]
+- babel-plugin-istanbul: v4.1.4 → v4.1.5
+- babel-plugin-react-transform: v2.0.2 → [v3.0.0](https://github.com/gaearon/babel-plugin-react-transform/releases) - add `React.PureComponent` to the list of default super classes
 - babel-plugin-transform-react-remove-prop-types: v0.4.6 → [v0.4.8](https://github.com/oliviertassinari/babel-plugin-transform-react-remove-prop-types/releases)
+- babel-polyfill: v6.23.0 → [v6.26.0][babel6260]
 - babel-runtime: v6.25.0 → [v6.26.0][babel6260]
-- css-loader: v0.28.4 → [v0.28.5](https://github.com/webpack-contrib/css-loader/blob/master/CHANGELOG.md#0285-2017-08-17)
+- copy-webpack-plugin: v4.0.1 → [v4.1.0](https://github.com/webpack-contrib/copy-webpack-plugin/blob/master/CHANGELOG.md#410-2017-09-29)
+- css-loader: v0.28.4 → [v0.28.7](https://github.com/webpack-contrib/css-loader/blob/master/CHANGELOG.md#0287-2017-08-30)
+- file-loader: v0.11.2 → [v1.1.4](https://github.com/webpack-contrib/file-loader/blob/master/CHANGELOG.md#114-2017-09-30)
+- gzip-size: v3.0.0 → v4.0.0 - async interface now uses Promises
 - html-webpack-plugin: v2.29.0 → [v2.30.1](https://github.com/jantimon/html-webpack-plugin/blob/master/CHANGELOG.md#v2301)
-- inquirer: v3.2.1 → [v3.2.2](https://github.com/SBoudrias/Inquirer.js/releases/tag/v3.2.2)
-- mocha: v3.4.2 → [v3.5.0](https://github.com/mochajs/mocha/blob/master/CHANGELOG.md#350--2017-07-31)
-- phantomjs-prebuilt: v2.1.14 → [v2.1.15] - fix security issues with dependencies
-- webpack: v3.4.1 → [v3.5.5](https://github.com/webpack/webpack/releases)
+- inquirer: v3.2.1 → [v3.3.0](https://github.com/SBoudrias/Inquirer.js/releases)
+- karma-mocha-reporter: v2.2.3 → [v2.2.4](https://github.com/litixsoft/karma-mocha-reporter/blob/master/CHANGELOG.md#224-2017-08-24)
+- karma: v1.7.0 → [v1.7.1](https://github.com/karma-runner/karma/releases/tag/1.7.1)
+- mocha: v3.4.2 → [v3.5.3](https://github.com/mochajs/mocha/blob/master/CHANGELOG.md#353--2017-09-11)
+- phantomjs-prebuilt: v2.1.14 → v2.1.15 - fix security issues with dependencies
 - webpack-dev-middleware: v1.11.0 → [v1.12.0](https://github.com/webpack/webpack-dev-middleware/releases/tag/v1.12.0)
-- webpack-dev-server: v2.6.1 → [v2.7.1](https://github.com/webpack/webpack-dev-server/releases)
+- webpack-dev-server: v2.6.1 → [v2.9.1](https://github.com/webpack/webpack-dev-server/releases)
+- webpack-hot-middleware: v2.18.2 → [v2.19.0](https://github.com/glenjamin/webpack-hot-middleware/compare/v2.18.2...v2.19.0)
+- webpack: v3.4.1 → [v3.6.0](https://github.com/webpack/webpack/releases)
 
 [babel6260]: https://github.com/babel/babel/blob/master/CHANGELOG.md#6260-2017-08-16
 
