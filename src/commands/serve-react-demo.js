@@ -4,7 +4,7 @@ import {directoryExists} from '../utils'
 import webpackServer from '../webpackServer'
 
 /**
- * Serve a web demo app from demo/src/index.js.
+ * Serve a React demo app from demo/src/index.js.
  */
 export default function serveReactDemo(args, cb) {
   let pkg = require(path.resolve('package.json'))
@@ -13,7 +13,7 @@ export default function serveReactDemo(args, cb) {
 
   let config = {
     babel: {
-      presets: [require.resolve('babel-preset-es2015')],
+      presets: [require.resolve('babel-preset-react')],
       stage: 1,
     },
     entry: [path.resolve('demo/src/index.js')],
@@ -28,6 +28,10 @@ export default function serveReactDemo(args, cb) {
         title: `${pkg.name} ${pkg.version} Demo`,
       },
     },
+  }
+
+  if (args.hmr !== false && args.hmre !== false) {
+    config.babel.presets.push(require.resolve('../react/react-hmre-preset'))
   }
 
   if (directoryExists('demo/public')) {
