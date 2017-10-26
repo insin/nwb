@@ -6,7 +6,7 @@ import webpackServer from '../webpackServer'
 /**
  * Serve a web demo app from demo/src/index.js.
  */
-export default function serveReactDemo(args, cb) {
+export default function serveWebDemo(args, cb) {
   let pkg = require(path.resolve('package.json'))
 
   let dist = path.resolve('demo/dist')
