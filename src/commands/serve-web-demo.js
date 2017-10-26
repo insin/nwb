@@ -13,7 +13,7 @@ export default function serveReactDemo(args, cb) {
 
   let config = {
     babel: {
-      presets: [require.resolve('babel-preset-es2015')],
+      presets: [require.resolve('babel-preset-stage-1')],
       stage: 1,
     },
     entry: [path.resolve('demo/src/index.js')],
