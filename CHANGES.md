@@ -21,13 +21,15 @@
 - filesize: v3.5.10 → [v3.5.11](https://github.com/avoidwork/filesize.js/compare/3.5.10...3.5.11)
 - karma-mocha-reporter: v2.2.4 → [v2.2.5](https://github.com/litixsoft/karma-mocha-reporter/blob/master/CHANGELOG.md#225-2017-10-17)
 - karma-webpack: v2.0.4 → [v2.0.5](https://github.com/webpack-contrib/karma-webpack/blob/master/CHANGELOG.md#205-2017-10-08)
+- phantomjs-prebuilt: v2.1.15 → v2.1.16
 - postcss-loader: v2.0.6 → [v2.0.7](https://github.com/postcss/postcss-loader/blob/master/CHANGELOG.md#207-2017-10-10)
 - resolve: v1.4.0 → [v1.5.0](https://github.com/substack/node-resolve/compare/v1.4.0...v1.5.0)
 - style-loader: v0.18.2 → [v0.19.0](https://github.com/webpack-contrib/style-loader/blob/master/CHANGELOG.md#0190-2017-10-03)
 - url-loader: v0.5.9 → [v0.6.2](https://github.com/webpack-contrib/url-loader/blob/master/CHANGELOG.md#062-2017-10-04)
 - webpack: v3.6.0 → [v3.8.1](https://github.com/webpack/webpack/releases)
-- webpack-dev-server: v2.9.1 → [v2.9.3](https://github.com/webpack/webpack-dev-server/releases)
+- webpack-dev-server: v2.9.1 → [v2.9.4](https://github.com/webpack/webpack-dev-server/releases)
 - webpack-hot-middleware: v2.19.1 → [v2.20.0](https://github.com/glenjamin/webpack-hot-middleware/compare/v2.19.1...v2.20.0)
+- webpack-merge: v4.1.0 → [v4.1.1](https://github.com/survivejs/webpack-merge/blob/master/CHANGELOG.md#411--2017-11-01)
 
 # 0.19.0 / 2017-10-02
 
