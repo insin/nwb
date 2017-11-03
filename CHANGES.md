@@ -1,3 +1,5 @@
+# 0.19.1 / 2017-11-04
+
 ## `nwb.config.js` Config Changes
 
 - Deprecated the `webpack.compat.enzyme` flag for Enzyme v2 compatibility settings. Upgrade to Enzyme v3 when you can, which supports React all the way back to v0.13.
