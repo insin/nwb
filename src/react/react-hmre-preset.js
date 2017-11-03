@@ -1,6 +1,7 @@
 module.exports = {
   plugins: [
     [require('babel-plugin-react-transform').default, {
+      factoryMethods: ['React.createClass', 'createClass', 'createReactClass'],
       transforms: [
         {
           transform: require.resolve('react-transform-hmr'),
