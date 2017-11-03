@@ -162,7 +162,7 @@ export function install(
     return process.nextTick(cb)
   }
 
-  let npmArgs = ['install', '--silent', '--no-progress']
+  let npmArgs = ['install', '--silent', '--no-progress', '--no-package-lock']
 
   if (save) {
     npmArgs.push(`--save${dev ? '-dev' : ''}`)

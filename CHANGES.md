@@ -5,6 +5,7 @@
 
 ## Changed
 
+- nwb is now also tested against Node 8 now that it's the Long Term Support version.
 - Reverted the Webpack settings change for `webpack.compat.enzyme` config in v0.19.0, as it only applied while the version numbers of published React packages were out of sync. The compatibility settings assume Enzyme v2 and React >= v15.5.
 - `style-loader`'s new `hmr` option is set to `false` when creating builds to prevent inclusion of its HMR code.
 
