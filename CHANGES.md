@@ -1,3 +1,13 @@
+# Unreleased (in `master`)
+
+## Breaking Changes
+
+- Updated to Mocha 4, which comes with [a number of breaking changes](https://github.com/mochajs/mocha/blob/master/CHANGELOG.md#boom-breaking-changes). These are mostly related to dropping support for older versions of Node.js and non-ES5-compliant browsers.
+
+## Dependencies
+
+- mocha: v3.4.2 → [v4.0.1](https://github.com/mochajs/mocha/blob/master/CHANGELOG.md#401--2017-10-05) - dropped support for old versions of Node.js and non-ES5-compliant
+
 # 0.19.1 / 2017-11-04
 
 ## `nwb.config.js` Config Changes

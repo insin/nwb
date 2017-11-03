@@ -15,8 +15,8 @@
     "lint:fix": "npm run lint -- --fix",
     "test": "npm run build && npm run test:all",
     "test:coverage": "npm run build && cross-env NODE_ENV=test NWB_TEST=true nyc mocha tests/*-test.js tests/commands/*-test.js",
-    "test:all": "cross-env NODE_ENV=test NWB_TEST=true mocha --compilers js:babel-core/register tests/*-test.js tests/commands/*-test.js",
-    "test:watch": "cross-env NODE_ENV=test NWB_TEST=true mocha --watch --compilers js:babel-core/register tests/*-test.js"
+    "test:all": "cross-env NODE_ENV=test NWB_TEST=true mocha --require babel-register tests/*-test.js tests/commands/*-test.js",
+    "test:watch": "cross-env NODE_ENV=test NWB_TEST=true mocha --require babel-register --watch tests/*-test.js"
   },
   "files": [
     "docs",
@@ -85,7 +85,7 @@
     "karma-webpack": "2.0.5",
     "phantomjs-prebuilt": "2.1.16",
 
-    "mocha": "3.5.3",
+    "mocha": "4.0.1",
     "expect": "1.20.2",
 
     "object-assign": "4.1.1",
@@ -112,6 +112,7 @@
   },
   "devDependencies": {
     "babel-preset-flow": "6.23.0",
+    "babel-register": "6.26.0",
     "cross-env": "5.1.1",
     "eslint-config-jonnybuchanan": "5.0.1",
     "eventsource": "1.0.5",
