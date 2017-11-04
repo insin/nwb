@@ -7,29 +7,7 @@
 
 ## Fixed
 
-- Added `'createClass'` and `'createReactClass'` to the factory function names [React Transform](https://github.com/gaearon/babel-plugin-react-transform) looks for, so React component hot reloading will work for React 15 apps using [`create-react-class`](https://www.npmjs.com/package/create-react-class), imported as one of those names.
-  - **Note:** React 16 seems to have broken use of React Transform (which has been deprecated for some time); in the meantime for React 16 apps you should [disable use of React Transform with the `--no-hmre` flag](https://github.com/insin/nwb/blob/master/docs/Commands.md#nwb-serve) and install and use [React Hot Loader](https://github.com/gaearon/react-hot-loader), which requires a top-level component to be added to your app.
-
-    The following `nwb.config.js` tweaks will provide the Babel and Webpack config React Hot Loader requires:
-
-    ```js
-    module.exports = function({command}) {
-      let config = {
-        type: 'react-app'
-      }
-      // Only include react-hot-loader config when serving a development build
-      if (command.startsWith('serve')) {
-        config.babel = {plugins: 'react-hot-loader/babel'}
-        config.webpack = {
-          config(webpackConfig) {
-            webpackConfig.entry.unshift('react-hot-loader/patch')
-            return webpackConfig
-          }
-        }
-      }
-      return config
-    }
-    ```
+- Added `'createClass'` and `'createReactClass'` to the factory function names [React Transform](https://github.com/gaearon/babel-plugin-react-transform) looks for, so React component hot reloading will work for apps using [`create-react-class`](https://www.npmjs.com/package/create-react-class) imported as one of those names.
 
 ## Changed
 
