@@ -1,3 +1,7 @@
+## Fixed
+
+- Backed out use of `preact/debug` in favour of `preact/devtools`, as the debug module tries to override the preact module's render export, which fails due to Webpack enforcing the read-only nature of ES module exports.
+
 # 0.19.1 / 2017-11-04
 
 ## `nwb.config.js` Config Changes

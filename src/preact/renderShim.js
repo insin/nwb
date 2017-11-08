@@ -8,8 +8,8 @@ let root = parent.firstChild // If #app already contains elements, hydrate from 
 let vnode = null
 
 if (process.env.NODE_ENV === 'development') {
-  // Enable Preact debug output and use of React Developer Tools
-  require('preact/debug')
+  // Enable use of React Developer Tools
+  require('preact/devtools')
 }
 
 function renderEntry(exported) {
