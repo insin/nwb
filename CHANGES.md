@@ -1,3 +1,5 @@
+# 0.19.2 / 2017-11-09
+
 ## Fixed
 
 - Backed out use of `preact/debug` in favour of `preact/devtools`, as the debug module tries to override the preact module's render export, which fails due to Webpack enforcing the read-only nature of ES module exports.
