@@ -6,6 +6,8 @@
 
 ## Dependencies
 
+- detect-port: v1.2.1 → [v1.2.2](https://github.com/node-modules/detect-port/releases)
+- karma-webpack: v2.0.5 → [v2.0.6](https://github.com/webpack-contrib/karma-webpack/blob/master/CHANGELOG.md#206-2017-11-10)
 - mocha: v3.4.2 → [v4.0.1](https://github.com/mochajs/mocha/blob/master/CHANGELOG.md#401--2017-10-05) - dropped support for old versions of Node.js and non-ES5-compliant browsers
 
 # 0.19.2 / 2017-11-09
