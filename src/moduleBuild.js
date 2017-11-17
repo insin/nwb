@@ -74,6 +74,7 @@ function buildUMD(args, buildConfig, userConfig, cb) {
     output: {
       filename: `${pkg.name}.js`,
       library: userConfig.npm.umd.global,
+      libraryExport: 'default',
       libraryTarget: 'umd',
       path: path.resolve('umd'),
     },
