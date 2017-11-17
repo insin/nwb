@@ -96,7 +96,7 @@
     "autoprefixer": "7.1.6",
     "babel-loader": "7.1.2",
     "case-sensitive-paths-webpack-plugin": "2.1.1",
-    "copy-webpack-plugin": "4.2.0",
+    "copy-webpack-plugin": "4.2.1",
     "css-loader": "0.28.7",
     "eventsource-polyfill": "0.9.6",
     "extract-text-webpack-plugin": "3.0.2",
