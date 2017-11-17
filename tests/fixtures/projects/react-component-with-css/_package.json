@@ -3,6 +3,6 @@
   "version": "1.0.0",
   "description": "test project",
   "dependencies": {
-    "react": "15.x"
+    "react": "16.x"
   }
 }

@@ -5,6 +5,10 @@
 - Updated UMD build config to [export the `default` export of the entry point](https://webpack.js.org/configuration/output/#output-libraryexport), rather than an ES modules interop object which looks something like `{__esModule: true, default: Getter}`, which was unintended behaviour. This will break any existing usage of UMD builds which depended on manually accessing the unintended `default` property [[#402](https://github.com/insin/nwb/issues/402)]
 - Updated to Mocha 4, which comes with [a number of breaking changes](https://github.com/mochajs/mocha/blob/master/CHANGELOG.md#boom-breaking-changes). These are mostly related to dropping support for older versions of Node.js and non-ES5-compliant browsers.
 
+## Fixed
+
+- Bump the default React peerDependency version for react-component projects to `16.x` - fixes creating components with npm 2.
+
 ## Dependencies
 
 - copy-webpack-plugin: v4.2.0 → [v4.2.1](https://github.com/webpack-contrib/copy-webpack-plugin/blob/master/CHANGELOG.md#421-2017-11-17)

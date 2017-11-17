@@ -78,7 +78,7 @@ function reactComponentAssertions(dir, name, err, done) {
   expect(pkg.name).toBe(name)
   expect(pkg['module']).toBe('es/index.js')
   expect(pkg.devDependencies.nwb).toMatch(DEP_VERSION_RE)
-  expect(pkg.peerDependencies.react).toBe('15.x')
+  expect(pkg.peerDependencies.react).toBe('16.x')
   let config = require(path.resolve(dir, 'nwb.config.js'))
   expect(config).toEqual({
     type: 'react-component',

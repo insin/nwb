@@ -209,7 +209,7 @@ function createModuleProject(args, projectType, name, targetDir, cb) {
       }
       else {
         // TODO Get from npm so we don't have to manually update on major releases
-        templateVars.reactPeerVersion = '15.x'
+        templateVars.reactPeerVersion = '16.x'
       }
     }
 

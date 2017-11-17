@@ -4,8 +4,8 @@
   "description": "test project",
   "dependencies": {
     "prop-types": "15.x",
-    "react": "15.x",
-    "react-bootstrap": "0.30.x",
-    "react-dom": "15.x"
+    "react": "16.x",
+    "react-bootstrap": "0.31.x",
+    "react-dom": "16.x"
   }
 }
