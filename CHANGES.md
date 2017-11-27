@@ -49,6 +49,7 @@
 - babel-plugin-inferno: v3.2.0 → [v3.3.0](https://github.com/infernojs/babel-plugin-inferno/releases)
 - babel-plugin-transform-react-remove-prop-types: v0.4.8 → [v0.4.10](https://github.com/oliviertassinari/babel-plugin-transform-react-remove-prop-types/releases)
 - babel-preset-env: v1.6.0 → [v1.6.1](https://github.com/babel/babel-preset-env/releases/tag/v1.6.1)
+- chalk: v2.1.0 → [v2.3.0](https://github.com/chalk/chalk/compare/v2.1.0...v2.3.0)
 - copy-webpack-plugin: v4.1.0 → [v4.2.0](https://github.com/webpack-contrib/copy-webpack-plugin/blob/master/CHANGELOG.md#420-2017-10-19)
 - extract-text-webpack-plugin: v3.0.0 → [v3.0.2](https://github.com/webpack-contrib/extract-text-webpack-plugin/blob/master/CHANGELOG.md#302-2017-10-25)
 - file-loader: v1.1.4 → [v1.1.5](https://github.com/webpack-contrib/file-loader/blob/master/CHANGELOG.md#115-2017-10-05)
@@ -56,7 +57,7 @@
 - karma-mocha-reporter: v2.2.4 → [v2.2.5](https://github.com/litixsoft/karma-mocha-reporter/blob/master/CHANGELOG.md#225-2017-10-17)
 - karma-webpack: v2.0.4 → [v2.0.5](https://github.com/webpack-contrib/karma-webpack/blob/master/CHANGELOG.md#205-2017-10-08)
 - phantomjs-prebuilt: v2.1.15 → v2.1.16
-- postcss-loader: v2.0.6 → [v2.0.7](https://github.com/postcss/postcss-loader/blob/master/CHANGELOG.md#207-2017-10-10)
+- postcss-loader: v2.0.6 → [v2.0.8](https://github.com/postcss/postcss-loader/blob/master/CHANGELOG.md#208-2017-10-14)
 - resolve: v1.4.0 → [v1.5.0](https://github.com/substack/node-resolve/compare/v1.4.0...v1.5.0)
 - style-loader: v0.18.2 → [v0.19.0](https://github.com/webpack-contrib/style-loader/blob/master/CHANGELOG.md#0190-2017-10-03)
 - url-loader: v0.5.9 → [v0.6.2](https://github.com/webpack-contrib/url-loader/blob/master/CHANGELOG.md#062-2017-10-04)
@@ -93,6 +94,7 @@
 - babel-plugin-transform-react-remove-prop-types: v0.4.6 → [v0.4.8](https://github.com/oliviertassinari/babel-plugin-transform-react-remove-prop-types/releases)
 - babel-polyfill: v6.23.0 → [v6.26.0][babel6260]
 - babel-runtime: v6.25.0 → [v6.26.0][babel6260]
+- chalk: v2.0.1 → [v2.1.0](https://github.com/chalk/chalk/compare/v2.0.1...v2.1.0)
 - copy-webpack-plugin: v4.0.1 → [v4.1.0](https://github.com/webpack-contrib/copy-webpack-plugin/blob/master/CHANGELOG.md#410-2017-09-29)
 - css-loader: v0.28.4 → [v0.28.7](https://github.com/webpack-contrib/css-loader/blob/master/CHANGELOG.md#0287-2017-08-30)
 - file-loader: v0.11.2 → [v1.1.4](https://github.com/webpack-contrib/file-loader/blob/master/CHANGELOG.md#114-2017-09-30)
