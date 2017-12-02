@@ -1,23 +1,35 @@
-## Commands
+# Commands
 
 Installing nwb provides the following commands:
 
 - [`nwb`](#nwb) - project tooling
-  - [Project Creation](#project-creation)
-    - [`nwb new`](#nwb-new) - create a project skeleton in a new directory
-      - [Project Types](#project-types)
-    - [`nwb init`](#nwb-init) - initialise a project skeleton in the current directory
-  - [Generic Commands](#generic-commands)
-    - [`nwb serve`](#nwb-serve) - start a development server
-    - [`nwb build`](#nwb-build) - create a build
-    - [`nwb test`](#nwb-test) - run unit tests
-  - [Project Type-specific Commands](#project-type-specific-commands)
-  - [Check Config Command](#check-config-command)
+- [Project Creation](#project-creation)
+  - [`nwb new`](#nwb-new) - create a project skeleton in a new directory
+    - [Project Types](#project-types)
+    - [Common options](#common-options)
+    - [React component and web module options](#react-component-and-web-module-options)
+    - [React app/component options](#react-appcomponent-options)
+    - [Preact app options](#preact-app-options)
+    - [Inferno app options](#inferno-app-options)
+  - [`nwb init`](#nwb-init) - initialise a project skeleton in the current directory
+- [Generic Commands](#generic-commands)
+  - [`nwb serve`](#nwb-serve) - start a development server
+  - [`nwb build`](#nwb-build) - create a build
+    - [React/Inferno/Preact/vanilla JS app builds](#reactinfernopreactvanilla-js-app-builds)
+      - [`--no-vendor`](#--no-vendor) - disable creation of separate bundles for JS and CSS from `node_modules/`
+    - [React app builds](#react-app-builds)
+    - [React component/library and web module builds](#react-componentlibrary-and-web-module-builds)
+      - [`--no-demo`](#--no-demo) - disable building the demo app
+      - [`--[keep-]proptypes`](#--keep-proptypes) - don't strip React `PropTypes` from production builds
+      - [`--copy-files`](#--copy-files) - copy non-`.js` files when building
+  - [`nwb test`](#nwb-test) - run unit tests
+- [Project Type-specific Commands](#project-type-specific-commands)
+- [`nwb check-config`](#nwb-check-config-command)
 
 - [`nwb react`, `nwb inferno`, `nwb preact` and `nwb web`](#nwb-react-nwb-inferno-and-nwb-preact) - quick development
   - See the [Quick Development with nwb](/docs/guides/QuickDevelopment.md#quick-development-with-nwb) guide
 
-### `nwb`
+## `nwb`
 
 The `nwb` command handles development of projects.
 
@@ -27,11 +39,11 @@ The `nwb` command handles development of projects.
 
 The following sub-commands are available:
 
-#### Project Creation
+## Project Creation
 
 These provide a workflow for getting started with a new project using the conventions nwb expects.
 
-##### `nwb new`
+### `nwb new`
 
 Create a project skeleton in a new directory.
 
@@ -41,7 +53,7 @@ nwb new <project_type> <name>
 
 The `name` argument must not be an existing directory.
 
-###### Project Types
+#### Project Types
 
 ```
 nwb new react-app <dir-name>
@@ -79,11 +91,11 @@ nwb new web-module <dir-name> [options]
 
 Creates a skeleton project for a JavaScript module for use on the web, ready for publishing to npm.
 
-**Options:**
+#### Common options:
 
 - `-f, --force` - force creation of the new project without asking any questions, using whichever default settings are necessary as a result.
 
-**React component and web module options:**
+#### React component and web module options:
 
 > Passing all available options will automatically skip asking of setup questions.
 
@@ -91,19 +103,19 @@ Creates a skeleton project for a JavaScript module for use on the web, ready for
 - `--no-git` - disable creation of a Git repo with an initial commit
 - `--umd=<var>` - enable a UMD build by providing a global variable name to be exported
 
-**React app/component options:**
+#### React app/component options:
 
 - `--react` - set the version of React which will be installed. For apps, this defaults to the latest available version. For components, this is also used as a `peerDependencies` version, defaulting to whatever the major version of React was when the version of `nwb` you're using was released.
 
-**Preact app options:**
+#### Preact app options:
 
 - `--preact` - set the version of Preact which will be installed. Defaults to the latest available version.
 
-**Inferno app options:**
+#### Inferno app options:
 
 - `--inferno` - set the version of Inferno which will be installed. Defaults to the latest available version.
 
-##### `nwb init`
+### `nwb init`
 
 Initialise a project skeleton in the current directory.
 
@@ -115,7 +127,7 @@ This is the same as `new`, except the `name` argument is optional and the new pr
 
 If  `name` is not provided, the name of the current directory will be used.
 
-#### npm `scripts`
+### npm `scripts`
 
 Project skeletons created by nwb include npm run `scripts` in `package.json` to run the appropriate nwb commands for that type of project, so you shouldn't have to manually use the nwb commands documented below in most cases.
 
@@ -125,11 +137,11 @@ Project skeletons created by nwb include npm run `scripts` in `package.json` to 
 > npm run build -- --no-demo
 > ```
 
-#### Generic Commands
+## Generic Commands
 
 The following commands require a [configuration file](/docs/Configuration.md) to specify the appropriate `type` config so nwb knows what to do when they're run - if you always use a config file, you should only have to learn these commands regardless of which type of project you're working on (project skeletons include a config file by default to enable this).
 
-##### `nwb serve`
+### `nwb serve`
 
 Starts a development server which serves an app with Hot Module Replacement.
 
@@ -174,7 +186,7 @@ A demo app is essential to show people what your component can do - as [React Ro
 
 Having a demo which uses your component is also a great way to test it as you prototype and build, quickly seeing what does and doesn't work before committing to a test.
 
-##### `nwb build`
+### `nwb build`
 
 Create a build.
 
@@ -182,7 +194,7 @@ Create a build.
 nwb build [entry] [dist_dir]
 ```
 
-###### React/Inferno/Preact/vanilla JS app builds
+#### React/Inferno/Preact/vanilla JS app builds
 
 Passing arguments for `entry` and `dist_dir` allows you to customise the entry point for your app and the directory it gets build into.
 
@@ -190,7 +202,7 @@ Default behaviour:
 
 - A static build will be created in `dist/`, with app `.js` and `.css` files plus any other resources used.
 - As part of the static build an `.html` page will be included in `dist/`. You can disable this by passing a `--no-html` flag.
-- Separate vendor `.js` and `.css` files will be built for any dependencies imported from `node_modules/`. You can disable this by passing a `--no-vendor` flag.
+- Separate vendor `.js` and `.css` files will be built for any dependencies imported from `node_modules/`.
 - Static builds are created in production mode. Code will be minified and have dead code elimination performed on it (for example to remove unreachable, or development-mode only, code).
 - To support long-term caching, generated `.js` and `.css` filenames will contain a deterministic hash, which will only change when the contents of the files change.
 
@@ -204,7 +216,13 @@ NODE_ENV=development nwb build
 set NODE_ENV=development&& nwb build
 ```
 
-###### React app builds
+**Feature Toggles:**
+
+#### `--no-vendor`
+
+Disable creation of `vendor.js` and `vendor.css` files for dependencies imported from `node_modules/`
+
+#### React app builds
 
 In production mode builds, the Babel [react-remove-prop-types](https://github.com/oliviertassinari/babel-plugin-transform-react-remove-prop-types) transform will be used.
 
@@ -212,13 +230,13 @@ When building React apps, you can also pass a `--preact` flag to configure Webpa
 
 If your app and its dependencies are compatible, this can be a quick and easy way to reduce the size of your app.
 
-###### Inferno and Preact app builds
+#### Inferno and Preact app builds
 
 These apps are pre-configured to use their React compatibility layer if React is imported, so you can try to re-use existing React components out of the box.
 
 You'll only pay the cost of including the compatibility layer in your bundle if you import something which uses React.
 
-###### React component/library and web module builds
+#### React component/library and web module builds
 
 Builds for publishing to npm.
 
@@ -230,13 +248,19 @@ Passing an argument for `entry` allows you to customise the entry point for the 
 
 **Feature Toggles:**
 
+#### `--no-demo`
+
 If the module has a `demo/` directory, running `build` will also create a static build of its demo app in `demo/dist/`. You can disable this by passing a `--no-demo` flag. If you need to use static content in the demo app, the demo build supports use of a `demo/public/` directory.
+
+#### `--[keep-]proptypes`
 
 React components created as ES6 classes or functional components will have any `propTypes` they declare wrapped an `process.env.NODE_ENV !== 'production'` check, so they will be removed by dead-code elimination in the production build of any apps they're used in. You can disable this by passing a `--[keep-]proptypes` flag.
 
-If you have non-JavaScript files in `src/` which you want to be copied over when building, such as CSS files, pass a `--copy-files` flag.
+#### `--copy-files`
 
-##### `nwb clean`
+If you have non-JavaScript files in `src/` which you want to be copied over when building, such as CSS or JSON files, pass a `--copy-files` flag.
+
+### `nwb clean`
 
 Delete built resource directories.
 
@@ -246,11 +270,11 @@ nwb clean [dist_dir]
 
 For React and web apps, passing an argument for `dist_dir` allows you to customise the output directory which will be deleted.
 
-#### Project commands
+## Project commands
 
 The following commands don't require an `nwb.config.js` file to specify a project type, but it may be required for other configuration depending on the command.
 
-##### `nwb test`
+### `nwb test`
 
 Run unit tests.
 
@@ -267,7 +291,7 @@ nwb test [options]
 
 Running the test server in tandem with a hot reloading demo app, you can quickly protoype and test your components.
 
-##### Project Type-specific Commands
+### Project Type-specific Commands
 
 Project type-specific versions of `build`, `clean` and `serve` commands are also available.
 
@@ -303,7 +327,7 @@ These are used in the `npm scripts` section of `package.json` in project skeleto
 
 - `serve-web-app [entry]` - serve a web app from `entry` *[default: `src/index.js`]*
 
-#### Check Config Command
+## `nwb check-config`
 
 Checks your nwb config file for errors and deprecated usage, and provides usage hints where appropriate (e.g. if there's a more convenient way provided to set certain configuration, or if it's unnecessary)
 
@@ -320,7 +344,7 @@ nwb check-config [config] [options]
 - `--command` - command name to use when loading your config. Use this to test variations if you [export a config function](/docs/Configuration.md#configuration-file) and use the `command` option it provides when creating your config.
 - `--e, --env` - `NODE_ENV` to use when checking your config: `dev`/`development`, `test` or `prod`/`production`. Use this to test variations if you use `process.env.NODE_ENV` when creating your config.
 
-### `nwb react`, `nwb inferno`, `nwb preact` and `nwb web`
+# `nwb react`, `nwb inferno`, `nwb preact` and `nwb web`
 
 These commands provide quick development, starting from a single `.js` file and working up.
 

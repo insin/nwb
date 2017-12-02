@@ -10,6 +10,10 @@
 - webpack-dev-middleware: v1.12.0 → [v1.12.2](https://github.com/webpack/webpack-dev-middleware/releases)
 - webpack-hot-middleware: v2.20.0 → [v2.21.0](https://github.com/glenjamin/webpack-hot-middleware/compare/v2.20.0...v2.21.0)
 
+## Docs
+
+- Added more headings to the [Commands docs]() to make them easier to browse, and to make feature flags such as `--copy-files` for component builds more visible [[#407](https://github.com/insin/nwb/issues/407)]
+
 # 0.20.0 / 2017-11-18
 
 ## Breaking Changes

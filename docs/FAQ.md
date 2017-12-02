@@ -74,7 +74,7 @@ Try configuring [`babel.cherryPick`](/docs/Configuration.md#cherrypick-string--a
 
 ### How can I copy non-JavaScript files when building a React component/library?
 
-Pass a [`--copy-files` flag](/docs/guides/ReactComponent.md#--copy-files).
+Pass a [`--copy-files` flag](/docs/guides/ReactComponent.md#--copy-files) if you have other files which you want to copy to build directories, such as CSS and JSON files.
 
 ### How can I use [React Hot Loader](https://github.com/gaearon/react-hot-loader) instead of [React Transform](https://github.com/gaearon/babel-plugin-react-transform)?
 
