@@ -24,4 +24,4 @@ branches:
   only:
     - master
     - next
-    - webpack3
+    - webpack4
