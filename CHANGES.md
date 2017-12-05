@@ -6,10 +6,11 @@
 
 ## Dependencies
 
+- autoprefixer: v7.1.6 → [v7.2.1](https://github.com/postcss/autoprefixer/blob/master/CHANGELOG.md#721)
 - copy-webpack-plugin: v4.2.1 → [v4.2.3](https://github.com/webpack-contrib/copy-webpack-plugin/blob/master/CHANGELOG.md#423-2017-11-23)
 - gzip-size: v4.0.0 → [v4.1.0](https://github.com/sindresorhus/gzip-size/compare/v4.0.0...v4.1.0)
 - postcss-loader: v2.0.8 → [v2.0.9](https://github.com/postcss/postcss-loader/blob/master/CHANGELOG.md#209-2017-11-24)
-- webpack: v3.8.1 → [v3.9.1](https://github.com/webpack/webpack/releases)
+- webpack: v3.8.1 → [v3.10.0](https://github.com/webpack/webpack/releases)
 - webpack-dev-server: v2.9.4 → [v2.9.5](https://github.com/webpack/webpack-dev-server/releases)
 - webpack-dev-middleware: v1.12.0 → [v1.12.2](https://github.com/webpack/webpack-dev-middleware/releases)
 - webpack-hot-middleware: v2.20.0 → [v2.21.0](https://github.com/glenjamin/webpack-hot-middleware/compare/v2.20.0...v2.21.0)
