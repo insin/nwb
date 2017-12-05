@@ -1,5 +1,9 @@
 # Unreleased (in `master`)
 
+## Added
+
+- You can now provide a [`karma.config()` function](https://github.com/insin/nwb/blob/master/docs/Configuration.md#config-function-1) which will be given the generated Karma config to do whatever it wants with [[#408](https://github.com/insin/nwb/issues/408)]
+
 ## Dependencies
 
 - copy-webpack-plugin: v4.2.1 → [v4.2.3](https://github.com/webpack-contrib/copy-webpack-plugin/blob/master/CHANGELOG.md#423-2017-11-23)

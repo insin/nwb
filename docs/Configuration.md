@@ -112,6 +112,7 @@ The configuration object can include the following properties:
   - [`karma.testContext`](#testcontext-string) - point to a Webpack context module for your tests
   - [`karma.testFiles`](#testfiles-string--arraystring) - patterns for test files
   - [`karma.extra`](#extra-object-1) - an escape hatch for extra Karma config, which will be merged into the generated config
+  - [`karma.config`](#config-function-1) - an escape hatch for manually editing the generated Karma config
 - [npm Build Configuration](#npm-build-configuration)
   - [`npm`](#npm-object)
   - [`npm.cjs`](#esmodules-boolean) - toggle creation of a CommonJS build
@@ -1025,6 +1026,25 @@ module.exports = {
         divider: '°º¤ø,¸¸,ø¤º°`°º¤ø,¸,ø¤°º¤ø,¸¸,ø¤º°`°º¤ø,¸',
         output: 'autowatch'
       }
+    }
+  }
+}
+```
+
+##### `config`: `Function`
+
+Finally, if you need *complete* control, provide a `karma.config()` function which will be given the generated config.
+
+> **Note:** you *must* return a config object from this function.
+
+```js
+module.exports = {
+  karma: {
+    config(config) {
+      // Change config as you wish
+
+      // You MUST return the edited config object
+      return config
     }
   }
 }
