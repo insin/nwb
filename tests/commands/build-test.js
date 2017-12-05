@@ -56,18 +56,18 @@ describe('command: build', function() {
         'app.js',
         'app.js.map',
         'index.html',
-        'manifest.js',
-        'manifest.js.map',
         'react.svg',
+        'runtime.js',
+        'runtime.js.map',
         'vendor.js',
         'vendor.js.map',
       ])
     })
-    it('injects the Webpack manifest into generated HTML', () => {
+    it('injects the Webpack runtime into generated HTML', () => {
       expect(builtHTML).toInclude('window.webpackJsonp')
     })
-    it('does not generate a <script src> for the manifest', () => {
-      expect(builtHTML).toNotInclude('src="/manifest"')
+    it('does not generate a <script src> for the runtime', () => {
+      expect(builtHTML).toNotInclude('src="/runtime"')
     })
     it('injects scripts in the correct order', () => {
       let appIndex = builtHTML.indexOf('src="/app')

@@ -23,7 +23,6 @@ export default function devServer(webpackConfig, serverConfig, url, cb) {
     },
     historyApiFallback: true,
     hot: true,
-    noInfo: true,
     overlay: true,
     publicPath: webpackConfig.output.publicPath,
     quiet: true,

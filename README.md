@@ -28,8 +28,6 @@ Installing globally provides an `nwb` command for quick development and working 
 npm install -g nwb
 ```
 
-> Using **npm >= 3 is recommended**, as Babel takes significantly more time and disk space to install with npm 2 due to its lack of deduplication.
-
 > **Note:** if you're using npm 5 and getting an `EACCES: permission denied` error from nwb's PhantomJS dependency while installing globally, try passing an `--unsafe-perm` flag:
 >
 > `npm install -g --unsafe-perm nwb`

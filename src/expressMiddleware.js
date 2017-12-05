@@ -68,9 +68,8 @@ export default function nwbMiddleware(express: Object, options: Object = {}) {
   let router = express.Router()
 
   router.use(require('webpack-dev-middleware')(compiler, {
-    noInfo: true,
+    logLevel: 'silent',
     publicPath: webpackConfig.output.publicPath,
-    quiet: true,
     watchOptions: {
       ignored: /node_modules/
     }

@@ -37,8 +37,8 @@ export default class StatusPlugin {
   }
 
   apply(compiler: Object) {
-    compiler.plugin('watch-run', this.watchRun)
-    compiler.plugin('done', this.done)
+    compiler.hooks.watchRun.tapAsync('StatusPlugin', this.watchRun)
+    compiler.hooks.done.tap('StatusPlugin', this.done)
   }
 
   clearConsole() {

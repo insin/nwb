@@ -95,7 +95,9 @@ describe('sample projects', function() {
 
         // Fail if there's any error logging
         server.stderr.on('data', data => {
-          done(new Error(`stderr output received: ${data}`))
+          if (!/DeprecationWarning/.test(data)) {
+            done(new Error(`stderr output received: ${data}`))
+          }
         })
 
         function startHMRClient() {
@@ -270,6 +272,8 @@ describe('sample projects', function() {
     it('creates split bundles, vendor bundles, copies public subdirs and includes font resources', () => {
       let files = stripHashes((glob.sync('**/*', {cwd: path.resolve('dist')}))).sort()
       expect(files).toEqual([
+        '0.css',
+        '0.css.map',
         '0.js',
         '0.js.map',
         '1.js',
@@ -285,8 +289,8 @@ describe('sample projects', function() {
         'glyphicons-halflings-regular.woff',
         'glyphicons-halflings-regular.woff2',
         'index.html',
-        'manifest.js',
-        'manifest.js.map',
+        'runtime.js',
+        'runtime.js.map',
         'subdir',
         'subdir/shyamalan.jpg',
         'vendor.css',

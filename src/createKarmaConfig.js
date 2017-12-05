@@ -204,6 +204,9 @@ export default function createKarmaConfig(args, buildConfig, pluginConfig, userC
       },
     }), pluginConfig, userConfig),
     webpackMiddleware: {
+      // These options are for webpack-dev-middleware 1.x, they should be
+      // replaced with logLevel: 'silent' if/when karma-webpack upgrades the
+      // version it uses.
       noInfo: true,
       quiet: true,
     },

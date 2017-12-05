@@ -89,7 +89,7 @@ The configuration object can include the following properties:
   - [`webpack.copy`](#copy-array--object) - patterns and options for `CopyWebpackPlugin`
   - [`webpack.debug`](#debug-boolean) - create a more debuggable production build
   - [`webpack.define`](#define-object) - options for `DefinePlugin`, for replacing certain expressions with values
-  - [`webpack.extractText`](#extracttext-object--false) - configure use of `ExtractTextPlugin`
+  - [`webpack.extractCSS`](#extractCSS-object--false) - configure use of `MiniCssExtractPlugin`
   - [`webpack.hoisting`](#hoisting-boolean) - enable partial scope hoisting with Webpack 3's `ModuleConcatenationPlugin`
   - [`webpack.html`](#html-object) - options for `HtmlPlugin`
   - [`webpack.install`](#install-object) - options for `NpmInstallPlugin`
@@ -525,20 +525,19 @@ module.exports = {
 }
 ```
 
-##### `extractText`: `Object | false`
+##### `extractCSS`: `Object | false`
 
-Configures [`ExtractWebpackPlugin` options](https://github.com/webpack-contrib/extract-text-webpack-plugin#options).
+Configures [`MiniCssExtractPlugin` options](https://github.com/webpack-contrib/mini-css-extract-plugin#configuration).
 
-By default, nwb uses [`ExtractTextWebpackPlugin`](https://github.com/webpack-contrib/extract-text-webpack-plugin#readme) to extract imported stylesheets into `.css` files when creating a build.
+By default, nwb uses [`MiniCssExtractPlugin`](https://github.com/webpack-contrib/mini-css-extract-plugin#readme) to extract imported stylesheets into `.css` files when creating a build.
 
-Default configuration is to extract stylesheets from all chunks (which also avoids including the `style-loader` runtime in builds) and use a content hash in extracted filenames, equivalent to:
+Default configuration is to a chunk hash in extracted filenames, equivalent to:
 
 ```js
 module.exports = {
   webpack: {
-    extractText: {
-      allChunks: true,
-      filename: process.env.NODE_ENV === 'production' ? `[name].[contenthash:8].css` : '[name].css'
+    extractCSS: {
+      filename: process.env.NODE_ENV === 'production' ? `[name].[chunkhash:8].css` : '[name].css'
     }
   }
 }
