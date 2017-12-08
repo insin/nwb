@@ -120,8 +120,8 @@ export default function moduleBuild(args, buildConfig = {}, cb) {
   // XXX Babel doesn't support passing the path to a babelrc file any more
   if (fs.existsSync('.babelrc')) {
     throw new UserError(
-      'Unable to build the module as there is a .babelrc in your project',
-      'nwb needs to write a temporary .babelrc to configure the build',
+      'Unable to build the module as there is a .babelrc in your project\n' +
+      'nwb needs to write a temporary .babelrc to configure the build'
     )
   }
 

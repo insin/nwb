@@ -3,10 +3,14 @@
  * An error related to user input or configuration, or anything else the user is
  * responsible for and can fix.
  */
-export class UserError {
-  message: string;
-  constructor(...messages: string[]) {
-    this.message = messages.join('\n')
+export class UserError extends Error {
+  constructor(message: string) {
+    super(message)
+    // Made instanceof UserError work in ES5
+    // $FlowFixMe
+    this.constructor = UserError
+    // $FlowFixMe
+    this.__proto__ = UserError.prototype // eslint-disable-line no-proto
   }
 }
 
