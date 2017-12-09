@@ -1,7 +1,6 @@
 // @flow
+import {getPluginConfig, getUserConfig} from './config'
 import createWebpackConfig from './createWebpackConfig'
-import getPluginConfig from './getPluginConfig'
-import getUserConfig from './getUserConfig'
 
 import type {ServerConfig} from './types'
 

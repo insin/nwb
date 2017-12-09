@@ -1,5 +1,5 @@
+import {getProjectType} from '../config'
 import {INFERNO_APP, PREACT_APP, REACT_APP, REACT_COMPONENT, WEB_APP, WEB_MODULE} from '../constants'
-import {getProjectType} from '../getUserConfig'
 import cleanApp from './clean-app'
 import cleanModule from './clean-module'
 

@@ -199,6 +199,10 @@ export function modulePath(module: string, basedir: string = process.cwd()): str
   return path.dirname(resolve.sync(`${module}/package.json`, {basedir}))
 }
 
+export function pluralise(count: number, suffixes : string = ',s'): string {
+  return suffixes.split(',')[count === 1 ? 0 : 1]
+}
+
 /**
  * Custom merge which replaces arrays instead of concatenating them.
  */

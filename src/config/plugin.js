@@ -3,8 +3,8 @@ import path from 'path'
 import resolve from 'resolve'
 import merge from 'webpack-merge'
 
-import debug from './debug'
-import {deepToString, getArgsPlugins, unique} from './utils'
+import debug from '../debug'
+import {deepToString, getArgsPlugins, unique} from '../utils'
 
 function getPackagePlugins(cwd) {
   let pkg = require(path.join(cwd, 'package.json'))
@@ -19,7 +19,7 @@ function getPackagePlugins(cwd) {
  * arguments when supported, import them and merge the plugin config objects
  * they export.
  */
-export default function getPluginConfig(args = {}, {cwd = process.cwd()} = {}) {
+export function getPluginConfig(args = {}, {cwd = process.cwd()} = {}) {
   let plugins = []
 
   try {

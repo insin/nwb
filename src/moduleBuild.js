@@ -7,11 +7,10 @@ import runSeries from 'run-series'
 import merge from 'webpack-merge'
 
 import cleanModule from './commands/clean-module'
+import {getPluginConfig, getUserConfig} from './config'
 import createBabelConfig from './createBabelConfig'
 import debug from './debug'
 import {UserError} from './errors'
-import getPluginConfig from './getPluginConfig'
-import getUserConfig from './getUserConfig'
 import {deepToString} from './utils'
 import webpackBuild from './webpackBuild'
 import {createBanner, createExternals, logGzippedFileSizes} from './webpackUtils'
@@ -29,8 +28,8 @@ const DEFAULT_BABEL_IGNORE_CONFIG = [
 /**
  * Run Babel with generated config written to a temporary .babelrc.
  */
-function runBabel(name, {copyFiles, outDir, src}, buildBabelConfig, userBabelConfig, cb) {
-  let babelConfig = createBabelConfig(buildBabelConfig, userBabelConfig)
+function runBabel(name, {copyFiles, outDir, src}, buildBabelConfig, userConfig, cb) {
+  let babelConfig = createBabelConfig(buildBabelConfig, userConfig.babel, userConfig.path)
   babelConfig.ignore = DEFAULT_BABEL_IGNORE_CONFIG
 
   debug('babel config: %s', deepToString(babelConfig))
@@ -150,7 +149,7 @@ export default function moduleBuild(args, buildConfig = {}, cb) {
         // Don't enable webpack-specific plugins
         webpack: false,
       }),
-      userConfig.babel,
+      userConfig,
       cb
     ))
   }
@@ -169,7 +168,7 @@ export default function moduleBuild(args, buildConfig = {}, cb) {
         // Don't enable webpack-specific plugins
         webpack: false,
       }),
-      userConfig.babel,
+      userConfig,
       cb
     ))
   }

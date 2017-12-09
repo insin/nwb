@@ -1,8 +1,24 @@
 # Unreleased (in `master`)
 
+## Breaking Changes
+
+- Validation of the configuration object provided by `nwb.config.js` files has been expanded, so previously valid config files may now be invalid:
+  - Unexpected properties in top-level configuration or in `babel`, `karma`, `npm` and `webpack` configuration (i.e. anything that's not documented in the [Configuration docs](https://github.com/insin/nwb/blob/master/docs/Configuration.md)) are now treated as errors.
+  - Basic type checking is now performed for all documented configuration properties.
+  - After upgrading, run `nwb check-config` to check your configuration file.
+
+## `nwb.config.js` Config Changes
+
+- Deprecated the `webpack.compat.sinon` flag for Sinon 1.x compatibility settings, as subsequent major versions since July 2017 support Webpack out of the box.
+
 ## Added
 
-- You can now provide a [`karma.config()` function](https://github.com/insin/nwb/blob/master/docs/Configuration.md#config-function-1) which will be given the generated Karma config to do whatever it wants with [[#408](https://github.com/insin/nwb/issues/408)]
+- You can now provide a [`babel.config()` function](https://github.com/insin/nwb/blob/master/docs/Configuration.md#config-function) which will be given the generated Babel config to do whatever it wants with.
+- You can now provide a [`karma.config()` function](https://github.com/insin/nwb/blob/master/docs/Configuration.md#config-function-2) which will be given the generated Karma config to do whatever it wants with [[#408](https://github.com/insin/nwb/issues/408)]
+
+## Changed
+
+- Simplified configuration of locales in [`webpack.compat` config](https://github.com/insin/nwb/blob/master/docs/Configuration.md#compat-object)
 
 ## Dependencies
 
@@ -17,7 +33,8 @@
 
 ## Docs
 
-- Added more headings to the [Commands docs]() to make them easier to browse, and to make feature flags such as `--copy-files` for component builds more visible [[#407](https://github.com/insin/nwb/issues/407)]
+- Added missing docs for [`webpack.copy` config](https://github.com/insin/nwb/blob/master/docs/Configuration.md#copy-array--object)
+- Added more headings to the [Commands docs](https://github.com/insin/nwb/blob/master/docs/Commands.md#commands) to make them easier to browse, and to make feature flags such as `--copy-files` for component builds more visible [[#407](https://github.com/insin/nwb/issues/407)]
 
 # 0.20.0 / 2017-11-18
 

@@ -132,9 +132,7 @@ export default function createKarmaConfig(args, buildConfig, pluginConfig, userC
   })
 
   let {excludeFromCoverage = DEFAULT_EXCLUDE_FROM_COVERAGE} = userKarma
-  if (typeOf(excludeFromCoverage) === 'string') excludeFromCoverage = [excludeFromCoverage]
   let testFiles = userKarma.testFiles || DEFAULT_TEST_FILES
-  if (typeOf(testFiles) === 'string') testFiles = [testFiles]
 
   // Polyfill by default for browsers which lack features (hello PhantomJS)
   let files = [require.resolve('babel-polyfill/dist/polyfill.js')]
@@ -217,7 +215,7 @@ export default function createKarmaConfig(args, buildConfig, pluginConfig, userC
     karmaConfig = merge(karmaConfig, userKarma.extra)
   }
 
-  // Finally, give them a chance to do whatever they want with the generated
+  // Finally, give the user a chance to do whatever they want with the generated
   // config.
   if (typeOf(userKarma.config) === 'function') {
     karmaConfig = userKarma.config(karmaConfig)

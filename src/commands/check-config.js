@@ -1,5 +1,4 @@
-import getUserConfig, {UserConfigReport} from '../getUserConfig'
-import getPluginConfig from '../getPluginConfig'
+import {getPluginConfig, getUserConfig, UserConfigReport} from '../config'
 
 function getFullEnv(env) {
   if (env === 'dev') return 'development'

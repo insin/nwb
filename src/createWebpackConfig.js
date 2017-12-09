@@ -786,7 +786,7 @@ export default function createWebpackConfig(
   }
 
   // Generate config for babel-loader and set it as loader config for the build
-  buildRulesConfig.babel = {options: createBabelConfig(buildBabelConfig, userConfig.babel)}
+  buildRulesConfig.babel = {options: createBabelConfig(buildBabelConfig, userConfig.babel, userConfig.path)}
 
   let webpackConfig = {
     module: {

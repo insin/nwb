@@ -183,7 +183,7 @@ Create a build of a React project which uses Inferno or Preact as the runtime vi
   - [`do` expressions](http://babeljs.io/docs/plugins/transform-do-expressions/#detail)
   - [`::` function binding operator](http://babeljs.io/docs/plugins/transform-function-bind/#detail)
 
-- Polyfills for  `Promise`,  `fetch()` and `Object.assign()`, which can be disabled with a `--no-polyfill` flag if you don’t need them or want to provide your own.
+- Polyfills for `Promise`,  `fetch()` and `Object.assign()`, which can be disabled with a `--no-polyfill` flag if you don’t need them or want to provide your own.
 - Import images and stylesheets into JavaScript like any other module, to be handled by Webpack as part of its build.
 
   ```js

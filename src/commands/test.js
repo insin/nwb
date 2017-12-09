@@ -1,6 +1,6 @@
 // @flow
+import {getProjectType} from '../config'
 import {INFERNO_APP, PREACT_APP, REACT_APP, REACT_COMPONENT} from '../constants'
-import {getProjectType} from '../getUserConfig'
 import karmaServer from '../karmaServer'
 import testInferno from './test-inferno'
 import testPreact from './test-preact'

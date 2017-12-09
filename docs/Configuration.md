@@ -38,11 +38,11 @@ If a function is exported, it will be passed an object with the following proper
 
 - `args`: a parsed version of arguments passed to the `nwb` command
 - `command`: the name of the command currently being executed, e.g. `'build'` or `'test'`
-- `webpack`: nwb's version of the `webpack` module, giving you access to the other plugins webpack provides.
+- `webpack`: nwb's version of the `webpack` module, giving you access to plugins bundled with Webpack.
 
 #### Example Configuration Files
 
-- [react-hn's `nwb.config.js`](https://github.com/insin/react-hn/blob/concat/nwb.config.js) is a simple configuration file with minor tweaks to Babel and Webpack config.
+- [bootstrap-4-nwb's `nwb.config.js`](https://github.com/insin/bootstrap-4-nwb/blob/master/nwb.config.js) is a simple configuration file with minor tweaks to Babel and Webpack config.
 - [React Yelp Clone's `nwb.config.js`](https://github.com/insin/react-yelp-clone/blob/nwb/nwb.config.js) configures Babel, Karma and Webpack to allow nwb to be dropped into an existing app to handle its development tooling, [reducing the amount of `devDependencies` and configuration](https://github.com/insin/react-yelp-clone/compare/master...nwb) which need to be managed.
 
 ### Configuration Via Arguments
@@ -80,26 +80,28 @@ The configuration object can include the following properties:
   - [`babel.reactConstantElements`](#reactconstantelements-false) - disable use of React constant element hoisting in production builds
   - [`babel.runtime`](#runtime-string--boolean) - enable the `transform-runtime` plugin with different configurations
   - [`babel.stage`](#stage-number--false) - control which experimental and upcoming JavaScript features can be used
+  - [`babel.config`](#config-function) - an escape hatch for manually editing the generated Babel config
 - [Webpack Configuration](#webpack-configuration)
   - [`webpack`](#webpack-object)
   - [`webpack.aliases`](#aliases-object) - rewrite certain import paths
   - [`webpack.autoprefixer`](#autoprefixer-string--object) - options for Autoprefixer
   - [`webpack.compat`](#compat-object) - enable Webpack compatibility tweaks for commonly-used modules
+  - [`webpack.copy`](#copy-array--object) - patterns and options for `CopyWebpackPlugin`
   - [`webpack.debug`](#debug-boolean) - create a more debuggable production build
   - [`webpack.define`](#define-object) - options for `DefinePlugin`, for replacing certain expressions with values
   - [`webpack.extractText`](#extracttext-object--boolean) - options for `ExtractTextPlugin`
   - [`webpack.hoisting`](#hoisting-boolean) - enable partial scope hoisting with Webpack 3's `ModuleConcatenationPlugin`
   - [`webpack.html`](#html-object) - options for `HtmlPlugin`
   - [`webpack.install`](#install-object) - options for `NpmInstallPlugin`
+  - [`webpack.publicPath`](#publicpath-string) - path to static resources
   - [`webpack.rules`](#rules-object) - tweak the configuration of generated Webpack rules and their loaders
     - [Default Rules](#default-rules)
     - [Customising loaders](#customising-loaders)
     - [Disabling default rules](#disabling-default-rules)
-  - [`webpack.publicPath`](#publicpath-string) - path to static resources
   - [`webpack.styles`](#styles-object--false--old) - customise creation of Webpack rules for stylesheets
   - [`webpack.uglify`](#uglify-object--false) - configure use of Webpack's `UglifyJsPlugin`
   - [`webpack.extra`](#extra-object) - an escape hatch for extra Webpack config, which will be merged into the generated config
-  - [`webpack.config`](#config-function) - an escape hatch for manually editing the generated Webpack config
+  - [`webpack.config`](#config-function-1) - an escape hatch for manually editing the generated Webpack config
 - [Dev Server Configuration](#dev-server-configuration)
   - [`devServer`](#devserver-object) - configure Webpack Dev Server
 - [Karma Configuration](#karma-configuration)
@@ -112,13 +114,13 @@ The configuration object can include the following properties:
   - [`karma.testContext`](#testcontext-string) - point to a Webpack context module for your tests
   - [`karma.testFiles`](#testfiles-string--arraystring) - patterns for test files
   - [`karma.extra`](#extra-object-1) - an escape hatch for extra Karma config, which will be merged into the generated config
-  - [`karma.config`](#config-function-1) - an escape hatch for manually editing the generated Karma config
+  - [`karma.config`](#config-function-2) - an escape hatch for manually editing the generated Karma config
 - [npm Build Configuration](#npm-build-configuration)
   - [`npm`](#npm-object)
   - [`npm.cjs`](#esmodules-boolean) - toggle creation of a CommonJS build
   - [`npm.esModules`](#esmodules-boolean) - toggle creation of an ES modules build
   - UMD build
-    - [`npm.umd`](#umd-string--object) - enable a UMD build which exports a global variable
+    - [`npm.umd`](#umd-string--object--false) - configure a UMD build which exports a global variable
       - [`umd.global`](#global-string) - global variable name exported by UMD build
       - [`umd.externals`](#externals-object) - dependencies to use via global variables in UMD build
     - [`package.json` fields](#packagejson-umd-banner-configuration)
@@ -328,6 +330,25 @@ module.exports = {
 }
 ```
 
+##### `config`: `Function`
+
+Finally, if you need *complete* control, provide a `babel.config()` function which will be given the generated config.
+
+> **Note:** you *must* return a config object from this function.
+
+```js
+module.exports = {
+  webpack: {
+    config(config) {
+      // Change config as you wish
+
+      // You MUST return the edited config object
+      return config
+    }
+  }
+}
+```
+
 ### Webpack Configuration
 
 #### `webpack`: `Object`
@@ -395,27 +416,23 @@ The following libraries are supported:
 
 ###### `enzyme`: `Boolean`
 
+*deprecated in v0.19.1+*
+
 Set to `true` for [Enzyme](http://airbnb.io/enzyme/) v2 compatibility - this also assumes you're using React v15.5 or v15.6.
 
-###### `intl`: `Object`
+###### `intl` / `moment` / `react-intl`: `String | Array | Object`
 
-If you use [intl](https://www.npmjs.com/package/intl) in a Webpack build, all the locales it supports will be imported by default and your build will be larger than you were expecting!
+*changed in v0.21.0*
 
-Provide an object with a `locales` Array specifying language codes for the locales you want to load, or a String if you only need one locale.
+If you use [intl](https://www.npmjs.com/package/intl), [Moment.js](http://momentjs.com/) or [react-intl](https://github.com/yahoo/react-intl) in a Webpack build, all the locales they support will be imported by default and your build will be larger than you were expecting!
 
-###### `moment`: `Object`
+Provide an Array specifying language codes for the locales you want to load, or a String if you only need one locale.
 
-If you use [Moment.js](http://momentjs.com/) in a Webpack build, all the locales it supports will be imported by default and your build will be larger than you were expecting!
-
-Provide an object with a `locales` Array specifying language codes for the locales you want to load, or a String if you only need one locale.
-
-###### `react-intl`: `Object`
-
-If you use [react-intl](https://github.com/yahoo/react-intl) in a Webpack build, all the locales it supports will be imported by default and your build will be larger than you were expecting!
-
-Provide an object with a `locales` Array specifying language codes for the locales you want to load, or a String if you only need one locale.
+> For backwards-compatibility with older versions of nwb, locales can also be provided as an Object with a `locales` property.
 
 ###### `sinon`: `Boolean`
+
+*deprecated in v0.21.0+*
 
 Set to `true` for [Sinon.js](http://sinonjs.org/) 1.x compatibility.
 
@@ -427,11 +444,44 @@ Example config showing the use of multiple `compat` settings:
 module.exports = {
   webpack: {
     compat: {
-      enzyme: true,
-      moment: {
-        locales: ['de', 'en-gb', 'es', 'fr', 'it']
-      },
+      moment: ['de', 'en-gb', 'es', 'fr', 'it'],
       sinon: true
+    }
+  }
+}
+```
+
+##### `copy`: `Array | Object`
+
+Configures [`CopyWebpackPlugin` patterns and options](https://github.com/webpack-contrib/extract-text-webpack-plugin#options).
+
+By default, nwb uses [`CopyWebpackPlugin`](https://github.com/webpack-contrib/extract-text-webpack-plugin#options) to copy any contents in an app's `public/` directory to the output directory.
+
+To add extra [copy patterns](https://github.com/webpack-contrib/copy-webpack-plugin#pattern-properties), you can provide an Array of them:
+
+```js
+module.exports = {
+  webpack: {
+    copy: [
+      // Copy directory contents to output
+      {from: 'path/to/mystuff'}
+    ]
+  }
+}
+```
+
+To configure [plugin options](https://github.com/webpack-contrib/copy-webpack-plugin#available-options), provide an object with `options` or `patterns` properties:
+
+```js
+module.exports = {
+  webpack: {
+    copy: {
+      options: {
+        debug: true
+      },
+      patterns: [
+        {from: 'path/to/mystuff'}
+      ]
     }
   }
 }
@@ -563,6 +613,42 @@ module.exports = {
 
 Configures [options for `NpmInstallPlugin`](https://github.com/webpack-contrib/npm-install-webpack-plugin#usage), which will be used if you pass an `--install` flag to nwb commands which run a development server.
 
+##### `publicPath`: `String`
+
+> This is just Webpack's [`output.publicPath` config](https://webpack.js.org/configuration/output/#output-publicpath) pulled up a level to make it more convenient to configure.
+
+`publicPath` defines the URL static resources will be referenced by in build output, such as `<link>` and `<src>` tags in generated HTML, `url()` in stylesheets and paths to any static resources you `require()` into your modules.
+
+The default `publicPath` configured for most app builds is `/`, which assumes you will be serving your app's static resources from the root of whatever URL it's hosted at:
+
+```html
+<script src="/app.12345678.js"></script>
+```
+
+If you're serving static resources from a different path, or from an external URL such as a CDN, set it as the `publicPath`:
+
+```js
+module.exports = {
+  webpack: {
+    publicPath: 'https://cdn.example.com/myapp/'
+  }
+}
+```
+
+The exception is the React component demo app, which doesn't set a `publicPath`, generating a build without any root URL paths to static resources. This allows you to serve it at any path without configuration (e.g. on GitHub Project Pages), or open the generated `index.html` file directly in a browser, which is ideal for distributing app builds which don't require a server to run.
+
+If you want to create a path-independent build, set `publicPath` to blank or `null`:
+
+```js
+module.exports = {
+  webpack: {
+    publicPath: ''
+  }
+}
+```
+
+The trade-off for path-independence is HTML5 History routing won't work, as serving up `index.html` at anything but its real path will mean its static resource URLs won't resolve. You will have to fall back on hash-based routing if you need it.
+
 ##### `rules`: `Object`
 
 Each [Webpack rule](https://webpack.js.org/configuration/module/#module-rules) generated by nwb has a unique id you can use to customise it:
@@ -662,42 +748,6 @@ module.exports = {
   }
 }
 ```
-
-##### `publicPath`: `String`
-
-> This is just Webpack's [`output.publicPath` config](https://webpack.js.org/configuration/output/#output-publicpath) pulled up a level to make it more convenient to configure.
-
-`publicPath` defines the URL static resources will be referenced by in build output, such as `<link>` and `<src>` tags in generated HTML, `url()` in stylesheets and paths to any static resources you `require()` into your modules.
-
-The default `publicPath` configured for most app builds is `/`, which assumes you will be serving your app's static resources from the root of whatever URL it's hosted at:
-
-```html
-<script src="/app.12345678.js"></script>
-```
-
-If you're serving static resources from a different path, or from an external URL such as a CDN, set it as the `publicPath`:
-
-```js
-module.exports = {
-  webpack: {
-    publicPath: 'https://cdn.example.com/myapp/'
-  }
-}
-```
-
-The exception is the React component demo app, which doesn't set a `publicPath`, generating a build without any root URL paths to static resources. This allows you to serve it at any path without configuration (e.g. on GitHub Project Pages), or open the generated `index.html` file directly in a browser, which is ideal for distributing app builds which don't require a server to run.
-
-If you want to create a path-independent build, set `publicPath` to blank or `null`:
-
-```js
-module.exports = {
-  webpack: {
-    publicPath: ''
-  }
-}
-```
-
-The trade-off for path-independence is HTML5 History routing won't work, as serving up `index.html` at anything but its real path will mean its static resource URLs won't resolve. You will have to fall back on hash-based routing if you need it.
 
 ##### `styles`: `Object | false | 'old'`
 
@@ -957,24 +1007,6 @@ module.exports = {
 
 > **Note:** If you're configuring frameworks and you want to use the Mocha framework plugin managed by nwb, just pass its name as in the above example.
 
-##### `testContext`: `String`
-
-Use this configuration to point to a [Webpack context module](/docs/Testing.md#using-a-test-context-module) for your tests if you need to run code prior to any tests being run, such as customising the assertion library you're using, or global before and after hooks.
-
-If you provide a context module, it is responsible for including tests via Webpack's  `require.context()` - see the [example in the Testing docs](/docs/Testing.md#using-a-test-context-module).
-
-If the default [`testFiles`](#testfiles-string--arraystring) config wouldn't have picked up your tests, you must also configure it so they can be excluded from code coverage.
-
-##### `testFiles`: `String | Array<String>`
-
-> Default: `.spec.js`, `.test.js` or `-test.js` files anywhere under `src/`, `test/` or `tests/`
-
-[Minimatch glob patterns](https://github.com/isaacs/minimatch) for test files.
-
-If [`karma.testContext`](#testcontext-string) is not being used, this controls which files Karma will run tests from.
-
-This can also be used to exclude tests from code coverage if you're using [`karma.testContext`](#testcontext-string) - if the default `testFiles` patterns wouldn't have picked up your tests, configure this as well to exclude then from code coverage.
-
 ##### `plugins`: `Array<Plugin>`
 
 A list of plugins to be loaded by Karma - this should be used in combination with [`browsers`](#browsers-arraystring--plugin), [`frameworks`](#frameworks-arraystring--plugin) and [`reporters`](#reporters-arraystring--plugin) config as necessary.
@@ -1009,6 +1041,24 @@ module.exports = {
   }
 }
 ```
+
+##### `testContext`: `String`
+
+Use this configuration to point to a [Webpack context module](/docs/Testing.md#using-a-test-context-module) for your tests if you need to run code prior to any tests being run, such as customising the assertion library you're using, or global before and after hooks.
+
+If you provide a context module, it is responsible for including tests via Webpack's  `require.context()` - see the [example in the Testing docs](/docs/Testing.md#using-a-test-context-module).
+
+If the default [`testFiles`](#testfiles-string--arraystring) config wouldn't have picked up your tests, you must also configure it so they can be excluded from code coverage.
+
+##### `testFiles`: `String | Array<String>`
+
+> Default: `.spec.js`, `.test.js` or `-test.js` files anywhere under `src/`, `test/` or `tests/`
+
+[Minimatch glob patterns](https://github.com/isaacs/minimatch) for test files.
+
+If [`karma.testContext`](#testcontext-string) is not being used, this controls which files Karma will run tests from.
+
+This can also be used to exclude tests from code coverage if you're using [`karma.testContext`](#testcontext-string) - if the default `testFiles` patterns wouldn't have picked up your tests, configure this as well to exclude then from code coverage.
 
 ##### `extra`: `Object`
 
@@ -1088,9 +1138,9 @@ When providing an ES6 modules build, you should also provide the following in `p
 
 These are included automatically if you create a project with an ES6 modules build enabled.
 
-##### `umd`: `String | Object`
+##### `umd`: `String | Object | false`
 
-Configures creation of a UMD build when you run `nwb build` for a React component/library or web module.
+Configures a UMD build when you run `nwb build` for a React component/library or web module.
 
 If you just need to configure the global variable the UMD build will export, you can use a String:
 
@@ -1127,6 +1177,8 @@ module.exports = {
   }
 }
 ```
+
+The UMD build can also be explicitly disabled by configuring `umd = false`.
 
 #### `package.json` UMD Banner Configuration
 

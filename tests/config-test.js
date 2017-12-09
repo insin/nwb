@@ -1,8 +1,12 @@
+import path from 'path'
+
 import expect from 'expect'
 import webpack from 'webpack'
 
 import {ConfigValidationError} from '../src/errors'
-import getUserConfig, {getProjectType, prepareWebpackRuleConfig, prepareWebpackStyleConfig, processUserConfig} from '../src/getUserConfig'
+import {getPluginConfig, getUserConfig, getProjectType} from '../src/config'
+import {processUserConfig} from '../src/config/user'
+import {prepareWebpackRuleConfig, prepareWebpackStyleConfig} from '../src/config/webpack'
 
 describe('getProjectType()', () => {
   it("throws an error when a config file can't be found", () => {
@@ -144,19 +148,24 @@ describe('processUserConfig()', () => {
 
   it('passes command and webpack arguments when a config function is provided', () => {
     let args = {_: ['abc123']}
+    // Using the webpack.extra escape hatch to pass arguments back out
     let config = processUserConfig({
       args,
       userConfig(args) {
         return {
-          args: args.args,
-          command: args.command,
-          webpack: args.webpack,
+          webpack: {
+            extra: {
+              args: args.args,
+              command: args.command,
+              webpack: args.webpack,
+            }
+          }
         }
       }
     })
-    expect(config.args).toEqual(args)
-    expect(config.command).toEqual('abc123')
-    expect(config.webpack).toEqual(webpack)
+    expect(config.webpack.extra.args).toEqual(args)
+    expect(config.webpack.extra.command).toEqual('abc123')
+    expect(config.webpack.extra.webpack).toEqual(webpack)
   })
 
   it('defaults top-level config when none is provided', () => {
@@ -257,6 +266,20 @@ describe('prepareWebpackStyleConfig()', () => {
           exclude: 'src/components',
         },
       ]
+    })
+  })
+})
+
+describe('getPluginConfig()', () => {
+  it('scans package.json for nwb-* dependencies and imports them', () => {
+    let config = getPluginConfig({}, {cwd: path.join(__dirname, 'fixtures/plugins')})
+    expect(config).toEqual({
+      cssPreprocessors: {
+        fake: {
+          loader: 'path/to/fake.js',
+          test: /\.fake$/,
+        }
+      }
     })
   })
 })

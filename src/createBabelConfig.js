@@ -1,6 +1,7 @@
 // @flow
 import path from 'path'
 
+import {UserError} from './errors'
 import {typeOf} from './utils'
 
 type BabelPluginConfig = string | [string, Object];
@@ -24,6 +25,7 @@ type BuildOptions = {
 
 type UserOptions = {
   cherryPick?: string | string[],
+  config?: (BabelConfig) => BabelConfig,
   env?: Object,
   loose?: boolean,
   plugins?: BabelPluginConfig[],
@@ -39,7 +41,8 @@ const RUNTIME_PATH = path.dirname(require.resolve('babel-runtime/package'))
 
 export default function createBabelConfig(
   buildConfig: BuildOptions = {},
-  userConfig: UserOptions = {}
+  userConfig: UserOptions = {},
+  userConfigPath: string = ''
 ): BabelConfig {
   let {
     commonJSInterop,
@@ -54,6 +57,7 @@ export default function createBabelConfig(
 
   let {
     cherryPick,
+    config: userConfigFunction,
     env = {},
     loose,
     plugins: userPlugins = [],
@@ -178,6 +182,15 @@ export default function createBabelConfig(
 
   if (plugins.length > 0) {
     config.plugins = plugins
+  }
+
+  // Finally, give the user a chance to do whatever they want with the generated
+  // config.
+  if (typeof userConfigFunction === 'function') {
+    config = userConfigFunction(config)
+    if (!config) {
+      throw new UserError(`babel.config() in ${userConfigPath} didn't return anything - it must return the Babel config object.`)
+    }
   }
 
   return config
