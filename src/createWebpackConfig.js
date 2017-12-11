@@ -7,6 +7,8 @@ import CopyPlugin from 'copy-webpack-plugin'
 import ExtractTextPlugin from 'extract-text-webpack-plugin'
 import HtmlPlugin from 'html-webpack-plugin'
 import NpmInstallPlugin from 'npm-install-webpack2-plugin' // XXX Temporary
+// $FlowFixMe
+import UglifyJsPlugin from 'uglifyjs-webpack-plugin'
 import webpack, {optimize} from 'webpack'
 import merge from 'webpack-merge'
 
@@ -37,29 +39,33 @@ type RuleConfig = {
 type RuleConfigFactory = (?string, RuleConfig) => ?RuleConfig;
 
 const DEFAULT_UGLIFY_CONFIG = {
-  compress: {
-    warnings: false,
-  },
-  output: {
-    comments: false,
-  },
+  cache: true,
+  parallel: true,
   sourceMap: true,
 }
 
-function createUglifyConfig(userPluginConfig) {
-  if (userPluginConfig.debug) {
+function createUglifyConfig(userWebpackConfig) {
+  if (userWebpackConfig.debug) {
     return merge(
-      {...DEFAULT_UGLIFY_CONFIG, beautify: true, mangle: false},
+      DEFAULT_UGLIFY_CONFIG,
+      {
+        uglifyOptions: {
+          beautify: true,
+          mangle: false,
+        }
+      },
       // Preserve user 'compress' config if present, as it affects what gets
       // removed from the production build.
-      typeof userPluginConfig.uglify === 'object' && 'compress' in userPluginConfig.uglify
-        ? {compress: userPluginConfig.uglify.compress}
+      typeof userWebpackConfig.uglify === 'object' &&
+      typeof userWebpackConfig.uglify.uglifyConfig === 'object' &&
+      'compress' in userWebpackConfig.uglify.uglifyConfig
+        ? {uglifyOptions: {compress: userWebpackConfig.uglify.uglifyConfig.compress}}
         : {}
     )
   }
   return merge(
     DEFAULT_UGLIFY_CONFIG,
-    typeof userPluginConfig.uglify === 'object' ? userPluginConfig.uglify : {}
+    typeof userWebpackConfig.uglify === 'object' ? userWebpackConfig.uglify : {}
   )
 }
 
@@ -597,7 +603,7 @@ export function createPlugins(
       minimize: true,
     }))
     if (userConfig.uglify !== false) {
-      plugins.push(new optimize.UglifyJsPlugin(createUglifyConfig(userConfig)))
+      plugins.push(new UglifyJsPlugin(createUglifyConfig(userConfig)))
     }
     // Use partial scope hoisting/module concatenation
     if (userConfig.hoisting) {

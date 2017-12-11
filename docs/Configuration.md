@@ -757,18 +757,14 @@ See the [Stylesheets documentation](/docs/Stylesheets.md#stylesheets) for detail
 
 ##### `uglify`: `Object | false`
 
-Configures [options for Webpack's `UglifyJsPlugin`](https://webpack.github.io/docs/list-of-plugins.html#uglifyjsplugin), which will be used when creating production builds.
+Configures [options for Webpack's `UglifyJsPlugin`](https://github.com/webpack-contrib/uglifyjs-webpack-plugin#readme), which will be used when creating production builds.
 
 Any additional options provided will be merged into nwb's defaults, which are:
 
 ```js
 {
-  compress: {
-    warnings: false
-  },
-  output: {
-    comments: false
-  },
+  cache: true,
+  parallel: true,
   sourceMap: true
 }
 ```
@@ -779,8 +775,10 @@ For example, if you want to strip development-only code but keep the output read
 module.exports = {
   webpack: {
     uglify: {
-      mangle: false,
-      beautify: true
+      uglifyOptions: {
+        mangle: false,
+        beautify: true
+      }
     }
   }
 }

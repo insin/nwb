@@ -6,6 +6,9 @@
   - Unexpected properties in top-level configuration or in `babel`, `karma`, `npm` and `webpack` configuration (i.e. anything that's not documented in the [Configuration docs](https://github.com/insin/nwb/blob/master/docs/Configuration.md)) are now treated as errors.
   - Basic type checking is now performed for all documented configuration properties.
   - After upgrading, run `nwb check-config` to check your configuration file.
+- Updated to [UglifyJSPlugin 1.x](https://github.com/webpack-contrib/uglifyjs-webpack-plugin#readme), which supports ES2015 syntax and adds options to enable filesystem caching and use multiple processes to improve build speed, which nwb enables by default [[#412](https://github.com/insin/nwb/issues/412)]
+  - Review any custom [`webpack.uglify` config](https://github.com/insin/nwb/blob/master/docs/Configuration.md#uglify-object--false) you have against the new version's [options documentation](https://github.com/webpack-contrib/uglifyjs-webpack-plugin#options) - options for UglifyJS itself must now be passed as an `uglifyOptions` object and some of UglifyJS' default options have changed.
+- Node.js 4.8.0 is now the minimum required version, based on the `engines` config of nwb's dependencies.
 
 ## `nwb.config.js` Config Changes
 
@@ -471,7 +474,7 @@ Backported fixes from 0.18:
 - Global `react`, `preact`, and `inferno` commands are no longer installed when nwb is installed globally [[#308](https://github.com/insin/nwb/issues/308)]
 
   These are now subcommands of the global `nwb` command, to avoid conflicting with global commands installed by official tools for these libraries, e.g. [`preact-cli`](https://github.com/developit/preact-cli) is now available, which provides a global `preact` command.
-- Node.js v4.6.0 is now the minimum required version, based on the `engines` config of nwb's dependencies,
+- Node.js 4.6.0 is now the minimum required version, based on the `engines` config of nwb's dependencies,
 - A separate Webpack rule for stylesheets imported from `node_modules/` is no longer created by default.
 
   > For backwards compatibility you can set [`webpack.style` config](https://github.com/insin/nwb/blob/master/docs/Configuration.md#styles-object--false--old) to `'old'` to use the old default behaviour - this capability will be removed in a future release.
@@ -515,7 +518,7 @@ Backported fixes from 0.18:
 - babel-core: v6.22.1 → [v6.24.1][babel6241]
 - babel-loader: v6.2.10 → [v7.0.0](https://github.com/babel/babel-loader/releases/tag/v7.0.0)
 - babel-plugin-inferno: v1.7.0 → [v3.2.0](https://github.com/infernojs/babel-plugin-inferno/releases) - adds support for Inferno 1.5, not backwards-compatible with 1.4
-- babel-plugin-istanbul: v3.1.2 → [v4.1.4](https://github.com/istanbuljs/babel-plugin-istanbul/blob/master/CHANGELOG.md#414-2017-05-27) - drop support for Node.js v0.10 and v0.12
+- babel-plugin-istanbul: v3.1.2 → [v4.1.4](https://github.com/istanbuljs/babel-plugin-istanbul/blob/master/CHANGELOG.md#414-2017-05-27) - drop support for Node.js 0.10 and v0.12
 - babel-plugin-transform-react-jsx: v6.22.0 → [v6.24.1][babel6241]
 - babel-plugin-transform-react-remove-prop-types: v0.2.11 → [v0.4.5](https://github.com/oliviertassinari/babel-plugin-transform-react-remove-prop-types/releases) - dropped support for `React.createClass()` in favour of the new `create-react-class` package
 - babel-plugin-transform-runtime: v6.22.0 → [v6.23.0][babel6230]
@@ -575,7 +578,7 @@ Backported fixes from 0.18:
 
 **Changed:**
 
-- Disable creation of a minified UMD build when [`webpack.uglify` config](https://github.com/insin/nwb/blob/next/docs/Configuration.md#uglify-object--false) is `false` [[#288](https://github.com/insin/nwb/issues/288)] [[treshugart][treshugart]]
+- Disable creation of a minified UMD build when [`webpack.uglify` config](https://github.com/insin/nwb/blob/master/docs/Configuration.md#uglify-object--false) is `false` [[#288](https://github.com/insin/nwb/issues/288)] [[treshugart][treshugart]]
 - Support use of Karma `customLaunchers` which start with "Chrome" [[#296](https://github.com/insin/nwb/pull/296)] [[michaelsbradleyjr][michaelsbradleyjr]]
 
 **Fixed:**
@@ -755,7 +758,7 @@ Backported fixes from 0.18:
 - detect-port: v1.0.7 → [v1.1.0](https://github.com/node-modules/detect-port/compare/1.0.7...1.1.0)
 - filesize: v3.3.0 → [v3.4.3](https://github.com/avoidwork/filesize.js/compare/3.3.0...3.4.3)
 - html-webpack-plugin: v2.24.1 → [v2.26.0](https://github.com/ampedandwired/html-webpack-plugin/blob/master/CHANGELOG.md#v2260) - Webpack 2 RC support
-- inquirer: v2.0.0 → [v3.0.1](https://github.com/SBoudrias/Inquirer.js/releases/) - drop Node.js v0.12 support
+- inquirer: v2.0.0 → [v3.0.1](https://github.com/SBoudrias/Inquirer.js/releases/) - drop Node.js 0.12 support
 - karma: v1.3.0 → [v1.4.0](https://github.com/karma-runner/karma/blob/master/CHANGELOG.md#140-2017-01-14)
 - karma-mocha-reporter: v2.2.1 → [v2.2.2](https://github.com/litixsoft/karma-mocha-reporter/blob/master/CHANGELOG.md#222-2017-01-19)
 - karma-webpack: v1.8.0 → v2.0.1 - Webpack 2 RC support
@@ -778,8 +781,8 @@ These are being scoped to both make use of unreleased features and to test them 
 **Internal:**
 
 - Dropped unused `fs-extra` dependency.
-- Use [`babel-preset-env`](https://github.com/babel/babel-preset-env/) when transpiling to `lib/`, targeting Node.js v4 [[#233](https://github.com/insin/nwb/issues/233)]
-- Use ES2015 `String` methods available in Node.js v4 instead of `String.prototype.indexOf` comparisons [[#222](https://github.com/insin/nwb/issues/222)]
+- Use [`babel-preset-env`](https://github.com/babel/babel-preset-env/) when transpiling to `lib/`, targeting Node.js 4 [[#233](https://github.com/insin/nwb/issues/233)]
+- Use ES2015 `String` methods available in Node.js 4 instead of `String.prototype.indexOf` comparisons [[#222](https://github.com/insin/nwb/issues/222)]
 
 # 0.14.3 / 2017-01-21
 
@@ -1009,9 +1012,9 @@ These are being scoped to both make use of unreleased features and to test them 
 
 **Breaking Changes:**
 
-- **Dropped Node.js v0.12 support**
+- **Dropped Node.js 0.12 support**
 
-  Based on the `engines` config of nwb's dependencies, Node.js v4.2.0 is now the minimum required version.
+  Based on the `engines` config of nwb's dependencies, Node.js 4.2.0 is now the minimum required version.
 - **Upgraded from Babel 5 to Babel 6** [[#12](https://github.com/insin/nwb/issues/12)] [[#31](https://github.com/insin/nwb/issues/31)] [[@geowarin](https://github.com/geowarin/)]
 
   Babel 6 introduced [a number of breaking changes](https://github.com/babel/babel/blob/master/CHANGELOG.md#600) which you may need to account for in your codebase if you're using nwb or were otherwise using Babel 5.

@@ -6,7 +6,7 @@
 export class UserError extends Error {
   constructor(message: string) {
     super(message)
-    // Made instanceof UserError work in ES5
+    // Make instanceof UserError work in ES5
     // $FlowFixMe
     this.constructor = UserError
     // $FlowFixMe
