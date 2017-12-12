@@ -2,7 +2,7 @@
 
 ## Breaking Changes
 
-- Validation of the configuration object provided by `nwb.config.js` files has been expanded, so previously valid config files may now be invalid:
+- Validation of the configuration object provided by `nwb.config.js` files has been expanded, so previously valid config files may now be invalid [[#136](https://github.com/insin/nwb/issues/136)]
   - Unexpected properties in top-level configuration or in `babel`, `karma`, `npm` and `webpack` configuration (i.e. anything that's not documented in the [Configuration docs](https://github.com/insin/nwb/blob/master/docs/Configuration.md)) are now treated as errors [[#193](https://github.com/insin/nwb/issues/193)]
   - Basic type checking is now performed for all documented configuration properties.
   - After upgrading, run `nwb check-config` to check your configuration file.
