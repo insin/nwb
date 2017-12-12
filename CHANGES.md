@@ -14,6 +14,10 @@
 
 - Deprecated the `webpack.compat.sinon` flag for Sinon 1.x compatibility settings, as subsequent major versions since July 2017 support Webpack out of the box.
 
+## Fixed
+
+- Fixed testing React component/library and web module projects when using [export extensions](http://babeljs.io/docs/plugins/transform-export-extensions/) - the Babel stage preset wasn't being defaulted to preset-stage-1, which includes the export extensions plugin [[#364](https://github.com/insin/nwb/issues/364)]
+
 ## Added
 
 - You can now provide a [`babel.config()` function](https://github.com/insin/nwb/blob/master/docs/Configuration.md#config-function) which will be given the generated Babel config to do whatever it wants with.
