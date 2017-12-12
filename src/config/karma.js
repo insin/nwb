@@ -24,7 +24,8 @@ export function processKarmaConfig({report, userConfig}) {
       'karma',
       unexpectedProps.join(', '),
       `Unexpected prop${s(unexpectedProps.length)} in ${chalk.cyan('karma')} config - ` +
-      'see https://github.com/insin/nwb/blob/master/docs/Configuration.md#karma-configuration for supported config'
+      'see https://github.com/insin/nwb/blob/master/docs/Configuration.md#karma-configuration for supported config.' +
+      `If you were trying to add extra Karma config, try putting it in ${chalk.cyan('karma.extra')} instead`
     )
   }
 

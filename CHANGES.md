@@ -3,7 +3,7 @@
 ## Breaking Changes
 
 - Validation of the configuration object provided by `nwb.config.js` files has been expanded, so previously valid config files may now be invalid:
-  - Unexpected properties in top-level configuration or in `babel`, `karma`, `npm` and `webpack` configuration (i.e. anything that's not documented in the [Configuration docs](https://github.com/insin/nwb/blob/master/docs/Configuration.md)) are now treated as errors.
+  - Unexpected properties in top-level configuration or in `babel`, `karma`, `npm` and `webpack` configuration (i.e. anything that's not documented in the [Configuration docs](https://github.com/insin/nwb/blob/master/docs/Configuration.md)) are now treated as errors [[#193](https://github.com/insin/nwb/issues/193)]
   - Basic type checking is now performed for all documented configuration properties.
   - After upgrading, run `nwb check-config` to check your configuration file.
 - Updated to [UglifyJSPlugin 1.x](https://github.com/webpack-contrib/uglifyjs-webpack-plugin#readme), which supports ES2015 syntax and adds options to enable filesystem caching and use multiple processes to improve build speed, which nwb enables by default [[#412](https://github.com/insin/nwb/issues/412)]

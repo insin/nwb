@@ -38,7 +38,8 @@ export function processWebpackConfig({pluginConfig, report, userConfig}) {
       'webpack',
       unexpectedProps.join(', '),
       `Unexpected prop${s(unexpectedProps.length)} in ${chalk.cyan('webpack')} config - ` +
-      'see https://github.com/insin/nwb/blob/master/docs/Configuration.md#webpack-configuration for supported config'
+      'see https://github.com/insin/nwb/blob/master/docs/Configuration.md#webpack-configuration for supported config. ' +
+      `If you were trying to add extra Webpack config, try putting it in ${chalk.cyan('webpack.extra')} instead`
     )
   }
 
