@@ -106,7 +106,9 @@ describe('sample projects', function() {
             console.log('HMR open: changing file in 5s')
             setTimeout(() => {
               state = States.CHANGED_FILE
+              console.log('HMR open: set state = CHANGED_FILE')
               let content = fs.readFileSync(path.join(tmpDir, 'src/App.js'), 'utf-8')
+              console.log('HMR open: changing file now')
               fs.writeFileSync(path.join(tmpDir, 'src/App.js'), content.replace('Welcome to', 'Change'))
             }, 5000)
           }
@@ -117,7 +119,9 @@ describe('sample projects', function() {
           }
 
           hmrClient.onmessage = e => {
+            // Ignore hearbeat
             if (e.data === '\uD83D\uDC93') {
+              console.log(e.data)
               return
             }
 
