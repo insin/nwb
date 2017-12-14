@@ -29,10 +29,12 @@
 
 ## Dependencies
 
-- autoprefixer: v7.1.6 → [v7.2.2](https://github.com/postcss/autoprefixer/blob/master/CHANGELOG.md#722)
-- copy-webpack-plugin: v4.2.1 → [v4.2.3](https://github.com/webpack-contrib/copy-webpack-plugin/blob/master/CHANGELOG.md#423-2017-11-23)
+- autoprefixer: v7.1.6 → [v7.2.3](https://github.com/postcss/autoprefixer/blob/master/CHANGELOG.md#723)
+- copy-webpack-plugin: v4.2.1 → [v4.3.0](https://github.com/webpack-contrib/copy-webpack-plugin/blob/master/CHANGELOG.md#430-2017-12-14)
 - gzip-size: v4.0.0 → [v4.1.0](https://github.com/sindresorhus/gzip-size/compare/v4.0.0...v4.1.0)
+- karma-webpack: v2.0.6 → [v2.0.9](https://github.com/webpack-contrib/karma-webpack/blob/master/CHANGELOG.md#209-2017-12-14)
 - postcss-loader: v2.0.8 → [v2.0.9](https://github.com/postcss/postcss-loader/blob/master/CHANGELOG.md#209-2017-11-24)
+- style-loader: v0.19.0→ [v0.19.1](https://github.com/webpack-contrib/style-loader/blob/master/CHANGELOG.md#0191-2017-12-14)
 - webpack: v3.8.1 → [v3.10.0](https://github.com/webpack/webpack/releases)
 - webpack-dev-server: v2.9.4 → [v2.9.7](https://github.com/webpack/webpack-dev-server/releases)
 - webpack-dev-middleware: v1.12.0 → [v1.12.2](https://github.com/webpack/webpack-dev-middleware/releases)
@@ -1436,7 +1438,6 @@ These are being scoped to both make use of unreleased features and to test them 
 - cross-spawn: v2.1.5 → [v2.2.3](https://github.com/IndigoUnited/node-cross-spawn/compare/2.1.5...2.2.3) - update deps
 - [detect-port](https://github.com/xudafeng/detect-port/): v1.0.0
 - expect: v1.16.0 → [v1.20.1](https://github.com/mjackson/expect/blob/master/CHANGES.md#v1201)
-- fs-extra: v0.26.7 → [v0.30.0](https://github.com/jprichardson/node-fs-extra/blob/master/CHANGELOG.md#0300--2016-04-28)
 - html-webpack-plugin: v2.14.0 → [v2.17.0](https://github.com/ampedandwired/html-webpack-plugin/blob/master/CHANGELOG.md#v2170)
 - inquirer: v0.12.0 → [v1.0.2](https://github.com/SBoudrias/Inquirer.js/compare/v0.12.0...v1.0.2) - switch to Promise-based API
 - karma-coverage: v0.5.5 → [v1.0.0](https://github.com/karma-runner/karma-coverage/compare/v0.5.5...v1.0.0)
@@ -1497,7 +1498,6 @@ These are being scoped to both make use of unreleased features and to test them 
 - connect-history-api-fallback: v1.1.0 → v1.2.0 - support custom `Accept` headers
 - copy-template-dir: v1.2.0 → v1.2.1 - support large template folders
 - expect: v1.14.0 → [v1.16.0](https://github.com/mjackson/expect/compare/v1.14.0...v1.16.0) - mostly packaging changes?
-- fs-extra: v0.26.5 → 0.26.7 - bug fixes for `copy` and `emptyDir`
 - glob: v7.0.0 → [v7.0.3](https://github.com/isaacs/node-glob/compare/v7.0.0...v7.0.3) - misc fixes
 - html-webpack-plugin: v2.9.0 → [v2.14.0](https://github.com/ampedandwired/html-webpack-plugin/blob/master/CHANGELOG.md#v2140)
 - karma: v0.13.21 → [v0.13.22](https://github.com/karma-runner/karma/releases/tag/v0.13.22) - removed a large test file from npm package
