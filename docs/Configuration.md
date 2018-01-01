@@ -882,7 +882,7 @@ Notable features you can configure using these options:
 
 - [`devServer.proxy`](https://webpack.js.org/configuration/dev-server/#devserver-proxy) - proxy certain URLs to a separate API backend development server.
 
-- [`devServer.setup`](https://webpack.js.org/configuration/dev-server/#devserver-setup) - access the Express app to add your own middleware to the dev server.
+- [`devServer.before`](https://webpack.js.org/configuration/dev-server/#devserver-before) - access the Express app to add your own middleware to the dev server.
 
 e.g. to enable HTTPS:
 
