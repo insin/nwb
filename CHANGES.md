@@ -32,10 +32,12 @@
 
 - autoprefixer: v7.1.6 → [v7.2.3](https://github.com/postcss/autoprefixer/blob/master/CHANGELOG.md#723)
 - babel-plugin-inferno: v3.3.0 → [v3.3.1](https://github.com/infernojs/babel-plugin-inferno/releases)
-- copy-webpack-plugin: v4.2.1 → [v4.3.0](https://github.com/webpack-contrib/copy-webpack-plugin/blob/master/CHANGELOG.md#430-2017-12-14)
+- copy-webpack-plugin: v4.2.1 → [v4.3.1](https://github.com/webpack-contrib/copy-webpack-plugin/blob/master/CHANGELOG.md#431-2017-12-22)
 - file-loader: v1.1.5 → [v1.1.6](https://github.com/webpack-contrib/file-loader/blob/master/CHANGELOG.md#116-2017-12-16)
 - gzip-size: v4.0.0 → [v4.1.0](https://github.com/sindresorhus/gzip-size/compare/v4.0.0...v4.1.0)
+- karma: v1.7.1 → [v2.0.0](https://github.com/karma-runner/karma/releases/tag/v2.0.0)
 - karma-webpack: v2.0.6 → [v2.0.9](https://github.com/webpack-contrib/karma-webpack/blob/master/CHANGELOG.md#209-2017-12-14)
+- mocha: v4.0.1 → [v4.1.0](https://github.com/mochajs/mocha/blob/master/CHANGELOG.md#410--2017-12-28)
 - postcss-loader: v2.0.8 → [v2.0.9](https://github.com/postcss/postcss-loader/blob/master/CHANGELOG.md#209-2017-11-24)
 - style-loader: v0.19.0→ [v0.19.1](https://github.com/webpack-contrib/style-loader/blob/master/CHANGELOG.md#0191-2017-12-14)
 - webpack: v3.8.1 → [v3.10.0](https://github.com/webpack/webpack/releases)
