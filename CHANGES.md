@@ -20,6 +20,7 @@
 
 ## Added
 
+- Added an [`--open` flag](https://github.com/insin/nwb/blob/master/docs/Commands.md#options) to open the app in your default browser or in a named browser (e.g. `--open="Google Chrome"`) after starting a Webpack dev server [[#334](https://github.com/insin/nwb/issues/334)]
 - You can now provide a [`babel.config()` function](https://github.com/insin/nwb/blob/master/docs/Configuration.md#config-function) which will be given the generated Babel config to do whatever it wants with.
 - You can now provide a [`karma.config()` function](https://github.com/insin/nwb/blob/master/docs/Configuration.md#config-function-2) which will be given the generated Karma config to do whatever it wants with [[#408](https://github.com/insin/nwb/issues/408)]
 

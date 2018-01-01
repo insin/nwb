@@ -76,12 +76,16 @@ export default function webpackServer(args, buildConfig, cb) {
     if (args.fallback === false) serverConfig.historyApiFallback = false
     // The host can be overridden with --host
     if (args.host) serverConfig.host = args.host
+    // Open a browser with --open (default browser) or --open="browser name"
+    if (args.open) serverConfig.open = args.open
+
+    let url = `http${serverConfig.https ? 's' : ''}://${args.host || 'localhost'}:${port}/`
 
     if (!('status' in buildConfig.plugins)) {
       buildConfig.plugins.status = {
         disableClearConsole: args.clear === false || args['clear-console'] === false,
         successMessage:
-          `The app is running at http${serverConfig.https ? 's' : ''}://${args.host || 'localhost'}:${port}/`,
+          `The app is running at ${url}`,
       }
     }
 
@@ -95,6 +99,6 @@ export default function webpackServer(args, buildConfig, cb) {
 
     debug('webpack config: %s', deepToString(webpackConfig))
 
-    devServer(webpackConfig, serverConfig, cb)
+    devServer(webpackConfig, serverConfig, url, cb)
   })
 }

@@ -103,6 +103,7 @@
     "file-loader": "1.1.6",
     "html-webpack-plugin": "2.30.1",
     "npm-install-webpack2-plugin": "5.0.1",
+    "opn": "5.1.0",
     "postcss-loader": "2.0.9",
     "style-loader": "0.19.1",
     "uglifyjs-webpack-plugin": "1.1.4",

@@ -14,6 +14,7 @@ Installing nwb provides the following commands:
   - [`nwb init`](#nwb-init) - initialise a project skeleton in the current directory
 - [Generic Commands](#generic-commands)
   - [`nwb serve`](#nwb-serve) - start a development server
+    - [Options](#options) - development server options
   - [`nwb build`](#nwb-build) - create a build
     - [React/Inferno/Preact/vanilla JS app builds](#reactinfernopreactvanilla-js-app-builds)
       - [`--no-vendor`](#--no-vendor) - disable creation of separate bundles for JS and CSS from `node_modules/`
@@ -155,12 +156,13 @@ nwb serve [entry]
 
 Passing an argument for `entry` allows you to customise the entry point for your React or web app.
 
-**Options:**
+#### Options
 
 - `--install` - automatically install missing npm dependencies (and save them to `package.json` if present)
 - `--host` - change the hostname the dev server binds to *[default: not specifying a host when starting the dev server]*
 - `--no-clear` - don't clear the console when displaying build status
 - `--no-fallback` - disable fallback serving of the index page from any path
+- `--open` - open a browser when the dev server starts; pass an `--open` flag for your default browser or pass a browser name, e.g. `--open="Google Chrome"`
 - `--port` - change the port the dev server runs on *[default: 3000]*
 - `--reload` - auto-reload the page when webpack gets stuck
 
