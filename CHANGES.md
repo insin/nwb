@@ -30,7 +30,7 @@
 
 ## Dependencies
 
-- autoprefixer: v7.1.6 → [v7.2.3](https://github.com/postcss/autoprefixer/blob/master/CHANGELOG.md#723)
+- autoprefixer: v7.1.6 → [v7.2.4](https://github.com/postcss/autoprefixer/blob/master/CHANGELOG.md#724)
 - babel-plugin-inferno: v3.3.0 → [v3.3.1](https://github.com/infernojs/babel-plugin-inferno/releases)
 - copy-webpack-plugin: v4.2.1 → [v4.3.1](https://github.com/webpack-contrib/copy-webpack-plugin/blob/master/CHANGELOG.md#431-2017-12-22)
 - file-loader: v1.1.5 → [v1.1.6](https://github.com/webpack-contrib/file-loader/blob/master/CHANGELOG.md#116-2017-12-16)
