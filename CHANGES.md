@@ -1,4 +1,4 @@
-# Unreleased (in `master`)
+# 0.21.0 / 2018-01-03
 
 ## Breaking Changes
 
