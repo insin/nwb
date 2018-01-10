@@ -2,6 +2,11 @@
 
 - Fixed validation of `webpack.extractText` config when set to `false`, which disables extraction of imported CSS into `.css` files [[#418](https://github.com/insin/nwb/issues/418)]
 
+## Dependencies
+
+- postcss-loader: v2.0.9 → [v2.0.10](https://github.com/postcss/postcss-loader/blob/master/CHANGELOG.md#2010-2018-01-03)
+- uglifyjs-webpack-plugin: v1.1.5 → [v1.1.6](https://github.com/webpack-contrib/uglifyjs-webpack-plugin/releases/tag/v1.1.6)
+
 # 0.21.0 / 2018-01-03
 
 ## Breaking Changes
