@@ -214,12 +214,14 @@ export function processWebpackConfig({pluginConfig, report, userConfig}) {
 
   // extractText
   if ('extractText' in userConfig.webpack) {
-    if (typeOf(extractText) !== 'object') {
-      report.error(
-        'webpack.extractText',
-        `type: ${typeOf(extractText)}`,
-        `Must be an ${chalk.cyan('Object')}`
-      )
+    let configType = typeOf(extractText)
+    let help = `Must be ${chalk.cyan('false')} (to disable CSS extraction) or ` +
+               `an ${chalk.cyan('Object')} (to configure ExtractTextPlugin)`
+    if (configType === 'boolean' && extractText !== false) {
+      report.error('webpack.extractText', extractText, help)
+    }
+    else if (configType !== 'object') {
+      report.error('webpack.extractText', `type: ${configType}`, help)
     }
   }
 

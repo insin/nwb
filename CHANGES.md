@@ -1,3 +1,7 @@
+## Fixed
+
+- Fixed validation of `webpack.extractText` config when set to `false`, which disables extraction of imported CSS into `.css` files [[#418](https://github.com/insin/nwb/issues/418)]
+
 # 0.21.0 / 2018-01-03
 
 ## Breaking Changes

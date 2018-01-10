@@ -89,7 +89,7 @@ The configuration object can include the following properties:
   - [`webpack.copy`](#copy-array--object) - patterns and options for `CopyWebpackPlugin`
   - [`webpack.debug`](#debug-boolean) - create a more debuggable production build
   - [`webpack.define`](#define-object) - options for `DefinePlugin`, for replacing certain expressions with values
-  - [`webpack.extractText`](#extracttext-object--boolean) - options for `ExtractTextPlugin`
+  - [`webpack.extractText`](#extracttext-object--false) - configure use of `ExtractTextPlugin`
   - [`webpack.hoisting`](#hoisting-boolean) - enable partial scope hoisting with Webpack 3's `ModuleConcatenationPlugin`
   - [`webpack.html`](#html-object) - options for `HtmlPlugin`
   - [`webpack.install`](#install-object) - options for `NpmInstallPlugin`
@@ -525,7 +525,7 @@ module.exports = {
 }
 ```
 
-##### `extractText`: `Object | Boolean`
+##### `extractText`: `Object | false`
 
 Configures [`ExtractWebpackPlugin` options](https://github.com/webpack-contrib/extract-text-webpack-plugin#options).
 
