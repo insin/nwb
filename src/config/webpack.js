@@ -217,8 +217,10 @@ export function processWebpackConfig({pluginConfig, report, userConfig}) {
     let configType = typeOf(extractText)
     let help = `Must be ${chalk.cyan('false')} (to disable CSS extraction) or ` +
                `an ${chalk.cyan('Object')} (to configure ExtractTextPlugin)`
-    if (configType === 'boolean' && extractText !== false) {
-      report.error('webpack.extractText', extractText, help)
+    if (configType === 'boolean') {
+      if (extractText !== false) {
+        report.error('webpack.extractText', extractText, help)
+      }
     }
     else if (configType !== 'object') {
       report.error('webpack.extractText', `type: ${configType}`, help)
