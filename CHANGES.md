@@ -1,6 +1,6 @@
 ## Fixed
 
-- Fixed validation of `webpack.extractText` config when set to `false`, which disables extraction of imported CSS into `.css` files [[#418](https://github.com/insin/nwb/issues/418)]
+- Fixed validation of `webpack.extractText = false` config, which disables extraction of imported stylesheets into `.css` files [[#418](https://github.com/insin/nwb/issues/418)]
 
 ## Dependencies
 
