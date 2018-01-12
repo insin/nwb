@@ -1,3 +1,5 @@
+# 0.21.1 / 2018-01-12
+
 ## Fixed
 
 - Fixed validation of `webpack.extractText = false` config, which disables extraction of imported stylesheets into `.css` files [[#418](https://github.com/insin/nwb/issues/418)]
