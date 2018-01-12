@@ -2,7 +2,6 @@
 import path from 'path'
 
 import {UserError} from './errors'
-import {typeOf} from './utils'
 
 type BabelPluginConfig = string | [string, Object];
 
@@ -12,14 +11,15 @@ type BabelConfig = {
 };
 
 type BuildOptions = {
+  absoluteRuntime?: false,
   commonJSInterop?: boolean,
   env?: Object,
   modules?: false | string,
   plugins?: BabelPluginConfig[],
-  presets?: string[],
+  presets?: BabelPluginConfig[],
+  proposals?: Object,
   removePropTypes?: true | Object,
-  setRuntimePath?: false,
-  stage?: number,
+  runtime?: Object,
   webpack?: boolean,
 };
 
@@ -30,14 +30,11 @@ type UserOptions = {
   loose?: boolean,
   plugins?: BabelPluginConfig[],
   presets?: BabelPluginConfig[],
+  proposals?: false | Object,
   reactConstantElements?: boolean,
   removePropTypes?: false | Object,
-  runtime?: boolean | string,
-  stage?: false | number,
+  runtime?: false | Object,
 };
-
-const DEFAULT_STAGE = 2
-const RUNTIME_PATH = path.dirname(require.resolve('babel-runtime/package'))
 
 export default function createBabelConfig(
   buildConfig: BuildOptions = {},
@@ -45,13 +42,14 @@ export default function createBabelConfig(
   userConfigPath: string = ''
 ): BabelConfig {
   let {
+    absoluteRuntime,
     commonJSInterop,
     modules = false,
     plugins: buildPlugins = [],
     presets: buildPresets,
+    proposals: buildProposals = {},
     removePropTypes: buildRemovePropTypes = false,
-    setRuntimePath,
-    stage: buildStage = DEFAULT_STAGE,
+    runtime: buildRuntime,
     webpack = true,
   } = buildConfig
 
@@ -62,22 +60,22 @@ export default function createBabelConfig(
     loose,
     plugins: userPlugins = [],
     presets: userPresets,
+    proposals: userProposals = {},
     reactConstantElements,
     removePropTypes: userRemovePropTypes,
     runtime: userRuntime,
-    stage: userStage,
   } = userConfig
 
   let presets: BabelPluginConfig[] = []
   let plugins: BabelPluginConfig[] = []
 
   // Default to loose mode unless explicitly configured
-  if (typeOf(loose) === 'undefined') {
+  if (typeof loose === 'undefined') {
     loose = true
   }
 
   presets.push(
-    [require.resolve('babel-preset-env'), {loose, modules, ...env}]
+    [require.resolve('@babel/preset-env'), {loose, modules, ...env}]
   )
 
   // Additional build presets
@@ -88,7 +86,7 @@ export default function createBabelConfig(
       if (preset === 'react-prod') {
         // Hoist static element subtrees up so React can skip them when reconciling
         if (reactConstantElements !== false) {
-          plugins.push(require.resolve('babel-plugin-transform-react-constant-elements'))
+          plugins.push(require.resolve('@babel/plugin-transform-react-constant-elements'))
         }
         // Remove or wrap propTypes and optionally remove prop-types imports
         if (userRemovePropTypes !== false) {
@@ -98,22 +96,26 @@ export default function createBabelConfig(
           ])
         }
       }
-      // All other presets are assumed to be paths to a preset module
       else {
         presets.push(preset)
       }
     })
   }
 
-  // Stage preset
-  let stage = userStage != null ? userStage : buildStage
-  if (typeof stage == 'number') {
-    presets.push(require.resolve(`babel-preset-stage-${stage}`))
-    // Decorators are stage 2 but not supported by Babel yet - add the legacy
-    // transform for support in the meantime.
-    if (stage <= 2) {
-      plugins.push(require.resolve('babel-plugin-transform-decorators-legacy'))
-    }
+  // Proposal plugins
+  if (userProposals !== false) {
+    presets.push([require.resolve('babel-preset-proposals'), {
+      // Pass on nwb's loose = true default
+      loose,
+      decorators: true,
+      classProperties: true,
+      exportDefaultFrom: true,
+      exportNamespaceFrom: true,
+      ...buildProposals,
+      ...userProposals,
+      // Required for non-local usage of nwb
+      absolutePaths: true
+    }])
   }
 
   if (userPresets) {
@@ -138,35 +140,20 @@ export default function createBabelConfig(
     }
   }
 
-  // The Runtime transform imports various things into a module based on usage.
-  // Turn regenerator on by default to enable use of async/await and generators
-  // without configuration.
-  let runtimeTransformOptions: Object = {
-    helpers: false,
-    polyfill: false,
-    regenerator: true,
-  }
-  if (setRuntimePath !== false) {
-    runtimeTransformOptions.moduleName = RUNTIME_PATH
-  }
+  // The Runtime transform imports helpers and the regenerator runtime when required
+  // See https://babeljs.io/docs/en/babel-plugin-transform-runtime.html
   if (userRuntime !== false) {
-    if (userRuntime === true) {
-      // Enable all features
-      runtimeTransformOptions = {}
-      if (setRuntimePath !== false) {
-        runtimeTransformOptions.moduleName = RUNTIME_PATH
-      }
-    }
-    else if (typeOf(userRuntime) === 'string') {
-      // Enable the named feature
-      runtimeTransformOptions[userRuntime] = true
-    }
-    plugins.push([require.resolve('babel-plugin-transform-runtime'), runtimeTransformOptions])
+    plugins.push([require.resolve('@babel/plugin-transform-runtime'), {
+      absoluteRuntime: absoluteRuntime !== false ? path.resolve(__dirname, '..') : false,
+      useESModules: modules === false,
+      ...typeof buildRuntime === 'object' ? buildRuntime : {},
+      ...typeof userRuntime === 'object' ? userRuntime : {}
+    }])
   }
 
   // Allow Babel to parse (but not transform) import() when used with Webpack
   if (webpack) {
-    plugins.push(require.resolve('babel-plugin-syntax-dynamic-import'))
+    plugins.push(require.resolve('@babel/plugin-syntax-dynamic-import'))
   }
 
   // Provide CommonJS interop so users don't have to tag a .default onto their

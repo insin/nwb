@@ -1,7 +1,7 @@
 // @flow
 import expect from 'expect'
 
-import {joinAnd} from '../src/utils'
+import {joinAnd, padLines} from '../src/utils'
 import {createBanner, createExternals} from '../src/webpackUtils'
 
 describe('utils', () => {
@@ -17,6 +17,12 @@ describe('utils', () => {
     })
     it('joins multiple items with a penultipate "and"', () => {
       expect(joinAnd(['one', 'two', 'three'])).toEqual('one, two and three')
+    })
+  })
+
+  describe('padLines()', () => {
+    it('pads lines with 2 spaces by default', () => {
+      expect(padLines('1\n2\n3\n4')).toEqual('  1\n  2\n  3\n  4')
     })
   })
 })

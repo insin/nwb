@@ -50,7 +50,6 @@ In the project skeletons created by nwb's `new` and `init` commands, the sample 
 
 However, the default configuration supports having tests in any file which ends with one of the following suffixes, anywhere underneath a `src/`, `test/` or `tests/` directory:
 
-- `-test.js`
 - `.test.js`
 - `.spec.js`
 
@@ -157,7 +156,7 @@ context.keys().forEach(context)
 
 A Webpack context module is also a suitable place for before/after hooks which should apply to all tests.
 
-For example, if you want to make use of Expect's spies to fail tests by default if any unexpected error logging is performed, you could use a context module like this (based on [React Router's context module](https://github.com/reactjs/react-router/blob/master/tests.webpack.js)):
+For example, if you want to make use of Expect's spies to fail tests by default if any unexpected error logging is performed, you could use a context module like this:
 
 ```js
 import expect from 'expect'

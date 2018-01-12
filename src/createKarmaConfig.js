@@ -15,7 +15,7 @@ import {deepToString, typeOf} from './utils'
 const DEFAULT_EXCLUDE_FROM_COVERAGE = ['test/', 'tests/', 'src/**/__tests__/']
 // Not every file in a test directory is a test and tests may also be co-located
 // with the code they test, so determine test files by suffix.
-const DEFAULT_TEST_FILES = ['+(src|test?(s))/**/*+(-test|.spec|.test).js']
+const DEFAULT_TEST_FILES = ['+(src|test?(s))/**/*+(.spec|.test).js']
 
 /**
  * Browser, framework and reporter config can be passed as strings or as plugin
@@ -135,7 +135,7 @@ export default function createKarmaConfig(args, buildConfig, pluginConfig, userC
   let testFiles = userKarma.testFiles || DEFAULT_TEST_FILES
 
   // Polyfill by default for browsers which lack features (hello PhantomJS)
-  let files = [require.resolve('babel-polyfill/dist/polyfill.js')]
+  let files = [require.resolve('@babel/polyfill/dist/polyfill.js')]
   let preprocessors = {}
 
   if (userKarma.testContext) {

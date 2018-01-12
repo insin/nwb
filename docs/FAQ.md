@@ -77,43 +77,6 @@ Try configuring [`babel.cherryPick`](/docs/Configuration.md#cherrypick-string--a
 
 Pass a [`--copy-files` flag](/docs/guides/ReactComponent.md#--copy-files) if you have other files which you want to copy to build directories, such as CSS and JSON files.
 
-### How can I use [React Hot Loader](https://github.com/gaearon/react-hot-loader) instead of [React Transform](https://github.com/gaearon/babel-plugin-react-transform)?
-
-> [React Transform](https://github.com/gaearon/babel-plugin-react-transform) is deprecated in favour of [React Hot Loader](https://github.com/gaearon/react-hot-loader), but nwb is still using the former as it can be activated entirely via the configuration nwb manages, whereas React Hot Loader requires a component to be added to your app.
-
-- `npm install react-hot-loader`
-- Disable use of React Transform by passing a [`--no-hmre` flag](https://github.com/insin/nwb/blob/master/docs/Commands.md#nwb-serve) to the `serve` command you're using. e.g. in your app's `package.json`:
-
-  ```json
-  {
-    "scripts": {
-      "start": "nwb serve-react-app --no-hmre",
-    }
-  }
-  ```
-- Provide the Babel and Webpack config React Hot Loader requires in your `nwb.config.js`:
-
-  ```js
-  module.exports = function({command}) {
-    let config = {
-      type: 'react-app'
-    }
-    // Only include react-hot-loader config when serving a development build
-    if (command.startsWith('serve')) {
-      config.babel = {plugins: 'react-hot-loader/babel'}
-      config.webpack = {
-        config(webpackConfig) {
-          // React Hot Loader's patch module needs to run before your app
-          webpackConfig.entry.unshift('react-hot-loader/patch')
-          return webpackConfig
-        }
-      }
-    }
-    return config
-  }
-  ```
-- Use React Hot Loader's `<AppContainer>` component in your app's entry module (usually `src/index.js` in apps using nwb) as per its [Getting Started docs](https://github.com/gaearon/react-hot-loader#getting-started).
-
 ### How can I debug using VS Code when using nwb?
 
 Ensure you have the [Debugger for Chrome extension](https://marketplace.visualstudio.com/items?itemName=msjsdiag.debugger-for-chrome) installed and add the following configurations to `.vscode/launch.json`:

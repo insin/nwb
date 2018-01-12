@@ -3,7 +3,7 @@ import util from 'util'
 import chalk from 'chalk'
 import figures from 'figures'
 
-import {pluralise as s} from '../utils'
+import {padLines, pluralise as s} from '../utils'
 
 export default class UserConfigReport {
   constructor({configFileExists, configPath} = {}) {
@@ -19,8 +19,8 @@ export default class UserConfigReport {
     this.deprecations.push({path, messages})
   }
 
-  error(path, value, message) {
-    this.errors.push({path, value, message})
+  error(path, value, ...messages) {
+    this.errors.push({path, value, message: messages.join('\n')})
   }
 
   hasErrors() {
@@ -66,8 +66,8 @@ export default class UserConfigReport {
       report.push('')
     }
     this.errors.forEach(({path, value, message}) => {
-      report.push(`${chalk.red(`${figures.cross} ${path}`)} ${chalk.cyan('=')} ${util.inspect(value)}`)
-      report.push(`  ${message}`)
+      report.push(`${chalk.red(`${figures.cross} ${path}`)}${value ? ` ${chalk.cyan('=')} ${util.inspect(value)}` : ''}`)
+      report.push(padLines(message))
       report.push('')
     })
 

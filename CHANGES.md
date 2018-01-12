@@ -9,17 +9,37 @@
   - [file-loader@4.0.0](https://github.com/webpack-contrib/file-loader/blob/master/CHANGELOG.md#400-2019-06-05)
   - [karma@4.0.0](https://github.com/karma-runner/karma/releases/tag/v4.0.0)
   - [mocha@6.0.0](https://github.com/mochajs/mocha/blob/master/CHANGELOG.md#boom-breaking-changes)
+- Updated to [Babel 7](https://babeljs.io/blog/2018/08/27/7.0.0)
+  - [`babel.runtime` config](https://github.com/insin/nwb/blob/master/docs/Configuration.md#runtime-object--false) no longer accepts a `String` to enable an additional, named feature.
 
-## Changes
+    Pass an `Object` with plugin options instead.
 
+  - Support for tests in `*-test.js` files has been removed, as `@babel-core` no longer supports pattern matching them to ignore them when co-located in `src/`.
+
+    Rename these to `*.test.js` instead.
+- Dropped support for old `--no-hmre` alias to disable Hot Module Replacement, just use `--no-hmr`  instead.
+
+## Added
+
+- Added [`babel.proposals` config](https://github.com/insin/nwb/blob/master/docs/Configuration.md#proposals-object--false) to configure use of Babel's proposal plugins.
+
+## Changed
+
+- [React Refresh Webpack Plugin](https://github.com/pmmmwh/react-refresh-webpack-plugin) is now used to enable [Fast Refresh](https://github.com/facebook/react/issues/16604#issuecomment-528663101) for React apps, as babel-plugin-react-transform is deprecated and doesn't support Babel 7.
 - Replaced use of `UglifyJsPlugin` with `TerserWebpackPlugin`.
   - Deprecated `webpack.uglify` config, which has been renamed to [`webpack.terser`](https://github.com/insin/nwb/blob/master/docs/Configuration.md#terser-object--false).
 - Autoprefixer renamed its `browsers` option to `overrideBrowserslist`, so you will get deprecation warnings if you were using `{browsers: ...}` in [`webpack.autoprefixer` config](https://github.com/insin/nwb/blob/master/docs/Configuration.md#autoprefixer-string--object).
 
+## Deprecated
+
+- `babel.stage` config is deprecated, as Babel's `stage-X` presets were/are being removed in Babel 7 - if you provide it, nwb will warn you and enable Babel proposal plugins equivalent to the current stage they're at.
+
+  Use [`babel.proposals` config](https://github.com/insin/nwb/blob/master/docs/Configuration.md#proposals-object--false) instead if you want to toggle some or all additional proposal plugins on.
+
 ## Dependencies
 
 - autoprefixer: v9.0.2 → [v9.7.4](https://github.com/postcss/autoprefixer/blob/master/CHANGELOG.md#974)
-- babel-plugin-add-module-exports: v0.2.1 → [v1.0.0](https://github.com/59naga/babel-plugin-add-module-exports/releases)
+- babel-plugin-add-module-exports: v0.2.1 → [v1.0.2](https://github.com/lijunle/babel-plugin-add-module-exports/releases/tag/v1.0.2)
 - babel-plugin-inferno: v5.0.1 → [v5.1.0](https://github.com/infernojs/babel-plugin-inferno/releases)
 - case-sensitive-paths-webpack-plugin: v2.1.2 → [v2.3.0](https://github.com/Urthen/case-sensitive-paths-webpack-plugin/blob/master/CHANGELOG.md#v230)
 - chalk: v2.4.1 → [v3.0.0](https://github.com/chalk/chalk/releases/tag/v3.0.0)

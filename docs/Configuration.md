@@ -50,7 +50,7 @@ If a function is exported, it will be passed an object with the following proper
 Configuration for the `babel`, `webpack`, `devServer`, `karma` and `npm` properties documented below can also be provided via arguments using dotted paths, instead of tweaking your `nwb.config.js` file for a single run, or instead of needing to add a config file for [Quick Development commands](/docs/guides/QuickDevelopment.md#quick-development-with-nwb):
 
 ```sh
-nwb build-react-app --babel.stage=2
+nwb build-react-app --babel.proposals.all
 ```
 
 > **Note:** If you have a config file, these arguments will act as overrides.
@@ -72,13 +72,14 @@ The configuration object can include the following properties:
 - [Babel Configuration](#babel-configuration)
   - [`babel`](#babel-object)
   - [`babel.cherryPick`](#cherrypick-string--arraystring) - enable cherry-picking for destructured `import` statements
-  - [`babel.env`](#env-object) - additional configuration for `babel-preset-env`
+  - [`babel.env`](#env-object) - additional configuration for `@babel/preset-env`
   - [`babel.loose`](#loose-boolean) - enable loose mode for Babel plugins which support it
   - [`babel.plugins`](#plugins-string--array) - extra Babel plugins to be used
   - [`babel.presets`](#presets-string--array) - extra Babel presets to be used
-  - [`babel.removePropTypes`](#removeproptypes-object--false) - disable or configure removal of React component `propTypes` in production builds
+  - [`babel.proposals`](#proposals-object--false) - configure or disable use of `babel-preset-proposals`
+  - [`babel.removePropTypes`](#removeproptypes-object--false) - configure or disable removal of React component `propTypes` in production builds
   - [`babel.reactConstantElements`](#reactconstantelements-false) - disable use of React constant element hoisting in production builds
-  - [`babel.runtime`](#runtime-string--boolean) - enable the `transform-runtime` plugin with different configurations
+  - [`babel.runtime`](#runtime-object--false) - configure or disable the Babel `transform-runtime` plugin
   - [`babel.stage`](#stage-number--false) - control which experimental and upcoming JavaScript features can be used
   - [`babel.config`](#config-function) - an escape hatch for manually editing the generated Babel config
 - [Webpack Configuration](#webpack-configuration)
@@ -192,7 +193,7 @@ This is implemented using [babel-plugin-lodash](https://github.com/lodash/babel-
 
 ##### `env`: `Object`
 
-Additional [options for `babel-preset-env`](https://github.com/babel/babel-preset-env#options) - nwb uses `babel-preset-env` to transpile ECMAScript features which aren't natively available in browsers yet.
+Additional [options for `@babel/preset-env`](https://babeljs.io/docs/en/next/babel-preset-env#options) - nwb uses `@babel/preset-env` to transpile ECMAScript features which aren't natively available in all browsers yet.
 
 ##### `loose`: `Boolean`
 
@@ -239,6 +240,55 @@ Additional Babel presets to use.
 
 A single additional preset which doesn't need a configuration object can be specified as a String, otherwise provide an Array.
 
+##### `proposals`: `Object | false`
+
+*added in v0.24.0*
+
+Configures which experimental Babel plugins will be used via [`babel-preset-proposals`](https://github.com/insin/babel-preset-proposals#babel-preset-proposals).
+
+By default, nwb enables:
+- class properties, which make ES classes more palatable, particularly for React-like components
+- @decorators, as used in libraries such as MobX.
+- namespace and default `export` extensions, which are useful for re-exporting modules from libraries
+
+nwb's [`babel.loose`](#loose-boolean) config is also passed to the preset, so proposal plugins are in loose mode by default.
+
+Provide an Object to configure the [preset's options](https://github.com/insin/babel-preset-proposals#options):
+
+```js
+module.exports = {
+  babel: {
+    proposals: {
+      pipelineOperator: true
+    }
+  }
+}
+```
+
+> **Note:** When running a Webpack build, `@babel/plugin-syntax-dynamic-import` will always be used independent of `babel.proposals`, to allow Babel to successfully parse dynamic `import()` statements so Webpack can handle them for code-splitting, so you probably never need to enable `dynamicImport` manually.
+
+If you want to turn one of the default proposal plugins offs, you can pass a `false` property:
+
+```js
+module.exports = {
+  babel: {
+    proposals: {
+      decorators: false,
+    }
+  }
+}
+```
+
+To disable use of `babel-preset-proposals`, configure `proposals = false`:
+
+```js
+module.exports = {
+  babel: {
+    proposals: false
+  }
+}
+```
+
 ##### `removePropTypes`: `Object | false`
 
 Since React `propTypes` are only used in development mode, nwb removes them from React app production builds by default using the [react-remove-prop-types](https://github.com/oliviertassinari/babel-plugin-transform-react-remove-prop-types) transform.
@@ -271,64 +321,39 @@ module.exports = {
 
 Set this to `false` to disable use of the [React constant element hoisting transform](https://babeljs.io/docs/plugins/transform-react-constant-elements/) in React app production builds.
 
-##### `runtime`: `String | Boolean`
+##### `runtime`: `Object | false`
 
-Babel's [runtime transform](https://babeljs.io/docs/plugins/transform-runtime/) does 3 things by default:
+*changed in v0.24.0 - now only takes an `Object` to tweak config*
 
-1. Imports helper modules from `babel-runtime` instead of duplicating **helpers** in every module which needs them.
-2. Imports a local **polyfill** for new ES built-ins (`Promise`) and static methods (e.g. `Object.assign`) when they're used in your code.
-3. Imports the **regenerator** runtime required to use `async`/`await` when needed.
+Configure options for Babel's [runtime transform plugin](https://babeljs.io/docs/en/next/babel-plugin-transform-runtime.html), which by default imports helper modules from `@babel/runtime/helpers` instead of duplicating helper code at the top of every module which needs it, and imports the regenerator runtime from `@babel/runtime/regenerator` required to use `async`/`await` or generators when needed.
 
-nwb's default config turns the regenerator runtime import on so you can use `async`/`await` and generators.
+> **Note:** if you use `async`/`await` or generators in a React Component or Web Module project and are transpiling it to ES5 for publishing (which is the default), you will need to add `@babel/runtime` to your package.json `peerDependencies` to ensure it can be resolved when somebody else uses your module from npm.
 
-To enable an additional feature, you can name it (either `'helpers'` or `'polyfill'`):
+e.g. to enable importing of helper modules if you're publishing a large React Component library:
 
 ```js
 module.exports = {
   babel: {
-    runtime: 'helpers'
+    runtime: {
+      helpers: true
+    }
   }
 }
 ```
-
-To enable all features, set `runtime` to `true`.
 
 To disable use of the runtime transform, set `runtime` to `false`.
 
-> **Note:** if you use `async`/`await` or enable the runtime transform's other features in a React Component or Web Module project, you will need to add `babel-runtime` to your package.json `peerDependencies` to ensure it can be resolved when somebody else uses your module from npm.
+```js
+module.exports = {
+  babel: {
+    runtime: false
+  }
+}
+```
 
 ##### `stage`: `Number | false`
 
-> nwb implements its own equivalent of Babel 5's `stage` config for Babel 6
-
-Controls which Babel preset will be used to enable use of experimental, proposed and upcoming JavaScript features in your code, grouped by the stage they're at in the TC39 process for proposing new JavaScript features:
-
-| Stage | TC39 Category | Features |
-| ----- | ------------- | -------- |
-| [0](https://babeljs.io/docs/plugins/preset-stage-0) | Strawman, just an idea |`do {...}` expressions, `::` function bind operator |
-| [1](https://babeljs.io/docs/plugins/preset-stage-1) | Proposal: this is worth working on | export extensions |
-| [2](https://babeljs.io/docs/plugins/preset-stage-2) | Draft: initial spec | class properties, `@decorator` syntax (using the [Babel Legacy Decorator plugin](https://github.com/loganfsmyth/babel-plugin-transform-decorators-legacy)) - **enabled by default** |
-| [3](https://babeljs.io/docs/plugins/preset-stage-3) | Candidate: complete spec and initial browser implementations | object rest/spread `...` syntax,  `async`/`await`, `**` exponentiation operator, trailing function commas |
-
-e.g. if you want to use export extensions in your app, you should set `stage` to `1`:
-
-```js
-module.exports = {
-  babel: {
-    stage: 1
-  }
-}
-```
-
-Stage 2 is enabled by default - to disable use of a stage preset entirely, set `stage` to `false`:
-
-```js
-module.exports = {
-  babel: {
-    stage: false
-  }
-}
-```
+*deprecated in v0.24.0 - use [`babel.proposals` config](#proposals-object--false) instead*
 
 ##### `config`: `Function`
 
@@ -1024,7 +1049,7 @@ If the default [`testFiles`](#testfiles-string--arraystring) config wouldn't hav
 
 ##### `testFiles`: `String | Array<String>`
 
-> Default: `.spec.js`, `.test.js` or `-test.js` files anywhere under `src/`, `test/` or `tests/`
+> Default: `.spec.js` or `.test.js` files anywhere under `src/`, `test/` or `tests/`
 
 [Minimatch glob patterns](https://github.com/isaacs/minimatch) for test files.
 
@@ -1163,7 +1188,7 @@ The name of the global variable the UMD build will export.
 
 A mapping from `peerDependency` module names to the global variables they're expected to be available as for use by the UMD build.
 
-e.g. if you're creating a React component which also depends on [React Router](https://github.com/reactjs/react-router), this configuration would ensure they're not included in the UMD build:
+e.g. if you're creating a React component which also depends on [React Router](https://github.com/ReactTraining/react-router), this configuration would ensure they're not included in the UMD build:
 
 ```js
 module.exports = {

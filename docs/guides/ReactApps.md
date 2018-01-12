@@ -62,7 +62,7 @@ nwb-thinking-in-react/
     react.svg
   tests/
     .eslintrc
-    App-test.js
+    App.test.js
 ```
 
 **dist/**: When you run a build, output will be generated in the `dist/` directory, ready for deployments.
@@ -145,11 +145,9 @@ nwb generates a comprehensive default configuration for creating React apps usin
 Without any configuration, the main features you get are:
 
 - Write JavaScript with modern features and JSX, transpiled down to ES5.
-- Use new JavaScript features which are at Stage 2 and above in the TC39 process:
-  - `async`/`await` syntax, for writing async code in a synchronous way.
+- Use proposed JavaScript features which make writing React apps more convenient:
   - Class properties, for avoiding boilerplate when writing classes.
-  - Decorators.
-  - Object rest/spread, for shallow cloning, merging and partially destructuring objects as syntax.
+  - Decorators, for libraries which are intended to be used with them.
 - Polyfills for  `Promise`,  `fetch` and `Object.assign`.
 - Import stylesheets (and font resources), images and JSON into JavaScript, to be handled by Webpack.
 - Autoprefixed CSS, so you don't need to write browser prefixes.
@@ -168,7 +166,7 @@ We'll start by splitting each of the main components from [the final Thinking in
 
 ### Palatable Class Components
 
-Written as a vanilla ES classes, React components need to call `super()` setting anything on `this`, and need to [manually bind event handlers in the constructor](https://reactjs.org/docs/react-component.html#constructor):
+Written as a vanilla ES classes, React components need to call `super()` before setting anything on `this`, and need to [manually bind event handlers in the constructor](https://reactjs.org/docs/react-component.html#constructor):
 
 ```js
 class FilterableProductTable extends Component {
@@ -191,7 +189,7 @@ class FilterableProductTable extends Component {
 }
 ```
 
-Using experimental class property syntax avoids this constructor boilerplate - `=` assignment statements in the class body are actually *moved into a generated constructor*, so the event handler arrow function inherits the constructor's `this`:
+Using proposed class property syntax avoids this constructor boilerplate - `=` assignment statements in the class body are actually *moved into a generated constructor*, so the event handler arrow function inherits the constructor's `this`:
 
 ```js
 class FilterableProductTable extends Component {

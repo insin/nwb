@@ -7,7 +7,7 @@ import {directoryExists} from '../utils'
 
 export default function new_(args, cb) {
   if (args._.length === 1) {
-    return cb(new UserError(`usage: nwb new [${[...PROJECT_TYPES].join('|')}] <name>`))
+    return cb(new UserError(`usage: nwb new [${Array.from(PROJECT_TYPES).join('|')}] <name>`))
   }
 
   let projectType = args._[1]

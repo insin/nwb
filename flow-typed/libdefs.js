@@ -1,3 +1,4 @@
+declare module '@pmmmwh/react-refresh-webpack-plugin' {  declare module.exports: any;  }
 declare module 'autoprefixer' {  declare module.exports: any;  }
 declare module 'case-sensitive-paths-webpack-plugin' {  declare module.exports: any;  }
 declare module 'chalk' {  declare module.exports: any;  }

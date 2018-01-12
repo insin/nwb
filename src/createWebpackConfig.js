@@ -7,6 +7,7 @@ import CopyPlugin from 'copy-webpack-plugin'
 import HtmlPlugin from 'html-webpack-plugin'
 import MiniCssExtractPlugin from 'mini-css-extract-plugin'
 import NpmInstallPlugin from '@insin/npm-install-webpack-plugin'
+import ReactRefreshPlugin from '@pmmmwh/react-refresh-webpack-plugin'
 import webpack from 'webpack'
 import merge from 'webpack-merge'
 
@@ -488,6 +489,13 @@ export function createPlugins(
     if (server.hot !== false) {
       plugins.push(new webpack.HotModuleReplacementPlugin())
       optimization.noEmitOnErrors = true
+    }
+    if (buildConfig.reactRefresh) {
+      // XXX disableRefreshCheck is currently required
+      // See https://github.com/pmmmwh/react-refresh-webpack-plugin/issues/15
+      plugins.push(new ReactRefreshPlugin({
+        disableRefreshCheck: true,
+      }))
     }
     if (buildConfig.status) {
       plugins.push(new StatusPlugin(buildConfig.status))

@@ -6,7 +6,7 @@ import {UserError} from '../errors'
 
 export default function init(args, cb) {
   if (args._.length === 1) {
-    return cb(new UserError(`usage: nwb init [${[...PROJECT_TYPES].join('|')}] [name]`))
+    return cb(new UserError(`usage: nwb init [${Array.from(PROJECT_TYPES).join('|')}] [name]`))
   }
 
   let projectType = args._[1]

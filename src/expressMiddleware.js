@@ -42,7 +42,7 @@ export default function nwbMiddleware(express: Object, options: Object = {}) {
   let args = {
     _: [`serve-${projectType}`, options.entry],
     config: options.config,
-    hmre: !(options.hmr === false || options.hmre === false),
+    hmr: options.hmr !== false,
     install: !!options.install || !!options.autoInstall,
     reload: !!options.reload
   }

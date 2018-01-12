@@ -16,13 +16,11 @@ import webpackBuild from './webpackBuild'
 import {createBanner, createExternals, logGzippedFileSizes} from './webpackUtils'
 
 // These match DEFAULT_TEST_DIRS and DEFAULT_TEST_FILES for co-located tests in
-// ./createKarmaConfig.js; unfortunately Babel doesn't seem to support reusing
-// the same patterns.
+// ./createKarmaConfig.js
 const DEFAULT_BABEL_IGNORE_CONFIG = [
-  '.spec.js',
-  '.test.js',
-  '-test.js',
-  '/__tests__/'
+  '**/*.spec.js',
+  '**/*.test.js',
+  '**/__tests__/'
 ]
 
 /**
@@ -125,10 +123,12 @@ export default function moduleBuild(args, buildConfig = {}, cb) {
     )
   }
 
-  let src = path.resolve('src')
   let pluginConfig = getPluginConfig(args)
   let userConfig = getUserConfig(args, {pluginConfig})
-  let copyFiles = !!args['copy-files']
+  let babelCliOptions = {
+    copyFiles: !!args['copy-files'],
+    src: path.resolve('src'),
+  }
 
   let tasks = [(cb) => cleanModule(args, cb)]
 
@@ -137,16 +137,16 @@ export default function moduleBuild(args, buildConfig = {}, cb) {
   if (userConfig.npm.cjs !== false) {
     tasks.push((cb) => runBabel(
       'ES5',
-      {copyFiles, outDir: path.resolve('lib'), src},
+      {...babelCliOptions, outDir: path.resolve('lib')},
       merge(buildConfig.babel, buildConfig.babelDev || {}, {
-        // Don't force CommonJS users of the CommonJS build to eat a .require
-        commonJSInterop: true,
+        // Don't set the path to nwb's @babel/runtime, as it will need to be a
+        // dependency or peerDependency of your module if you enable
+        // transform-runtime's 'helpers' option.
+        absoluteRuntime: false,
         // Transpile modules to CommonJS
         modules: 'commonjs',
-        // Don't set the path to nwb's babel-runtime, as it will need to be a
-        // peerDependency of your module if you use transform-runtime's helpers
-        // option.
-        setRuntimePath: false,
+        // Don't force CommonJS users of the CommonJS build to eat a .default
+        commonJSInterop: true,
         // Don't enable webpack-specific plugins
         webpack: false,
       }),
@@ -160,12 +160,12 @@ export default function moduleBuild(args, buildConfig = {}, cb) {
   if (userConfig.npm.esModules !== false) {
     tasks.push((cb) => runBabel(
       'ES modules',
-      {copyFiles, outDir: path.resolve('es'), src},
+      {...babelCliOptions, outDir: path.resolve('es')},
       merge(buildConfig.babel, buildConfig.babelDev || {}, {
-        // Don't set the path to nwb's babel-runtime, as it will need to be a
-        // peerDependency of your module if you use transform-runtime's helpers
-        // option.
-        setRuntimePath: false,
+        // Don't set the path to nwb's @babel/runtime, as it will need to be a
+        // dependency or peerDependency of your module if you enable
+        // transform-runtime's 'helpers' option.
+        absoluteRuntime: false,
         // Don't enable webpack-specific plugins
         webpack: false,
       }),

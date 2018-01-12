@@ -55,7 +55,7 @@ Commands:
       ${opt('--host')}         hostname to bind the dev server to
       ${opt('--mount-id')}     id for the <div> the app will render into ${opt('[default: app]')}
       ${opt('--no-fallback')}  disable serving of the index page from any path
-      ${opt('--no-hmre')}      disable use of React Transform for Hot Module Replacement & Errors
+      ${opt('--no-hmr')}       disable use of Fast Refresh for Hot Module Replacement
       ${opt('--no-polyfill')}  disable inclusion of default polyfills
       ${opt('--port')}         port to run the dev server on ${opt('[default: 3000]')}
       ${opt('--reload')}       auto reload the page if hot reloading fails

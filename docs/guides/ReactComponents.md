@@ -183,9 +183,9 @@ If you're into README Driven Development, it also provides a place to play with 
 
 Let's start by imagining how we'll use our `LoadingButton` component in the demo app:
 
-> **Note:** This Demo component is implemented as a class extending React's `Component` class, but also using some [experimental language features](http://babeljs.io/docs/plugins/transform-class-properties/) which are part of Babel's [stage 2 preset](http://babeljs.io/docs/plugins/preset-stage-2/), which is enabled by default when using nwb.
+> **Note:** This Demo component is implemented as a class extending React's `Component` class, but also uses a [proposed language feature - class properties](/docs/Configuration.md#proposals-object--false), which is enabled by default when using nwb.
 >
-> Don't sweat the details of these if you're not familiar with them; the most important thing for this guide is the `render()` method.
+> Don't sweat the details of if you're not familiar with this; the most important thing for this guide is the `render()` method.
 
 ```js
 import React, {Component} from 'react'
@@ -356,13 +356,13 @@ npm publish
 
 ## Libraries
 
-We've demonstrated using nwb to develop and publish a single reusable React component, but the same tooling also applies to developing component libraries (such as [React Bootstrap](http://react-bootstrap.github.io/)) and other React libraries (such as [React Router](https://github.com/reactjs/react-router)).
+We've demonstrated using nwb to develop and publish a single reusable React component, but the same tooling also applies to developing component libraries (such as [React Bootstrap](http://react-bootstrap.github.io/)) and other React libraries (such as [React Router](https://github.com/ReactTraining/react-router)).
 
 The main difference with libraries is that the entry point (`src/index.js` by default when using nwb) usually imports and re-exports everything the library provides, for users performing top-level imports or using the UMD build.
 
-To make this easier, nwb uses the Babel `stage-1` preset by default when building `react-component` projects, which allows you to use [export extensions](http://babeljs.io/docs/plugins/transform-export-extensions/) to import and re-export modules using a single `export` statement.
+To make this easier, by default nwb enables Babel proposal plugins for export extensions, which allow you to use [`export default from`](https://github.com/tc39/proposal-export-default-from#readme) and `export * as ns from`(https://github.com/tc39/proposal-export-ns-from) statements to import and re-export modules.
 
-For example, this is a snippet of how [React Bootstrap](https://github.com/react-bootstrap/react-bootstrap) re-exports its components using export extensions:
+For example, this is a snippet of how [React Bootstrap](https://github.com/react-bootstrap/react-bootstrap) re-exports its components using `export default from` statements:
 
 ```js
 export Accordion from './Accordion'

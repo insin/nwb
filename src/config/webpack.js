@@ -307,11 +307,7 @@ export function processWebpackConfig({pluginConfig, report, userConfig}) {
             } = styleConfig
             Object.keys(loaderConfig).forEach(loaderId => {
               if (!DEFAULT_STYLE_LOADERS.has(loaderId) && loaderId !== styleType) {
-                // XXX Assumption: preprocessors provide a single loader which
-                //     is configured with the same id as the style type id.
-                // XXX Using Array.from() manually as babel-preset-env with a
-                //     Node 4 target is tranpiling Array spreads to concat()
-                //     calls without ensuring Sets are converted to Arrays.
+                // XXX Assumption: preprocessors provide a single loader which is configured with the same id as the style type id
                 let loaderIds = Array.from(new Set([
                   ...Array.from(DEFAULT_STYLE_LOADERS),
                   styleType
