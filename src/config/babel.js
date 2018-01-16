@@ -42,7 +42,7 @@ export function processBabelConfig({report, userConfig}) {
 
   // env
   if ('env' in userConfig.babel) {
-    if (typeOf(env) !== 'Object') {
+    if (typeOf(env) !== 'object') {
       report.error(
         'babel.env',
         env,
