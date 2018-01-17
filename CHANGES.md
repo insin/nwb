@@ -1,3 +1,7 @@
+## Fixed
+
+- Fixed validation of `babel.env` config [[#420](https://github.com/insin/nwb/issues/420)] [[ngyikp][ngyikp]]
+
 # 0.21.1 / 2018-01-12
 
 ## Fixed
@@ -1912,6 +1916,7 @@ First 0.x release.
 [grahamlyus]: https://github.com/grahamlyus
 [jihchi]: https://github.com/jihchi
 [michaelsbradleyjr]: https://github.com/michaelsbradleyjr
+[ngyikp]: https://github.com/ngyikp
 [ntwcklng]: https://github.com/ntwcklng
 [seanofw]: https://github.com/seanofw
 [totaldis]: https://github.com/totaldis
