@@ -2,6 +2,12 @@
 
 - Fixed validation of `babel.env` config [[#420](https://github.com/insin/nwb/issues/420)] [[ngyikp][ngyikp]]
 
+## Dependencies
+
+- autoprefixer: v7.2.4 → [v7.2.5](https://github.com/postcss/autoprefixer/blob/master/CHANGELOG.md#725)
+- opn: v5.1.0 → [v5.2.0](https://github.com/sindresorhus/opn/compare/v5.1.0...v5.2.0)
+- semver: v5.4.1 → [v5.5.0](https://github.com/npm/node-semver/compare/v5.4.1...v5.5.0)
+
 # 0.21.1 / 2018-01-12
 
 ## Fixed
