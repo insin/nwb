@@ -13,9 +13,7 @@ import {clearConsole, deepToString} from './utils'
  * Get the port to run the server on, detecting if the intended port is
  * available first and prompting the user if not.
  */
-function getServerPort(args, cb) {
-  let intendedPort = args.port || DEFAULT_PORT
-
+function getServerPort(args, intendedPort, cb) {
   detect(intendedPort, (err, suggestedPort) => {
     if (err) return cb(err)
     // No need to prompt if the intended port is available
@@ -65,8 +63,7 @@ export default function webpackServer(args, buildConfig, cb) {
     return cb(e)
   }
 
-  // Other config can be provided by the user via the CLI
-  getServerPort(args, (err, port) => {
+  getServerPort(args, args.port || serverConfig.port || DEFAULT_PORT, (err, port) => {
     if (err) return cb(err)
     // A null port indicates the user chose not to run the server when prompted
     if (port === null) return cb()

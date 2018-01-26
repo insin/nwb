@@ -1,3 +1,7 @@
+## Changed
+
+- `port` config in [`devServer` config](https://github.com/insin/nwb/blob/master/docs/Configuration.md#devserver-object) will now be used if configured [[#423](https://github.com/insin/nwb/issues/423)]
+
 # 0.21.2 / 2018-01-17
 
 ## Fixed
