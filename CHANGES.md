@@ -2,6 +2,12 @@
 
 - `port` config in [`devServer` config](https://github.com/insin/nwb/blob/master/docs/Configuration.md#devserver-object) will now be used if configured [[#423](https://github.com/insin/nwb/issues/423)]
 
+## Dependencies
+
+- cross-spawn: v5.1.0 → [v6.0.3](https://github.com/moxystudio/node-cross-spawn/blob/master/CHANGELOG.md#603-2018-01-23)
+- css-loader: v0.28.7 → [v0.28.9](https://github.com/webpack-contrib/css-loader/blob/master/CHANGELOG.md#0289-2018-01-17)
+- style-loader: v0.19.1 → [v0.20.1](https://github.com/webpack-contrib/style-loader/blob/master/CHANGELOG.md#0201-2018-01-26)
+
 # 0.21.2 / 2018-01-17
 
 ## Fixed
@@ -66,7 +72,7 @@
 - karma-webpack: v2.0.6 → [v2.0.9](https://github.com/webpack-contrib/karma-webpack/blob/master/CHANGELOG.md#209-2017-12-14)
 - mocha: v4.0.1 → [v4.1.0](https://github.com/mochajs/mocha/blob/master/CHANGELOG.md#410--2017-12-28)
 - postcss-loader: v2.0.8 → [v2.0.9](https://github.com/postcss/postcss-loader/blob/master/CHANGELOG.md#209-2017-11-24)
-- style-loader: v0.19.0→ [v0.19.1](https://github.com/webpack-contrib/style-loader/blob/master/CHANGELOG.md#0191-2017-12-14)
+- style-loader: v0.19.0 → [v0.19.1](https://github.com/webpack-contrib/style-loader/blob/master/CHANGELOG.md#0191-2017-12-14)
 - webpack: v3.8.1 → [v3.10.0](https://github.com/webpack/webpack/releases)
 - webpack-dev-server: v2.9.4 → [v2.9.7](https://github.com/webpack/webpack-dev-server/releases)
 - webpack-dev-middleware: v1.12.0 → [v1.12.2](https://github.com/webpack/webpack-dev-middleware/releases)
@@ -243,7 +249,7 @@
 ## Dependencies
 
 - extract-text-webpack-plugin: v3.0.0-rc.1 → v3.0.0-rc.2 - fix module sorting type error
-- inquirer: v3.1.1→ [v3.2.0](https://github.com/SBoudrias/Inquirer.js/releases/tag/v3.2.0)
+- inquirer: v3.1.1 → [v3.2.0](https://github.com/SBoudrias/Inquirer.js/releases/tag/v3.2.0)
 
 # 0.18.5 / 2017-07-09
 
@@ -350,7 +356,7 @@
 
 ## Dependencies
 
-- inquirer: v3.1.0→ [v3.1.1](https://github.com/SBoudrias/Inquirer.js/releases/tag/v3.1.1)
+- inquirer: v3.1.0 → [v3.1.1](https://github.com/SBoudrias/Inquirer.js/releases/tag/v3.1.1)
 - npm-install-webpack2-plugin: v4.1.1 → v5.0.0 - drop Webpack 1 and add Webpack 3 to peerDeps
 - promise: v7.3.0 → v8.0.0
 - webpack: v2.6.1 → [v3.0.0](https://github.com/webpack/webpack/releases/tag/v3.0.0)
