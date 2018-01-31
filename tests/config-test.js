@@ -83,8 +83,23 @@ describe('processUserConfig()', () => {
     it('babel.runtime is not valid', () => {
       check({babel: {runtime: 'welp'}}, 'babel.runtime', /Must be/)
     })
-    it('webpack.config is not a function', () => {
-      check({webpack: {config: {}}}, 'webpack.config', /Must be/)
+    it('webpack contains unexpected prop', () => {
+      check({webpack: {invalid: true}}, 'webpack', /Unexpected prop/)
+    })
+    it('webpack.aliases is not an object', () => {
+      check({webpack: {aliases: 'invalid'}}, 'webpack.aliases', /Must be/)
+    })
+    it('webpack.autoprefixer is an invalid type', () => {
+      check({webpack: {autoprefixer: /invalid/}}, 'webpack.autoprefixer', /Must be/)
+    })
+    it('webpack.compat is not an object', () => {
+      check({webpack: {compat: 'invalid'}}, 'webpack.compat', /Must be/)
+    })
+    it('webpack.compat contains unexpected prop', () => {
+      check({webpack: {compat: {invalid: true}}}, 'webpack.compat', /Unexpected prop/)
+    })
+    it('webpack.compat.moment is not valid', () => {
+      check({webpack: {compat: {moment: /invalid/}}}, 'webpack.compat.moment', /Must be/)
     })
     it('webpack.copy is an invalid type', () => {
       check({webpack: {copy: /test/}}, 'webpack.copy', /Must be/)
@@ -97,6 +112,24 @@ describe('processUserConfig()', () => {
     })
     it('webpack.copy.options is not an object', () => {
       check({webpack: {copy: {options: []}}}, 'webpack.copy.options', /Must be/)
+    })
+    it('webpack.define is not an object', () => {
+      check({webpack: {define: []}}, 'webpack.define', /Must be/)
+    })
+    it('webpack.extractText is an invalid type', () => {
+      check({webpack: {extractText: /test/}}, 'webpack.extractText', /Must be/)
+    })
+    it('webpack.hoisting is not a boolean', () => {
+      check({webpack: {hoisting: /test/}}, 'webpack.hoisting', /Must be/)
+    })
+    it('webpack.html is not an object', () => {
+      check({webpack: {html: /test/}}, 'webpack.html', /Must be/)
+    })
+    it('webpack.install is not an object', () => {
+      check({webpack: {install: /test/}}, 'webpack.install', /Must be/)
+    })
+    it('webpack.publicPath is not a string', () => {
+      check({webpack: {publicPath: true}}, 'webpack.publicPath', /Must be/)
     })
     it('webpack.rules is not an object', () => {
       check({webpack: {rules: []}}, 'webpack.rules', /Must be/)
@@ -121,6 +154,15 @@ describe('processUserConfig()', () => {
     })
     it('webpack.styles style type config object contains an invalid property', () => {
       check({webpack: {styles: {css: [{invalid: true}]}}}, 'webpack.styles.css[0]', /Must be/)
+    })
+    it('webpack.uglify is an invalid type', () => {
+      check({webpack: {uglify: /text/}}, 'webpack.uglify', /Must be/)
+    })
+    it('webpack.extra is not an object', () => {
+      check({webpack: {extra: []}}, 'webpack.extra', /Must be/)
+    })
+    it('webpack.config is not a function', () => {
+      check({webpack: {config: {}}}, 'webpack.config', /Must be/)
     })
   })
 

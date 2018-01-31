@@ -122,6 +122,7 @@ export function processWebpackConfig({pluginConfig, report, userConfig}) {
       }
 
       void ['intl', 'moment', 'react-intl'].forEach(compatProp => {
+        if (!(compatProp in compat)) return
         let config = compat[compatProp]
         let configType = typeOf(config)
         if (configType === 'string') {
