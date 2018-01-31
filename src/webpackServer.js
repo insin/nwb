@@ -63,7 +63,7 @@ export default function webpackServer(args, buildConfig, cb) {
     return cb(e)
   }
 
-  getServerPort(args, args.port || serverConfig.port || DEFAULT_PORT, (err, port) => {
+  getServerPort(args, args.port || Number(serverConfig.port) || DEFAULT_PORT, (err, port) => {
     if (err) return cb(err)
     // A null port indicates the user chose not to run the server when prompted
     if (port === null) return cb()

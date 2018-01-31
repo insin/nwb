@@ -1,6 +1,7 @@
 ## Fixed
 
 - Fixed validation of `webpack.compat` locale properties [[#425](https://github.com/insin/nwb/issues/425)]
+- Fixed false negative when checking if the port is available when `devServer.port` is specified as a `String` [[#423](https://github.com/insin/nwb/issues/423)]
 
 ## Dependencies
 
