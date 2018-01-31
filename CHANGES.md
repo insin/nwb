@@ -2,6 +2,10 @@
 
 - Fixed validation of `webpack.compat` locale properties [[#425](https://github.com/insin/nwb/issues/425)]
 
+## Dependencies
+
+- uglifyjs-webpack-plugin: v1.1.6 → [v1.1.8](https://github.com/webpack-contrib/uglifyjs-webpack-plugin/blob/master/CHANGELOG.md#118-2018-01-29) - reduce memory consumption
+
 # 0.21.3 / 2018-01-28
 
 ## Changed

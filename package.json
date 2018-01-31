@@ -106,7 +106,7 @@
     "opn": "5.2.0",
     "postcss-loader": "2.0.10",
     "style-loader": "0.20.1",
-    "uglifyjs-webpack-plugin": "1.1.6",
+    "uglifyjs-webpack-plugin": "1.1.8",
     "url-loader": "0.6.2",
     "webpack-dev-middleware": "1.12.2",
     "webpack-dev-server": "2.9.7",
