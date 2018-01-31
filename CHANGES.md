@@ -1,3 +1,5 @@
+# 0.21.4 / 2018-01-30
+
 ## Fixed
 
 - Fixed validation of `webpack.compat` locale properties [[#425](https://github.com/insin/nwb/issues/425)]
