@@ -1,3 +1,7 @@
+## Dependencies
+
+- cross-spawn: v6.0.3 → [v6.0.4](https://github.com/moxystudio/node-cross-spawn/blob/master/CHANGELOG.md#604-2018-01-31)
+
 # 0.21.4 / 2018-01-30
 
 ## Fixed
