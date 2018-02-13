@@ -1,3 +1,16 @@
+# Unreleased (in `master`)
+
+## Dependencies
+
+- autoprefixer: v7.2.5 → [v8.0.0](https://github.com/postcss/autoprefixer/blob/master/CHANGELOG.md#800)
+- chalk: v2.3.0 → [v2.3.1](https://github.com/chalk/chalk/compare/v2.3.0...v2.3.1)
+- copy-webpack-plugin: v4.3.1 → [v4.4.1](https://github.com/webpack-contrib/copy-webpack-plugin/blob/master/CHANGELOG.md#441-2018-02-08)
+- filesize: v3.5.11 → [v3.6.0](https://github.com/avoidwork/filesize.js/compare/3.5.11...3.6.0)
+- mocha: v4.1.0 → [v5.0.0](https://github.com/mochajs/mocha/blob/master/CHANGELOG.md#500--2018-01-17) - drops support for IE9 and IE10
+- ora: v1.3.0 → [v1.4.0](https://github.com/sindresorhus/ora/compare/v1.3.0...v1.4.0)
+- postcss-loader: v2.0.10 → [v2.11.0](https://github.com/postcss/postcss-loader/blob/master/CHANGELOG.md#210-2018-02-02)
+- webpack: v3.10.0 → [v3.11.0](https://github.com/webpack/webpack/releases/tag/v3.11.0)
+
 # 0.21.5 / 2018-02-02
 
 ## Dependencies
