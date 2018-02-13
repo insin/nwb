@@ -1,8 +1,19 @@
 # Unreleased (in `master`)
 
+## Breaking Changes
+
+- Updated config for Inferno v4 - see the [Inferno v4 migration guide](https://github.com/infernojs/inferno/blob/master/docs/v4-migration.md) for breaking changes [[#429](https://github.com/insin/nwb/issues/429)]
+  - `nwb new inferno-app` now asks if you want to install `inferno-compat` as it's no longer a single dependency, defaulting to not installing it.
+- `nwb new preact-app` now asks if you want to install `preact-compat`, defaulting to not installing it.
+
+## Added
+
+- Added an `-f/--force` flag to `nwb new` to accept defaults and skip questions.
+
 ## Dependencies
 
 - autoprefixer: v7.2.5 → [v8.0.0](https://github.com/postcss/autoprefixer/blob/master/CHANGELOG.md#800)
+- babel-plugin-inferno: v3.3.1 → [v4.0.0](https://github.com/infernojs/babel-plugin-inferno/releases)
 - chalk: v2.3.0 → [v2.3.1](https://github.com/chalk/chalk/compare/v2.3.0...v2.3.1)
 - copy-webpack-plugin: v4.3.1 → [v4.4.1](https://github.com/webpack-contrib/copy-webpack-plugin/blob/master/CHANGELOG.md#441-2018-02-08)
 - filesize: v3.5.11 → [v3.6.0](https://github.com/avoidwork/filesize.js/compare/3.5.11...3.6.0)

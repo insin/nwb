@@ -18,7 +18,9 @@ function getQuickConfig() {
 // Vanilla JavaScript apps just use the default config for everything
 export default (args: Object) => ({
   getName: () => 'Web',
+  getProjectDefaults: () => ({}),
   getProjectDependencies: getDependencies,
+  getProjectQuestions: () => null,
   getBuildDependencies: getDependencies,
   getBuildConfig: getBaseConfig,
   getServeConfig: getBaseConfig,

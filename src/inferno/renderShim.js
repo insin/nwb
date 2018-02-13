@@ -1,7 +1,7 @@
 /* global NWB_QUICK_MOUNT_ID */
 
-let Inferno = require('inferno')
-let {createVNode, render} = Inferno
+import {createVNode, render} from 'inferno'
+
 let parent = document.getElementById(NWB_QUICK_MOUNT_ID)
 let vnode = null
 
@@ -13,7 +13,7 @@ function renderEntry(exported) {
   // Inferno component (which is either a function or class) or VNode (which has
   // a flags property).
   if (Object.prototype.toString.call(exported) === '[object Function]') {
-    vnode = createVNode(1 << 4 /* === VNodeFlags.ComponentUnknown */, exported)
+    vnode = createVNode(1 << 1 /* === VNodeFlags.ComponentUnknown */, exported)
   }
   else if (exported.flags) {
     vnode = exported
