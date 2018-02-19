@@ -2,9 +2,10 @@
 
 ## Breaking Changes
 
-- Updated config for Inferno v4 - see the [Inferno v4 migration guide](https://github.com/infernojs/inferno/blob/master/docs/v4-migration.md) for breaking changes [[#429](https://github.com/insin/nwb/issues/429)]
+- Updated Inferno config for Inferno v4 - see the [Inferno v4 migration guide](https://github.com/infernojs/inferno/blob/master/docs/v4-migration.md) for breaking changes [[#429](https://github.com/insin/nwb/issues/429)]
   - `nwb new inferno-app` now asks if you want to install `inferno-compat` as it's no longer a single dependency, defaulting to not installing it.
 - `nwb new preact-app` now asks if you want to install `preact-compat`, defaulting to not installing it.
+- Updated to Mocha 5, which dropped support for IE9 and IE10
 
 ## Added
 
@@ -17,9 +18,11 @@
 - chalk: v2.3.0 → [v2.3.1](https://github.com/chalk/chalk/compare/v2.3.0...v2.3.1)
 - copy-webpack-plugin: v4.3.1 → [v4.4.1](https://github.com/webpack-contrib/copy-webpack-plugin/blob/master/CHANGELOG.md#441-2018-02-08)
 - filesize: v3.5.11 → [v3.6.0](https://github.com/avoidwork/filesize.js/compare/3.5.11...3.6.0)
-- mocha: v4.1.0 → [v5.0.0](https://github.com/mochajs/mocha/blob/master/CHANGELOG.md#500--2018-01-17) - drops support for IE9 and IE10
+- mocha: v4.1.0 → [v5.0.1](https://github.com/mochajs/mocha/blob/master/CHANGELOG.md#501--2018-02-07)
 - ora: v1.3.0 → [v1.4.0](https://github.com/sindresorhus/ora/compare/v1.3.0...v1.4.0)
 - postcss-loader: v2.0.10 → [v2.11.0](https://github.com/postcss/postcss-loader/blob/master/CHANGELOG.md#210-2018-02-02)
+- style-loader: v0.20.1 → [v0.20.2](https://github.com/webpack-contrib/style-loader/blob/master/CHANGELOG.md#0202-2018-02-15) - skip empty `url()`s
+- uglifyjs-webpack-plugin: v1.1.8 → [v1.2.0](https://github.com/webpack-contrib/uglifyjs-webpack-plugin/blob/master/CHANGELOG.md#120-2018-02-16) - add missing `uglifyOptions`
 - webpack: v3.10.0 → [v3.11.0](https://github.com/webpack/webpack/releases/tag/v3.11.0)
 
 # 0.21.5 / 2018-02-02
