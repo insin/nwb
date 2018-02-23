@@ -637,7 +637,7 @@ module.exports = {
 
 The exception is the React component demo app, which doesn't set a `publicPath`, generating a build without any root URL paths to static resources. This allows you to serve it at any path without configuration (e.g. on GitHub Project Pages), or open the generated `index.html` file directly in a browser, which is ideal for distributing app builds which don't require a server to run.
 
-If you want to create a path-independent build, set `publicPath` to blank or `null`:
+If you want to create a path-independent build, set `publicPath` to blank:
 
 ```js
 module.exports = {
