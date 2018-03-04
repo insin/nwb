@@ -13,13 +13,14 @@
 
 ## Dependencies
 
-- autoprefixer: v7.2.5 → [v8.0.0](https://github.com/postcss/autoprefixer/blob/master/CHANGELOG.md#800)
+- autoprefixer: v7.2.5 → [v8.1.0](https://github.com/postcss/autoprefixer/blob/master/CHANGELOG.md#810)
 - babel-plugin-inferno: v3.3.1 → [v4.0.0](https://github.com/infernojs/babel-plugin-inferno/releases)
-- chalk: v2.3.0 → [v2.3.1](https://github.com/chalk/chalk/compare/v2.3.0...v2.3.1)
+- chalk: v2.3.0 → [v2.3.2](https://github.com/chalk/chalk/compare/v2.3.0...v2.3.2)
 - copy-webpack-plugin: v4.3.1 → [v4.4.1](https://github.com/webpack-contrib/copy-webpack-plugin/blob/master/CHANGELOG.md#441-2018-02-08)
+- cross-spawn: v6.0.4 → [v6.0.5](https://github.com/moxystudio/node-cross-spawn/blob/master/CHANGELOG.md#605-2018-03-02)
 - filesize: v3.5.11 → [v3.6.0](https://github.com/avoidwork/filesize.js/compare/3.5.11...3.6.0)
 - mocha: v4.1.0 → [v5.0.1](https://github.com/mochajs/mocha/blob/master/CHANGELOG.md#501--2018-02-07)
-- ora: v1.3.0 → [v1.4.0](https://github.com/sindresorhus/ora/compare/v1.3.0...v1.4.0)
+- ora: v1.3.0 → [v2.0.0](https://github.com/sindresorhus/ora/releases/tag/v2.0.0)
 - postcss-loader: v2.0.10 → [v2.11.0](https://github.com/postcss/postcss-loader/blob/master/CHANGELOG.md#210-2018-02-02)
 - style-loader: v0.20.1 → [v0.20.2](https://github.com/webpack-contrib/style-loader/blob/master/CHANGELOG.md#0202-2018-02-15) - skip empty `url()`s
 - uglifyjs-webpack-plugin: v1.1.8 → [v1.2.0](https://github.com/webpack-contrib/uglifyjs-webpack-plugin/blob/master/CHANGELOG.md#120-2018-02-16) - add missing `uglifyOptions`

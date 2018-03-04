@@ -91,7 +91,7 @@ export function logBuildResults(stats, spinner) {
   }
   else if (stats.hasWarnings()) {
     if (spinner) {
-      spinner.stopAndPersist(chalk.yellow(figures.warning))
+      spinner.stopAndPersist({symbol: chalk.yellow(figures.warning)})
       console.log()
     }
     logErrorsAndWarnings(stats)
