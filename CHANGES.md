@@ -19,7 +19,7 @@
 - copy-webpack-plugin: v4.3.1 → [v4.4.1](https://github.com/webpack-contrib/copy-webpack-plugin/blob/master/CHANGELOG.md#441-2018-02-08)
 - cross-spawn: v6.0.4 → [v6.0.5](https://github.com/moxystudio/node-cross-spawn/blob/master/CHANGELOG.md#605-2018-03-02)
 - filesize: v3.5.11 → [v3.6.0](https://github.com/avoidwork/filesize.js/compare/3.5.11...3.6.0)
-- mocha: v4.1.0 → [v5.0.2](https://github.com/mochajs/mocha/blob/master/CHANGELOG.md#502--2018-03-05)
+- mocha: v4.1.0 → [v5.0.3](https://github.com/mochajs/mocha/blob/master/CHANGELOG.md#503--2018-03-06)
 - ora: v1.3.0 → [v2.0.0](https://github.com/sindresorhus/ora/releases/tag/v2.0.0)
 - postcss-loader: v2.0.10 → [v2.11.0](https://github.com/postcss/postcss-loader/blob/master/CHANGELOG.md#210-2018-02-02)
 - style-loader: v0.20.1 → [v0.20.2](https://github.com/webpack-contrib/style-loader/blob/master/CHANGELOG.md#0202-2018-02-15) - skip empty `url()`s
@@ -944,7 +944,6 @@ These are being scoped to both make use of unreleased features and to test them 
 - babel-plugin-istanbul: v3.0.0 → [v3.1.2](https://github.com/istanbuljs/babel-plugin-istanbul/blob/master/CHANGELOG.md#312-2017-01-04)
 - babel-plugin-lodash: v3.2.10 → [v3.2.11](https://github.com/lodash/babel-plugin-lodash/compare/3.2.10...3.2.11)
 - detect-port: v1.0.6 → [v1.0.7](https://github.com/node-modules/detect-port/releases/tag/1.0.7)
-- diff: v3.1.0 → [v3.2.0](https://github.com/kpdecker/jsdiff/blob/master/release-notes.md#v320---december-26th-2016)
 - html-webpack-plugin: v2.24.1 → [v2.26.0](https://github.com/ampedandwired/html-webpack-plugin/blob/master/CHANGELOG.md#v2260) - Webpack 2 RC support
 - karma-webpack: v1.8.0 → v1.8.1 - Webpack 2 RC support
 - ora: v0.3.0 → v0.4.1
@@ -1063,7 +1062,6 @@ These are being scoped to both make use of unreleased features and to test them 
 - copy-webpack-plugin: v3.0.1 → [v4.0.1](https://github.com/kevlened/copy-webpack-plugin/releases)
 - css-loader: v0.23.1 → [v0.26.1](https://github.com/webpack/css-loader/compare/v0.23.0...v0.26.1) - cssnano's use of autoprefixer is now disabled by default
 - detect-port: v1.0.0 → v1.0.6
-- diff: v2.2.3 → [v3.1.0](https://github.com/kpdecker/jsdiff/blob/master/release-notes.md#v310---november-27th-2016)
 - figures: v1.7.0 → v2.0.0
 - html-webpack-plugin: v2.22.0 → [v2.24.1](https://github.com/ampedandwired/html-webpack-plugin/blob/master/CHANGELOG.md#v2241)
 - inquirer: v1.1.2 → [v2.0.0](https://github.com/SBoudrias/Inquirer.js/releases/tag/v2.0.0)
@@ -1489,7 +1487,6 @@ These are being scoped to both make use of unreleased features and to test them 
 
 **Dependencies:**
 
-- diff: v2.2.2 → [v2.2.3](https://github.com/kpdecker/jsdiff/blob/master/release-notes.md#v223---may-31st-2016)
 - html-webpack-plugin: v2.17.0 → [v2.19.0](https://github.com/ampedandwired/html-webpack-plugin/blob/master/CHANGELOG.md#v2190)
 - inquirer: v1.0.2 → [v1.0.3](https://github.com/SBoudrias/Inquirer.js/compare/v1.0.2...v1.0.3)
 - mocha: v2.4.5 → [v2.5.3](https://github.com/mochajs/mocha/blob/master/CHANGELOG.md#253--2016-05-25)
