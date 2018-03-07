@@ -28,13 +28,13 @@ export DEBUG=nwb
 set DEBUG=nwb
 ```
 
-If you need to prevent server commands from clearing scrollback so you can read any unexpected error logging which is happening, set the `NWB_TEST` environment variable to `true`:
+If you need to prevent server commands from clearing scrollback so you can read any unexpected error logging which is happening, pass a `--no-clear` flag when running the development server:
 
 ```
-# *nix
-export NWB_TEST=true
-# Windows
-set NWB_TEST=true
+# When running nwb via npm scripts
+npm start -- --no-clear
+# When running nwb serve directly
+nwb serve --no-clear
 ```
 
 ### How do I enable CSS Modules?
