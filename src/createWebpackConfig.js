@@ -238,7 +238,9 @@ export function createStyleLoaders(
 }
 
 /**
- * Create style rules for nwb >= 0.16.
+ * Create style rules. By default, creates a single rule for .css files and for
+ * any style preprocessor plugins present. The user can configure this to create
+ * multiple rules if needed.
  */
 function createStyleRules(
   server: boolean,
@@ -301,59 +303,6 @@ function createStyleRules(
             preprocessor: {id, config: {loader: preprocessorLoader}},
             server,
           })
-        })
-      )
-    })
-  }
-
-  return styleRules
-}
-
-// TODO Remove in a future version
-/**
- * Create default style rules for nwb < 0.16.
- */
-function createLegacyStyleRules(
-  server: boolean,
-  userWebpackConfig: Object,
-  pluginConfig: Object,
-  createRule: RuleConfigFactory,
-  createLoader: LoaderConfigFactory
-): Array<?RuleConfig> {
-  let styleRules = [
-    createRule('css-pipeline', {
-      test: /\.css$/,
-      use: createStyleLoaders(createLoader, userWebpackConfig, {server}),
-      exclude: /node_modules/,
-    }),
-    createRule('vendor-css-pipeline', {
-      test: /\.css$/,
-      use: createStyleLoaders(createLoader, userWebpackConfig, {prefix: 'vendor', server}),
-      include: /node_modules/,
-    })
-  ]
-
-  if (pluginConfig.cssPreprocessors) {
-    Object.keys(pluginConfig.cssPreprocessors).forEach(id => {
-      let {test, loader: preprocessorLoader} = pluginConfig.cssPreprocessors[id]
-      styleRules.push(
-        createRule(`${id}-pipeline`, {
-          test,
-          use: createStyleLoaders(createLoader, userWebpackConfig, {
-            prefix: id,
-            preprocessor: {id, config: {loader: preprocessorLoader}},
-            server,
-          }),
-          exclude: /node_modules/
-        }),
-        createRule(`vendor-${id}-pipeline`, {
-          test,
-          use: createStyleLoaders(createLoader, userWebpackConfig, {
-            prefix: `vendor-${id}`,
-            preprocessor: {id, config: {loader: preprocessorLoader}},
-            server,
-          }),
-          include: /node_modules/
         })
       )
     })
@@ -437,13 +386,7 @@ export function createRules(
   ]
 
   // Add rules with chained style loaders, using ExtractTextPlugin for builds
-  if (userWebpackConfig.styles === 'old') {
-    // nwb <= 0.15 default
-    rules = rules.concat(createLegacyStyleRules(
-      server, userWebpackConfig, pluginConfig, createRule, createLoader
-    ))
-  }
-  else if (userWebpackConfig.styles !== false) {
+  if (userWebpackConfig.styles !== false) {
     rules = rules.concat(createStyleRules(
       server, userWebpackConfig, pluginConfig, createRule, createLoader
     ))
@@ -667,13 +610,6 @@ function createDefaultPostCSSPlugins(userWebpackConfig) {
 }
 
 export const COMPAT_CONFIGS = {
-  enzyme: {
-    externals: {
-      'react/addons': true,
-      'react/lib/ExecutionEnvironment': true,
-      'react/lib/ReactContext': true,
-    }
-  },
   intl(options: {locales: string[]}) {
     return {
       plugins: [
@@ -703,16 +639,6 @@ export const COMPAT_CONFIGS = {
         )
       ]
     }
-  },
-  sinon: {
-    module: {
-      noParse: [/[/\\]sinon\.js/],
-    },
-    resolve: {
-      alias: {
-        sinon: 'sinon/pkg/sinon',
-      },
-    },
   },
 }
 

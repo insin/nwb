@@ -6,6 +6,7 @@
   - `nwb new inferno-app` now asks if you want to install `inferno-compat` as it's no longer a single dependency, defaulting to not installing it.
 - `nwb new preact-app` now asks if you want to install `preact-compat`, defaulting to not installing it.
 - Updated to Mocha 5, which dropped support for IE9 and IE10 and fixed some false positives.
+- Removed support for deprecated `webpack.compat.enzyme`, `webpack.compat.sinon` and `webpack.style = 'old'` config.
 
 ## Added
 

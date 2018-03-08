@@ -1,5 +1,6 @@
 // @flow
 import expect from 'expect'
+import webpack from 'webpack'
 
 import createWebpackConfig, {
   COMPAT_CONFIGS,
@@ -200,90 +201,6 @@ describe('createWebpackConfig()', () => {
         ])
       })
     })
-
-    // TODO Remove in a future version
-    context("with styles: 'old' config for backwards-compatibility", () => {
-      function findSassRule(rules) {
-        return rules.filter(rule =>
-          rule.test.test('.scss') && rule.exclude
-        )[0]
-      }
-
-      function findVendorSassRule(rules) {
-        return rules.filter(rule =>
-          rule.test.test('.scss') && rule.include
-        )[0]
-      }
-
-      context('with plugin config for a CSS preprocessor', () => {
-        let config = createWebpackConfig({server: true}, cssPreprocessorPluginConfig, {
-          webpack: {
-            styles: 'old'
-          }
-        })
-        it('creates a style loading pipeline', () => {
-          let rule = findSassRule(config.module.rules)
-          expect(rule).toExist()
-          expect(rule.use).toMatch([
-            {loader: /style-loader/},
-            {loader: /css-loader/},
-            {loader: /postcss-loader/},
-            {loader: /path\/to\/sass-loader\.js$/},
-          ])
-          expect(rule.exclude.test('node_modules')).toBe(true, 'app rule should exclude node_modules')
-        })
-        it('creates a vendor style loading pipeline', () => {
-          let rule = findVendorSassRule(config.module.rules)
-          expect(rule).toExist()
-          expect(rule.use).toMatch([
-            {loader: /style-loader/},
-            {loader: /css-loader/},
-            {loader: /postcss-loader/},
-            {loader: /path\/to\/sass-loader\.js$/},
-          ])
-          expect(rule.include.test('node_modules')).toBe(true, 'vendor rule should include node_modules')
-        })
-      })
-
-      context('with plugin config for a CSS preprocessor and user config for its rule', () => {
-        let config = createWebpackConfig({server: true}, cssPreprocessorPluginConfig, {
-          webpack: {
-            styles: 'old',
-            rules: {
-              sass: {
-                options: {
-                  a: 1,
-                  b: 2,
-                }
-              }
-            }
-          }
-        })
-        it('applies user config to the preprocessor rule', () => {
-          let rule = findSassRule(config.module.rules)
-          expect(rule).toExist()
-          expect(rule.use).toMatch([
-            {loader: /style-loader/},
-            {loader: /css-loader/},
-            {loader: /postcss-loader/},
-            {
-              loader: /path\/to\/sass-loader\.js$/,
-              options: {a: 1, b: 2},
-            },
-          ])
-        })
-        it('only applies user config to the appropriate rule', () => {
-          let rule = findVendorSassRule(config.module.rules)
-          expect(rule).toExist()
-          expect(rule.use).toMatch([
-            {loader: /style-loader/},
-            {loader: /css-loader/},
-            {loader: /postcss-loader/},
-            {loader: /path\/to\/sass-loader\.js$/},
-          ])
-        })
-      })
-    })
   })
 
   context('with aliases config', () => {
@@ -335,11 +252,14 @@ describe('createWebpackConfig()', () => {
       let config = createWebpackConfig({}, {}, {
         webpack: {
           compat: {
-            enzyme: true,
+            moment: {locales: ['de', 'en-gb']},
           }
         }
       })
-      expect(config.externals).toEqual(COMPAT_CONFIGS.enzyme.externals)
+      let plugin = config.plugins.find(p => p instanceof webpack.ContextReplacementPlugin)
+      expect(plugin).toNotBe(undefined)
+      expect(plugin.resourceRegExp).toEqual(/moment[/\\]locale$/)
+      expect(plugin.newContentRegExp).toEqual(/^\.\/(de|en-gb)$/)
     })
   })
 
@@ -536,10 +456,7 @@ describe('getCompatConfig()', () => {
     expect(getCompatConfig()).toBe(null)
   })
   it('skips falsy config', () => {
-    expect(getCompatConfig({enzyme: false, intl: false, moment: false, 'react-intl': false, sinon: false})).toBe(null)
-  })
-  it('supports enzyme', () => {
-    expect(getCompatConfig({enzyme: true})).toEqual(COMPAT_CONFIGS.enzyme)
+    expect(getCompatConfig({intl: false, moment: false, 'react-intl': false})).toBe(null)
   })
   it('supports intl', () => {
     let config = getCompatConfig({intl: {locales: ['de', 'en-gb']}})
@@ -564,12 +481,5 @@ describe('getCompatConfig()', () => {
     expect(config.plugins.length).toBe(1)
     expect(config.plugins[0].resourceRegExp).toEqual(/react-intl[/\\]locale-data$/)
     expect(config.plugins[0].newContentRegExp).toEqual(/^\.\/(de|en-gb)$/)
-  })
-  it('supports sinon', () => {
-    expect(getCompatConfig({sinon: true})).toEqual(COMPAT_CONFIGS.sinon)
-  })
-  it('merges multiple compat configs ', () => {
-    expect(getCompatConfig({enzyme: true, sinon: true}))
-      .toEqual({...COMPAT_CONFIGS.enzyme, ...COMPAT_CONFIGS.sinon})
   })
 })

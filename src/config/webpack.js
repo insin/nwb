@@ -6,11 +6,6 @@ import {joinAnd, pluralise as s, typeOf} from '../utils'
 
 const DEFAULT_STYLE_LOADERS = new Set(['css', 'postcss'])
 
-// TODO Remove in a future version
-let warnedAboutEnzymeCompat = false
-let warnedAboutOldStyleRules = false
-let warnedAboutSinonCompat = false
-
 export function processWebpackConfig({pluginConfig, report, userConfig}) {
   let {
     aliases,
@@ -97,28 +92,6 @@ export function processWebpackConfig({pluginConfig, report, userConfig}) {
           unexpectedCompatProps.join(', '),
           `Unexpected prop${s(unexpectedCompatProps.length)} in ${chalk.cyan('webpack.compat')}. ` +
           `Valid props are: ${joinAnd(Object.keys(COMPAT_CONFIGS).map(p => chalk.cyan(p)), 'or')}`)
-      }
-
-      if (compat.enzyme) {
-        if (!warnedAboutEnzymeCompat) {
-          report.deprecated(
-            'webpack.compat.enzyme',
-            `The ${chalk.cyan('enzyme')} compat flag applies to Enzyme 2.x, which is no longer the current major version`,
-            'Consider upgrading Enzyme if you can, which now requires configuring Enzyme itself rather than Webpack config'
-          )
-          warnedAboutEnzymeCompat = true
-        }
-      }
-
-      if (compat.sinon) {
-        if (!warnedAboutSinonCompat) {
-          report.deprecated(
-            'webpack.compat.sinon',
-            `The ${chalk.cyan('sinon')} compat flag applies to Sinon 1.x, which is no longer the current major version`,
-            'Consider upgrading Sinon if you can, which now works with Webpack out of the box'
-          )
-          warnedAboutSinonCompat = true
-        }
       }
 
       void ['intl', 'moment', 'react-intl'].forEach(compatProp => {
@@ -303,17 +276,9 @@ export function processWebpackConfig({pluginConfig, report, userConfig}) {
   // styles
   if ('styles' in userConfig.webpack) {
     let configType = typeOf(styles)
-    let help = `Must be ${chalk.cyan("'old'")} (to use default style rules from nwb <= v0.15), ` +
-               `${chalk.cyan('false')} (to disable default style rules) or ` +
-               `an ${chalk.cyan('Object')} (to configure custom style rules)`
-    if (configType === 'string' && styles !== 'old') {
-      report.error('webpack.styles', styles, help)
-      if (!warnedAboutOldStyleRules) {
-        report.deprecated('webpack.styles', 'Support for default style rules from nwb <= v0.15 will be removed in a future release')
-        warnedAboutOldStyleRules = true
-      }
-    }
-    else if (configType === 'boolean' && styles !== false) {
+    let help = `Must be an ${chalk.cyan('Object')} (to configure custom style rules) ` +
+               `or ${chalk.cyan('false')} (to disable style rules)`
+    if (configType === 'boolean' && styles !== false) {
       report.error('webpack.styles', styles, help)
     }
     else if (configType !== 'object' && configType !== 'boolean') {
