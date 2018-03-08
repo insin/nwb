@@ -20,7 +20,7 @@
 - copy-webpack-plugin: v4.3.1 → [v4.4.1](https://github.com/webpack-contrib/copy-webpack-plugin/blob/master/CHANGELOG.md#441-2018-02-08)
 - cross-spawn: v6.0.4 → [v6.0.5](https://github.com/moxystudio/node-cross-spawn/blob/master/CHANGELOG.md#605-2018-03-02)
 - filesize: v3.5.11 → [v3.6.0](https://github.com/avoidwork/filesize.js/compare/3.5.11...3.6.0)
-- mocha: v4.1.0 → [v5.0.3](https://github.com/mochajs/mocha/blob/master/CHANGELOG.md#503--2018-03-06)
+- mocha: v4.1.0 → [v5.0.4](https://github.com/mochajs/mocha/blob/master/CHANGELOG.md#504--2018-03-07)
 - ora: v1.3.0 → [v2.0.0](https://github.com/sindresorhus/ora/releases/tag/v2.0.0)
 - postcss-loader: v2.0.10 → [v2.11.0](https://github.com/postcss/postcss-loader/blob/master/CHANGELOG.md#210-2018-02-02)
 - style-loader: v0.20.1 → [v0.20.2](https://github.com/webpack-contrib/style-loader/blob/master/CHANGELOG.md#0202-2018-02-15) - skip empty `url()`s
