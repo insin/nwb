@@ -81,10 +81,11 @@ function buildUMD(args, buildConfig, userConfig, cb) {
     polyfill: false,
     plugins: {
       banner: createBanner(pkg),
+      uglify: false,
     },
   }
 
-  process.env.NODE_ENV = 'development'
+  process.env.NODE_ENV = 'production'
   webpackBuild(null, args, webpackBuildConfig, (err, stats1) => {
     if (err) {
       spinner.fail()
@@ -98,10 +99,10 @@ function buildUMD(args, buildConfig, userConfig, cb) {
       return cb()
     }
 
-    process.env.NODE_ENV = 'production'
     webpackBuildConfig.babel = merge(buildConfig.babel, buildConfig.babelProd || {})
     webpackBuildConfig.devtool = 'source-map'
     webpackBuildConfig.output.filename = `${pkg.name}.min.js`
+    webpackBuildConfig.plugins.uglify = true
     webpackBuild(null, args, webpackBuildConfig, (err, stats2) => {
       if (err) {
         spinner.fail()

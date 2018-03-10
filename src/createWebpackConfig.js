@@ -528,8 +528,8 @@ export function createPlugins(
       debug: false,
       minimize: true,
     }))
-    optimization.minimize = userConfig.uglify !== false
-    if (userConfig.uglify !== false) {
+    optimization.minimize = buildConfig.uglify !== false && userConfig.uglify !== false
+    if (buildConfig.uglify !== false && userConfig.uglify !== false) {
       optimization.minimizer = [{
         apply(compiler: any) {
           // Lazy load the uglifyjs plugin
