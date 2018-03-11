@@ -115,7 +115,7 @@
     "babel-preset-flow": "6.23.0",
     "babel-register": "6.26.0",
     "cross-env": "5.1.4",
-    "eslint-config-jonnybuchanan": "5.0.3",
+    "eslint-config-jonnybuchanan": "6.0.0",
     "eventsource": "1.0.5",
     "flow-bin": "0.67.1",
     "glob": "7.1.2",

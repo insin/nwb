@@ -136,6 +136,6 @@ export function processKarmaConfig({report, userConfig}) {
       `karma.config`,
       `type: ${typeOf(config)}`,
       `Must be a ${chalk.cyan('Function')}`
-     )
+    )
   }
 }

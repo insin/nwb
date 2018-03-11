@@ -377,7 +377,7 @@ export function processWebpackConfig({pluginConfig, report, userConfig}) {
       `webpack.config`,
       `type: ${typeOf(config)}`,
       `Must be a ${chalk.cyan('Function')}`
-     )
+    )
   }
 }
 

@@ -120,14 +120,14 @@ export function getProjectType(args = {}) {
  * Validate user config and perform any supported transformations to it.
  */
 export function processUserConfig({
-    args = {},
-    check = false,
-    configFileExists,
-    configPath,
-    pluginConfig = {},
-    required = DEFAULT_REQUIRED,
-    userConfig,
-  }) {
+  args = {},
+  check = false,
+  configFileExists,
+  configPath,
+  pluginConfig = {},
+  required = DEFAULT_REQUIRED,
+  userConfig,
+}) {
   // Config modules can export a function if they need to access the current
   // command or the webpack dependency nwb manages for them.
   if (typeOf(userConfig) === 'function') {
