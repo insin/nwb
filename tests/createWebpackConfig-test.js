@@ -3,7 +3,6 @@ import expect from 'expect'
 import webpack from 'webpack'
 
 import createWebpackConfig, {
-  COMPAT_CONFIGS,
   getCompatConfig,
   mergeLoaderConfig,
   mergeRuleConfig,
