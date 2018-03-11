@@ -25,6 +25,7 @@
 ## Known Issues
 
 - [`NpmInstallPlugin` doesn't work with Webpack 4 yet](https://github.com/webpack-contrib/npm-install-webpack-plugin/issues/122), so the `--install` flag for auto-installation of missing modules doesn't work.
+- Inferno is currently publishing `.mjs` files to npm, [which is breaking `inferno-*` packages with Webpack 4](https://github.com/infernojs/inferno/issues/1296), so e.g. `inferno-compat` won't work if you want to reuse React components.
 
 ## Added
 
