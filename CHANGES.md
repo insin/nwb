@@ -2,11 +2,29 @@
 
 ## Breaking Changes
 
+- Node.js 4 is no longer supported; Node.js 6.11.5 is now the minimum required version, as per Webpack 4 [[#400](https://github.com/insin/nwb/issues/400)]
+- Updated to Webpack 4 - if you were customising your build with `nwb.config.js`, some of the nwb config you depended on may have changed, and the options Webpack accepts may have changed [[#409](https://github.com/insin/nwb/issues/409)]
+  - Webpack's new `mode` option is now set to activate Webpack 4's new defaults, which removes the need for a bunch of manual configuration nwb was doing:
+    - `ModuleConcatenationPlugin` is now automatically enabled in `production` mode instead of being explicitly configured, so nwb's `webpack.hoisting` config has been removed.
+    - `NamedModulesPlugin` is now automatically used in `development `mode instead of being explicitly configured.
+     - Development UMD builds for modules now use `production` mode with minimization disabled, as the new `development` mode defaults are unsuitable for code which will be published to npm.
+  - Webpack's `optimization` options are now used for certain pieces of configuration:
+    - `optimization.noEmitOnErrors` is used instead of `NoEmitOnErrorsPlugin` to prevent emission of assets when using Hot Module Replacement.
+    - UglifyJS is now configured via `optimization.minimize`/`optimization.minimizer` instead of just adding `UglifyJsPlugin` directly to `plugins`.
+    - `CommonsChunkPlugin` has been removed in Webpack 4 - `optimization.runtimeChunk` is now configured to create a `runtime` chunk (which replaces the old `manifest` chunk) and `optimization.splitChunks` is configured to create a `vendor` bundle.
+  - Replaced used of `ExtractTextPlugin` with [`MiniCssExtractPlugin`](https://github.com/webpack-contrib/mini-css-extract-plugin):
+    - Separate CSS files are now created and loaded on-demand for code splits.
+    - Replaced `webpack.extractText` config with [`webpack.extractCSS` config](https://github.com/insin/nwb/blob/master/docs/Configuration.md#extractcss-object--boolean) - this is not backwards-compatible, as plugin options differ.
+  - Webpack's default `performance` option size warnings have been disabled (for now).
 - Updated Inferno config for Inferno v4 - see the [Inferno v4 migration guide](https://github.com/infernojs/inferno/blob/master/docs/v4-migration.md) for breaking changes [[#429](https://github.com/insin/nwb/issues/429)]
   - `nwb new inferno-app` now asks if you want to install `inferno-compat` as it's no longer a single dependency, defaulting to not installing it.
 - `nwb new preact-app` now asks if you want to install `preact-compat`, defaulting to not installing it.
 - Updated to Mocha 5, which dropped support for IE9 and IE10 and fixed some false positives.
 - Removed support for deprecated `webpack.compat.enzyme`, `webpack.compat.sinon` and `webpack.style = 'old'` config.
+
+## Known Issues
+
+- [`NpmInstallPlugin` doesn't work with Webpack 4 yet](https://github.com/webpack-contrib/npm-install-webpack-plugin/issues/122), so the `--install` flag for auto-installation of missing modules doesn't work.
 
 ## Added
 
@@ -15,17 +33,32 @@
 ## Dependencies
 
 - autoprefixer: v7.2.5 → [v8.1.0](https://github.com/postcss/autoprefixer/blob/master/CHANGELOG.md#810)
+- babel-loader: v7.1.2 → [v7.1.4](https://github.com/babel/babel-loader/releases)
 - babel-plugin-inferno: v3.3.1 → [v4.0.0](https://github.com/infernojs/babel-plugin-inferno/releases)
+- case-sensitive-paths-webpack-plugin: v2.1.1 → [v2.1.2](https://github.com/Urthen/case-sensitive-paths-webpack-plugin/blob/master/CHANGELOG.md#v212)
 - chalk: v2.3.0 → [v2.3.2](https://github.com/chalk/chalk/compare/v2.3.0...v2.3.2)
-- copy-webpack-plugin: v4.3.1 → [v4.4.1](https://github.com/webpack-contrib/copy-webpack-plugin/blob/master/CHANGELOG.md#441-2018-02-08)
+- copy-webpack-plugin: v4.3.1 → [v4.5.1](https://github.com/webpack-contrib/copy-webpack-plugin/blob/master/CHANGELOG.md#451-2018-03-09)
 - cross-spawn: v6.0.4 → [v6.0.5](https://github.com/moxystudio/node-cross-spawn/blob/master/CHANGELOG.md#605-2018-03-02)
+- css-loader: v0.28.9 → [v0.28.10](https://github.com/webpack-contrib/css-loader/blob/master/CHANGELOG.md#02810-2018-02-22)
+- extract-text-webpack-plugin v3.0.0 → [mini-css-extract-plugin v0.2.0](https://github.com/webpack-contrib/mini-css-extract-plugin)
 - filesize: v3.5.11 → [v3.6.0](https://github.com/avoidwork/filesize.js/compare/3.5.11...3.6.0)
+- inquirer: v3.3.0 → [v5.1.0](https://github.com/SBoudrias/Inquirer.js/releases) - latest version requires Node.js 6
+- karma-webpack: v2.0.9 → [v2.0.13](https://github.com/webpack-contrib/karma-webpack/blob/master/CHANGELOG.md#2013-2018-02-27)
 - mocha: v4.1.0 → [v5.0.4](https://github.com/mochajs/mocha/blob/master/CHANGELOG.md#504--2018-03-07)
 - ora: v1.3.0 → [v2.0.0](https://github.com/sindresorhus/ora/releases/tag/v2.0.0)
-- postcss-loader: v2.0.10 → [v2.11.0](https://github.com/postcss/postcss-loader/blob/master/CHANGELOG.md#210-2018-02-02)
+- postcss-loader: v2.0.10 → [v2.1.1](https://github.com/postcss/postcss-loader/blob/master/CHANGELOG.md#211-2018-02-26)
 - style-loader: v0.20.1 → [v0.20.2](https://github.com/webpack-contrib/style-loader/blob/master/CHANGELOG.md#0202-2018-02-15) - skip empty `url()`s
-- uglifyjs-webpack-plugin: v1.1.8 → [v1.2.0](https://github.com/webpack-contrib/uglifyjs-webpack-plugin/blob/master/CHANGELOG.md#120-2018-02-16) - add missing `uglifyOptions`
-- webpack: v3.10.0 → [v3.11.0](https://github.com/webpack/webpack/releases/tag/v3.11.0)
+- uglifyjs-webpack-plugin: v1.1.8 → [v1.2.3](https://github.com/webpack-contrib/uglifyjs-webpack-plugin/blob/master/CHANGELOG.md#123-2018-03-10)
+- url-loader: v0.6.2 → [v1.0.1](https://github.com/webpack-contrib/url-loader/blob/master/CHANGELOG.md#101-2018-03-03)
+- webpack: v3.10.0 → [v4.1.1](https://github.com/webpack/webpack/releases)
+- webpack-dev-middleware: v1.12.2 → [v3.0.1](https://github.com/webpack/webpack-dev-middleware/releases)
+- webpack-dev-server: v2.9.7 → [v3.1.1](https://github.com/webpack/webpack-dev-server/releases)
+- webpack-hot-middleware: v2.21.0 → [v2.21.2](https://github.com/glenjamin/webpack-hot-middleware/compare/v2.21.0...v2.21.2)
+- webpack-merge: v4.1.1 → [v4.1.2](https://github.com/survivejs/webpack-merge/compare/v4.1.1...v4.1.2)
+
+## Internal
+
+- Updated `StatusPlugin` and `InlineRuntimePlugin` to use the Use the new Webpack 4 `.hooks` plugin API.
 
 # 0.21.5 / 2018-02-02
 
@@ -122,8 +155,8 @@
 - postcss-loader: v2.0.8 → [v2.0.9](https://github.com/postcss/postcss-loader/blob/master/CHANGELOG.md#209-2017-11-24)
 - style-loader: v0.19.0 → [v0.19.1](https://github.com/webpack-contrib/style-loader/blob/master/CHANGELOG.md#0191-2017-12-14)
 - webpack: v3.8.1 → [v3.10.0](https://github.com/webpack/webpack/releases)
-- webpack-dev-server: v2.9.4 → [v2.9.7](https://github.com/webpack/webpack-dev-server/releases)
 - webpack-dev-middleware: v1.12.0 → [v1.12.2](https://github.com/webpack/webpack-dev-middleware/releases)
+- webpack-dev-server: v2.9.4 → [v2.9.7](https://github.com/webpack/webpack-dev-server/releases)
 - webpack-hot-middleware: v2.20.0 → [v2.21.0](https://github.com/glenjamin/webpack-hot-middleware/compare/v2.20.0...v2.21.0)
 
 ## Docs

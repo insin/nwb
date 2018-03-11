@@ -23,5 +23,4 @@ branches:
   only:
     - master
     - next
-    - webpack4
     - babel7
