@@ -48,7 +48,9 @@ function createUglifyConfig(userWebpackConfig) {
       DEFAULT_UGLIFY_CONFIG,
       {
         uglifyOptions: {
-          beautify: true,
+          output: {
+            beautify: true,
+          },
           mangle: false,
         }
       },
