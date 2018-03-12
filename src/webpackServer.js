@@ -7,7 +7,7 @@ import {DEFAULT_PORT} from './constants'
 import createServerWebpackConfig from './createServerWebpackConfig'
 import debug from './debug'
 import devServer from './devServer'
-import {clearConsole, deepToString} from './utils'
+import {clearConsole, deepToString, typeOf} from './utils'
 
 /**
  * Get the port to run the server on, detecting if the intended port is
@@ -70,7 +70,14 @@ export default function webpackServer(args, buildConfig, cb) {
 
     serverConfig.port = port
     // Fallback index serving can be disabled with --no-fallback
-    if (args.fallback === false) serverConfig.historyApiFallback = false
+    if (args.fallback === false) {
+      serverConfig.historyApiFallback = false
+    }
+    // Fallback index serving can be configured with dot arguments
+    // e.g. --fallback.disableDotRule --fallback.verbose
+    else if (typeOf(args.fallback) === 'object') {
+      serverConfig.historyApiFallback = args.fallback
+    }
     // The host can be overridden with --host
     if (args.host) serverConfig.host = args.host
     // Open a browser with --open (default browser) or --open="browser name"

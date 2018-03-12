@@ -33,6 +33,7 @@
 
 ## Changed
 
+- The dev server's fallback `index.html` serving can now be configured with dot arguments - e.g. pass `--fallback.disableDotRule` if you need to use dots in your path when using the HTML5 History API.
 - `--no-polyfill` can now be used to disable default polyfills for app projects as well as quick commands.
 
 ## Dependencies
