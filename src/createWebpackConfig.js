@@ -6,7 +6,7 @@ import CaseSensitivePathsPlugin from 'case-sensitive-paths-webpack-plugin'
 import CopyPlugin from 'copy-webpack-plugin'
 import HtmlPlugin from 'html-webpack-plugin'
 import MiniCssExtractPlugin from 'mini-css-extract-plugin'
-import NpmInstallPlugin from 'npm-install-webpack-plugin'
+import NpmInstallPlugin from '@insin/npm-install-webpack-plugin'
 import webpack from 'webpack'
 import merge from 'webpack-merge'
 

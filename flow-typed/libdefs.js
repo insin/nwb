@@ -6,7 +6,7 @@ declare module 'cross-spawn' {  declare module.exports: any;  }
 declare module 'fs-extra' {  declare module.exports: any;  }
 declare module 'html-webpack-plugin' {  declare module.exports: any;  }
 declare module 'mini-css-extract-plugin' {  declare module.exports: any;  }
-declare module 'npm-install-webpack-plugin' {  declare module.exports: any;  }
+declare module '@insin/npm-install-webpack-plugin' {  declare module.exports: any;  }
 declare module 'ora' {  declare module.exports: any;  }
 declare module 'resolve' {  declare module.exports: any;  }
 declare module 'uglifyjs-webpack-plugin' {  declare module.exports: any;  }

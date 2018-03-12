@@ -24,7 +24,6 @@
 
 ## Known Issues
 
-- [`NpmInstallPlugin` doesn't work with Webpack 4 yet](https://github.com/webpack-contrib/npm-install-webpack-plugin/issues/122), so the `--install` flag for auto-installation of missing modules doesn't work.
 - Inferno is currently publishing `.mjs` files to npm, [which is breaking `inferno-*` packages with Webpack 4](https://github.com/infernojs/inferno/issues/1296), so e.g. `inferno-compat` won't work if you want to reuse React components.
 
 ## Added
@@ -51,6 +50,7 @@
 - inquirer: v3.3.0 → [v5.1.0](https://github.com/SBoudrias/Inquirer.js/releases) - latest version requires Node.js 6
 - karma-webpack: v2.0.9 → [v2.0.13](https://github.com/webpack-contrib/karma-webpack/blob/master/CHANGELOG.md#2013-2018-02-27)
 - mocha: v4.1.0 → [v5.0.4](https://github.com/mochajs/mocha/blob/master/CHANGELOG.md#504--2018-03-07)
+- npm-install-webpack-plugin v4.0.5 → @insin/npm-install-webpack-plugin v5.0.0 - Webpack 4 compatibility
 - ora: v1.3.0 → [v2.0.0](https://github.com/sindresorhus/ora/releases/tag/v2.0.0)
 - postcss-loader: v2.0.10 → [v2.1.1](https://github.com/postcss/postcss-loader/blob/master/CHANGELOG.md#211-2018-02-26)
 - style-loader: v0.20.1 → [v0.20.2](https://github.com/webpack-contrib/style-loader/blob/master/CHANGELOG.md#0202-2018-02-15) - skip empty `url()`s

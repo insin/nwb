@@ -101,7 +101,7 @@
     "file-loader": "1.1.11",
     "html-webpack-plugin": "3.0.6",
     "mini-css-extract-plugin": "0.2.0",
-    "npm-install-webpack-plugin": "4.0.5",
+    "@insin/npm-install-webpack-plugin": "5.0.0",
     "opn": "5.2.0",
     "postcss-loader": "2.1.1",
     "style-loader": "0.20.3",
