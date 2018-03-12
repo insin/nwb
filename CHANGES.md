@@ -31,6 +31,10 @@
 
 - Added an `-f/--force` flag to `nwb new` to accept defaults and skip questions.
 
+## Changed
+
+- `--no-polyfill` can now be used to disable default polyfills for app projects as well as quick commands.
+
 ## Dependencies
 
 - autoprefixer: v7.2.5 → [v8.1.0](https://github.com/postcss/autoprefixer/blob/master/CHANGELOG.md#810)
