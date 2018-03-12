@@ -6,7 +6,7 @@
 - Updated to Webpack 4 - if you were customising your build with `nwb.config.js`, some of the nwb config you depended on may have changed, and the options Webpack accepts may have changed [[#409](https://github.com/insin/nwb/issues/409)]
   - Webpack's new `mode` option is now set to activate Webpack 4's new defaults, which removes the need for a bunch of manual configuration nwb was doing:
     - `ModuleConcatenationPlugin` is now automatically enabled in `production` mode instead of being explicitly configured, so nwb's `webpack.hoisting` config has been removed.
-    - `NamedModulesPlugin` is now automatically used in `development `mode instead of being explicitly configured.
+    - `NamedModulesPlugin` is now automatically used in `development` mode instead of being explicitly configured.
      - Development UMD builds for modules now use `production` mode with minimization disabled, as the new `development` mode defaults are unsuitable for code which will be published to npm.
   - Webpack's `optimization` options are now used for certain pieces of configuration:
     - `optimization.noEmitOnErrors` is used instead of `NoEmitOnErrorsPlugin` to prevent emission of assets when using Hot Module Replacement.
@@ -65,6 +65,10 @@
 ## Internal
 
 - Updated `StatusPlugin` and `InlineRuntimePlugin` to use the Use the new Webpack 4 `.hooks` plugin API.
+
+## Docs
+
+- Fixed [`publicPath` docs](https://github.com/insin/nwb/blob/master/docs/Configuration.md#publicpath-string), as Webpack's `output.publicPath` config can't be `null` [[#432](https://github.com/insin/nwb/issues/432)] [[stephenwf][stephenwf]]
 
 # 0.21.5 / 2018-02-02
 
@@ -2021,5 +2025,6 @@ First 0.x release.
 [ngyikp]: https://github.com/ngyikp
 [ntwcklng]: https://github.com/ntwcklng
 [seanofw]: https://github.com/seanofw
+[stephenwf]: https://github.com/stephenwf
 [totaldis]: https://github.com/totaldis
 [treshugart]: https://github.com/treshugart

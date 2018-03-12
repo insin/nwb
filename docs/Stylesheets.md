@@ -24,13 +24,12 @@ When running a production build, imported stylesheets will be extracted out to s
     - [Included Files](#included-files)
     - [Loader Options](#loader-options)
 - [Disabling Style Rules](#disabling-style-rules)
-- [Old Style Rules](#old-style-rules)
 
 ### Default Stylesheet Rules
 
 > Note: each generated Webpack rule and chained loader has an associated unique id which can be used in [`webpack.rules` configuration](/docs/Configuration.md#rules-object) to tweak its configuration.
 
-Without any [`webpack.styles` configuration](/docs/Configuration.md#styles-object--false--old), nwb generates a rule (id: `css-rule`) which handles `.css` files by chaining together a number of loaders:
+Without any [`webpack.styles` configuration](/docs/Configuration.md#styles-object--false), nwb generates a rule (id: `css-rule`) which handles `.css` files by chaining together a number of loaders:
 
 - loader id: `style` - applies styles using [style-loader][style-loader]
 
@@ -101,7 +100,7 @@ module.exports = {
 
 ### Custom Stylesheet Rules
 
-If your application needs more than one stylesheet rule, you can configure generation of multiple rules using [`webpack.styles` config](/docs/Configuration.md#styles-object--false--old).
+If your application needs more than one stylesheet rule, you can configure generation of multiple rules using [`webpack.styles` config](/docs/Configuration.md#styles-object--false).
 
 This should be an object defining lists of style rule configuration objects, with properties named for the type of rule being configured.
 
@@ -250,20 +249,6 @@ module.exports = {
 ```
 
 If you need to use any of the Webpack loaders nwb manages dependencies for - e.g. `css-loader` and `postcss-loader` - refer to them by loader name in your [`webpack.extra` config](/docs/Configuration.md#extra-object) or [`webpack.config` function](#config-function). nwb configures Webpack to resolve these loaders correctly if they're not installed locally in your project.
-
-### Old Style Rules
-
-> Note: This feature is provided to aid gradual migration to nwb v0.16's new style configuration - using it will trigger deprecation warnings, as it will be removed in a future release.
-
-To use the default style rules from earlier versions of nwb (<= v0.15), configure `webpack.styles` like so:
-
-```js
-module.exports = {
-  webpack: {
-    styles: 'old'
-  }
-}
-```
 
 [autoprefixer]: https://github.com/postcss/autoprefixer
 [CSS Modules]: https://github.com/css-modules/css-modules

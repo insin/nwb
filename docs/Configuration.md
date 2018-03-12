@@ -50,7 +50,7 @@ If a function is exported, it will be passed an object with the following proper
 Configuration for the `babel`, `webpack`, `devServer`, `karma` and `npm` properties documented below can also be provided via arguments using dotted paths, instead of tweaking your `nwb.config.js` file for a single run, or instead of needing to add a config file for [Quick Development commands](/docs/guides/QuickDevelopment.md#quick-development-with-nwb):
 
 ```sh
-nwb build-react-app --babel.stage=2 --webpack.hoisting
+nwb build-react-app --babel.stage=2
 ```
 
 > **Note:** If you have a config file, these arguments will act as overrides.
@@ -90,7 +90,6 @@ The configuration object can include the following properties:
   - [`webpack.debug`](#debug-boolean) - create a more debuggable production build
   - [`webpack.define`](#define-object) - options for `DefinePlugin`, for replacing certain expressions with values
   - [`webpack.extractCSS`](#extractCSS-object--false) - configure use of `MiniCssExtractPlugin`
-  - [`webpack.hoisting`](#hoisting-boolean) - enable partial scope hoisting with Webpack 3's `ModuleConcatenationPlugin`
   - [`webpack.html`](#html-object) - options for `HtmlPlugin`
   - [`webpack.install`](#install-object) - options for `NpmInstallPlugin`
   - [`webpack.publicPath`](#publicpath-string) - path to static resources
@@ -98,7 +97,7 @@ The configuration object can include the following properties:
     - [Default Rules](#default-rules)
     - [Customising loaders](#customising-loaders)
     - [Disabling default rules](#disabling-default-rules)
-  - [`webpack.styles`](#styles-object--false--old) - customise creation of Webpack rules for stylesheets
+  - [`webpack.styles`](#styles-object--false) - customise creation of Webpack rules for stylesheets
   - [`webpack.uglify`](#uglify-object--false) - configure use of Webpack's `UglifyJsPlugin`
   - [`webpack.extra`](#extra-object) - an escape hatch for extra Webpack config, which will be merged into the generated config
   - [`webpack.config`](#config-function-1) - an escape hatch for manually editing the generated Webpack config
@@ -414,12 +413,6 @@ Certain libraries require specific configuration to play nicely with Webpack - n
 
 The following libraries are supported:
 
-###### `enzyme`: `Boolean`
-
-*deprecated in v0.19.1+*
-
-Set to `true` for [Enzyme](http://airbnb.io/enzyme/) v2 compatibility - this also assumes you're using React v15.5 or v15.6.
-
 ###### `intl` / `moment` / `react-intl`: `String | Array | Object`
 
 *changed in v0.21.0*
@@ -430,12 +423,6 @@ Provide an Array specifying language codes for the locales you want to load, or 
 
 > For backwards-compatibility with older versions of nwb, locales can also be provided as an Object with a `locales` property.
 
-###### `sinon`: `Boolean`
-
-*deprecated in v0.21.0+*
-
-Set to `true` for [Sinon.js](http://sinonjs.org/) 1.x compatibility.
-
 ---
 
 Example config showing the use of multiple `compat` settings:
@@ -444,8 +431,7 @@ Example config showing the use of multiple `compat` settings:
 module.exports = {
   webpack: {
     compat: {
-      moment: ['de', 'en-gb', 'es', 'fr', 'it'],
-      sinon: true
+      moment: ['de', 'en-gb', 'es', 'fr', 'it']
     }
   }
 }
@@ -453,9 +439,9 @@ module.exports = {
 
 ##### `copy`: `Array | Object`
 
-Configures [`CopyWebpackPlugin` patterns and options](https://github.com/webpack-contrib/extract-text-webpack-plugin#options).
+Configures [`CopyWebpackPlugin`](https://github.com/webpack-contrib/copy-webpack-plugin#readme) patterns and options.
 
-By default, nwb uses [`CopyWebpackPlugin`](https://github.com/webpack-contrib/extract-text-webpack-plugin#options) to copy any contents in an app's `public/` directory to the output directory.
+By default, nwb uses `CopyWebpackPlugin` to copy any contents in an app's `public/` directory to the output directory.
 
 To add extra [copy patterns](https://github.com/webpack-contrib/copy-webpack-plugin#pattern-properties), you can provide an Array of them:
 
@@ -470,7 +456,7 @@ module.exports = {
 }
 ```
 
-To configure [plugin options](https://github.com/webpack-contrib/copy-webpack-plugin#available-options), provide an object with `options` or `patterns` properties:
+To configure [plugin options](https://github.com/webpack-contrib/copy-webpack-plugin#options), provide an object with `options` or `patterns` properties:
 
 ```js
 module.exports = {
@@ -527,6 +513,8 @@ module.exports = {
 
 ##### `extractCSS`: `Object | false`
 
+*added in v0.22.0*
+
 Configures [`MiniCssExtractPlugin` options](https://github.com/webpack-contrib/mini-css-extract-plugin#configuration).
 
 By default, nwb uses [`MiniCssExtractPlugin`](https://github.com/webpack-contrib/mini-css-extract-plugin#readme) to extract imported stylesheets into `.css` files when creating a build.
@@ -544,18 +532,6 @@ module.exports = {
 ```
 
 Set to `false` to disable extraction of `.css` files in builds (in which case [`style-loader`](https://github.com/webpack-contrib/style-loader#readme) will handle injecting `<style>` tags at runtime, as it does when running the development server).
-
-##### `hoisting`: `Boolean`
-
-Enables [partial scope hoisting](https://github.com/webpack/webpack/tree/master/examples/scope-hoisting#readme) with Webpack 3's `ModuleConcatenationPlugin`.
-
-```js
-module.exports = {
-  webpack: {
-    hoisting: true
-  }
-}
-```
 
 ##### `html`: `Object`
 
@@ -748,7 +724,7 @@ module.exports = {
 }
 ```
 
-##### `styles`: `Object | false | 'old'`
+##### `styles`: `Object | false`
 
 Configures how nwb creates Webpack config for importing stylesheets.
 
