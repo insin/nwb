@@ -317,6 +317,10 @@ describe('getPluginConfig()', () => {
         fake: {
           loader: 'path/to/fake.js',
           test: /\.fake$/,
+        },
+        fakeVendor: {
+          loader: 'path/to/fake.js',
+          test: /\.fake$/,
         }
       }
     })
