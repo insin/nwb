@@ -1,3 +1,9 @@
+# Unreleased (in `master`)
+
+## Dependencies
+
+- opn: v5.2.0 → [v5.3.0](https://github.com/sindresorhus/opn/compare/v5.2.0...v5.3.0)
+
 # 0.22.0 / 2018-03-13 (`next` release)
 
 > This is the `next` release of nwb - you need to specify `nwb@next` or `nwb@0.22` when installing it.
