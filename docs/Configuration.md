@@ -1151,7 +1151,7 @@ module.exports = {
 In this scenario, `umd.js` could `import *` a module which uses named exports and re-export its contents as `default`:
 
 ```js
-import * as components from './src/index.js`
+import * as components from './src/index.js'
 export default components
 ```
 
