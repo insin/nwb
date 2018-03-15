@@ -1,5 +1,9 @@
 # Unreleased (in `master`)
 
+## Fixed
+
+- Always add `CopyPlugin` when [`webpack.copy` config](https://github.com/insin/nwb/blob/master/docs/Configuration.md#copy-array--object) is provided [[#431](https://github.com/insin/nwb/issues/431)]
+
 ## Dependencies
 
 - opn: v5.2.0 → [v5.3.0](https://github.com/sindresorhus/opn/compare/v5.2.0...v5.3.0)

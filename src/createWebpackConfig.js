@@ -558,7 +558,7 @@ export function createPlugins(
   }
 
   // Copy static resources
-  if (buildConfig.copy) {
+  if (buildConfig.copy || userConfig.copy) {
     plugins.push(new CopyPlugin(
       ...getCopyPluginArgs(buildConfig.copy, userConfig.copy)
     ))
