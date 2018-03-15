@@ -83,6 +83,30 @@ describe('processUserConfig()', () => {
     it('babel.runtime is not valid', () => {
       check({babel: {runtime: 'welp'}}, 'babel.runtime', /Must be/)
     })
+    it('npm contains unexpected prop', () => {
+      check({npm: {invalid: true}}, 'npm', /Unexpected prop/)
+    })
+    it('npm.cjs is an invalid type', () => {
+      check({npm: {cjs: 'yes'}}, 'npm.cjs', /Must be/)
+    })
+    it('npm.esModules is an invalid type', () => {
+      check({npm: {esModules: 'no'}}, 'npm.esModules', /Must be/)
+    })
+    it('npm.umd is an invalid type', () => {
+      check({npm: {umd: /invalid/}}, 'npm.umd', /Must be/)
+    })
+    it('npm.umd contains unexpected prop', () => {
+      check({npm: {umd: {invalid: true}}}, 'npm.umd', /Unexpected prop/)
+    })
+    it('npm.umd.entry is an invalid type', () => {
+      check({npm: {umd: {entry: /invalid/}}}, 'npm.umd.entry', /Must be/)
+    })
+    it('npm.umd.global is an invalid type', () => {
+      check({npm: {umd: {global: /invalid/}}}, 'npm.umd.global', /Must be/)
+    })
+    it('npm.umd.externals is an invalid type', () => {
+      check({npm: {umd: {externals: /invalid/}}}, 'npm.umd.externals', /Must be/)
+    })
     it('webpack contains unexpected prop', () => {
       check({webpack: {invalid: true}}, 'webpack', /Unexpected prop/)
     })

@@ -69,7 +69,7 @@ function buildUMD(args, buildConfig, userConfig, cb) {
   let entry = path.resolve(args._[1] || 'src/index.js')
   let webpackBuildConfig = {
     babel: buildConfig.babel,
-    entry: [entry],
+    entry: [userConfig.npm.umd.entry || entry],
     output: {
       filename: `${pkg.name}.js`,
       library: userConfig.npm.umd.global,

@@ -1,5 +1,9 @@
 # Unreleased (in `master`)
 
+## Added
+
+- Added [`npm.umd.entry` config](https://github.com/insin/nwb/blob/master/docs/Configuration.md#entry-string) to specify a different entry point for the UMD build in npm module projects. Currently, the UMD build requires an entry point which *must* have a `default` export [[#411](https://github.com/insin/nwb/issues/411)]
+
 ## Fixed
 
 - Always add `CopyPlugin` when [`webpack.copy` config](https://github.com/insin/nwb/blob/master/docs/Configuration.md#copy-array--object) is provided [[#431](https://github.com/insin/nwb/issues/431)]

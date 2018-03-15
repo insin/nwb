@@ -120,6 +120,7 @@ The configuration object can include the following properties:
   - [`npm.esModules`](#esmodules-boolean) - toggle creation of an ES modules build
   - UMD build
     - [`npm.umd`](#umd-string--object--false) - configure a UMD build which exports a global variable
+      - [`umd.entry`](#entry-string) - use a different entry point for the UMD build
       - [`umd.global`](#global-string) - global variable name exported by UMD build
       - [`umd.externals`](#externals-object) - dependencies to use via global variables in UMD build
     - [`package.json` fields](#packagejson-umd-banner-configuration)
@@ -1126,6 +1127,33 @@ module.exports = {
 ```
 
 If you also have some external dependencies to configure, use an object containing the following properties:
+
+###### `entry`: `String`
+
+Specifies a module which will be the entry point for the UMD build. Otherwise the default entry (`src/index.js`) is used.
+
+Currently, the UMD entry point *must* have a `default` export, but you might want to have named exports from the default entry point for people using your module via npm, e.g. if you're publishing a component library.
+
+```js
+module.exports = {
+  npm: {
+    umd: {
+      global: 'MyComponentLibrary',
+      entry: './umd.js',
+      externals: {
+        'react': 'React'
+      }
+    }
+  }
+}
+```
+
+In this scenario, `umd.js` could `import *` a module which uses named exports and re-export its contents as `default`:
+
+```js
+import * as components from './src/index.js`
+export default components
+```
 
 ###### `global`: `String`
 

@@ -61,6 +61,7 @@ export function processNpmBuildConfig({report, userConfig}) {
     }
     else {
       let {
+        entry,
         global: umdGlobal,
         externals,
         ...unexpectedConfig
@@ -73,6 +74,14 @@ export function processNpmBuildConfig({report, userConfig}) {
           unexpectedProps.join(', '),
           `Unexpected prop${s(unexpectedProps.length)} in ${chalk.cyan('npm.umd')} config - ` +
           'see https://github.com/insin/nwb/blob/master/docs/Configuration.md#umd-string--object for supported config'
+        )
+      }
+
+      if ('entry' in umd && typeOf(entry) !== 'string') {
+        report.error(
+          'npm.umd.entry',
+          entry,
+          `Must be a ${chalk.cyan('String')}`
         )
       }
 
