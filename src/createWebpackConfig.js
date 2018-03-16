@@ -36,6 +36,8 @@ type RuleConfig = {
 
 type RuleConfigFactory = (?string, RuleConfig) => ?RuleConfig;
 
+type ServerConfig = boolean | Object;
+
 const DEFAULT_UGLIFY_CONFIG = {
   cache: true,
   parallel: true,
@@ -185,7 +187,7 @@ export function createStyleLoaders(
   options: {
     preprocessor?: ?Object,
     prefix?: ?string,
-    server?: ?boolean
+    server?: ?ServerConfig
   } = {},
 ): UseConfig {
   let {
@@ -243,7 +245,7 @@ export function createStyleLoaders(
  * multiple rules if needed.
  */
 function createStyleRules(
-  server: boolean,
+  server: ServerConfig,
   userWebpackConfig: Object,
   pluginConfig: Object,
   createRule: RuleConfigFactory,
@@ -322,7 +324,7 @@ function createStyleRules(
  * - extra rules defined in user config.
  */
 export function createRules(
-  server: boolean,
+  server: ServerConfig,
   buildConfig: Object = {},
   userWebpackConfig: Object = {},
   pluginConfig: Object = {}
@@ -463,7 +465,7 @@ function getCopyPluginArgs(buildConfig, userConfig) {
  *   not handled here, but by the final merge of webpack.extra config).
  */
 export function createPlugins(
-  server: boolean,
+  server: ServerConfig,
   buildConfig: Object = {},
   userConfig: Object = {}
 ) {

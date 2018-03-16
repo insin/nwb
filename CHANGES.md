@@ -10,6 +10,7 @@
 
 ## Dependencies
 
+- css-loader: v0.28.10 → [v0.28.11](https://github.com/webpack-contrib/css-loader/blob/master/CHANGELOG.md#02811-2018-03-16)
 - opn: v5.2.0 → [v5.3.0](https://github.com/sindresorhus/opn/compare/v5.2.0...v5.3.0)
 
 # 0.22.0 / 2018-03-13 (`next` release)
