@@ -2,6 +2,7 @@
 
 ## Added
 
+- Added `prepublishOnly` to react-component and web-module project package.json scripts, which invokes `npm run build` prior to publishing [[#436](https://github.com/insin/nwb/issues/436)] [[hanford][hanford]]
 - Added [`npm.umd.entry` config](https://github.com/insin/nwb/blob/master/docs/Configuration.md#entry-string) to specify a different entry point for the UMD build in npm module projects. Currently, the UMD build requires an entry point which *must* have a `default` export [[#411](https://github.com/insin/nwb/issues/411)]
 
 ## Fixed
@@ -2038,6 +2039,7 @@ First 0.x release.
 [bwendt-mylo]: https://github.com/bwendt-mylo
 [DethAriel]: https://github.com/DethAriel
 [grahamlyus]: https://github.com/grahamlyus
+[hanford]: https://github.com/hanford
 [jihchi]: https://github.com/jihchi
 [michaelsbradleyjr]: https://github.com/michaelsbradleyjr
 [ngyikp]: https://github.com/ngyikp
