@@ -15,7 +15,7 @@
 
 ## Dependencies
 
-- babel-plugin-inferno: v4.0.0 → [v5.0.0](https://github.com/infernojs/babel-plugin-inferno/releases)
+- babel-plugin-inferno: v4.0.0 → [v5.0.1](https://github.com/infernojs/babel-plugin-inferno/releases)
 - css-loader: v0.28.10 → [v0.28.11](https://github.com/webpack-contrib/css-loader/blob/master/CHANGELOG.md#02811-2018-03-16)
 - opn: v5.2.0 → [v5.3.0](https://github.com/sindresorhus/opn/compare/v5.2.0...v5.3.0)
 - postcss-loader: v2.1.1 → [v2.1.2](https://github.com/postcss/postcss-loader/blob/master/CHANGELOG.md#212-2018-03-17)

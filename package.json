@@ -49,7 +49,7 @@
     "babel-cli": "6.26.0",
     "babel-core": "6.26.0",
     "babel-plugin-add-module-exports": "0.2.1",
-    "babel-plugin-inferno": "5.0.0",
+    "babel-plugin-inferno": "5.0.1",
     "babel-plugin-istanbul": "4.1.5",
     "babel-plugin-lodash": "3.2.11",
     "babel-plugin-react-transform": "3.0.0",
