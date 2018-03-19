@@ -1,5 +1,9 @@
 # Unreleased (in `master`)
 
+## Breaking Changes
+
+- Updated Inferno config for Inferno 5 - `inferno-*` packages (such as `inferno-compat`) work again with Webpack 4 [[#440](https://github.com/insin/nwb/issues/440)]
+
 ## Added
 
 - Added `prepublishOnly` to react-component and web-module project package.json scripts, which invokes `npm run build` prior to publishing [[#436](https://github.com/insin/nwb/issues/436)] [[hanford][hanford]]
@@ -11,6 +15,7 @@
 
 ## Dependencies
 
+- babel-plugin-inferno: v4.0.0 → [v5.0.0](https://github.com/infernojs/babel-plugin-inferno/releases)
 - css-loader: v0.28.10 → [v0.28.11](https://github.com/webpack-contrib/css-loader/blob/master/CHANGELOG.md#02811-2018-03-16)
 - opn: v5.2.0 → [v5.3.0](https://github.com/sindresorhus/opn/compare/v5.2.0...v5.3.0)
 - postcss-loader: v2.1.1 → [v2.1.2](https://github.com/postcss/postcss-loader/blob/master/CHANGELOG.md#212-2018-03-17)
@@ -36,7 +41,7 @@
     - Separate CSS files are now created and loaded on-demand for code splits.
     - Replaced `webpack.extractText` config with [`webpack.extractCSS` config](https://github.com/insin/nwb/blob/master/docs/Configuration.md#extractcss-object--boolean) - this is not backwards-compatible, as plugin options differ.
   - Webpack's default `performance` option size warnings have been disabled (for now).
-- Updated Inferno config for Inferno v4 - see the [Inferno v4 migration guide](https://github.com/infernojs/inferno/blob/master/docs/v4-migration.md) for breaking changes [[#429](https://github.com/insin/nwb/issues/429)]
+- Updated Inferno config for Inferno 4 - see the [Inferno v4 migration guide](https://github.com/infernojs/inferno/blob/master/docs/v4-migration.md) for breaking changes [[#429](https://github.com/insin/nwb/issues/429)]
   - `nwb new inferno-app` now asks if you want to install `inferno-compat` as it's no longer a single dependency, defaulting to not installing it.
 - `nwb new preact-app` now asks if you want to install `preact-compat`, defaulting to not installing it.
 - Updated to Mocha 5, which dropped support for IE9 and IE10 and fixed some false positives.

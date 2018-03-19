@@ -19,7 +19,7 @@ function getBaseConfig() {
   // Inferno's default module build is the production version - use the
   // development version for development and testing.
   if (process.env.NODE_ENV !== 'production') {
-    config.resolve.alias['inferno'] = resolve.sync('inferno/dist/index.dev.mjs', {
+    config.resolve.alias['inferno'] = resolve.sync('inferno/dist/index.dev.esm.js', {
       basedir: process.cwd()
     })
   }
