@@ -18,6 +18,7 @@
 - babel-plugin-inferno: v4.0.0 → [v5.0.1](https://github.com/infernojs/babel-plugin-inferno/releases)
 - css-loader: v0.28.10 → [v0.28.11](https://github.com/webpack-contrib/css-loader/blob/master/CHANGELOG.md#02811-2018-03-16)
 - html-webpack-plugin: v3.0.6 → [v3.0.7](https://github.com/jantimon/html-webpack-plugin/blob/master/CHANGELOG.md#307-2018-03-19)
+- karma-webpack: v2.0.13 → [v3.0.0](https://github.com/webpack-contrib/karma-webpack/blob/master/CHANGELOG.md#300-2018-03-19)
 - opn: v5.2.0 → [v5.3.0](https://github.com/sindresorhus/opn/compare/v5.2.0...v5.3.0)
 - postcss-loader: v2.1.1 → [v2.1.2](https://github.com/postcss/postcss-loader/blob/master/CHANGELOG.md#212-2018-03-17)
 - uglifyjs-webpack-plugin: v1.2.3 → [v1.2.4](https://github.com/webpack-contrib/uglifyjs-webpack-plugin/blob/master/CHANGELOG.md#124-2018-03-16)
