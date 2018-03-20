@@ -21,6 +21,7 @@
 - karma-webpack: v2.0.13 → [v3.0.0](https://github.com/webpack-contrib/karma-webpack/blob/master/CHANGELOG.md#300-2018-03-19)
 - opn: v5.2.0 → [v5.3.0](https://github.com/sindresorhus/opn/compare/v5.2.0...v5.3.0)
 - postcss-loader: v2.1.1 → [v2.1.2](https://github.com/postcss/postcss-loader/blob/master/CHANGELOG.md#212-2018-03-17)
+- resolve: v1.5.0 → [v1.6.0](https://github.com/substack/node-resolve/compare/v1.5.0...v1.6.0)
 - uglifyjs-webpack-plugin: v1.2.3 → [v1.2.4](https://github.com/webpack-contrib/uglifyjs-webpack-plugin/blob/master/CHANGELOG.md#124-2018-03-16)
 
 # 0.22.0 / 2018-03-13 (`next` release)
