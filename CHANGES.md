@@ -16,6 +16,7 @@
 ## Dependencies
 
 - babel-plugin-inferno: v4.0.0 → [v5.0.1](https://github.com/infernojs/babel-plugin-inferno/releases)
+- copy-template-dir: v1.3.0 → [v1.4.0](https://github.com/yoshuawuyts/copy-template-dir/releases/tag/v1.4.0)
 - css-loader: v0.28.10 → [v0.28.11](https://github.com/webpack-contrib/css-loader/blob/master/CHANGELOG.md#02811-2018-03-16)
 - html-webpack-plugin: v3.0.6 → [v3.0.7](https://github.com/jantimon/html-webpack-plugin/blob/master/CHANGELOG.md#307-2018-03-19)
 - karma-webpack: v2.0.13 → [v3.0.0](https://github.com/webpack-contrib/karma-webpack/blob/master/CHANGELOG.md#300-2018-03-19)
