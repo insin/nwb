@@ -15,15 +15,21 @@
 
 ## Dependencies
 
+- autoprefixer: v8.1.0 → [v8.2.0](https://github.com/postcss/autoprefixer/blob/master/CHANGELOG.md#820)
 - babel-plugin-inferno: v4.0.0 → [v5.0.1](https://github.com/infernojs/babel-plugin-inferno/releases)
 - copy-template-dir: v1.3.0 → [v1.4.0](https://github.com/yoshuawuyts/copy-template-dir/releases/tag/v1.4.0)
 - css-loader: v0.28.10 → [v0.28.11](https://github.com/webpack-contrib/css-loader/blob/master/CHANGELOG.md#02811-2018-03-16)
-- html-webpack-plugin: v3.0.6 → [v3.0.7](https://github.com/jantimon/html-webpack-plugin/blob/master/CHANGELOG.md#307-2018-03-19)
+- filesize: v3.6.0 → [v3.6.1](https://github.com/avoidwork/filesize.js/compare/3.6.0...3.6.1)
+- html-webpack-plugin: v3.0.6 → [v3.1.0](https://github.com/jantimon/html-webpack-plugin/blob/master/CHANGELOG.md#310-2018-03-22)
+- inquirer: v5.1.0 → [v5.2.0](https://github.com/SBoudrias/Inquirer.js/releases/tag/v5.2.0)
 - karma-webpack: v2.0.13 → [v3.0.0](https://github.com/webpack-contrib/karma-webpack/blob/master/CHANGELOG.md#300-2018-03-19)
+- mocha: v5.0.4 → [v5.0.5](https://github.com/mochajs/mocha/blob/master/CHANGELOG.md#505--2018-03-22)
 - opn: v5.2.0 → [v5.3.0](https://github.com/sindresorhus/opn/compare/v5.2.0...v5.3.0)
 - postcss-loader: v2.1.1 → [v2.1.3](https://github.com/postcss/postcss-loader/blob/master/CHANGELOG.md#213-2018-03-20)
 - resolve: v1.5.0 → [v1.6.0](https://github.com/substack/node-resolve/compare/v1.5.0...v1.6.0)
 - uglifyjs-webpack-plugin: v1.2.3 → [v1.2.4](https://github.com/webpack-contrib/uglifyjs-webpack-plugin/blob/master/CHANGELOG.md#124-2018-03-16)
+- webpack: v4.1.1 → [v4.2.0](https://github.com/webpack/webpack/releases/tag/v4.2.0)
+- webpack-dev-middleware: v3.0.1 → [v3.1.0](https://github.com/webpack/webpack-dev-middleware/releases/tag/v3.1.0)
 
 # 0.22.0 / 2018-03-13 (`next` release)
 
