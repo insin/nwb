@@ -31,6 +31,10 @@
 - webpack: v4.1.1 → [v4.2.0](https://github.com/webpack/webpack/releases/tag/v4.2.0)
 - webpack-dev-middleware: v3.0.1 → [v3.1.0](https://github.com/webpack/webpack-dev-middleware/releases/tag/v3.1.0)
 
+## Docs
+
+- Added [instructions for debugging in VS Code](https://github.com/insin/nwb/blob/master/docs/FAQ.md#how-can-i-debug-using-vs-code-when-running-an-app-with-nwb) to the FAQ [[#445](https://github.com/insin/nwb/issues/445)]
+
 # 0.22.0 / 2018-03-13 (`next` release)
 
 > This is the `next` release of nwb - you need to specify `nwb@next` or `nwb@0.22` when installing it.

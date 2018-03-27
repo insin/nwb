@@ -5,7 +5,8 @@
 - [How do I enable CSS Modules?](#how-do-i-enable-css-modules)
 - [What can I configure to reduce bundle size?](#what-can-i-configure-to-reduce-bundle-size)
 - [How can I copy non-JavaScript files when building a React component/library?](#how-can-i-copy-non-javascript-files-when-building-a-react-component-library)
-- [How can I use React Hot Loader instead of React Transform?](how-can-i-use-react-hot-loader-instead-of-react-transform)
+- [How can I use React Hot Loader instead of React Transform?](#how-can-i-use-react-hot-loader-instead-of-react-transform)
+- [How can I debug using VS Code when running an app with nwb?](#how-can-i-debug-using-vs-code-when-running-an-app-with-nwb)
 
 ---
 
@@ -112,3 +113,27 @@ Pass a [`--copy-files` flag](/docs/guides/ReactComponent.md#--copy-files) if you
   }
   ```
 - Use React Hot Loader's `<AppContainer>` component in your app's entry module (usually `src/index.js` in apps using nwb) as per its [Getting Started docs](https://github.com/gaearon/react-hot-loader#getting-started).
+
+### How can I debug using VS Code when running an app with nwb?
+
+Ensure you have the [Debugger for Chrome extension](https://marketplace.visualstudio.com/items?itemName=msjsdiag.debugger-for-chrome) installed and create `.vscode/launch.json` or add the following configuration to it:
+
+```json
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Chrome",
+      "type": "chrome",
+      "request": "launch",
+      "url": "http://localhost:3000",
+      "webRoot": "${workspaceRoot}/src",
+      "sourceMapPathOverrides": {
+        "webpack:///src/*": "${webRoot}/*"
+      }
+    }
+  ]
+}
+```
+
+After you've started the dev server with `npm start` you should be able to press F5 and start debugging in VS Code.
