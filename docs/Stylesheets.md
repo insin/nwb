@@ -27,13 +27,13 @@ When running a production build, imported stylesheets will be extracted out to s
 
 ### Default Stylesheet Rules
 
-> Note: each generated Webpack rule and chained loader has an associated unique id which can be used in [`webpack.rules` configuration](/docs/Configuration.md#rules-object) to tweak its configuration.
+> **Note:** each generated Webpack rule and chained loader has an associated unique id which can be used in [`webpack.rules` configuration](/docs/Configuration.md#rules-object) to tweak its configuration.
 
 Without any [`webpack.styles` configuration](/docs/Configuration.md#styles-object--false), nwb generates a rule (id: `css-rule`) which handles `.css` files by chaining together a number of loaders:
 
 - loader id: `style` - applies styles using [style-loader][style-loader]
 
-  > Note: use of this loader is only configured when running a development server
+  > **Note:** use of this loader is only configured when running a development server
 
 - loader id: `css` - handles URLs, minification and can be configured to enable [CSS Modules][Css Modules], using [css-loader][css-loader]
 

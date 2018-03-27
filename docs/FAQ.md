@@ -114,26 +114,39 @@ Pass a [`--copy-files` flag](/docs/guides/ReactComponent.md#--copy-files) if you
   ```
 - Use React Hot Loader's `<AppContainer>` component in your app's entry module (usually `src/index.js` in apps using nwb) as per its [Getting Started docs](https://github.com/gaearon/react-hot-loader#getting-started).
 
-### How can I debug using VS Code when running an app with nwb?
+### How can I debug using VS Code when using nwb?
 
-Ensure you have the [Debugger for Chrome extension](https://marketplace.visualstudio.com/items?itemName=msjsdiag.debugger-for-chrome) installed and create `.vscode/launch.json` or add the following configuration to it:
+Ensure you have the [Debugger for Chrome extension](https://marketplace.visualstudio.com/items?itemName=msjsdiag.debugger-for-chrome) installed and add the following configurations to `.vscode/launch.json`:
 
 ```json
 {
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "Chrome",
-      "type": "chrome",
+      "name": "Debug Dev Server",
       "request": "launch",
-      "url": "http://localhost:3000",
-      "webRoot": "${workspaceRoot}/src",
       "sourceMapPathOverrides": {
         "webpack:///src/*": "${webRoot}/*"
-      }
+      },
+      "type": "chrome",
+      "url": "http://localhost:3000",
+      "webRoot": "${workspaceRoot}/src",
+    },
+    {
+      "name": "Debug Karma Tests",
+      "request": "launch",
+      "runtimeArgs": ["--headless"],
+      "sourceMapPathOverrides": {
+        "webpack:///src/*": "${workspaceRoot}/src/*",
+        "webpack:///tests/*": "${workspaceRoot}/tests/*"
+      },
+      "type": "chrome",
+      "url": "http://localhost:9876/debug.html",
     }
   ]
 }
 ```
 
-After you've started the dev server with `npm start` you should be able to press F5 and start debugging in VS Code.
+> **Note:** the above configuration assumes you're using the default host and port settings, and that the requested dev server port was available.
+
+After you've started the dev server with `npm start` or `nwb serve`, or started a watching test server with `npm run test:watch` or `nwb test --server`, you should be able to start debugging in VS Code by running a debugging configuration from the Debug panel or pressing F5.
