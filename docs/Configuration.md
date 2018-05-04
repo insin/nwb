@@ -526,7 +526,7 @@ Default configuration is to a chunk hash in extracted filenames, equivalent to:
 module.exports = {
   webpack: {
     extractCSS: {
-      filename: process.env.NODE_ENV === 'production' ? `[name].[chunkhash:8].css` : '[name].css'
+      filename: process.env.NODE_ENV === 'production' ? `[name].[contenthash:8].css` : '[name].css'
     }
   }
 }

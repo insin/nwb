@@ -504,7 +504,7 @@ export function createPlugins(
     if (userConfig.extractCSS !== false) {
       // Extract imported stylesheets out into .css files
       plugins.push(new MiniCssExtractPlugin({
-        filename: production ? `[name].[chunkhash:8].css` : '[name].css',
+        filename: production ? `[name].[contenthash:8].css` : '[name].css',
         ...userConfig.extractCSS,
       }))
     }
