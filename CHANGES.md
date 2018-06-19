@@ -15,21 +15,36 @@
 
 ## Dependencies
 
-- autoprefixer: v8.1.0 → [v8.2.0](https://github.com/postcss/autoprefixer/blob/master/CHANGELOG.md#820)
+- autoprefixer: v8.1.0 → [v8.6.3](https://github.com/postcss/autoprefixer/blob/master/CHANGELOG.md#863)
+- babel-core: v6.26.0 → [v6.26.3](https://github.com/babel/babel/releases/tag/v6.26.3)
 - babel-plugin-inferno: v4.0.0 → [v5.0.1](https://github.com/infernojs/babel-plugin-inferno/releases)
+- babel-plugin-istanbul: v4.1.5 → [v4.1.6](https://github.com/istanbuljs/babel-plugin-istanbul/compare/v4.1.5...v4.1.6)
+- babel-plugin-transform-decorators-legacy: v1.3.4 → [v1.3.5](https://github.com/loganfsmyth/babel-plugin-transform-decorators-legacy/releases/tag/v1.3.5)
+- chalk: v2.3.2 → [v2.4.1](https://github.com/chalk/chalk/compare/v2.3.0...v2.4.1)
 - copy-template-dir: v1.3.0 → [v1.4.0](https://github.com/yoshuawuyts/copy-template-dir/releases/tag/v1.4.0)
 - css-loader: v0.28.10 → [v0.28.11](https://github.com/webpack-contrib/css-loader/blob/master/CHANGELOG.md#02811-2018-03-16)
+- detect-port: v1.2.2 → [v1.2.3](https://github.com/node-modules/detect-port/releases)
 - filesize: v3.6.0 → [v3.6.1](https://github.com/avoidwork/filesize.js/compare/3.6.0...3.6.1)
-- html-webpack-plugin: v3.0.6 → [v3.1.0](https://github.com/jantimon/html-webpack-plugin/blob/master/CHANGELOG.md#310-2018-03-22)
-- inquirer: v5.1.0 → [v5.2.0](https://github.com/SBoudrias/Inquirer.js/releases/tag/v5.2.0)
+- fs-extra: v6.0.0 → [v6.0.1](https://github.com/jprichardson/node-fs-extra/blob/master/CHANGELOG.md#601--2018-05-09)
+- html-webpack-plugin: v3.0.6 → [v3.2.0](https://github.com/jantimon/html-webpack-plugin/blob/master/CHANGELOG.md#320-2018-04-03)
+- inquirer: v5.1.0 → [v6.0.0](https://github.com/SBoudrias/Inquirer.js/releases)
+- karma: v2.0.0 → [v2.0.3](https://github.com/karma-runner/karma/releases)
+- karma-coverage: v1.1.1 → [v1.1.2](https://github.com/karma-runner/karma-coverage/blob/master/CHANGELOG.md#112-2018-05-03)
 - karma-webpack: v2.0.13 → [v3.0.0](https://github.com/webpack-contrib/karma-webpack/blob/master/CHANGELOG.md#300-2018-03-19)
-- mocha: v5.0.4 → [v5.0.5](https://github.com/mochajs/mocha/blob/master/CHANGELOG.md#505--2018-03-22)
+- mocha: v5.0.4 → [v5.2.0](https://github.com/mochajs/mocha/blob/master/CHANGELOG.md#520--2018-05-18)
 - opn: v5.2.0 → [v5.3.0](https://github.com/sindresorhus/opn/compare/v5.2.0...v5.3.0)
-- postcss-loader: v2.1.1 → [v2.1.3](https://github.com/postcss/postcss-loader/blob/master/CHANGELOG.md#213-2018-03-20)
-- resolve: v1.5.0 → [v1.6.0](https://github.com/substack/node-resolve/compare/v1.5.0...v1.6.0)
-- uglifyjs-webpack-plugin: v1.2.3 → [v1.2.4](https://github.com/webpack-contrib/uglifyjs-webpack-plugin/blob/master/CHANGELOG.md#124-2018-03-16)
-- webpack: v4.1.1 → [v4.2.0](https://github.com/webpack/webpack/releases/tag/v4.2.0)
-- webpack-dev-middleware: v3.0.1 → [v3.1.0](https://github.com/webpack/webpack-dev-middleware/releases/tag/v3.1.0)
+- ora: v2.0.0 → [v2.1.0](https://github.com/sindresorhus/ora/compare/v2.0.0...v2.1.0)
+- postcss-loader: v2.1.1 → [v2.1.5](https://github.com/postcss/postcss-loader/blob/master/CHANGELOG.md#215-2018-05-04)
+- resolve: v1.5.0 → [v1.8.1](https://github.com/browserify/resolve/compare/v1.5.0...v1.8.1)
+- run-series: v1.1.6 → [v1.1.8](https://github.com/feross/run-series/compare/v1.1.6...v1.1.8)
+- style-loader: v0.20.2 → [v0.21.0](https://github.com/webpack-contrib/style-loader/blob/master/CHANGELOG.md#0210-2018-04-18)
+- uglifyjs-webpack-plugin: v1.2.3 → [v1.2.5](https://github.com/webpack-contrib/uglifyjs-webpack-plugin/blob/master/CHANGELOG.md#125-2018-04-18)
+- webpack: v4.1.1 → [v4.12.0](https://github.com/webpack/webpack/releases)
+- webpack-dev-middleware: v3.0.1 → [v3.1.3](https://github.com/webpack/webpack-dev-middleware/releases)
+- webpack-dev-server: v3.1.1 → [v3.1.4](https://github.com/webpack/webpack-dev-server/releases)
+- webpack-hot-middleware: v2.21.2 → [v2.22.2](https://github.com/glenjamin/webpack-hot-middleware/compare/v2.21.2...v2.22.2)
+- webpack-merge: v4.1.2 → [v4.1.3](https://github.com/survivejs/webpack-merge/compare/v4.1.2...v4.1.3)
+- whatwg-fetch: v2.0.3 → [v2.0.4](https://github.com/github/fetch/releases/tag/v2.0.4)
 
 ## Docs
 
@@ -265,7 +280,7 @@
 - autoprefixer: v7.1.4 → [v7.1.6](https://github.com/postcss/autoprefixer/blob/master/CHANGELOG.md#716)
 - babel-plugin-inferno: v3.2.0 → [v3.3.0](https://github.com/infernojs/babel-plugin-inferno/releases)
 - babel-plugin-transform-react-remove-prop-types: v0.4.8 → [v0.4.10](https://github.com/oliviertassinari/babel-plugin-transform-react-remove-prop-types/releases)
-- babel-preset-env: v1.6.0 → [v1.6.1](https://github.com/babel/babel-preset-env/releases/tag/v1.6.1)
+- babel-preset-env: v1.6.0 → v1.7.0
 - chalk: v2.1.0 → [v2.3.0](https://github.com/chalk/chalk/compare/v2.1.0...v2.3.0)
 - copy-webpack-plugin: v4.1.0 → [v4.2.0](https://github.com/webpack-contrib/copy-webpack-plugin/blob/master/CHANGELOG.md#420-2017-10-19)
 - extract-text-webpack-plugin: v3.0.0 → [v3.0.2](https://github.com/webpack-contrib/extract-text-webpack-plugin/blob/master/CHANGELOG.md#302-2017-10-25)
@@ -275,7 +290,7 @@
 - karma-webpack: v2.0.4 → [v2.0.5](https://github.com/webpack-contrib/karma-webpack/blob/master/CHANGELOG.md#205-2017-10-08)
 - phantomjs-prebuilt: v2.1.15 → v2.1.16
 - postcss-loader: v2.0.6 → [v2.0.8](https://github.com/postcss/postcss-loader/blob/master/CHANGELOG.md#208-2017-10-14)
-- resolve: v1.4.0 → [v1.5.0](https://github.com/substack/node-resolve/compare/v1.4.0...v1.5.0)
+- resolve: v1.4.0 → [v1.5.0](https://github.com/browserify/resolve/compare/v1.4.0...v1.5.0)
 - style-loader: v0.18.2 → [v0.19.0](https://github.com/webpack-contrib/style-loader/blob/master/CHANGELOG.md#0190-2017-10-03)
 - url-loader: v0.5.9 → [v0.6.2](https://github.com/webpack-contrib/url-loader/blob/master/CHANGELOG.md#062-2017-10-04)
 - webpack: v3.6.0 → [v3.8.1](https://github.com/webpack/webpack/releases)
@@ -338,7 +353,7 @@
 ## Dependencies
 
 - babel-runtime: v6.23.0 → v6.25.0
-- resolve: v1.3.3 → [v1.4.0](https://github.com/substack/node-resolve/compare/v1.3.3...v1.4.0)
+- resolve: v1.3.3 → [v1.4.0](https://github.com/browserify/resolve/compare/v1.3.3...v1.4.0)
 - webpack: v3.4.0 → [v3.4.1](https://github.com/webpack/webpack/releases/tag/v3.4.1)
 
 # 0.18.9 / 2017-07-26
@@ -722,7 +737,7 @@ Backported fixes from 0.18:
 - mocha: v3.2.0 → [v3.4.2](https://github.com/mochajs/mocha/blob/master/CHANGELOG.md#342--2017-05-24)
 - ora: v1.1.0 → v1.2.0 - added `warn()` and `info()` utilities
 - postcss-loader: v1.2.2 → [v2.0.5](https://github.com/postcss/postcss-loader/blob/master/CHANGELOG.md#205-2017-05-10) - validate options
-- resolve: v1.2.0 → [v1.3.3](https://github.com/substack/node-resolve/compare/v1.2.0...v1.3.3)
+- resolve: v1.2.0 → [v1.3.3](https://github.com/browserify/resolve/compare/v1.2.0...v1.3.3)
 - style-loader: v0.13.1 → [v0.18.1](https://github.com/webpack-contrib/style-loader/blob/master/CHANGELOG.md#0181-2017-05-23)
 - url-loader: v0.5.7 → [v0.5.8](https://github.com/webpack-contrib/url-loader/releases/tag/v0.5.8) - fix loader util deprecation warning
 - webpack: v2.2.1 → [v2.6.1](https://github.com/webpack/webpack/releases) - `import()` can now configure a chunk name, `require.ensure()` can now take an error callback, added `module.strictExportPresence`
@@ -1034,7 +1049,7 @@ These are being scoped to both make use of unreleased features and to test them 
 - ora: v0.3.0 → v0.4.1
 - phantomjs-prebuilt: v2.1.13 → [v2.1.14](https://github.com/Medium/phantomjs/releases/tag/2.1.14)
 - postcss-loader: v1.2.0 → [v1.2.1](https://github.com/postcss/postcss-loader/blob/master/CHANGELOG.md#121)
-- resolve: v1.1.7 → [v1.2.0](https://github.com/substack/node-resolve/compare/1.1.7...v1.2.0)
+- resolve: v1.1.7 → [v1.2.0](https://github.com/browserify/resolve/compare/1.1.7...v1.2.0)
 - webpack-dev-middleware: v1.8.4 → [v1.9.0](https://github.com/webpack/webpack-dev-middleware/releases/tag/v1.9.0) - Webpack 2 RC support
 - webpack-hot-middleware: v2.13.2 → [v2.15.0](https://github.com/glenjamin/webpack-hot-middleware/compare/v2.13.2...v2.15.0) - add cache for warnings
 - webpack-merge: v1.0.2 → [v2.3.1](https://github.com/survivejs/webpack-merge/blob/master/CHANGELOG.md#231--2017-01-06) - providing an empty array/object no longer overrides when merging
@@ -1835,7 +1850,7 @@ These are being scoped to both make use of unreleased features and to test them 
 - qs: v5.2.0 → [v6.1.0](https://github.com/ljharb/qs/blob/master/CHANGELOG.md#610) - revert ES6 requirement, new `allowDots` option and some fixes
 - react-transform-catch-errors: v1.0.1 → v1.0.2 - remove some files from the npm package
 - react-transform-hmr: v1.0.1 → v1.0.2 - remove some files from the npm package
-- resolve: v1.1.6 → [v1.1.7](https://github.com/substack/node-resolve/compare/1.1.6...1.1.7) - fix `node_modules` paths on Windows
+- resolve: v1.1.6 → [v1.1.7](https://github.com/browserify/resolve/compare/1.1.6...1.1.7) - fix `node_modules` paths on Windows
 - rimraf: v2.5.0 → [v2.5.2](https://github.com/isaacs/rimraf/compare/v2.5.0...v2.5.2)
 - webpack: v1.12.11 → [v1.12.14](https://github.com/webpack/webpack/compare/v1.12.11...v1.12.14) - fix Windows filename backslash incompatibility
 - webpack-dev-middleware: v1.4.0 → [v1.5.1](https://github.com/webpack/webpack-dev-middleware/compare/v1.4.0...v1.5.1) - platform-agnostic path joining, use `res.send` when available
