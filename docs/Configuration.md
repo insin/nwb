@@ -196,7 +196,7 @@ Additional [options for `babel-preset-env`](https://github.com/babel/babel-prese
 
 ##### `loose`: `Boolean`
 
-Some Babel plugins have a [loose mode](http://www.2ality.com/2015/12/babel6-loose-mode.html) in which they output simpler, potentially faster code rather than following the semantics of the ES6 spec closely.
+Some Babel plugins have a [loose mode](http://www.2ality.com/2015/12/babel6-loose-mode.html) in which they output simpler, potentially faster code rather than following the semantics of the ES spec closely.
 
 **nwb enables loose mode by default**.
 
@@ -276,7 +276,7 @@ Set this to `false` to disable use of the [React constant element hoisting trans
 Babel's [runtime transform](https://babeljs.io/docs/plugins/transform-runtime/) does 3 things by default:
 
 1. Imports helper modules from `babel-runtime` instead of duplicating **helpers** in every module which needs them.
-2. Imports a local **polyfill** for new ES6 built-ins (`Promise`) and static methods (e.g. `Object.assign`) when they're used in your code.
+2. Imports a local **polyfill** for new ES built-ins (`Promise`) and static methods (e.g. `Object.assign`) when they're used in your code.
 3. Imports the **regenerator** runtime required to use `async`/`await` when needed.
 
 nwb's default config turns the regenerator runtime import on so you can use `async`/`await` and generators.
@@ -774,7 +774,7 @@ module.exports = {
 
 Extra configuration to be merged into the generated Webpack configuration using [webpack-merge](https://github.com/survivejs/webpack-merge#webpack-merge---merge-designed-for-webpack) - see the [Webpack configuration docs](https://webpack.js.org/configuration/) for the available properties.
 
-> **Note:** Webpack 2 validates the structure of the config it's given, so providing invalid or unexpected config will break the build.
+> **Note:** Webpack validates the structure of the config it's given, so providing invalid or unexpected config will break the build.
 
 e.g. to add an extra rule which isn't managed by nwb's own `webpack.rules` config, you would need to provide a list of rules at `webpack.extra.module.rules`.
 
@@ -1076,7 +1076,7 @@ module.exports = {
 
 ### npm Build Configuration
 
-By default, nwb creates ES5 and ES6 modules builds for publishing to npm.
+By default, nwb creates CommonJS and ES modules builds for publishing to npm.
 
 #### `npm`: `Object`
 
@@ -1102,15 +1102,15 @@ module.exports = {
 
 > Defaults to `true` if not provided.
 
-Determines whether or not nwb will create an ES6 modules build for use by ES6 module bundlers when you run `nwb build` for a React component/library or web module project.
+Determines whether or not nwb will create an ES modules build for use by bundlers when you run `nwb build` for a React component/library or web module project.
 
-When providing an ES6 modules build, you should also provide the following in `package.json` so compatible module bundlers can find it:
+When providing an ES modules build, you should also provide the following in `package.json` so compatible bundlers can find it:
 
 ```
 "module": "es/index.js",
 ```
 
-These are included automatically if you create a project with an ES6 modules build enabled.
+These are included automatically if you create a project with an ES modules build enabled.
 
 ##### `umd`: `String | Object | false`
 

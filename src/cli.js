@@ -62,7 +62,7 @@ Project creation commands:
 
   Options:
     ${opt('-f, --force')}   force project creation, don't ask questions
-    ${opt('--es-modules')}  enable or disable (${opt('--no-es-modules')}) an ES6 modules build
+    ${opt('--es-modules')}  enable or disable (${opt('--no-es-modules')}) an ES modules build
     ${opt('--no-git')}      disable creation of a Git repo with an initial commit
     ${opt('--react')}       version of React to install for React apps & components
     ${opt('--umd=<var>')}   enable or disable (${opt('--no-umd')}) a UMD build
@@ -115,7 +115,7 @@ Project type-specific commands:
     Build a React app from ${opt('entry')} to ${opt('dist_dir')}.
 
   ${cmd('nwb build-react-component')} ${opt('[umd_entry]')}
-    Create ES5, ES6 modules and UMD builds for a React component.
+    Create ES5, ES modules and UMD builds for a React component.
 
     Options:
       ${opt('--copy-files')}        copy files which won't be transpiled by Babel (e.g. CSS)
@@ -132,7 +132,7 @@ Project type-specific commands:
     Build a web app from ${opt('entry')} to ${opt('dist_dir')}.
 
   ${cmd('nwb build-web-module')} ${opt('[umd_entry]')}
-    Create ES5, ES6 modules and UMD builds for a web module.
+    Create ES5, ES modules and UMD builds for a web module.
 
   ${cmd('nwb clean-app')} ${opt('[dist_dir]')}
     Delete ${opt('dist_dir')}.

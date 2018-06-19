@@ -155,11 +155,11 @@ export default function moduleBuild(args, buildConfig = {}, cb) {
     ))
   }
 
-  // The ES6 modules build is enabled by default, and must be explicitly
+  // The ES modules build is enabled by default, and must be explicitly
   // disabled if you don't want it.
   if (userConfig.npm.esModules !== false) {
     tasks.push((cb) => runBabel(
-      'ES6 modules',
+      'ES modules',
       {copyFiles, outDir: path.resolve('es'), src},
       merge(buildConfig.babel, buildConfig.babelDev || {}, {
         // Don't set the path to nwb's babel-runtime, as it will need to be a

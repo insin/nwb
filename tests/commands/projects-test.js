@@ -174,7 +174,7 @@ describe('sample projects', function() {
 
   describe('cherry-pick project', () => {
     let es5
-    let es6
+    let esModules
     let originalCwd
     let originalNodeEnv
     let tmpDir
@@ -191,7 +191,7 @@ describe('sample projects', function() {
         cli(['build'], err => {
           expect(err).toNotExist()
           es5 = fs.readFileSync(path.join(tmpDir, 'lib/index.js'), 'utf-8')
-          es6 = fs.readFileSync(path.join(tmpDir, 'es/index.js'), 'utf-8')
+          esModules = fs.readFileSync(path.join(tmpDir, 'es/index.js'), 'utf-8')
           done()
         })
       })
@@ -222,16 +222,16 @@ describe('sample projects', function() {
         'index.js',
       ])
     })
-    it('ES6 modules build transpiles to a cherry-picked version', () => {
-      expect(es6)
+    it('ES modules build transpiles to a cherry-picked version', () => {
+      expect(esModules)
         .toInclude("import _Col from 'react-bootstrap/lib/Col'")
         .toInclude("import _Grid from 'react-bootstrap/lib/Grid'")
         .toInclude("import _Row from 'react-bootstrap/lib/Row'")
     })
-    it('ES6 module build has propType declarations wrapped in an environment check', () => {
-      expect(es6).toInclude('CherryPicker.propTypes = process.env.NODE_ENV !== "production" ? {')
+    it('ES module build has propType declarations wrapped in an environment check', () => {
+      expect(esModules).toInclude('CherryPicker.propTypes = process.env.NODE_ENV !== "production" ? {')
     })
-    it('ES6 module build ignores co-located test files and directories', () => {
+    it('ES module build ignores co-located test files and directories', () => {
       expect(glob.sync('*', {cwd: path.resolve('es')})).toEqual([
         'index.js',
       ])

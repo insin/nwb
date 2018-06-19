@@ -34,6 +34,7 @@
 ## Docs
 
 - Added [instructions for debugging in VS Code](https://github.com/insin/nwb/blob/master/docs/FAQ.md#how-can-i-debug-using-vs-code-when-running-an-app-with-nwb) to the FAQ [[#445](https://github.com/insin/nwb/issues/445)]
+- Replaced references to "ES6" with plain old "ES"
 
 # 0.22.0 / 2018-03-13 (`next` release)
 

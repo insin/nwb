@@ -38,7 +38,7 @@ function copyTemplate(templateDir, targetDir, templateVars, cb) {
  * arguments.
  */
 export function getNpmModulePrefs(args, cb) {
-  // An ES6 modules build is enabled by default, but can be disabled with
+  // An ES modules build is enabled by default, but can be disabled with
   // --no-es-modules or --es-modules=false (or a bunch of other undocumented
   // stuff)
   let esModules = args['es-modules'] !== false && !/^(0|false|no|nope|off)$/.test(args['es-modules'])
@@ -57,7 +57,7 @@ export function getNpmModulePrefs(args, cb) {
       when: () => !('es-modules' in args),
       type: 'confirm',
       name: 'esModules',
-      message: 'Do you want to create an ES6 modules build for use by ES6 bundlers?',
+      message: 'Do you want to create an ES modules build for use by compatible bundlers?',
       default: esModules,
     },
     {

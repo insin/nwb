@@ -100,7 +100,7 @@ Creates a skeleton project for a JavaScript module for use on the web, ready for
 
 > Passing all available options will automatically skip asking of setup questions.
 
-- `--es-modules` - explicitly enable or disable (with `--no-es-modules`) an ES6 modules build
+- `--es-modules` - explicitly enable or disable (with `--no-es-modules`) an ES modules build
 - `--no-git` - disable creation of a Git repo with an initial commit
 - `--umd=<var>` - enable a UMD build by providing a global variable name to be exported
 
@@ -243,11 +243,9 @@ You'll only pay the cost of including the compatibility layer in your bundle if 
 
 Builds for publishing to npm.
 
-Passing an argument for `entry` allows you to customise the entry point for the UMD build of your app.
-
-- An ES5 build will be created in `lib/`
-- By default, an ES6 modules build will be created in `es/`
-- If enabled, UMD builds will be created in `umd/`
+- A build which uses CommonJS modules will be created in `lib/`
+- By default, a build which uses ES modules will also be created in `es/`
+- If enabled via configuration, UMD builds for global `<script>` tag usage will be created in `umd/`
 
 **Feature Toggles:**
 
@@ -257,7 +255,7 @@ If the module has a `demo/` directory, running `build` will also create a static
 
 #### `--[keep-]proptypes`
 
-React components created as ES6 classes or functional components will have any `propTypes` they declare wrapped an `process.env.NODE_ENV !== 'production'` check, so they will be removed by dead-code elimination in the production build of any apps they're used in. You can disable this by passing a `--[keep-]proptypes` flag.
+React components will have any `propTypes` they declare wrapped an `process.env.NODE_ENV !== 'production'` check, so they will be removed by dead-code elimination in the production build of any apps they're used in. You can disable this by passing a `--[keep-]proptypes` flag.
 
 #### `--copy-files`
 
@@ -308,11 +306,11 @@ These are used in the `npm scripts` section of `package.json` in project skeleto
 
 - `build-react-app [entry] [dist_dir]` - build a React app from `entry` *[default: `src/index.js`]* to `dist_dir` *[default: `dist/`]*
 
-- `build-react-component [umd_entry]` - create an ES5 build, an ES6 modules build and, if configured, a UMD build - for a React component, starting from `umd_entry` *[default: `src/index.js`]* for the UMD build.
+- `build-react-component` - create an ES5 build, an ES modules build and, if configured, a UMD build for a React component
 
 - `build-web-app [entry] [dist_dir]` - build a web app from `entry` *[default: `src/index.js`]* to `dist_dir` *[default: `dist/`]*
 
-- `build-web-module [umd_entry]` - create an ES5 build - and if configured, an ES6 modules build and a UMD build - for a browser-focused npm module, starting from `umd_entry` *[default: `src/index.js`]* for the UMD build.
+- `build-web-module` - create an ES5 build, an ES modules build and, if configured, a UMD build for a browser-focused npm module
 
 - `clean-app [dist_dir]` - delete `dist_dir` *[default: `dist/`]*
 
