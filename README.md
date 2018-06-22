@@ -128,7 +128,7 @@ cd my-component/
 
 `npm start` will run a demo app you can use to develop your component or library against.
 
-`npm test` will run the project's tests and `npm run build` will create ES5, ES6 modules and UMD builds for publishing to npm.
+`npm test` will run the project's tests and `npm run build` will create ES5, ES modules and UMD builds for publishing to npm.
 
 **See [Developing React Components and Libraries with nwb](/docs/guides/ReactComponents.md#developing-react-components-and-libraries-with-nwb) for a more detailed guide.**
 
@@ -140,7 +140,7 @@ nwb new web-module my-module
 cd my-module/
 ```
 
-`npm test` will run the project's tests and `npm run build` will create ES5, ES6 modules and UMD builds for publishing to npm.
+`npm test` will run the project's tests and `npm run build` will create ES5, ES modules and UMD builds for publishing to npm.
 
 ## [Guides](/docs/guides/#table-of-contents)
 
