@@ -2,8 +2,7 @@
 
 let React = require('react')
 let ReactDOM = require('react-dom')
-let {createElement} = React
-let {render} = ReactDOM
+
 let parent = document.getElementById(NWB_QUICK_MOUNT_ID)
 let element = null
 
@@ -15,7 +14,7 @@ function renderEntry(exported) {
   // React component (which is either a function or class) or element (which has
   // type and props properties).
   if (Object.prototype.toString.call(exported) === '[object Function]') {
-    element = createElement(exported)
+    element = React.createElement(exported)
   }
   else if (exported.type && exported.props) {
     element = exported
@@ -24,7 +23,7 @@ function renderEntry(exported) {
     // Assumption: the entry module rendered the app
     return
   }
-  render(element, parent)
+  ReactDOM.render(element, parent)
 }
 
 function init() {

@@ -1,8 +1,7 @@
 /* global NWB_QUICK_MOUNT_ID */
 
-// h/t to @developit for this render shim module
 let Preact = require('preact')
-let {h, render} = Preact
+
 let parent = document.getElementById(NWB_QUICK_MOUNT_ID)
 let root = parent.firstChild // If #app already contains elements, hydrate from them (for SSR)
 let vnode = null
@@ -20,7 +19,7 @@ function renderEntry(exported) {
   // Preact component (which is either a function or class) or VNode (which has
   // a children property).
   if (Object.prototype.toString.call(exported) === '[object Function]') {
-    vnode = h(exported)
+    vnode = Preact.h(exported)
   }
   else if (exported.children) {
     vnode = exported
@@ -29,7 +28,7 @@ function renderEntry(exported) {
     // Assumption: the entry module rendered the app
     return
   }
-  root = render(vnode, parent, root)
+  root = Preact.render(vnode, parent, root)
 }
 
 function init() {

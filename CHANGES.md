@@ -12,6 +12,7 @@
 ## Fixed
 
 - Always add `CopyPlugin` when [`webpack.copy` config](https://github.com/insin/nwb/blob/master/docs/Configuration.md#copy-array--object) is provided [[#431](https://github.com/insin/nwb/issues/431)]
+- Remove use of object destructuring from render shims - fixes output of quick build commands in IE11 [[#453](https://github.com/insin/nwb/issues/453)]
 
 ## Dependencies
 
