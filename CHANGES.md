@@ -25,7 +25,7 @@
 - chalk: v2.3.2 → [v2.4.1](https://github.com/chalk/chalk/compare/v2.3.0...v2.4.1)
 - copy-template-dir: v1.3.0 → [v1.4.0](https://github.com/yoshuawuyts/copy-template-dir/releases/tag/v1.4.0)
 - copy-webpack-plugin: v4.5.1 → [v4.5.2](https://github.com/webpack-contrib/copy-webpack-plugin/blob/master/CHANGELOG.md#452-2018-06-26)
-- css-loader: v0.28.10 → [v1.0.0]https://github.com/webpack-contrib/css-loader/blob/master/CHANGELOG.md#100-2018-07-06)
+- css-loader: v0.28.10 → [v1.0.0](https://github.com/webpack-contrib/css-loader/blob/master/CHANGELOG.md#100-2018-07-06)
 - detect-port: v1.2.2 → [v1.2.3](https://github.com/node-modules/detect-port/releases)
 - filesize: v3.6.0 → [v3.6.1](https://github.com/avoidwork/filesize.js/compare/3.6.0...3.6.1)
 - fs-extra: v6.0.0 → [v7.0.0](https://github.com/jprichardson/node-fs-extra/blob/master/CHANGELOG.md#700--2018-07-16)
