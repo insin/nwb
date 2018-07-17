@@ -16,7 +16,7 @@
 
 ## Dependencies
 
-- autoprefixer: v8.1.0 → [v8.6.5](https://github.com/postcss/autoprefixer/blob/master/CHANGELOG.md#865)
+- autoprefixer: v8.1.0 → [v9.0.0](https://github.com/postcss/autoprefixer/blob/master/CHANGELOG.md#900)
 - babel-core: v6.26.0 → [v6.26.3](https://github.com/babel/babel/releases/tag/v6.26.3)
 - babel-loader: v7.1.4 → [v7.1.5](https://github.com/babel/babel-loader/releases/tag/v7.1.5)
 - babel-plugin-inferno: v4.0.0 → [v5.0.1](https://github.com/infernojs/babel-plugin-inferno/releases)
@@ -25,10 +25,10 @@
 - chalk: v2.3.2 → [v2.4.1](https://github.com/chalk/chalk/compare/v2.3.0...v2.4.1)
 - copy-template-dir: v1.3.0 → [v1.4.0](https://github.com/yoshuawuyts/copy-template-dir/releases/tag/v1.4.0)
 - copy-webpack-plugin: v4.5.1 → [v4.5.2](https://github.com/webpack-contrib/copy-webpack-plugin/blob/master/CHANGELOG.md#452-2018-06-26)
-- css-loader: v0.28.10 → [v0.28.11](https://github.com/webpack-contrib/css-loader/blob/master/CHANGELOG.md#02811-2018-03-16)
+- css-loader: v0.28.10 → [v1.0.0]https://github.com/webpack-contrib/css-loader/blob/master/CHANGELOG.md#100-2018-07-06)
 - detect-port: v1.2.2 → [v1.2.3](https://github.com/node-modules/detect-port/releases)
 - filesize: v3.6.0 → [v3.6.1](https://github.com/avoidwork/filesize.js/compare/3.6.0...3.6.1)
-- fs-extra: v6.0.0 → [v6.0.1](https://github.com/jprichardson/node-fs-extra/blob/master/CHANGELOG.md#601--2018-05-09)
+- fs-extra: v6.0.0 → [v7.0.0](https://github.com/jprichardson/node-fs-extra/blob/master/CHANGELOG.md#700--2018-07-16)
 - gzip-size: v4.1.0 → [v5.0.0](https://github.com/sindresorhus/gzip-size/compare/v4.1.0...v5.0.0) - dropped Node.js 4 support
 - html-webpack-plugin: v3.0.6 → [v3.2.0](https://github.com/jantimon/html-webpack-plugin/blob/master/CHANGELOG.md#320-2018-04-03)
 - inquirer: v5.1.0 → [v6.0.0](https://github.com/SBoudrias/Inquirer.js/releases)
@@ -44,10 +44,10 @@
 - run-series: v1.1.6 → [v1.1.8](https://github.com/feross/run-series/compare/v1.1.6...v1.1.8)
 - style-loader: v0.20.2 → [v0.21.0](https://github.com/webpack-contrib/style-loader/blob/master/CHANGELOG.md#0210-2018-04-18)
 - uglifyjs-webpack-plugin: v1.2.3 → [v1.2.7](https://github.com/webpack-contrib/uglifyjs-webpack-plugin/blob/master/CHANGELOG.md#127-2018-06-25)
-- webpack: v4.1.1 → [v4.16.0](https://github.com/webpack/webpack/releases)
+- webpack: v4.1.1 → [v4.16.1](https://github.com/webpack/webpack/releases)
 - webpack-dev-middleware: v3.0.1 → [v3.1.3](https://github.com/webpack/webpack-dev-middleware/releases)
 - webpack-dev-server: v3.1.1 → [v3.1.4](https://github.com/webpack/webpack-dev-server/releases)
-- webpack-hot-middleware: v2.21.2 → [v2.22.2](https://github.com/glenjamin/webpack-hot-middleware/compare/v2.21.2...v2.22.2)
+- webpack-hot-middleware: v2.21.2 → [v2.22.3](https://github.com/glenjamin/webpack-hot-middleware/compare/v2.21.2...v2.22.3)
 - webpack-merge: v4.1.2 → [v4.1.3](https://github.com/survivejs/webpack-merge/compare/v4.1.2...v4.1.3)
 - whatwg-fetch: v2.0.3 → [v2.0.4](https://github.com/github/fetch/releases/tag/v2.0.4)
 
