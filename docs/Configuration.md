@@ -1130,6 +1130,8 @@ If you also have some external dependencies to configure, use an object containi
 
 ###### `entry`: `String`
 
+*added in v0.23.0*
+
 Specifies a module which will be the entry point for the UMD build. Otherwise the default entry (`src/index.js`) is used.
 
 Currently, the UMD entry point *must* have a `default` export, but you might want to have named exports from the default entry point for people using your module via npm, e.g. if you're publishing a component library.
