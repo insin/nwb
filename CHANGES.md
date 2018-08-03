@@ -44,7 +44,7 @@
 - run-series: v1.1.6 → [v1.1.8](https://github.com/feross/run-series/compare/v1.1.6...v1.1.8)
 - style-loader: v0.20.2 → [v0.21.0](https://github.com/webpack-contrib/style-loader/blob/master/CHANGELOG.md#0210-2018-04-18)
 - uglifyjs-webpack-plugin: v1.2.3 → [v1.2.7](https://github.com/webpack-contrib/uglifyjs-webpack-plugin/blob/master/CHANGELOG.md#127-2018-06-25)
-- webpack: v4.1.1 → [v4.16.3](https://github.com/webpack/webpack/releases)
+- webpack: v4.1.1 → [v4.16.4](https://github.com/webpack/webpack/releases)
 - webpack-dev-middleware: v3.0.1 → [v3.1.3](https://github.com/webpack/webpack-dev-middleware/releases)
 - webpack-dev-server: v3.1.1 → [v3.1.5](https://github.com/webpack/webpack-dev-server/releases)
 - webpack-hot-middleware: v2.21.2 → [v2.22.3](https://github.com/glenjamin/webpack-hot-middleware/compare/v2.21.2...v2.22.3)
