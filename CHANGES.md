@@ -1,4 +1,4 @@
-# Unreleased (in `master`)
+# 0.23.0 / 2018-08-03
 
 ## Breaking Changes
 
@@ -56,9 +56,7 @@
 - Added [instructions for debugging in VS Code](https://github.com/insin/nwb/blob/master/docs/FAQ.md#how-can-i-debug-using-vs-code-when-running-an-app-with-nwb) to the FAQ [[#445](https://github.com/insin/nwb/issues/445)]
 - Replaced references to "ES6" with plain old "ES"
 
-# 0.22.0 / 2018-03-13 (`next` release)
-
-> This is the `next` release of nwb - you need to specify `nwb@next` or `nwb@0.22` when installing it.
+# 0.22.0 / 2018-03-13
 
 ## Breaking Changes
 
