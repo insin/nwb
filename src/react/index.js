@@ -126,7 +126,7 @@ class ReactConfig {
     return config
   }
 
-  getQuickDependencies = () => {
+  getQuickDependencies = (): string[] => {
     let deps = getBaseDependencies()
     if (/^build/.test(this._args._[0])) {
       deps = deps.concat(this._getCompatDependencies())

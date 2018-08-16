@@ -229,7 +229,7 @@ export function typeOf(o: any) {
 /**
  * @param {Array<string>} strings
  */
-export function unique(strings: string[]) {
+export function unique(strings: string[]): string[] {
   // eslint-disable-next-line
   return Object.keys(strings.reduce((o, s) => (o[s] = true, o), {}))
 }

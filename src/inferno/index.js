@@ -50,7 +50,7 @@ export default (args: Object) => ({
   getProjectDefaults() {
     return {compat: false}
   },
-  getProjectDependencies(answers: Object) {
+  getProjectDependencies(answers: Object): string[] {
     let deps = getDependencies()
     if (answers.compat) {
       deps = deps.concat(getCompatDependencies())
@@ -70,7 +70,7 @@ export default (args: Object) => ({
   getBuildDependencies: () => [],
   getBuildConfig: getBaseConfig,
   getServeConfig: getBaseConfig,
-  getQuickDependencies: () => getDependencies().concat(getCompatDependencies()),
+  getQuickDependencies: (): string[] => getDependencies().concat(getCompatDependencies()),
   getQuickBuildConfig: getQuickConfig,
   getQuickServeConfig: getQuickConfig,
   getKarmaTestConfig: getBaseConfig,

@@ -328,7 +328,7 @@ export function createRules(
   buildConfig: Object = {},
   userWebpackConfig: Object = {},
   pluginConfig: Object = {}
-) {
+): RuleConfig[] {
   let createRule = createRuleConfigFactory(buildConfig, userWebpackConfig.rules)
   let createLoader = createLoaderConfigFactory(buildConfig, userWebpackConfig.rules)
 
@@ -394,7 +394,7 @@ export function createRules(
     ))
   }
 
-  return rules.filter(rule => rule != null)
+  return rules.filter(Boolean)
 }
 
 /**
@@ -468,7 +468,7 @@ export function createPlugins(
   server: ServerConfig,
   buildConfig: Object = {},
   userConfig: Object = {}
-) {
+): {optimization: Object, plugins: Object[]} {
   let production = process.env.NODE_ENV === 'production'
 
   let optimization = {}
