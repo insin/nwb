@@ -9,6 +9,7 @@
 - postcss-loader: v2.1.6 → [v3.0.0](https://github.com/postcss/postcss-loader/blob/master/CHANGELOG.md#300-2018-08-08) - dropped Node.js 4 support
 - style-loader: v0.21.0 → [v0.22.1](https://github.com/webpack-contrib/style-loader/blob/master/CHANGELOG.md#0221-2018-08-08)
 - uglifyjs-webpack-plugin: v1.2.7 → [v1.3.0](https://github.com/webpack-contrib/uglifyjs-webpack-plugin/blob/master/CHANGELOG.md#130-2018-08-14)
+- url-loader: v1.0.1 → [v1.1.1](https://github.com/webpack-contrib/url-loader/blob/master/CHANGELOG.md#111-2018-08-17)
 - webpack: v4.16.4 → [v4.16.5](https://github.com/webpack/webpack/releases/tag/v4.16.5)
 
 # 0.23.0 / 2018-08-03
