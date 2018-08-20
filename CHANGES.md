@@ -2,7 +2,7 @@
 
 ## Dependencies
 
-- autoprefixer: v9.0.2 → [v9.1.1](https://github.com/postcss/autoprefixer/blob/master/CHANGELOG.md#911)
+- autoprefixer: v9.0.2 → [v9.1.2](https://github.com/postcss/autoprefixer/blob/master/CHANGELOG.md#912)
 - babel-plugin-inferno: v5.0.1 → [v5.1.0](https://github.com/infernojs/babel-plugin-inferno/releases)
 - inquirer: v6.0.0 → [v6.1.0](https://github.com/SBoudrias/Inquirer.js/releases/tag/inquirer%406.1.0)
 - karma: v2.0.0 → [v3.0.0](https://github.com/karma-runner/karma/releases/tag/v3.0.0)

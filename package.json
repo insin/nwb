@@ -43,7 +43,7 @@
     "ora": "3.0.0",
     "resolve": "1.8.1",
     "run-series": "1.1.8",
-    "semver": "5.5.0",
+    "semver": "5.5.1",
     "webpack-merge": "4.1.4",
 
     "babel-cli": "6.26.0",
@@ -92,7 +92,7 @@
     "whatwg-fetch": "2.0.4",
 
     "webpack": "4.16.5",
-    "autoprefixer": "9.1.1",
+    "autoprefixer": "9.1.2",
     "babel-loader": "7.1.5",
     "case-sensitive-paths-webpack-plugin": "2.1.2",
     "copy-webpack-plugin": "4.5.2",
@@ -117,7 +117,7 @@
     "cross-env": "5.2.0",
     "eslint-config-jonnybuchanan": "6.0.0",
     "eventsource": "1.0.5",
-    "flow-bin": "0.79.0",
+    "flow-bin": "0.79.1",
     "glob": "7.1.2",
     "nyc": "12.0.2",
     "rimraf": "2.6.2",
