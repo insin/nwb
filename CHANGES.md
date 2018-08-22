@@ -2,15 +2,17 @@
 
 ## Dependencies
 
-- autoprefixer: v9.0.2 → [v9.1.2](https://github.com/postcss/autoprefixer/blob/master/CHANGELOG.md#912)
+- autoprefixer: v9.0.2 → [v9.1.3](https://github.com/postcss/autoprefixer/blob/master/CHANGELOG.md#913)
 - babel-plugin-inferno: v5.0.1 → [v5.1.0](https://github.com/infernojs/babel-plugin-inferno/releases)
+- file-loader: v1.1.11 → [v2.0.0](https://github.com/webpack-contrib/file-loader/blob/master/CHANGELOG.md#200-2018-08-21)
 - inquirer: v6.0.0 → [v6.1.0](https://github.com/SBoudrias/Inquirer.js/releases/tag/inquirer%406.1.0)
 - karma: v2.0.0 → [v3.0.0](https://github.com/karma-runner/karma/releases/tag/v3.0.0)
+- mini-css-extract-plugin v0.4.1 → [v0.4.2](https://github.com/webpack-contrib/mini-css-extract-plugin/releases)
 - postcss-loader: v2.1.6 → [v3.0.0](https://github.com/postcss/postcss-loader/blob/master/CHANGELOG.md#300-2018-08-08) - dropped Node.js 4 support
 - style-loader: v0.21.0 → [v0.22.1](https://github.com/webpack-contrib/style-loader/blob/master/CHANGELOG.md#0221-2018-08-08)
 - uglifyjs-webpack-plugin: v1.2.7 → [v1.3.0](https://github.com/webpack-contrib/uglifyjs-webpack-plugin/blob/master/CHANGELOG.md#130-2018-08-14)
 - url-loader: v1.0.1 → [v1.1.1](https://github.com/webpack-contrib/url-loader/blob/master/CHANGELOG.md#111-2018-08-17)
-- webpack: v4.16.4 → [v4.16.5](https://github.com/webpack/webpack/releases/tag/v4.16.5)
+- webpack: v4.16.4 → [v4.17.0](https://github.com/webpack/webpack/releases)
 
 # 0.23.0 / 2018-08-03
 
@@ -118,6 +120,7 @@
 - cross-spawn: v6.0.4 → [v6.0.5](https://github.com/moxystudio/node-cross-spawn/blob/master/CHANGELOG.md#605-2018-03-02)
 - css-loader: v0.28.9 → [v0.28.10](https://github.com/webpack-contrib/css-loader/blob/master/CHANGELOG.md#02810-2018-02-22)
 - extract-text-webpack-plugin v3.0.0 → [mini-css-extract-plugin v0.2.0](https://github.com/webpack-contrib/mini-css-extract-plugin)
+- file-loader: v1.1.6 → [v1.1.11](https://github.com/webpack-contrib/file-loader/blob/master/CHANGELOG.md#1111-2018-03-01)
 - filesize: v3.5.11 → [v3.6.0](https://github.com/avoidwork/filesize.js/compare/3.5.11...3.6.0)
 - html-webpack-plugin: v2.30.1 → [v3.0.6](https://github.com/jantimon/html-webpack-plugin/blob/master/CHANGELOG.md#306-2018-03-06)
 - inquirer: v3.3.0 → [v5.1.0](https://github.com/SBoudrias/Inquirer.js/releases) - latest version requires Node.js 6
