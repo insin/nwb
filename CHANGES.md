@@ -9,11 +9,12 @@
 - karma: v2.0.0 → [v3.0.0](https://github.com/karma-runner/karma/releases/tag/v3.0.0)
 - mini-css-extract-plugin v0.4.1 → [v0.4.2](https://github.com/webpack-contrib/mini-css-extract-plugin/releases)
 - postcss-loader: v2.1.6 → [v3.0.0](https://github.com/postcss/postcss-loader/blob/master/CHANGELOG.md#300-2018-08-08) - dropped Node.js 4 support
-- style-loader: v0.21.0 → [v0.22.1](https://github.com/webpack-contrib/style-loader/blob/master/CHANGELOG.md#0221-2018-08-08)
+- style-loader: v0.21.0 → [v0.23.0](https://github.com/webpack-contrib/style-loader/blob/master/CHANGELOG.md#0230-2018-08-27)
 - uglifyjs-webpack-plugin: v1.2.7 → [v1.3.0](https://github.com/webpack-contrib/uglifyjs-webpack-plugin/blob/master/CHANGELOG.md#130-2018-08-14)
 - url-loader: v1.0.1 → [v1.1.1](https://github.com/webpack-contrib/url-loader/blob/master/CHANGELOG.md#111-2018-08-17)
 - webpack: v4.16.4 → [v4.17.1](https://github.com/webpack/webpack/releases)
 - webpack-dev-middleware: v3.1.3 → [v3.2.0](https://github.com/webpack/webpack-dev-middleware/releases/tag/v3.2.0)
+- webpack-dev-server: v3.1.5 → [v3.1.6](https://github.com/webpack/webpack-dev-server/releases/tag/v3.1.6)
 
 # 0.23.0 / 2018-08-03
 
