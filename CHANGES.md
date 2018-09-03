@@ -7,7 +7,7 @@
 - file-loader: v1.1.11 → [v2.0.0](https://github.com/webpack-contrib/file-loader/blob/master/CHANGELOG.md#200-2018-08-21)
 - inquirer: v6.0.0 → [v6.2.0](https://github.com/SBoudrias/Inquirer.js/releases)
 - karma: v2.0.0 → [v3.0.0](https://github.com/karma-runner/karma/releases/tag/v3.0.0)
-- karma-webpack: v3.0.0 → [v3.0.1](https://github.com/webpack-contrib/karma-webpack/releases/tag/v3.0.1)
+- karma-webpack: v3.0.0 → [v3.0.2](https://github.com/webpack-contrib/karma-webpack/releases)
 - mini-css-extract-plugin v0.4.1 → [v0.4.2](https://github.com/webpack-contrib/mini-css-extract-plugin/releases)
 - postcss-loader: v2.1.6 → [v3.0.0](https://github.com/postcss/postcss-loader/blob/master/CHANGELOG.md#300-2018-08-08) - dropped Node.js 4 support
 - style-loader: v0.21.0 → [v0.23.0](https://github.com/webpack-contrib/style-loader/blob/master/CHANGELOG.md#0230-2018-08-27)
