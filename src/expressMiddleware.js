@@ -4,10 +4,10 @@ import assert from 'assert'
 import webpack from 'webpack'
 
 import {createServeConfig} from './appCommands'
+import {getProjectType} from './config'
 import {INFERNO_APP, PREACT_APP, REACT_APP, WEB_APP} from './constants'
 import createServerWebpackConfig from './createServerWebpackConfig'
 import debug from './debug'
-import {getProjectType} from './getUserConfig'
 import {deepToString, joinAnd} from './utils'
 
 const APP_TYPE_CONFIG = {
@@ -68,9 +68,8 @@ export default function nwbMiddleware(express: Object, options: Object = {}) {
   let router = express.Router()
 
   router.use(require('webpack-dev-middleware')(compiler, {
-    noInfo: true,
+    logLevel: 'silent',
     publicPath: webpackConfig.output.publicPath,
-    quiet: true,
     watchOptions: {
       ignored: /node_modules/
     }

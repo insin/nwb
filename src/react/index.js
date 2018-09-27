@@ -59,7 +59,7 @@ class ReactConfig {
 
   _getCompatDependencies() {
     if (this._args.inferno || this._args['inferno-compat']) {
-      return ['inferno', 'inferno-compat']
+      return ['inferno', 'inferno-compat', 'inferno-clone-vnode', 'inferno-create-class', 'inferno-create-element']
     }
     else if (this._args.preact || this._args['preact-compat']) {
       return ['preact', 'preact-compat']
@@ -95,8 +95,16 @@ class ReactConfig {
     return 'React'
   }
 
+  getProjectDefaults() {
+    return {}
+  }
+
   getProjectDependencies() {
     return getBaseDependencies()
+  }
+
+  getProjectQuestions() {
+    return null
   }
 
   getBuildDependencies = () => {
@@ -118,7 +126,7 @@ class ReactConfig {
     return config
   }
 
-  getQuickDependencies = () => {
+  getQuickDependencies = (): string[] => {
     let deps = getBaseDependencies()
     if (/^build/.test(this._args._[0])) {
       deps = deps.concat(this._getCompatDependencies())

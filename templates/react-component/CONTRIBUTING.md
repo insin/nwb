@@ -1,10 +1,10 @@
 ## Prerequisites
 
-[Node.js](http://nodejs.org/) >= v4 must be installed.
+[Node.js](http://nodejs.org/) >= 6 must be installed.
 
 ## Installation
 
-- Running `npm install` in the components's root directory will install everything you need for development.
+- Running `npm install` in the component's root directory will install everything you need for development.
 
 ## Demo Development Server
 

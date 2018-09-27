@@ -78,6 +78,10 @@ export function createBuildConfig(args: Object, extra: Object = {}) {
     config.plugins.copy = [{from: path.resolve('public'), to: dist, ignore: '.gitkeep'}]
   }
 
+  if (args.polyfill === false || args.polyfills === false) {
+    config.polyfill = false
+  }
+
   return merge(config, extra)
 }
 

@@ -1,12 +1,12 @@
-This issue is a: <!-- Insert an X in the appropriate option -->
+This issue is a: <!-- Delete as appropriate -->
 
-- [ ] Bug report
-- [ ] Feature request
-- [ ] Question / support request
-- [ ] Other
+- Bug report
+- Feature request
+- Question / support request
+- Other
 
 <!-- REPRO REPOS
-For non-trivial bugs, a link to a Git repo which demonstrates the bug you're reporting will make it easier to reproduce and fix the problem, which makes it more likely to get fixed.
+For bugs, unless the cause is obvious a link to a Git repo which demonstrates the bug you're reporting will make it easier to reproduce and fix the problem, which makes it more likely to get fixed.
 -->
 
 <!-- TROUBLESHOOTING

@@ -2,8 +2,7 @@
 
 let React = require('react')
 let ReactDOM = require('react-dom')
-let {createElement} = React
-let {render} = ReactDOM
+
 let parent = document.getElementById(NWB_QUICK_MOUNT_ID)
 let element = null
 
@@ -15,25 +14,20 @@ function renderEntry(exported) {
   // React component (which is either a function or class) or element (which has
   // type and props properties).
   if (Object.prototype.toString.call(exported) === '[object Function]') {
-    element = createElement(exported)
+    element = React.createElement(exported)
   }
   else if (exported.type && exported.props) {
     element = exported
   }
-  render(element, parent)
+  else {
+    // Assumption: the entry module rendered the app
+    return
+  }
+  ReactDOM.render(element, parent)
 }
 
 function init() {
-  // Hijack any inline render() from the entry module, but only the first one -
-  // others may be from components like portals which need to render() their
-  // contents.
-  ReactDOM.render = (el) => {
-    element = el
-    ReactDOM.render = render
-  }
-  let entry = require('nwb-quick-entry')
-  ReactDOM.render = render
-  renderEntry(entry)
+  renderEntry(require('nwb-quick-entry'))
 }
 
 if (module.hot) {

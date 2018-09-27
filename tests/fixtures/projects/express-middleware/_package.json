@@ -4,7 +4,7 @@
   "description": "test project",
   "dependencies": {
     "express": "4.x",
-    "react": "15.x",
-    "react-dom": "15.x"
+    "react": "16.x",
+    "react-dom": "16.x"
   }
 }

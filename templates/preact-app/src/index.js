@@ -3,7 +3,7 @@ import './index.css'
 import {h, render} from 'preact'
 
 if (process.env.NODE_ENV === 'development') {
-  // Enable preact devtools
+  // Enable use of React Developer Tools
   require('preact/devtools')
 }
 

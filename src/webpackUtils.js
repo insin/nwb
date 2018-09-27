@@ -91,7 +91,7 @@ export function logBuildResults(stats, spinner) {
   }
   else if (stats.hasWarnings()) {
     if (spinner) {
-      spinner.stopAndPersist(chalk.yellow(figures.warning))
+      spinner.stopAndPersist({symbol: chalk.yellow(figures.warning)})
       console.log()
     }
     logErrorsAndWarnings(stats)
@@ -146,7 +146,7 @@ export function logErrorsAndWarnings(stats) {
  */
 export function logGzippedFileSizes(...stats) {
   let files = stats.reduce((files, stats) => (files.concat(getFileDetails(stats))), [])
-                   .filter(({name}) => !/^manifest\.[a-z\d]+\.js$/.test(name))
+                   .filter(({name}) => !/^runtime\.[a-z\d]+\.js$/.test(name))
 
   let longest = files.reduce((max, {dir, name}) => {
     let length = (dir + name).length

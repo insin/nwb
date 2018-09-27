@@ -162,7 +162,7 @@ export function install(
     return process.nextTick(cb)
   }
 
-  let npmArgs = ['install', '--silent', '--no-progress']
+  let npmArgs = ['install', '--silent', '--no-progress', '--no-package-lock']
 
   if (save) {
     npmArgs.push(`--save${dev ? '-dev' : ''}`)
@@ -199,6 +199,10 @@ export function modulePath(module: string, basedir: string = process.cwd()): str
   return path.dirname(resolve.sync(`${module}/package.json`, {basedir}))
 }
 
+export function pluralise(count: number, suffixes : string = ',s'): string {
+  return suffixes.split(',')[count === 1 ? 0 : 1]
+}
+
 /**
  * Custom merge which replaces arrays instead of concatenating them.
  */
@@ -225,7 +229,7 @@ export function typeOf(o: any) {
 /**
  * @param {Array<string>} strings
  */
-export function unique(strings: string[]) {
+export function unique(strings: string[]): string[] {
   // eslint-disable-next-line
   return Object.keys(strings.reduce((o, s) => (o[s] = true, o), {}))
 }

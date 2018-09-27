@@ -11,7 +11,7 @@ declare module 'debug' {
     namespace: string;
   };
 
-  declare function exports(namespace: string): Debugger;
+  declare module.exports: (namespace: string) => Debugger;
 
   declare var names: Array<string>;
   declare var skips: Array<string>;

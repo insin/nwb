@@ -10,7 +10,7 @@ nwb supports development of React component/library modules which will be publis
 
 - [Creating a New Project](#creating-a-new-project)
   - [Build Configuration Questions](#build-configuration-questions)
-    - [ECMAScript 6 (ES6) Modules Build](#ecmascript-6-es6-modules-build)
+    - [ECMAScript Modules Build](#ecmascript-modules-build)
     - [Universal Module Definition (UMD) Build](#universal-module-definition-umd-build)
 - [Project Layout](#project-layout)
 - [`npm run` Scripts](#npm-run-scripts)
@@ -31,7 +31,7 @@ nwb supports development of React component/library modules which will be publis
     - [`--no-demo`](#--no-demo)
     - [`--[keep-]proptypes`](#--keep-proptypes)
 
-To walk you though the process, we're going to implement a simple `LoadingButton` component, which renders a `<button>` and implements the following requirements:
+To walk you through the process, we're going to implement a simple `LoadingButton` component, which renders a `<button>` and implements the following requirements:
 
 1. The button should take a `loading` prop, representing whichever action it controls being in progress (e.g. loading some data or submitting a form).
 2. The button should be `disabled` when loading, to avoid the double-submission problem.
@@ -57,26 +57,26 @@ By default, nwb will create a CommonJS build for your project in `lib/`, which i
 
 Configuration questions are asked about *additional* builds
 
-#### ECMAScript 6 (ES6) Modules Build
+#### ECMAScript Modules Build
 
 ```
 Creating a react-component project...
-? Do you want to create an ES6 modules build? (Y/n)
+? Do you want to create an ES modules build? (Y/n)
 ```
 
-An ES6 modules build retains use of ES6 `import` and `export` statements in your code but transpiles everything else to ES5.
+An ES modules build retains use of `import` and `export` statements in your code but transpiles everything else to ES5.
 
-Module bundlers like [Rollup](http://rollupjs.org/) and [Webpack 2](https://webpack.js.org/) can use this build to determine if code was imported but never used and eliminate it from the final bundle.
+Module bundlers like [Webpack](https://webpack.js.org/) and [Rollup](http://rollupjs.org/) can use this build to determine if code was imported but never used and eliminate it from the final bundle.
 
 It's enabled by default, so we can just hit `Enter` to accept the default:
 
 ```
-? Do you want to create an ES6 modules build? Yes
+? Do you want to create an ES modules build? Yes
 ```
 
-> **Note:** nwb will create an ES6 modules build in `es/` when we build the project later.
+> **Note:** nwb will create an ES modules build in `es/` when we build the project later.
 >
->It will also add `"module"` configuration to `package.json`, for use by ES6 module bundlers.
+>It will also add `"module"` configuration to `package.json`, for use by ES module bundlers.
 
 #### Universal Module Definition (UMD) Build
 
@@ -183,7 +183,7 @@ If you're into README Driven Development, it also provides a place to play with 
 
 Let's start by imagining how we'll use our `LoadingButton` component in the demo app:
 
-> **Note:** This Demo component is implemented as an ES6 class extending React's `Component` class, but also using some [experimental language features](http://babeljs.io/docs/plugins/transform-class-properties/) which are part of Babel's [stage 2 preset](http://babeljs.io/docs/plugins/preset-stage-2/), which is enabled by default when using nwb.
+> **Note:** This Demo component is implemented as a class extending React's `Component` class, but also using some [experimental language features](http://babeljs.io/docs/plugins/transform-class-properties/) which are part of Babel's [stage 2 preset](http://babeljs.io/docs/plugins/preset-stage-2/), which is enabled by default when using nwb.
 >
 > Don't sweat the details of these if you're not familiar with them; the most important thing for this guide is the `render()` method.
 
@@ -329,12 +329,12 @@ nwb provides a default setup which keeps your source code repository free from d
 `npm run build` will prepare the component for publishing, creating:
 
 - A CommonJS build in `lib/`
-- An ES6 modules build in `es/` (enabled by default / without configuration)
+- An ES modules build in `es/` (enabled by default / without configuration)
 - UMD development and production builds in `umd/` (if configuration is provided)
 
 The CommonJS build preserves CommonJS interop using the [`add-module-exports`](https://github.com/59naga/babel-plugin-add-module-exports) plugin, to avoid people using your npm packages via CommonJS `require()` having to tag a `.default` onto every `require()` call.
 
-Any `propTypes` declared by ES6 class components or stateless function components will be wrapped with an `if (process.env.NODE_ENV !== 'production')` environment check by default, so they'll be automatically stripped from the production build of apps which use them.
+Any `propTypes` declared by class components or stateless function components will be wrapped with an `if (process.env.NODE_ENV !== 'production')` environment check by default, so they'll be automatically stripped from the production build of apps which use them.
 
 By default nwb will also create a production build of the demo React app in `demo/dist/`, ready for deployment to wherever you want to host the demo (e.g. [Surge](http://surge.sh/) for simple deployment, [GitHub Pages](https://pages.github.com/) for more involved deployment tied in with source control). The demo is configured so it can be served from any directory, so you shouldn't need to configure anything no matter where you're hosting it.
 
@@ -398,6 +398,51 @@ module.exports = {
     }
   }
 }
+```
+
+### Adding a css pre-processor for sass
+
+Install `node-sass-chokidar` and `npm-run-all`.
+
+```sh
+npm install node-sass-chokidar npm-run-all --save-dev
+```
+
+Update your `package.json` accordingly:
+
+```json
+"scripts": {
+    "start": "npm-run-all -p build-css start-js",
+    "start-js": "nwb serve-react-demo",
+    "build": "npm-run-all build-css build-js",
+    "build-css": "node-sass-chokidar src/styles/ -o src/styles",
+    "build-js": "nwb build-react-component --copy-files",
+    "watch-css": "npm run build-css && node-sass-chokidar src/styles/ -o src/styles --watch --recursive"
+}
+```
+
+The location `src/styles` is the location of your sass files. Remember to create a base sass file called `style.scss` where you import all the other sass. The other sass files should have filenames beginning with a `_`. For eg:
+
+```
+react-loading-button/
+  src/
+    styles/
+      _sass_file_one.scss
+      _sass_file_two.scss
+      styles.scss
+    index.js
+```
+
+The sass files will processed to a `styles.css` file which you will have to import to your component.
+
+```js
+import '../styles/style.css'
+```
+
+The css file will also be available on your build. Don't forget to add the css file to your `.gitignore`. For eg:
+
+```
+src/**/*.css
 ```
 
 ### Feature Toggles

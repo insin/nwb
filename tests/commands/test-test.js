@@ -59,7 +59,7 @@ describe('command: test', function() {
   })
 
   it('successfully tests a new Preact app', function(done) {
-    cli(['new', 'preact-app', 'test-app'], err => {
+    cli(['new', 'preact-app', 'test-app', '-f'], err => {
       expect(err).toNotExist('No errors creating new Preact app')
       process.chdir(path.join(tmpDir, 'test-app'))
       cli(['test'], err => {
@@ -69,8 +69,8 @@ describe('command: test', function() {
     })
   })
 
-  it('successfully tests a new Inferno app', function(done) {
-    cli(['new', 'inferno-app', 'test-app'], err => {
+  it.skip('successfully tests a new Inferno app', function(done) {
+    cli(['new', 'inferno-app', 'test-app', '-f'], err => {
       expect(err).toNotExist('No errors creating new Inferno app')
       process.chdir(path.join(tmpDir, 'test-app'))
       cli(['test'], err => {

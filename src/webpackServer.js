@@ -2,20 +2,18 @@ import {yellow} from 'chalk'
 import detect from 'detect-port'
 import inquirer from 'inquirer'
 
+import {getPluginConfig, getUserConfig} from './config'
 import {DEFAULT_PORT} from './constants'
 import createServerWebpackConfig from './createServerWebpackConfig'
 import debug from './debug'
 import devServer from './devServer'
-import getUserConfig from './getUserConfig'
-import {clearConsole, deepToString} from './utils'
+import {clearConsole, deepToString, typeOf} from './utils'
 
 /**
  * Get the port to run the server on, detecting if the intended port is
  * available first and prompting the user if not.
  */
-function getServerPort(args, cb) {
-  let intendedPort = args.port || DEFAULT_PORT
-
+function getServerPort(args, intendedPort, cb) {
   detect(intendedPort, (err, suggestedPort) => {
     if (err) return cb(err)
     // No need to prompt if the intended port is available
@@ -58,29 +56,40 @@ export default function webpackServer(args, buildConfig, cb) {
 
   let serverConfig
   try {
-    serverConfig = getUserConfig(args).devServer
+    let pluginConfig = getPluginConfig(args)
+    serverConfig = getUserConfig(args, {pluginConfig}).devServer
   }
   catch (e) {
     return cb(e)
   }
 
-  // Other config can be provided by the user via the CLI
-  getServerPort(args, (err, port) => {
+  getServerPort(args, args.port || Number(serverConfig.port) || DEFAULT_PORT, (err, port) => {
     if (err) return cb(err)
     // A null port indicates the user chose not to run the server when prompted
     if (port === null) return cb()
 
     serverConfig.port = port
     // Fallback index serving can be disabled with --no-fallback
-    if (args.fallback === false) serverConfig.historyApiFallback = false
+    if (args.fallback === false) {
+      serverConfig.historyApiFallback = false
+    }
+    // Fallback index serving can be configured with dot arguments
+    // e.g. --fallback.disableDotRule --fallback.verbose
+    else if (typeOf(args.fallback) === 'object') {
+      serverConfig.historyApiFallback = args.fallback
+    }
     // The host can be overridden with --host
     if (args.host) serverConfig.host = args.host
+    // Open a browser with --open (default browser) or --open="browser name"
+    if (args.open) serverConfig.open = args.open
+
+    let url = `http${serverConfig.https ? 's' : ''}://${args.host || 'localhost'}:${port}/`
 
     if (!('status' in buildConfig.plugins)) {
       buildConfig.plugins.status = {
-        disableClearConsole: args.clear !== false && args.clearConsole !== false,
+        disableClearConsole: args.clear === false || args['clear-console'] === false,
         successMessage:
-          `The app is running at http${serverConfig.https ? 's' : ''}://${args.host || 'localhost'}:${port}/`,
+          `The app is running at ${url}`,
       }
     }
 
@@ -94,6 +103,6 @@ export default function webpackServer(args, buildConfig, cb) {
 
     debug('webpack config: %s', deepToString(webpackConfig))
 
-    devServer(webpackConfig, serverConfig, cb)
+    devServer(webpackConfig, serverConfig, url, cb)
   })
 }

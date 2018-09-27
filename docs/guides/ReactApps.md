@@ -2,7 +2,7 @@
 
 nwb supports development of production-ready React apps.
 
-> **Prerequisite:** nwb must be installed globally (we're using version 0.12 in this guide):
+> **Prerequisite:** nwb must be installed globally (we're using version 0.22 in this guide):
 >
 > ```
 > npm install -g nwb
@@ -14,8 +14,7 @@ nwb supports development of production-ready React apps.
 - [Running the Development Server](#running-the-development-server)
 - [Zero Configuration Development Setup](#zero-configuration-development-setup)
 - [Thinking in React Components](#thinking-in-react-components)
-  - [Palatable ES6 Class Components](#palatable-es6-class-components)
-  - [Stateless Function Components](#stateless-function-components)
+  - [Palatable Class Components](#palatable-class-components)
 - [Entry Point](#entry-point)
 - [Testing](#testing)
   - [Code Coverage Reporting](#code-coverage-reporting)
@@ -27,9 +26,9 @@ nwb supports development of production-ready React apps.
     - [Auto Reload](#auto-reload)
     - [Automatically Install Missing Dependencies](#automatically-install-missing-dependencies)
 
-To walk you though the process, we're going to take the components from [the Thinking in React example](https://facebook.github.io/react/docs/thinking-in-react.html), split them out into individual modules, change some of their implementations to ES6 classes, perform some basic testing and create a production build, all using features nwb provides without any configuration.
+To walk you though the process, we're going to take the components from [the Thinking in React example](https://reactjs.org/docs/thinking-in-react.html), split them out into individual modules, perform some basic testing and create a production build, all using features nwb provides without any configuration.
 
-> This is a *how to use nwb* guide, not a *how to write React apps* guide; if you're new to React, you might want to walk through Thinking in React first, as it's one of the best ways to get a hands-on feel for developing React components and their data flow.
+> This is a *how to use nwb* guide, not a *how to write React apps* guide; if you're new to React, you might want to walk through [Thinking in React](https://reactjs.org/docs/thinking-in-react.html) first, as it's one of the best ways to get a hands-on feel for developing React components and their data flow.
 
 ## Creating a New Project
 
@@ -137,7 +136,7 @@ Changes to stylesheets will also be hot-reloaded into the running app:
 
 ![](resources/react-serve-app-hmr-css.gif)
 
-The development server will also serve the app's HTML entry file at non-root URLs, for use when developing apps which use the [History API](https://developer.mozilla.org/en-US/docs/Web/API/History_API) (e.g. with [React Router](https://github.com/reactjs/react-router)).
+The development server will also serve the app's HTML entry file at non-root URLs, for use when developing apps which use the [History API](https://developer.mozilla.org/en-US/docs/Web/API/History_API) (e.g. with [React Router](https://github.com/ReactTraining/react-router)).
 
 ## Zero Configuration Development Setup
 
@@ -145,10 +144,10 @@ nwb generates a comprehensive default configuration for creating React apps usin
 
 Without any configuration, the main features you get are:
 
-- Write JavaScript with ES6/ES2015-ES2017 features and JSX, transpiled down to ES5.
+- Write JavaScript with modern features and JSX, transpiled down to ES5.
 - Use new JavaScript features which are at Stage 2 and above in the TC39 process:
   - `async`/`await` syntax, for writing async code in a synchronous way.
-  - Class properties, for avoiding boilerplate when writing ES6 classes.
+  - Class properties, for avoiding boilerplate when writing classes.
   - Decorators.
   - Object rest/spread, for shallow cloning, merging and partially destructuring objects as syntax.
 - Polyfills for  `Promise`,  `fetch` and `Object.assign`.
@@ -159,7 +158,7 @@ Without any configuration, the main features you get are:
 
 ## Thinking in React Components
 
-We'll start by splitting each of the main components from [the final Thinking in React example code](https://facebook.github.io/react/docs/thinking-in-react.html#step-5-add-inverse-data-flow) into its own module, which is more representative of how a larger React project will be laid out.
+We'll start by splitting each of the main components from [the final Thinking in React example code](https://reactjs.org/docs/thinking-in-react.html#step-5-add-inverse-data-flow) into its own module, which is more representative of how a larger React project will be laid out.
 
 > A single module is perfectly fine for small apps, demos and examples!
 
@@ -167,35 +166,9 @@ We'll start by splitting each of the main components from [the final Thinking in
 - [`SearchBar.js`](https://github.com/insin/nwb-thinking-in-react/blob/master/src/SearchBar.js) renders a `<form>` with the current filter state and passes changes back up to `FilterableProductTable`.
 - [`ProductTable.js`](https://github.com/insin/nwb-thinking-in-react/blob/master/src/ProductTable.js) renders a `<table>` of products filtered according to the current filter state. This module also includes subcomponents used to implement the `ProductTable` component.
 
-### Palatable ES6 Class Components
+### Palatable Class Components
 
-Thinking in React uses [`React.createClass()`](https://facebook.github.io/react/docs/top-level-api.html#react.createclass) to define its components.
-
-This is arguably the least confusing way to start learning about React components as it auto-binds component methods to the component instance. This means you never have to worry about the value of `this` when using a component method as an event handler or other callback; it just works like you think it should.
-
-For the sake of showing different ways to define components which are enabled by nwb's default configuration, the modules linked to above use [ES6 class components](https://facebook.github.io/react/docs/reusable-components.html#es6-classes) and [stateless function components](https://facebook.github.io/react/docs/reusable-components.html#stateless-functions).
-
-For example, this is part of the `FilterableProductTable` component using `React.createClass()`:
-
-```js
-const FilterableProductTable = React.createClass({
-  getInitialState: function() {
-    return {
-      filterText: '',
-      inStockOnly: false,
-    }
-  },
-
-  handleUserInput(filterText, inStockOnly) {
-    this.setState({filterText, inStockOnly})
-  },
-
-  render() {
-    // ...same in all implementations
-  }
-})
-```
-Written as a vanilla ES6 class, we would need to perform a `super()` call before we can set anything on `this`, and we'd need to [manually bind](https://facebook.github.io/react/docs/reusable-components.html#no-autobinding) the event handling method:
+Written as a vanilla ES classes, React components need to call `super()` setting anything on `this`, and need to [manually bind event handlers in the constructor](https://reactjs.org/docs/react-component.html#constructor):
 
 ```js
 class FilterableProductTable extends Component {
@@ -218,7 +191,7 @@ class FilterableProductTable extends Component {
 }
 ```
 
-Using experimental class property syntax avoids this constructor boilerplate - the `=` assignment statements in the class body are actually *moved into a generated constructor*, so the event handler arrow function inherits the constructor's `this`, which is roughly equivalent to what `React.createClass()` auto-binding was doing for us:
+Using experimental class property syntax avoids this constructor boilerplate - `=` assignment statements in the class body are actually *moved into a generated constructor*, so the event handler arrow function inherits the constructor's `this`:
 
 ```js
 class FilterableProductTable extends Component {
@@ -236,30 +209,6 @@ class FilterableProductTable extends Component {
   }
 }
 ```
-
-> Class properties are *effectively* required to make writing React ES6 class components as palatable as `React.createClass()` components; nwb's default config leaves you free to create components whichever way you prefer.
-
-### Stateless Function Components
-
-This is the `ProductCategoryRow` component using `React.createClass()`:
-
-```js
-var ProductCategoryRow = React.createClass({
-  render() {
-    return <tr><th colSpan="2">{this.props.category}</th></tr>
-  }
-})
-```
-
-And as a [stateless function component](https://facebook.github.io/react/docs/reusable-components.html#stateless-functions):
-
-```js
-let ProductCategoryRow = ({category}) => <tr>
-  <th colSpan="2">{category}</th>
-</tr>
-```
-
-> Stateless function components are a  more convenient way to create React components which just manage a particular chunk of rendering based on given props.
 
 ## Entry Point
 
@@ -391,7 +340,7 @@ Generated bundles have a deterministic hash in their filename to support long-te
 
 The following React-specific optimisations are also performed as part of the build:
 
-- If you're using ES6 class components or stateless function components for any of your app's own components, any `propTypes` they define will be stripped from the build, as React doesn't use PropTypes in production.
+- Any `propTypes` defined on your app's class components or stateless function components will be stripped from the build, as PropTypes aren't checked in production.
 
 ## Using nwb in Your Own Express Server via Middleware
 

@@ -95,7 +95,9 @@ describe('sample projects', function() {
 
         // Fail if there's any error logging
         server.stderr.on('data', data => {
-          done(new Error(`stderr output received: ${data}`))
+          if (!/DeprecationWarning/.test(data)) {
+            done(new Error(`stderr output received: ${data}`))
+          }
         })
 
         function startHMRClient() {
@@ -106,7 +108,9 @@ describe('sample projects', function() {
             console.log('HMR open: changing file in 5s')
             setTimeout(() => {
               state = States.CHANGED_FILE
+              console.log('HMR open: set state = CHANGED_FILE')
               let content = fs.readFileSync(path.join(tmpDir, 'src/App.js'), 'utf-8')
+              console.log('HMR open: changing file now')
               fs.writeFileSync(path.join(tmpDir, 'src/App.js'), content.replace('Welcome to', 'Change'))
             }, 5000)
           }
@@ -117,7 +121,9 @@ describe('sample projects', function() {
           }
 
           hmrClient.onmessage = e => {
+            // Ignore hearbeat
             if (e.data === '\uD83D\uDC93') {
+              console.log(e.data)
               return
             }
 
@@ -168,7 +174,7 @@ describe('sample projects', function() {
 
   describe('cherry-pick project', () => {
     let es5
-    let es6
+    let esModules
     let originalCwd
     let originalNodeEnv
     let tmpDir
@@ -185,7 +191,7 @@ describe('sample projects', function() {
         cli(['build'], err => {
           expect(err).toNotExist()
           es5 = fs.readFileSync(path.join(tmpDir, 'lib/index.js'), 'utf-8')
-          es6 = fs.readFileSync(path.join(tmpDir, 'es/index.js'), 'utf-8')
+          esModules = fs.readFileSync(path.join(tmpDir, 'es/index.js'), 'utf-8')
           done()
         })
       })
@@ -216,16 +222,16 @@ describe('sample projects', function() {
         'index.js',
       ])
     })
-    it('ES6 modules build transpiles to a cherry-picked version', () => {
-      expect(es6)
+    it('ES modules build transpiles to a cherry-picked version', () => {
+      expect(esModules)
         .toInclude("import _Col from 'react-bootstrap/lib/Col'")
         .toInclude("import _Grid from 'react-bootstrap/lib/Grid'")
         .toInclude("import _Row from 'react-bootstrap/lib/Row'")
     })
-    it('ES6 module build has propType declarations wrapped in an environment check', () => {
-      expect(es6).toInclude('CherryPicker.propTypes = process.env.NODE_ENV !== "production" ? {')
+    it('ES module build has propType declarations wrapped in an environment check', () => {
+      expect(esModules).toInclude('CherryPicker.propTypes = process.env.NODE_ENV !== "production" ? {')
     })
-    it('ES6 module build ignores co-located test files and directories', () => {
+    it('ES module build ignores co-located test files and directories', () => {
       expect(glob.sync('*', {cwd: path.resolve('es')})).toEqual([
         'index.js',
       ])
@@ -242,7 +248,6 @@ describe('sample projects', function() {
     before(done => {
       originalCwd = process.cwd()
       originalNodeEnv = process.env.NODE_ENV
-      console.log(originalNodeEnv)
       delete process.env.NODE_ENV
       tmpDir = temp.mkdirSync('router-app')
       copyTemplateDir(path.join(__dirname, '../fixtures/projects/router-app'), tmpDir, {}, err => {
@@ -267,10 +272,12 @@ describe('sample projects', function() {
     it('creates split bundles, vendor bundles, copies public subdirs and includes font resources', () => {
       let files = stripHashes((glob.sync('**/*', {cwd: path.resolve('dist')}))).sort()
       expect(files).toEqual([
-        '0.js',
-        '0.js.map',
         '1.js',
         '1.js.map',
+        '2.css',
+        '2.css.map',
+        '2.js',
+        '2.js.map',
         'app.css',
         'app.css.map',
         'app.js',
@@ -282,8 +289,8 @@ describe('sample projects', function() {
         'glyphicons-halflings-regular.woff',
         'glyphicons-halflings-regular.woff2',
         'index.html',
-        'manifest.js',
-        'manifest.js.map',
+        'runtime.js',
+        'runtime.js.map',
         'subdir',
         'subdir/shyamalan.jpg',
         'vendor.css',

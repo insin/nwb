@@ -13,7 +13,7 @@ nwb uses [Karma](http://karma-runner.github.io/) as a test runner, with [Webpack
   - [Co-Located Tests](#co-located-tests)
 - [Using a Test Context Module](#using-a-test-context-module)
   - [Automatic Babel Polyfill](#automatic-babel-polyfill)
-  - [Configuring Assertion Libraries](#configuring-assertion-libraries)
+  - [Configuring Testing Libraries](#configuring-testing-libraries)
   - [Global `beforeEach`/`afterEach` Hooks](#global-beforeeach--aftereach-Hooks)
 - [Code Coverage](#code-coverage)
   - [Excluding Test Directories from Coverage](#excluding-test-directories-from-coverage)
@@ -38,7 +38,7 @@ A suitable reporter for Mocha is configured as the default if you don't configur
 
 #### Assertion Library
 
-[expect](https://github.com/mjackson/expect) is made available by default for assertions and spies without having to install it in your own `devDependencies` - just import it when you need it:
+[expect](https://github.com/mjackson/expect) v1 is made available by default for assertions and spies without having to install it in your own `devDependencies` - just import it when you need it:
 
 ```
 import expect from 'expect'
@@ -119,8 +119,18 @@ If you need to run some code before any of your tests run, the recommended appro
 You will need to use [`require.context()`](https://webpack.js.org/guides/dependency-management/#require-context) in this module to specify which test files to run, e.g.:
 
 ```js
+// tests.webpack.js
 let context = require.context('./src', true, /\.spec\.js$/)
 context.keys().forEach(context)
+```
+
+```js
+// nwb.js
+module.exports = {
+  karma: {
+    testContext: 'tests.webpack.js'
+  }
+}
 ```
 
 **Note:** if you provide `karma.testContext` and your tests would not have been picked up by the [default test files][#test-files] config, you will also need to provide a suitable [`karma.testFiles` config](/docs/Configuration.md#testcontext-string) so your tests can be excluded from code coverage.
@@ -129,32 +139,18 @@ context.keys().forEach(context)
 
 A context module is commonly used to load polyfills to allow tests to run in browsers missing certain features, but you don't need to worry about that if you were just going to use `babel-polyfill` - nwb automatically injects Babel's polyfill into Karma tests for you.
 
-#### Configuring Assertion Libraries
+#### Configuring Testing Libraries
 
-If you need to configure an assertion library before running any tests and your tests are in `.spec.js` files under `src/`, you could create the following `tests.webpack.js` module in the root of your project...
+Use a context module you need to configure testing libraries before running any tests. E.g. if you're using [Enzyme](https://github.com/airbnb/enzyme) to test some React code...
 
 ```js
-import chai from 'chai'
-import chaiEnzyme from 'chai-enzyme'
+import Enzyme from 'enzyme'
+import Adapter from 'enzyme-adapter-react-15'
 
-chai.use(chaiEnzyme())
+Enzyme.configure({adapter: new Adapter()})
 
 let context = require.context('./src', true, /\.spec\.js$/)
 context.keys().forEach(context)
-```
-
-...then point to it in `nwb.config.js`:
-
-```js
-module.exports = {
-  karma: {
-    testContext: 'tests.webpack.js'
-    plugins: [
-      require('karma-chai')
-    ],
-    frameworks: ['mocha', 'chai']
-  }
-}
 ```
 
 #### Global `beforeEach`/`afterEach` Hooks

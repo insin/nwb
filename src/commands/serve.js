@@ -1,7 +1,7 @@
 // @flow
+import {getProjectType} from '../config'
 import {INFERNO_APP, PREACT_APP, REACT_APP, REACT_COMPONENT, WEB_APP} from '../constants'
 import {UserError} from '../errors'
-import {getProjectType} from '../getUserConfig'
 import serveInfernoApp from './serve-inferno-app'
 import servePreactApp from './serve-preact-app'
 import serveReactApp from './serve-react-app'

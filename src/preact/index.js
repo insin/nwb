@@ -18,7 +18,11 @@ function getBaseConfig() {
 }
 
 function getDependencies() {
-  return ['preact', 'preact-compat']
+  return ['preact']
+}
+
+function getCompatDependencies() {
+  return ['preact-compat']
 }
 
 function getQuickConfig() {
@@ -34,11 +38,30 @@ function getQuickConfig() {
 
 export default (args: Object) => ({
   getName: () => 'Preact',
-  getProjectDependencies: getDependencies,
+  getProjectDefaults() {
+    return {compat: false}
+  },
+  getProjectDependencies(answers: Object): string[] {
+    let deps = getDependencies()
+    if (answers.compat) {
+      deps = deps.concat(getCompatDependencies())
+    }
+    return deps
+  },
+  getProjectQuestions() {
+    let defaults = this.getProjectDefaults()
+    return [{
+      when: () => !('compat' in args),
+      type: 'confirm',
+      name: 'compat',
+      message: 'Do you want to use preact-compat so you can use React modules?',
+      default: defaults.compat,
+    }]
+  },
   getBuildDependencies: () => [],
   getBuildConfig: getBaseConfig,
   getServeConfig: getBaseConfig,
-  getQuickDependencies: getDependencies,
+  getQuickDependencies: (): string[] => getDependencies().concat(getCompatDependencies()),
   getQuickBuildConfig: getQuickConfig,
   getQuickServeConfig: getQuickConfig,
   getKarmaTestConfig: getBaseConfig,

@@ -1,6 +1,7 @@
 // @flow
 import path from 'path'
 
+import {UserError} from './errors'
 import {typeOf} from './utils'
 
 type BabelPluginConfig = string | [string, Object];
@@ -24,6 +25,8 @@ type BuildOptions = {
 
 type UserOptions = {
   cherryPick?: string | string[],
+  config?: (BabelConfig) => BabelConfig,
+  env?: Object,
   loose?: boolean,
   plugins?: BabelPluginConfig[],
   presets?: BabelPluginConfig[],
@@ -38,7 +41,8 @@ const RUNTIME_PATH = path.dirname(require.resolve('babel-runtime/package'))
 
 export default function createBabelConfig(
   buildConfig: BuildOptions = {},
-  userConfig: UserOptions = {}
+  userConfig: UserOptions = {},
+  userConfigPath: string = ''
 ): BabelConfig {
   let {
     commonJSInterop,
@@ -53,6 +57,8 @@ export default function createBabelConfig(
 
   let {
     cherryPick,
+    config: userConfigFunction,
+    env = {},
     loose,
     plugins: userPlugins = [],
     presets: userPresets,
@@ -70,16 +76,9 @@ export default function createBabelConfig(
     loose = true
   }
 
-  // ES2015 and ES2016 presets
   presets.push(
-    [require.resolve('babel-preset-es2015'), {loose, modules}],
-    require.resolve('babel-preset-es2016'),
+    [require.resolve('babel-preset-env'), {loose, modules, ...env}]
   )
-  // Babel 6's stage-3 preset contains all the es2017 plugins, so only use the
-  // es2017 preset if the user has disabled use of a stage preset.
-  if (userStage === false) {
-    presets.push(require.resolve('babel-preset-es2017'))
-  }
 
   // Additional build presets
   if (Array.isArray(buildPresets)) {
@@ -183,6 +182,15 @@ export default function createBabelConfig(
 
   if (plugins.length > 0) {
     config.plugins = plugins
+  }
+
+  // Finally, give the user a chance to do whatever they want with the generated
+  // config.
+  if (typeof userConfigFunction === 'function') {
+    config = userConfigFunction(config)
+    if (!config) {
+      throw new UserError(`babel.config() in ${userConfigPath} didn't return anything - it must return the Babel config object.`)
+    }
   }
 
   return config

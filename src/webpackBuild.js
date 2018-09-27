@@ -1,10 +1,9 @@
 import ora from 'ora'
 import webpack from 'webpack'
 
+import {getPluginConfig, getUserConfig} from './config'
 import createWebpackConfig from './createWebpackConfig'
 import debug from './debug'
-import getPluginConfig from './getPluginConfig'
-import getUserConfig from './getUserConfig'
 import {deepToString} from './utils'
 import {logBuildResults} from './webpackUtils'
 

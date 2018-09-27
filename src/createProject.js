@@ -9,8 +9,7 @@ import ora from 'ora'
 import runSeries from 'run-series'
 
 import {
-  CONFIG_FILE_NAME, INFERNO_APP, PREACT_APP, PROJECT_TYPES, REACT_APP,
-  REACT_COMPONENT, WEB_APP, WEB_MODULE,
+  CONFIG_FILE_NAME, PROJECT_TYPES, REACT_COMPONENT, WEB_MODULE,
 } from './constants'
 import {UserError} from './errors'
 import pkg from '../package.json'
@@ -39,7 +38,7 @@ function copyTemplate(templateDir, targetDir, templateVars, cb) {
  * arguments.
  */
 export function getNpmModulePrefs(args, cb) {
-  // An ES6 modules build is enabled by default, but can be disabled with
+  // An ES modules build is enabled by default, but can be disabled with
   // --no-es-modules or --es-modules=false (or a bunch of other undocumented
   // stuff)
   let esModules = args['es-modules'] !== false && !/^(0|false|no|nope|off)$/.test(args['es-modules'])
@@ -58,7 +57,7 @@ export function getNpmModulePrefs(args, cb) {
       when: () => !('es-modules' in args),
       type: 'confirm',
       name: 'esModules',
-      message: 'Do you want to create an ES6 modules build for use by ES6 bundlers?',
+      message: 'Do you want to create an ES modules build for use by compatible bundlers?',
       default: esModules,
     },
     {
@@ -137,19 +136,6 @@ function writeConfigFile(dir, config, cb) {
   )
 }
 
-const APP_PROJECT_CONFIG = {
-  [INFERNO_APP]: {
-    dependencies: ['inferno', 'inferno-component', 'inferno-compat'],
-  },
-  [PREACT_APP]: {
-    dependencies: ['preact', 'preact-compat'],
-  },
-  [REACT_APP]: {
-    dependencies: ['react', 'react-dom'],
-  },
-  [WEB_APP]: {},
-}
-
 const MODULE_PROJECT_CONFIG = {
   [REACT_COMPONENT]: {
     devDependencies: ['react', 'react-dom'],
@@ -162,20 +148,52 @@ const MODULE_PROJECT_CONFIG = {
  * Create an app project skeleton.
  */
 function createAppProject(args, projectType, name, targetDir, cb) {
-  let {dependencies = []} = APP_PROJECT_CONFIG[projectType]
-  if (dependencies.length !== 0) {
-    let library = projectType.split('-')[0]
-    if (args[library]) {
-      dependencies = dependencies.map(pkg => `${pkg}@${args[library]}`)
+  let appType = projectType.split('-')[0]
+  let projectConfig = require(`./${appType}`)(args)
+
+  let dependencies = null
+
+  let tasks = [
+    (cb) => {
+      let templateDir = path.join(__dirname, `../templates/${projectType}`)
+      let templateVars = {name, nwbVersion: NWB_VERSION}
+      copyTemplate(templateDir, targetDir, templateVars, cb)
+    },
+    (cb) => {
+      // Allow specification of the exact version, e.g. --react=16.2
+      if (dependencies.length !== 0 && args[appType]) {
+        dependencies = dependencies.map(pkg => `${pkg}@${args[appType]}`)
+      }
+      install(dependencies, {cwd: targetDir, save: true}, cb)
+    },
+    (cb) => initGit(args, targetDir, cb),
+  ]
+
+  let questions = projectConfig.getProjectQuestions()
+  if (questions) {
+    // Don't ask questions if the user doesn't want them
+    if (args.f || args.force) {
+      dependencies = projectConfig.getProjectDependencies(
+        projectConfig.getProjectDefaults()
+      )
+    }
+    else {
+      tasks.unshift((cb) => {
+        inquirer.prompt(questions).then(
+          (answers) => {
+            dependencies = projectConfig.getProjectDependencies(answers)
+            cb(null)
+          },
+          (err) => cb(err)
+        )
+      })
     }
   }
-  let templateDir = path.join(__dirname, `../templates/${projectType}`)
-  let templateVars = {name, nwbVersion: NWB_VERSION}
-  runSeries([
-    (cb) => copyTemplate(templateDir, targetDir, templateVars, cb),
-    (cb) => install(dependencies, {cwd: targetDir, save: true}, cb),
-    (cb) => initGit(args, targetDir, cb),
-  ], cb)
+  else {
+    dependencies = projectConfig.getProjectDependencies()
+  }
+
+  runSeries(tasks, cb)
 }
 
 /**
@@ -209,7 +227,7 @@ function createModuleProject(args, projectType, name, targetDir, cb) {
       }
       else {
         // TODO Get from npm so we don't have to manually update on major releases
-        templateVars.reactPeerVersion = '15.x'
+        templateVars.reactPeerVersion = '16.x'
       }
     }
 
@@ -222,11 +240,11 @@ function createModuleProject(args, projectType, name, targetDir, cb) {
   })
 }
 
-export default function createProject(args, type, name, dir, cb) {
-  if (type in APP_PROJECT_CONFIG) {
-    return createAppProject(args, type, name, dir, cb)
+export default function createProject(args, projectType, name, dir, cb) {
+  if (/-app$/.test(projectType)) {
+    return createAppProject(args, projectType, name, dir, cb)
   }
   else {
-    createModuleProject(args, type, name, dir, cb)
+    createModuleProject(args, projectType, name, dir, cb)
   }
 }

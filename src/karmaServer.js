@@ -1,9 +1,8 @@
 import {Server} from 'karma'
 
+import {getPluginConfig, getUserConfig} from './config'
 import createKarmaConfig from './createKarmaConfig'
 import {KarmaExitCodeError} from './errors'
-import getPluginConfig from './getPluginConfig'
-import getUserConfig from './getUserConfig'
 
 export default function karmaServer(args, buildConfig, cb) {
   // Force the environment to test

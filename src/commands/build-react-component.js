@@ -5,7 +5,7 @@ import {directoryExists} from '../utils'
 import buildDemo from './build-demo'
 
 /**
- * Create a React component's CommonJS and ES6 modules and UMD builds, and build
+ * Create a React component's CommonJS and ES modules and UMD builds, and build
  * its demo app if it has one.
  */
 export default function buildModule(args, cb) {

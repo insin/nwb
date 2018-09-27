@@ -1,5 +1,5 @@
 import expect from 'expect'
-import Inferno from 'inferno'
+import {render} from 'inferno'
 
 import App from 'src/App'
 
@@ -11,11 +11,11 @@ describe('App component', () => {
   })
 
   afterEach(() => {
-    Inferno.render(null, node)
+    render(null, node)
   })
 
   it('displays a welcome message', () => {
-    Inferno.render(<App/>, node)
+    render(<App/>, node)
     expect(node.textContent).toContain('Welcome to Inferno')
   })
 })

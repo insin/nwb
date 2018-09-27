@@ -5,6 +5,8 @@
 - [How do I enable CSS Modules?](#how-do-i-enable-css-modules)
 - [What can I configure to reduce bundle size?](#what-can-i-configure-to-reduce-bundle-size)
 - [How can I copy non-JavaScript files when building a React component/library?](#how-can-i-copy-non-javascript-files-when-building-a-react-component-library)
+- [How can I use React Hot Loader instead of React Transform?](#how-can-i-use-react-hot-loader-instead-of-react-transform)
+- [How can I debug using VS Code when running an app with nwb?](#how-can-i-debug-using-vs-code-when-running-an-app-with-nwb)
 
 ---
 
@@ -27,13 +29,13 @@ export DEBUG=nwb
 set DEBUG=nwb
 ```
 
-If you need to prevent server commands from clearing scrollback so you can read any unexpected error logging which is happening, set the `NWB_TEST` environment variable to `true`:
+If you need to prevent server commands from clearing scrollback so you can read any unexpected error logging which is happening, pass a `--no-clear` flag when running the development server:
 
 ```
-# *nix
-export NWB_TEST=true
-# Windows
-set NWB_TEST=true
+# When running nwb via npm scripts
+npm start -- --no-clear
+# When running nwb serve directly
+nwb serve --no-clear
 ```
 
 ### How do I enable CSS Modules?
@@ -73,4 +75,78 @@ Try configuring [`babel.cherryPick`](/docs/Configuration.md#cherrypick-string--a
 
 ### How can I copy non-JavaScript files when building a React component/library?
 
-Pass a [`--copy-files` flag](/docs/guides/ReactComponent.md#--copy-files).
+Pass a [`--copy-files` flag](/docs/guides/ReactComponent.md#--copy-files) if you have other files which you want to copy to build directories, such as CSS and JSON files.
+
+### How can I use [React Hot Loader](https://github.com/gaearon/react-hot-loader) instead of [React Transform](https://github.com/gaearon/babel-plugin-react-transform)?
+
+> [React Transform](https://github.com/gaearon/babel-plugin-react-transform) is deprecated in favour of [React Hot Loader](https://github.com/gaearon/react-hot-loader), but nwb is still using the former as it can be activated entirely via the configuration nwb manages, whereas React Hot Loader requires a component to be added to your app.
+
+- `npm install react-hot-loader`
+- Disable use of React Transform by passing a [`--no-hmre` flag](https://github.com/insin/nwb/blob/master/docs/Commands.md#nwb-serve) to the `serve` command you're using. e.g. in your app's `package.json`:
+
+  ```json
+  {
+    "scripts": {
+      "start": "nwb serve-react-app --no-hmre",
+    }
+  }
+  ```
+- Provide the Babel and Webpack config React Hot Loader requires in your `nwb.config.js`:
+
+  ```js
+  module.exports = function({command}) {
+    let config = {
+      type: 'react-app'
+    }
+    // Only include react-hot-loader config when serving a development build
+    if (command.startsWith('serve')) {
+      config.babel = {plugins: 'react-hot-loader/babel'}
+      config.webpack = {
+        config(webpackConfig) {
+          // React Hot Loader's patch module needs to run before your app
+          webpackConfig.entry.unshift('react-hot-loader/patch')
+          return webpackConfig
+        }
+      }
+    }
+    return config
+  }
+  ```
+- Use React Hot Loader's `<AppContainer>` component in your app's entry module (usually `src/index.js` in apps using nwb) as per its [Getting Started docs](https://github.com/gaearon/react-hot-loader#getting-started).
+
+### How can I debug using VS Code when using nwb?
+
+Ensure you have the [Debugger for Chrome extension](https://marketplace.visualstudio.com/items?itemName=msjsdiag.debugger-for-chrome) installed and add the following configurations to `.vscode/launch.json`:
+
+```json
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Debug Dev Server",
+      "request": "launch",
+      "sourceMapPathOverrides": {
+        "webpack:///src/*": "${webRoot}/*"
+      },
+      "type": "chrome",
+      "url": "http://localhost:3000",
+      "webRoot": "${workspaceRoot}/src",
+    },
+    {
+      "name": "Debug Karma Tests",
+      "request": "launch",
+      "runtimeArgs": ["--headless"],
+      "sourceMapPathOverrides": {
+        "webpack:///src/*": "${workspaceRoot}/src/*",
+        "webpack:///tests/*": "${workspaceRoot}/tests/*"
+      },
+      "type": "chrome",
+      "url": "http://localhost:9876/debug.html",
+    }
+  ]
+}
+```
+
+> **Note:** the above configuration assumes you're using the default host and port settings, and that the requested dev server port was available.
+
+After you've started the dev server with `npm start` or `nwb serve`, or started a watching test server with `npm run test:watch` or `nwb test --server`, you should be able to start debugging in VS Code by running a debugging configuration from the Debug panel or pressing F5.

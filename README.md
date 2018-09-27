@@ -24,23 +24,13 @@ A zero-config development setup is provided, but nwb also supports [configuratio
 
 Installing globally provides an `nwb` command for quick development and working with projects.
 
-- The `next` version of nwb uses Wepack 3 and **requires npm >= 3 or yarn to install** until the Webpack ecosystem catches up with the Webpack 3 release, after which it will become the default version:
+```sh
+npm install -g nwb
+```
 
-  ```sh
-  npm install -g nwb@next
-  ```
-
-  This version is in the `master` branch, so documentation links from this page are current.
-
-- The default version of nwb uses Webpack 2 and is compatible with the default version of npm included with Node.js 4.6 and up:
-
-  ```sh
-  npm install -g nwb
-  ```
-
-  [Docs for this version are available here](https://github.com/insin/nwb/tree/v0.17.1/docs#table-of-contents).
-
-> Using **npm >= 3 is recommended**, as Babel 6 takes significantly more time and disk space to install with npm 2 due to its lack of deduplication.
+> **Note:** if you're using npm 5 and getting an `EACCES: permission denied` error from nwb's PhantomJS dependency while installing globally, try passing an `--unsafe-perm` flag:
+>
+> `npm install -g --unsafe-perm nwb`
 
 To use nwb's tooling in a project, install it as a `devDependency` and use `nwb` commands in `package.json` `"scripts"`:
 
@@ -138,7 +128,7 @@ cd my-component/
 
 `npm start` will run a demo app you can use to develop your component or library against.
 
-`npm test` will run the project's tests and `npm run build` will create ES5, ES6 modules and UMD builds for publishing to npm.
+`npm test` will run the project's tests and `npm run build` will create ES5, ES modules and UMD builds for publishing to npm.
 
 **See [Developing React Components and Libraries with nwb](/docs/guides/ReactComponents.md#developing-react-components-and-libraries-with-nwb) for a more detailed guide.**
 
@@ -150,7 +140,7 @@ nwb new web-module my-module
 cd my-module/
 ```
 
-`npm test` will run the project's tests and `npm run build` will create ES5, ES6 modules and UMD builds for publishing to npm.
+`npm test` will run the project's tests and `npm run build` will create ES5, ES modules and UMD builds for publishing to npm.
 
 ## [Guides](/docs/guides/#table-of-contents)
 

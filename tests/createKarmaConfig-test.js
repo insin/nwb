@@ -160,4 +160,15 @@ describe('createKarmaConfig()', () => {
     expect(config.browsers).toEqual(['PhantomJS', 'Chrome'])
     expect(config.mochaReporter).toEqual({output: 'autowatch', showDiff: true})
   })
+  it('supports a karma.config() function to manually edit generated config', () => {
+    let config = createKarmaConfig({}, {}, {}, {
+      karma: {
+        config(karmaConfig) {
+          karmaConfig.browsers.push('Chrome')
+          return karmaConfig
+        }
+      }
+    })
+    expect(config.browsers).toEqual(['PhantomJS', 'Chrome'])
+  })
 })

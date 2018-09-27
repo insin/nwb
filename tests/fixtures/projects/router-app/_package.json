@@ -5,8 +5,8 @@
   "dependencies": {
     "bootstrap": "3.x",
     "prop-types": "15.x",
-    "react": "15.x",
-    "react-dom": "15.x",
+    "react": "16.x",
+    "react-dom": "16.x",
     "react-router": "3.x"
   }
 }
