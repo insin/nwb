@@ -176,8 +176,8 @@ describe('processUserConfig()', () => {
     it('webpack.styles style type config object contains an invalid property', () => {
       check({webpack: {styles: {css: [{invalid: true}]}}}, 'webpack.styles.css[0]', /Must be/)
     })
-    it('webpack.uglify is an invalid type', () => {
-      check({webpack: {uglify: /text/}}, 'webpack.uglify', /Must be/)
+    it('webpack.terser is an invalid type', () => {
+      check({webpack: {terser: /text/}}, 'webpack.terser', /Must be/)
     })
     it('webpack.extra is not an object', () => {
       check({webpack: {extra: []}}, 'webpack.extra', /Must be/)

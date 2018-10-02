@@ -60,7 +60,7 @@ module.exports = {
     publicPath: 45,
     rules: 45,
     styles: 45,
-    uglify: 45,
+    terser: 45,
     extra: 45,
     config: 45,
   }

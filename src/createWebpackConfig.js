@@ -38,18 +38,18 @@ type RuleConfigFactory = (?string, RuleConfig) => ?RuleConfig;
 
 type ServerConfig = boolean | Object;
 
-const DEFAULT_UGLIFY_CONFIG = {
+const DEFAULT_TERSER_CONFIG = {
   cache: true,
   parallel: true,
   sourceMap: true,
 }
 
-function createUglifyConfig(userWebpackConfig) {
+function createTerserConfig(userWebpackConfig) {
   if (userWebpackConfig.debug) {
     return merge(
-      DEFAULT_UGLIFY_CONFIG,
+      DEFAULT_TERSER_CONFIG,
       {
-        uglifyOptions: {
+        terserOptions: {
           output: {
             beautify: true,
           },
@@ -58,16 +58,16 @@ function createUglifyConfig(userWebpackConfig) {
       },
       // Preserve user 'compress' config if present, as it affects what gets
       // removed from the production build.
-      typeof userWebpackConfig.uglify === 'object' &&
-      typeof userWebpackConfig.uglify.uglifyConfig === 'object' &&
-      'compress' in userWebpackConfig.uglify.uglifyConfig
-        ? {uglifyOptions: {compress: userWebpackConfig.uglify.uglifyConfig.compress}}
+      typeof userWebpackConfig.terser === 'object' &&
+      typeof userWebpackConfig.terser.terserConfig === 'object' &&
+      'compress' in userWebpackConfig.terser.terserConfig
+        ? {terserOptions: {compress: userWebpackConfig.terser.terserConfig.compress}}
         : {}
     )
   }
   return merge(
-    DEFAULT_UGLIFY_CONFIG,
-    typeof userWebpackConfig.uglify === 'object' ? userWebpackConfig.uglify : {}
+    DEFAULT_TERSER_CONFIG,
+    typeof userWebpackConfig.terser === 'object' ? userWebpackConfig.terser : {}
   )
 }
 
@@ -532,13 +532,13 @@ export function createPlugins(
       debug: false,
       minimize: true,
     }))
-    optimization.minimize = buildConfig.uglify !== false && userConfig.uglify !== false
-    if (buildConfig.uglify !== false && userConfig.uglify !== false) {
+    optimization.minimize = buildConfig.terser !== false && userConfig.terser !== false
+    if (buildConfig.terser !== false && userConfig.terser !== false) {
       optimization.minimizer = [{
         apply(compiler: any) {
-          // Lazy load the uglifyjs plugin
-          let UglifyJsPlugin = require('uglifyjs-webpack-plugin')
-          new UglifyJsPlugin(createUglifyConfig(userConfig)).apply(compiler)
+          // Lazy load the terser plugin
+          let TerserPlugin = require('terser-webpack-plugin')
+          new TerserPlugin(createTerserConfig(userConfig)).apply(compiler)
         }
       }]
     }

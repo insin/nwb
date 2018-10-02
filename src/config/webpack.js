@@ -6,6 +6,8 @@ import {joinAnd, pluralise as s, typeOf} from '../utils'
 
 const DEFAULT_STYLE_LOADERS = new Set(['css', 'postcss'])
 
+let warnedAboutUglify = false
+
 export function processWebpackConfig({pluginConfig, report, userConfig}) {
   let {
     aliases,
@@ -20,6 +22,7 @@ export function processWebpackConfig({pluginConfig, report, userConfig}) {
     publicPath,
     rules,
     styles,
+    terser,
     uglify,
     extra,
     config,
@@ -330,14 +333,30 @@ export function processWebpackConfig({pluginConfig, report, userConfig}) {
     }
   }
 
+  // TODO Deprecated - remove
   // uglify
   if ('uglify' in userConfig.webpack) {
-    if (uglify !== false && typeOf(uglify) !== 'object') {
+    if (!warnedAboutUglify) {
+      report.deprecated(
+        'webpack.uglify',
+        `This setting has been renamed to ${chalk.cyan('webpack.terser')} as of nwb v0.24`
+      )
+      warnedAboutUglify = true
+      if (!('terser' in userConfig.webpack)) {
+        userConfig.webpack.terser = uglify
+        terser = uglify
+      }
+    }
+  }
+
+  // terser
+  if ('terser' in userConfig.webpack) {
+    if (terser !== false && typeOf(terser) !== 'object') {
       report.error(
-        `webpack.uglify`,
-        uglify,
-        `Must be ${chalk.cyan('false')} (to disable UglifyJsPlugin) or ` +
-        `an ${chalk.cyan('Object')} (to configure UglifyJsPlugin)`
+        `webpack.terser`,
+        terser,
+        `Must be ${chalk.cyan('false')} (to disable terser-webpack-plugin) or ` +
+        `an ${chalk.cyan('Object')} (to configure terser-webpack-plugin)`
       )
     }
   }

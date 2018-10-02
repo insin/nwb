@@ -98,7 +98,7 @@ The configuration object can include the following properties:
     - [Customising loaders](#customising-loaders)
     - [Disabling default rules](#disabling-default-rules)
   - [`webpack.styles`](#styles-object--false) - customise creation of Webpack rules for stylesheets
-  - [`webpack.uglify`](#uglify-object--false) - configure use of Webpack's `UglifyJsPlugin`
+  - [`webpack.terser`](#terser-object--false) - configure use of `TerserWebpackPlugin`
   - [`webpack.extra`](#extra-object) - an escape hatch for extra Webpack config, which will be merged into the generated config
   - [`webpack.config`](#config-function-1) - an escape hatch for manually editing the generated Webpack config
 - [Dev Server Configuration](#dev-server-configuration)
@@ -492,7 +492,7 @@ nwb preact build app.js --webpack.debug
 
 If you set `debug` in your config file, nwb will always display a hint to remind you to remove it later.
 
-> **Note:** if you've customised `UglifyJsPlugin` settings via [`webpack.uglify` config](#uglify-object--false), only `webpack.uglify.compress` will be used when a debug build is enabled.
+> **Note:** if you've customised `TerserWebpackPlugin` settings via [`webpack.terser` config](#terser-object--false), only `webpack.terser.compress` will be used when a debug build is enabled.
 
 ##### `define`: `Object`
 
@@ -731,9 +731,9 @@ Configures how nwb creates Webpack config for importing stylesheets.
 
 See the [Stylesheets documentation](/docs/Stylesheets.md#stylesheets) for details.
 
-##### `uglify`: `Object | false`
+##### `terser`: `Object | false`
 
-Configures [options for Webpack's `UglifyJsPlugin`](https://github.com/webpack-contrib/uglifyjs-webpack-plugin#readme), which will be used when creating production builds.
+Configures [options for `TerserWebpackPlugin`](https://github.com/webpack-contrib/terser-webpack-plugin#readme), which will be used when creating production builds.
 
 Any additional options provided will be merged into nwb's defaults, which are:
 
@@ -750,8 +750,8 @@ For example, if you want to strip development-only code but keep the output read
 ```js
 module.exports = {
   webpack: {
-    uglify: {
-      uglifyOptions: {
+    terser: {
+      terserOptions: {
         mangle: false,
         beautify: true
       }
@@ -760,12 +760,12 @@ module.exports = {
 }
 ```
 
-To completely disable use of UglifyJS, set `uglify` to false:
+To completely disable use of Terser, set `terser` to false:
 
 ```js
 module.exports = {
   webpack: {
-    uglify: false
+    terser: false
   }
 }
 ```

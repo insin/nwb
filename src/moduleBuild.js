@@ -81,7 +81,7 @@ function buildUMD(args, buildConfig, userConfig, cb) {
     polyfill: false,
     plugins: {
       banner: createBanner(pkg),
-      uglify: false,
+      terser: false,
     },
   }
 
@@ -92,7 +92,7 @@ function buildUMD(args, buildConfig, userConfig, cb) {
       return cb(err)
     }
 
-    if (userConfig.uglify === false) {
+    if (userConfig.terser === false) {
       spinner.succeed()
       console.log()
       logGzippedFileSizes(stats1)
@@ -102,7 +102,7 @@ function buildUMD(args, buildConfig, userConfig, cb) {
     webpackBuildConfig.babel = merge(buildConfig.babel, buildConfig.babelProd || {})
     webpackBuildConfig.devtool = 'source-map'
     webpackBuildConfig.output.filename = `${pkg.name}.min.js`
-    webpackBuildConfig.plugins.uglify = true
+    webpackBuildConfig.plugins.terser = true
     webpackBuild(null, args, webpackBuildConfig, (err, stats2) => {
       if (err) {
         spinner.fail()

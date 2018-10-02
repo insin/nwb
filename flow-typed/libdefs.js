@@ -9,7 +9,7 @@ declare module 'mini-css-extract-plugin' {  declare module.exports: any;  }
 declare module '@insin/npm-install-webpack-plugin' {  declare module.exports: any;  }
 declare module 'ora' {  declare module.exports: any;  }
 declare module 'resolve' {  declare module.exports: any;  }
-declare module 'uglifyjs-webpack-plugin' {  declare module.exports: any;  }
+declare module 'terser-webpack-plugin' {  declare module.exports: any;  }
 declare module 'webpack' {  declare module.exports: any;  }
 declare module 'webpack-dev-middleware' {  declare module.exports: any;  }
 declare module 'webpack-hot-middleware' {  declare module.exports: any;  }
