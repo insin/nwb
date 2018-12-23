@@ -3,27 +3,36 @@
 ## Changes
 
 - Replaced use of `UglifyJsPlugin` with `TerserWebpackPlugin`.
-  - Deprecated `webpack.uglify` config, which has been renamed to [`webpack.terser`](https://github.com/insin/nwb/blob/master/docs/Configuration.md#uglify-object--false).
+- Deprecated `webpack.uglify` config, which has been renamed to [`webpack.terser`](https://github.com/insin/nwb/blob/master/docs/Configuration.md#uglify-object--false).
 
 ## Dependencies
 
-- autoprefixer: v9.0.2 → [v9.1.5](https://github.com/postcss/autoprefixer/blob/master/CHANGELOG.md#913)
+- autoprefixer: v9.0.2 → [v9.4.3](https://github.com/postcss/autoprefixer/blob/master/CHANGELOG.md#943)
 - babel-plugin-inferno: v5.0.1 → [v5.1.0](https://github.com/infernojs/babel-plugin-inferno/releases)
-- file-loader: v1.1.11 → [v2.0.0](https://github.com/webpack-contrib/file-loader/blob/master/CHANGELOG.md#200-2018-08-21)
-- inquirer: v6.0.0 → [v6.2.0](https://github.com/SBoudrias/Inquirer.js/releases)
-- karma: v2.0.0 → [v3.0.0](https://github.com/karma-runner/karma/releases/tag/v3.0.0)
+- copy-webpack-plugin: v4.5.2 → [v4.6.0](https://github.com/webpack-contrib/copy-webpack-plugin/releases/tag/v4.6.0)
+- css-loader: v1.0.0 → [v1.0.1](https://github.com/webpack-contrib/css-loader/releases/tag/v2.0.2)
+- debug: v4.0.1 → [v4.1.1](https://github.com/visionmedia/debug/releases/tag/4.1.1)
+- detect-port: v1.2.3 → [v1.3.0](https://github.com/node-modules/detect-port/blob/master/HISTORY.md#130--2018-11-20)
+- expect: v1.20.2 → [v23.6.0](https://github.com/facebook/jest/blob/master/CHANGELOG.md#2360)
+- file-loader: v1.1.11 → [v3.0.1](https://github.com/webpack-contrib/file-loader/releases/tag/v3.0.1)
+- fs-extra: v7.0.0 → [v7.0.1](https://github.com/jprichardson/node-fs-extra/blob/master/CHANGELOG.md)
+- inquirer: v6.0.0 → [v6.2.1](https://github.com/SBoudrias/Inquirer.js/releases/tag/inquirer%406.2.1)
+- karma: v2.0.0 → [v3.1.4](https://github.com/karma-runner/karma/releases/tag/v3.1.4)
 - karma-webpack: v3.0.0 → [v3.0.5](https://github.com/webpack-contrib/karma-webpack/releases)
-- mini-css-extract-plugin v0.4.1 → [v0.4.3](https://github.com/webpack-contrib/mini-css-extract-plugin/releases)
+- mini-css-extract-plugin v0.4.1 → [v0.5.0](https://github.com/webpack-contrib/mini-css-extract-plugin/releases/tag/v0.5.0)
 - opn: v5.3.0 → [v5.4.0](https://github.com/sindresorhus/opn/compare/v5.3.0...v5.4.0)
 - postcss-loader: v2.1.6 → [v3.0.0](https://github.com/postcss/postcss-loader/blob/master/CHANGELOG.md#300-2018-08-08) - dropped Node.js 4 support
 - promise: v8.0.1 → v8.0.2
-- style-loader: v0.21.0 → [v0.23.0](https://github.com/webpack-contrib/style-loader/blob/master/CHANGELOG.md#0230-2018-08-27)
+- resolve: v1.8.1 → [v1.9.0](https://github.com/browserify/resolve/compare/v1.8.1...v1.9.0)
+- semver: v5.5.1 → [v5.6.0](https://github.com/npm/node-semver/blob/master/CHANGELOG.md#56)
+- style-loader: v0.21.0 → [v0.23.1](https://github.com/webpack-contrib/style-loader/releases/tag/v0.23.1)
 - uglifyjs-webpack-plugin v1.2.7 → [terser-webpack-plugin v1.1.0](https://github.com/webpack-contrib/terser-webpack-plugin#readme)
-- url-loader: v1.0.1 → [v1.1.1](https://github.com/webpack-contrib/url-loader/blob/master/CHANGELOG.md#111-2018-08-17)
-- webpack: v4.16.4 → [v4.20.2](https://github.com/webpack/webpack/releases)
+- url-loader: v1.0.1 → [v1.1.2](https://github.com/webpack-contrib/url-loader/releases/tag/v1.1.2)
+- webpack: v4.16.4 → [v4.28.2](https://github.com/webpack/webpack/releases/tag/v4.28.2)
 - webpack-dev-middleware: v3.1.3 → [v3.4.0](https://github.com/webpack/webpack-dev-middleware/releases)
-- webpack-dev-server: v3.1.5 → [v3.1.9](https://github.com/webpack/webpack-dev-server/releases)
-- webpack-hot-middleware: v2.22.3 → [v2.24.2](https://github.com/glenjamin/webpack-hot-middleware/compare/v2.22.3...v2.24.2)
+- webpack-dev-server: v3.1.5 → [v3.1.13](https://github.com/webpack/webpack-dev-server/releases/tag/v3.1.13)
+- webpack-hot-middleware: v2.22.3 → [v2.24.3](https://github.com/glenjamin/webpack-hot-middleware/compare/v2.22.3...v2.24.3)
+- webpack-merge: v4.1.4 → [v4.1.5](https://github.com/survivejs/webpack-merge/compare/v4.1.4...2c98a8d)
 - whatwg-fetch: v2.0.4 → [v3.0.0](https://github.com/github/fetch/releases/tag/v3.0.0)
 
 # 0.23.0 / 2018-08-03
