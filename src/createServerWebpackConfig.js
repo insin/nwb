@@ -21,17 +21,23 @@ function getHMRClientEntries(args: Object, serverConfig: ?ServerConfig): string[
       require.resolve('webpack-hot-middleware/client') + hotMiddlewareOptions,
     ]
   }
-  // Otherwise, we're using webpack-dev-server's client
-  let hmrURL = '/'
-  // Set full HMR URL if the user customised it (#279)
-  if (args.host || args.port) {
-    hmrURL = `http://${serverConfig.host || 'localhost'}:${serverConfig.port}/`
-  }
 
-  return [
-    require.resolve('webpack-dev-server/client') + `?${hmrURL}`,
+  let entries = [
     require.resolve(`webpack/hot/${args.reload ? '' : 'only-'}dev-server`),
   ]
+
+  // inline mode adds the client for us
+  if (!serverConfig.inline){
+    // Otherwise, we're using webpack-dev-server's client
+    let hmrURL = '/'
+    // Set full HMR URL if the user customised it (#279)
+    if (args.host || args.port) {
+      hmrURL = `http://${serverConfig.host || 'localhost'}:${serverConfig.port}/`
+    }
+    entries.unshift(require.resolve('webpack-dev-server/client') + `?${hmrURL}`)
+  }
+
+  return entries
 }
 
 /**
