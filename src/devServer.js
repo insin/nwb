@@ -12,8 +12,6 @@ import {deepToString} from './utils'
  * Static content is handled by CopyPlugin.
  */
 export default function devServer(webpackConfig, serverConfig, cb) {
-  let compiler = webpack(webpackConfig)
-
   let {host, port, ...otherServerConfig} = serverConfig
 
   let webpackDevServerOptions = merge({
@@ -27,6 +25,9 @@ export default function devServer(webpackConfig, serverConfig, cb) {
       ignored: /node_modules/,
     },
   }, otherServerConfig)
+
+  WebpackDevServer.addDevServerEntrypoints(webpackConfig, webpackDevServerOptions)
+  let compiler = webpack(webpackConfig)
 
   debug('webpack dev server options: %s', deepToString(webpackDevServerOptions))
 
