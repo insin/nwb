@@ -1,7 +1,7 @@
 // @flow
 import expect from 'expect'
 
-import {joinAnd} from '../src/utils'
+import {joinAnd, formatPackageName} from '../src/utils'
 import {createBanner, createExternals} from '../src/webpackUtils'
 
 describe('utils', () => {
@@ -17,6 +17,15 @@ describe('utils', () => {
     })
     it('joins multiple items with a penultipate "and"', () => {
       expect(joinAnd(['one', 'two', 'three'])).toEqual('one, two and three')
+    })
+  })
+
+  describe('formatPackageName()', () => {
+    it('returns the name without the npm scope', () => {
+      expect(formatPackageName("@org/component")).toEqual("component")
+    })
+    it('returns the name as is', () => {
+      expect(formatPackageName("component")).toEqual("component")
     })
   })
 })
