@@ -22,10 +22,10 @@ describe('utils', () => {
 
   describe('formatPackageName()', () => {
     it('returns the name without the npm scope', () => {
-      expect(formatPackageName("@org/component")).toEqual("component")
+      expect(formatPackageName('@org/component')).toEqual('component')
     })
     it('returns the name as is', () => {
-      expect(formatPackageName("component")).toEqual("component")
+      expect(formatPackageName('component')).toEqual('component')
     })
   })
 })
