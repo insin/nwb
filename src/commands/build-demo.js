@@ -29,6 +29,7 @@ function getCommandConfig(args) {
     },
     plugins: {
       html: {
+        lang: 'en',
         mountId: 'demo',
         title: args.title || `${pkg.name} ${pkg.version} Demo`,
       },
