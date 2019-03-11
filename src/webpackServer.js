@@ -83,7 +83,7 @@ export default function webpackServer(args, buildConfig, cb) {
     // Open a browser with --open (default browser) or --open="browser name"
     if (args.open) serverConfig.open = args.open
 
-    let url = `http${serverConfig.https ? 's' : ''}://${args.host || 'localhost'}:${port}/`
+    let url = `http${serverConfig.https ? 's' : ''}://${serverConfig.host || 'localhost'}:${port}/`
 
     if (!('status' in buildConfig.plugins)) {
       buildConfig.plugins.status = {
