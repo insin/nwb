@@ -215,7 +215,7 @@ describe('sample projects', function() {
       expect(es5).toInclude('CherryPicker.propTypes = process.env.NODE_ENV !== "production" ? {')
     })
     it('ES5 build includes a CommonJS interop export', () => {
-      expect(es5).toInclude("module.exports = exports['default']")
+      expect(es5).toInclude('module.exports = exports.default')
     })
     it('ES5 build ignores co-located test files and directories', () => {
       expect(glob.sync('*', {cwd: path.resolve('lib')})).toEqual([
@@ -272,12 +272,12 @@ describe('sample projects', function() {
     it('creates split bundles, vendor bundles, copies public subdirs and includes font resources', () => {
       let files = stripHashes((glob.sync('**/*', {cwd: path.resolve('dist')}))).sort()
       expect(files).toEqual([
-        '1.js',
-        '1.js.map',
-        '2.css',
-        '2.css.map',
-        '2.js',
-        '2.js.map',
+        '3.css',
+        '3.css.map',
+        '3.js',
+        '3.js.map',
+        '4.js',
+        '4.js.map',
         'app.css',
         'app.css.map',
         'app.js',

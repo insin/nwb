@@ -1,5 +1,16 @@
 # Unreleased (in `master`)
 
+## Breaking Changes
+
+- Node.js 6 is no longer supported; Node.js 8.9.0 is now the minimum required version, as per nwb's dependencies.
+- Dependencies with (documented) breaking changes:
+  - [copy-webpack-plugin@5.0.0](https://github.com/webpack-contrib/copy-webpack-plugin/blob/master/CHANGELOG.md#breaking-changes)
+  - [css-loader@2.0.0](https://github.com/webpack-contrib/css-loader/blob/master/CHANGELOG.md#breaking-changes)
+  - [file-loader@2.0.0](https://github.com/webpack-contrib/file-loader/blob/master/CHANGELOG.md#breaking-changes-1)
+  - [file-loader@3.0.0](https://github.com/webpack-contrib/file-loader/blob/master/CHANGELOG.md#breaking-changes)
+  - [karma@4.0.0](https://github.com/karma-runner/karma/releases/tag/v4.0.0)
+  - [mocha@6.0.0](https://github.com/mochajs/mocha/blob/master/CHANGELOG.md#boom-breaking-changes)
+
 ## Changes
 
 - Replaced use of `UglifyJsPlugin` with `TerserWebpackPlugin`.
@@ -7,23 +18,36 @@
 
 ## Dependencies
 
-- autoprefixer: v9.0.2 → [v9.1.5](https://github.com/postcss/autoprefixer/blob/master/CHANGELOG.md#913)
+- autoprefixer: v9.0.2 → [v9.4.10](https://github.com/postcss/autoprefixer/blob/master/CHANGELOG.md#9410)
+- babel-plugin-add-module-exports: v0.2.1 → [v1.0.0](https://github.com/59naga/babel-plugin-add-module-exports/releases)
 - babel-plugin-inferno: v5.0.1 → [v5.1.0](https://github.com/infernojs/babel-plugin-inferno/releases)
-- file-loader: v1.1.11 → [v2.0.0](https://github.com/webpack-contrib/file-loader/blob/master/CHANGELOG.md#200-2018-08-21)
-- inquirer: v6.0.0 → [v6.2.0](https://github.com/SBoudrias/Inquirer.js/releases)
-- karma: v2.0.0 → [v3.0.0](https://github.com/karma-runner/karma/releases/tag/v3.0.0)
+- case-sensitive-paths-webpack-plugin: v2.1.2 → [v2.2.0](https://github.com/Urthen/case-sensitive-paths-webpack-plugin/blob/master/CHANGELOG.md#v220)
+- chalk: v2.4.1 → [v2.4.2](https://github.com/chalk/chalk/compare/v2.4.1...v2.4.2)
+- copy-webpack-plugin: v4.5.2 → [v5.0.0](https://github.com/webpack-contrib/copy-webpack-plugin/blob/master/CHANGELOG.md#500-2019-02-20)
+- css-loader: v1.0.0 → [v2.1.1](https://github.com/webpack-contrib/css-loader/blob/master/CHANGELOG.md#211-2019-03-07)
+- detect-port: v1.2.3 → [v1.3.0](https://github.com/node-modules/detect-port/releases)
+- filesize: v3.6.1 → [v4.1.2](https://github.com/avoidwork/filesize.js/compare/3.6.1...4.1.2)
+- file-loader: v1.1.11 → [v3.0.1](https://github.com/webpack-contrib/file-loader/blob/master/CHANGELOG.md#301-2018-12-20)
+- fs-extra: v7.0.0 → [v7.0.1](https://github.com/jprichardson/node-fs-extra/blob/master/CHANGELOG.md#701--2018-11-07)
+- inquirer: v6.0.0 → [v6.2.2](https://github.com/SBoudrias/Inquirer.js/releases)
+- karma: v2.0.0 → [v4.0.1](https://github.com/karma-runner/karma/releases)
 - karma-webpack: v3.0.0 → [v3.0.5](https://github.com/webpack-contrib/karma-webpack/releases)
-- mini-css-extract-plugin v0.4.1 → [v0.4.3](https://github.com/webpack-contrib/mini-css-extract-plugin/releases)
+- mini-css-extract-plugin v0.4.1 → [v0.5.0](https://github.com/webpack-contrib/mini-css-extract-plugin/releases)
+- mocha: v5.2.0 → [v6.0.2](https://github.com/mochajs/mocha/blob/master/CHANGELOG.md#602--2019-02-25)
 - opn: v5.3.0 → [v5.4.0](https://github.com/sindresorhus/opn/compare/v5.3.0...v5.4.0)
+- ora: v3.0.0 → [v3.2.0](https://github.com/sindresorhus/ora/compare/v3.0.0...v3.2.0)
 - postcss-loader: v2.1.6 → [v3.0.0](https://github.com/postcss/postcss-loader/blob/master/CHANGELOG.md#300-2018-08-08) - dropped Node.js 4 support
 - promise: v8.0.1 → v8.0.2
-- style-loader: v0.21.0 → [v0.23.0](https://github.com/webpack-contrib/style-loader/blob/master/CHANGELOG.md#0230-2018-08-27)
-- uglifyjs-webpack-plugin v1.2.7 → [terser-webpack-plugin v1.1.0](https://github.com/webpack-contrib/terser-webpack-plugin#readme)
-- url-loader: v1.0.1 → [v1.1.1](https://github.com/webpack-contrib/url-loader/blob/master/CHANGELOG.md#111-2018-08-17)
-- webpack: v4.16.4 → [v4.20.2](https://github.com/webpack/webpack/releases)
-- webpack-dev-middleware: v3.1.3 → [v3.4.0](https://github.com/webpack/webpack-dev-middleware/releases)
+- resolve: v1.8.1 → [v1.10.0](https://github.com/browserify/resolve/compare/v1.8.1...v1.10.0)
+- semver: v5.5.1 → [v5.6.0](https://github.com/npm/node-semver/compare/v5.5.1...v5.6.0)
+- style-loader: v0.21.0 → [v0.23.1](https://github.com/webpack-contrib/style-loader/blob/master/CHANGELOG.md#0231-2018-10-08)
+- uglifyjs-webpack-plugin v1.2.7 → [terser-webpack-plugin v1.2.3](https://github.com/webpack-contrib/terser-webpack-plugin#readme)
+- url-loader: v1.0.1 → [v1.1.2](https://github.com/webpack-contrib/url-loader/blob/master/CHANGELOG.md#112-2018-10-10)
+- webpack: v4.16.4 → [v4.29.6](https://github.com/webpack/webpack/releases)
+- webpack-dev-middleware: v3.1.3 → [v3.6.1](https://github.com/webpack/webpack-dev-middleware/releases)
 - webpack-dev-server: v3.1.5 → [v3.1.9](https://github.com/webpack/webpack-dev-server/releases)
-- webpack-hot-middleware: v2.22.3 → [v2.24.2](https://github.com/glenjamin/webpack-hot-middleware/compare/v2.22.3...v2.24.2)
+- webpack-hot-middleware: v2.22.3 → [v2.24.3](https://github.com/glenjamin/webpack-hot-middleware/compare/v2.22.3...v2.24.3)
+- webpack-merge: v4.1.4 → [v4.2.1](https://github.com/survivejs/webpack-merge/blob/master/CHANGELOG.md#421--2019-01-04)
 - whatwg-fetch: v2.0.4 → [v3.0.0](https://github.com/github/fetch/releases/tag/v3.0.0)
 
 # 0.23.0 / 2018-08-03
