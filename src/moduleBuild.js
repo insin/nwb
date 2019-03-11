@@ -22,7 +22,8 @@ const DEFAULT_BABEL_IGNORE_CONFIG = [
   '.spec.js',
   '.test.js',
   '-test.js',
-  '/__tests__/'
+  '/__tests__/',
+  '/__mocks__/'
 ]
 
 /**

@@ -84,6 +84,12 @@ describe('command: build', function() {
       cli(['new', 'react-component', 'test-component', '--umd=TestComponent', '--es-modules'], (err) => {
         expect(err).toNotExist('No errors creating a new React component')
         process.chdir(path.join(tmpDir, 'test-component'))
+
+        // Create test files. They should not be on the build directories
+        fs.writeFileSync(path.join('src', 'test-component.test.js'), '')
+        fs.mkdirSync(path.join('src', '__mocks__'))
+        fs.writeFileSync(path.join('src', '__mocks__', 'test-component.js'), '')
+
         cli(['build'], (err) => {
           expect(err).toNotExist()
           done(err)
