@@ -4,9 +4,9 @@
 - [How can I view the configuration nwb generates?](#how-can-i-view-the-configuration-nwb-generates)
 - [How do I enable CSS Modules?](#how-do-i-enable-css-modules)
 - [What can I configure to reduce bundle size?](#what-can-i-configure-to-reduce-bundle-size)
-- [How can I copy non-JavaScript files when building a React component/library?](#how-can-i-copy-non-javascript-files-when-building-a-react-component-library)
+- [How can I copy non-JavaScript files when building a React component/library?](#how-can-i-copy-non-javascript-files-when-building-a-react-componentlibrary)
 - [How can I use React Hot Loader instead of React Transform?](#how-can-i-use-react-hot-loader-instead-of-react-transform)
-- [How can I debug using VS Code when running an app with nwb?](#how-can-i-debug-using-vs-code-when-running-an-app-with-nwb)
+- [How can I debug using VS Code when using nwb?](#how-can-i-debug-using-vs-code-when-using-nwb)
 
 ---
 
