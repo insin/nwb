@@ -39,9 +39,7 @@ type RuleConfigFactory = (?string, RuleConfig) => ?RuleConfig;
 type ServerConfig = boolean | Object;
 
 const DEFAULT_TERSER_CONFIG = {
-  cache: true,
-  parallel: true,
-  sourceMap: true,
+  extractComments: false,
 }
 
 function createTerserConfig(userWebpackConfig) {
@@ -198,10 +196,6 @@ export function createStyleLoaders(
   let name = loaderConfigName(prefix)
   let styleLoader = createLoader(name('style'), {
     loader: require.resolve('style-loader'),
-    options: {
-      // Only enable style-loader HMR when we're serving a development build
-      hmr: Boolean(server),
-    }
   })
   let loaders = [
     createLoader(name('css'), {
@@ -561,9 +555,10 @@ export function createPlugins(
 
   // Copy static resources
   if (buildConfig.copy || userConfig.copy) {
-    plugins.push(new CopyPlugin(
-      ...getCopyPluginArgs(buildConfig.copy, userConfig.copy)
-    ))
+    const [patterns, options] = getCopyPluginArgs(buildConfig.copy, userConfig.copy)
+    if (patterns.length > 0) {
+      plugins.push(new CopyPlugin(patterns, options))
+    }
   }
 
   // Automatically install missing npm dependencies and add them to package.json
@@ -593,7 +588,7 @@ export function createPlugins(
 function createDefaultPostCSSPlugins(userWebpackConfig) {
   return [
     autoprefixer({
-      browsers: [
+      overrideBrowserslist: [
         '>1%',
         'last 4 versions',
         'Firefox ESR',

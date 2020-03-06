@@ -201,7 +201,7 @@ describe('processUserConfig()', () => {
     })
     it('allows webpack.autoprefixer to be a browser string', () => {
       let config = process({webpack: {autoprefixer: 'test'}})
-      expect(config.webpack.autoprefixer).toEqual({browsers: 'test'})
+      expect(config.webpack.autoprefixer).toEqual({overrideBrowserslist: 'test'})
     })
     it('allows webpack.copy to be an array', () => {
       let config = process({webpack: {copy: ['test']}})

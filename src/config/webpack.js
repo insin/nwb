@@ -63,7 +63,7 @@ export function processWebpackConfig({pluginConfig, report, userConfig}) {
   if ('autoprefixer' in userConfig.webpack) {
     // Convenience: allow Autoprefixer browsers config to be configured as a String
     if (typeOf(autoprefixer) === 'string') {
-      userConfig.webpack.autoprefixer = {browsers: autoprefixer}
+      userConfig.webpack.autoprefixer = {overrideBrowserslist: autoprefixer}
     }
     else if (typeOf(autoprefixer) !== 'object') {
       report.error(

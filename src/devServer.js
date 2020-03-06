@@ -1,4 +1,4 @@
-import opn from 'opn'
+import opn from 'open'
 import webpack from 'webpack'
 import WebpackDevServer from 'webpack-dev-server'
 import merge from 'webpack-merge'
@@ -38,9 +38,9 @@ export default function devServer(webpackConfig, serverConfig, url, cb) {
     if (err) return cb(err)
     if (open) {
       // --open
-      if (typeOf(open) === 'boolean') opn(url)
+      if (typeOf(open) === 'boolean') opn(url, {url: true})
       // --open=firefox
-      else opn(url, {app: open})
+      else opn(url, {app: open, url: true})
     }
   })
 }

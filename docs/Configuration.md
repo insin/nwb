@@ -739,9 +739,7 @@ Any additional options provided will be merged into nwb's defaults, which are:
 
 ```js
 {
-  cache: true,
-  parallel: true,
-  sourceMap: true
+  extractComments: false
 }
 ```
 
