@@ -125,6 +125,7 @@ export function getDefaultHTMLConfig(cwd: string = process.cwd()) {
   // Otherwise provide default variables for the internal template, in case we
   // fall back to it.
   return {
+    lang: 'en',
     mountId: 'app',
     title: require(path.join(cwd, 'package.json')).name,
   }
