@@ -237,3 +237,14 @@ export function unique(strings: string[]): string[] {
   // eslint-disable-next-line
   return Object.keys(strings.reduce((o, s) => (o[s] = true, o), {}))
 }
+
+/**
+ * Removes npm package scope from package name
+ */
+export function formatPackageName(name: string) {
+  const scopedPackageRegex = new RegExp(`^@[a-z0-9][\\w-.]+/[a-z0-9][\\w-.]*`, 'i')
+  if (scopedPackageRegex.test(name)) {
+    return name.split('/')[1]
+  }
+  return name
+}

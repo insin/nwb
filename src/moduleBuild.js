@@ -11,7 +11,7 @@ import {getPluginConfig, getUserConfig} from './config'
 import createBabelConfig from './createBabelConfig'
 import debug from './debug'
 import {UserError} from './errors'
-import {deepToString} from './utils'
+import {deepToString, formatPackageName} from './utils'
 import webpackBuild from './webpackBuild'
 import {createBanner, createExternals, logGzippedFileSizes} from './webpackUtils'
 
@@ -69,7 +69,7 @@ function buildUMD(args, buildConfig, userConfig, cb) {
     babel: buildConfig.babel,
     entry: [userConfig.npm.umd.entry || entry],
     output: {
-      filename: `${pkg.name}.js`,
+      filename: `${formatPackageName(pkg.name)}.js`,
       library: userConfig.npm.umd.global,
       libraryExport: 'default',
       libraryTarget: 'umd',
@@ -99,7 +99,7 @@ function buildUMD(args, buildConfig, userConfig, cb) {
 
     webpackBuildConfig.babel = merge(buildConfig.babel, buildConfig.babelProd || {})
     webpackBuildConfig.devtool = 'source-map'
-    webpackBuildConfig.output.filename = `${pkg.name}.min.js`
+    webpackBuildConfig.output.filename = `${formatPackageName(pkg.name)}.min.js`
     webpackBuildConfig.plugins.terser = true
     webpackBuild(null, args, webpackBuildConfig, (err, stats2) => {
       if (err) {
