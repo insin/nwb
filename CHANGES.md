@@ -3,12 +3,7 @@
 ## Breaking Changes
 
 - Node.js 6 is no longer supported; Node.js 8.9.0 is now the minimum required version, as per nwb's dependencies.
-- Dependencies with (documented) breaking changes:
-  - [copy-webpack-plugin@5.0.0](https://github.com/webpack-contrib/copy-webpack-plugin/blob/master/CHANGELOG.md#breaking-changes)
-  - [css-loader@3.0.0](https://github.com/webpack-contrib/css-loader/blob/master/CHANGELOG.md#breaking-changes)
-  - [file-loader@4.0.0](https://github.com/webpack-contrib/file-loader/blob/master/CHANGELOG.md#400-2019-06-05)
-  - [karma@4.0.0](https://github.com/karma-runner/karma/releases/tag/v4.0.0)
-  - [mocha@6.0.0](https://github.com/mochajs/mocha/blob/master/CHANGELOG.md#boom-breaking-changes)
+
 - Updated to [Babel 7](https://babeljs.io/blog/2018/08/27/7.0.0)
   - [`babel.runtime` config](https://github.com/insin/nwb/blob/master/docs/Configuration.md#runtime-object--false) no longer accepts a `String` to enable an additional, named feature.
 
@@ -17,11 +12,24 @@
   - Support for tests in `*-test.js` files has been removed, as `@babel-core` no longer supports pattern matching them to ignore them when co-located in `src/`.
 
     Rename these to `*.test.js` instead.
+
 - Dropped support for old `--no-hmre` alias to disable Hot Module Replacement, just use `--no-hmr`  instead.
+
+- Dependencies with (documented) breaking changes:
+  - [copy-webpack-plugin@5.0.0](https://github.com/webpack-contrib/copy-webpack-plugin/blob/master/CHANGELOG.md#breaking-changes)
+  - [css-loader@3.0.0](https://github.com/webpack-contrib/css-loader/blob/master/CHANGELOG.md#breaking-changes)
+  - [file-loader@4.0.0](https://github.com/webpack-contrib/file-loader/blob/master/CHANGELOG.md#400-2019-06-05)
+  - [karma@4.0.0](https://github.com/karma-runner/karma/releases/tag/v4.0.0)
+  - [mocha@6.0.0](https://github.com/mochajs/mocha/blob/master/CHANGELOG.md#boom-breaking-changes)
 
 ## Added
 
 - Added [`babel.proposals` config](https://github.com/insin/nwb/blob/master/docs/Configuration.md#proposals-object--false) to configure use of Babel's proposal plugins.
+- Added an `en` property to [`webpack.html` config](https://github.com/insin/nwb/blob/master/docs/Configuration.md#html-object) to set the document language when using nwb's default HTML template [[#520](https://github.com/insin/nwb/pull/520)] [[Muhnad][Muhnad]]
+
+## Fixed
+
+- Fix creation of an extra directory when creating a scoped component's UMD build [[#513](https://github.com/insin/nwb/issues/513)] [[rrapiteanu][rrapiteanu]]
 
 ## Changed
 
@@ -43,7 +51,7 @@
 - babel-plugin-inferno: v5.0.1 → [v5.1.0](https://github.com/infernojs/babel-plugin-inferno/releases)
 - case-sensitive-paths-webpack-plugin: v2.1.2 → [v2.3.0](https://github.com/Urthen/case-sensitive-paths-webpack-plugin/blob/master/CHANGELOG.md#v230)
 - chalk: v2.4.1 → [v3.0.0](https://github.com/chalk/chalk/releases/tag/v3.0.0)
-- copy-webpack-plugin: v4.5.2 → [v5.1.1]https://github.com/webpack-contrib/copy-webpack-plugin/blob/master/CHANGELOG.md#511-2019-12-12)
+- copy-webpack-plugin: v4.5.2 → [v5.1.1](https://github.com/webpack-contrib/copy-webpack-plugin/blob/master/CHANGELOG.md#511-2019-12-12)
 - cross-spawn: v6.0.5 → [v7.0.1](https://github.com/moxystudio/node-cross-spawn/blob/master/CHANGELOG.md#701-2019-10-07)
 - css-loader: v1.0.0 → [v3.4.2](https://github.com/webpack-contrib/css-loader/blob/master/CHANGELOG.md#342-2020-01-10)
 - detect-port: v1.2.3 → [v1.3.0](https://github.com/node-modules/detect-port/releases)
@@ -67,7 +75,7 @@
 - resolve: v1.8.1 → [v1.15.1](https://github.com/browserify/resolve/compare/v1.8.1...v1.15.1)
 - semver: v5.5.1 → [v7.1.3](https://github.com/npm/node-semver/compare/v5.5.1...v7.1.3)
 - style-loader: v0.21.0 → [v1.1.3](https://github.com/webpack-contrib/style-loader/blob/master/CHANGELOG.md#0231-2018-10-08)
-- uglifyjs-webpack-plugin v1.2.7 → [terser-webpack-plugin v1.2.3](https://github.com/webpack-contrib/terser-webpack-plugin#readme)
+- uglifyjs-webpack-plugin v1.2.7 → [terser-webpack-plugin v2.3.5](https://github.com/webpack-contrib/terser-webpack-plugin#readme)
 - url-loader: v1.0.1 → [v2.3.0](https://github.com/webpack-contrib/url-loader/blob/master/CHANGELOG.md#230-2019-11-21)
 - webpack: v4.16.4 → [v4.42.0](https://github.com/webpack/webpack/releases)
 - webpack-dev-middleware: v3.1.3 → [v3.7.2](https://github.com/webpack/webpack-dev-middleware/blob/master/CHANGELOG.md#372-2019-09-28)
@@ -2161,8 +2169,10 @@ First 0.x release.
 [hanford]: https://github.com/hanford
 [jihchi]: https://github.com/jihchi
 [michaelsbradleyjr]: https://github.com/michaelsbradleyjr
+[Muhnad]: https://github.com/Muhnad
 [ngyikp]: https://github.com/ngyikp
 [ntwcklng]: https://github.com/ntwcklng
+[rrapiteanu]: https://github.com/rrapiteanu
 [seanofw]: https://github.com/seanofw
 [stephenwf]: https://github.com/stephenwf
 [totaldis]: https://github.com/totaldis
