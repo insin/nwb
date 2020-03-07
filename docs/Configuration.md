@@ -554,7 +554,7 @@ module.exports = {
 
 If you don't have a template at `src/index.html` or specify one via `template`, nwb will fall back to using a basic template which has the following properties you can configure:
 
-- `lang` - the language of document `<html lang=""`>
+- `lang` - the language of document `<html lang="">`
 
   > Default: `'en'`
 
