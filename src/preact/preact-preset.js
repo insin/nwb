@@ -1,7 +1,10 @@
 module.exports = function() {
   return {
     plugins: [
-      [require.resolve('@babel/plugin-transform-react-jsx'), {pragma: 'h'}]
+      [require.resolve('@babel/plugin-transform-react-jsx'), {
+        pragma: 'h',
+        pragmaFrag: 'Fragment',
+      }]
     ]
   }
 }

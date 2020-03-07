@@ -15,6 +15,8 @@
 
 - Dropped support for old `--no-hmre` alias to disable Hot Module Replacement, just use `--no-hmr`  instead.
 
+- Updated Preact config for Preact X
+
 - Dependencies with (documented) breaking changes:
   - [copy-webpack-plugin@5.0.0](https://github.com/webpack-contrib/copy-webpack-plugin/blob/master/CHANGELOG.md#breaking-changes)
   - [css-loader@3.0.0](https://github.com/webpack-contrib/css-loader/blob/master/CHANGELOG.md#breaking-changes)

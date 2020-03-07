@@ -9,9 +9,9 @@ function getBaseConfig() {
     // Allow compatible React components to be used
     resolve: {
       alias: {
-        'react': 'preact-compat',
-        'react-dom': 'preact-compat',
-        'create-react-class': 'preact-compat/lib/create-react-class',
+        'react': 'preact/compat',
+        'react-dom/test-utils': 'preact/test-utils',
+        'react-dom': 'preact/compat',
       }
     },
   }
@@ -19,10 +19,6 @@ function getBaseConfig() {
 
 function getDependencies() {
   return ['preact']
-}
-
-function getCompatDependencies() {
-  return ['preact-compat']
 }
 
 function getQuickConfig() {
@@ -42,11 +38,7 @@ export default (args: Object) => ({
     return {compat: false}
   },
   getProjectDependencies(answers: Object): string[] {
-    let deps = getDependencies()
-    if (answers.compat) {
-      deps = deps.concat(getCompatDependencies())
-    }
-    return deps
+    return getDependencies()
   },
   getProjectQuestions() {
     let defaults = this.getProjectDefaults()
@@ -54,14 +46,14 @@ export default (args: Object) => ({
       when: () => !('compat' in args),
       type: 'confirm',
       name: 'compat',
-      message: 'Do you want to use preact-compat so you can use React modules?',
+      message: 'Do you want to use preact/compat so you can use React modules?',
       default: defaults.compat,
     }]
   },
   getBuildDependencies: () => [],
   getBuildConfig: getBaseConfig,
   getServeConfig: getBaseConfig,
-  getQuickDependencies: (): string[] => getDependencies().concat(getCompatDependencies()),
+  getQuickDependencies: (): string[] => getDependencies(),
   getQuickBuildConfig: getQuickConfig,
   getQuickServeConfig: getQuickConfig,
   getKarmaTestConfig: getBaseConfig,

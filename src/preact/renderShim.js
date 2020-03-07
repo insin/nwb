@@ -1,15 +1,14 @@
 /* global NWB_QUICK_MOUNT_ID */
 
+// Enable use of Preact Devtools
+if (process.env.NODE_ENV === 'development') {
+  require('preact/debug')
+}
+
 let Preact = require('preact')
 
 let parent = document.getElementById(NWB_QUICK_MOUNT_ID)
-let root = parent.firstChild // If #app already contains elements, hydrate from them (for SSR)
 let vnode = null
-
-if (process.env.NODE_ENV === 'development') {
-  // Enable use of React Developer Tools
-  require('preact/devtools')
-}
 
 function renderEntry(exported) {
   if (exported.default) {
@@ -28,7 +27,7 @@ function renderEntry(exported) {
     // Assumption: the entry module rendered the app
     return
   }
-  root = Preact.render(vnode, parent, root)
+  Preact.render(vnode, parent, parent.firstElementChild)
 }
 
 function init() {

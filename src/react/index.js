@@ -38,15 +38,15 @@ function getBuildConfig(args, options: {useModulePath?: boolean} = {}) {
     }
   }
   else if (args.preact || args['preact-compat']) {
-    // Use the path to preact-compat.js, as using the path to the preact-compat
-    // module picks up the "module" build, which prevents hijacking the render()
-    // function in the render shim.
-    let preactCompathPath = path.join(aliasPath('preact-compat'), 'dist/preact-compat')
+    // Use the path to preact/compat's CommonJS build to avoid picking up the
+    // ES modules build, which prevents hijacking the render() function in the
+    // render shim.
+    let preactCompathPath = path.join(aliasPath('preact'), 'compat/dist/compat')
     config.resolve = {
       alias: {
         'react': preactCompathPath,
+        'react-dom/test-utils': path.join(aliasPath('preact'), 'test-utils'),
         'react-dom': preactCompathPath,
-        'create-react-class': 'preact-compat/lib/create-react-class',
       },
     }
   }
@@ -66,7 +66,7 @@ class ReactConfig {
       return ['inferno', 'inferno-compat', 'inferno-clone-vnode', 'inferno-create-class', 'inferno-create-element']
     }
     else if (this._args.preact || this._args['preact-compat']) {
-      return ['preact', 'preact-compat']
+      return ['preact']
     }
     return []
   }
