@@ -46,7 +46,7 @@ import expect from 'expect'
 
 #### Test Files
 
-In the project skeletons created by nwb's `new` and `init` commands, the sample unit test is in a `*-test.js` file in the `tests/` directory.
+In the project skeletons created by nwb's `new` and `init` commands, the sample unit test is in a `*.test.js` file in the `tests/` directory.
 
 However, the default configuration supports having tests in any file which ends with one of the following suffixes, anywhere underneath a `src/`, `test/` or `tests/` directory:
 

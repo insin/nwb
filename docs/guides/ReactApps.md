@@ -83,7 +83,7 @@ Includes a template for your project's HTML entry point, which will have `<link>
 
 > Gist: any file Webpack is configured to deal with (including stylesheets and images) can be imported as if it were a module; Webpack starts from your app's entry module and walks imports to build up a graph of modules to be built.
 
-**tests/**: nwb will find and run tests in a separate `tests/` directory or co-located with your source code under `src/`, as long as their filenames end with `.test.js`, `-test.js` or `.spec.js` - an example of a basic React component test is provided.
+**tests/**: nwb will find and run tests in a separate `tests/` directory or co-located with your source code under `src/`, as long as their filenames end with `.test.js` or `.spec.js` - an example of a basic React component test is provided.
 
 ---
 

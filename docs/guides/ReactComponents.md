@@ -123,7 +123,7 @@ react-loading-button/
     index.js
   tests/
     .eslintrc
-    index-test.js
+    index.test.js
 ```
 
 **demo/**: Contains a React application you can develop your module against using nwb's development server.
@@ -134,7 +134,7 @@ react-loading-button/
 
 **src/**: Contains your React module's source.
 
-**tests/**: nwb will find and run tests in a separate `tests/` directory or co-located with your source code under `src/`, as long as their filenames end with `.test.js`, `-test.js` or `.spec.js` - an example of a basic React component test is provided.
+**tests/**: nwb will find and run tests in a separate `tests/` directory or co-located with your source code under `src/`, as long as their filenames end with `.test.js` or `.spec.js` - an example of a basic React component test is provided.
 
 ---
 
@@ -263,7 +263,7 @@ export default LoadingButton
 
 nwb provides a default testing setup which uses Karma to run tests written with Mocha and Expect in the headless PhantomJS browser.
 
-> The [Testing documentation](/docs/Testing.md) provides an in-depth overview of what nwb's default testing setup provides (and how to configure things to your liking if you want to), but we'll stick to editing the initial test provided in the React component project skeleton, in `tests/index-test.js`.
+> The [Testing documentation](/docs/Testing.md) provides an in-depth overview of what nwb's default testing setup provides (and how to configure things to your liking if you want to), but we'll stick to editing the initial test provided in the React component project skeleton, in `tests/index.test.js`.
 
 `npm run test:watch` automatically re-runs tests on every change to provide a quick feedback loop while developing, whether you're writing tests up-front, in parallel with implementation or after the fact.
 
