@@ -24,7 +24,7 @@ See the [`eslint-config-jonnybuchanan` README](https://github.com/insin/eslint-c
 
   This takes a few minutes to run and requires network access to install dependencies for tests which create projects.
 
-  The last set of tests check that nwb exits correctly when tests will fail, so you'll see *expected* error output at the end of the run. On a successful test run, the last line will be something along the lines of `147 passing (3m)`.
+  The last set of tests check that nwb exits correctly when tests fail, so you'll see *expected* error output at the end of the run. On a successful test run, the last line will be something along the lines of `147 passing (3m)`.
 
 - `npm run test:coverage` is the same as the above, plus creation of a code coverage report.
 

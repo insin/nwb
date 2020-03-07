@@ -10,10 +10,12 @@ module.exports = {
     env: 45,
     loose: 45,
     plugins: 45,
+    proposals: 45,
     presets: 45,
     removePropTypes: 45,
     reactConstantElements: 45,
     runtime: 45,
+    // TODO Remove - deprecated
     stage: 45,
     config: 45
   },

@@ -6,7 +6,11 @@ import {modulePath} from '../utils'
 function getBaseConfig(): Object {
   return {
     babel: {
-      presets: [require.resolve('babel-preset-react')]
+      presets: [
+        [require.resolve('@babel/preset-react'), {
+          development: process.env.NODE_ENV !== 'production'
+        }]
+      ]
     },
   }
 }
@@ -117,10 +121,14 @@ class ReactConfig {
 
   getServeConfig = () => {
     let config = getBaseConfig()
-    config.babel.presets.push(require.resolve('./react-dev-preset'))
 
-    if (this._args.hmr !== false && this._args.hmre !== false) {
-      config.babel.presets.push(require.resolve('./react-hmre-preset'))
+    if (this._args.hmr !== false) {
+      config.babel.plugins = [
+        [require.resolve('react-refresh/babel'), {
+          skipEnvCheck: Boolean(process.env.NWB_TEST)
+        }]
+      ]
+      config.plugins = {reactRefresh: true}
     }
 
     return config

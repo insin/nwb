@@ -7,9 +7,5 @@ import reactConfig from '../react'
 import type {ErrBack} from '../types'
 
 export default function testReactComponent(args: Object, cb: ErrBack) {
-  karmaServer(args, merge(reactConfig(args).getKarmaTestConfig(), {
-    babel: {
-      stage: 1
-    }
-  }), cb)
+  karmaServer(args, merge(reactConfig(args).getKarmaTestConfig(), {}), cb)
 }

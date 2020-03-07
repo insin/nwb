@@ -169,7 +169,7 @@ Passing an argument for `entry` allows you to customise the entry point for your
 
 **React app/component options:**
 
-- `--no-hmre` - disable use of [React Transform](https://github.com/gaearon/babel-plugin-react-transform) to attempt to automatically handle Hot Module Replacement for React components and display an overlay with `render()` errors - if you want to use HMR, you will have to accept updates manually
+- `--no-hmr` - disable use of [React Refresh Webpack Plugin](https://github.com/pmmmwh/react-refresh-webpack-plugin/#react-refresh-webpack-plugin) to attempt to automatically handle Hot Module Replacement for React components - if you want to use HMR, you will have to accept updates manually
 
 **In Inferno and Preact apps:**
 

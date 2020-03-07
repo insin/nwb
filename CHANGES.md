@@ -1,29 +1,79 @@
 # Unreleased (in `master`)
 
-## Changes
+## Breaking Changes
 
+- Node.js 6 is no longer supported; Node.js 8.9.0 is now the minimum required version, as per nwb's dependencies.
+- Dependencies with (documented) breaking changes:
+  - [copy-webpack-plugin@5.0.0](https://github.com/webpack-contrib/copy-webpack-plugin/blob/master/CHANGELOG.md#breaking-changes)
+  - [css-loader@3.0.0](https://github.com/webpack-contrib/css-loader/blob/master/CHANGELOG.md#breaking-changes)
+  - [file-loader@4.0.0](https://github.com/webpack-contrib/file-loader/blob/master/CHANGELOG.md#400-2019-06-05)
+  - [karma@4.0.0](https://github.com/karma-runner/karma/releases/tag/v4.0.0)
+  - [mocha@6.0.0](https://github.com/mochajs/mocha/blob/master/CHANGELOG.md#boom-breaking-changes)
+- Updated to [Babel 7](https://babeljs.io/blog/2018/08/27/7.0.0)
+  - [`babel.runtime` config](https://github.com/insin/nwb/blob/master/docs/Configuration.md#runtime-object--false) no longer accepts a `String` to enable an additional, named feature.
+
+    Pass an `Object` with plugin options instead.
+
+  - Support for tests in `*-test.js` files has been removed, as `@babel-core` no longer supports pattern matching them to ignore them when co-located in `src/`.
+
+    Rename these to `*.test.js` instead.
+- Dropped support for old `--no-hmre` alias to disable Hot Module Replacement, just use `--no-hmr`  instead.
+
+## Added
+
+- Added [`babel.proposals` config](https://github.com/insin/nwb/blob/master/docs/Configuration.md#proposals-object--false) to configure use of Babel's proposal plugins.
+
+## Changed
+
+- [React Refresh Webpack Plugin](https://github.com/pmmmwh/react-refresh-webpack-plugin) is now used to enable [Fast Refresh](https://github.com/facebook/react/issues/16604#issuecomment-528663101) for React apps, as babel-plugin-react-transform is deprecated and doesn't support Babel 7.
 - Replaced use of `UglifyJsPlugin` with `TerserWebpackPlugin`.
-  - Deprecated `webpack.uglify` config, which has been renamed to [`webpack.terser`](https://github.com/insin/nwb/blob/master/docs/Configuration.md#uglify-object--false).
+  - Deprecated `webpack.uglify` config, which has been renamed to [`webpack.terser`](https://github.com/insin/nwb/blob/master/docs/Configuration.md#terser-object--false).
+- Autoprefixer renamed its `browsers` option to `overrideBrowserslist`, so you will get deprecation warnings if you were using `{browsers: ...}` in [`webpack.autoprefixer` config](https://github.com/insin/nwb/blob/master/docs/Configuration.md#autoprefixer-string--object).
+
+## Deprecated
+
+- `babel.stage` config is deprecated, as Babel's `stage-X` presets were/are being removed in Babel 7 - if you provide it, nwb will warn you and enable Babel proposal plugins equivalent to the current stage they're at.
+
+  Use [`babel.proposals` config](https://github.com/insin/nwb/blob/master/docs/Configuration.md#proposals-object--false) instead if you want to toggle some or all additional proposal plugins on.
 
 ## Dependencies
 
-- autoprefixer: v9.0.2 → [v9.1.5](https://github.com/postcss/autoprefixer/blob/master/CHANGELOG.md#913)
+- autoprefixer: v9.0.2 → [v9.7.4](https://github.com/postcss/autoprefixer/blob/master/CHANGELOG.md#974)
+- babel-plugin-add-module-exports: v0.2.1 → [v1.0.2](https://github.com/lijunle/babel-plugin-add-module-exports/releases/tag/v1.0.2)
 - babel-plugin-inferno: v5.0.1 → [v5.1.0](https://github.com/infernojs/babel-plugin-inferno/releases)
-- file-loader: v1.1.11 → [v2.0.0](https://github.com/webpack-contrib/file-loader/blob/master/CHANGELOG.md#200-2018-08-21)
-- inquirer: v6.0.0 → [v6.2.0](https://github.com/SBoudrias/Inquirer.js/releases)
-- karma: v2.0.0 → [v3.0.0](https://github.com/karma-runner/karma/releases/tag/v3.0.0)
-- karma-webpack: v3.0.0 → [v3.0.5](https://github.com/webpack-contrib/karma-webpack/releases)
-- mini-css-extract-plugin v0.4.1 → [v0.4.3](https://github.com/webpack-contrib/mini-css-extract-plugin/releases)
-- opn: v5.3.0 → [v5.4.0](https://github.com/sindresorhus/opn/compare/v5.3.0...v5.4.0)
+- case-sensitive-paths-webpack-plugin: v2.1.2 → [v2.3.0](https://github.com/Urthen/case-sensitive-paths-webpack-plugin/blob/master/CHANGELOG.md#v230)
+- chalk: v2.4.1 → [v3.0.0](https://github.com/chalk/chalk/releases/tag/v3.0.0)
+- copy-webpack-plugin: v4.5.2 → [v5.1.1]https://github.com/webpack-contrib/copy-webpack-plugin/blob/master/CHANGELOG.md#511-2019-12-12)
+- cross-spawn: v6.0.5 → [v7.0.1](https://github.com/moxystudio/node-cross-spawn/blob/master/CHANGELOG.md#701-2019-10-07)
+- css-loader: v1.0.0 → [v3.4.2](https://github.com/webpack-contrib/css-loader/blob/master/CHANGELOG.md#342-2020-01-10)
+- detect-port: v1.2.3 → [v1.3.0](https://github.com/node-modules/detect-port/releases)
+- figures: v2.0.0 → v3.2.0
+- filesize: v3.6.1 → [v6.1.0](https://github.com/avoidwork/filesize.js/blob/master/CHANGELOG.md#610)
+- file-loader: v1.1.11 → [v4.3.0](https://github.com/webpack-contrib/file-loader/blob/master/CHANGELOG.md#430-2019-11-21)
+- fs-extra: v7.0.0 → [v8.1.0](https://github.com/jprichardson/node-fs-extra/blob/master/CHANGELOG.md#810--2019-06-28)
+- glob: v7.1.3 → [v7.1.6](https://github.com/isaacs/node-glob/compare/v7.1.3...v7.1.6)
+- gzip-size: v5.0.0 → [v5.1.1](https://github.com/sindresorhus/gzip-size/compare/v5.0.0...v5.1.1)
+- inquirer: v6.0.0 → [v7.0.6](https://github.com/SBoudrias/Inquirer.js/releases)
+- karma: v2.0.0 → [v4.4.1](https://github.com/karma-runner/karma/blob/master/CHANGELOG.md#441-2019-10-18)
+- karma-chrome-launcher: v2.2.0 → [v3.1.0](https://github.com/karma-runner/karma-chrome-launcher/blob/master/CHANGELOG.md#310-2019-08-13)
+- karma-coverage: v1.1.2 → [v2.0.1](https://github.com/karma-runner/karma-coverage/blob/master/CHANGELOG.md#201-2019-08-20)
+- karma-webpack: v3.0.0 → [v4.0.2](https://github.com/webpack-contrib/karma-webpack/blob/master/CHANGELOG.md#402-2019-06-08)
+- mini-css-extract-plugin v0.4.1 → [v0.9.0](https://github.com/webpack-contrib/mini-css-extract-plugin/blob/master/CHANGELOG.md#090-2019-12-20)
+- mocha: v5.2.0 → [v7.1.0](https://github.com/mochajs/mocha/blob/master/CHANGELOG.md#710--2020-02-26)
+- opn: v5.3.0 → [open v7.0.2](https://github.com/sindresorhus/open/releases)
+- ora: v3.0.0 → [v4.0.3](https://github.com/sindresorhus/ora/compare/v3.0.0...v4.0.3)
 - postcss-loader: v2.1.6 → [v3.0.0](https://github.com/postcss/postcss-loader/blob/master/CHANGELOG.md#300-2018-08-08) - dropped Node.js 4 support
-- promise: v8.0.1 → v8.0.2
-- style-loader: v0.21.0 → [v0.23.0](https://github.com/webpack-contrib/style-loader/blob/master/CHANGELOG.md#0230-2018-08-27)
-- uglifyjs-webpack-plugin v1.2.7 → [terser-webpack-plugin v1.1.0](https://github.com/webpack-contrib/terser-webpack-plugin#readme)
-- url-loader: v1.0.1 → [v1.1.1](https://github.com/webpack-contrib/url-loader/blob/master/CHANGELOG.md#111-2018-08-17)
-- webpack: v4.16.4 → [v4.20.2](https://github.com/webpack/webpack/releases)
-- webpack-dev-middleware: v3.1.3 → [v3.4.0](https://github.com/webpack/webpack-dev-middleware/releases)
-- webpack-dev-server: v3.1.5 → [v3.1.9](https://github.com/webpack/webpack-dev-server/releases)
-- webpack-hot-middleware: v2.22.3 → [v2.24.2](https://github.com/glenjamin/webpack-hot-middleware/compare/v2.22.3...v2.24.2)
+- promise: v8.0.1 → v8.1.0
+- resolve: v1.8.1 → [v1.15.1](https://github.com/browserify/resolve/compare/v1.8.1...v1.15.1)
+- semver: v5.5.1 → [v7.1.3](https://github.com/npm/node-semver/compare/v5.5.1...v7.1.3)
+- style-loader: v0.21.0 → [v1.1.3](https://github.com/webpack-contrib/style-loader/blob/master/CHANGELOG.md#0231-2018-10-08)
+- uglifyjs-webpack-plugin v1.2.7 → [terser-webpack-plugin v1.2.3](https://github.com/webpack-contrib/terser-webpack-plugin#readme)
+- url-loader: v1.0.1 → [v2.3.0](https://github.com/webpack-contrib/url-loader/blob/master/CHANGELOG.md#230-2019-11-21)
+- webpack: v4.16.4 → [v4.42.0](https://github.com/webpack/webpack/releases)
+- webpack-dev-middleware: v3.1.3 → [v3.7.2](https://github.com/webpack/webpack-dev-middleware/blob/master/CHANGELOG.md#372-2019-09-28)
+- webpack-dev-server: v3.1.5 → [v3.10.3](https://github.com/webpack/webpack-dev-server/blob/master/CHANGELOG.md#3103-2020-02-05)
+- webpack-hot-middleware: v2.22.3 → [v2.25.0](https://github.com/webpack-contrib/webpack-hot-middleware/compare/v2.22.3...v2.25.0)
+- webpack-merge: v4.1.4 → [v4.2.2](https://github.com/survivejs/webpack-merge/blob/master/CHANGELOG.md#422--2019-08-27)
 - whatwg-fetch: v2.0.4 → [v3.0.0](https://github.com/github/fetch/releases/tag/v3.0.0)
 
 # 0.23.0 / 2018-08-03

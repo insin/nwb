@@ -1,7 +1,7 @@
 // @flow
 import expect from 'expect'
 
-import {joinAnd, formatPackageName} from '../src/utils'
+import {formatPackageName, joinAnd, padLines} from '../src/utils'
 import {createBanner, createExternals} from '../src/webpackUtils'
 
 describe('utils', () => {
@@ -26,6 +26,12 @@ describe('utils', () => {
     })
     it('returns the name as is', () => {
       expect(formatPackageName('component')).toEqual('component')
+    })
+  })
+
+  describe('padLines()', () => {
+    it('pads lines with 2 spaces by default', () => {
+      expect(padLines('1\n2\n3\n4')).toEqual('  1\n  2\n  3\n  4')
     })
   })
 })

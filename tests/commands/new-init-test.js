@@ -34,7 +34,7 @@ function reactAppAssertions(dir, name, err, done) {
     'src/react.svg',
     'tests',
     'tests/.eslintrc',
-    'tests/App-test.js',
+    'tests/App.test.js',
   ])
   expect(glob.sync('node_modules/*', {
     cwd: path.resolve(dir)
@@ -68,7 +68,7 @@ function reactComponentAssertions(dir, name, err, done) {
     'src/index.js',
     'tests',
     'tests/.eslintrc',
-    'tests/index-test.js',
+    'tests/index.test.js',
   ])
   expect(glob.sync('node_modules/*', {
     cwd: path.resolve(dir)
@@ -112,7 +112,7 @@ function webAppAssertions(dir, name, err, done) {
     'src/index.js',
     'tests',
     'tests/.eslintrc',
-    'tests/index-test.js',
+    'tests/index.test.js',
   ])
   let pkg = require(path.resolve(dir, 'package.json'))
   expect(pkg.name).toBe(name)
@@ -138,7 +138,7 @@ function webModuleAssertions(dir, name, err, done) {
     'src/index.js',
     'tests',
     'tests/.eslintrc',
-    'tests/index-test.js',
+    'tests/index.test.js',
   ])
   let pkg = require(path.resolve(dir, 'package.json'))
   expect(pkg.name).toBe(name)

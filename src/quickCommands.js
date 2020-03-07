@@ -76,7 +76,9 @@ export function createBuildConfig(args: Object, options: QuickConfigOptions) {
 
   let config: Object = {
     babel: {
-      stage: 0,
+      proposals: {
+        all: true
+      }
     },
     devtool: 'source-map',
     output: {
@@ -137,7 +139,9 @@ export function createServeConfig(args: Object, options: QuickConfigOptions) {
 
   let config: Object = {
     babel: {
-      stage: 0
+      proposals: {
+        all: true
+      }
     },
     output: {
       filename: 'app.js',

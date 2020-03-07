@@ -7,6 +7,7 @@ import CopyPlugin from 'copy-webpack-plugin'
 import HtmlPlugin from 'html-webpack-plugin'
 import MiniCssExtractPlugin from 'mini-css-extract-plugin'
 import NpmInstallPlugin from '@insin/npm-install-webpack-plugin'
+import ReactRefreshPlugin from '@pmmmwh/react-refresh-webpack-plugin'
 import webpack from 'webpack'
 import merge from 'webpack-merge'
 
@@ -39,9 +40,7 @@ type RuleConfigFactory = (?string, RuleConfig) => ?RuleConfig;
 type ServerConfig = boolean | Object;
 
 const DEFAULT_TERSER_CONFIG = {
-  cache: true,
-  parallel: true,
-  sourceMap: true,
+  extractComments: false,
 }
 
 function createTerserConfig(userWebpackConfig) {
@@ -198,10 +197,6 @@ export function createStyleLoaders(
   let name = loaderConfigName(prefix)
   let styleLoader = createLoader(name('style'), {
     loader: require.resolve('style-loader'),
-    options: {
-      // Only enable style-loader HMR when we're serving a development build
-      hmr: Boolean(server),
-    }
   })
   let loaders = [
     createLoader(name('css'), {
@@ -495,6 +490,13 @@ export function createPlugins(
       plugins.push(new webpack.HotModuleReplacementPlugin())
       optimization.noEmitOnErrors = true
     }
+    if (buildConfig.reactRefresh) {
+      // XXX disableRefreshCheck is currently required
+      // See https://github.com/pmmmwh/react-refresh-webpack-plugin/issues/15
+      plugins.push(new ReactRefreshPlugin({
+        disableRefreshCheck: true,
+      }))
+    }
     if (buildConfig.status) {
       plugins.push(new StatusPlugin(buildConfig.status))
     }
@@ -561,9 +563,10 @@ export function createPlugins(
 
   // Copy static resources
   if (buildConfig.copy || userConfig.copy) {
-    plugins.push(new CopyPlugin(
-      ...getCopyPluginArgs(buildConfig.copy, userConfig.copy)
-    ))
+    const [patterns, options] = getCopyPluginArgs(buildConfig.copy, userConfig.copy)
+    if (patterns.length > 0) {
+      plugins.push(new CopyPlugin(patterns, options))
+    }
   }
 
   // Automatically install missing npm dependencies and add them to package.json
@@ -593,7 +596,7 @@ export function createPlugins(
 function createDefaultPostCSSPlugins(userWebpackConfig) {
   return [
     autoprefixer({
-      browsers: [
+      overrideBrowserslist: [
         '>1%',
         'last 4 versions',
         'Firefox ESR',

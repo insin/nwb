@@ -95,8 +95,8 @@ describe('command: test', function() {
     cli(['new', 'web-module', 'test-failure-module', '-f'], err => {
       expect(err).toNotExist('No errors creating new web module for failure test')
       process.chdir(path.join(tmpDir, 'test-failure-module'))
-      let content = fs.readFileSync('./tests/index-test.js', 'utf-8')
-      fs.writeFileSync('./tests/index-test.js', content.replace('Welcome to', 'X'))
+      let content = fs.readFileSync('./tests/index.test.js', 'utf-8')
+      fs.writeFileSync('./tests/index.test.js', content.replace('Welcome to', 'X'))
       cli(['test'], err => {
         expect(err).toExist()
         done()
@@ -108,8 +108,8 @@ describe('command: test', function() {
     cli(['new', 'web-module', 'test-failure-module', '-f'], err => {
       expect(err).toNotExist('No errors creating new web module for failure test')
       process.chdir(path.join(tmpDir, 'test-failure-module'))
-      let content = fs.readFileSync('./tests/index-test.js', 'utf-8')
-      fs.writeFileSync('./tests/index-test.js', content.replace('Welcome to', 'X'))
+      let content = fs.readFileSync('./tests/index.test.js', 'utf-8')
+      fs.writeFileSync('./tests/index.test.js', content.replace('Welcome to', 'X'))
       try {
         execSync(['node', path.join(__dirname, '../../lib/bin/nwb.js'), 'test'].join(' '), {
           stdio: 'inherit'

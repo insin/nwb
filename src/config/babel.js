@@ -1,8 +1,37 @@
+import {validateOptions} from 'babel-preset-proposals'
 import chalk from 'chalk'
 
-import {pluralise as s, typeOf} from '../utils'
+import {padLines, pluralise as s, toSource, typeOf} from '../utils'
 
-const BABEL_RUNTIME_OPTIONS = new Set(['helpers', 'polyfill'])
+// TODO Remove - deprecated
+let warnedAboutStageConfig = false
+const STAGE_3_PROPOSALS = {
+  dynamicImport: true,
+  importMeta: true,
+  classProperties: true,
+  numericSeparator: true,
+  // Actually Stage 4, but still...
+  exportNamespaceFrom: true,
+}
+const STAGE_2_PROPOSALS = {
+  ...STAGE_3_PROPOSALS,
+  decorators: true,
+  functionSent: true,
+  logicalAssignmentOperators: true,
+  throwExpressions: true,
+}
+const STAGE_1_PROPOSALS = {
+  ...STAGE_2_PROPOSALS,
+  exportDefaultFrom: true,
+  pipelineOperator: true,
+  doExpressions: true,
+}
+const PROPOSALS_BY_STAGE = {
+  0: {all: true},
+  1: STAGE_1_PROPOSALS,
+  2: STAGE_2_PROPOSALS,
+  3: STAGE_3_PROPOSALS,
+}
 
 export function processBabelConfig({report, userConfig}) {
   let {
@@ -11,6 +40,7 @@ export function processBabelConfig({report, userConfig}) {
     loose,
     plugins,
     presets,
+    proposals,
     removePropTypes,
     reactConstantElements,
     runtime,
@@ -90,6 +120,24 @@ export function processBabelConfig({report, userConfig}) {
     }
   }
 
+  // proposals
+  if ('proposals' in userConfig.babel) {
+    if (typeOf(proposals) === 'object') {
+      let errors = validateOptions(proposals)
+      if (errors.length) {
+        report.error('babel.proposals', null, errors.join('\n'))
+      }
+    }
+    else if (proposals !== false) {
+      report.error(
+        'babel.proposals',
+        proposals,
+        `Must be an ${chalk.cyan('Object')} (to configure proposal plugins) or ` +
+        `${chalk.cyan('false')} (to disable use of proposal plugins)`
+      )
+    }
+  }
+
   // removePropTypes
   if ('removePropTypes' in userConfig.babel) {
     if (removePropTypes !== false && typeOf(removePropTypes) !== 'object') {
@@ -114,18 +162,26 @@ export function processBabelConfig({report, userConfig}) {
   }
 
   // runtime
-  if ('runtime' in userConfig.babel &&
-      typeOf(runtime) !== 'boolean' &&
-      !BABEL_RUNTIME_OPTIONS.has(runtime)) {
-    report.error(
-      'babel.runtime',
-      runtime,
-      `Must be ${chalk.cyan('Boolean')}, ${chalk.cyan("'helpers'")} or ${chalk.cyan("'polyfill'")}`
-    )
+  if ('runtime' in userConfig.babel) {
+    if (typeOf(runtime) !== 'object' && runtime !== false) {
+      report.error(
+        'babel.runtime',
+        runtime,
+        `Must be an ${chalk.cyan('Object')} (to configure transform-runtime options) or ` +
+        `${chalk.cyan('false')} (to disable use of the runtime-transform plugin)`
+      )
+    }
   }
 
+  // TODO Remove - deprecated
   // stage
   if ('stage' in userConfig.babel) {
+    let hasProposalsConfig = 'proposals' in userConfig.babel
+    let deprecationMessages = [
+      'Deprecated as of nwb v0.24.0, as Babel 7 no longer has preset-stage-X presets',
+      'Use babel.proposals config instead to enable the required proposal plugins',
+    ]
+
     if (typeOf(stage) === 'number') {
       if (stage < 0 || stage > 3) {
         report.error(
@@ -134,14 +190,37 @@ export function processBabelConfig({report, userConfig}) {
           `Must be between ${chalk.cyan(0)} and ${chalk.cyan(3)}`
         )
       }
+      else if (!hasProposalsConfig) {
+        deprecationMessages.push(
+          `For now, nwb will enable proposal plugins corresponding to the final version of preset-stage-${stage}`,
+          `This is equivalent to the following babel.proposals config:`,
+          '',
+          ...padLines(toSource(PROPOSALS_BY_STAGE[stage])).split('\n')
+        )
+        userConfig.babel.proposals = {...PROPOSALS_BY_STAGE[stage]}
+      }
     }
     else if (stage !== false) {
       report.error(
         'babel.stage',
         stage,
-        `Must be a ${chalk.cyan('Number')} between ${chalk.cyan('0')} and ${chalk.cyan('3')} (to choose a stage preset), ` +
+        `Must be a ${chalk.cyan('Number')} between ${chalk.cyan(0)} and ${chalk.cyan(3)} (to choose a stage preset), ` +
         `or ${chalk.cyan('false')} (to disable use of a stage preset)`
       )
+    }
+    else {
+      if (!hasProposalsConfig) {
+        deprecationMessages.push(
+          `For now, nwb will disable use of proposal plugins`,
+          `This is equivalent to configuring ${chalk.cyan('babel.proposals = false')}`
+        )
+        userConfig.babel.proposals = false
+      }
+    }
+
+    if (!warnedAboutStageConfig) {
+      report.deprecated('babel.stage', ...deprecationMessages)
+      warnedAboutStageConfig = true
     }
   }
 
