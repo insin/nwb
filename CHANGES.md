@@ -2,7 +2,7 @@
 
 ## Breaking Changes
 
-- Node.js 6 is no longer supported; Node.js 8.9.0 is now the minimum required version, as per nwb's dependencies.
+- Node.js 6 is no longer supported; Node.js 8.9.0 is now the minimum required version, as per many of nwb's dependencies.
 
 - Updated to [Babel 7](https://babeljs.io/blog/2018/08/27/7.0.0)
   - [`babel.runtime` config](https://github.com/insin/nwb/blob/master/docs/Configuration.md#runtime-object--false) no longer accepts a `String` to enable an additional, named feature.
@@ -13,9 +13,9 @@
 
     Rename these to `*.test.js` instead.
 
-- Dropped support for old `--no-hmre` alias to disable Hot Module Replacement, just use `--no-hmr`  instead.
+- Dropped support for the old `--no-hmre` alias to disable Hot Module Replacement, just use `--no-hmr`  instead.
 
-- Updated Preact config for Preact X
+- Updated Preact config for [Preact X](https://preactjs.com/guide/v10/whats-new).
 
 - Dependencies with (documented) breaking changes:
   - [copy-webpack-plugin@5.0.0](https://github.com/webpack-contrib/copy-webpack-plugin/blob/master/CHANGELOG.md#breaking-changes)
@@ -37,14 +37,16 @@
 
 - [React Refresh Webpack Plugin](https://github.com/pmmmwh/react-refresh-webpack-plugin) is now used to enable [Fast Refresh](https://github.com/facebook/react/issues/16604#issuecomment-528663101) for React apps, as babel-plugin-react-transform is deprecated and doesn't support Babel 7.
 - Replaced use of `UglifyJsPlugin` with `TerserWebpackPlugin`.
-  - Deprecated `webpack.uglify` config, which has been renamed to [`webpack.terser`](https://github.com/insin/nwb/blob/master/docs/Configuration.md#terser-object--false).
-- Autoprefixer renamed its `browsers` option to `overrideBrowserslist`, so you will get deprecation warnings if you were using `{browsers: ...}` in [`webpack.autoprefixer` config](https://github.com/insin/nwb/blob/master/docs/Configuration.md#autoprefixer-string--object).
 
 ## Deprecated
 
-- `babel.stage` config is deprecated, as Babel's `stage-X` presets were/are being removed in Babel 7 - if you provide it, nwb will warn you and enable Babel proposal plugins equivalent to the current stage they're at.
+- Deprecated `babel.stage` config, as Babel's `stage-X` presets were/are being removed in Babel 7 - if you provide it, nwb will warn you and enable Babel proposal plugins equivalent to the current stage they're at.
 
   Use [`babel.proposals` config](https://github.com/insin/nwb/blob/master/docs/Configuration.md#proposals-object--false) instead if you want to toggle some or all additional proposal plugins on.
+
+- Deprecated `webpack.uglify` config, which has been renamed to [`webpack.terser`](https://github.com/insin/nwb/blob/master/docs/Configuration.md#terser-object--false).
+
+- Autoprefixer renamed its `browsers` option to `overrideBrowserslist`, so you will get deprecation warnings if you were using `{browsers: ...}` in [`webpack.autoprefixer` config](https://github.com/insin/nwb/blob/master/docs/Configuration.md#autoprefixer-string--object).
 
 ## Dependencies
 

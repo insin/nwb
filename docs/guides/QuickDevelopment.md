@@ -51,7 +51,7 @@ To serve this for development use `nwb preact run`, which will install essential
 
 ```sh
 $ nwb preact run Lightbulb.js
-✔ Installing preact and preact-compat
+✔ Installing preact
 Starting Webpack compilation...
 Compiled successfully in 3717 ms.
 
@@ -233,7 +233,7 @@ Inferno and Preact both provide compatibility layers which simulate React APIs a
 
 #### React Compatible Builds with `--inferno` or `--preact`
 
-To try this out with some React code you've written, you can pass an `--inferno` flag for a build which uses [`inferno-compat`](https://infernojs.org/docs/guides/switching-to-inferno) or a `--preact` flag for a build which uses [`preact-compat`](https://preactjs.com/guide/switching-to-preact).
+To try this out with some React code you've written, you can pass an `--inferno` flag for a build which uses [`inferno-compat`](https://infernojs.org/docs/guides/switching-to-inferno) or a `--preact` flag for a build which uses [`preact/compat`](https://preactjs.com/guide/v10/switching-to-preact) .
 
 If your code is compatible, these builds offer an easy way to take a large chunk off the size of the final bundle, and may even provide a performance boost.
 
@@ -247,7 +247,7 @@ File size after gzip:
 ```
 ```sh
 $ nwb react build hello.js --preact
-✔ Installing preact and preact-compat
+✔ Installing preact
 ✔ Cleaning app
 ✔ Building Preact (React compat) app
 
@@ -312,7 +312,7 @@ export default <div>
 ```
 ```sh
 $ nwb inferno run idea.js
-✔ Installing inferno, inferno-component and inferno-compat
+✔ Installing inferno, inferno-compat, inferno-clone-vnode, inferno-create-class and inferno-create-element
 Starting Webpack compilation...
 Compiled successfully in 3595 ms.
 
@@ -348,7 +348,7 @@ When the rendering shim detects that one of these has been exported from the pro
 
 #### React Rendering Shim
 
-`nwb react run`'s configuration uses [React Refresh Webpack Plugin](https://github.com/pmmmwh/react-refresh-webpack-plugin/#react-refresh-webpack-plugin) to enable Fast Refresh for React components.
+`nwb react run`'s configuration uses [React Refresh Webpack Plugin](https://github.com/pmmmwh/react-refresh-webpack-plugin/#react-refresh-webpack-plugin) to enable [Fast Refresh](https://github.com/facebook/react/issues/16604#issuecomment-528663101) for React components.
 
 > To disable this, pass a `--no-hmr` flag.
 

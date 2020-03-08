@@ -27,7 +27,7 @@ Installing nwb provides the following commands:
 - [Project Type-specific Commands](#project-type-specific-commands)
 - [`nwb check-config`](#nwb-check-config-command)
 
-- [`nwb react`, `nwb inferno`, `nwb preact` and `nwb web`](#nwb-react-nwb-inferno-and-nwb-preact) - quick development
+- [`nwb react`, `nwb inferno`, `nwb preact` and `nwb web`](#nwb-react-nwb-inferno-and-nwb-preact) - quick development commands
   - See the [Quick Development with nwb](/docs/guides/QuickDevelopment.md#quick-development-with-nwb) guide
 
 ## `nwb`
@@ -227,9 +227,9 @@ Disable creation of `vendor.js` and `vendor.css` files for dependencies imported
 
 #### React app builds
 
-In production mode builds, the Babel [react-remove-prop-types](https://github.com/oliviertassinari/babel-plugin-transform-react-remove-prop-types) transform will be used.
+In production mode builds, the Babel [`react-remove-prop-types`](https://github.com/oliviertassinari/babel-plugin-transform-react-remove-prop-types) transform will be used.
 
-When building React apps, you can also pass a `--preact` flag to configure Webpack to use [Preact](https://preactjs.com/) via the [`preact-compat`](https://github.com/developit/preact-compat#readme) module, or an `--inferno` flag to configure Webpack to use [Inferno](https://infernojs.org/) via the [`inferno-compat`](https://github.com/infernojs/inferno/tree/master/packages/inferno-compat#readme) module.
+When building React apps, you can also pass a `--preact` flag to configure Webpack to use [Preact](https://preactjs.com/) via [`preact/compat`](https://preactjs.com/guide/v10/switching-to-preact) module, or an `--inferno` flag to configure Webpack to use [Inferno](https://infernojs.org/) via the [`inferno-compat`](https://github.com/infernojs/inferno/tree/master/packages/inferno-compat#readme) module.
 
 If your app and its dependencies are compatible, this can be a quick and easy way to reduce the size of your app.
 
