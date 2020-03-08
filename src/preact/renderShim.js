@@ -8,6 +8,7 @@ if (process.env.NODE_ENV === 'development') {
 let Preact = require('preact')
 
 let parent = document.getElementById(NWB_QUICK_MOUNT_ID)
+let root = parent.firstElementChild
 let vnode = null
 
 function renderEntry(exported) {
@@ -27,7 +28,7 @@ function renderEntry(exported) {
     // Assumption: the entry module rendered the app
     return
   }
-  Preact.render(vnode, parent, parent.firstElementChild)
+  root = Preact.render(vnode, parent, root)
 }
 
 function init() {
