@@ -37,6 +37,7 @@
 
 - [React Refresh Webpack Plugin](https://github.com/pmmmwh/react-refresh-webpack-plugin) is now used to enable [Fast Refresh](https://github.com/facebook/react/issues/16604#issuecomment-528663101) for React apps, as babel-plugin-react-transform is deprecated and doesn't support Babel 7.
 - Replaced use of `UglifyJsPlugin` with `TerserWebpackPlugin`.
+- React compatibility is now always configured for Preact apps, as `preact/compat` is now part of the `preact` module.
 
 ## Deprecated
 

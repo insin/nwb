@@ -35,20 +35,13 @@ function getQuickConfig() {
 export default (args: Object) => ({
   getName: () => 'Preact',
   getProjectDefaults() {
-    return {compat: false}
+    return {}
   },
-  getProjectDependencies(answers: Object): string[] {
+  getProjectDependencies(): string[] {
     return getDependencies()
   },
   getProjectQuestions() {
-    let defaults = this.getProjectDefaults()
-    return [{
-      when: () => !('compat' in args),
-      type: 'confirm',
-      name: 'compat',
-      message: 'Do you want to use preact/compat so you can use React modules?',
-      default: defaults.compat,
-    }]
+    return null
   },
   getBuildDependencies: () => [],
   getBuildConfig: getBaseConfig,

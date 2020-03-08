@@ -38,10 +38,7 @@ function getBuildConfig(args, options: {useModulePath?: boolean} = {}) {
     }
   }
   else if (args.preact || args['preact-compat']) {
-    // Use the path to preact/compat's CommonJS build to avoid picking up the
-    // ES modules build, which prevents hijacking the render() function in the
-    // render shim.
-    let preactCompathPath = path.join(aliasPath('preact'), 'compat/dist/compat')
+    let preactCompathPath = path.join(aliasPath('preact'), 'compat')
     config.resolve = {
       alias: {
         'react': preactCompathPath,
