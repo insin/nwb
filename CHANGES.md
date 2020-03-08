@@ -1,4 +1,4 @@
-# Unreleased (in `master`)
+# 0.24.0 / 2020-03-08 ♀️
 
 ## Breaking Changes
 
