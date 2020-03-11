@@ -4,6 +4,12 @@
 
 - Fixed copying of co-located `.test.js`/`.spec.js` files when building a React component or web module by also passing the new `--no-copy-ignored` flag when calling @babel/cli [[#529](https://github.com/insin/nwb/pull/529)]
 
+## Dependencies
+
+- inquirer: v7.0.6 → [v7.1.0](https://github.com/SBoudrias/Inquirer.js/compare/inquirer@7.0.6...inquirer@7.1.0)
+- minimist v1.2.0 → [v1.2.4](https://github.com/substack/minimist/compare/1.2.0...1.2.4) - security fix
+- open: v7.0.2 → [v7.0.3](https://github.com/sindresorhus/open/releases/tag/v7.0.3)
+
 # 0.24.1 / 2020-03-11
 
 ## Fixed
