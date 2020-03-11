@@ -1,8 +1,14 @@
+# Unreleased (in `master`)
+
+## Fixed
+
+- Fixed copying of co-located `.test.js`/`.spec.js` files when building a React component or web module by also passing the new `--no-copy-ignored` flag when calling @babel/cli [[#529](https://github.com/insin/nwb/pull/529)]
+
 # 0.24.1 / 2020-03-11
 
 ## Fixed
 
-- Fixed serving the demo app for a React component.
+- Fixed serving the demo app for a React component [[#542](https://github.com/insin/nwb/pull/542)]
 - Fixed Fast Refresh for the default React component demo app by exporting the `Demo` component in the template.
 
 # 0.24.0 / 2020-03-08 ♀️

@@ -34,7 +34,7 @@ function runBabel(name, {copyFiles, outDir, src}, buildBabelConfig, userConfig, 
 
   let args = [src, '--out-dir', outDir, '--quiet']
   if (copyFiles) {
-    args.push('--copy-files')
+    args.push('--copy-files', '--no-copy-ignored')
   }
 
   fs.writeFile('.babelrc', JSON.stringify(babelConfig, null, 2), (err) => {
