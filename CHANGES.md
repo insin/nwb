@@ -1,3 +1,5 @@
+# 0.24.1 / 2020-03-11
+
 ## Fixed
 
 - Fixed serving the demo app for a React component.
