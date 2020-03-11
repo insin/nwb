@@ -1,3 +1,8 @@
+## Fixed
+
+- Fixed serving the demo app for a React component.
+- Fixed Fast Refresh for the default React component demo app by exporting the `Demo` component in the template.
+
 # 0.24.0 / 2020-03-08 ♀️
 
 ## Breaking Changes

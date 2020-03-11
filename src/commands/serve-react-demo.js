@@ -34,7 +34,7 @@ export default function serveReactDemo(args, cb) {
 
   if (args.hmr !== false) {
     config.babel.plugins = [require.resolve('react-refresh/babel')]
-    config.plugins = {reactRefresh: true}
+    config.plugins.reactRefresh = true
   }
 
   if (directoryExists('demo/public')) {
