@@ -1,4 +1,4 @@
-# Unreleased (in `master`)
+# 0.24.2 / 2020-03-12
 
 ## Fixed
 
