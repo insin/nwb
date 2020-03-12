@@ -34,7 +34,13 @@ export default function devServer(webpackConfig, serverConfig, url, cb) {
   debug('webpack dev server options: %s', deepToString(webpackDevServerOptions))
 
   let server = new WebpackDevServer(compiler, webpackDevServerOptions)
+
+  // XXX Temporarily replace console.info() to prevent WDS startup logging which
+  //     is explicitly done at the info level when the quiet option is set.
+  let info = console.info
+  console.info = () => {}
   server.listen(port, host, (err) => {
+    console.info = info
     if (err) return cb(err)
     if (open) {
       // --open

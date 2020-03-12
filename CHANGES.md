@@ -1,3 +1,9 @@
+# Unreleased (in `master`)
+
+## Changed
+
+- Added a temporary hack to bypass [startup info logging](https://github.com/webpack/webpack-dev-server/blob/50c09a4b64c013cca0acb6013bdaa28d0f342149/lib/utils/status.js#L9-L16) Webpack Dev Server currently does even when its `quiet` option is set.
+
 # 0.24.2 / 2020-03-12
 
 ## Fixed
