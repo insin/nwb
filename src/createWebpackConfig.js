@@ -536,13 +536,21 @@ export function createPlugins(
     }))
     optimization.minimize = buildConfig.terser !== false && userConfig.terser !== false
     if (buildConfig.terser !== false && userConfig.terser !== false) {
-      optimization.minimizer = [{
-        apply(compiler: any) {
-          // Lazy load the terser plugin
+      optimization.minimizer = [
+        (compiler: any) => {
           let TerserPlugin = require('terser-webpack-plugin')
+          let OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
           new TerserPlugin(createTerserConfig(userConfig)).apply(compiler)
+          new OptimizeCSSAssetsPlugin({
+            cssProcessorOptions: {
+              map: {
+                inline: false,
+                annotation: true,
+              }
+            }
+          }).apply(compiler)
         }
-      }]
+      ]
     }
   }
 
