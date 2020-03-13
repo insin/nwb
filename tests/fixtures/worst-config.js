@@ -15,8 +15,6 @@ module.exports = {
     removePropTypes: 45,
     reactConstantElements: 45,
     runtime: 45,
-    // TODO Remove - deprecated
-    stage: 45,
     config: 45
   },
   devServer: 45,

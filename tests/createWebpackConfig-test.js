@@ -36,8 +36,8 @@ describe('createWebpackConfig()', () => {
     it('excludes node_modules from babel-loader', () => {
       expect(config.module.rules[0].exclude.test('node_modules')).toBe(true)
     })
-    it('adds default polyfills to the entry chunk', () => {
-      expect(config.entry).toEqual([require.resolve('../polyfills'), 'index.js'])
+    it('uses entry config', () => {
+      expect(config.entry).toEqual(['index.js'])
     })
   })
 
@@ -63,13 +63,6 @@ describe('createWebpackConfig()', () => {
         .toContain('css-loader')
         .toContain('postcss-loader')
         .toContain('url-loader')
-    })
-  })
-
-  context('with polyfill=false config', () => {
-    let config = createWebpackConfig({entry: ['index.js'], polyfill: false})
-    it('skips default polyfilling', () => {
-      expect(config.entry).toEqual(['index.js'])
     })
   })
 

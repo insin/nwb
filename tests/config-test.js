@@ -67,15 +67,6 @@ describe('processUserConfig()', () => {
     it('config file has an invalid type', () => {
       check({type: 'invalid'}, 'type', /Must be/)
     })
-    // TODO Remove - deprecated
-    it('babel.stage is not a number, or falsy', () => {
-      check({babel: {stage: []}}, 'babel.stage', /Must be/)
-    })
-    // TODO Remove - deprecated
-    it('babel.stage is out of bounds', () => {
-      check({babel: {stage: -1}}, 'babel.stage', /Must be/)
-      check({babel: {stage: 4}}, 'babel.stage', /Must be/)
-    })
     it('babel.plugins is not an array', () => {
       check({babel: {plugins: {}}}, 'babel.plugins', /Must be/)
     })

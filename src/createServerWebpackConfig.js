@@ -15,7 +15,7 @@ function getHMRClientEntries(args: Object, serverConfig: ?ServerConfig): string[
   if (serverConfig == null) {
     let hotMiddlewareOptions = args.reload ? '?reload=true' : ''
     return [
-      // Polyfill EventSource for IE, as webpack-hot-middleware/client uses it
+      // Polyfill EventSource for IE11, as webpack-hot-middleware/client uses it
       require.resolve('eventsource-polyfill'),
       require.resolve('webpack-hot-middleware/client') + hotMiddlewareOptions,
     ]

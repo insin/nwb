@@ -55,7 +55,6 @@ Commands:
       ${opt('--mount-id')}     id for the <div> in the default HTML ${opt('[default: app]')}
       ${opt('--no-fallback')}  disable serving of the index page from any path
       ${opt('--no-reload')}    disable auto reloading on changes
-      ${opt('--no-polyfill')}  disable inclusion of default polyfills
       ${opt('--port')}         port to run the dev server on ${opt('[default: 3000]')}
       ${opt('--title')}        contents for <title> ${opt('[default: Web App]')}
 
@@ -68,7 +67,6 @@ Commands:
 
     Options:
       ${opt('--mount-id')}     id for the <div> in the default HTML ${opt('[default: app]')}
-      ${opt('--no-polyfill')}  disable bundling of default polyfills
       ${opt('--title')}        contents for <title> ${opt('[default: Web App]')}
       ${opt('--vendor')}       create a 'vendor' bundle for node_modules/ modules
 `)

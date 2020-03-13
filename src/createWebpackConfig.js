@@ -339,7 +339,7 @@ export function createRules(
     createRule('babel', {
       test: /\.js$/,
       loader: require.resolve('babel-loader'),
-      exclude: process.env.NWB_TEST ? /(node_modules|nwb[\\/]polyfills\.js$)/ : /node_modules/,
+      exclude: /node_modules/,
       options: {
         // Don't look for .babelrc files
         babelrc: false,
@@ -659,19 +659,6 @@ export function getCompatConfig(userCompatConfig: Object = {}): ?Object {
 }
 
 /**
- * Add default polyfills to the head of the entry array.
- */
-function addPolyfillsToEntry(entry) {
-  if (typeOf(entry) === 'array') {
-    entry.unshift(require.resolve('../polyfills'))
-  }
-  else {
-    // Assumption: there will only be one entry point, naming the entry chunk
-    entry[Object.keys(entry)[0]].unshift(require.resolve('../polyfills'))
-  }
-}
-
-/**
  * Create a webpack config with a curated set of default rules suitable for
  * creating a static build (default) or serving an app with hot reloading.
  */
@@ -691,7 +678,6 @@ export default function createWebpackConfig(
     babel: buildBabelConfig = {},
     entry,
     output: buildOutputConfig,
-    polyfill: buildPolyfill,
     plugins: buildPluginConfig = {},
     resolve: buildResolveConfig = {},
     rules: buildRulesConfig = {},
@@ -737,10 +723,6 @@ export default function createWebpackConfig(
   }
 
   if (entry) {
-    // Add default polyfills to the entry chunk unless configured not to
-    if (buildPolyfill !== false && userConfig.polyfill !== false) {
-      addPolyfillsToEntry(entry)
-    }
     webpackConfig.entry = entry
   }
 

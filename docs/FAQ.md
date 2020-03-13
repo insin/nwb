@@ -63,10 +63,6 @@ If you only need CSS Modules for some of the stylesheets you'll be importing, yo
 
 ### What can I configure to reduce bundle size?
 
-#### Disable default polyfills
-
-If you don't need the `Promise`, `fetch` and `Object.assign` polyfills nwb provides by default, configuring [`polyfill: false`](/docs/Configuration.md#polyfill-boolean) (or passing a [`--no-polyfill` flag](/docs/guides/QuickDevelopment.md#options-for-run-and-build-commands) when using Quick Development commands) will shave ~4KB off the gzipped vendor bundle.
-
 #### Enable cherry-picking for destructuring imports
 
 If you're using destructuring imports with libraries like React Router and React Bootstrap (e.g. `import {Button} from 'react-bootstrap'`), you're bundling the whole library, instead of just the bits you need.

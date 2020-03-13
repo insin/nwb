@@ -136,7 +136,7 @@ module.exports = {
 
 #### Automatic Babel Polyfill
 
-A context module is commonly used to load polyfills to allow tests to run in browsers missing certain features, but you don't need to worry about that if you were just going to use `babel-polyfill` - nwb automatically injects Babel's polyfill into Karma tests for you.
+A context module is commonly used to load polyfills to allow tests to run in browsers missing certain features, but you don't need to worry about that if you were just going to use `@babel/polyfill` - nwb automatically injects Babel's polyfill into Karma tests for you.
 
 #### Configuring Testing Libraries
 

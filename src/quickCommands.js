@@ -119,10 +119,6 @@ export function createBuildConfig(args: Object, options: QuickConfigOptions) {
     }
   }
 
-  if (args.polyfill === false || args.polyfills === false) {
-    config.polyfill = false
-  }
-
   return merge(config, extraConfig)
 }
 
@@ -176,10 +172,6 @@ export function createServeConfig(args: Object, options: QuickConfigOptions) {
         ...renderShimAliases,
       }
     }
-  }
-
-  if (args.polyfill === false || args.polyfills === false) {
-    config.polyfill = false
   }
 
   return merge(config, extraConfig)

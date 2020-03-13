@@ -118,10 +118,6 @@ Don't use a rendering shim, run the provided entry module directly - see [Opting
 
 The default HTML template provided contains a `<div>` which the app is rendered into, with a default `id` of `'app'`. You can change the `id` with this setting.
 
-#### `--no-polyfill`
-
-Disable inclusion of nwb's default polyfills for `Promise`, `fetch()` and `Object.assign()` - you can use this to shave a few KB off the final bundle size if you're not using these features, are only supporting browsers which support them natively, or would prefer to provide your own polyfills, etc.
-
 #### `--title`
 
 Contents for `<title>` - defaults to the type of app you're serving, e.g. `'Preact App'`
@@ -177,7 +173,6 @@ Create a build of a React project which uses Inferno or Preact as the runtime vi
   - Decorators.
   - Export extensions.
 
-- Polyfills for `Promise`,  `fetch()` and `Object.assign()`, which can be disabled with a `--no-polyfill` flag if you don’t need them or want to provide your own.
 - Import images and stylesheets into JavaScript like any other module, to be handled by Webpack as part of its build.
 
   ```js

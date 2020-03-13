@@ -6,8 +6,6 @@ import {joinAnd, pluralise as s, typeOf} from '../utils'
 
 const DEFAULT_STYLE_LOADERS = new Set(['css', 'postcss'])
 
-let warnedAboutUglify = false
-
 export function processWebpackConfig({pluginConfig, report, userConfig}) {
   let {
     aliases,
@@ -23,7 +21,6 @@ export function processWebpackConfig({pluginConfig, report, userConfig}) {
     rules,
     styles,
     terser,
-    uglify,
     extra,
     config,
     ...unexpectedConfig
@@ -325,22 +322,6 @@ export function processWebpackConfig({pluginConfig, report, userConfig}) {
       })
       if (!error) {
         prepareWebpackStyleConfig(styles)
-      }
-    }
-  }
-
-  // TODO Deprecated - remove
-  // uglify
-  if ('uglify' in userConfig.webpack) {
-    if (!warnedAboutUglify) {
-      report.deprecated(
-        'webpack.uglify',
-        `This setting has been renamed to ${chalk.cyan('webpack.terser')} as of nwb v0.24`
-      )
-      warnedAboutUglify = true
-      if (!('terser' in userConfig.webpack)) {
-        userConfig.webpack.terser = uglify
-        terser = uglify
       }
     }
   }

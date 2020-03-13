@@ -116,6 +116,8 @@ export function getProjectType(args = {}) {
   return userConfig.type
 }
 
+let warnedAboutPolyfillConfig = false
+
 /**
  * Validate user config and perform any supported transformations to it.
  */
@@ -160,12 +162,15 @@ export function processUserConfig({
     report.error('type', userConfig.type, `Must be one of: ${joinAnd(Array.from(PROJECT_TYPES), 'or')}`)
   }
 
-  if ('polyfill' in userConfig && typeOf(polyfill) !== 'boolean') {
-    report.error(
-      'polyfill',
-      `type: ${typeOf(polyfill)}`,
-      `Must be ${chalk.cyan('Boolean')}`
-    )
+  // TODO Deprecated - remove
+  if ('polyfill' in userConfig) {
+    if (!warnedAboutPolyfillConfig) {
+      report.deprecated(
+        'polyfill',
+        'Default polyfills were removed in nwb v0.25.0, so polyfill config is no longer supported'
+      )
+      warnedAboutPolyfillConfig = true
+    }
   }
 
   let argumentOverrides = {}

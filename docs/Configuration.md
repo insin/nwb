@@ -68,7 +68,6 @@ The configuration object can include the following properties:
 
 - nwb Configuration
   - [`type`](#type-string-required-for-generic-build-commands)
-  - [`polyfill`](#polyfill-boolean) - control automatic polyfilling
 - [Babel Configuration](#babel-configuration)
   - [`babel`](#babel-object)
   - [`babel.cherryPick`](#cherrypick-string--arraystring) - enable cherry-picking for destructured `import` statements
@@ -139,18 +138,6 @@ If configured, it must be one of the following:
 - `'react-component'`
 - `'web-app'`
 - `'web-module'`
-
-#### `polyfill`: `Boolean`
-
-For apps, nwb will provide polyfills for `Promise`, `fetch` and `Object.assign` by default.
-
-To disable this, set `polyfill` to `false`:
-
-```js
-module.exports = {
-  polyfill: false
-}
-```
 
 ### Babel Configuration
 
@@ -377,10 +364,6 @@ module.exports = {
   }
 }
 ```
-
-##### `stage`: `Number | false`
-
-*deprecated in v0.24.0 - use [`babel.proposals` config](#proposals-object--false) instead*
 
 ##### `config`: `Function`
 

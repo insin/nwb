@@ -148,7 +148,6 @@ Without any configuration, the main features you get are:
 - Use proposed JavaScript features which make writing React apps more convenient:
   - Class properties, for avoiding boilerplate when writing classes.
   - Decorators, for libraries which are intended to be used with them.
-- Polyfills for  `Promise`,  `fetch` and `Object.assign`.
 - Import stylesheets (and font resources), images and JSON into JavaScript, to be handled by Webpack.
 - Autoprefixed CSS, so you don't need to write browser prefixes.
 

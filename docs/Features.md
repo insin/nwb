@@ -5,7 +5,6 @@
 - Provides tooling for [React](https://facebook.github.io/react/) apps and components, [Preact](https://preactjs.com/) apps, [Inferno](https://infernojs.org/) apps, and vanilla JS web apps and npm modules.
 - Use modern JavaScript features, and JSX.
 - Use proposed JavaScript features now.
-- Default polyfills and configuration allow use of [`Promise`](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Promise) (with [rejection tracking](https://www.2ality.com/2016/04/unhandled-rejections.html) enabled), [`fetch()`](https://developer.mozilla.org/en/docs/Web/API/Fetch_API), [`async`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function)/[`await`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/await), [generators](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Statements/function*) and [`Object.assign()`](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Object/assign) in any browser.
 - Import CSS (and font resources) and images to be managed by Webpack.
 - [Autoprefixed](https://github.com/postcss/autoprefixer#autoprefixer-) CSS, so you don't need to write browser prefixes; you can also configure your own [PostCSS](https://postcss.org/) plugins.
 - Plugin modules which add support for the [Sass](https://github.com/insin/nwb-sass), [Less](https://github.com/insin/nwb-less) and [Stylus](https://github.com/insin/nwb-stylus) stylesheet languages.

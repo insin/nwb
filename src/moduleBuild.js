@@ -76,7 +76,6 @@ function buildUMD(args, buildConfig, userConfig, cb) {
       path: path.resolve('umd'),
     },
     externals: createExternals(userConfig.npm.umd.externals),
-    polyfill: false,
     plugins: {
       banner: createBanner(pkg),
       terser: false,
