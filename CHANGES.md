@@ -5,6 +5,10 @@
 - Added a temporary hack to bypass [startup info logging](https://github.com/webpack/webpack-dev-server/blob/50c09a4b64c013cca0acb6013bdaa28d0f342149/lib/utils/status.js#L9-L16) Webpack Dev Server currently does even when its `quiet` option is set.
 - CSS minification hasn't been enabled since nwb v0.23.0 as css-loader v1.0.0 stopped doing it by default - re-enable it using [Optimize CSS Assets Webpack Plugin](https://github.com/NMFR/optimize-css-assets-webpack-plugin) [[#467](https://github.com/insin/nwb/issues/467)]
 
+## Dependencies
+
+- minimist v1.2.4 → v1.2.5
+
 # 0.24.2 / 2020-03-12
 
 ## Fixed
