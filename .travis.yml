@@ -24,4 +24,3 @@ branches:
   only:
     - master
     - next
-    - babel7
