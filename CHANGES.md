@@ -1,4 +1,4 @@
-# Unreleased (in `master`)
+# 0.24.3 / 2020-03-14
 
 ## Changed
 
@@ -8,6 +8,7 @@
 ## Dependencies
 
 - minimist v1.2.4 → v1.2.5
+- optimize-css-assets-webpack-plugin v5.0.3
 
 # 0.24.2 / 2020-03-12
 
