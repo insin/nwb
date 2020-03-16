@@ -1,4 +1,5 @@
 // @flow
+import fs from 'fs'
 import path from 'path'
 
 import runSeries from 'run-series'
@@ -39,6 +40,9 @@ type QuickAppConfig = {
 export function build(args: Object, appConfig: QuickAppConfig, cb: ErrBack) {
   if (args._.length === 1) {
     return cb(new UserError('An entry module must be specified.'))
+  }
+  if (!fs.existsSync(args._[1])) {
+    return cb(new UserError(`${args._[1]} does not exist.`))
   }
 
   let dist = args._[2] || 'dist'
@@ -186,6 +190,9 @@ export function createServeConfig(args: Object, options: QuickConfigOptions) {
 export function serve(args: Object, appConfig: QuickAppConfig, cb: ErrBack) {
   if (args._.length === 1) {
     return cb(new UserError('An entry module must be specified.'))
+  }
+  if (!fs.existsSync(args._[1])) {
+    return cb(new UserError(`${args._[1]} does not exist.`))
   }
 
   runSeries([

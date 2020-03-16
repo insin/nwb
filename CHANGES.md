@@ -1,3 +1,9 @@
+# Unreleased (in `master`)
+
+## Changed
+
+- Validate that the entry module for quick commands (`nwb react`, `nwb preact`, `nwb inferno`) exists, to avoid a confusing error message [[#441](https://github.com/insin/nwb/issues/441)]
+
 # 0.24.3 / 2020-03-14
 
 ## Changed
