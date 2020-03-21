@@ -2,7 +2,21 @@
 
 ## Changed
 
+- Updated to [Babel v7.9.0](https://babeljs.io/blog/2020/03/16/7.9.0).
 - Validate that the entry module for quick commands (`nwb react`, `nwb preact`, `nwb inferno`) exists, to avoid a confusing error message [[#441](https://github.com/insin/nwb/issues/441)]
+
+## Dependencies
+
+- @babel/core: v7.8.7 → v7.9.0
+- @babel/plugin-transform-react-constant-elements: v7.8.3 → v7.9.0
+- @babel/plugin-transform-react-jsx: v7.8.3 → v7.9.1
+- @babel/plugin-transform-runtime: v7.8.3 → v7.9.0
+- @babel/preset-env: v7.8.7 → v7.9.0
+- @babel/preset-react: v7.8.3 → v7.9.1
+- @babel/runtime: v7.8.7 → v7.9.0
+- babel-loader: v8.0.6 → [v8.1.0](https://github.com/babel/babel-loader/releases/tag/v8.1.0)
+- mocha: v7.1.0 → [v7.1.1](https://github.com/mochajs/mocha/blob/master/CHANGELOG.md#711--2020-03-18)
+- react-refresh: v0.8.0 → v0.8.1
 
 # 0.24.3 / 2020-03-14
 
