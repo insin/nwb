@@ -85,6 +85,15 @@ describe('processUserConfig()', () => {
     it('babel.proposals is not an object or false', () => {
       check({babel: {proposals: /invalid/}}, 'babel.proposals', /Must be/)
     })
+    it('babel.react is not an string or an object', () => {
+      check({babel: {react: /invalid/}}, 'babel.react', /Must be/)
+    })
+    it('babel.react is not an string or an object', () => {
+      check({babel: {react: /invalid/}}, 'babel.react', /Must be/)
+    })
+    it('babel.reactConstantElements is not a boolean', () => {
+      check({babel: {reactConstantElements: 'invalid'}}, 'babel.reactConstantElements', /Must be/)
+    })
     it('babel.runtime is not valid', () => {
       check({babel: {runtime: 'welp'}}, 'babel.runtime', /Must be/)
     })
@@ -200,6 +209,10 @@ describe('processUserConfig()', () => {
   })
 
   describe('convenience shorthand', () => {
+    it('allows babel.react to be a string', () => {
+      let config = process({babel: {react: 'test'}})
+      expect(config.babel.react).toEqual({runtime: 'test'})
+    })
     it('allows npm.umd to be a string', () => {
       let config = process({npm: {umd: 'test'}})
       expect(config.npm.umd).toEqual({global: 'test'})

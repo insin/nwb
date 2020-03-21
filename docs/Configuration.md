@@ -78,6 +78,7 @@ The configuration object can include the following properties:
   - [`babel.presets`](#presets-string--array) - extra Babel presets to be used
   - [`babel.proposals`](#proposals-object--false) - configure or disable use of `babel-preset-proposals`
   - [`babel.removePropTypes`](#removeproptypes-object--false) - configure or disable removal of React component `propTypes` in production builds
+  - [`babel.react`](#react-string--object) - configure the Babel `react` preset
   - [`babel.reactConstantElements`](#reactconstantelements-false) - disable use of React constant element hoisting in production builds
   - [`babel.runtime`](#runtime-object--false) - configure or disable the Babel `transform-runtime` plugin
   - [`babel.stage`](#stage-number--false) - control which experimental and upcoming JavaScript features can be used
@@ -193,7 +194,7 @@ This is implemented using [babel-plugin-lodash](https://github.com/lodash/babel-
 
 ##### `env`: `Object`
 
-Additional [options for `@babel/preset-env`](https://babeljs.io/docs/en/next/babel-preset-env#options) - nwb uses `@babel/preset-env` to transpile ECMAScript features which aren't natively available in all browsers yet.
+Additional [options for `@babel/preset-env`](https://babeljs.io/docs/en/babel-preset-env#options) - nwb uses `@babel/preset-env` to transpile ECMAScript features which aren't natively available in all browsers yet.
 
 ##### `loose`: `Boolean`
 
@@ -317,6 +318,32 @@ module.exports = {
 }
 ```
 
+##### `react`: `String | Object`
+
+*added in v0.24.4*
+
+Configure [options for Babel's `@babel/preset-react` preset](https://babeljs.io/docs/en/babel-preset-react#options).
+
+In addition to the existing `classic` mode, Babel v7.9.0 added [a new `automatic` JSX transform](https://babeljs.io/blog/2020/03/16/7.9.0#a-new-jsx-transform-11154-https-githubcom-babel-babel-pull-11154) to this preset, which:
+
+- **currently requires the [experimental version of React](https://reactjs.org/blog/2019/10/22/react-release-channels.html#experimental-channel)**
+- uses new functions for instantiating JSX elements, which will allow optimizing them better in the future.
+- automatically imports the functions that JSX transpiles to.
+
+If you just want to enable the new transform, you can use a String to specify the new `'automatic'` runtime:
+
+```js
+module.exports = {
+  babel: {
+    react: 'automatic'
+  }
+}
+```
+
+Use an Object if you need to configure any of the preset's other options.
+
+> **Note:** The preset's `development` option is automatically set for you depending on whether or not you're running a production build, no matter which runtime you use.
+
 ##### `reactConstantElements`: `false`
 
 Set this to `false` to disable use of the [React constant element hoisting transform](https://babeljs.io/docs/plugins/transform-react-constant-elements/) in React app production builds.
@@ -325,7 +352,7 @@ Set this to `false` to disable use of the [React constant element hoisting trans
 
 *changed in v0.24.0 - now only takes an `Object` to tweak config*
 
-Configure options for Babel's [runtime transform plugin](https://babeljs.io/docs/en/next/babel-plugin-transform-runtime.html), which by default imports helper modules from `@babel/runtime/helpers` instead of duplicating helper code at the top of every module which needs it, and imports the regenerator runtime from `@babel/runtime/regenerator` required to use `async`/`await` or generators when needed.
+Configure options for Babel's [runtime transform plugin](https://babeljs.io/docs/en/babel-plugin-transform-runtime), which by default imports helper modules from `@babel/runtime/helpers` instead of duplicating helper code at the top of every module which needs it, and imports the regenerator runtime from `@babel/runtime/regenerator` required to use `async`/`await` or generators when needed.
 
 > **Note:** if you use `async`/`await` or generators in a React Component or Web Module project and are transpiling it to ES5 for publishing (which is the default), you will need to add `@babel/runtime` to your package.json `peerDependencies` to ensure it can be resolved when somebody else uses your module from npm.
 

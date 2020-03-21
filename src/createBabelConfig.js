@@ -31,6 +31,7 @@ type UserOptions = {
   plugins?: BabelPluginConfig[],
   presets?: BabelPluginConfig[],
   proposals?: false | Object,
+  react?: Object,
   reactConstantElements?: boolean,
   removePropTypes?: false | Object,
   runtime?: false | Object,
@@ -61,6 +62,7 @@ export default function createBabelConfig(
     plugins: userPlugins = [],
     presets: userPresets,
     proposals: userProposals = {},
+    react = {},
     reactConstantElements,
     removePropTypes: userRemovePropTypes,
     runtime: userRuntime,
@@ -83,7 +85,15 @@ export default function createBabelConfig(
     buildPresets.forEach(preset => {
       // Presets which are configurable via user config are specified by name so
       // customisation can be handled in this module.
-      if (preset === 'react-prod') {
+      if (preset === 'react') {
+        presets.push(
+          [require.resolve('@babel/preset-react'), {
+            development: process.env.NODE_ENV !== 'production',
+            ...react
+          }]
+        )
+      }
+      else if (preset === 'react-prod') {
         // Hoist static element subtrees up so React can skip them when reconciling
         if (reactConstantElements !== false) {
           plugins.push(require.resolve('@babel/plugin-transform-react-constant-elements'))

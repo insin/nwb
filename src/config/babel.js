@@ -42,6 +42,7 @@ export function processBabelConfig({report, userConfig}) {
     presets,
     proposals,
     removePropTypes,
+    react,
     reactConstantElements,
     runtime,
     stage,
@@ -146,6 +147,21 @@ export function processBabelConfig({report, userConfig}) {
         removePropTypes,
         `Must be ${chalk.cyan('false')} (to disable removal of PropTypes) ` +
         `or an ${chalk.cyan('Object')} (to configure react-remove-prop-types)`
+      )
+    }
+  }
+
+  // react
+  if ('react' in userConfig.babel) {
+    if (typeOf(react) === 'string') {
+      userConfig.babel.react = {runtime: react}
+    }
+    else if (typeOf(react) !== 'object') {
+      report.error(
+        `babel.react`,
+        react,
+        `Must be an ${chalk.cyan('Object')} (to configure @babel/preset-react options) ` +
+        `or a ${chalk.cyan('String')} (to configure @babel/preset-react's runtime option)`
       )
     }
   }

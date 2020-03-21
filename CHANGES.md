@@ -1,9 +1,23 @@
 # Unreleased (in `master`)
 
+## Added
+
+- Added [`babel.react` config](https://github.com/insin/nwb/blob/master/docs/Configuration.md#react-string--object) to configure `@babel/preset-react` options, allowing you to opt-in to using the [new `automatic` runtime](https://reactjs.org/blog/2019/10/22/react-release-channels.html#experimental-channel) which was added in Babel v7.9.0.
+
+  For convenience, you can just configure the runtime name if you want to try it with the [experimental version of React](https://reactjs.org/blog/2019/10/22/react-release-channels.html#experimental-channel):
+
+  ```js
+  module.exports = {
+    babel: {
+      react: 'automatic'
+    }
+  }
+  ```
+
 ## Changed
 
 - Updated to [Babel v7.9.0](https://babeljs.io/blog/2020/03/16/7.9.0).
-- Validate that the entry module for quick commands (`nwb react`, `nwb preact`, `nwb inferno`) exists, to avoid a confusing error message [[#441](https://github.com/insin/nwb/issues/441)]
+- Validate that the entry module for quick commands (e.g. `nwb react run SomeComponent.js`) exists, to avoid a confusing error message [[#441](https://github.com/insin/nwb/issues/441)]
 
 ## Dependencies
 

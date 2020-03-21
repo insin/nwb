@@ -57,7 +57,23 @@ describe('createBabelConfig()', () => {
         ],
       })
     })
-    it('adds plugins given the "react-prod" preset', () => {
+    it('adds the @babel/preset-react preset given a "react" preset', () => {
+      expect(createBabelConfig({
+        presets: ['react'],
+      }, {
+        proposals: false,
+      })).toEqual({
+        presets: [
+          [require.resolve('@babel/preset-env'), {loose: true, modules: false}],
+          [require.resolve('@babel/preset-react'), {development: true}],
+        ],
+        plugins: [
+          DEFAULT_RUNTIME_CONFIG,
+          require.resolve('@babel/plugin-syntax-dynamic-import'),
+        ],
+      })
+    })
+    it('adds plugins given a "react-prod" preset', () => {
       expect(createBabelConfig({
         presets: ['react-prod'],
       }, {

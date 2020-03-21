@@ -7,9 +7,8 @@ function getBaseConfig(): Object {
   return {
     babel: {
       presets: [
-        [require.resolve('@babel/preset-react'), {
-          development: process.env.NODE_ENV !== 'production'
-        }]
+        // User-configurable, so handled by createBabelConfig
+        'react'
       ]
     },
   }
