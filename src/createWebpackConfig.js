@@ -409,25 +409,18 @@ export function createExtraRules(
 
 /**
  * Plugin for HtmlPlugin which inlines the Webpack runtime code and chunk
- * manifest into the HTML in a <script> tag before other emitted asssets are
- * injected by HtmlPlugin itself.
+ * manifest into its <script> tag.
  */
 function inlineRuntimePlugin() {
   this.hooks.compilation.tap('inlineRuntimePlugin', compilation => {
-    compilation.hooks.htmlWebpackPluginBeforeHtmlProcessing.tapAsync('inlineRuntimePlugin', (data, cb) => {
-      Object.keys(compilation.assets).forEach(key => {
-        if (!/^runtime\.[a-z\d]+\.js$/.test(key)) return
-        let {children} = compilation.assets[key]
+    HtmlPlugin.getHooks(compilation).alterAssetTags.tapAsync('inlineRuntimePlugin', (data, cb) => {
+      Object.keys(compilation.assets).forEach(assetName => {
+        if (!/^runtime\.[a-z\d]+\.js$/.test(assetName)) return
+        let {children} = compilation.assets[assetName]
         if (children && children[0]) {
-          data.html = data.html.replace(
-            /^(\s*)<\/body>/m,
-            `$1<script>${children[0]._value}</script>\n$1</body>`
-          )
-          // Remove the runtime from HtmlPlugin's assets to prevent a <script>
-          // tag being created for it.
-          var runtimeIndex = data.assets.js.indexOf(data.assets.publicPath + key)
-          data.assets.js.splice(runtimeIndex, 1)
-          delete data.assets.chunks.runtime
+          let tag = data.assetTags.scripts.find(tag => tag.attributes.src.endsWith(assetName))
+          delete tag.attributes.src
+          tag.innerHTML = children[0]._value
         }
       })
       cb(null, data)
@@ -557,7 +550,6 @@ export function createPlugins(
   // Generate an HTML file for web apps which pulls in generated resources
   if (buildConfig.html) {
     plugins.push(new HtmlPlugin({
-      chunksSortMode: 'dependency',
       template: path.join(__dirname, '../templates/webpack-template.html'),
       ...buildConfig.html,
       ...userConfig.html,
