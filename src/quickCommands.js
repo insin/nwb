@@ -93,6 +93,7 @@ export function createBuildConfig(args: Object, options: QuickConfigOptions) {
     },
     plugins: {
       html: {
+        lang: 'en',
         mountId,
         title: args.title || defaultTitle,
       },
@@ -154,6 +155,7 @@ export function createServeConfig(args: Object, options: QuickConfigOptions) {
     },
     plugins: {
       html: {
+        lang: 'en',
         mountId,
         title: args.title || defaultTitle,
       },
