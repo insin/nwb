@@ -1,3 +1,13 @@
+# Unreleased (in `master`)
+
+## Dependencies
+
+- autoprefixer: v9.7.5 → [v9.7.6](https://github.com/postcss/autoprefixer/blob/master/CHANGELOG.md#976)
+- cross-spawn: v7.0.1 → [v7.0.2](https://github.com/moxystudio/node-cross-spawn/blob/master/CHANGELOG.md#702-2020-04-04)
+- css-loader: v3.4.2 → [v3.5.1](https://github.com/webpack-contrib/css-loader/blob/master/CHANGELOG.md#351-2020-04-07)
+- html-webpack-plugin: v3.2.0 → [v4.0.4](https://github.com/jantimon/html-webpack-plugin/blob/master/CHANGELOG.md#404-2020-04-01)
+- semver: v7.1.3 → [v7.2.1](https://github.com/npm/node-semver/compare/v7.1.3...v7.2.1)
+
 # 0.24.5 / 2020-03-24
 
 ## Changed
