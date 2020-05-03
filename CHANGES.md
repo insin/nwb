@@ -2,11 +2,23 @@
 
 ## Dependencies
 
+- @babel/core: v7.90 → [v7.9.6](https://github.com/babel/babel/blob/master/CHANGELOG.md#v796-2020-04-29)
+- @babel/plugin-transform-runtime: v7.9.0 → [v7.9.6](https://github.com/babel/babel/blob/master/CHANGELOG.md#v796-2020-04-29)
+- @babel/preset-env: v7.9.0 → [v7.9.6](https://github.com/babel/babel/blob/master/CHANGELOG.md#v796-2020-04-29)
+- @babel/runtime: v7.9.2 → [v7.9.6](https://github.com/babel/babel/blob/master/CHANGELOG.md#v796-2020-04-29)
 - autoprefixer: v9.7.5 → [v9.7.6](https://github.com/postcss/autoprefixer/blob/master/CHANGELOG.md#976)
 - cross-spawn: v7.0.1 → [v7.0.2](https://github.com/moxystudio/node-cross-spawn/blob/master/CHANGELOG.md#702-2020-04-04)
-- css-loader: v3.4.2 → [v3.5.1](https://github.com/webpack-contrib/css-loader/blob/master/CHANGELOG.md#351-2020-04-07)
-- html-webpack-plugin: v3.2.0 → [v4.0.4](https://github.com/jantimon/html-webpack-plugin/blob/master/CHANGELOG.md#404-2020-04-01)
-- semver: v7.1.3 → [v7.2.1](https://github.com/npm/node-semver/compare/v7.1.3...v7.2.1)
+- css-loader: v3.4.2 → [v3.5.3](https://github.com/webpack-contrib/css-loader/blob/master/CHANGELOG.md#353-2020-04-24)
+- html-webpack-plugin: v3.2.0 → [v4.3.0](https://github.com/jantimon/html-webpack-plugin/blob/master/CHANGELOG.md#430-2020-04-30)
+- karma-coverage: v2.0.1 → [v2.0.2](https://github.com/karma-runner/karma-coverage/blob/master/CHANGELOG.md#202-2020-04-13)
+- mocha: v7.1.1 → [v7.1.2](https://github.com/mochajs/mocha/blob/master/CHANGELOG.md#712--2020-04-26)
+- ora: v4.0.3 → [v4.0.4](https://github.com/sindresorhus/ora/compare/v4.0.3...v4.0.4)
+- react-refresh: v0.8.1 → [v0.8.2](https://github.com/facebook/react/commits/9491f394723e140259d65f4d2b8a4d869fa4ba62/packages/react-refresh)
+- resolve: v1.15.1 → [v1.17.0](https://github.com/browserify/resolve/compare/v1.15.1...v1.17.0)
+- semver: v7.1.3 → [v7.3.2](https://github.com/npm/node-semver/compare/v7.1.3...v7.3.2)
+- style-loader: v1.1.3 → [v1.2.1](https://github.com/webpack-contrib/style-loader/blob/master/CHANGELOG.md#121-2020-04-28)
+- terser-webpack-plugin v2.3.5 → [v2.3.6](https://github.com/webpack-contrib/terser-webpack-plugin/blob/master/CHANGELOG.md#236-2020-04-25)
+- webpack: v4.42.1 → [v4.43.0](https://github.com/webpack/webpack/releases/tag/v4.43.0)
 
 # 0.24.5 / 2020-03-24
 

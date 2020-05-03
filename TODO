@@ -1,0 +1,9 @@
+Dependencies:
+  ☐ Node.js 10 minimum version
+    chalk
+    file-loader
+    fs-extra
+    karma
+    karma-mocha
+    terser-webpack-plugin
+    url-loader
