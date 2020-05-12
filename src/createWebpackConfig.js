@@ -484,11 +484,7 @@ export function createPlugins(
       optimization.noEmitOnErrors = true
     }
     if (buildConfig.reactRefresh) {
-      // XXX disableRefreshCheck is currently required
-      // See https://github.com/pmmmwh/react-refresh-webpack-plugin/issues/15
-      plugins.push(new ReactRefreshPlugin({
-        disableRefreshCheck: true,
-      }))
+      plugins.push(new ReactRefreshPlugin())
     }
     if (buildConfig.status) {
       plugins.push(new StatusPlugin(buildConfig.status))

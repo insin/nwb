@@ -57,7 +57,7 @@
     "@babel/preset-env": "7.9.6",
     "@babel/preset-react": "7.9.4",
     "@babel/runtime": "7.9.6",
-    "@pmmmwh/react-refresh-webpack-plugin": "0.2.0",
+    "@pmmmwh/react-refresh-webpack-plugin": "0.3.1",
     "babel-plugin-add-module-exports": "1.0.2",
     "babel-plugin-inferno": "6.1.0",
     "babel-plugin-istanbul": "6.0.0",
@@ -102,7 +102,7 @@
     "terser-webpack-plugin": "2.3.6",
     "url-loader": "2.3.0",
     "webpack-dev-middleware": "3.7.2",
-    "webpack-dev-server": "3.10.3",
+    "webpack-dev-server": "3.11.0",
     "webpack-hot-middleware": "2.25.0"
   },
   "devDependencies": {
@@ -111,7 +111,7 @@
     "cross-env": "7.0.2",
     "eslint-config-jonnybuchanan": "6.0.0",
     "eventsource": "1.0.7",
-    "flow-bin": "0.123.0",
+    "flow-bin": "0.124.0",
     "glob": "7.1.6",
     "nyc": "15.0.1",
     "rimraf": "3.0.2",

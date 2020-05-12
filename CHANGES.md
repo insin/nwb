@@ -6,6 +6,7 @@
 - @babel/plugin-transform-runtime: v7.9.0 → [v7.9.6](https://github.com/babel/babel/blob/master/CHANGELOG.md#v796-2020-04-29)
 - @babel/preset-env: v7.9.0 → [v7.9.6](https://github.com/babel/babel/blob/master/CHANGELOG.md#v796-2020-04-29)
 - @babel/runtime: v7.9.2 → [v7.9.6](https://github.com/babel/babel/blob/master/CHANGELOG.md#v796-2020-04-29)
+- @pmmmwh/react-refresh-webpack-plugin: v0.2.0 → [v0.3.1](https://github.com/pmmmwh/react-refresh-webpack-plugin/blob/master/CHANGELOG.md#031-11-may-2020)
 - autoprefixer: v9.7.5 → [v9.7.6](https://github.com/postcss/autoprefixer/blob/master/CHANGELOG.md#976)
 - cross-spawn: v7.0.1 → [v7.0.2](https://github.com/moxystudio/node-cross-spawn/blob/master/CHANGELOG.md#702-2020-04-04)
 - css-loader: v3.4.2 → [v3.5.3](https://github.com/webpack-contrib/css-loader/blob/master/CHANGELOG.md#353-2020-04-24)
@@ -19,6 +20,7 @@
 - style-loader: v1.1.3 → [v1.2.1](https://github.com/webpack-contrib/style-loader/blob/master/CHANGELOG.md#121-2020-04-28)
 - terser-webpack-plugin v2.3.5 → [v2.3.6](https://github.com/webpack-contrib/terser-webpack-plugin/blob/master/CHANGELOG.md#236-2020-04-25)
 - webpack: v4.42.1 → [v4.43.0](https://github.com/webpack/webpack/releases/tag/v4.43.0)
+- webpack-dev-server: v3.10.3 → [v3.11.0](https://github.com/webpack/webpack-dev-server/blob/master/CHANGELOG.md#3110-2020-05-08)
 
 # 0.24.5 / 2020-03-24
 
