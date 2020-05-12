@@ -1,4 +1,4 @@
-# Unreleased (in `master`)
+# 0.24.6 / 2020-05-12
 
 ## Dependencies
 
