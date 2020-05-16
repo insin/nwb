@@ -123,6 +123,10 @@ export default function moduleBuild(args, buildConfig = {}, cb) {
     )
   }
 
+  if (!process.env.NODE_ENV) {
+    process.env.NODE_ENV = 'production'
+  }
+
   let pluginConfig = getPluginConfig(args)
   let userConfig = getUserConfig(args, {pluginConfig})
   let babelCliOptions = {
