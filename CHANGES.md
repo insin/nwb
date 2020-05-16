@@ -1,3 +1,5 @@
+# 0.24.7 / 2020-05-16
+
 ## Fixed
 
 - Fixed inclusion of `__source` and `__self` debugging information when transpiling JSX in `react-component` projects by defaulting `process.env.NODE_ENV` to `'production'` when building.
