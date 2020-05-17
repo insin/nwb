@@ -1,6 +1,7 @@
 // A config file in which everything is wrong
 module.exports = {
   type: 'invalid',
+  browsers: 45,
   polyfill: 45,
   invalidTopLevelConfig: true,
   moreInvalidTopLevelConfig: true,

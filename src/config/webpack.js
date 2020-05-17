@@ -6,6 +6,8 @@ import {joinAnd, pluralise as s, typeOf} from '../utils'
 
 const DEFAULT_STYLE_LOADERS = new Set(['css', 'postcss'])
 
+let warnedAboutAutoPrefixerString = false
+
 export function processWebpackConfig({pluginConfig, report, userConfig}) {
   let {
     aliases,
@@ -58,16 +60,22 @@ export function processWebpackConfig({pluginConfig, report, userConfig}) {
 
   // autoprefixer
   if ('autoprefixer' in userConfig.webpack) {
-    // Convenience: allow Autoprefixer browsers config to be configured as a String
+    // TODO Deprecated - remove
     if (typeOf(autoprefixer) === 'string') {
-      userConfig.webpack.autoprefixer = {overrideBrowserslist: autoprefixer}
+      if (!warnedAboutAutoPrefixerString) {
+        report.deprecated(
+          'webpack.autoprefixer as a String',
+          'Replaced by top-level "browsers" config in nwb v0.25.0 - webpack.autoprefixer can no longer be a String',
+        )
+        warnedAboutAutoPrefixerString = true
+      }
+      userConfig.webpack.autoprefixer = {}
     }
     else if (typeOf(autoprefixer) !== 'object') {
       report.error(
         'webpack.autoprefixer',
         `type: ${typeOf(autoprefixer)}`,
-        `Must be a ${chalk.cyan('String')} (for ${chalk.cyan('browsers')} config only) ` +
-        `or an ${chalk.cyan('Object')} (for any Autoprefixer options)`
+        `Must be an ${chalk.cyan('Object')}`
       )
     }
   }

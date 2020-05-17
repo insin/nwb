@@ -27,7 +27,7 @@ module.exports = {
 ...or a function which returns a configuration object when called:
 
 ```js
-module.exports = function(args) {
+module.exports = function(nwb) {
   return {
     // ...
   }
@@ -68,6 +68,7 @@ The configuration object can include the following properties:
 
 - nwb Configuration
   - [`type`](#type-string-required-for-generic-build-commands)
+  - [`browsers`](#browsers-string--arraystring--object) - browserslist queries for the browsers your app supports
 - [Babel Configuration](#babel-configuration)
   - [`babel`](#babel-object)
   - [`babel.cherryPick`](#cherrypick-string--arraystring) - enable cherry-picking for destructured `import` statements
@@ -85,7 +86,7 @@ The configuration object can include the following properties:
 - [Webpack Configuration](#webpack-configuration)
   - [`webpack`](#webpack-object)
   - [`webpack.aliases`](#aliases-object) - rewrite certain import paths
-  - [`webpack.autoprefixer`](#autoprefixer-string--object) - options for Autoprefixer
+  - [`webpack.autoprefixer`](#autoprefixer-object) - options for Autoprefixer
   - [`webpack.compat`](#compat-object) - enable Webpack compatibility tweaks for commonly-used modules
   - [`webpack.copy`](#copy-array--object) - patterns and options for `CopyWebpackPlugin`
   - [`webpack.debug`](#debug-boolean) - create a more debuggable production build
@@ -138,6 +139,40 @@ If configured, it must be one of the following:
 - `'react-component'`
 - `'web-app'`
 - `'web-module'`
+
+#### `browsers`: `String | Array<String> | Object`
+
+Configures [Browserslist](https://github.com/browserslist/browserslist#browserslist-) queries specifying the range of browsers your app supports.
+
+If you don't configure this, nwb's default configuration is:
+
+- `'last 1 chrome version, last 1 firefox version, last 1 safari version'` for development (when running a development server with `nwb serve`)
+-  `'>0.2%, not dead, not op_mini all'` for production (when building your app with `nwb build`)
+
+To override the defaults individually, configure an object with `development` or `production` properties:
+
+```js
+module.exports = {
+  browsers: {
+    production: '>0.5%, not IE 11'
+  }
+}
+```
+
+If you configure a string or a list of strings, it will be used for both development and production:
+
+```js
+module.exports = {
+  browsers: [
+    'last 2 chrome versions',
+    'last 2 firefox versions',
+    'last 2 safari versions',
+    'IE 11'
+  ]
+}
+```
+
+You can check which browsers your query will target using the [browserl.ist](http://browserl.ist) service.
 
 ### Babel Configuration
 
@@ -413,35 +448,25 @@ module.exports = {
 
 You should be careful to avoid creating aliases which conflict with the names of Node.js built-ins or npm packages, as you will then be unable to import them.
 
-##### `autoprefixer`: `String | Object`
+##### `autoprefixer`: `Object`
 
 Configures [Autoprefixer options](https://github.com/postcss/autoprefixer#options) for nwb's default PostCSS configuration.
 
-If you just need to configure the range of browsers prefix addition/removal is based on (nwb's default is `>1%, last 4 versions, Firefox ESR, not ie < 9`), you can use a String:
+If you want to configure the range of browsers prefix management is based on, the top-level [`browsers` config](#browsers-string--arraystring--object) is passed to Autoprefixer by default for its `overrideBrowserslist` option.
 
-```js
-module.exports = {
-  webpack: {
-    autoprefixer: '> 1%, last 2 versions, Firefox ESR, ios >= 8'
-  }
-}
-```
+Provide an Object to configure any of Autoprefixer's other options.
 
-Use an Object if you need to set any of Autoprefixer's other options.
-
-e.g. if you also want to disable removal of prefixes which aren't required for the configured range of browsers:
+e.g. if you want to enable grid prefixes for IE 10 and IE 11:
 
 ```js
 module.exports = {
   webpack: {
     autoprefixer: {
-      remove: false,
+      grid: 'autoplace'
     }
   }
 }
 ```
-
-You can check which browsers your Autoprefixer configuration will target using the [browserl.ist](http://browserl.ist) service.
 
 ##### `compat`: `Object`
 

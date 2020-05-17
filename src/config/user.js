@@ -143,7 +143,9 @@ export function processUserConfig({
   let report = new UserConfigReport({configFileExists, configPath})
 
   let {
-    type, polyfill,
+    type, browsers,
+    // TODO Deprecated - remove
+    polyfill,
     babel, devServer, karma, npm, webpack: _webpack, // eslint-disable-line no-unused-vars
     ...unexpectedConfig
   } = userConfig
@@ -160,6 +162,30 @@ export function processUserConfig({
 
   if ((required || 'type' in userConfig) && !PROJECT_TYPES.has(type)) {
     report.error('type', userConfig.type, `Must be one of: ${joinAnd(Array.from(PROJECT_TYPES), 'or')}`)
+  }
+
+  if ('browsers' in userConfig) {
+    if (typeOf(browsers) === 'string' || typeOf(browsers) === 'array') {
+      userConfig.browsers = {
+        development: browsers,
+        production: browsers
+      }
+    }
+    else if (typeOf(browsers) === 'object') {
+      if (!browsers.hasOwnProperty('development') && !browsers.hasOwnProperty('production')) {
+        report.hint(
+          'browsers',
+          `You provided ${chalk.cyan('browsers')} config but didn't provide ${chalk.cyan('development')} or ${chalk.cyan('production')} settings`
+        )
+      }
+    }
+    else {
+      report.error(
+        'browsers',
+        `type: ${typeOf(browsers)}`,
+        `Must be a ${chalk.cyan('String')}, ${chalk.cyan('Array')} or ${chalk.cyan('Object')}`
+      )
+    }
   }
 
   // TODO Deprecated - remove

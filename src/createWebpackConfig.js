@@ -12,6 +12,7 @@ import webpack from 'webpack'
 import merge from 'webpack-merge'
 
 import createBabelConfig from './createBabelConfig'
+import {DEFAULT_BROWSERS_DEV, DEFAULT_BROWSERS_PROD} from './constants'
 import debug from './debug'
 import {UserError} from './errors'
 import {deepToString, replaceArrayMerge, typeOf} from './utils'
@@ -590,14 +591,14 @@ export function createPlugins(
 }
 
 function createDefaultPostCSSPlugins(userWebpackConfig) {
+  let overrideBrowserslist = process.env.NODE_ENV === 'production'
+    ? (userWebpackConfig.browsers && userWebpackConfig.browsers.production) ||
+      DEFAULT_BROWSERS_PROD
+    : (userWebpackConfig.browsers && userWebpackConfig.browsers.development) ||
+      DEFAULT_BROWSERS_DEV
   return [
     autoprefixer({
-      overrideBrowserslist: [
-        '>1%',
-        'last 4 versions',
-        'Firefox ESR',
-        'not ie < 9',
-      ],
+      overrideBrowserslist,
       ...userWebpackConfig.autoprefixer
     })
   ]

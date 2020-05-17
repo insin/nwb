@@ -7,7 +7,17 @@
 - Removed default polyfills for `Promise`, `fetch()` and `Object.assign()` and deprecated `polyfill` config.
   - If you need to support older browsers, you will need to provide the necessary polyfills yourself.
   - The [react-app-polyfill](https://github.com/facebook/create-react-app/tree/master/packages/react-app-polyfill#react-app-polyfill) module provides polyfills for IE 9-11, and for stable language features - its instructions also work for apps using nwb.
+- Deprecated using a string for [`webpack.autoprefixer` config](https://github.com/insin/nwb/blob/master/docs/Configuration.md#autoprefixer-object) to configure supported browsers - this will no longer do anything and should be moved to the new [`browsers` config](https://github.com/insin/nwb/blob/master/docs/Configuration.md#browsers-string--arraystring--object).
+- Default browser configuration for Autoprefixer when building an app has changed from [`>1%, last 4 versions, Firefox ESR, not ie < 9`](https://browserl.ist/?q=%3E1%25%2C+last+4+versions%2C+Firefox+ESR%2C+not+ie+%3C+9) to [`>0.2%, not dead, not op_mini all`](https://browserl.ist/?q=%3E0.2%25%2C+not+dead%2C+not+op_mini+all).
 - file-loader v6.0.0 [changed its default hashing algorithm](https://github.com/webpack-contrib/file-loader/blob/master/CHANGELOG.md#600-2020-03-17).
+
+## Added
+
+- Added top-level [`browsers` config](https://github.com/insin/nwb/blob/master/docs/Configuration.md#browsers-string--arraystring--object) to configure supported browsers. This supports using separate browserslist configuration for development and production.
+
+## Changed
+
+- Default browser configuration for Autoprefixer when running the development server for an app has changed from [`>1%, last 4 versions, Firefox ESR, not ie < 9`](https://browserl.ist/?q=%3E1%25%2C+last+4+versions%2C+Firefox+ESR%2C+not+ie+%3C+9) to [`last 1 chrome version, last 1 firefox version, last 1 safari version`](https://browserl.ist/?q=last+1+chrome+version%2C+last+1+firefox+version%2C+last+1+safari+version).
 
 ## Dependencies
 

@@ -64,8 +64,11 @@ function process(config) {
 
 describe('processUserConfig()', () => {
   describe('validation', () => {
-    it('config file has an invalid type', () => {
+    it('type is not a string', () => {
       check({type: 'invalid'}, 'type', /Must be/)
+    })
+    it('browsers is an invalid type', () => {
+      check({browsers: /invalid/}, 'browsers', /Must be/)
     })
     it('babel.plugins is not an array', () => {
       check({babel: {plugins: {}}}, 'babel.plugins', /Must be/)
@@ -76,10 +79,7 @@ describe('processUserConfig()', () => {
     it('babel.proposals is not an object or false', () => {
       check({babel: {proposals: /invalid/}}, 'babel.proposals', /Must be/)
     })
-    it('babel.react is not an string or an object', () => {
-      check({babel: {react: /invalid/}}, 'babel.react', /Must be/)
-    })
-    it('babel.react is not an string or an object', () => {
+    it('babel.react is not a string or an object', () => {
       check({babel: {react: /invalid/}}, 'babel.react', /Must be/)
     })
     it('babel.reactConstantElements is not a boolean', () => {
@@ -200,6 +200,14 @@ describe('processUserConfig()', () => {
   })
 
   describe('convenience shorthand', () => {
+    it('allows browsers to be a string', () => {
+      let config = process({browsers: 'test'})
+      expect(config.browsers).toEqual({development: 'test', production: 'test'})
+    })
+    it('allows browsers to be an array', () => {
+      let config = process({browsers: ['test']})
+      expect(config.browsers).toEqual({development: ['test'], production: ['test']})
+    })
     it('allows babel.react to be a string', () => {
       let config = process({babel: {react: 'test'}})
       expect(config.babel.react).toEqual({runtime: 'test'})
@@ -207,10 +215,6 @@ describe('processUserConfig()', () => {
     it('allows npm.umd to be a string', () => {
       let config = process({npm: {umd: 'test'}})
       expect(config.npm.umd).toEqual({global: 'test'})
-    })
-    it('allows webpack.autoprefixer to be a browser string', () => {
-      let config = process({webpack: {autoprefixer: 'test'}})
-      expect(config.webpack.autoprefixer).toEqual({overrideBrowserslist: 'test'})
     })
     it('allows webpack.copy to be an array', () => {
       let config = process({webpack: {copy: ['test']}})

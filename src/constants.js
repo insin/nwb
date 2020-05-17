@@ -17,3 +17,6 @@ export const PROJECT_TYPES = new Set([
   WEB_APP,
   WEB_MODULE,
 ])
+
+export const DEFAULT_BROWSERS_DEV = 'last 1 chrome version, last 1 firefox version, last 1 safari version'
+export const DEFAULT_BROWSERS_PROD = '>0.2%, not dead, not op_mini all'
