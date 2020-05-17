@@ -5,10 +5,13 @@
 - Node.js 8 is no longer supported; Node.js 10.13.0 is now the minimum required version, as per many of nwb's dependencies.
 - Removed support for deprecated `babel.stage` and `webpack.uglify` config.
 - Removed default polyfills for `Promise`, `fetch()` and `Object.assign()` and deprecated `polyfill` config.
-  - If you need to support older browsers, you will need to provide the necessary polyfills yourself.
+  - If you need to support older browsers, you will now need to provide the necessary polyfills yourself in your app.
   - The [react-app-polyfill](https://github.com/facebook/create-react-app/tree/master/packages/react-app-polyfill#react-app-polyfill) module provides polyfills for IE 9-11, and for stable language features - its instructions also work for apps using nwb.
 - Deprecated using a string for [`webpack.autoprefixer` config](https://github.com/insin/nwb/blob/master/docs/Configuration.md#autoprefixer-object) to configure supported browsers - this will no longer do anything and should be moved to the new [`browsers` config](https://github.com/insin/nwb/blob/master/docs/Configuration.md#browsers-string--arraystring--object).
 - Default browser configuration for Autoprefixer when building an app has changed from [`>1%, last 4 versions, Firefox ESR, not ie < 9`](https://browserl.ist/?q=%3E1%25%2C+last+4+versions%2C+Firefox+ESR%2C+not+ie+%3C+9) to [`>0.2%, not dead, not op_mini all`](https://browserl.ist/?q=%3E0.2%25%2C+not+dead%2C+not+op_mini+all).
+- copy-webpack-plugin v6.0.0 [has breaking changes to its options](https://github.com/webpack-contrib/copy-webpack-plugin/blob/master/CHANGELOG.md#600-2020-05-15) which you should read if you've configured the [`webpack.copy` option](https://github.com/insin/nwb/blob/master/docs/Configuration.md#copy-array--object).
+
+  In particular, the `ignore` option in a copy pattern must now be put inside the new `globOptions` option.
 - file-loader v6.0.0 [changed its default hashing algorithm](https://github.com/webpack-contrib/file-loader/blob/master/CHANGELOG.md#600-2020-03-17).
 
 ## Added
@@ -22,9 +25,10 @@
 ## Dependencies
 
 - chalk: v3.0.0 → [v4.0.0](https://github.com/chalk/chalk/releases/tag/v4.0.0)
+- copy-webpack-plugin: v5.1.1 → [v6.0.1](https://github.com/webpack-contrib/copy-webpack-plugin/blob/master/CHANGELOG.md#601-2020-05-16)
 - file-loader: v4.3.0 → [v6.0.0](https://github.com/webpack-contrib/file-loader/blob/master/CHANGELOG.md#600-2020-03-17)
 - fs-extra: v8.1.0 → [v9.0.0](https://github.com/jprichardson/node-fs-extra/blob/master/CHANGELOG.md#900--2020-03-19)
-- karma: v4.4.1 → [v5.0.5](https://github.com/karma-runner/karma/blob/master/CHANGELOG.md#505-2020-05-07)
+- karma: v4.4.1 → [v5.0.7](https://github.com/karma-runner/karma/blob/master/CHANGELOG.md#507-2020-05-16)
 - karma-mocha: v1.3.0 → [v2.0.1](https://github.com/karma-runner/karma-mocha/blob/master/CHANGELOG.md#201-2020-04-29)
 - terser-webpack-plugin v2.3.6 → [v3.0.1](https://github.com/webpack-contrib/terser-webpack-plugin/blob/master/CHANGELOG.md#301-2020-05-06)
 - url-loader: v2.3.0→ [v4.1.0](https://github.com/webpack-contrib/url-loader/blob/master/CHANGELOG.md)

@@ -1,7 +1,7 @@
 ## Features
 
 - **A toolkit, not a boilerplate.**
-- Uses [Webpack 4](https://webpack.js.org/), [Babel 7](https://babeljs.io/) and [Karma 4](https://karma-runner.github.io/).
+- Uses [Webpack 4](https://webpack.js.org/), [Babel 7](https://babeljs.io/) and [Karma 5](https://karma-runner.github.io/).
 - Provides tooling for [React](https://facebook.github.io/react/) apps and components, [Preact](https://preactjs.com/) apps, [Inferno](https://infernojs.org/) apps, and vanilla JS web apps and npm modules.
 - Use modern JavaScript features, and JSX.
 - Use proposed JavaScript features now.

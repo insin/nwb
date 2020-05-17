@@ -75,7 +75,11 @@ export function createBuildConfig(args: Object, extra: Object = {}) {
   }
 
   if (directoryExists('public')) {
-    config.plugins.copy = [{from: path.resolve('public'), to: dist, ignore: ['.gitkeep']}]
+    config.plugins.copy = [{
+      from: path.resolve('public'),
+      to: dist,
+      globOptions: {ignore: ['.gitkeep']}
+    }]
   }
 
   return merge(config, extra)
@@ -102,7 +106,11 @@ export function createServeConfig(args: Object, ...extra: Object[]) {
   }
 
   if (directoryExists('public')) {
-    config.plugins.copy = [{from: path.resolve('public'), to: dist, ignore: ['.gitkeep']}]
+    config.plugins.copy = [{
+      from: path.resolve('public'),
+      to: dist,
+      globOptions: {ignore: ['.gitkeep']}
+    }]
   }
 
   return merge(config, ...extra)

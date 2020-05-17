@@ -562,7 +562,7 @@ export function createPlugins(
   if (buildConfig.copy || userConfig.copy) {
     const [patterns, options] = getCopyPluginArgs(buildConfig.copy, userConfig.copy)
     if (patterns.length > 0) {
-      plugins.push(new CopyPlugin(patterns, options))
+      plugins.push(new CopyPlugin({patterns, options}))
     }
   }
 
