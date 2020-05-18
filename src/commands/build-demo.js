@@ -2,6 +2,7 @@ import path from 'path'
 
 import runSeries from 'run-series'
 
+import {DEFAULT_BROWSERS_PROD} from '../constants'
 import {directoryExists} from '../utils'
 import webpackBuild from '../webpackBuild'
 import cleanDemo from './clean-demo'
@@ -15,6 +16,12 @@ function getCommandConfig(args) {
 
   let config = {
     babel: {
+      env: {
+        targets: DEFAULT_BROWSERS_PROD,
+        useBuiltIns: 'entry',
+        corejs: 3,
+        exclude: ['transform-typeof-symbol'],
+      },
       presets: ['react'],
     },
     devtool: 'source-map',

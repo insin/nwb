@@ -3,24 +3,43 @@
 ## Breaking Changes
 
 - Node.js 8 is no longer supported; Node.js 10.13.0 is now the minimum required version, as per many of nwb's dependencies.
-- Removed support for deprecated `babel.stage` and `webpack.uglify` config.
+
+**Browser Support**
+
 - Removed default polyfills for `Promise`, `fetch()` and `Object.assign()` and deprecated `polyfill` config.
-  - If you need to support older browsers, you will now need to provide the necessary polyfills yourself in your app.
-  - The [react-app-polyfill](https://github.com/facebook/create-react-app/tree/master/packages/react-app-polyfill#react-app-polyfill) module provides polyfills for IE 9-11, and for stable language features - its instructions also work for apps using nwb.
-- Deprecated using a string for [`webpack.autoprefixer` config](https://github.com/insin/nwb/blob/master/docs/Configuration.md#autoprefixer-object) to configure supported browsers - this will no longer do anything and should be moved to the new [`browsers` config](https://github.com/insin/nwb/blob/master/docs/Configuration.md#browsers-string--arraystring--object).
+
+  If you need to support older browsers, you will now need to include the necessary polyfills in your app - see the new [Browser Support docs](https://github.com/insin/nwb/blob/master/docs/BrowserSupport.md#browser-support) for details on polyfilling and suggested modules it's to provide them.
+
+  If this change affects your app, a quick fix is to use [react-app-polyfill](https://github.com/facebook/create-react-app/tree/master/packages/react-app-polyfill)'s IE11 polyfill, which is equivalent to what nwb's default polyfill used to be:
+
+  ```js
+  import 'react-app-polyfill/ie11'
+  ```
+
+- For apps and quick commands, `@babel/preset-env` is now configured to [only transpile the necessary ECMAScript 2015+ for supported browsers](https://github.com/insin/nwb/blob/master/docs/BrowserSupport.md#default-browser-support).
+
+  When running a development server, this defaults to the most recent version of Chrome, Firefox or Safari, so you _may_ need to adjust [`browsers.development` config](https://github.com/insin/nwb/blob/master/docs/Configuration.md#browsers-string--arraystring--object) if you're using an out of date browser and you **will** need to adjust it if you're developing with an older browser supported by your app.
+
 - Default browser configuration for Autoprefixer when building an app has changed from [`>1%, last 4 versions, Firefox ESR, not ie < 9`](https://browserl.ist/?q=%3E1%25%2C+last+4+versions%2C+Firefox+ESR%2C+not+ie+%3C+9) to [`>0.2%, not dead, not op_mini all`](https://browserl.ist/?q=%3E0.2%25%2C+not+dead%2C+not+op_mini+all).
-- copy-webpack-plugin v6.0.0 [has breaking changes to its options](https://github.com/webpack-contrib/copy-webpack-plugin/blob/master/CHANGELOG.md#600-2020-05-15) which you should read if you've configured the [`webpack.copy` option](https://github.com/insin/nwb/blob/master/docs/Configuration.md#copy-array--object).
+
+  When running a development server, the default browser configuration has changed to [`last 1 chrome version, last 1 firefox version, last 1 safari version`](https://browserl.ist/?q=last+1+chrome+version%2C+last+1+firefox+version%2C+last+1+safari+version).
+
+**Configuration**
+
+- Deprecated using a string for [`webpack.autoprefixer` config](https://github.com/insin/nwb/blob/master/docs/Configuration.md#autoprefixer-object) to configure supported browsers - this will no longer do anything and should be moved to the new [`browsers` config](https://github.com/insin/nwb/blob/master/docs/Configuration.md#browsers-string--arraystring--object).
+- Removed support for `babel.stage` and `webpack.uglify` config deprecated in nwb v0.24.0.
+- copy-webpack-plugin v6.0.0 [has breaking changes to its options](https://github.com/webpack-contrib/copy-webpack-plugin/blob/master/CHANGELOG.md#600-2020-05-15) which you should read if you're using [`webpack.copy` config](https://github.com/insin/nwb/blob/master/docs/Configuration.md#copy-array--object).
 
   In particular, the `ignore` option in a copy pattern must now be put inside the new `globOptions` option.
-- file-loader v6.0.0 [changed its default hashing algorithm](https://github.com/webpack-contrib/file-loader/blob/master/CHANGELOG.md#600-2020-03-17).
+
+**Dependencies**
+
+- file-loader v6.0.0 [changed its default hashing algorithm](https://github.com/webpack-contrib/file-loader/blob/master/CHANGELOG.md#600-2020-03-17) so hashes in output filenames will change after updating to this release, even if their contents haven't changed.
 
 ## Added
 
-- Added top-level [`browsers` config](https://github.com/insin/nwb/blob/master/docs/Configuration.md#browsers-string--arraystring--object) to configure supported browsers. This supports using separate browserslist configuration for development and production.
-
-## Changed
-
-- Default browser configuration for Autoprefixer when running the development server for an app has changed from [`>1%, last 4 versions, Firefox ESR, not ie < 9`](https://browserl.ist/?q=%3E1%25%2C+last+4+versions%2C+Firefox+ESR%2C+not+ie+%3C+9) to [`last 1 chrome version, last 1 firefox version, last 1 safari version`](https://browserl.ist/?q=last+1+chrome+version%2C+last+1+firefox+version%2C+last+1+safari+version).
+- Added top-level [`browsers` config](https://github.com/insin/nwb/blob/master/docs/Configuration.md#browsers-string--arraystring--object) to configure supported browsers. This supports using separate browserslist queries for development and production.
+- Added [Browser Support docs](https://github.com/insin/nwb/blob/master/docs/BrowserSupport.md#browser-support), with a section on [polyfilling missing language features](https://github.com/insin/nwb/blob/master/docs/BrowserSupport.md#polyfilling-missing-language-features).
 
 ## Dependencies
 

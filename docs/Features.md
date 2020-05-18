@@ -3,7 +3,7 @@
 - **A toolkit, not a boilerplate.**
 - Uses [Webpack 4](https://webpack.js.org/), [Babel 7](https://babeljs.io/) and [Karma 5](https://karma-runner.github.io/).
 - Provides tooling for [React](https://facebook.github.io/react/) apps and components, [Preact](https://preactjs.com/) apps, [Inferno](https://infernojs.org/) apps, and vanilla JS web apps and npm modules.
-- Use modern JavaScript features, and JSX.
+- Use modern JavaScript features and JSX.
 - Use proposed JavaScript features now.
 - Import CSS (and font resources) and images to be managed by Webpack.
 - [Autoprefixed](https://github.com/postcss/autoprefixer#autoprefixer-) CSS, so you don't need to write browser prefixes; you can also configure your own [PostCSS](https://postcss.org/) plugins.

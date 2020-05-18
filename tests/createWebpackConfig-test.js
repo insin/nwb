@@ -34,7 +34,7 @@ describe('createWebpackConfig()', () => {
         .toContain('url-loader')
     })
     it('excludes node_modules from babel-loader', () => {
-      expect(config.module.rules[0].exclude.test('node_modules')).toBe(true)
+      expect(config.module.rules[0].exclude.test('node_modules/')).toBe(true)
     })
     it('uses entry config', () => {
       expect(config.entry).toEqual(['index.js'])

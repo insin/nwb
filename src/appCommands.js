@@ -6,6 +6,7 @@ import runSeries from 'run-series'
 import merge from 'webpack-merge'
 
 import cleanApp from './commands/clean-app'
+import {DEFAULT_BROWSERS_DEV, DEFAULT_BROWSERS_PROD} from './constants'
 import {directoryExists, install} from './utils'
 import webpackBuild from './webpackBuild'
 import webpackServer from './webpackServer'
@@ -58,6 +59,14 @@ export function createBuildConfig(args: Object, extra: Object = {}) {
   let filenamePattern = production ? '[name].[chunkhash:8].js' : '[name].js'
 
   let config: Object = {
+    babel: {
+      env: {
+        targets: DEFAULT_BROWSERS_PROD,
+        useBuiltIns: 'entry',
+        corejs: 3,
+        exclude: ['transform-typeof-symbol'],
+      },
+    },
     devtool: 'source-map',
     entry: {
       app: [entry],
@@ -94,6 +103,14 @@ export function createServeConfig(args: Object, ...extra: Object[]) {
   let dist = path.resolve(args._[2] || 'dist')
 
   let config: Object = {
+    babel: {
+      env: {
+        targets: DEFAULT_BROWSERS_DEV,
+        useBuiltIns: 'entry',
+        corejs: 3,
+        exclude: ['transform-typeof-symbol'],
+      },
+    },
     entry: [entry],
     output: {
       path: dist,

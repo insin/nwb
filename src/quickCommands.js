@@ -6,6 +6,7 @@ import runSeries from 'run-series'
 import merge from 'webpack-merge'
 
 import cleanApp from './commands/clean-app'
+import {DEFAULT_BROWSERS_DEV, DEFAULT_BROWSERS_PROD} from './constants'
 import {UserError} from './errors'
 import {install} from './utils'
 import webpackBuild from './webpackBuild'
@@ -80,6 +81,12 @@ export function createBuildConfig(args: Object, options: QuickConfigOptions) {
 
   let config: Object = {
     babel: {
+      env: {
+        targets: DEFAULT_BROWSERS_PROD,
+        useBuiltIns: 'entry',
+        corejs: 3,
+        exclude: ['transform-typeof-symbol'],
+      },
       proposals: {
         all: true
       }
@@ -140,6 +147,12 @@ export function createServeConfig(args: Object, options: QuickConfigOptions) {
 
   let config: Object = {
     babel: {
+      env: {
+        targets: DEFAULT_BROWSERS_DEV,
+        useBuiltIns: 'entry',
+        corejs: 3,
+        exclude: ['transform-typeof-symbol'],
+      },
       proposals: {
         all: true
       }

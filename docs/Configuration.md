@@ -144,6 +144,8 @@ If configured, it must be one of the following:
 
 Configures [Browserslist](https://github.com/browserslist/browserslist#browserslist-) queries specifying the range of browsers your app supports.
 
+This is used to configure [`@babel/preset-env`](https://babeljs.io/docs/en/babel-preset-env#targets) (so it only transpiles the necessary ECMAScript 2015+ for your target browsers) and [Autoprefixer](https://github.com/postcss/autoprefixer#browsers) (for managing vendor prefixes in your CSS).
+
 If you don't configure this, nwb's default configuration is:
 
 - `'last 1 chrome version, last 1 firefox version, last 1 safari version'` for development (when running a development server with `nwb serve`)

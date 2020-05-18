@@ -340,7 +340,7 @@ export function createRules(
     createRule('babel', {
       test: /\.js$/,
       loader: require.resolve('babel-loader'),
-      exclude: /node_modules/,
+      exclude: /node_modules[\\/](?!react-app-polyfill)/,
       options: {
         // Don't look for .babelrc files
         babelrc: false,
@@ -591,6 +591,8 @@ export function createPlugins(
 }
 
 function createDefaultPostCSSPlugins(userWebpackConfig) {
+  // Users can override browser versions for Autoprefixer using `browsers` or
+  // `webpack.autoprefixer.overrideBrowserslist` config.
   let overrideBrowserslist = process.env.NODE_ENV === 'production'
     ? (userWebpackConfig.browsers && userWebpackConfig.browsers.production) ||
       DEFAULT_BROWSERS_PROD
@@ -699,7 +701,9 @@ export default function createWebpackConfig(
   }
 
   // Generate config for babel-loader and set it as loader config for the build
-  buildRulesConfig.babel = {options: createBabelConfig(buildBabelConfig, userConfig.babel, userConfig.path)}
+  buildRulesConfig.babel = {
+    options: createBabelConfig(buildBabelConfig, userConfig.babel, userConfig.path, userConfig.browsers)
+  }
 
   let webpackConfig = {
     mode: process.env.NODE_ENV === 'production' ? 'production' : 'development',

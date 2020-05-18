@@ -1,5 +1,6 @@
 import path from 'path'
 
+import {DEFAULT_BROWSERS_DEV} from '../constants'
 import {directoryExists} from '../utils'
 import webpackServer from '../webpackServer'
 
@@ -13,6 +14,12 @@ export default function serveReactDemo(args, cb) {
 
   let config = {
     babel: {
+      env: {
+        targets: DEFAULT_BROWSERS_DEV,
+        useBuiltIns: 'entry',
+        corejs: 3,
+        exclude: ['transform-typeof-symbol'],
+      },
       presets: ['react'],
     },
     entry: [path.resolve('demo/src/index.js')],

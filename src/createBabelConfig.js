@@ -23,6 +23,11 @@ type BuildOptions = {
   webpack?: boolean,
 };
 
+type BrowserOptions = {
+  development?: string | string[],
+  production?: string | string[],
+}
+
 type UserOptions = {
   cherryPick?: string | string[],
   config?: (BabelConfig) => BabelConfig,
@@ -40,11 +45,13 @@ type UserOptions = {
 export default function createBabelConfig(
   buildConfig: BuildOptions = {},
   userConfig: UserOptions = {},
-  userConfigPath: string = ''
+  userConfigPath: string = '',
+  userConfigBrowsers: BrowserOptions = {},
 ): BabelConfig {
   let {
     absoluteRuntime,
     commonJSInterop,
+    env: buildEnv = {},
     modules = false,
     plugins: buildPlugins = [],
     presets: buildPresets,
@@ -57,7 +64,7 @@ export default function createBabelConfig(
   let {
     cherryPick,
     config: userConfigFunction,
-    env = {},
+    env: userEnv = {},
     loose,
     plugins: userPlugins = [],
     presets: userPresets,
@@ -69,15 +76,41 @@ export default function createBabelConfig(
   } = userConfig
 
   let presets: BabelPluginConfig[] = []
-  let plugins: BabelPluginConfig[] = []
+  let plugins: BabelPluginConfig[] = [
+    // XXX Webpack can't currently handle untranspiled ?. and ?? syntax
+    // See https://github.com/webpack/webpack/issues/10227#issuecomment-588409413
+    require.resolve('@babel/plugin-proposal-optional-chaining'),
+    require.resolve('@babel/plugin-proposal-nullish-coalescing-operator'),
+  ]
 
   // Default to loose mode unless explicitly configured
   if (typeof loose === 'undefined') {
     loose = true
   }
 
+  // Build config controls whether or not we set browser targets. Users can
+  // override this using `browsers` or `babel.env.targets` config.
+  let userTargets = {}
+  if (buildEnv.targets) {
+    let targets = userConfigBrowsers && (
+      process.env.NODE_ENV === 'production'
+        ? userConfigBrowsers.production
+        : userConfigBrowsers.development
+    )
+    if (targets) {
+      userTargets.targets = targets
+    }
+  }
   presets.push(
-    [require.resolve('@babel/preset-env'), {loose, modules, ...env}]
+    [require.resolve('@babel/preset-env'), {
+      loose,
+      ...buildEnv,
+      modules,
+      // Targets config from top-level browsers config if present
+      ...userTargets,
+      // The user gets a last go at all the env options
+      ...userEnv
+    }]
   )
 
   // Additional build presets
