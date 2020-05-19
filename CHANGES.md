@@ -43,11 +43,12 @@
 
 ## Dependencies
 
+- autoprefixer: v9.7.6 → [v9.8.0](https://github.com/postcss/autoprefixer/blob/master/CHANGELOG.md#980)
 - chalk: v3.0.0 → [v4.0.0](https://github.com/chalk/chalk/releases/tag/v4.0.0)
 - copy-webpack-plugin: v5.1.1 → [v6.0.1](https://github.com/webpack-contrib/copy-webpack-plugin/blob/master/CHANGELOG.md#601-2020-05-16)
 - file-loader: v4.3.0 → [v6.0.0](https://github.com/webpack-contrib/file-loader/blob/master/CHANGELOG.md#600-2020-03-17)
 - fs-extra: v8.1.0 → [v9.0.0](https://github.com/jprichardson/node-fs-extra/blob/master/CHANGELOG.md#900--2020-03-19)
-- karma: v4.4.1 → [v5.0.7](https://github.com/karma-runner/karma/blob/master/CHANGELOG.md#507-2020-05-16)
+- karma: v4.4.1 → [v5.0.9](https://github.com/karma-runner/karma/blob/master/CHANGELOG.md#509-2020-05-19)
 - karma-mocha: v1.3.0 → [v2.0.1](https://github.com/karma-runner/karma-mocha/blob/master/CHANGELOG.md#201-2020-04-29)
 - terser-webpack-plugin v2.3.6 → [v3.0.1](https://github.com/webpack-contrib/terser-webpack-plugin/blob/master/CHANGELOG.md#301-2020-05-06)
 - url-loader: v2.3.0→ [v4.1.0](https://github.com/webpack-contrib/url-loader/blob/master/CHANGELOG.md)

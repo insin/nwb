@@ -69,7 +69,7 @@
     "babel-preset-proposals": "0.3.0",
     "react-refresh": "0.8.2",
 
-    "karma": "5.0.7",
+    "karma": "5.0.9",
     "karma-chrome-launcher": "3.1.0",
     "karma-coverage": "2.0.2",
     "karma-mocha": "2.0.1",
@@ -83,7 +83,7 @@
     "expect": "1.20.2",
 
     "webpack": "4.43.0",
-    "autoprefixer": "9.7.6",
+    "autoprefixer": "9.8.0",
     "babel-loader": "8.1.0",
     "case-sensitive-paths-webpack-plugin": "2.3.0",
     "copy-webpack-plugin": "6.0.1",
@@ -109,7 +109,7 @@
     "cross-env": "7.0.2",
     "eslint-config-jonnybuchanan": "6.0.0",
     "eventsource": "1.0.7",
-    "flow-bin": "0.124.0",
+    "flow-bin": "0.125.1",
     "glob": "7.1.6",
     "nyc": "15.0.1",
     "rimraf": "3.0.2",
