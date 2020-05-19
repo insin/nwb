@@ -1,7 +1,7 @@
 {
   "name": "nwb",
   "description": "A toolkit for React, Preact & Inferno apps, React libraries and other npm modules for the web, with no configuration (until you need it)",
-  "version": "0.25.0",
+  "version": "0.25.1",
   "license": "MIT",
   "author": "Jonny Buchanan <jonathan.buchanan@gmail.com>",
   "bin": {
@@ -19,11 +19,9 @@
     "test:watch": "cross-env NODE_ENV=test NWB_TEST=true mocha --require @babel/register --watch tests/*-test.js"
   },
   "files": [
-    "docs",
     "lib",
     "templates",
-    "express.js",
-    "polyfills.js"
+    "express.js"
   ],
   "engines": {
     "node": ">=10.13.0"
