@@ -20,7 +20,7 @@
 
 - Removed default polyfills for `Promise`, `fetch()` and `Object.assign()` and deprecated `polyfill` config.
 
-  If you need to support older browsers, you will now need to include the necessary polyfills in your app - see the new [Browser Support docs](https://github.com/insin/nwb/blob/master/docs/BrowserSupport.md#browser-support) for details on polyfilling and suggested modules it's to provide them.
+  If you need to support older browsers, you will now need to include the necessary polyfills in your app - see the new [Browser Support docs](https://github.com/insin/nwb/blob/master/docs/BrowserSupport.md#browser-support) for details on polyfilling and suggested modules which provide them.
 
   If this change affects your app, a quick fix is to use [react-app-polyfill](https://github.com/facebook/create-react-app/tree/master/packages/react-app-polyfill)'s IE11 polyfill, which is equivalent to what nwb's default polyfill used to be:
 
