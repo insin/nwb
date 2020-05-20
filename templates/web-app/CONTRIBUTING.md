@@ -1,6 +1,6 @@
 ## Prerequisites
 
-[Node.js](http://nodejs.org/) >= 8 must be installed.
+[Node.js](http://nodejs.org/) >= 10 must be installed.
 
 ## Installation
 

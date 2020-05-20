@@ -1,3 +1,7 @@
+## Fixed
+
+- Bumped Node.js version in templates.
+
 # 0.25.1 / 2020-05-20
 
 ## Changed
