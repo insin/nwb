@@ -1,3 +1,31 @@
+## Dependencies
+
+- @babel/cli: v7.8.4 → [v7.10.3](https://github.com/babel/babel/blob/master/CHANGELOG.md#v7102-2020-05-30)
+- @babel/core: v7.9.6 → [v7.10.3](https://github.com/babel/babel/blob/master/CHANGELOG.md#v7102-2020-05-30)
+- @babel/plugin-proposal-nullish-coalescing-operator: v7.8.3 → [v7.10.1](https://github.com/babel/babel/blob/master/CHANGELOG.md#v7101-2020-05-27)
+- @babel/plugin-proposal-optional-chaining: v7.9.0 → [v7.10.3](https://github.com/babel/babel/blob/master/CHANGELOG.md#v7100-2020-05-26)
+- @babel/plugin-syntax-jsx: v7.8.3 → [v7.10.1](https://github.com/babel/babel/blob/master/CHANGELOG.md#v7101-2020-05-27)
+- @babel/plugin-transform-react-constant-elements: v7.9.0 → [v7.10.1](https://github.com/babel/babel/blob/master/CHANGELOG.md#v7101-2020-05-27)
+- @babel/plugin-transform-react-jsx: v7.9.4 → [v7.10.3](https://github.com/babel/babel/blob/master/CHANGELOG.md#v7100-2020-05-26)
+- @babel/plugin-transform-runtime: v7.9.6 → [v7.10.3](https://github.com/babel/babel/blob/master/CHANGELOG.md#v7100-2020-05-26)
+- @babel/polyfill: v7.8.7 → [v7.10.1](https://github.com/babel/babel/blob/master/CHANGELOG.md#v7101-2020-05-27)
+- @babel/preset-env: v7.9.6 → [v7.10.3](https://github.com/babel/babel/blob/master/CHANGELOG.md#v7100-2020-05-26)
+- @babel/preset-flow: v7.9.0 → [v7.10.1](https://github.com/babel/babel/blob/master/CHANGELOG.md#v7101-2020-05-27)
+- @babel/preset-react: v7.9.4 → [v7.10.1](https://github.com/babel/babel/blob/master/CHANGELOG.md#v7101-2020-05-27)
+- @babel/runtime: v7.9.6 → [v7.10.3](https://github.com/babel/babel/blob/master/CHANGELOG.md#v7100-2020-05-26)
+- @pmmmwh/react-refresh-webpack-plugin: v0.3.1 → [v0.3.3](https://github.com/pmmmwh/react-refresh-webpack-plugin/releases)
+- autoprefixer: v9.8.0 → [v9.8.4](https://github.com/postcss/autoprefixer/blob/master/CHANGELOG.md#984)
+- babel-plugin-inferno: v6.1.0 → v6.1.1
+- chalk: v4.0.0 → [v4.1.0](https://github.com/chalk/chalk/releases/tag/v4.1.0)
+- copy-webpack-plugin: v6.0.1 → [v6.0.2](https://github.com/webpack-contrib/copy-webpack-plugin/blob/master/CHANGELOG.md#602-2020-06-03)
+- cross-spawn: v7.0.2 → [v7.0.3](https://github.com/moxystudio/node-cross-spawn/blob/master/CHANGELOG.md#703-2020-05-25)
+- css-loader: v3.5.3 → [v3.6.0](https://github.com/webpack-contrib/css-loader/blob/master/CHANGELOG.md#360-2020-06-13)
+- fs-extra: v9.0.0 → [v9.0.1](https://github.com/jprichardson/node-fs-extra/blob/master/CHANGELOG.md#901--2020-06-03)
+- inquirer: v7.1.0 → [v7.2.0](https://github.com/SBoudrias/Inquirer.js/releases/tag/inquirer%407.2.0)
+- karma: v5.0.9 → [v5.1.0](https://github.com/karma-runner/karma/blob/master/CHANGELOG.md#510-2020-06-11)
+- react-refresh: v0.8.2 → [v0.8.3](https://github.com/facebook/react/commits/3ca1904b37ad1f527ff5e31b51373caea67478c5/packages/react-refresh)
+- terser-webpack-plugin: v3.0.1 → [v3.0.6](https://github.com/webpack-contrib/terser-webpack-plugin/blob/master/CHANGELOG.md#306-2020-06-18)
+
 # 0.25.2 / 2020-05-20
 
 ## Fixed
