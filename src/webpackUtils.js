@@ -82,6 +82,14 @@ function getFileDetails(stats) {
 }
 
 export function logBuildResults(stats, spinner) {
+  // In case of a MultiStats instance, run the function individually for each embedded stat
+  if (stats.stats) {
+    stats.stats.forEach((s) => {
+      logBuildResults(s)
+    })
+    return
+  }
+
   if (stats.hasErrors()) {
     if (spinner) {
       spinner.fail()
