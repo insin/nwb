@@ -17,6 +17,12 @@ export default function devServer(webpackConfig, serverConfig, url, cb) {
 
   let {host, open, port, ...otherServerConfig} = serverConfig
 
+  // In case of an array of config, use the first config
+  // as the 'default' config for public path extraction
+  if (Array.isArray(webpackConfig)) {
+    webpackConfig = webpackConfig[0]
+  }
+
   let webpackDevServerOptions = merge({
     headers: {
       'Access-Control-Allow-Origin': '*'
