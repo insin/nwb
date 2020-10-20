@@ -10,7 +10,6 @@ import cleanModule from './commands/clean-module'
 import {getPluginConfig, getUserConfig} from './config'
 import createBabelConfig from './createBabelConfig'
 import debug from './debug'
-import {UserError} from './errors'
 import {deepToString, formatPackageName} from './utils'
 import webpackBuild from './webpackBuild'
 import {createBanner, createExternals, logGzippedFileSizes} from './webpackUtils'
@@ -23,10 +22,12 @@ const DEFAULT_BABEL_IGNORE_CONFIG = [
   '**/__tests__/'
 ]
 
+const DEFAULT_BABEL_CONFIG_FILE = '.babelrc'
+
 /**
  * Run Babel with generated config written to a temporary .babelrc.
  */
-function runBabel(name, {copyFiles, outDir, src}, buildBabelConfig, userConfig, cb) {
+function runBabel(name, {copyFiles, outDir, src, configFileName}, buildBabelConfig, userConfig, cb) {
   let babelConfig = createBabelConfig(buildBabelConfig, userConfig.babel, userConfig.path)
   babelConfig.ignore = DEFAULT_BABEL_IGNORE_CONFIG
 
@@ -37,7 +38,11 @@ function runBabel(name, {copyFiles, outDir, src}, buildBabelConfig, userConfig, 
     args.push('--copy-files', '--no-copy-ignored')
   }
 
-  fs.writeFile('.babelrc', JSON.stringify(babelConfig, null, 2), (err) => {
+  if (configFileName !== DEFAULT_BABEL_CONFIG_FILE) {
+    args.push('--config-file', path.resolve(configFileName))
+  }
+
+  fs.writeFile(configFileName, JSON.stringify(babelConfig, null, 2), (err) => {
     if (err) return cb(err)
     let spinner = ora(`Creating ${name} build`).start()
     let babel = spawn(require.resolve('.bin/babel'), args, {stdio: 'inherit'})
@@ -50,7 +55,7 @@ function runBabel(name, {copyFiles, outDir, src}, buildBabelConfig, userConfig, 
       else {
         spinner.succeed()
       }
-      fs.unlink('.babelrc', (unlinkError) => {
+      fs.unlink(configFileName, (unlinkError) => {
         cb(babelError || unlinkError)
       })
     })
@@ -114,12 +119,16 @@ function buildUMD(args, buildConfig, userConfig, cb) {
 }
 
 export default function moduleBuild(args, buildConfig = {}, cb) {
-  // XXX Babel doesn't support passing the path to a babelrc file any more
-  if (fs.existsSync('.babelrc')) {
-    throw new UserError(
-      'Unable to build the module as there is a .babelrc in your project\n' +
-      'nwb needs to write a temporary .babelrc to configure the build'
+  let configFileName = DEFAULT_BABEL_CONFIG_FILE
+
+  if (fs.existsSync(configFileName)) {
+    console.info(
+      `There is a ${configFileName} in your project ` +
+      `nwb needs to write a temporary ${configFileName} to configure the build, ` +
+      `will use ${configFileName}.build instead`
     )
+
+    configFileName += '.build'
   }
 
   if (!process.env.NODE_ENV) {
@@ -131,6 +140,7 @@ export default function moduleBuild(args, buildConfig = {}, cb) {
   let babelCliOptions = {
     copyFiles: !!args['copy-files'],
     src: path.resolve('src'),
+    configFileName
   }
 
   let tasks = [(cb) => cleanModule(args, cb)]
