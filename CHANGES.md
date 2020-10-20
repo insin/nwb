@@ -1,3 +1,8 @@
+# 0.26.0 / 2020-10-20
+## Fixes
+- Allow to specify Babel CLI extensions argument. This makes it possible to compile Typescript components.
+
+
 # 0.25.0 / 2020-05-20
 
 ## Breaking Changes
