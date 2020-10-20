@@ -1,3 +1,7 @@
+# 0.26.0 / 2020-10-20
+## Fixes
+- Allow to specify Babel CLI extensions argument. This makes it possible to compile Typescript components.
+
 ## Dependencies
 
 - @babel/cli: v7.8.4 → [v7.10.3](https://github.com/babel/babel/blob/master/CHANGELOG.md#v7102-2020-05-30)
@@ -37,6 +41,7 @@
 ## Changed
 
 - Don't include `docs/` in the npm package.
+
 
 # 0.25.0 / 2020-05-20
 

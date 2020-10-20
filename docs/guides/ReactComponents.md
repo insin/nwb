@@ -437,3 +437,22 @@ Use this if you want to develop against the demo app using nwb's development ser
 Disables `propTypes` wrapping/stripping.
 
 Use this if your module needs to use `propTypes` at runtime (e.g. for masking `props`), or you think its users might need them.
+
+#### `--extensions` (a.k.a `-x`)
+
+Allows to pass custom extensions that will be taken into account when building the component.
+
+##### Typescript
+1. CLI
+  ```
+  --extensions ['.ts', '.tsx']
+  ```
+
+2. package.json
+  ```
+  "scripts": {
+    …
+    "build": "nwb build-react-component --extensions '.ts,.tsx'",
+    …
+  }
+  ```

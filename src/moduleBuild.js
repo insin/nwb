@@ -26,7 +26,7 @@ const DEFAULT_BABEL_IGNORE_CONFIG = [
 /**
  * Run Babel with generated config written to a temporary .babelrc.
  */
-function runBabel(name, {copyFiles, outDir, src}, buildBabelConfig, userConfig, cb) {
+function runBabel(name, {copyFiles, outDir, src, extensions}, buildBabelConfig, userConfig, cb) {
   let babelConfig = createBabelConfig(buildBabelConfig, userConfig.babel, userConfig.path)
   babelConfig.ignore = DEFAULT_BABEL_IGNORE_CONFIG
 
@@ -35,6 +35,10 @@ function runBabel(name, {copyFiles, outDir, src}, buildBabelConfig, userConfig, 
   let args = [src, '--out-dir', outDir, '--quiet']
   if (copyFiles) {
     args.push('--copy-files', '--no-copy-ignored')
+  }
+
+  if (extensions) {
+    args.push('--extensions', extensions)
   }
 
   fs.writeFile('.babelrc', JSON.stringify(babelConfig, null, 2), (err) => {
@@ -131,6 +135,7 @@ export default function moduleBuild(args, buildConfig = {}, cb) {
   let babelCliOptions = {
     copyFiles: !!args['copy-files'],
     src: path.resolve('src'),
+    extensions: args['extensions'] || args['x'],
   }
 
   let tasks = [(cb) => cleanModule(args, cb)]
