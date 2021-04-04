@@ -49,13 +49,13 @@ You'll be asked a few questions about your project's build configuration.
 
 > **Note:** If you want to skip these questions, you can pass an `-f` or `--force` flag to accept the default configuration, or just keep bashing `Enter` to accept the defaults.
 >
-> If you want to skip *reading* about these questions, continue on to [Project Layout](#project-layout).
+> If you want to skip _reading_ about these questions, continue on to [Project Layout](#project-layout).
 
 ### Build Configuration Questions
 
 By default, nwb will create a CommonJS build for your project in `lib/`, which is the primary way it will be used when installed via npm, with default `package.json` `main` config pointing to `lib/index.js`.
 
-Configuration questions are asked about *additional* builds
+Configuration questions are asked about _additional_ builds
 
 #### ECMAScript Modules Build
 
@@ -76,7 +76,7 @@ It's enabled by default, so we can just hit `Enter` to accept the default:
 
 > **Note:** nwb will create an ES modules build in `es/` when we build the project later.
 >
->It will also add `"module"` configuration to `package.json`, for use by ES module bundlers.
+> It will also add `"module"` configuration to `package.json`, for use by ES module bundlers.
 
 #### Universal Module Definition (UMD) Build
 
@@ -150,14 +150,14 @@ cd react-loading-button/
 
 `package.json` is configured with `"scripts"` we can use with `npm run` while developing the project.
 
-Command | Description |
---- | ---
-`npm start` | start a development server for the demo app
-`npm test` | run tests
-`npm run test:coverage` | run tests and produce a code coverage report in `coverage/`
-`npm run test:watch` | start a test server and re-run tests on every change
-`npm run build` | prepare for publishing to npm
-`npm run clean` | delete built resources
+| Command                 | Description                                                 |
+| ----------------------- | ----------------------------------------------------------- |
+| `npm start`             | start a development server for the demo app                 |
+| `npm test`              | run tests                                                   |
+| `npm run test:coverage` | run tests and produce a code coverage report in `coverage/` |
+| `npm run test:watch`    | start a test server and re-run tests on every change        |
+| `npm run build`         | prepare for publishing to npm                               |
+| `npm run clean`         | delete built resources                                      |
 
 The initial project is set up so you can successfully run each of these commands and get some meaningful output, albeit for a component which does nothing more than render a welcome message.
 
@@ -173,9 +173,9 @@ Running `npm start` will start a development server for the demo app. Every time
 
 If there are any errors, they will be displayed in both the console and the browser, so you're unlikely to miss them while developing.
 
-Console Error | Browser Error
-:---: | :---:
-![](resources/react-component-serve-error-console.png) | ![](resources/react-component-serve-error-browser.png)
+|                     Console Error                      |                     Browser Error                      |
+| :----------------------------------------------------: | :----------------------------------------------------: |
+| ![](resources/react-component-serve-error-console.png) | ![](resources/react-component-serve-error-browser.png) |
 
 Developing components against a hot-reloading app provides a quick feedback loop.
 
@@ -188,80 +188,84 @@ Let's start by imagining how we'll use our `LoadingButton` component in the demo
 > Don't sweat the details of if you're not familiar with this; the most important thing for this guide is the `render()` method.
 
 ```js
-import React, {Component} from 'react'
-import {render} from 'react-dom'
+import React, { Component } from "react";
+import { render } from "react-dom";
 
-import LoadingButton from '../../src'
+import LoadingButton from "../../src";
 
 class Demo extends Component {
-  state = {loading: false}
+  state = { loading: false };
 
   handleToggleLoading = () => {
-    this.setState({loading: !this.state.loading})
-  }
+    this.setState({ loading: !this.state.loading });
+  };
 
   render() {
-    return <div>
-      <h1>react-loading-button Demo</h1>
+    return (
+      <div>
+        <h1>react-loading-button Demo</h1>
 
-      <h2>Static</h2>
-      <LoadingButton>Load</LoadingButton>
-      <LoadingButton loading>Loading</LoadingButton>
+        <h2>Static</h2>
+        <LoadingButton>Load</LoadingButton>
+        <LoadingButton loading>Loading</LoadingButton>
 
-      <h2>Dynamic</h2>
-      <LoadingButton loading={this.state.loading}>
-        {this.state.loading ? 'Loading' : 'Load'}
-      </LoadingButton>
-      <button type="button" onClick={this.handleToggleLoading}>
-        Toggle Loading
-      </button>
-    </div>
+        <h2>Dynamic</h2>
+        <LoadingButton loading={this.state.loading}>
+          {this.state.loading ? "Loading" : "Load"}
+        </LoadingButton>
+        <button type="button" onClick={this.handleToggleLoading}>
+          Toggle Loading
+        </button>
+      </div>
+    );
   }
 }
 
-render(<Demo/>, document.querySelector('#demo'))
+render(<Demo />, document.querySelector("#demo"));
 ```
 
-Once your component is developed, the demo app falls back to its primary purpose of creating a demo you can deploy when publishing your code *without* having to build and publish separately, as component builds and demo bundles are built from the same source at the same time.
+Once your component is developed, the demo app falls back to its primary purpose of creating a demo you can deploy when publishing your code _without_ having to build and publish separately, as component builds and demo bundles are built from the same source at the same time.
 
 ## Implementation
 
 Here's an example implementation of the `LoadingButton` component:
 
 ```js
-import t from 'prop-types'
-import React, {Component} from 'react'
+import t from "prop-types";
+import React, { Component } from "react";
 
 class LoadingButton extends Component {
   static propTypes = {
     disabled: t.bool,
     loading: t.bool,
     type: t.string,
-  }
+  };
   static defaultProps = {
     disabled: false,
     loading: false,
-    type: 'button',
-  }
+    type: "button",
+  };
   render() {
-    let {children, disabled, loading, type, ...props} = this.props
+    let { children, disabled, loading, type, ...props } = this.props;
     if (loading) {
-      disabled = true
+      disabled = true;
     }
-    return <button disabled={disabled} type={type} {...props}>
-      {children}
-    </button>
+    return (
+      <button disabled={disabled} type={type} {...props}>
+        {children}
+      </button>
+    );
   }
 }
 
-export default LoadingButton
+export default LoadingButton;
 ```
 
 ![](resources/react-component-demo.gif)
 
 ## Testing
 
-nwb provides a default testing setup which uses Karma to run tests written with Mocha and Expect in the headless PhantomJS browser.
+nwb provides a default testing setup which uses Karma to run tests written with Mocha and Expect in the a headless Chrome browser.
 
 > The [Testing documentation](/docs/Testing.md) provides an in-depth overview of what nwb's default testing setup provides (and how to configure things to your liking if you want to), but we'll stick to editing the initial test provided in the React component project skeleton, in `tests/index.test.js`.
 
@@ -276,30 +280,38 @@ The following example tests were implemented after the `LoadingButton` component
 > **Note 2:** We're importing the [expect](https://github.com/mjackson/expect/) library below, but it's not included in `package.json` - nwb handles the expect dependency for you so you can get started with testing without having to make a decision. Other assertion and spy libraries are available :)
 
 ```js
-import expect from 'expect'
-import React from 'react'
-import {renderToStaticMarkup as render} from 'react-dom/server'
+import expect from "expect";
+import React from "react";
+import { renderToStaticMarkup as render } from "react-dom/server";
 
-import LoadingButton from 'src/'
+import LoadingButton from "src/";
 
-describe('LoadingButton', () => {
+describe("LoadingButton", () => {
   it('renders a button with type="button"', () => {
-    expect(render(<LoadingButton>Test</LoadingButton>))
-      .toContain('<button type="button">Test</button>')
-  })
-  it('disables the button when loading=true', () => {
-    expect(render(<LoadingButton loading>Test</LoadingButton>))
-      .toContain('<button disabled="" type="button">Test</button>')
-  })
-  it('disables the button when loading=true even if disabled=false', () => {
-    expect(render(<LoadingButton disabled={false} loading>Test</LoadingButton>))
-      .toContain('<button disabled="" type="button">Test</button>')
-  })
-  it('passes other props through', () => {
-    expect(render(<LoadingButton className="test">Test</LoadingButton>))
-      .toContain('<button type="button" class="test">Test</button>')
-  })
-})
+    expect(render(<LoadingButton>Test</LoadingButton>)).toContain(
+      '<button type="button">Test</button>'
+    );
+  });
+  it("disables the button when loading=true", () => {
+    expect(render(<LoadingButton loading>Test</LoadingButton>)).toContain(
+      '<button disabled="" type="button">Test</button>'
+    );
+  });
+  it("disables the button when loading=true even if disabled=false", () => {
+    expect(
+      render(
+        <LoadingButton disabled={false} loading>
+          Test
+        </LoadingButton>
+      )
+    ).toContain('<button disabled="" type="button">Test</button>');
+  });
+  it("passes other props through", () => {
+    expect(
+      render(<LoadingButton className="test">Test</LoadingButton>)
+    ).toContain('<button type="button" class="test">Test</button>');
+  });
+});
 ```
 
 ### Code Coverage Reporting
@@ -312,7 +324,7 @@ Code coverage percentages on their own are fairly meaningless, but running cover
 
 ![](resources/react-component-test-coverage-html.png)
 
-This HTML report is handy for finding out what your tests *aren't* covering, and deciding which uncovered areas you'd feel more comfortable having some tests for.
+This HTML report is handy for finding out what your tests _aren't_ covering, and deciding which uncovered areas you'd feel more comfortable having some tests for.
 
 ### Continuous Integration (CI) Testing
 
@@ -365,11 +377,11 @@ To make this easier, by default nwb enables Babel proposal plugins for export ex
 For example, this is a snippet of how [React Bootstrap](https://github.com/react-bootstrap/react-bootstrap) re-exports its components using `export default from` statements:
 
 ```js
-export Accordion from './Accordion'
-export Alert from './Alert'
-export Badge from './Badge'
-export Breadcrumb from './Breadcrumb'
-export BreadcrumbItem from './BreadcrumbItem'
+export Accordion from "./Accordion";
+export Alert from "./Alert";
+export Badge from "./Badge";
+export Breadcrumb from "./Breadcrumb";
+export BreadcrumbItem from "./BreadcrumbItem";
 ```
 
 ## Build Configuration
@@ -390,14 +402,14 @@ e.g. if your component uses React Router, you'll also need to map the 'react-rou
 module.exports = {
   npm: {
     umd: {
-      global: 'ReactSomeComponent',
+      global: "ReactSomeComponent",
       externals: {
-        'react': 'React',
-        'react-router': 'ReactRouter'
-      }
-    }
-  }
-}
+        react: "React",
+        "react-router": "ReactRouter",
+      },
+    },
+  },
+};
 ```
 
 ### Feature Toggles

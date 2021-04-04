@@ -1,4 +1,4 @@
-import {Server} from 'karma'
+import {Server, config} from 'karma'
 
 import {getPluginConfig, getUserConfig} from './config'
 import createKarmaConfig from './createKarmaConfig'
@@ -12,7 +12,7 @@ export default function karmaServer(args, buildConfig, cb) {
   let userConfig = getUserConfig(args, {pluginConfig})
   let karmaConfig = createKarmaConfig(args, buildConfig, pluginConfig, userConfig)
 
-  new Server(karmaConfig, (exitCode) => {
+  new Server(config.parseConfig(null, karmaConfig), (exitCode) => {
     if (exitCode !== 0) return cb(new KarmaExitCodeError(exitCode))
     cb()
   }).start()

@@ -82,14 +82,14 @@ export function createBuildConfig(args: Object, options: QuickConfigOptions) {
   let config: Object = {
     babel: {
       env: {
-        targets: DEFAULT_BROWSERS_PROD,
         useBuiltIns: 'entry',
         corejs: 3,
         exclude: ['transform-typeof-symbol'],
       },
       proposals: {
         all: true
-      }
+      },
+      targets: DEFAULT_BROWSERS_PROD,
     },
     devtool: 'source-map',
     output: {
@@ -148,14 +148,14 @@ export function createServeConfig(args: Object, options: QuickConfigOptions) {
   let config: Object = {
     babel: {
       env: {
-        targets: DEFAULT_BROWSERS_DEV,
         useBuiltIns: 'entry',
         corejs: 3,
         exclude: ['transform-typeof-symbol'],
       },
       proposals: {
         all: true
-      }
+      },
+      targets: DEFAULT_BROWSERS_DEV,
     },
     output: {
       filename: 'app.js',

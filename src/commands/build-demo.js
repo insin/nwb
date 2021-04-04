@@ -17,12 +17,12 @@ function getCommandConfig(args) {
   let config = {
     babel: {
       env: {
-        targets: DEFAULT_BROWSERS_PROD,
         useBuiltIns: 'entry',
         corejs: 3,
         exclude: ['transform-typeof-symbol'],
       },
       presets: ['react'],
+      targets: DEFAULT_BROWSERS_PROD,
     },
     devtool: 'source-map',
     entry: {

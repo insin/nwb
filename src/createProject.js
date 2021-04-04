@@ -160,7 +160,7 @@ function createAppProject(args, projectType, name, targetDir, cb) {
       copyTemplate(templateDir, targetDir, templateVars, cb)
     },
     (cb) => {
-      // Allow specification of the exact version, e.g. --react=16.2
+      // Allow specification of the exact version, e.g. --react=17.0.2
       if (dependencies.length !== 0 && args[appType]) {
         dependencies = dependencies.map(pkg => `${pkg}@${args[appType]}`)
       }
@@ -227,7 +227,7 @@ function createModuleProject(args, projectType, name, targetDir, cb) {
       }
       else {
         // TODO Get from npm so we don't have to manually update on major releases
-        templateVars.reactPeerVersion = '16.x'
+        templateVars.reactPeerVersion = '17.x'
       }
     }
 

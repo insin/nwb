@@ -1,3 +1,4 @@
+import fs from 'fs'
 import path from 'path'
 
 import chalk from 'chalk'
@@ -39,30 +40,13 @@ export function createExternals(externals = {}) {
   }, {})
 }
 
-function formatMessage(message) {
-  return message
-    // Make some common errors shorter:
-    .replace(
-      // Babel syntax error
-      'Module build failed: SyntaxError:',
-      FRIENDLY_SYNTAX_ERROR_LABEL
-    )
-    .replace(
-      // Webpack file not found error
-      /Module not found: Error: Cannot resolve 'file' or 'directory'/,
-      'Module not found:'
-    )
-    // Webpack loader names obscure CSS filenames
-    .replace(/^.*css-loader.*!/gm, '')
-}
-
 function isLikelyASyntaxError(message) {
   return message.includes(FRIENDLY_SYNTAX_ERROR_LABEL)
 }
 
 function formatMessages(messages, type) {
   return messages.map(
-    message => `${type} in ${formatMessage(message)}`
+    message => `${type} ${message.message}${message.details ? `\n\n${message.details}` : ''}`
   )
 }
 
@@ -71,7 +55,8 @@ function getFileDetails(stats) {
   return Object.keys(stats.compilation.assets)
     .filter(assetName => /\.(css|js)$/.test(assetName))
     .map(assetName => {
-      let size = gzipSize(stats.compilation.assets[assetName].source())
+      let contents = fs.readFileSync(path.join(outputPath, assetName))
+      let size = gzipSize(contents)
       return {
         dir: path.dirname(path.join(path.relative(process.cwd(), outputPath), assetName)),
         name: path.basename(assetName),

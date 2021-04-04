@@ -21,7 +21,7 @@
 
 **Testing:**
 
-- Run unit tests with Karma in PhantomJS, using [Mocha](https://mochajs.org/) and [Expect](https://github.com/mjackson/expect#expect1x-documentation), without any configuration.
+- Run unit tests with Karma in headless Chrome, using [Mocha](https://mochajs.org/) and [Expect](https://github.com/mjackson/expect#expect1x-documentation), without any configuration.
 - Flexible defaults allow tests to be organised using a number of naming schemes, with tests in a separate directory, co-located with the code, or both.
 - Code coverage reporting.
 - Project skeletons ready to run tests on Travis CI and post code coverage results to Coveralls/codecov.io.

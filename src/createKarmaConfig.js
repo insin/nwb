@@ -1,5 +1,6 @@
 import path from 'path'
 
+import webpack from 'webpack'
 import merge from 'webpack-merge'
 
 import createWebpackConfig from './createWebpackConfig'
@@ -58,13 +59,13 @@ export function findPlugin(plugins, findId) {
  * Handles creation of Karma config based on Karma plugins.
  */
 export function getKarmaPluginConfig({codeCoverage = false, userConfig = {}} = {}) {
-  let browsers = ['PhantomJS']
+  let browsers = ['ChromeHeadless']
   let frameworks = ['mocha']
   let plugins = [
     require('karma-sourcemap-loader'),
     require('karma-webpack'),
   ]
-  // Default reporter if the user configure their own frameworks
+  // Default reporter if the user configures their own frameworks
   let reporters = ['dots']
 
   // Browsers, frameworks and reporters can be configured as a list containing
@@ -104,9 +105,6 @@ export function getKarmaPluginConfig({codeCoverage = false, userConfig = {}} = {
   if (reporters.indexOf('mocha') !== -1 && !findPlugin(plugins, 'reporter:mocha')) {
     plugins.push(require('karma-mocha-reporter'))
   }
-  if (browsers.indexOf('PhantomJS') !== -1 && !findPlugin(plugins, 'launcher:PhantomJS')) {
-    plugins.push(require('karma-phantomjs-launcher'))
-  }
   if (browsers.some(function matchChrom(b) { return /Chrom/.test(b) }) &&
       !findPlugin(plugins, 'launcher:Chrome')) {
     plugins.push(require('karma-chrome-launcher'))
@@ -116,6 +114,8 @@ export function getKarmaPluginConfig({codeCoverage = false, userConfig = {}} = {
     plugins.push(require('karma-coverage'))
     reporters.push('coverage')
   }
+
+  frameworks.push('webpack')
 
   return {browsers, frameworks, plugins, reporters}
 }
@@ -134,8 +134,7 @@ export default function createKarmaConfig(args, buildConfig, pluginConfig, userC
   let {excludeFromCoverage = DEFAULT_EXCLUDE_FROM_COVERAGE} = userKarma
   let testFiles = userKarma.testFiles || DEFAULT_TEST_FILES
 
-  // Polyfill by default for browsers which lack features (hello PhantomJS)
-  let files = [require.resolve('@babel/polyfill/dist/polyfill.js')]
+  let files = []
   let preprocessors = {}
 
   if (userKarma.testContext) {
@@ -184,28 +183,31 @@ export default function createKarmaConfig(args, buildConfig, pluginConfig, userC
     reporters,
     singleRun: isCi || !args.server,
     webpack: createWebpackConfig(merge(buildConfig, {
-      devtool: 'cheap-module-inline-source-map',
-      node: {
-        fs: 'empty',
-      },
+      devtool: 'inline-cheap-module-source-map',
       plugins: {
         status: {
           quiet: true,
-        }
+        },
+        extra: [
+          new webpack.ProvidePlugin({
+            process: require.resolve('process/browser'),
+          }),
+        ]
       },
       resolve: {
         alias: {
           expect: path.dirname(require.resolve('expect/package')),
           src: path.resolve('src'),
         },
+        fallback: {
+          fs: false,
+        },
       },
       server: {
         hot: false,
       },
+      stats: 'none'
     }), pluginConfig, userConfig),
-    webpackMiddleware: {
-      logLevel: 'silent'
-    },
   }
 
   // Any extra user Karma config is merged into the generated config to give

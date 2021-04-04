@@ -52,6 +52,7 @@ export default function nwbMiddleware(express: Object, options: Object = {}) {
   let webpackConfig = createServerWebpackConfig(
     args,
     createServeConfig(args, appTypeConfig.getServeConfig(), {
+      stats: 'none',
       plugins: {
         status: {
           disableClearConsole: true,
@@ -68,11 +69,7 @@ export default function nwbMiddleware(express: Object, options: Object = {}) {
   let router = express.Router()
 
   router.use(require('webpack-dev-middleware')(compiler, {
-    logLevel: 'silent',
     publicPath: webpackConfig.output.publicPath,
-    watchOptions: {
-      ignored: /node_modules/
-    }
   }))
 
   router.use(require('webpack-hot-middleware')(compiler, {

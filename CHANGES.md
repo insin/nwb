@@ -1,30 +1,78 @@
+# Unreleased (in `master`)
+
+## Breaking Changes
+
+- Updated to Webpack 5 and updated all plugins and loaders - custom configuration for any of these could now be invalid.
+
+- Dropped use of PhantomJS - the default browser for Karma testing is now `ChromeHeadless` and Chrome must be available wherever tests are going to be run.
+
+## Changes
+
+- Updated to Babel 7.13
+- Updated to Karma 6 and Mocha 8
+
 ## Dependencies
 
-- @babel/cli: v7.8.4 → [v7.10.3](https://github.com/babel/babel/blob/master/CHANGELOG.md#v7102-2020-05-30)
-- @babel/core: v7.9.6 → [v7.10.3](https://github.com/babel/babel/blob/master/CHANGELOG.md#v7102-2020-05-30)
-- @babel/plugin-proposal-nullish-coalescing-operator: v7.8.3 → [v7.10.1](https://github.com/babel/babel/blob/master/CHANGELOG.md#v7101-2020-05-27)
-- @babel/plugin-proposal-optional-chaining: v7.9.0 → [v7.10.3](https://github.com/babel/babel/blob/master/CHANGELOG.md#v7100-2020-05-26)
-- @babel/plugin-syntax-jsx: v7.8.3 → [v7.10.1](https://github.com/babel/babel/blob/master/CHANGELOG.md#v7101-2020-05-27)
-- @babel/plugin-transform-react-constant-elements: v7.9.0 → [v7.10.1](https://github.com/babel/babel/blob/master/CHANGELOG.md#v7101-2020-05-27)
-- @babel/plugin-transform-react-jsx: v7.9.4 → [v7.10.3](https://github.com/babel/babel/blob/master/CHANGELOG.md#v7100-2020-05-26)
-- @babel/plugin-transform-runtime: v7.9.6 → [v7.10.3](https://github.com/babel/babel/blob/master/CHANGELOG.md#v7100-2020-05-26)
-- @babel/polyfill: v7.8.7 → [v7.10.1](https://github.com/babel/babel/blob/master/CHANGELOG.md#v7101-2020-05-27)
-- @babel/preset-env: v7.9.6 → [v7.10.3](https://github.com/babel/babel/blob/master/CHANGELOG.md#v7100-2020-05-26)
-- @babel/preset-flow: v7.9.0 → [v7.10.1](https://github.com/babel/babel/blob/master/CHANGELOG.md#v7101-2020-05-27)
-- @babel/preset-react: v7.9.4 → [v7.10.1](https://github.com/babel/babel/blob/master/CHANGELOG.md#v7101-2020-05-27)
-- @babel/runtime: v7.9.6 → [v7.10.3](https://github.com/babel/babel/blob/master/CHANGELOG.md#v7100-2020-05-26)
-- @pmmmwh/react-refresh-webpack-plugin: v0.3.1 → [v0.3.3](https://github.com/pmmmwh/react-refresh-webpack-plugin/releases)
-- autoprefixer: v9.8.0 → [v9.8.4](https://github.com/postcss/autoprefixer/blob/master/CHANGELOG.md#984)
-- babel-plugin-inferno: v6.1.0 → v6.1.1
-- chalk: v4.0.0 → [v4.1.0](https://github.com/chalk/chalk/releases/tag/v4.1.0)
-- copy-webpack-plugin: v6.0.1 → [v6.0.2](https://github.com/webpack-contrib/copy-webpack-plugin/blob/master/CHANGELOG.md#602-2020-06-03)
-- cross-spawn: v7.0.2 → [v7.0.3](https://github.com/moxystudio/node-cross-spawn/blob/master/CHANGELOG.md#703-2020-05-25)
-- css-loader: v3.5.3 → [v3.6.0](https://github.com/webpack-contrib/css-loader/blob/master/CHANGELOG.md#360-2020-06-13)
-- fs-extra: v9.0.0 → [v9.0.1](https://github.com/jprichardson/node-fs-extra/blob/master/CHANGELOG.md#901--2020-06-03)
-- inquirer: v7.1.0 → [v7.2.0](https://github.com/SBoudrias/Inquirer.js/releases/tag/inquirer%407.2.0)
-- karma: v5.0.9 → [v5.1.0](https://github.com/karma-runner/karma/blob/master/CHANGELOG.md#510-2020-06-11)
-- react-refresh: v0.8.2 → [v0.8.3](https://github.com/facebook/react/commits/3ca1904b37ad1f527ff5e31b51373caea67478c5/packages/react-refresh)
-- terser-webpack-plugin: v3.0.1 → [v3.0.6](https://github.com/webpack-contrib/terser-webpack-plugin/blob/master/CHANGELOG.md#306-2020-06-18)
+### Added
+
+- css-minimizer-webpack-plugin v1.3.0
+- postcss v8.2.9
+
+### Changed
+
+- @babel/cli: v7.10.3 → v7.13.14
+- @babel/core: v7.10.3 → v7.13.14
+- @babel/plugin-syntax-jsx: v7.10.1 → v7.12.13
+- @babel/plugin-transform-react-constant-elements: v7.10.1 → v7.13.13
+- @babel/plugin-transform-react-jsx: v7.10.3 → v7.13.12
+- @babel/plugin-transform-runtime: v7.10.3 → v7.13.10
+- @babel/preset-env: v7.10.3 → v7.13.12
+- @babel/preset-react: v7.10.1 → v7.13.13
+- @babel/runtime: v7.10.3 → v7.13.10
+- @pmmmwh/react-refresh-webpack-plugin: v0.3.3 → v0.4.3
+- autoprefixer: v9.8.4 → v10.2.5
+- babel-loader: v8.1.0 → v8.2.2
+- babel-plugin-add-module-exports: v1.0.2 → v1.0.4
+- babel-preset-proposals: v0.3.0 → v0.4.0
+- case-sensitive-paths-webpack-plugin: v2.3.0 → v2.4.0
+- copy-webpack-plugin: v6.0.2 → v8.1.0
+- cross-env: v7.0.2 → v7.0.3
+- css-loader: v3.6.0 → v5.2.0
+- debug: v4.1.1 → v4.3.1
+- file-loader: v6.0.0 → v6.2.0
+- fs-extra: v9.0.1 → v9.1.0
+- gzip-size: v5.1.1 → v6.0.0
+- html-webpack-plugin: v4.3.0 → v5.3.1
+- inquirer: v7.2.0 → v8.0.0
+- karma: v5.1.0 → v6.3.2
+- karma-coverage: v2.0.2 → v2.0.3
+- karma-sourcemap-loader: v0.3.7 → v0.3.8
+- karma-webpack: v4.0.2 → v5.0.0
+- mini-css-extract-plugin: v0.9.0 → v1.4.0
+- mocha: v7.1.2 → v8.3.2
+- open: v7.0.4 → v8.0.5
+- ora: v4.0.4 → v5.4.0
+- postcss-loader: v3.0.0 → v5.2.0
+- react-refresh: v0.8.3 → v0.10.0
+- resolve: v1.17.0 → v1.20.0
+- run-series: v1.1.8 → v1.1.9
+- semver: v7.3.2 → v7.3.5
+- style-loader: v1.2.1 → v2.0.0
+- terser-webpack-plugin: v3.0.6 → v5.1.1
+- url-loader: v4.1.0 → v4.1.1
+- webpack: v4.43.0 → v5.30.0
+- webpack-dev-middleware: v3.7.2 → v4.1.0
+- webpack-dev-server: v3.11.0 → v3.11.2
+
+### Removed
+
+- @babel/plugin-proposal-optional-chaining (only used to avoid a Webpack 4 parser bug)
+- @babel/plugin-proposal-nullish-coalescing-operator (only used to avoid a Webpack 4 parser bug)
+- @babel/polyfill (no longer required for PhantomJS)
+- babel-plugin-transform-decorators-legacy (obsolete, was no longer being used)
+- karma-phantomjs-launcher (dropped PhantomJS)
+- optimize-css-assets-webpack-plugin (replaced by css-minimizer-webpack-plugin)
+- phantomjs-prebuilt (dropped PhantomJS)
 
 # 0.25.2 / 2020-05-20
 

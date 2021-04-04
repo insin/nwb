@@ -6,6 +6,7 @@ import {UserError} from './errors'
 type BabelPluginConfig = string | [string, Object];
 
 type BabelConfig = {
+  targets?: string | string[],
   presets: BabelPluginConfig[],
   plugins?: BabelPluginConfig[],
 };
@@ -20,6 +21,7 @@ type BuildOptions = {
   proposals?: Object,
   removePropTypes?: true | Object,
   runtime?: Object,
+  targets?: string | string[],
   webpack?: boolean,
 };
 
@@ -58,6 +60,7 @@ export default function createBabelConfig(
     proposals: buildProposals = {},
     removePropTypes: buildRemovePropTypes = false,
     runtime: buildRuntime,
+    targets: buildTargets,
     webpack = true,
   } = buildConfig
 
@@ -76,12 +79,7 @@ export default function createBabelConfig(
   } = userConfig
 
   let presets: BabelPluginConfig[] = []
-  let plugins: BabelPluginConfig[] = [
-    // XXX Webpack can't currently handle untranspiled ?. and ?? syntax
-    // See https://github.com/webpack/webpack/issues/10227#issuecomment-588409413
-    require.resolve('@babel/plugin-proposal-optional-chaining'),
-    require.resolve('@babel/plugin-proposal-nullish-coalescing-operator'),
-  ]
+  let plugins: BabelPluginConfig[] = []
 
   // Default to loose mode unless explicitly configured
   if (typeof loose === 'undefined') {
@@ -89,25 +87,25 @@ export default function createBabelConfig(
   }
 
   // Build config controls whether or not we set browser targets. Users can
-  // override this using `browsers` or `babel.env.targets` config.
-  let userTargets = {}
-  if (buildEnv.targets) {
-    let targets = userConfigBrowsers && (
+  // override this using `browsers` or `babel.targets` config.
+  let targetsConfig = {}
+  if (buildTargets) {
+    targetsConfig.targets = buildTargets
+    let userTargets = userConfigBrowsers && (
       process.env.NODE_ENV === 'production'
         ? userConfigBrowsers.production
         : userConfigBrowsers.development
     )
-    if (targets) {
-      userTargets.targets = targets
+    if (userTargets) {
+      targetsConfig.targets = userTargets
     }
   }
+
   presets.push(
     [require.resolve('@babel/preset-env'), {
       loose,
       ...buildEnv,
       modules,
-      // Targets config from top-level browsers config if present
-      ...userTargets,
       // The user gets a last go at all the env options
       ...userEnv
     }]
@@ -165,7 +163,7 @@ export default function createBabelConfig(
     presets = presets.concat(userPresets)
   }
 
-  let config: BabelConfig = {presets}
+  let config: BabelConfig = {...targetsConfig, presets}
 
   plugins = plugins.concat(buildPlugins, userPlugins)
 
@@ -188,7 +186,6 @@ export default function createBabelConfig(
   if (userRuntime !== false) {
     plugins.push([require.resolve('@babel/plugin-transform-runtime'), {
       absoluteRuntime: absoluteRuntime !== false ? path.resolve(__dirname, '..') : false,
-      useESModules: modules === false,
       ...typeof buildRuntime === 'object' ? buildRuntime : {},
       ...typeof userRuntime === 'object' ? userRuntime : {}
     }])

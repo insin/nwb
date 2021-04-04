@@ -8,9 +8,9 @@ let routes = <Route path="/" component={App}>
     path="child1"
     getComponent={
       (nextState, cb) => {
-        require.ensure([], (require) => {
-          cb(null, require('./child1/Child1').default)
-        })
+        import(/* webpackChunkName: "child1" */ './child1/Child1')
+          .then(component => cb(null, component))
+          .catch(error => cb(error))
       }
     }
   />
@@ -18,9 +18,9 @@ let routes = <Route path="/" component={App}>
     path="child2(/:site)"
     getComponent={
       (nextState, cb) => {
-        require.ensure([], (require) => {
-          cb(null, require('./child2/Child2').default)
-        })
+        import(/* webpackChunkName: "child2" */ './child2/Child2')
+          .then(component => cb(null, component))
+          .catch(error => cb(error))
       }
     }
   />

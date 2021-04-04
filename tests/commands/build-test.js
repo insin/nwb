@@ -64,7 +64,7 @@ describe('command: build', function() {
       ])
     })
     it('injects the Webpack runtime into generated HTML', () => {
-      expect(builtHTML).toInclude('window.webpackJsonp')
+      expect(builtHTML).toInclude('self.webpackChunk')
     })
     it('does not generate a <script src> for the runtime', () => {
       expect(builtHTML).toNotInclude('src="/runtime"')

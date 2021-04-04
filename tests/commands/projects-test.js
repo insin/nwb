@@ -272,16 +272,16 @@ describe('sample projects', function() {
     it('creates split bundles, vendor bundles, copies public subdirs and includes font resources', () => {
       let files = stripHashes((glob.sync('**/*', {cwd: path.resolve('dist')}))).sort()
       expect(files).toEqual([
-        '3.css',
-        '3.css.map',
-        '3.js',
-        '3.js.map',
-        '4.js',
-        '4.js.map',
         'app.css',
         'app.css.map',
         'app.js',
         'app.js.map',
+        'child1.js',
+        'child1.js.map',
+        'child2.css',
+        'child2.css.map',
+        'child2.js',
+        'child2.js.map',
         'favicon.ico',
         'glyphicons-halflings-regular.eot',
         'glyphicons-halflings-regular.svg',

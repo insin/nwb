@@ -249,7 +249,7 @@ You can [view the live version of the app here](http://insin.github.io/nwb-think
 
 ## Testing
 
-nwb provides a default testing setup which uses Karma to run tests written with Mocha and Expect in the headless PhantomJS browser.
+nwb provides a default testing setup which uses Karma to run tests written with Mocha and Expect in a headless Chrome browser.
 
 > The [Testing documentation](/docs/Testing.md) provides an in-depth overview of what nwb's default testing setup provides (and how to configure things to your liking if you want to), but we'll stick to the defaults and repurpose the initial test in the `tests/` directory to test the `ProductTable` component.
 

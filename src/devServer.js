@@ -26,9 +26,6 @@ export default function devServer(webpackConfig, serverConfig, url, cb) {
     overlay: true,
     publicPath: webpackConfig.output.publicPath,
     quiet: true,
-    watchOptions: {
-      ignored: /node_modules/,
-    },
   }, otherServerConfig)
 
   debug('webpack dev server options: %s', deepToString(webpackDevServerOptions))

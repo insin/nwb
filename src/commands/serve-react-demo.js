@@ -15,12 +15,12 @@ export default function serveReactDemo(args, cb) {
   let config = {
     babel: {
       env: {
-        targets: DEFAULT_BROWSERS_DEV,
         useBuiltIns: 'entry',
         corejs: 3,
         exclude: ['transform-typeof-symbol'],
       },
       presets: ['react'],
+      targets: DEFAULT_BROWSERS_DEV,
     },
     entry: [path.resolve('demo/src/index.js')],
     output: {

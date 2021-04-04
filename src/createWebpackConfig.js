@@ -210,9 +210,10 @@ export function createStyleLoaders(
     createLoader(name('postcss'), {
       loader: require.resolve('postcss-loader'),
       options: {
-        ident: name('postcss'),
-        plugins: createDefaultPostCSSPlugins(userWebpackConfig),
-      }
+        postcssOptions: {
+          plugins: createDefaultPostCSSPlugins(userWebpackConfig),
+        },
+      },
     })
   ]
 
@@ -417,11 +418,13 @@ function inlineRuntimePlugin() {
     HtmlPlugin.getHooks(compilation).alterAssetTags.tapAsync('inlineRuntimePlugin', (data, cb) => {
       Object.keys(compilation.assets).forEach(assetName => {
         if (!/^runtime\.[a-z\d]+\.js$/.test(assetName)) return
-        let {children} = compilation.assets[assetName]
-        if (children && children[0]) {
+        let asset = compilation.assets[assetName]
+        let source = asset.source()
+        if (source) {
           let tag = data.assetTags.scripts.find(tag => tag.attributes.src.endsWith(assetName))
+          delete tag.attributes.defer
           delete tag.attributes.src
-          tag.innerHTML = children[0]._value
+          tag.innerHTML = source
         }
       })
       cb(null, data)
@@ -460,7 +463,11 @@ export function createPlugins(
 ): {optimization: Object, plugins: Object[]} {
   let production = process.env.NODE_ENV === 'production'
 
-  let optimization = {}
+  let optimization: Object = {
+    // Tell webpack not to use DefinePlugin to define 'process.env.NODE_ENV' itself
+    nodeEnv: false
+  }
+
   let plugins = [
     // Enforce case-sensitive import paths
     new CaseSensitivePathsPlugin(),
@@ -482,7 +489,6 @@ export function createPlugins(
     // HMR is enabled by default but can be explicitly disabled
     if (server.hot !== false) {
       plugins.push(new webpack.HotModuleReplacementPlugin())
-      optimization.noEmitOnErrors = true
     }
     if (buildConfig.reactRefresh) {
       plugins.push(new ReactRefreshPlugin())
@@ -509,7 +515,7 @@ export function createPlugins(
         // A 'vendors' cacheGroup will get defaulted if it doesn't exist, so
         // we override it to explicitly set the chunk name.
         cacheGroups: {
-          vendors: {
+          defaultVendors: {
             name: 'vendor',
             priority: -10,
             test: /[\\/]node_modules[\\/]/,
@@ -529,16 +535,9 @@ export function createPlugins(
       optimization.minimizer = [
         (compiler: any) => {
           let TerserPlugin = require('terser-webpack-plugin')
-          let OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
+          let CssMinimizerPlugin = require('css-minimizer-webpack-plugin')
           new TerserPlugin(createTerserConfig(userConfig)).apply(compiler)
-          new OptimizeCSSAssetsPlugin({
-            cssProcessorOptions: {
-              map: {
-                inline: false,
-                annotation: true,
-              }
-            }
-          }).apply(compiler)
+          new CssMinimizerPlugin().apply(compiler)
         }
       ]
     }

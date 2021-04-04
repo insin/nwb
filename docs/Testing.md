@@ -22,7 +22,7 @@ nwb uses [Karma](http://karma-runner.github.io/) as a test runner, with [Webpack
 
 #### Browsers
 
-Karma runs tests in Phantom JS, which is installed automatically with nwb.
+Karma runs tests in Chrome, which must be installed on the machine the tests are running on.
 
 > To configure this, provide [`karma.browsers` config](/docs/Configuration.md#browsers-string--arrayplugin)
 
@@ -133,10 +133,6 @@ module.exports = {
 ```
 
 **Note:** if you provide `karma.testContext` and your tests would not have been picked up by the [default test files][#test-files] config, you will also need to provide a suitable [`karma.testFiles` config](/docs/Configuration.md#testcontext-string) so your tests can be excluded from code coverage.
-
-#### Automatic Babel Polyfill
-
-A context module is commonly used to load polyfills to allow tests to run in browsers missing certain features, but you don't need to worry about that if you were just going to use `@babel/polyfill` - nwb automatically injects Babel's polyfill into Karma tests for you.
 
 #### Configuring Testing Libraries
 

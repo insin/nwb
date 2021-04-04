@@ -61,11 +61,11 @@ export function createBuildConfig(args: Object, extra: Object = {}) {
   let config: Object = {
     babel: {
       env: {
-        targets: DEFAULT_BROWSERS_PROD,
         useBuiltIns: 'entry',
         corejs: 3,
         exclude: ['transform-typeof-symbol'],
       },
+      targets: DEFAULT_BROWSERS_PROD,
     },
     devtool: 'source-map',
     entry: {
@@ -105,16 +105,16 @@ export function createServeConfig(args: Object, ...extra: Object[]) {
   let config: Object = {
     babel: {
       env: {
-        targets: DEFAULT_BROWSERS_DEV,
         useBuiltIns: 'entry',
         corejs: 3,
         exclude: ['transform-typeof-symbol'],
       },
+      targets: DEFAULT_BROWSERS_DEV,
     },
     entry: [entry],
     output: {
       path: dist,
-      filename: 'app.js',
+      filename: '[name].js',
       publicPath: '/',
     },
     plugins: {

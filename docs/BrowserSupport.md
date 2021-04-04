@@ -13,7 +13,7 @@ nwb uses the following [Browserslist](https://github.com/browserslist/browsersli
 
 These are used to configure:
 
-- [`@babel/preset-env`'s `targets` option](https://babeljs.io/docs/en/babel-preset-env#targets), so it only transpiles the necessary ECMAScript 2015+ for supported browsers.
+- [Babel's `targets` option](https://babeljs.io/docs/en/options#targets), so it only transpiles the necessary ECMAScript 2015+ for supported browsers.
 - [Autoprefixer's `overrideBrowserslist` option](https://github.com/postcss/autoprefixer#options), so it only includes the necessary CSS prefixes for supported browsers.
 
 ### Configuring Browser Support

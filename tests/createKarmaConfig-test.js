@@ -32,16 +32,16 @@ describe('getKarmaPluginConfig()', function() {
   this.timeout(10000)
   describe('without user config', () => {
     let expectedDefaultPlugins = [
-      'launcher:PhantomJS',
+      'launcher:Chrome',
       'preprocessor:sourcemap',
-      'webpackPlugin',
+      'preprocessor:webpack',
       'framework:mocha',
       'reporter:mocha',
     ]
-    it('defaults to Mocha and PhantomJS', () => {
+    it('defaults to Mocha and ChromeHeadless', () => {
       let {browsers, frameworks, reporters, plugins} = getKarmaPluginConfig()
-      expect(browsers).toEqual(['PhantomJS'])
-      expect(frameworks).toEqual(['mocha'])
+      expect(browsers).toEqual(['ChromeHeadless'])
+      expect(frameworks).toEqual(['mocha', 'webpack'])
       expect(reporters).toEqual(['mocha'])
       expectedDefaultPlugins.forEach(plugin =>
         expect(findPlugin(plugins, plugin)).toExist()
@@ -49,8 +49,8 @@ describe('getKarmaPluginConfig()', function() {
     })
     it('adds coverage config when asked to', () => {
       let {browsers, frameworks, reporters, plugins} = getKarmaPluginConfig({codeCoverage: true})
-      expect(browsers).toEqual(['PhantomJS'])
-      expect(frameworks).toEqual(['mocha'])
+      expect(browsers).toEqual(['ChromeHeadless'])
+      expect(frameworks).toEqual(['mocha', 'webpack'])
       expect(reporters).toEqual(['mocha', 'coverage'])
       expectedDefaultPlugins.concat(['preprocessor:coverage']).forEach(plugin => {
         expect(findPlugin(plugins, plugin)).toExist()
@@ -68,7 +68,7 @@ describe('getKarmaPluginConfig()', function() {
           frameworks: [tapeFramework],
         },
       })
-      expect(frameworks).toEqual(['tape'])
+      expect(frameworks).toEqual(['tape', 'webpack'])
       expect(reporters).toEqual(['dots'])
       expect(findPlugin(plugins, 'framework:tape')).toExist()
     })
@@ -79,7 +79,7 @@ describe('getKarmaPluginConfig()', function() {
           plugins: [tapeFramework],
         },
       })
-      expect(frameworks).toEqual(['tape'])
+      expect(frameworks).toEqual(['tape', 'webpack'])
       expect(reporters).toEqual(['dots'])
       expect(findPlugin(plugins, 'framework:tape')).toExist()
     })
@@ -90,7 +90,7 @@ describe('getKarmaPluginConfig()', function() {
           reporters: [tapReporter],
         },
       })
-      expect(frameworks).toEqual(['tape'])
+      expect(frameworks).toEqual(['tape', 'webpack'])
       expect(reporters).toEqual(['tap'])
       expect(findPlugin(plugins, 'framework:tape')).toExist()
       expect(findPlugin(plugins, 'reporter:tap')).toExist()
@@ -103,7 +103,7 @@ describe('getKarmaPluginConfig()', function() {
           plugins: [tapeFramework, tapReporter],
         },
       })
-      expect(frameworks).toEqual(['tape'])
+      expect(frameworks).toEqual(['tape', 'webpack'])
       expect(reporters).toEqual(['tap'])
       expect(findPlugin(plugins, 'framework:tape')).toExist()
       expect(findPlugin(plugins, 'reporter:tap')).toExist()
@@ -116,7 +116,7 @@ describe('getKarmaPluginConfig()', function() {
           plugins: [{'framework: chai': []}],
         },
       })
-      expect(frameworks).toEqual(['mocha', 'chai', 'chai-as-promised'])
+      expect(frameworks).toEqual(['mocha', 'chai', 'chai-as-promised', 'webpack'])
       expect(reporters).toEqual(['mocha'])
       expect(findPlugin(plugins, 'framework:mocha')).toExist()
       expect(findPlugin(plugins, 'reporter:mocha')).toExist()
@@ -135,10 +135,9 @@ describe('getKarmaPluginConfig()', function() {
 })
 
 describe('createKarmaConfig()', () => {
-  it('includes polyfill and default test files pattern', () => {
+  it('includes default test files pattern', () => {
     let config = createKarmaConfig({}, {}, {}, {})
     expect(config.files).toEqual([
-      require.resolve('@babel/polyfill/dist/polyfill.js'),
       '+(src|test?(s))/**/*+(.spec|.test).js',
     ])
   })
@@ -157,7 +156,7 @@ describe('createKarmaConfig()', () => {
         }
       }
     })
-    expect(config.browsers).toEqual(['PhantomJS', 'Chrome'])
+    expect(config.browsers).toEqual(['ChromeHeadless', 'Chrome'])
     expect(config.mochaReporter).toEqual({output: 'autowatch', showDiff: true})
   })
   it('supports a karma.config() function to manually edit generated config', () => {
@@ -169,6 +168,6 @@ describe('createKarmaConfig()', () => {
         }
       }
     })
-    expect(config.browsers).toEqual(['PhantomJS', 'Chrome'])
+    expect(config.browsers).toEqual(['ChromeHeadless', 'Chrome'])
   })
 })
