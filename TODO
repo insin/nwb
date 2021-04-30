@@ -1,9 +1,8 @@
-Dependencies:
-  ☐ Node.js 10 minimum version
-    chalk
-    file-loader
-    fs-extra
-    karma
-    karma-mocha
-    terser-webpack-plugin
-    url-loader
+☐ Add `babel.assumptions` config
+   https://babeljs.io/assumptions
+☐ Configure browser targets in Webpack's top-level `target` option:
+   https://webpack.js.org/configuration/target/#browserslist
+   browserslist:${browserslist query}
+☐ Use webpack 5's new asset modules instead of url-loader and file-loader
+   https://webpack.js.org/guides/asset-modules/
+☐ Check if npm-install-plugin's approach still works in Webpack 5 and fix it if not

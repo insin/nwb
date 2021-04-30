@@ -15,29 +15,30 @@
 
 ### Added
 
-- css-minimizer-webpack-plugin v1.3.0
-- postcss v8.2.9
+- css-minimizer-webpack-plugin v2.0.0
+- postcss v8.2.13
 
 ### Changed
 
-- @babel/cli: v7.10.3 → v7.13.14
-- @babel/core: v7.10.3 → v7.13.14
+- @babel/cli: v7.10.3 → v7.13.16
+- @babel/core: v7.10.3 → v7.14.0
 - @babel/plugin-syntax-jsx: v7.10.1 → v7.12.13
 - @babel/plugin-transform-react-constant-elements: v7.10.1 → v7.13.13
 - @babel/plugin-transform-react-jsx: v7.10.3 → v7.13.12
-- @babel/plugin-transform-runtime: v7.10.3 → v7.13.10
-- @babel/preset-env: v7.10.3 → v7.13.12
+- @babel/plugin-transform-runtime: v7.10.3 → v7.13.15
+- @babel/preset-env: v7.10.3 → v7.14.0
 - @babel/preset-react: v7.10.1 → v7.13.13
-- @babel/runtime: v7.10.3 → v7.13.10
+- @babel/runtime: v7.10.3 → v7.14.0
 - @pmmmwh/react-refresh-webpack-plugin: v0.3.3 → v0.4.3
 - autoprefixer: v9.8.4 → v10.2.5
 - babel-loader: v8.1.0 → v8.2.2
 - babel-plugin-add-module-exports: v1.0.2 → v1.0.4
+- babel-plugin-inferno: v6.1.1 → v6.2.0
 - babel-preset-proposals: v0.3.0 → v0.4.0
 - case-sensitive-paths-webpack-plugin: v2.3.0 → v2.4.0
-- copy-webpack-plugin: v6.0.2 → v8.1.0
+- copy-webpack-plugin: v6.0.2 → v8.1.1
 - cross-env: v7.0.2 → v7.0.3
-- css-loader: v3.6.0 → v5.2.0
+- css-loader: v3.6.0 → v5.2.4
 - debug: v4.1.1 → v4.3.1
 - file-loader: v6.0.0 → v6.2.0
 - fs-extra: v9.0.1 → v9.1.0
@@ -50,7 +51,7 @@
 - karma-webpack: v4.0.2 → v5.0.0
 - mini-css-extract-plugin: v0.9.0 → v1.4.0
 - mocha: v7.1.2 → v8.3.2
-- open: v7.0.4 → v8.0.5
+- open: v7.0.4 → v8.0.7
 - ora: v4.0.4 → v5.4.0
 - postcss-loader: v3.0.0 → v5.2.0
 - react-refresh: v0.8.3 → v0.10.0
@@ -60,7 +61,7 @@
 - style-loader: v1.2.1 → v2.0.0
 - terser-webpack-plugin: v3.0.6 → v5.1.1
 - url-loader: v4.1.0 → v4.1.1
-- webpack: v4.43.0 → v5.30.0
+- webpack: v4.43.0 → v5.36.1
 - webpack-dev-middleware: v3.7.2 → v4.1.0
 - webpack-dev-server: v3.11.0 → v3.11.2
 
