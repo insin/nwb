@@ -20,7 +20,7 @@ These are used to configure:
 
 If your app needs to support more (or fewer!) browsers, you can tweak browser support settings using [`browsers` config](https://github.com/insin/nwb/blob/master/docs/Configuration.md#browsers-string--arraystring--object).
 
-Broadening the range of supported browsers will ensure your app works for everone who needs to use it, while narrowing the range may help decrease your bundle sizes, if less code needs to be transpiled and fewer Babel helpers need to be imported.
+Broadening the range of supported browsers will ensure your app works for everyone who needs to use it, while narrowing the range may help decrease your bundle sizes, if less code needs to be transpiled and fewer Babel helpers need to be imported.
 
 For example, IE9 is considered a "dead" browser in Browserslist queries, so if you needed to support it, you could specifically enable it in [`browsers.production` config](https://github.com/insin/nwb/blob/master/docs/Configuration.md#browsers-string--arraystring--object) like so:
 
