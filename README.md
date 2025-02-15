@@ -1,3 +1,43 @@
+# nwb is deprecated and unmaintained
+
+### TL;DR: use [Vite](https://vite.dev/)!
+
+nwb was created at a time when JavaScript tooling was in flux, when the capabilities of ES6 were less widely-supported by browsers than they are today, and when versions of Webpack, Babel and other common build tools were out of date almost as soon as you added them to your package.json, and there wasn't even a create-react-app yet!
+
+People who were adopting these tools ended up having to independently manage the same sets of dependencies and configure them to work together to create a great local development experience, a solid testing setup and optimised production builds.
+
+The goal of nwb was to take the weight of managing these [off the shoulders of developers, and instead provide a configuration file](https://github.com/insin/react-yelp-clone/compare/master...nwb) exposing a smaller surface area for the configuration needed to tweak the things which were specific to your project.
+
+---
+
+At this point in time, years later than we should have formally announced nwb's deprecation, [Vite](https://vite.dev/) is one of the best implementations of that goal there is.
+
+It's massively popular, widely-used, and it's likely that every plugin you need for your use case has already likely written, and if not, there's an API for that, which is so good that high-quality frameworks now build on top of Vite, such as [Astro](https://astro.build/) for static site generation (and on-demand server rendering) and [React Router](https://reactrouter.com) for client and/or server rendered React apps.
+
+Web Application frameworks like [Hono](https://hono.dev/) also provide official plugins to integrate with Vite's development server if you just need to create a server which serves up a client app and provide authentication and API endpoints, while retaining Vite's fantastic developer experience.
+
+Vite also comes with a fantastic testing framework in [Vitest](https://vitest.dev/) which integrates directly with Vite, rather than the hodge-podge of different configs we used to have to deal with to get the likes of Karma sucessfully using the same build tooling as the rest of our development process (IYKYK).
+
+In summary:
+
+- Starting a new React/Preact etc. project today? Possibly even your first project?
+
+  Use [Vite](https://vite.dev/). There _will_ be a plugin and a project template for whatever you want to use.
+
+- Have an old project which used something like nwb or create-react-app?
+
+  Migrate to [Vite](https://vite.dev/). It's not going to be painless, but it's going to be better. I've done it. You can do it.
+
+- Starting a new project which needs client rendering? Server rendering?
+
+  Use [Vite](https://vite.dev/). There's a plugin or maybe even a framework built on Vite for that. Don't take on more complexity than you need. Don't fight with a framework intended for server rendering if that's not what you need.
+
+Thanks for using nwb!
+
+-- Jonny
+
+---
+
 # nwb
 
 ![Linux](resources/linux.png) [![Travis][travis-badge]][travis]
